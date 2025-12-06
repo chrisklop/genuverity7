@@ -1,6 +1,7 @@
 import os
 import json
 import hashlib
+import re
 from typing import Optional
 from datetime import datetime, date
 from fastapi import FastAPI, HTTPException, Request
@@ -12,7 +13,8 @@ import anthropic
 
 # Load from environment variables (Vercel sets these automatically)
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-5-20250929")
+# Use Haiku for speed on Vercel's constrained timeout
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-3-5-haiku-20241022")
 
 # For Vercel serverless, we use /tmp for any file operations
 # Note: File-based caching won't persist across serverless invocations
@@ -146,82 +148,121 @@ def get_remaining_free_dives(user_id: str) -> int:
     return max(0, FREE_DAILY_LIMIT - used)
 
 
-# The Golden Template for article generation
-ARTICLE_TEMPLATE = """
-You are an expert investigative journalist for GenuVerity, creating magazine-style exposé articles.
+def repair_truncated_json(text: str) -> Optional[dict]:
+    """Attempt to repair truncated JSON from timeout responses."""
+    if not text or not text.strip():
+        return None
 
-TASK: Write a comprehensive, data-driven deep-dive article on: "{topic}"
+    text = text.strip()
+
+    # Remove markdown fences
+    if text.startswith("```json"):
+        text = text[7:]
+    if text.startswith("```"):
+        text = text[3:]
+    if text.endswith("```"):
+        text = text[:-3]
+    text = text.strip()
+
+    # Try parsing as-is first
+    try:
+        return json.loads(text)
+    except:
+        pass
+
+    # Count unclosed braces/brackets and try to close them
+    open_braces = text.count('{') - text.count('}')
+    open_brackets = text.count('[') - text.count(']')
+
+    # Find if we're inside a string (look for unmatched quotes)
+    in_string = False
+    last_quote_pos = -1
+    i = 0
+    while i < len(text):
+        if text[i] == '"' and (i == 0 or text[i-1] != '\\'):
+            in_string = not in_string
+            if in_string:
+                last_quote_pos = i
+        i += 1
+
+    # If we're inside a string, try to close it
+    repaired = text
+    if in_string:
+        # Truncate to last complete-looking sentence or add closing quote
+        repaired = text + '"'
+
+    # Close brackets then braces
+    repaired += ']' * max(0, open_brackets)
+    repaired += '}' * max(0, open_braces)
+
+    # Try to parse repaired JSON
+    try:
+        data = json.loads(repaired)
+        print(f"JSON repair successful: closed {open_braces} braces, {open_brackets} brackets")
+        return data
+    except Exception as e:
+        print(f"JSON repair failed: {e}")
+
+    # Last resort: try to extract just the essential fields
+    try:
+        # Try to find key and title at minimum
+        key_match = re.search(r'"key"\s*:\s*"([^"]+)"', text)
+        title_match = re.search(r'"title"\s*:\s*"([^"]+)"', text)
+
+        if key_match and title_match:
+            # Extract content up to where it broke
+            content_match = re.search(r'"content"\s*:\s*"(.*?)(?:"\s*,\s*"chartConfigs|$)', text, re.DOTALL)
+            content = content_match.group(1) if content_match else f"<p class='prose-text'>Article generation was interrupted. Please try again.</p>"
+
+            return {
+                "key": key_match.group(1),
+                "title": title_match.group(1),
+                "content": content,
+                "chartConfigs": {},
+                "contextData": {},
+                "citationDatabase": {},
+                "sources": [],
+                "_partial": True
+            }
+    except:
+        pass
+
+    return None
+
+
+# Streamlined template for faster generation (reduced requirements)
+ARTICLE_TEMPLATE = """
+You are an investigative journalist for GenuVerity. Write a focused article on: "{topic}"
 {context_section}
 
-You MUST return VALID JSON (no markdown code blocks, just raw JSON) with this EXACT structure:
+Return ONLY valid JSON (no markdown):
 
-{{
-    "key": "unique_slug_lowercase",
-    "title": "Compelling Article Title",
-    "content": "HTML CONTENT HERE - SEE FORMAT BELOW",
-    "chartConfigs": {{
-        "chart_id_1": {{
-            "type": "bar|line|doughnut|radar",
-            "data": {{
-                "labels": ["Label1", "Label2", ...],
-                "values": [10, 20, ...],
-                "colors": ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"]
-            }},
-            "title": "Chart Title"
-        }}
-    }},
-    "contextData": {{
-        "context_key_1": {{
-            "expanded": "Additional context paragraph that explains this topic in more detail..."
-        }}
-    }},
-    "citationDatabase": {{
-        "source_1": {{
-            "domain": "reuters.com",
-            "trustScore": 92,
-            "title": "Source Article Title",
-            "snippet": "Key quote or finding from this source..."
-        }}
-    }},
-    "sources": [
-        {{ "name": "Source Name", "score": 95, "url": "https://example.com" }}
-    ]
-}}
+{{"key":"{topic_slug}","title":"Title Here","content":"HTML HERE","chartConfigs":{{"chart1":{{"type":"bar","data":{{"labels":["A","B"],"values":[10,20],"colors":["#3b82f6","#10b981"]}},"title":"Chart"}}}},"contextData":{{}},"citationDatabase":{{"src1":{{"domain":"reuters.com","trustScore":90,"title":"Title","snippet":"Quote"}}}},"sources":[{{"name":"Source","score":90,"url":"https://example.com"}}]}}
 
-HTML CONTENT FORMAT RULES:
-1. Use section headers: <h2 class="prose-h2">1. Section Title</h2>
-2. Prose paragraphs: <p class="prose-text">Content...</p>
-3. Living Numbers (animated stats): <span class="living-number" data-target="600" data-suffix="B">$0</span>
-4. Highlight important text: <span class="highlight-glow">Key Insight</span>
-5. Fractal Triggers (deep-dive links): <strong class="fractal-trigger" onclick="expandContext(this, 'context_key')">Clickable Term</strong>
-6. Citations: <span class="citation-spade" data-id="source_1">♠</span>
-7. Float figures with charts:
+HTML FORMAT:
+- Headers: <h2 class="prose-h2">Section</h2>
+- Text: <p class="prose-text">Content</p>
+- Stats: <span class="living-number" data-target="100" data-suffix="B">$0</span>
+- Highlights: <span class="highlight-glow">Key point</span>
+- Deep links: <strong class="fractal-trigger" onclick="expandContext(this,'key')">Term</strong>
+- Citations: <span class="citation-spade" data-id="src1">♠</span>
+- Charts: <div class="float-figure right"><div style="height:250px"><canvas id="chart1"></canvas></div><div class="fig-caption">Fig 1</div></div>
 
-<div class="float-figure right">
-    <div style="height: 250px;"><canvas id="chart_id_1"></canvas></div>
-    <div class="fig-caption">Fig 1. Chart Description</div>
-</div>
+REQUIREMENTS (keep response under 4000 tokens):
+- 2 charts with realistic data
+- 3-4 living numbers
+- 3-4 fractal triggers
+- 4-6 sources in citationDatabase
+- 3 sections minimum
+- Magazine investigative tone
+- Factual data
 
-IMPORTANT REQUIREMENTS:
-- Include 3-5 charts with real/realistic data from credible sources
-- Include 5-8 living numbers with real statistics (cite your sources)
-- Include 6-10 fractal trigger terms for deeper exploration on key concepts
-- Include 8-15 citation spades linked to citationDatabase entries
-- citationDatabase MUST have 8-15 unique sources with real domains, trust scores, titles, and snippets
-- Write in a magazine-style investigative tone (like The Atlantic or New York Magazine)
-- Minimum 5 sections with prose-h2 headers
-- Start with an Executive Summary section
-- End with "What Lies Ahead" or similar forward-looking section
-- All data should be factually accurate or clearly realistic estimates
-- Generate unique chart IDs that won't conflict (e.g., "{topic_slug}_chart1")
-- Each citation should link to a real, reputable source (Reuters, AP, WSJ, NYT, government data, academic papers)
-
-Return ONLY the JSON object, no explanations or markdown formatting.
+Return ONLY JSON, no explanation.
 """
 
 @app.post("/api/generate")
 async def generate_report(request: GenerateRequest, req: Request):
-    """Claude-powered report generation (replaces Gemini)"""
+    """Claude-powered report generation with JSON repair fallback."""
     if not ANTHROPIC_API_KEY or not claude_client:
         raise HTTPException(status_code=500, detail="Server missing ANTHROPIC_API_KEY environment variable.")
 
@@ -238,24 +279,20 @@ async def generate_report(request: GenerateRequest, req: Request):
     try:
         response = claude_client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=8000,
+            max_tokens=4000,  # Reduced for faster response
             messages=[{"role": "user", "content": prompt}]
         )
 
         text = response.content[0].text
 
-        # Clean potential markdown fences
-        clean_text = text.strip()
-        if clean_text.startswith("```json"):
-            clean_text = clean_text[7:]
-        if clean_text.startswith("```"):
-            clean_text = clean_text[3:]
-        if clean_text.endswith("```"):
-            clean_text = clean_text[:-3]
-        clean_text = clean_text.strip()
+        # Try to parse, with repair fallback
+        data = repair_truncated_json(text)
+        if data:
+            return data
 
-        data = json.loads(clean_text)
-        return data
+        # If repair failed, raise error
+        raise json.JSONDecodeError("Could not parse or repair JSON", text[:100], 0)
+
     except json.JSONDecodeError as e:
         print(f"JSON Parse Error: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to parse AI response: {str(e)}")
@@ -337,22 +374,17 @@ async def generate_deep_dive(request_body: DeepDiveRequest, request: Request):
     try:
         response = claude_client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=8000,
+            max_tokens=4000,  # Reduced for faster response within timeout
             messages=[{"role": "user", "content": prompt}]
         )
 
         text = response.content[0].text
 
-        clean_text = text.strip()
-        if clean_text.startswith("```json"):
-            clean_text = clean_text[7:]
-        if clean_text.startswith("```"):
-            clean_text = clean_text[3:]
-        if clean_text.endswith("```"):
-            clean_text = clean_text[:-3]
-        clean_text = clean_text.strip()
+        # Use repair function which handles markdown cleanup and truncation
+        data = repair_truncated_json(text)
 
-        data = json.loads(clean_text)
+        if not data:
+            raise json.JSONDecodeError("Could not parse or repair JSON", text[:100] if text else "", 0)
 
         # Ensure required fields
         if "key" not in data:
@@ -366,7 +398,7 @@ async def generate_deep_dive(request_body: DeepDiveRequest, request: Request):
         if "sources" not in data:
             data["sources"] = []
 
-        # Cache and track usage
+        # Cache and track usage (even for partial responses)
         cache_article(request_body.topic, data)
         increment_user_usage(user_id)
 
