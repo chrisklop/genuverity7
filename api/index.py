@@ -304,7 +304,7 @@ IMPORTANT: Return ONLY the JSON object. No markdown, no explanation, no code fen
 
 @app.post("/api/generate")
 async def generate_report(request: GenerateRequest, req: Request):
-    """Claude-powered report generation with streaming to avoid timeout."""
+    """Claude-powered report generation with SSE progress updates."""
     if not ANTHROPIC_API_KEY or not claude_client:
         raise HTTPException(status_code=500, detail="Server missing ANTHROPIC_API_KEY environment variable.")
 
@@ -318,31 +318,90 @@ async def generate_report(request: GenerateRequest, req: Request):
         topic_slug=topic_slug
     )
 
+    def send_sse(event: str, data: str) -> str:
+        """Format a Server-Sent Event message."""
+        return f"event: {event}\ndata: {json.dumps(data)}\n\n"
+
     async def stream_response():
-        """Stream the response to keep connection alive and avoid timeout."""
+        """Stream SSE progress events and final content."""
         full_text = ""
+        char_count = 0
+
+        # Progress stages based on content detection
+        stages = {
+            "title": False,
+            "section_1": False,
+            "section_2": False,
+            "section_3": False,
+            "charts": False,
+            "sources": False
+        }
+
         try:
+            # Stage 1: Initializing
+            yield send_sse("progress", {"stage": "init", "percent": 5, "message": "Initializing Sonnet 4.5..."})
+
+            # Stage 2: Connecting
+            yield send_sse("progress", {"stage": "connect", "percent": 10, "message": "Connecting to Claude AI..."})
+
             with claude_client.messages.stream(
                 model=CLAUDE_MODEL,
                 max_tokens=8000,
                 messages=[{"role": "user", "content": prompt}]
             ) as stream:
+                # Stage 3: Researching
+                yield send_sse("progress", {"stage": "research", "percent": 15, "message": "Researching topic..."})
+
                 for text in stream.text_stream:
                     full_text += text
-                    # Send chunk to keep connection alive
-                    yield text
+                    char_count += len(text)
 
-            # After streaming completes, we've already sent the raw text
-            # The frontend will parse it
+                    # Detect progress based on content
+                    if '"title"' in full_text and not stages["title"]:
+                        stages["title"] = True
+                        yield send_sse("progress", {"stage": "title", "percent": 25, "message": "Crafting headline..."})
+
+                    if '"content"' in full_text and not stages["section_1"]:
+                        stages["section_1"] = True
+                        yield send_sse("progress", {"stage": "writing", "percent": 35, "message": "Writing introduction..."})
+
+                    if '<h2 class="prose-h2">2.' in full_text and not stages["section_2"]:
+                        stages["section_2"] = True
+                        yield send_sse("progress", {"stage": "analysis", "percent": 50, "message": "Analyzing data..."})
+
+                    if '<h2 class="prose-h2">3.' in full_text and not stages["section_3"]:
+                        stages["section_3"] = True
+                        yield send_sse("progress", {"stage": "deep", "percent": 65, "message": "Deep diving into findings..."})
+
+                    if '"chartConfigs"' in full_text and not stages["charts"]:
+                        stages["charts"] = True
+                        yield send_sse("progress", {"stage": "charts", "percent": 80, "message": "Generating visualizations..."})
+
+                    if '"sources"' in full_text and not stages["sources"]:
+                        stages["sources"] = True
+                        yield send_sse("progress", {"stage": "sources", "percent": 90, "message": "Verifying sources..."})
+
+            # Stage: Complete
+            yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Investigation complete!"})
+
+            # Send the actual content
+            yield send_sse("content", full_text)
+
+            # Signal done
+            yield send_sse("done", "ok")
 
         except Exception as e:
             print(f"Streaming Error: {e}")
-            yield f"\n\nERROR: {str(e)}"
+            yield send_sse("error", str(e))
 
     return StreamingResponse(
         stream_response(),
-        media_type="text/plain",
-        headers={"X-Content-Type-Options": "nosniff"}
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no"
+        }
     )
 
 

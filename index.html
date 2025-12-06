@@ -1336,6 +1336,22 @@
             color: var(--accent-blue);
         }
 
+        .status-item.done {
+            opacity: 1;
+            color: var(--accent-green);
+        }
+
+        .status-item.done .status-dot {
+            background: var(--accent-green);
+        }
+
+        .status-item.done::after {
+            content: '✓';
+            font-size: 0.6rem;
+            margin-left: 0.25rem;
+            color: var(--accent-green);
+        }
+
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.6; transform: scale(1.2); }
@@ -1779,23 +1795,44 @@
             <div id="loader-context-text" class="context-preview-text"></div>
         </div>
 
-        <div class="loader-status">
-            <div class="status-item active" id="status-research">
+        <div class="loader-status" id="loader-status-stages">
+            <div class="status-item" id="status-init">
+                <span class="status-dot"></span>
+                <span>Initializing</span>
+            </div>
+            <div class="status-item" id="status-connect">
+                <span class="status-dot"></span>
+                <span>Connecting</span>
+            </div>
+            <div class="status-item" id="status-research">
                 <span class="status-dot"></span>
                 <span>Researching</span>
             </div>
-            <div class="status-item" id="status-verify">
+            <div class="status-item" id="status-writing">
                 <span class="status-dot"></span>
-                <span>Verifying</span>
+                <span>Writing</span>
             </div>
-            <div class="status-item" id="status-compose">
+            <div class="status-item" id="status-analysis">
                 <span class="status-dot"></span>
-                <span>Composing</span>
+                <span>Analyzing</span>
+            </div>
+            <div class="status-item" id="status-charts">
+                <span class="status-dot"></span>
+                <span>Charts</span>
+            </div>
+            <div class="status-item" id="status-sources">
+                <span class="status-dot"></span>
+                <span>Sources</span>
+            </div>
+            <div class="status-item" id="status-complete">
+                <span class="status-dot"></span>
+                <span>Complete</span>
             </div>
         </div>
         <div class="loader-progress">
             <div class="loader-progress-bar" id="loader-progress-bar"></div>
         </div>
+        <div id="loader-percent" style="color: var(--accent); font-size: 0.9rem; margin-top: 0.5rem; font-family: monospace;">0%</div>
         <button onclick="cancelDeepDive()" class="action-btn" style="margin-top: 1rem; opacity: 0.7;">
             <i data-lucide="x" class="w-4 h-4"></i> Cancel
         </button>
@@ -4011,6 +4048,67 @@
         }
 
         // --- 6. GENAI INTEGRATION (LOCAL) ---
+        // Progress update helper
+        function updateProgress(stage, percent, message) {
+            // Update subtitle
+            const subtitle = document.getElementById('loader-subtitle');
+            if (subtitle) subtitle.textContent = message;
+
+            // Update progress bar
+            const progressBar = document.getElementById('loader-progress-bar');
+            if (progressBar) progressBar.style.width = percent + '%';
+
+            // Update percent display
+            const percentDisplay = document.getElementById('loader-percent');
+            if (percentDisplay) percentDisplay.textContent = percent + '%';
+
+            // Map backend stages to UI elements
+            const stageMap = {
+                'init': 'status-init',
+                'connect': 'status-connect',
+                'research': 'status-research',
+                'title': 'status-writing',
+                'writing': 'status-writing',
+                'analysis': 'status-analysis',
+                'deep': 'status-analysis',
+                'charts': 'status-charts',
+                'sources': 'status-sources',
+                'complete': 'status-complete'
+            };
+
+            // Reset all stages
+            document.querySelectorAll('#loader-status-stages .status-item').forEach(el => {
+                el.classList.remove('active', 'done');
+            });
+
+            // Mark completed stages
+            const stageOrder = ['init', 'connect', 'research', 'writing', 'analysis', 'charts', 'sources', 'complete'];
+            const currentIdx = stageOrder.indexOf(stage === 'title' ? 'writing' : (stage === 'deep' ? 'analysis' : stage));
+
+            stageOrder.forEach((s, idx) => {
+                const elId = 'status-' + s;
+                const el = document.getElementById(elId);
+                if (el) {
+                    if (idx < currentIdx) {
+                        el.classList.add('done');
+                    } else if (idx === currentIdx) {
+                        el.classList.add('active');
+                    }
+                }
+            });
+        }
+
+        // Reset progress UI
+        function resetProgressUI() {
+            document.querySelectorAll('#loader-status-stages .status-item').forEach(el => {
+                el.classList.remove('active', 'done');
+            });
+            const progressBar = document.getElementById('loader-progress-bar');
+            if (progressBar) progressBar.style.width = '0%';
+            const percentDisplay = document.getElementById('loader-percent');
+            if (percentDisplay) percentDisplay.textContent = '0%';
+        }
+
         async function generateReport(initialTopic = null) {
             let topic = initialTopic;
             if (!topic) {
@@ -4032,6 +4130,14 @@
                 searchInput.placeholder = 'Generating investigation...';
             }
 
+            // Show the loader
+            const loader = document.getElementById('deep-dive-loader');
+            if (loader) {
+                loader.style.display = 'flex';
+                document.getElementById('loader-title').textContent = `Investigating: ${topic}`;
+                resetProgressUI();
+            }
+
             try {
                 const response = await fetch('/api/generate', {
                     method: 'POST',
@@ -4044,24 +4150,43 @@
                     throw new Error(errorText || "Generation failed");
                 }
 
-                // Handle streaming response - collect all chunks
+                // Handle SSE streaming response
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder();
-                let fullText = '';
+                let buffer = '';
+                let articleContent = '';
 
                 while (true) {
                     const { done, value } = await reader.read();
                     if (done) break;
-                    fullText += decoder.decode(value, { stream: true });
+
+                    buffer += decoder.decode(value, { stream: true });
+
+                    // Process complete SSE events
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop() || ''; // Keep incomplete line in buffer
+
+                    let currentEvent = null;
+                    for (const line of lines) {
+                        if (line.startsWith('event: ')) {
+                            currentEvent = line.slice(7);
+                        } else if (line.startsWith('data: ') && currentEvent) {
+                            const data = JSON.parse(line.slice(6));
+
+                            if (currentEvent === 'progress') {
+                                updateProgress(data.stage, data.percent, data.message);
+                            } else if (currentEvent === 'content') {
+                                articleContent = data;
+                            } else if (currentEvent === 'error') {
+                                throw new Error(data);
+                            }
+                            currentEvent = null;
+                        }
+                    }
                 }
 
-                // Check for streaming error
-                if (fullText.includes('ERROR:')) {
-                    throw new Error(fullText.split('ERROR:')[1].trim());
-                }
-
-                // Parse the accumulated JSON
-                let cleanText = fullText.trim();
+                // Parse the article content
+                let cleanText = articleContent.trim();
                 if (cleanText.startsWith('```json')) cleanText = cleanText.slice(7);
                 if (cleanText.startsWith('```')) cleanText = cleanText.slice(3);
                 if (cleanText.endsWith('```')) cleanText = cleanText.slice(0, -3);
@@ -4073,10 +4198,12 @@
                 const key = data.key || topic.toLowerCase().replace(/\s+/g, '_').slice(0, 20);
                 reports[key] = data;
 
-                // Open it
+                // Hide loader and open report
+                if (loader) loader.style.display = 'none';
                 loadReport(key);
 
             } catch (e) {
+                if (loader) loader.style.display = 'none';
                 alert("Generation Error: " + e.message);
             } finally {
                 // Restore search box state
