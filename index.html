@@ -1014,13 +1014,13 @@
             }
         }
 
-        /* Trending Cards */
+        /* Trending Cards - Base */
         .trending-card {
             cursor: pointer;
             transition: transform 0.2s, border-color 0.2s, background 0.3s;
             border: 1px solid var(--border-color);
             background: var(--bg-card);
-            height: 100%;
+            border-radius: 1rem;
         }
 
         .trending-card:hover {
@@ -1037,35 +1037,102 @@
             color: var(--text-muted) !important;
         }
 
-        /* Small Trending Card (for additional articles beyond top 4) */
-        .trending-card-small {
+        /* Graduated Card Sizes - 1st is largest, decreasing to 4th */
+        .trending-card-1 {
+            padding: 2rem;
+        }
+        .trending-card-1 h3 { font-size: 1.5rem; }
+        .trending-card-1 p { font-size: 1rem; line-height: 1.6; }
+
+        .trending-card-2 {
+            padding: 1.5rem;
+        }
+        .trending-card-2 h3 { font-size: 1.25rem; }
+        .trending-card-2 p { font-size: 0.9rem; }
+
+        .trending-card-3 {
+            padding: 1.25rem;
+        }
+        .trending-card-3 h3 { font-size: 1.1rem; }
+        .trending-card-3 p { font-size: 0.85rem; }
+
+        .trending-card-4 {
+            padding: 1rem;
+        }
+        .trending-card-4 h3 { font-size: 1rem; }
+        .trending-card-4 p { font-size: 0.8rem; }
+
+        /* 5th card and beyond - Compact list style */
+        .trending-card-list {
             cursor: pointer;
             transition: transform 0.2s, border-color 0.2s, background 0.3s;
             border: 1px solid var(--border-color);
             background: var(--bg-card);
-            padding: 1rem;
-            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .trending-card-small:hover {
-            transform: translateY(-2px);
+        .trending-card-list:hover {
+            transform: translateX(4px);
             border-color: var(--accent-blue);
             background: var(--bg-elevated);
         }
 
-        .trending-card-small .card-tag {
-            font-size: 0.6rem;
-            margin-bottom: 0.5rem;
+        .trending-card-list .card-tag {
+            font-size: 0.55rem;
+            white-space: nowrap;
+            min-width: 70px;
         }
 
-        .trending-card-small h4 {
+        .trending-card-list h4 {
             font-size: 0.85rem;
             font-weight: 600;
             line-height: 1.3;
+            flex: 1;
         }
 
-        [data-theme="light"] .trending-card-small {
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        [data-theme="light"] .trending-card-list {
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Expand/Browse section */
+        .browse-more-header {
+            padding: 0.75rem 1rem;
+            border: 1px dashed var(--border-color);
+            border-radius: 0.5rem;
+            background: transparent;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Typewriter effect */
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--text-muted);
+            animation: typing 2s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+        }
+
+        .typewriter.done {
+            border-right: none;
+            animation: none;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--text-muted); }
         }
 
         /* Rabbit Hole Button */
@@ -1834,8 +1901,8 @@
                     <h1 id="portal-logo" class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tighter text-white anim-drop-in anim-delay-2">
                         Genu<span style="color: var(--logo-accent);">Verity</span>
                     </h1>
-                    <p class="text-lg lg:text-xl text-gray-400 mb-8 max-w-md anim-drop-in anim-delay-3">
-                        Verified intelligence. No noise. Just data.
+                    <p id="tagline" class="text-lg lg:text-xl text-gray-400 mb-8 max-w-md anim-drop-in anim-delay-3">
+                        <span class="typewriter">Verified intelligence. No noise. Just data.</span>
                     </p>
 
                     <!-- Optional: Add search or CTA here -->
@@ -3632,6 +3699,13 @@
         }
         startLogoAttention();
 
+        // === TYPEWRITER CURSOR CLEANUP ===
+        // Remove blinking cursor after typewriter animation completes
+        setTimeout(() => {
+            const typewriter = document.querySelector('.typewriter');
+            if (typewriter) typewriter.classList.add('done');
+        }, 2500); // 2s typing + 0.5s buffer
+
         // === DYNAMIC TRENDING SECTION ===
         function renderTrendingSection() {
             const featuredContainer = document.getElementById('trending-featured');
@@ -3681,29 +3755,33 @@
         }
 
         function renderArticleCards(articles, featuredContainer, moreContainer) {
-            // Split into featured (top 3) and more
-            const featured = articles.slice(0, 3);
-            const more = articles.slice(3);
+            // Split: top 4 get graduated sizes, 5th+ goes to browse list
+            const mainCards = articles.slice(0, 4);
+            const browseList = articles.slice(4);
 
-            // Render featured cards (large) with staggered animation
-            featuredContainer.innerHTML = featured.map((article, i) => `
-                <div onclick="loadReport('${article.key}')" class="trending-card p-6 rounded-2xl anim-fade-up anim-delay-${4 + i}">
-                    <div class="text-xs font-mono ${article.tagColor} mb-4">${article.tag}</div>
-                    <h3 class="text-xl font-bold mb-2" style="color: var(--text-main);">${article.title}</h3>
-                    <p class="text-sm" style="color: var(--text-muted);">${article.description}</p>
+            // Render main cards with graduated sizes (1=largest, 4=smallest)
+            featuredContainer.innerHTML = mainCards.map((article, i) => `
+                <div onclick="loadReport('${article.key}')" class="trending-card trending-card-${i + 1} anim-fade-up anim-delay-${4 + i}">
+                    <div class="text-xs font-mono ${article.tagColor} mb-3">${article.tag}</div>
+                    <h3 class="font-bold mb-2" style="color: var(--text-main);">${article.title}</h3>
+                    <p style="color: var(--text-muted);">${article.description}</p>
                 </div>
             `).join('');
 
-            // Render additional cards (shorter height) if any
-            if (more.length > 0) {
-                moreContainer.innerHTML = more.map((article, i) => `
-                    <div onclick="loadReport('${article.key}')" class="trending-card-small anim-fade-up anim-delay-${7 + i}">
-                        <div class="card-tag font-mono ${article.tagColor}">${article.tag}</div>
-                        <h4 style="color: var(--text-main);">${article.title}</h4>
-                        <p class="text-xs mt-1" style="color: var(--text-muted); line-height: 1.3;">${article.description}</p>
-                    </div>
-                `).join('');
-                moreContainer.style.display = 'grid';
+            // Render browse list (5th card and beyond) - compact list style
+            if (browseList.length > 0) {
+                moreContainer.innerHTML = `
+                    <div class="browse-more-header anim-fade-up anim-delay-8">Browse More</div>
+                    ${browseList.map((article, i) => `
+                        <div onclick="loadReport('${article.key}')" class="trending-card-list anim-fade-up" style="animation-delay: ${0.9 + i * 0.1}s;">
+                            <div class="card-tag font-mono ${article.tagColor}">${article.tag}</div>
+                            <h4 style="color: var(--text-main);">${article.title}</h4>
+                        </div>
+                    `).join('')}
+                `;
+                moreContainer.style.display = 'flex';
+                moreContainer.style.flexDirection = 'column';
+                moreContainer.style.gap = '0.5rem';
             } else {
                 moreContainer.style.display = 'none';
             }
