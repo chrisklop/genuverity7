@@ -13,8 +13,9 @@ import anthropic
 
 # Load from environment variables (Vercel sets these automatically)
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-# Use Sonnet for quality investigative articles (Pro plan has 60s timeout)
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
+# Use Haiku for fast generation (60s Vercel timeout limit)
+# Sonnet produces better quality but times out on free tier
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-3-5-haiku-20241022")
 
 # For Vercel serverless, we use /tmp for any file operations
 # Note: File-based caching won't persist across serverless invocations
