@@ -13,8 +13,8 @@ import anthropic
 
 # Load from environment variables (Vercel sets these automatically)
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-# Use Haiku for speed on Vercel's constrained timeout
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-3-5-haiku-20241022")
+# Use Sonnet for quality investigative articles (Pro plan has 60s timeout)
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
 
 # For Vercel serverless, we use /tmp for any file operations
 # Note: File-based caching won't persist across serverless invocations
@@ -230,34 +230,76 @@ def repair_truncated_json(text: str) -> Optional[dict]:
     return None
 
 
-# Streamlined template for faster generation (reduced requirements)
+# Comprehensive investigative journalism template
 ARTICLE_TEMPLATE = """
-You are an investigative journalist for GenuVerity. Write a focused article on: "{topic}"
+You are an elite investigative journalist for GenuVerity, a premium research platform. Write a comprehensive deep-dive exposé on: "{topic}"
 {context_section}
 
-Return ONLY valid JSON (no markdown):
+RETURN ONLY VALID JSON (no markdown, no code fences). The JSON structure:
 
-{{"key":"{topic_slug}","title":"Title Here","content":"HTML HERE","chartConfigs":{{"chart1":{{"type":"bar","data":{{"labels":["A","B"],"values":[10,20],"colors":["#3b82f6","#10b981"]}},"title":"Chart"}}}},"contextData":{{}},"citationDatabase":{{"src1":{{"domain":"reuters.com","trustScore":90,"title":"Title","snippet":"Quote"}}}},"sources":[{{"name":"Source","score":90,"url":"https://example.com"}}]}}
+{{
+  "key": "{topic_slug}",
+  "title": "Compelling investigative headline with specific hook",
+  "cardTitle": "Short card title (3-5 words)",
+  "cardTag": "CATEGORY // SUBCATEGORY",
+  "cardTagColor": "text-red-400",
+  "cardDescription": "One-line teaser for the card",
+  "content": "FULL HTML CONTENT HERE",
+  "chartConfigs": {{
+    "chart_main": {{"type": "bar", "data": {{"labels": ["Label1", "Label2", "Label3", "Label4"], "values": [num1, num2, num3, num4], "colors": ["#3b82f6", "#10b981", "#f59e0b", "#ef4444"]}}, "title": "Chart Title"}},
+    "chart_secondary": {{"type": "line", "data": {{"labels": ["2020", "2021", "2022", "2023", "2024"], "values": [v1, v2, v3, v4, v5], "colors": ["#8b5cf6"]}}, "title": "Trend Title"}},
+    "chart_tertiary": {{"type": "pie", "data": {{"labels": ["A", "B", "C"], "values": [40, 35, 25], "colors": ["#3b82f6", "#10b981", "#f59e0b"]}}, "title": "Distribution Title"}}
+  }},
+  "citationDatabase": {{
+    "source_key": {{"domain": "reuters.com", "trustScore": 95, "title": "Article Title", "snippet": "Key quote from source", "url": "https://..."}}
+  }},
+  "contextData": {{
+    "term_key": {{"expanded": "2-3 sentence deep explanation of this concept for the fractal trigger popup"}}
+  }},
+  "sources": [
+    {{"name": "Source Name: Article Title", "score": 95, "url": "https://..."}}
+  ]
+}}
 
-HTML FORMAT:
-- Headers: <h2 class="prose-h2">Section</h2>
-- Text: <p class="prose-text">Content</p>
-- Stats: <span class="living-number" data-target="100" data-suffix="B">$0</span>
-- Highlights: <span class="highlight-glow">Key point</span>
-- Deep links: <strong class="fractal-trigger" onclick="expandContext(this,'key')">Term</strong>
-- Citations: <span class="citation-spade" data-id="src1">♠</span>
-- Charts: <div class="float-figure right"><div style="height:250px"><canvas id="chart1"></canvas></div><div class="fig-caption">Fig 1</div></div>
+HTML CONTENT STRUCTURE (use these exact classes):
 
-REQUIREMENTS (keep response under 4000 tokens):
-- 2 charts with realistic data
-- 3-4 living numbers
-- 3-4 fractal triggers
-- 4-6 sources in citationDatabase
-- 3 sections minimum
-- Magazine investigative tone
-- Factual data
+1. EXECUTIVE SUMMARY (opening paragraph):
+<p class="prose-text"><strong class="text-white">Executive Summary:</strong> Hook the reader with the key finding. Include <span class="highlight-glow">highlighted key stat</span> and <span class="living-number" data-target="NUMBER" data-suffix="SUFFIX">$0</span> animated numbers <span class="citation-spade" data-id="source_key">♠</span>.</p>
 
-Return ONLY JSON, no explanation.
+2. SECTION 1 with chart:
+<h2 class="prose-h2">1. Section Title</h2>
+<div class="float-figure right"><div style="height: 250px;"><canvas id="chart_main"></canvas></div><div class="fig-caption">Fig 1. Caption <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div></div>
+<p class="prose-text">Content with <strong class="fractal-trigger" onclick="expandContext(this, 'term_key')">clickable deep-dive terms</strong> and citations <span class="citation-spade" data-id="source_key">♠</span>.</p>
+
+3. SECTION 2 with chart:
+<h2 class="prose-h2">2. Section Title</h2>
+<div class="float-figure left"><div style="height: 250px;"><canvas id="chart_secondary"></canvas></div><div class="fig-caption">Fig 2. Caption <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div></div>
+<p class="prose-text">More investigative content...</p>
+
+4. SECTION 3 with chart:
+<h2 class="prose-h2">3. Section Title</h2>
+<div class="float-figure right"><div style="height: 250px;"><canvas id="chart_tertiary"></canvas></div><div class="fig-caption">Fig 3. Caption <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div></div>
+<p class="prose-text">Continue the investigation...</p>
+
+5. SECTIONS 4-5: Additional analysis sections with more content.
+
+6. CONCLUSION:
+<h2 class="prose-h2">5. Conclusion: [Provocative Question or Statement]</h2>
+<p class="prose-text">Synthesize findings and pose forward-looking questions.</p>
+
+REQUIREMENTS:
+- 5 distinct sections with numbered h2 headers
+- 3 charts minimum (bar, line, pie/doughnut) with REALISTIC data
+- 8-12 living numbers with real statistics
+- 6-8 fractal triggers with contextData entries
+- 10-15 citation spades with citationDatabase entries
+- 8-10 sources in the sources array
+- Investigative magazine tone (think: The Atlantic meets Bloomberg)
+- Use specific numbers, dates, names, and statistics
+- Each chart MUST have a DEEP DIVE button
+- Alternate float-figure right/left for visual balance
+
+IMPORTANT: Return ONLY the JSON object. No markdown, no explanation, no code fences.
 """
 
 @app.post("/api/generate")
@@ -279,7 +321,7 @@ async def generate_report(request: GenerateRequest, req: Request):
     try:
         response = claude_client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=4000,  # Reduced for faster response
+            max_tokens=8000,  # Full article with charts, sources, and contextData
             messages=[{"role": "user", "content": prompt}]
         )
 
@@ -374,7 +416,7 @@ async def generate_deep_dive(request_body: DeepDiveRequest, request: Request):
     try:
         response = claude_client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=4000,  # Reduced for faster response within timeout
+            max_tokens=8000,  # Full article with charts, sources, and contextData
             messages=[{"role": "user", "content": prompt}]
         )
 
