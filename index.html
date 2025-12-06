@@ -1037,30 +1037,72 @@
             color: var(--text-muted) !important;
         }
 
-        /* Graduated Card Sizes - 1st is largest, decreasing to 4th */
+        /* Graduated Card Sizes - 1st is largest, decreasing to 4th (30% reduced) */
         .trending-card-1 {
-            padding: 2rem;
-        }
-        .trending-card-1 h3 { font-size: 1.5rem; }
-        .trending-card-1 p { font-size: 1rem; line-height: 1.6; }
-
-        .trending-card-2 {
-            padding: 1.5rem;
-        }
-        .trending-card-2 h3 { font-size: 1.25rem; }
-        .trending-card-2 p { font-size: 0.9rem; }
-
-        .trending-card-3 {
             padding: 1.25rem;
         }
-        .trending-card-3 h3 { font-size: 1.1rem; }
-        .trending-card-3 p { font-size: 0.85rem; }
+        .trending-card-1 h3 { font-size: 1.25rem; }
+        .trending-card-1 p { font-size: 0.9rem; line-height: 1.5; }
 
-        .trending-card-4 {
+        .trending-card-2 {
             padding: 1rem;
         }
-        .trending-card-4 h3 { font-size: 1rem; }
-        .trending-card-4 p { font-size: 0.8rem; }
+        .trending-card-2 h3 { font-size: 1.1rem; }
+        .trending-card-2 p { font-size: 0.85rem; }
+
+        .trending-card-3 {
+            padding: 0.875rem;
+        }
+        .trending-card-3 h3 { font-size: 1rem; }
+        .trending-card-3 p { font-size: 0.8rem; }
+
+        .trending-card-4 {
+            padding: 0.75rem;
+        }
+        .trending-card-4 h3 { font-size: 0.9rem; }
+        .trending-card-4 p { font-size: 0.75rem; }
+
+        /* 2-column card layout - content left, sources right */
+        .card-inner {
+            display: flex;
+            gap: 1rem;
+        }
+        .card-content {
+            flex: 1;
+            min-width: 0;
+        }
+        .card-sources {
+            width: 100px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            border-left: 1px solid var(--border-color);
+            padding-left: 0.75rem;
+            font-size: 0.65rem;
+        }
+        .card-sources .source-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .card-sources .source-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .card-sources .source-dot.high { background: #10b981; }
+        .card-sources .source-dot.medium { background: #f59e0b; }
+        .card-sources .source-dot.low { background: #ef4444; }
+
+        @media (max-width: 640px) {
+            .card-sources { display: none; }
+        }
 
         /* 5th card and beyond - Compact list style */
         .trending-card-list {
@@ -3758,18 +3800,50 @@
         }
 
         function renderArticleCards(articles, featuredContainer, moreContainer) {
+            // Helper to get sources for an article
+            function getArticleSources(key) {
+                const report = reports[key];
+                if (!report || !report.sources) return [];
+                return report.sources.slice(0, 3);
+            }
+
+            // Helper to render sources column
+            function renderSources(sources) {
+                if (!sources || sources.length === 0) {
+                    return `<div class="card-sources">
+                        <div class="source-item"><span class="source-dot high"></span>Reuters</div>
+                        <div class="source-item"><span class="source-dot high"></span>AP News</div>
+                    </div>`;
+                }
+                return `<div class="card-sources">
+                    ${sources.map(s => {
+                        const score = s.score || 80;
+                        const level = score >= 85 ? 'high' : score >= 70 ? 'medium' : 'low';
+                        const name = s.name || s.domain || 'Source';
+                        return `<div class="source-item"><span class="source-dot ${level}"></span>${name.substring(0, 12)}</div>`;
+                    }).join('')}
+                </div>`;
+            }
+
             // Split: top 4 get graduated sizes, 5th+ goes to browse list
             const mainCards = articles.slice(0, 4);
             const browseList = articles.slice(4);
 
-            // Render main cards with graduated sizes (1=largest, 4=smallest)
-            featuredContainer.innerHTML = mainCards.map((article, i) => `
+            // Render main cards with 2-column layout (content left, sources right)
+            featuredContainer.innerHTML = mainCards.map((article, i) => {
+                const sources = getArticleSources(article.key);
+                return `
                 <div onclick="loadReport('${article.key}')" class="trending-card trending-card-${i + 1} anim-fade-up anim-delay-${4 + i}">
-                    <div class="text-xs font-mono ${article.tagColor} mb-3">${article.tag}</div>
-                    <h3 class="font-bold mb-2" style="color: var(--text-main);">${article.title}</h3>
-                    <p style="color: var(--text-muted);">${article.description}</p>
-                </div>
-            `).join('');
+                    <div class="card-inner">
+                        <div class="card-content">
+                            <div class="text-xs font-mono ${article.tagColor} mb-2">${article.tag}</div>
+                            <h3 class="font-bold mb-1" style="color: var(--text-main);">${article.title}</h3>
+                            <p style="color: var(--text-muted);">${article.description}</p>
+                        </div>
+                        ${renderSources(sources)}
+                    </div>
+                </div>`;
+            }).join('');
 
             // Render browse list (5th card and beyond) - compact list style
             if (browseList.length > 0) {
