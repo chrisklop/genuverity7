@@ -3196,6 +3196,32 @@
                         }
                     }));
                 }
+                // Fig 3: Energy Demand Chart
+                const ctx3 = document.getElementById('chart_energy_demand');
+                if (ctx3) {
+                    activeCharts.push(new Chart(ctx3, {
+                        type: 'bar',
+                        data: {
+                            labels: ['2022', '2024', '2026 (Projected)'],
+                            datasets: [{
+                                label: 'Data Center Energy (TWh)',
+                                data: [460, 650, 1000],
+                                backgroundColor: [colors.secondary, colors.primary, colors.tertiary],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            ...commonOptions,
+                            plugins: {
+                                title: { display: true, text: 'Global Data Center Energy Demand', color: chartTextColor }
+                            },
+                            scales: {
+                                y: { beginAtZero: true, title: { display: true, text: 'TWh' }, ticks: { color: chartTextColor } },
+                                x: { ticks: { color: chartTextColor } }
+                            }
+                        }
+                    }));
+                }
                 const plotDiv = document.getElementById('plotlyForceChart');
                 if (plotDiv) {
                     Plotly.newPlot(plotDiv, [{ x: [1, 2, 3], y: [50, 80, 120], text: ['Railroad', 'Dot-Com', 'AI'], mode: 'markers+text', marker: { size: [40, 70, 110], color: [colors.muted, colors.primary, colors.tertiary], opacity: 0.9 }, textposition: 'bottom center', textfont: { color: chartTextColor, size: 14 }, type: 'scatter', hoverinfo: 'none' }], { paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', xaxis: { showgrid: false, zeroline: false, showticklabels: false, range: [0.5, 3.5] }, yaxis: { showgrid: false, zeroline: false, showticklabels: false, range: [20, 150] }, margin: { l: 0, r: 0, b: 20, t: 0 }, hovermode: false }, { displayModeBar: false });
