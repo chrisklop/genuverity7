@@ -3781,21 +3781,24 @@
                     body: JSON.stringify({ topic })
                 });
 
-                if (!response.ok) throw new Error("Generation failed");
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.detail || "Generation failed");
+                }
 
                 const data = await response.json();
 
-                // Merge into database
-                const key = Object.keys(data)[0];
-                reports[key] = data[key];
+                // API returns the report directly with key, title, content, etc.
+                const key = data.key || topic.toLowerCase().replace(/\s+/g, '_').slice(0, 20);
+                reports[key] = data;
 
                 // Open it
                 loadReport(key);
 
             } catch (e) {
-                alert("Error: Ensure server.py is running and .env has API KEY.\n" + e.message);
+                alert("Generation Error: " + e.message);
             } finally {
-                btn.innerHTML = originalText;
+                if (btn) btn.innerHTML = originalText;
                 lucide.createIcons();
             }
         }
