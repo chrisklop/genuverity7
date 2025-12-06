@@ -4040,11 +4040,34 @@
                 });
 
                 if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || "Generation failed");
+                    const errorText = await response.text();
+                    throw new Error(errorText || "Generation failed");
                 }
 
-                const data = await response.json();
+                // Handle streaming response - collect all chunks
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullText = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    fullText += decoder.decode(value, { stream: true });
+                }
+
+                // Check for streaming error
+                if (fullText.includes('ERROR:')) {
+                    throw new Error(fullText.split('ERROR:')[1].trim());
+                }
+
+                // Parse the accumulated JSON
+                let cleanText = fullText.trim();
+                if (cleanText.startsWith('```json')) cleanText = cleanText.slice(7);
+                if (cleanText.startsWith('```')) cleanText = cleanText.slice(3);
+                if (cleanText.endsWith('```')) cleanText = cleanText.slice(0, -3);
+                cleanText = cleanText.trim();
+
+                const data = JSON.parse(cleanText);
 
                 // API returns the report directly with key, title, content, etc.
                 const key = data.key || topic.toLowerCase().replace(/\s+/g, '_').slice(0, 20);

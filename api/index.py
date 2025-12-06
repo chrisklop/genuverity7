@@ -6,16 +6,15 @@ from typing import Optional
 from datetime import datetime, date
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import anthropic
 
 # Load from environment variables (Vercel sets these automatically)
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-# Use Haiku for fast generation (60s Vercel timeout limit)
-# Sonnet produces better quality but times out on free tier
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-3-5-haiku-20241022")
+# Use Sonnet for quality investigative articles
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
 
 # For Vercel serverless, we use /tmp for any file operations
 # Note: File-based caching won't persist across serverless invocations
@@ -305,7 +304,7 @@ IMPORTANT: Return ONLY the JSON object. No markdown, no explanation, no code fen
 
 @app.post("/api/generate")
 async def generate_report(request: GenerateRequest, req: Request):
-    """Claude-powered report generation with JSON repair fallback."""
+    """Claude-powered report generation with streaming to avoid timeout."""
     if not ANTHROPIC_API_KEY or not claude_client:
         raise HTTPException(status_code=500, detail="Server missing ANTHROPIC_API_KEY environment variable.")
 
@@ -319,29 +318,32 @@ async def generate_report(request: GenerateRequest, req: Request):
         topic_slug=topic_slug
     )
 
-    try:
-        response = claude_client.messages.create(
-            model=CLAUDE_MODEL,
-            max_tokens=8000,  # Full article with charts, sources, and contextData
-            messages=[{"role": "user", "content": prompt}]
-        )
+    async def stream_response():
+        """Stream the response to keep connection alive and avoid timeout."""
+        full_text = ""
+        try:
+            with claude_client.messages.stream(
+                model=CLAUDE_MODEL,
+                max_tokens=8000,
+                messages=[{"role": "user", "content": prompt}]
+            ) as stream:
+                for text in stream.text_stream:
+                    full_text += text
+                    # Send chunk to keep connection alive
+                    yield text
 
-        text = response.content[0].text
+            # After streaming completes, we've already sent the raw text
+            # The frontend will parse it
 
-        # Try to parse, with repair fallback
-        data = repair_truncated_json(text)
-        if data:
-            return data
+        except Exception as e:
+            print(f"Streaming Error: {e}")
+            yield f"\n\nERROR: {str(e)}"
 
-        # If repair failed, raise error
-        raise json.JSONDecodeError("Could not parse or repair JSON", text[:100], 0)
-
-    except json.JSONDecodeError as e:
-        print(f"JSON Parse Error: {e}")
-        raise HTTPException(status_code=500, detail=f"Failed to parse AI response: {str(e)}")
-    except Exception as e:
-        print(f"Generation Error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+    return StreamingResponse(
+        stream_response(),
+        media_type="text/plain",
+        headers={"X-Content-Type-Options": "nosniff"}
+    )
 
 
 @app.post("/api/cache/check")
