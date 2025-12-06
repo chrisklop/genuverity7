@@ -1742,32 +1742,53 @@
 
     <!-- VIEW 1: PORTAL -->
     <section id="view-portal" class="view-section active">
-        <!-- Centering Fix: Calculate height based on nav size to center content -->
-        <div class="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-4 text-center">
+        <!-- Two-column layout: Logo left, Essays stacked right -->
+        <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] px-4 lg:px-8">
 
-            <div
-                class="inline-flex items-center gap-2 px-3 py-1 rounded-full border mb-8" style="border-color: rgba(232, 184, 74, 0.3); background: rgba(201, 162, 39, 0.1);">
-                <span class="w-2 h-2 rounded-full animate-pulse" style="background: #7c9a5e;"></span>
-                <span class="text-xs font-mono" style="color: var(--logo-accent);">ARCHIVE ONLINE</span>
+            <!-- LEFT SIDE: Logo and branding (sticky on desktop) -->
+            <div class="lg:w-1/2 flex flex-col items-center lg:items-start justify-center py-12 lg:py-0 lg:sticky lg:top-20 lg:h-[calc(100vh-80px)]">
+                <div class="text-center lg:text-left lg:pl-8 xl:pl-16">
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full border mb-8" style="border-color: rgba(232, 184, 74, 0.3); background: rgba(201, 162, 39, 0.1);">
+                        <span class="w-2 h-2 rounded-full animate-pulse" style="background: #7c9a5e;"></span>
+                        <span class="text-xs font-mono" style="color: var(--logo-accent);">ARCHIVE ONLINE</span>
+                    </div>
+
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tighter text-white">
+                        Genu<span style="color: var(--logo-accent);">Verity</span>
+                    </h1>
+                    <p class="text-lg lg:text-xl text-gray-400 mb-8 max-w-md">
+                        Verified intelligence. No noise. Just data.
+                    </p>
+
+                    <!-- Optional: Add search or CTA here -->
+                    <div class="hidden lg:block">
+                        <p class="text-sm text-gray-500 mt-12">
+                            <span class="font-mono text-xs" style="color: var(--accent-blue);">↓</span>
+                            Scroll to explore trending investigations
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <h1 class="text-6xl md:text-9xl font-black mb-6 tracking-tighter text-white">
-                Genu<span style="color: var(--logo-accent);">Verity</span>
-            </h1>
-            <p class="text-xl text-gray-400 mb-16 max-w-2xl">
-                Verified intelligence. No noise. Just data.
-            </p>
+            <!-- RIGHT SIDE: Essays stacked vertically -->
+            <div class="lg:w-1/2 py-8 lg:py-12 lg:pr-8 xl:pr-16">
+                <div id="trending-container" class="w-full">
+                    <!-- Section Header -->
+                    <div class="mb-6 lg:mb-8">
+                        <h2 class="text-sm font-mono uppercase tracking-wider mb-2" style="color: var(--text-muted);">Trending Investigations</h2>
+                        <div class="w-16 h-0.5" style="background: var(--accent-blue);"></div>
+                    </div>
 
-            <!-- Dynamic Trending Section Container -->
-            <div id="trending-container" class="max-w-7xl w-full text-left">
-                <!-- Featured Articles (Top 3) - Larger Cards -->
-                <div id="trending-featured" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <!-- Dynamically populated -->
-                </div>
+                    <!-- All Articles Stacked Vertically -->
+                    <div id="trending-featured" class="flex flex-col gap-4">
+                        <!-- Dynamically populated -->
+                    </div>
 
-                <!-- Additional Articles - Shorter Cards -->
-                <div id="trending-more" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- Dynamically populated when more than 3 articles -->
+                    <!-- Additional Articles -->
+                    <div id="trending-more" class="flex flex-col gap-3 mt-4">
+                        <!-- Dynamically populated when more than 3 articles -->
+                    </div>
                 </div>
             </div>
         </div>
