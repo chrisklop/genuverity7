@@ -13,8 +13,8 @@ import anthropic
 
 # Load from environment variables (Vercel sets these automatically)
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-# Use Sonnet for quality investigative articles
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
+# Use Claude Sonnet 4.5 for quality investigative articles
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-5-20241022")
 
 # For Vercel serverless, we use /tmp for any file operations
 # Note: File-based caching won't persist across serverless invocations
