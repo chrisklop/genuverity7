@@ -628,6 +628,25 @@
             background: #a68520;
         }
 
+        .action-btn.enhance-btn {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            border-color: #8b5cf6;
+            color: white;
+        }
+
+        .action-btn.enhance-btn:hover {
+            background: linear-gradient(135deg, #9d7cf8, #7578f3);
+            border-color: #9d7cf8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .action-btn.enhance-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         /* --- VIEW MANAGEMENT --- */
         .view-section {
             display: none;
@@ -676,6 +695,150 @@
             max-width: 900px;
             margin: 0 auto;
             display: block;
+        }
+
+        /* Report View with Sources Sidebar */
+        .report-layout {
+            display: flex;
+            flex-direction: column;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .report-main {
+            flex: 1;
+            max-width: 900px;
+        }
+
+        .sources-sidebar {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .sources-sidebar-header {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sources-sidebar-header::before {
+            content: '';
+            width: 3px;
+            height: 14px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
+        .source-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+            transition: all 0.2s ease;
+        }
+
+        .source-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateX(2px);
+        }
+
+        .source-card-domain {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .source-card-title {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-main);
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+
+        .source-card-score {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .source-score-bar {
+            flex: 1;
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .source-score-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .source-score-fill.high { background: linear-gradient(90deg, #10b981, #34d399); }
+        .source-score-fill.medium { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .source-score-fill.low { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+        .source-score-value {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            min-width: 28px;
+            text-align: right;
+        }
+
+        @media (min-width: 1200px) {
+            .report-layout {
+                flex-direction: row;
+                gap: 3rem;
+            }
+
+            .report-main {
+                flex: 1;
+            }
+
+            .sources-sidebar {
+                width: 280px;
+                flex-shrink: 0;
+                margin-top: 0;
+                padding-top: 0;
+                border-top: none;
+                position: sticky;
+                top: 100px;
+                max-height: calc(100vh - 120px);
+                overflow-y: auto;
+                padding-right: 0.5rem;
+            }
+
+            .sources-sidebar::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .sources-sidebar::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            .sources-sidebar::-webkit-scrollbar-thumb {
+                background: var(--border-color);
+                border-radius: 2px;
+            }
+
+            .sources-sidebar::-webkit-scrollbar-thumb:hover {
+                background: var(--text-muted);
+            }
         }
 
         .prose-text {
@@ -769,6 +932,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             vertical-align: middle;
+            position: relative;
         }
 
         .fig-deep-dive:hover {
@@ -779,6 +943,82 @@
 
         [data-theme="light"] .fig-deep-dive {
             background: rgba(59, 130, 246, 0.08);
+        }
+
+        /* Deep Dive Hover Preview Tooltip */
+        .deep-dive-tooltip {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            padding: 12px 14px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+
+        .deep-dive-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: var(--border-color);
+        }
+
+        .deep-dive-tooltip::before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 7px solid transparent;
+            border-top-color: var(--card-bg);
+            z-index: 1;
+        }
+
+        .fig-deep-dive:hover .deep-dive-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-4px);
+        }
+
+        .tooltip-context {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            color: var(--text-prose);
+            margin-bottom: 10px;
+        }
+
+        .tooltip-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 12px;
+            background: linear-gradient(135deg, var(--accent-blue), #4f46e5);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .tooltip-action:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .tooltip-rabbit {
+            font-size: 1rem;
         }
 
         /* HIGHLIGHTS & LIVING NUMBERS */
@@ -2022,37 +2262,43 @@
 
     <!-- VIEW 2: REPORT -->
     <section id="view-report" class="view-section">
-        <div class="article-container px-6">
-            <div class="mb-12 border-b pb-8" style="border-color: var(--border-color);">
-                <div class="flex items-center justify-between mb-6">
-                    <button onclick="switchView('view-portal')"
-                        class="text-xs font-bold hover:text-blue-700 flex items-center gap-2" style="color: var(--text-muted);">← RETURN TO
-                        ARCHIVE</button>
-                    <div class="flex items-center gap-2">
-                        <button onclick="toggleBookmark()" id="bookmark-btn" class="action-btn" title="Bookmark (B)">
-                            <i data-lucide="bookmark" class="w-4 h-4"></i>
-                            <span class="hidden sm:inline">Save</span>
-                        </button>
-                        <button onclick="exportToMarkdown()" class="action-btn" title="Export Markdown (M)">
-                            <i data-lucide="file-text" class="w-4 h-4"></i>
-                            <span class="hidden sm:inline">MD</span>
-                        </button>
-                        <button onclick="exportToPDF()" class="action-btn" title="Export PDF (P)">
-                            <i data-lucide="download" class="w-4 h-4"></i>
-                            <span class="hidden sm:inline">PDF</span>
-                        </button>
+        <div class="report-layout">
+            <!-- Main Article Content -->
+            <div class="report-main">
+                <div class="mb-12 border-b pb-8" style="border-color: var(--border-color);">
+                    <div class="flex items-center justify-between mb-6">
+                        <button onclick="switchView('view-portal')"
+                            class="text-xs font-bold hover:text-blue-700 flex items-center gap-2" style="color: var(--text-muted);">← RETURN TO
+                            ARCHIVE</button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="enhanceArticle()" id="enhance-btn" class="action-btn enhance-btn" title="Enhance Article (E)">
+                                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                                <span class="hidden sm:inline">Enhance</span>
+                            </button>
+                            <button onclick="toggleBookmark()" id="bookmark-btn" class="action-btn" title="Bookmark (B)">
+                                <i data-lucide="bookmark" class="w-4 h-4"></i>
+                                <span class="hidden sm:inline">Save</span>
+                            </button>
+                            <button onclick="exportToMarkdown()" class="action-btn" title="Export Markdown (M)">
+                                <i data-lucide="file-text" class="w-4 h-4"></i>
+                                <span class="hidden sm:inline">MD</span>
+                            </button>
+                            <button onclick="exportToPDF()" class="action-btn" title="Export PDF (P)">
+                                <i data-lucide="download" class="w-4 h-4"></i>
+                                <span class="hidden sm:inline">PDF</span>
+                            </button>
+                        </div>
                     </div>
+                    <h1 id="report-title" class="text-5xl md:text-6xl font-bold leading-tight" style="color: var(--text-main);">Loading...</h1>
                 </div>
-                <h1 id="report-title" class="text-5xl md:text-6xl font-bold leading-tight" style="color: var(--text-main);">Loading...</h1>
+                <div id="report-body"></div>
             </div>
-            <div id="report-body"></div>
-        </div>
 
-        <!-- Sources Footer -->
-        <div class="article-container px-6 mt-12 border-t border-white/10 pt-8">
-            <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Credibility Matrix: Verified
-                Sources</h3>
-            <div id="report-sources" class="space-y-2"></div>
+            <!-- Sources Sidebar (right on desktop, bottom on mobile) -->
+            <aside class="sources-sidebar">
+                <div class="sources-sidebar-header">Credibility Matrix</div>
+                <div id="report-sources"></div>
+            </aside>
         </div>
     </section>
 
@@ -2993,22 +3239,22 @@
                 window.dynamicCitationDatabase = data.citationDatabase;
             }
 
-            // Render Sources
+            // Render Sources in sidebar
             const sourceContainer = document.getElementById('report-sources');
             sourceContainer.innerHTML = '';
             (data.sources || []).forEach(s => {
-                const nameHtml = s.url
-                    ? `<a href="${s.url}" target="_blank" class="text-sm text-emerald-400 hover:text-emerald-300 hover:underline flex items-center gap-2">${s.name} <i data-lucide="external-link" class="w-3 h-3"></i></a>`
-                    : `<span class="text-sm text-gray-300 font-medium">${s.name}</span>`;
+                const scoreClass = s.score >= 90 ? 'high' : s.score >= 70 ? 'medium' : 'low';
+                const domain = s.url ? new URL(s.url).hostname.replace('www.', '') : s.name;
 
                 sourceContainer.innerHTML += `
-                    <div class="flex items-center justify-between p-3 bg-white/5 rounded border border-white/10 transition hover:bg-white/10">
-                        ${nameHtml}
-                        <div class="flex items-center gap-2">
-                            <div class="h-1 w-24 bg-gray-700 rounded overflow-hidden">
-                                <div class="h-full bg-emerald-500" style="width: ${s.score}%"></div>
+                    <div class="source-card" ${s.url ? `onclick="window.open('${s.url}', '_blank')" style="cursor: pointer;"` : ''}>
+                        <div class="source-card-domain">${domain}</div>
+                        <div class="source-card-title">${s.name}</div>
+                        <div class="source-card-score">
+                            <div class="source-score-bar">
+                                <div class="source-score-fill ${scoreClass}" style="width: ${s.score}%"></div>
                             </div>
-                            <span class="text-xs font-mono text-emerald-400">${s.score}%</span>
+                            <span class="source-score-value">${s.score}%</span>
                         </div>
                     </div>
                 `;
@@ -3026,7 +3272,33 @@
                         renderCharts(data.chartType);
                     }
                     initLivingNumbers(); // Re-run observer for new elements
+                    initDeepDiveTooltips(); // Add hover tooltips to deep dive buttons
                 }, 100);
+            });
+        }
+
+        // Initialize deep dive hover tooltips
+        function initDeepDiveTooltips() {
+            document.querySelectorAll('.fig-deep-dive').forEach(element => {
+                // Skip if tooltip already exists
+                if (element.querySelector('.deep-dive-tooltip')) return;
+
+                // Get context from parent figure caption
+                const figCaption = element.closest('.fig-caption');
+                const figureTitle = figCaption ? figCaption.textContent.replace('DEEP DIVE', '').trim() : 'this topic';
+
+                // Create tooltip HTML
+                const tooltip = document.createElement('div');
+                tooltip.className = 'deep-dive-tooltip';
+                tooltip.innerHTML = `
+                    <div class="tooltip-context">Explore the data behind <strong>${figureTitle}</strong> with an AI-generated deep analysis.</div>
+                    <div class="tooltip-action">
+                        <span class="tooltip-rabbit">🐇</span>
+                        <span>Go Down the Rabbit Hole</span>
+                    </div>
+                `;
+
+                element.appendChild(tooltip);
             });
         }
 
@@ -4321,7 +4593,7 @@
         }
 
         // --- MARKDOWN EXPORT ---
-        function exportToMarkdown() {
+        async function exportToMarkdown() {
             const title = document.getElementById('report-title').innerText;
             const content = document.getElementById('report-body');
             const filename = 'GenuVerity_' + title.replace(/[^a-z0-9]/gi, '_').substring(0, 50) + '.md';
@@ -4398,16 +4670,46 @@
                 });
             }
 
-            // Download the file
-            const blob = new Blob([markdown], { type: 'text/markdown' });
+            // Download the file with better cross-browser support
+            const blob = new Blob([markdown], { type: 'text/plain;charset=utf-8' });
+
+            // Try using the modern File System Access API first
+            if (window.showSaveFilePicker) {
+                try {
+                    const handle = await window.showSaveFilePicker({
+                        suggestedName: filename,
+                        types: [{
+                            description: 'Markdown Files',
+                            accept: { 'text/markdown': ['.md'] }
+                        }]
+                    });
+                    const writable = await handle.createWritable();
+                    await writable.write(blob);
+                    await writable.close();
+                    return;
+                } catch (err) {
+                    // User cancelled or API failed, fall through to legacy method
+                    if (err.name !== 'AbortError') console.log('Save picker failed, using fallback');
+                }
+            }
+
+            // Fallback: create download link
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
+            a.style.display = 'none';
             a.href = url;
             a.download = filename;
+            a.target = '_self';
             document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+
+            // Use setTimeout to ensure the click is processed
+            setTimeout(() => {
+                a.click();
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+            }, 0);
         }
 
         // --- PDF EXPORT (IMPROVED) ---
@@ -4984,6 +5286,149 @@
 
         function saveBookmarks(bookmarks) {
             localStorage.setItem('genuverity-bookmarks', JSON.stringify(bookmarks));
+        }
+
+        // --- ENHANCE ARTICLE ---
+        async function enhanceArticle() {
+            const title = document.getElementById('report-title').innerText;
+            const currentContent = document.getElementById('report-body').innerHTML;
+            const btn = document.getElementById('enhance-btn');
+
+            // Confirm with user
+            const confirmed = confirm(
+                `Enhance "${title}"?\n\nThis will expand the article with additional sections, deeper analysis, and more comprehensive coverage while maintaining the same journalistic style.\n\nThis may take a minute to generate.`
+            );
+
+            if (!confirmed) return;
+
+            // Disable button and show loading state
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span class="hidden sm:inline">Enhancing...</span>';
+                lucide.createIcons();
+            }
+
+            try {
+                // Show loader
+                document.getElementById('generate-loader').classList.remove('hidden');
+                resetProgress();
+
+                // Build enhancement prompt with article context
+                const enhancePrompt = `ENHANCE AND EXPAND the following investigative article.
+
+ORIGINAL TITLE: ${title}
+
+INSTRUCTIONS:
+- Keep the same title, thesis, and core arguments
+- Add 2-3 NEW substantial sections with deeper analysis
+- Expand existing sections with more data points, examples, and expert perspectives
+- Add more living numbers with verified statistics
+- Include additional citation spades for new claims
+- Add fractal triggers for key terms that deserve expanded context
+- Maintain the same journalistic tone and magazine-style formatting
+- Total output should be roughly 2x the original length
+
+The enhanced article should feel like the "premium" or "full" version of the original piece.
+
+ORIGINAL CONTENT FOR CONTEXT (HTML):
+${currentContent}`;
+
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        topic: enhancePrompt,
+                        mode: 'enhance'
+                    })
+                });
+
+                if (!response.ok) throw new Error(`API error: ${response.status}`);
+
+                // Handle SSE streaming response
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = '';
+                let articleContent = null;
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop() || '';
+
+                    let currentEvent = null;
+                    for (const line of lines) {
+                        if (line.startsWith('event: ')) {
+                            currentEvent = line.slice(7).trim();
+                        } else if (line.startsWith('data: ') && currentEvent) {
+                            try {
+                                const data = JSON.parse(line.slice(6));
+                                if (currentEvent === 'progress') {
+                                    updateProgress(data.stage, data.percent, data.message);
+                                } else if (currentEvent === 'content') {
+                                    articleContent = data;
+                                }
+                            } catch (e) { /* ignore parse errors */ }
+                            currentEvent = null;
+                        }
+                    }
+                }
+
+                // Hide loader
+                document.getElementById('generate-loader').classList.add('hidden');
+
+                if (articleContent) {
+                    // Parse the enhanced article
+                    const parsed = typeof articleContent === 'string' ? JSON.parse(articleContent) : articleContent;
+
+                    // Update the current report
+                    const enhancedReport = {
+                        title: parsed.title || title,
+                        content: parsed.content || parsed.body,
+                        sources: parsed.sources || [],
+                        citationDatabase: parsed.citationDatabase || {},
+                        chartConfigs: parsed.chartConfigs || [],
+                        chartType: 'dynamic'
+                    };
+
+                    // Render the enhanced article
+                    currentReport = enhancedReport;
+                    renderReportData(enhancedReport, true);
+
+                    // Show success notification
+                    showNotification('Article enhanced successfully!', 'success');
+                }
+
+            } catch (error) {
+                console.error('Enhancement failed:', error);
+                document.getElementById('generate-loader').classList.add('hidden');
+                showNotification('Enhancement failed. Please try again.', 'error');
+            } finally {
+                // Reset button state
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i data-lucide="sparkles" class="w-4 h-4"></i><span class="hidden sm:inline">Enhance</span>';
+                    lucide.createIcons();
+                }
+            }
+        }
+
+        // Simple notification helper
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed bottom-4 right-4 px-4 py-3 rounded-lg shadow-lg z-50 animate-fade-in`;
+            notification.style.background = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6';
+            notification.style.color = 'white';
+            notification.innerHTML = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
         }
 
         function toggleBookmark() {
