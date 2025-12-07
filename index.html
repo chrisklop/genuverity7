@@ -6669,9 +6669,14 @@
             }
 
             try {
-                // Show loader
-                document.getElementById('generate-loader').classList.remove('hidden');
-                resetProgress();
+                // Show loader (use deep-dive-loader since generate-loader doesn't exist)
+                const loader = document.getElementById('deep-dive-loader');
+                const loaderTitle = document.getElementById('loader-title');
+                if (loader) {
+                    if (loaderTitle) loaderTitle.textContent = `Enhancing: ${title}`;
+                    loader.classList.add('visible');
+                }
+                startStatusAnimation();
 
                 // Build enhancement prompt with article context
                 const enhancePrompt = `ENHANCE AND EXPAND the following investigative article.
@@ -6750,7 +6755,8 @@ ${currentContent}`;
                 console.log('[Enhance] Stream complete. articleContent:', articleContent ? 'received' : 'null');
 
                 // Hide loader
-                document.getElementById('generate-loader').classList.add('hidden');
+                stopStatusAnimation();
+                document.getElementById('deep-dive-loader').classList.remove('visible');
 
                 // Try to get article content from SSE or fallback to raw response
                 let parsed = null;
@@ -6802,7 +6808,8 @@ ${currentContent}`;
 
             } catch (error) {
                 console.error('Enhancement failed:', error);
-                document.getElementById('generate-loader').classList.add('hidden');
+                stopStatusAnimation();
+                document.getElementById('deep-dive-loader').classList.remove('visible');
                 showNotification('Enhancement failed. Please try again.', 'error');
             } finally {
                 // Reset button state
