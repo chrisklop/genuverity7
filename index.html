@@ -4128,17 +4128,43 @@
             const themeColors = getThemeChartColors();
             const defaultColors = themeColors.palette.concat([themeColors.accent, themeColors.muted]);
 
+            // Get all canvases in the report body that haven't been used yet
+            const reportBody = document.getElementById('report-body');
+            const allCanvases = reportBody ? Array.from(reportBody.querySelectorAll('canvas')) : [];
+            const usedCanvases = new Set();
+            let fallbackIndex = 0;
+
             for (const [chartId, config] of Object.entries(chartConfigs)) {
                 console.log('[Charts] Looking for canvas with id:', chartId);
-                const canvas = document.getElementById(chartId);
+                let canvas = document.getElementById(chartId);
+
+                // If canvas not found by exact ID, try fallback to next available canvas
                 if (!canvas) {
                     console.log('[Charts] Canvas NOT found for:', chartId);
-                    // List all canvases in the document for debugging
-                    const allCanvases = document.querySelectorAll('canvas');
-                    console.log('[Charts] Available canvases:', Array.from(allCanvases).map(c => c.id));
-                    continue;
+                    console.log('[Charts] Available canvases:', allCanvases.map(c => c.id || '(no id)'));
+
+                    // Find next unused canvas in the report body
+                    while (fallbackIndex < allCanvases.length) {
+                        const candidate = allCanvases[fallbackIndex];
+                        if (!usedCanvases.has(candidate)) {
+                            canvas = candidate;
+                            usedCanvases.add(candidate);
+                            console.log('[Charts] Using fallback canvas:', canvas.id || `(index ${fallbackIndex})`);
+                            fallbackIndex++;
+                            break;
+                        }
+                        fallbackIndex++;
+                    }
+
+                    if (!canvas) {
+                        console.log('[Charts] No fallback canvas available for:', chartId);
+                        continue;
+                    }
+                } else {
+                    usedCanvases.add(canvas);
                 }
-                console.log('[Charts] Canvas found for:', chartId);
+
+                console.log('[Charts] Canvas found/assigned for:', chartId);
 
                 const chartType = config.type || 'bar';
                 const data = config.data || {};
