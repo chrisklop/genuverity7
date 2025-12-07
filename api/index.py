@@ -629,6 +629,10 @@ async def check_cache(request: CacheCheckRequest):
     """Check if an article is already cached."""
     cached = get_cached_article(request.topic)
     if cached:
+        # Ensure cached articles have chartType='dynamic' for frontend detection
+        # This handles legacy cached articles that may not have this field set
+        if cached.get("chartConfigs"):
+            cached["chartType"] = "dynamic"
         return {"cached": True, "article": cached}
     return {"cached": False}
 
