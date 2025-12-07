@@ -3425,14 +3425,12 @@
                     document.querySelectorAll('.sources-tab').forEach(tab => {
                         tab.addEventListener('click', function() {
                             const tabIdx = this.dataset.tab;
-                            // Update active tab
-                            document.querySelectorAll('.sources-tab').forEach(t => t.classList.remove('active'));
-                            this.classList.add('active');
-                            // Update active panel
-                            document.querySelectorAll('.sources-tab-panel').forEach(p => p.classList.remove('active'));
-                            document.querySelector(`.sources-tab-panel[data-panel="${tabIdx}"]`).classList.add('active');
+                            switchToSourcesTab(tabIdx);
                         });
                     });
+
+                    // Add trackpad/touch swipe gesture support
+                    initSourcesSwipeGestures();
                 }, 50);
             } else {
                 sourcesFirstContainer.innerHTML = '';
@@ -5125,6 +5123,137 @@
                 }
             }
         });
+
+        // === SOURCES TAB SWIPE GESTURES ===
+        // Supports Mac trackpad horizontal swipes and touch swipes on mobile
+
+        // Switch to a specific sources tab by index
+        function switchToSourcesTab(tabIdx) {
+            const tabs = document.querySelectorAll('.sources-tab');
+            const panels = document.querySelectorAll('.sources-tab-panel');
+            if (tabs.length === 0) return;
+
+            // Clamp to valid range
+            tabIdx = Math.max(0, Math.min(parseInt(tabIdx), tabs.length - 1));
+
+            // Update active tab
+            tabs.forEach(t => t.classList.remove('active'));
+            tabs[tabIdx].classList.add('active');
+
+            // Update active panel
+            panels.forEach(p => p.classList.remove('active'));
+            const targetPanel = document.querySelector(`.sources-tab-panel[data-panel="${tabIdx}"]`);
+            if (targetPanel) targetPanel.classList.add('active');
+        }
+
+        // Get current active tab index
+        function getCurrentSourcesTabIndex() {
+            const activeTab = document.querySelector('.sources-tab.active');
+            return activeTab ? parseInt(activeTab.dataset.tab) : 0;
+        }
+
+        // Get total number of sources tabs
+        function getSourcesTabCount() {
+            return document.querySelectorAll('.sources-tab').length;
+        }
+
+        // Initialize swipe gesture handlers
+        function initSourcesSwipeGestures() {
+            const panelsContainer = document.querySelector('.sources-tab-panels');
+            if (!panelsContainer) return;
+
+            // === TRACKPAD SWIPE (Mac/Windows) ===
+            // Uses wheel event with deltaX for horizontal scrolling
+            let accumulatedDeltaX = 0;
+            let wheelTimeout = null;
+            const SWIPE_THRESHOLD = 50; // Accumulated pixels needed to trigger tab switch
+
+            panelsContainer.addEventListener('wheel', (e) => {
+                // Only respond to horizontal scroll (trackpad two-finger swipe)
+                if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 2) {
+                    e.preventDefault();
+
+                    accumulatedDeltaX += e.deltaX;
+
+                    // Clear existing timeout
+                    if (wheelTimeout) clearTimeout(wheelTimeout);
+
+                    // Check if threshold reached
+                    if (Math.abs(accumulatedDeltaX) >= SWIPE_THRESHOLD) {
+                        const currentIdx = getCurrentSourcesTabIndex();
+                        const totalTabs = getSourcesTabCount();
+
+                        if (accumulatedDeltaX > 0 && currentIdx < totalTabs - 1) {
+                            // Swiped left -> go to next tab
+                            switchToSourcesTab(currentIdx + 1);
+                        } else if (accumulatedDeltaX < 0 && currentIdx > 0) {
+                            // Swiped right -> go to previous tab
+                            switchToSourcesTab(currentIdx - 1);
+                        }
+
+                        accumulatedDeltaX = 0;
+                    }
+
+                    // Reset accumulator after a pause in scrolling
+                    wheelTimeout = setTimeout(() => {
+                        accumulatedDeltaX = 0;
+                    }, 150);
+                }
+            }, { passive: false });
+
+            // === TOUCH SWIPE (Mobile/Tablet) ===
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let isSwiping = false;
+            const TOUCH_THRESHOLD = 50;
+
+            panelsContainer.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                isSwiping = false;
+            }, { passive: true });
+
+            panelsContainer.addEventListener('touchmove', (e) => {
+                if (!touchStartX) return;
+
+                const touchX = e.touches[0].clientX;
+                const touchY = e.touches[0].clientY;
+                const deltaX = touchStartX - touchX;
+                const deltaY = touchStartY - touchY;
+
+                // Only swipe horizontally if it's primarily a horizontal gesture
+                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
+                    isSwiping = true;
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            panelsContainer.addEventListener('touchend', (e) => {
+                if (!isSwiping) {
+                    touchStartX = 0;
+                    return;
+                }
+
+                const touchEndX = e.changedTouches[0].clientX;
+                const deltaX = touchStartX - touchEndX;
+
+                if (Math.abs(deltaX) >= TOUCH_THRESHOLD) {
+                    const currentIdx = getCurrentSourcesTabIndex();
+                    const totalTabs = getSourcesTabCount();
+
+                    if (deltaX > 0 && currentIdx < totalTabs - 1) {
+                        // Swiped left -> go to next tab
+                        switchToSourcesTab(currentIdx + 1);
+                    } else if (deltaX < 0 && currentIdx > 0) {
+                        // Swiped right -> go to previous tab
+                        switchToSourcesTab(currentIdx - 1);
+                    }
+                }
+
+                touchStartX = 0;
+                isSwiping = false;
+            }, { passive: true });
+        }
 
         // --- MARKDOWN EXPORT ---
         async function exportToMarkdown() {
