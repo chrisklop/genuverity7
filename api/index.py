@@ -590,6 +590,8 @@ async def generate_report(request: GenerateRequest, req: Request):
                     # Ensure required fields
                     if "key" not in data:
                         data["key"] = topic_slug
+                    # Mark as dynamic article for frontend chart rendering
+                    data["chartType"] = "dynamic"
                     data.setdefault("chartConfigs", {})
                     data.setdefault("contextData", {})
                     data.setdefault("citationDatabase", {})
@@ -765,6 +767,8 @@ async def generate_deep_dive(request_body: DeepDiveRequest, request: Request):
                 # Ensure required fields
                 if "key" not in data:
                     data["key"] = topic_slug
+                # Mark as dynamic article for frontend chart rendering
+                data["chartType"] = "dynamic"
                 data.setdefault("chartConfigs", {})
                 data.setdefault("contextData", {})
                 data.setdefault("citationDatabase", {})

@@ -5266,8 +5266,9 @@
 
             const section = chartSection[1];
 
-            // Extract individual chart definitions
-            const chartPattern = /"(chart_\w+)"\s*:\s*(\{[^}]*"type"\s*:\s*"[^"]+"\s*,[^}]*"data"\s*:\s*\{[^}]*\}[^}]*\})/g;
+            // Extract individual chart definitions - match any chart ID pattern (not just "chart_")
+            // Matches IDs like: "chart_main", "plastic_bottles_chart1", "topic_name_chart_1", etc.
+            const chartPattern = /"([a-zA-Z_][a-zA-Z0-9_]*(?:chart|Chart)[a-zA-Z0-9_]*)"\s*:\s*(\{[^}]*"type"\s*:\s*"[^"]+"\s*,[^}]*"data"\s*:\s*\{[^}]*\}[^}]*\})/g;
             let match;
 
             while ((match = chartPattern.exec(section)) !== null) {
