@@ -19,374 +19,118 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* === THEME SYSTEM - 12 THEME PALETTE === */
+        /* === THEME SYSTEM - Dark/Light with Radix Colors === */
+        /* Using Slate scale for neutrals, Blue for accents */
+        /* WCAG AA compliant: 4.5:1 normal text, 3:1 large text */
 
-        /* 1. MIDNIGHT - Black with Navy Blue (DEFAULT) */
-        :root, [data-theme="midnight"] {
-            --bg-deep: #171919;
-            --bg-card: #1e2020;
-            --bg-elevated: #252828;
-            --text-main: #e4e8f0;
-            --text-muted: #7a8494;
-            --text-prose: #b8c0cc;
-            --border-color: rgba(70, 100, 160, 0.18);
-            --accent-blue: #000096;
-            --accent-green: #4a9d7c;
-            --accent-warm: #d4a574;
-            --logo-accent: #000096;
-            --logo-bg: linear-gradient(135deg, #00004d, #000096);
-            --logo-text: #e4e8f0;
-            --glass: rgba(23, 25, 25, 0.97);
-            --glass-border: rgba(0, 0, 150, 0.15);
-            --shadow-color: rgba(0, 0, 0, 0.6);
-            --gradient-start: #1a1c1c;
-            --gradient-end: #171919;
-            --chart-bg: rgba(0, 0, 150, 0.05);
-        }
+        /* DARK MODE (Default) - Based on Radix Slate Dark */
+        :root, [data-theme="dark"] {
+            /* Background layers (Radix slate-dark 1-6) */
+            --bg-deep: #111113;      /* slate-1: app background */
+            --bg-card: #18191b;      /* slate-2: subtle background */
+            --bg-elevated: #212225;  /* slate-3: UI element background */
 
-        /* 2. OCEAN - Deep Sea Blue */
-        [data-theme="ocean"] {
-            --bg-deep: #0a1628;
-            --bg-card: #0f2035;
-            --bg-elevated: #162a42;
-            --text-main: #e0f0ff;
-            --text-muted: #7ca0c4;
-            --text-prose: #a8c8e8;
-            --border-color: rgba(100, 160, 220, 0.15);
-            --accent-blue: #3d8bd4;
-            --accent-green: #2dd4bf;
-            --accent-warm: #fbbf24;
-            --logo-accent: #60a5fa;
-            --logo-bg: linear-gradient(135deg, #1e4976, #3d8bd4);
-            --logo-text: #e0f0ff;
-            --glass: rgba(10, 22, 40, 0.97);
-            --glass-border: rgba(100, 160, 220, 0.12);
+            /* Text hierarchy (Radix slate-dark 11-12) */
+            --text-main: #edeef0;    /* slate-12: high contrast text */
+            --text-muted: #9ba1a6;   /* slate-11: low contrast text */
+            --text-prose: #b0b4ba;   /* between 11-12 for body text */
+
+            /* Borders and dividers */
+            --border-color: rgba(255, 255, 255, 0.08);
+
+            /* Accent colors (Radix Blue scale) */
+            --accent-blue: #3e63dd;  /* blue-9: solid backgrounds */
+            --accent-green: #30a46c; /* green-9: success states */
+            --accent-warm: #f76b15;  /* orange-9: warning states */
+
+            /* Logo styling */
+            --logo-accent: #3e63dd;
+            --logo-bg: linear-gradient(135deg, #1f2f6d, #3e63dd);
+            --logo-text: #edeef0;
+
+            /* Glass effects */
+            --glass: rgba(17, 17, 19, 0.95);
+            --glass-border: rgba(62, 99, 221, 0.15);
+
+            /* Shadows and gradients */
             --shadow-color: rgba(0, 0, 0, 0.5);
-            --gradient-start: #0e1e32;
-            --gradient-end: #0a1628;
-            --chart-bg: rgba(61, 139, 212, 0.05);
+            --gradient-start: #151517;
+            --gradient-end: #111113;
+            --chart-bg: rgba(62, 99, 221, 0.06);
         }
 
-        /* 3. FOREST - Deep Green */
-        [data-theme="forest"] {
-            --bg-deep: #0a1410;
-            --bg-card: #0f1f18;
-            --bg-elevated: #162a22;
-            --text-main: #e0f5ec;
-            --text-muted: #7cb09a;
-            --text-prose: #a8d4c0;
-            --border-color: rgba(100, 180, 140, 0.15);
-            --accent-blue: #34d399;
-            --accent-green: #10b981;
-            --accent-warm: #fbbf24;
-            --logo-accent: #4ade80;
-            --logo-bg: linear-gradient(135deg, #166534, #22c55e);
-            --logo-text: #e0f5ec;
-            --glass: rgba(10, 20, 16, 0.97);
-            --glass-border: rgba(100, 180, 140, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.5);
-            --gradient-start: #0e1c16;
-            --gradient-end: #0a1410;
-            --chart-bg: rgba(16, 185, 129, 0.05);
-        }
-
-        /* 4. EMBER - Dark with Orange/Red */
-        [data-theme="ember"] {
-            --bg-deep: #140a08;
-            --bg-card: #1f0f0c;
-            --bg-elevated: #2a1612;
-            --text-main: #fce8e4;
-            --text-muted: #c49080;
-            --text-prose: #e8b8a8;
-            --border-color: rgba(220, 120, 80, 0.15);
-            --accent-blue: #f97316;
-            --accent-green: #84cc16;
-            --accent-warm: #ef4444;
-            --logo-accent: #fb923c;
-            --logo-bg: linear-gradient(135deg, #c2410c, #f97316);
-            --logo-text: #fce8e4;
-            --glass: rgba(20, 10, 8, 0.97);
-            --glass-border: rgba(220, 120, 80, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.5);
-            --gradient-start: #1a0e0a;
-            --gradient-end: #140a08;
-            --chart-bg: rgba(249, 115, 22, 0.05);
-        }
-
-        /* 5. VIOLET - Purple/Violet Dark */
-        [data-theme="violet"] {
-            --bg-deep: #0e0a14;
-            --bg-card: #16101f;
-            --bg-elevated: #1e162a;
-            --text-main: #f0e8fc;
-            --text-muted: #a090c4;
-            --text-prose: #c8b8e8;
-            --border-color: rgba(160, 120, 220, 0.15);
-            --accent-blue: #a855f7;
-            --accent-green: #22d3ee;
-            --accent-warm: #f472b6;
-            --logo-accent: #c084fc;
-            --logo-bg: linear-gradient(135deg, #7c3aed, #a855f7);
-            --logo-text: #f0e8fc;
-            --glass: rgba(14, 10, 20, 0.97);
-            --glass-border: rgba(160, 120, 220, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.5);
-            --gradient-start: #12101a;
-            --gradient-end: #0e0a14;
-            --chart-bg: rgba(168, 85, 247, 0.05);
-        }
-
-        /* 6. SLATE - Neutral Gray */
-        [data-theme="slate"] {
-            --bg-deep: #0f1114;
-            --bg-card: #181a1f;
-            --bg-elevated: #22252b;
-            --text-main: #e8eaed;
-            --text-muted: #8b8f96;
-            --text-prose: #b4b8c0;
-            --border-color: rgba(140, 145, 155, 0.15);
-            --accent-blue: #64748b;
-            --accent-green: #6ee7b7;
-            --accent-warm: #fcd34d;
-            --logo-accent: #94a3b8;
-            --logo-bg: linear-gradient(135deg, #475569, #64748b);
-            --logo-text: #e8eaed;
-            --glass: rgba(15, 17, 20, 0.97);
-            --glass-border: rgba(140, 145, 155, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.5);
-            --gradient-start: #14161a;
-            --gradient-end: #0f1114;
-            --chart-bg: rgba(100, 116, 139, 0.05);
-        }
-
-        /* 7. ESPRESSO - Warm Brown */
-        [data-theme="espresso"] {
-            --bg-deep: #1a1410;
-            --bg-card: #252019;
-            --bg-elevated: #2f2820;
-            --text-main: #f0e6dc;
-            --text-muted: #a89a8a;
-            --text-prose: #d4c8ba;
-            --border-color: rgba(210, 180, 140, 0.15);
-            --accent-blue: #c9a227;
-            --accent-green: #7c9a5e;
-            --accent-warm: #d4a574;
-            --logo-accent: #e8b84a;
-            --logo-bg: linear-gradient(135deg, #92700a, #c9a227);
-            --logo-text: #1a1410;
-            --glass: rgba(20, 16, 12, 0.97);
-            --glass-border: rgba(210, 180, 140, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.5);
-            --gradient-start: #231c14;
-            --gradient-end: #1a1410;
-            --chart-bg: rgba(201, 162, 39, 0.05);
-        }
-
-        /* 8. ROSE - Dark Pink/Rose */
-        [data-theme="rose"] {
-            --bg-deep: #14080c;
-            --bg-card: #1f0c14;
-            --bg-elevated: #2a121c;
-            --text-main: #fce8f0;
-            --text-muted: #c4809a;
-            --text-prose: #e8a8c0;
-            --border-color: rgba(220, 100, 140, 0.15);
-            --accent-blue: #ec4899;
-            --accent-green: #34d399;
-            --accent-warm: #fbbf24;
-            --logo-accent: #f472b6;
-            --logo-bg: linear-gradient(135deg, #be185d, #ec4899);
-            --logo-text: #fce8f0;
-            --glass: rgba(20, 8, 12, 0.97);
-            --glass-border: rgba(220, 100, 140, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.5);
-            --gradient-start: #1a0c10;
-            --gradient-end: #14080c;
-            --chart-bg: rgba(236, 72, 153, 0.05);
-        }
-
-        /* 9. CYAN - Teal/Cyan Dark */
-        [data-theme="cyan"] {
-            --bg-deep: #08120f;
-            --bg-card: #0c1c18;
-            --bg-elevated: #122622;
-            --text-main: #e0fcf8;
-            --text-muted: #70c4b8;
-            --text-prose: #a0e8dc;
-            --border-color: rgba(80, 200, 180, 0.15);
-            --accent-blue: #14b8a6;
-            --accent-green: #22d3ee;
-            --accent-warm: #fbbf24;
-            --logo-accent: #2dd4bf;
-            --logo-bg: linear-gradient(135deg, #0f766e, #14b8a6);
-            --logo-text: #e0fcf8;
-            --glass: rgba(8, 18, 15, 0.97);
-            --glass-border: rgba(80, 200, 180, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.5);
-            --gradient-start: #0a1612;
-            --gradient-end: #08120f;
-            --chart-bg: rgba(20, 184, 166, 0.05);
-        }
-
-        /* 10. LIGHT - Clean Light Mode */
+        /* LIGHT MODE - Based on Radix Slate Light */
         [data-theme="light"] {
-            --bg-deep: #f8fafc;
-            --bg-card: #ffffff;
-            --bg-elevated: #f1f5f9;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --text-prose: #475569;
-            --border-color: rgba(30, 41, 59, 0.12);
-            --accent-blue: #3b82f6;
-            --accent-green: #22c55e;
-            --accent-warm: #f59e0b;
-            --logo-accent: #2563eb;
-            --logo-bg: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            /* Background layers (Radix slate-light 1-6) */
+            --bg-deep: #fbfcfd;      /* slate-1: app background */
+            --bg-card: #ffffff;      /* white for cards */
+            --bg-elevated: #f1f3f5;  /* slate-3: UI element background */
+
+            /* Text hierarchy (Radix slate-light 11-12) */
+            --text-main: #1c2024;    /* slate-12: high contrast text */
+            --text-muted: #60646c;   /* slate-11: low contrast text */
+            --text-prose: #3e4249;   /* between 11-12 for body text */
+
+            /* Borders and dividers */
+            --border-color: rgba(0, 0, 0, 0.08);
+
+            /* Accent colors (Radix Blue scale - light mode) */
+            --accent-blue: #3e63dd;  /* blue-9: solid backgrounds */
+            --accent-green: #30a46c; /* green-9: success states */
+            --accent-warm: #f76b15;  /* orange-9: warning states */
+
+            /* Logo styling */
+            --logo-accent: #3e63dd;
+            --logo-bg: linear-gradient(135deg, #1f2f6d, #3e63dd);
             --logo-text: #ffffff;
-            --glass: rgba(248, 250, 252, 0.95);
-            --glass-border: rgba(30, 41, 59, 0.1);
-            --shadow-color: rgba(15, 23, 42, 0.08);
-            --gradient-start: #e2e8f0;
-            --gradient-end: #f8fafc;
-            --chart-bg: rgba(59, 130, 246, 0.05);
+
+            /* Glass effects */
+            --glass: rgba(251, 252, 253, 0.95);
+            --glass-border: rgba(62, 99, 221, 0.12);
+
+            /* Shadows and gradients */
+            --shadow-color: rgba(0, 0, 0, 0.06);
+            --gradient-start: #eef1f4;
+            --gradient-end: #fbfcfd;
+            --chart-bg: rgba(62, 99, 221, 0.04);
         }
 
-        /* 11. SAND - Warm Light Mode */
-        [data-theme="sand"] {
-            --bg-deep: #faf8f3;
-            --bg-card: #fffefa;
-            --bg-elevated: #f5f0e6;
-            --text-main: #3d3427;
-            --text-muted: #7a6f5c;
-            --text-prose: #5c5347;
-            --border-color: rgba(120, 100, 60, 0.12);
-            --accent-blue: #b8860b;
-            --accent-green: #6b8e23;
-            --accent-warm: #cd853f;
-            --logo-accent: #d4a017;
-            --logo-bg: linear-gradient(135deg, #b8860b, #daa520);
-            --logo-text: #3d3427;
-            --glass: rgba(250, 248, 243, 0.95);
-            --glass-border: rgba(120, 100, 60, 0.1);
-            --shadow-color: rgba(61, 52, 39, 0.08);
-            --gradient-start: #f0ebe0;
-            --gradient-end: #faf8f3;
-            --chart-bg: rgba(184, 134, 11, 0.05);
-        }
+        /* System preference detection - auto-apply light mode */
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+                /* Background layers */
+                --bg-deep: #fbfcfd;
+                --bg-card: #ffffff;
+                --bg-elevated: #f1f3f5;
 
-        /* 12. MINT - Fresh Light Green */
-        [data-theme="mint"] {
-            --bg-deep: #f0fdf4;
-            --bg-card: #fafffe;
-            --bg-elevated: #dcfce7;
-            --text-main: #14532d;
-            --text-muted: #4d7c5f;
-            --text-prose: #365c42;
-            --border-color: rgba(22, 101, 52, 0.12);
-            --accent-blue: #16a34a;
-            --accent-green: #22c55e;
-            --accent-warm: #eab308;
-            --logo-accent: #22c55e;
-            --logo-bg: linear-gradient(135deg, #15803d, #22c55e);
-            --logo-text: #f0fdf4;
-            --glass: rgba(240, 253, 244, 0.95);
-            --glass-border: rgba(22, 101, 52, 0.1);
-            --shadow-color: rgba(20, 83, 45, 0.08);
-            --gradient-start: #d1fae5;
-            --gradient-end: #f0fdf4;
-            --chart-bg: rgba(34, 197, 94, 0.05);
-        }
+                /* Text hierarchy */
+                --text-main: #1c2024;
+                --text-muted: #60646c;
+                --text-prose: #3e4249;
 
-        /* 13. KRISTIE - Warm Gray (#434343) with Dark Navy Accents */
-        [data-theme="kristie"] {
-            --bg-deep: #434343;
-            --bg-card: #3a3a3a;
-            --bg-elevated: #2d2d2d;
-            --text-main: #f5f5f5;
-            --text-muted: #c0c0c0;
-            --text-prose: #e0e0e0;
-            --border-color: rgba(255, 255, 255, 0.12);
-            --accent-blue: #1e3a5f;
-            --accent-green: #a8e6cf;
-            --accent-warm: #ffd3b6;
-            --logo-accent: #2c4a7c;
-            --logo-bg: linear-gradient(135deg, #152840, #1e3a5f);
-            --logo-text: #f5f5f5;
-            --glass: rgba(45, 45, 45, 0.97);
-            --glass-border: rgba(30, 58, 95, 0.2);
-            --shadow-color: rgba(0, 0, 0, 0.4);
-            --gradient-start: #434343;
-            --gradient-end: #3d3d3d;
-            --chart-bg: rgba(30, 58, 95, 0.1);
-        }
+                /* Borders */
+                --border-color: rgba(0, 0, 0, 0.08);
 
-        /* 14. AURORA - Northern Lights */
-        [data-theme="aurora"] {
-            --bg-deep: #0f0f23;
-            --bg-card: #1a1a2e;
-            --bg-elevated: #25253a;
-            --text-main: #e8f4f8;
-            --text-muted: #88c0d0;
-            --text-prose: #b8dce8;
-            --border-color: rgba(136, 192, 208, 0.15);
-            --accent-blue: #88c0d0;
-            --accent-green: #a3be8c;
-            --accent-warm: #ebcb8b;
-            --logo-accent: #8fbcbb;
-            --logo-bg: linear-gradient(135deg, #5e81ac, #88c0d0);
-            --logo-text: #e8f4f8;
-            --glass: rgba(15, 15, 35, 0.97);
-            --glass-border: rgba(136, 192, 208, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.5);
-            --gradient-start: #16162a;
-            --gradient-end: #0f0f23;
-            --chart-bg: rgba(136, 192, 208, 0.05);
-        }
+                /* Accents */
+                --accent-blue: #3e63dd;
+                --accent-green: #30a46c;
+                --accent-warm: #f76b15;
 
-        /* 15. CHERRY - Deep Red/Burgundy */
-        [data-theme="cherry"] {
-            --bg-deep: #1a0a0a;
-            --bg-card: #2a1010;
-            --bg-elevated: #3a1818;
-            --text-main: #fce8e8;
-            --text-muted: #d09090;
-            --text-prose: #e8b8b8;
-            --border-color: rgba(220, 80, 80, 0.15);
-            --accent-blue: #dc5050;
-            --accent-green: #50dc80;
-            --accent-warm: #dcb050;
-            --logo-accent: #f06060;
-            --logo-bg: linear-gradient(135deg, #8b2020, #dc5050);
-            --logo-text: #fce8e8;
-            --glass: rgba(26, 10, 10, 0.97);
-            --glass-border: rgba(220, 80, 80, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.5);
-            --gradient-start: #220e0e;
-            --gradient-end: #1a0a0a;
-            --chart-bg: rgba(220, 80, 80, 0.05);
-        }
+                /* Logo */
+                --logo-accent: #3e63dd;
+                --logo-bg: linear-gradient(135deg, #1f2f6d, #3e63dd);
+                --logo-text: #ffffff;
 
-        /* 16. COBALT - Electric Blue */
-        [data-theme="cobalt"] {
-            --bg-deep: #001b33;
-            --bg-card: #002744;
-            --bg-elevated: #003355;
-            --text-main: #e8f4ff;
-            --text-muted: #80b3e0;
-            --text-prose: #b0d4f0;
-            --border-color: rgba(0, 150, 255, 0.15);
-            --accent-blue: #0096ff;
-            --accent-green: #00ff96;
-            --accent-warm: #ffcc00;
-            --logo-accent: #00b4ff;
-            --logo-bg: linear-gradient(135deg, #0066aa, #0096ff);
-            --logo-text: #e8f4ff;
-            --glass: rgba(0, 27, 51, 0.97);
-            --glass-border: rgba(0, 150, 255, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.5);
-            --gradient-start: #002040;
-            --gradient-end: #001b33;
-            --chart-bg: rgba(0, 150, 255, 0.05);
+                /* Glass */
+                --glass: rgba(251, 252, 253, 0.95);
+                --glass-border: rgba(62, 99, 221, 0.12);
+
+                /* Shadows */
+                --shadow-color: rgba(0, 0, 0, 0.06);
+                --gradient-start: #eef1f4;
+                --gradient-end: #fbfcfd;
+                --chart-bg: rgba(62, 99, 221, 0.04);
+            }
         }
 
         body {
@@ -509,92 +253,59 @@
             border-color: var(--accent-blue);
         }
 
-        /* === THEME PICKER DROPDOWN === */
-        .theme-picker {
-            position: fixed;
-            top: 70px;
-            right: 100px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px;
-            z-index: 100;
-            box-shadow: 0 10px 40px var(--shadow-color);
-            display: none;
-            width: 280px;
-        }
-
-        .theme-picker.visible {
-            display: block;
-        }
-
-        .theme-picker-header {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            padding: 0 4px;
-        }
-
-        .theme-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+        /* === DARK/LIGHT THEME TOGGLE === */
+        .theme-toggle-switch {
+            display: flex;
+            align-items: center;
             gap: 8px;
-        }
-
-        .theme-swatch {
-            width: 100%;
-            aspect-ratio: 1;
-            border-radius: 8px;
+            padding: 6px 12px;
+            border-radius: 20px;
             cursor: pointer;
-            border: 2px solid transparent;
             transition: all 0.2s;
-            position: relative;
-            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-muted);
         }
 
-        .theme-swatch:hover {
-            transform: scale(1.08);
-            box-shadow: 0 4px 12px var(--shadow-color);
-        }
-
-        .theme-swatch.active {
+        .theme-toggle-switch:hover {
+            background: var(--bg-elevated);
             border-color: var(--accent-blue);
-            box-shadow: 0 0 0 2px var(--accent-blue);
+            color: var(--text-main);
         }
 
-        .theme-swatch::after {
-            content: attr(data-label);
+        .theme-toggle-switch .icon-sun,
+        .theme-toggle-switch .icon-moon {
+            width: 16px;
+            height: 16px;
+            transition: opacity 0.2s, transform 0.3s;
+        }
+
+        /* Show sun in dark mode, moon in light mode */
+        :root .theme-toggle-switch .icon-sun,
+        [data-theme="dark"] .theme-toggle-switch .icon-sun {
+            opacity: 1;
+        }
+        :root .theme-toggle-switch .icon-moon,
+        [data-theme="dark"] .theme-toggle-switch .icon-moon {
+            opacity: 0;
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            font-size: 0.55rem;
-            text-align: center;
-            padding: 2px;
-            background: rgba(0,0,0,0.6);
-            color: white;
-            text-transform: capitalize;
         }
 
-        /* Theme swatch colors */
-        .theme-swatch[data-theme="midnight"] { background: linear-gradient(135deg, #171919, #000096); }
-        .theme-swatch[data-theme="ocean"] { background: linear-gradient(135deg, #0a1628, #3d8bd4); }
-        .theme-swatch[data-theme="forest"] { background: linear-gradient(135deg, #0a1410, #22c55e); }
-        .theme-swatch[data-theme="ember"] { background: linear-gradient(135deg, #140a08, #f97316); }
-        .theme-swatch[data-theme="violet"] { background: linear-gradient(135deg, #0e0a14, #a855f7); }
-        .theme-swatch[data-theme="slate"] { background: linear-gradient(135deg, #0f1114, #64748b); }
-        .theme-swatch[data-theme="espresso"] { background: linear-gradient(135deg, #1a1410, #c9a227); }
-        .theme-swatch[data-theme="rose"] { background: linear-gradient(135deg, #14080c, #ec4899); }
-        .theme-swatch[data-theme="cyan"] { background: linear-gradient(135deg, #08120f, #14b8a6); }
-        .theme-swatch[data-theme="light"] { background: linear-gradient(135deg, #f8fafc, #3b82f6); }
-        .theme-swatch[data-theme="sand"] { background: linear-gradient(135deg, #faf8f3, #daa520); }
-        .theme-swatch[data-theme="mint"] { background: linear-gradient(135deg, #f0fdf4, #22c55e); }
-        .theme-swatch[data-theme="kristie"] { background: linear-gradient(135deg, #434343, #1e3a5f); }
-        .theme-swatch[data-theme="aurora"] { background: linear-gradient(135deg, #0f0f23, #88c0d0); }
-        .theme-swatch[data-theme="cherry"] { background: linear-gradient(135deg, #1a0a0a, #dc5050); }
-        .theme-swatch[data-theme="cobalt"] { background: linear-gradient(135deg, #001b33, #0096ff); }
+        [data-theme="light"] .theme-toggle-switch .icon-sun {
+            opacity: 0;
+            position: absolute;
+        }
+        [data-theme="light"] .theme-toggle-switch .icon-moon {
+            opacity: 1;
+            position: relative;
+        }
+
+        .theme-toggle-switch .toggle-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
         /* === ACTION BUTTONS === */
         .action-btn {
@@ -697,146 +408,458 @@
             display: block;
         }
 
-        /* Report View with Sources Sidebar */
+        /* Report View - Professional Single Column Layout */
         .report-layout {
-            display: flex;
-            flex-direction: column;
-            max-width: 1400px;
+            display: block;
+            max-width: 720px;
             margin: 0 auto;
             padding: 0 1.5rem;
         }
 
         .report-main {
-            flex: 1;
-            max-width: 900px;
+            width: 100%;
         }
 
-        .sources-sidebar {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
+        @media (min-width: 768px) {
+            .report-layout {
+                padding: 0 2rem;
+            }
         }
 
-        .sources-sidebar-header {
-            font-size: 0.75rem;
+        @media (min-width: 1200px) {
+            .report-layout {
+                max-width: 760px;
+                padding: 0;
+            }
+        }
+
+        /* === SOURCES FIRST BANNER - TABBED VERSION === */
+        .sources-first-banner {
+            background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sources-first-banner.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 0;
+            border: none;
+            pointer-events: none;
+        }
+
+        .sources-first-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-green), var(--accent-blue));
+            background-size: 200% 100%;
+            animation: sources-gradient 3s ease infinite;
+        }
+
+        @keyframes sources-gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .sources-first-inner {
+            padding: 1.25rem;
+        }
+
+        .sources-first-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .sources-first-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .sources-first-title h3 {
+            font-size: 0.85rem;
             font-weight: 700;
-            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
+            letter-spacing: 0.15em;
+            color: var(--accent-blue);
+            margin: 0;
+        }
+
+        .sources-first-title .shield-icon {
+            color: var(--accent-green);
+            animation: shield-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes shield-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .sources-collapse-btn {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-        }
-
-        .sources-sidebar-header::before {
-            content: '';
-            width: 3px;
-            height: 14px;
-            background: var(--accent-blue);
-            border-radius: 2px;
-        }
-
-        .source-card {
-            background: var(--card-bg);
+            background: transparent;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.75rem;
-            margin-bottom: 0.75rem;
+            border-radius: 6px;
+            padding: 0.35rem 0.6rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .source-card:hover {
+        .sources-collapse-btn:hover {
             border-color: var(--accent-blue);
-            transform: translateX(2px);
+            color: var(--accent-blue);
         }
 
-        .source-card-domain {
+        .sources-first-byline {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        /* Tab Navigation */
+        .sources-tabs {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0;
+        }
+
+        .sources-tab {
+            position: relative;
+            padding: 0.5rem 0.75rem;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: var(--text-muted);
             font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .sources-tab:hover {
+            color: var(--text-main);
+        }
+
+        .sources-tab.active {
+            color: var(--accent-blue);
+            border-bottom-color: var(--accent-blue);
+        }
+
+        .sources-tab .tab-count {
+            display: inline-block;
+            background: var(--bg-deep);
+            color: var(--text-muted);
+            font-size: 0.6rem;
+            padding: 1px 5px;
+            border-radius: 8px;
+            margin-left: 4px;
+        }
+
+        .sources-tab.active .tab-count {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* Mobile tabs - horizontal scroll */
+        @media (max-width: 480px) {
+            .sources-tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .sources-tabs::-webkit-scrollbar { display: none; }
+            .sources-tab { font-size: 0.65rem; padding: 0.4rem 0.6rem; }
+        }
+
+        /* Tab Content Panels */
+        .sources-tab-panels {
+            position: relative;
+            min-height: 180px;
+        }
+
+        .sources-tab-panel {
+            display: none;
+            animation: tab-fade-in 0.3s ease;
+        }
+
+        .sources-tab-panel.active {
+            display: block;
+        }
+
+        @keyframes tab-fade-in {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tab CTA - subtle encouragement */
+        .tab-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            padding: 0.5rem;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-style: italic;
+        }
+
+        .tab-cta i {
+            color: var(--accent-blue);
+            opacity: 0.7;
+        }
+
+        .sources-first-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.6rem;
+        }
+
+        @media (max-width: 768px) {
+            .sources-first-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .top-source-card {
+            background: var(--bg-deep);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: source-fade-in 0.4s ease forwards;
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        .top-source-card:nth-child(1) { animation-delay: 0.05s; }
+        .top-source-card:nth-child(2) { animation-delay: 0.1s; }
+        .top-source-card:nth-child(3) { animation-delay: 0.15s; }
+        .top-source-card:nth-child(4) { animation-delay: 0.2s; }
+
+        @keyframes source-fade-in {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .top-source-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px -4px rgba(0, 0, 150, 0.15);
+        }
+
+        .top-source-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 20px 20px 0;
+            border-color: transparent var(--accent-green) transparent transparent;
+            opacity: 0.7;
+        }
+
+        .top-source-rank {
+            font-size: 0.6rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            margin-bottom: 0.2rem;
+            opacity: 0.7;
+        }
+
+        .top-source-domain {
+            font-size: 0.65rem;
             font-weight: 600;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
         }
 
-        .source-card-title {
-            font-size: 0.85rem;
+        .top-source-title {
+            font-size: 0.75rem;
             font-weight: 500;
             color: var(--text-main);
             line-height: 1.3;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
-        .source-card-score {
+        .top-source-score {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
-        .source-score-bar {
+        .top-source-score-bar {
             flex: 1;
-            height: 4px;
+            height: 3px;
             background: var(--border-color);
             border-radius: 2px;
             overflow: hidden;
         }
 
-        .source-score-fill {
+        .top-source-score-fill {
             height: 100%;
             border-radius: 2px;
-            transition: width 0.5s ease;
+            transition: width 0.8s ease;
         }
 
-        .source-score-fill.high { background: linear-gradient(90deg, #10b981, #34d399); }
-        .source-score-fill.medium { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
-        .source-score-fill.low { background: linear-gradient(90deg, #ef4444, #f87171); }
+        .top-source-score-fill.high { background: linear-gradient(90deg, #10b981, #34d399); }
+        .top-source-score-fill.medium { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .top-source-score-fill.low { background: linear-gradient(90deg, #ef4444, #f87171); }
 
-        .source-score-value {
-            font-size: 0.7rem;
+        .top-source-score-value {
+            font-size: 0.65rem;
             font-weight: 700;
-            color: var(--text-muted);
-            min-width: 28px;
+            color: var(--accent-green);
+            min-width: 26px;
             text-align: right;
         }
 
-        @media (min-width: 1200px) {
-            .report-layout {
+        /* Floating Sources Button (when collapsed) */
+        .sources-floating-btn {
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card));
+            border: 1px solid var(--accent-blue);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            color: var(--accent-blue);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sources-floating-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .sources-floating-btn:hover {
+            background: var(--accent-blue);
+            color: white;
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        .sources-floating-btn .shield-mini {
+            color: var(--accent-green);
+        }
+
+        .sources-floating-btn:hover .shield-mini {
+            color: white;
+        }
+
+        .sources-floating-count {
+            background: var(--accent-green);
+            color: var(--bg-deep);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        /* Portal Layout with Independent Scroll */
+        .portal-layout {
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100vh - 80px);
+            padding: 0 1rem;
+        }
+
+        .portal-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 0;
+        }
+
+        .portal-right {
+            padding: 2rem 0;
+        }
+
+        @media (min-width: 1024px) {
+            .portal-layout {
                 flex-direction: row;
-                gap: 3rem;
+                height: calc(100vh - 80px);
+                overflow: hidden;
+                padding: 0 2rem;
             }
 
-            .report-main {
-                flex: 1;
-            }
-
-            .sources-sidebar {
-                width: 280px;
+            .portal-left {
+                width: 50%;
                 flex-shrink: 0;
-                margin-top: 0;
-                padding-top: 0;
-                border-top: none;
+                align-items: flex-start;
+                padding-left: 6rem;
                 position: sticky;
-                top: 100px;
-                max-height: calc(100vh - 120px);
+                top: 80px;
+                height: calc(100vh - 80px);
+            }
+
+            .portal-right {
+                width: 50%;
+                height: calc(100vh - 80px);
                 overflow-y: auto;
-                padding-right: 0.5rem;
+                padding: 3rem 2rem 3rem 0;
+                scrollbar-width: thin;
+                scrollbar-color: var(--border-color) transparent;
             }
 
-            .sources-sidebar::-webkit-scrollbar {
-                width: 4px;
+            .portal-right::-webkit-scrollbar {
+                width: 6px;
             }
 
-            .sources-sidebar::-webkit-scrollbar-track {
+            .portal-right::-webkit-scrollbar-track {
                 background: transparent;
             }
 
-            .sources-sidebar::-webkit-scrollbar-thumb {
+            .portal-right::-webkit-scrollbar-thumb {
                 background: var(--border-color);
-                border-radius: 2px;
+                border-radius: 3px;
             }
 
-            .sources-sidebar::-webkit-scrollbar-thumb:hover {
+            .portal-right::-webkit-scrollbar-thumb:hover {
                 background: var(--text-muted);
             }
         }
@@ -947,20 +970,18 @@
 
         /* Deep Dive Hover Preview Tooltip */
         .deep-dive-tooltip {
-            position: absolute;
-            bottom: calc(100% + 10px);
-            left: 50%;
-            transform: translateX(-50%);
+            position: fixed;
             width: 280px;
+            max-width: 90vw;
             padding: 12px 14px;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 10000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.2s ease;
+            transition: opacity 0.2s ease;
             pointer-events: none;
         }
 
@@ -985,10 +1006,9 @@
             z-index: 1;
         }
 
-        .fig-deep-dive:hover .deep-dive-tooltip {
+        .deep-dive-tooltip.visible {
             opacity: 1;
             visibility: visible;
-            transform: translateX(-50%) translateY(-4px);
         }
 
         .tooltip-context {
@@ -1035,47 +1055,33 @@
             border-radius: 4px;
         }
 
-        /* Light mode text fixes - apply to all light themes */
-        [data-theme="light"] .text-white,
-        [data-theme="sand"] .text-white,
-        [data-theme="mint"] .text-white {
+        /* Light mode text fixes */
+        [data-theme="light"] .text-white {
             color: var(--text-main) !important;
         }
 
-        [data-theme="light"] strong.text-white,
-        [data-theme="sand"] strong.text-white,
-        [data-theme="mint"] strong.text-white {
+        [data-theme="light"] strong.text-white {
             color: var(--text-main) !important;
         }
 
-        [data-theme="light"] .trending-card h3,
-        [data-theme="sand"] .trending-card h3,
-        [data-theme="mint"] .trending-card h3 {
+        [data-theme="light"] .trending-card h3 {
             color: var(--text-main) !important;
         }
 
-        [data-theme="light"] .hover\:text-white:hover,
-        [data-theme="sand"] .hover\:text-white:hover,
-        [data-theme="mint"] .hover\:text-white:hover {
+        [data-theme="light"] .hover\:text-white:hover {
             color: var(--text-main) !important;
         }
 
-        [data-theme="light"] .fractal-trigger,
-        [data-theme="sand"] .fractal-trigger,
-        [data-theme="mint"] .fractal-trigger {
+        [data-theme="light"] .fractal-trigger {
             color: var(--accent-blue) !important;
         }
 
-        [data-theme="light"] .fractal-trigger:hover,
-        [data-theme="sand"] .fractal-trigger:hover,
-        [data-theme="mint"] .fractal-trigger:hover {
+        [data-theme="light"] .fractal-trigger:hover {
             color: var(--text-main) !important;
         }
 
         /* Keep logo G styled properly */
-        [data-theme="light"] .bg-blue-600.text-white,
-        [data-theme="sand"] .bg-blue-600.text-white,
-        [data-theme="mint"] .bg-blue-600.text-white {
+        [data-theme="light"] .bg-blue-600.text-white {
             color: white !important;
         }
 
@@ -1143,6 +1149,62 @@
             visibility: visible;
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* FRACTAL TRIGGER TOOLTIP */
+        .fractal-tooltip {
+            visibility: hidden;
+            position: fixed;
+            width: 280px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(99, 102, 241, 0.1));
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            padding: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.1);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+            transform: translateY(8px);
+            pointer-events: none;
+        }
+
+        .fractal-tooltip.visible {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fractal-tooltip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .fractal-tooltip-title {
+            font-weight: 700;
+            color: #93c5fd;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .fractal-tooltip-action {
+            font-size: 10px;
+            color: rgba(147, 197, 253, 0.7);
+            background: rgba(59, 130, 246, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .fractal-tooltip-content {
+            font-size: 12px;
+            color: var(--text-prose);
+            line-height: 1.5;
         }
 
         .card-header {
@@ -1399,7 +1461,7 @@
             overflow: hidden;
             white-space: nowrap;
             border-right: 2px solid var(--text-muted);
-            animation: typing 2s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+            animation: typing 4s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
         }
 
         .typewriter.done {
@@ -1675,7 +1737,8 @@
             background: linear-gradient(90deg, #8b6914, #c9a227, #e8b84a, #d4a574);
             background-size: 200% 100%;
             width: 0%;
-            animation: progress 15s ease-out forwards, shimmer 2s linear infinite;
+            transition: width 0.3s ease-out;
+            animation: shimmer 2s linear infinite;
             border-radius: 2px;
         }
 
@@ -1728,22 +1791,19 @@
             }
         }
 
-        /* Subtle attention bounce for logo */
+        /* Soft attention roll for logo - gentle and refined */
         @keyframes attentionBounce {
             0%, 100% {
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
-            15% {
-                transform: translateY(-12px);
+            25% {
+                transform: translateY(-5px) scale(1.01);
             }
-            30% {
-                transform: translateY(0);
+            50% {
+                transform: translateY(-2px) scale(1.005);
             }
-            45% {
-                transform: translateY(-6px);
-            }
-            60% {
-                transform: translateY(0);
+            75% {
+                transform: translateY(-1px) scale(1.002);
             }
         }
 
@@ -1759,7 +1819,7 @@
         }
 
         .anim-attention {
-            animation: attentionBounce 0.8s ease-in-out;
+            animation: attentionBounce 1.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* Staggered delays for children */
@@ -2167,9 +2227,10 @@
                     <button onclick="toggleBookmarksSidebar()" class="theme-toggle" title="Research Library (L)">
                         <i data-lucide="library" class="w-4 h-4"></i>
                     </button>
-                    <!-- Theme Picker Toggle -->
-                    <button onclick="toggleThemePicker()" class="theme-toggle" title="Choose theme (T)">
-                        <i data-lucide="palette" class="w-4 h-4"></i>
+                    <!-- Dark/Light Mode Toggle -->
+                    <button onclick="toggleTheme()" class="theme-toggle-switch" title="Toggle dark/light mode (T)">
+                        <i data-lucide="sun" class="icon-sun w-4 h-4"></i>
+                        <i data-lucide="moon" class="icon-moon w-4 h-4"></i>
                     </button>
                     <!-- Keyboard Shortcuts Help -->
                     <button onclick="toggleShortcutsModal()" class="theme-toggle" title="Keyboard shortcuts (?)">
@@ -2180,36 +2241,15 @@
         </div>
     </nav>
 
-    <!-- THEME PICKER DROPDOWN -->
-    <div id="theme-picker" class="theme-picker">
-        <div class="theme-picker-header">Choose Theme</div>
-        <div class="theme-grid">
-            <div class="theme-swatch" data-theme="midnight" data-label="Midnight" onclick="setTheme('midnight')"></div>
-            <div class="theme-swatch" data-theme="ocean" data-label="Ocean" onclick="setTheme('ocean')"></div>
-            <div class="theme-swatch" data-theme="forest" data-label="Forest" onclick="setTheme('forest')"></div>
-            <div class="theme-swatch" data-theme="ember" data-label="Ember" onclick="setTheme('ember')"></div>
-            <div class="theme-swatch" data-theme="violet" data-label="Violet" onclick="setTheme('violet')"></div>
-            <div class="theme-swatch" data-theme="slate" data-label="Slate" onclick="setTheme('slate')"></div>
-            <div class="theme-swatch" data-theme="espresso" data-label="Espresso" onclick="setTheme('espresso')"></div>
-            <div class="theme-swatch" data-theme="rose" data-label="Rose" onclick="setTheme('rose')"></div>
-            <div class="theme-swatch" data-theme="cyan" data-label="Cyan" onclick="setTheme('cyan')"></div>
-            <div class="theme-swatch" data-theme="light" data-label="Light" onclick="setTheme('light')"></div>
-            <div class="theme-swatch" data-theme="sand" data-label="Sand" onclick="setTheme('sand')"></div>
-            <div class="theme-swatch" data-theme="mint" data-label="Mint" onclick="setTheme('mint')"></div>
-            <div class="theme-swatch" data-theme="kristie" data-label="Kristie" onclick="setTheme('kristie')"></div>
-            <div class="theme-swatch" data-theme="aurora" data-label="Aurora" onclick="setTheme('aurora')"></div>
-            <div class="theme-swatch" data-theme="cherry" data-label="Cherry" onclick="setTheme('cherry')"></div>
-            <div class="theme-swatch" data-theme="cobalt" data-label="Cobalt" onclick="setTheme('cobalt')"></div>
-        </div>
-    </div>
+    <!-- Theme picker removed - using simple dark/light toggle in nav -->
 
     <!-- VIEW 1: PORTAL -->
     <section id="view-portal" class="view-section active">
-        <!-- Two-column layout: Logo left, Essays stacked right -->
-        <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] px-4 lg:px-8">
+        <!-- Two-column layout: Logo left (static), Essays right (scrollable) -->
+        <div class="portal-layout">
 
-            <!-- LEFT SIDE: Logo and branding (sticky on desktop, vertically centered) -->
-            <div class="lg:w-1/2 flex flex-col items-center lg:items-start justify-center py-12 lg:py-0 lg:sticky lg:top-20 lg:h-[calc(100vh-80px)] lg:pl-24">
+            <!-- LEFT SIDE: Logo and branding (static on desktop) -->
+            <div class="portal-left">
                 <div class="text-center lg:text-left">
                     <h1 id="portal-logo" class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tighter text-white anim-drop-in anim-delay-1">
                         Genu<span style="color: var(--logo-accent);">Verity</span>
@@ -2232,13 +2272,13 @@
                                 <i data-lucide="sparkles" class="w-4 h-4"></i>
                             </button>
                         </div>
-                        <p class="text-xs mt-2" style="color: var(--text-muted);">Press Enter or click to generate an AI investigation</p>
+                        <p class="text-xs mt-2" style="color: var(--text-muted);">Research on your terms</p>
                     </div>
                 </div>
             </div>
 
-            <!-- RIGHT SIDE: Essays stacked vertically -->
-            <div class="lg:w-1/2 py-8 lg:py-12 lg:pr-8 xl:pr-16">
+            <!-- RIGHT SIDE: Essays (independently scrollable on desktop) -->
+            <div class="portal-right">
                 <div id="trending-container" class="w-full">
                     <!-- Section Header -->
                     <div class="mb-6 lg:mb-8 anim-fade-up anim-delay-3">
@@ -2265,6 +2305,9 @@
         <div class="report-layout">
             <!-- Main Article Content -->
             <div class="report-main">
+                <!-- SOURCES FIRST BANNER - Dynamically populated -->
+                <div id="sources-first-container"></div>
+
                 <div class="mb-12 border-b pb-8" style="border-color: var(--border-color);">
                     <div class="flex items-center justify-between mb-6">
                         <button onclick="switchView('view-portal')"
@@ -2294,11 +2337,8 @@
                 <div id="report-body"></div>
             </div>
 
-            <!-- Sources Sidebar (right on desktop, bottom on mobile) -->
-            <aside class="sources-sidebar">
-                <div class="sources-sidebar-header">Credibility Matrix</div>
-                <div id="report-sources"></div>
-            </aside>
+            <!-- Hidden container for JS compatibility (sources now in tabbed banner above) -->
+            <div id="report-sources" style="display: none;"></div>
         </div>
     </section>
 
@@ -2375,35 +2415,35 @@
                         trustScore: 98,
                         title: "Gen AI: Too Much Spend, Too Little Benefit?",
                         snippet: "Tech giants and utilities are on track to invest over $1 trillion in AI capacity in the coming years.",
-                        url: "https://www.goldmansachs.com/intelligence/pages/gen-ai-too-much-spend-too-little-benefit.html"
+                        url: "https://www.goldmansachs.com/insights/top-of-mind/gen-ai-too-much-spend-too-little-benefit"
                     },
                     covello_skeptic: {
                         domain: "goldmansachs.com",
                         trustScore: 98,
                         title: "Goldman Sachs Equity Research",
                         snippet: "The technology is 'exceptionally expensive' and must solve 'extremely complex problems' to justify this cost.",
-                        url: "https://www.goldmansachs.com/intelligence/pages/gen-ai-too-much-spend-too-little-benefit.html"
+                        url: "https://www.goldmansachs.com/insights/top-of-mind/gen-ai-too-much-spend-too-little-benefit"
                     },
                     hyperscaler_share: {
-                        domain: "synergystats.com",
-                        trustScore: 94,
-                        title: "Hyperscaler Capex Tracker Q3 2024",
+                        domain: "goldmansachs.com",
+                        trustScore: 97,
+                        title: "Will the $1 Trillion of AI Investment Pay Off?",
                         snippet: "The five major hyperscalers account for approximately 65% of all global data center capital expenditure.",
-                        url: "https://www.srgresearch.com/articles/hyperscale-capex"
+                        url: "https://www.goldmansachs.com/insights/articles/will-the-1-trillion-of-generative-ai-investment-pay-off"
                     },
                     gen_ai_revenue: {
-                        domain: "bloomberg.com",
+                        domain: "goldmansachs.com",
                         trustScore: 97,
-                        title: "Generative AI Market Size Analysis",
+                        title: "Gen AI: Too Much Spend, Too Little Benefit?",
                         snippet: "The entire generative AI market generates less than $100 billion in annual revenue as of 2024.",
-                        url: "https://www.bloomberg.com/news/articles/2024-03-14/generative-ai-market-size-projections"
+                        url: "https://www.goldmansachs.com/insights/top-of-mind/gen-ai-too-much-spend-too-little-benefit"
                     },
                     msft_capex: {
                         domain: "microsoft.com",
                         trustScore: 100,
                         title: "Microsoft FY24 Annual Report",
                         snippet: "Microsoft's AI-related capital expenditure reached $55 billion in fiscal year 2024.",
-                        url: "https://www.microsoft.com/investor/reports/ar24/"
+                        url: "https://www.microsoft.com/en-us/investor/annual-reports"
                     },
                     sequoia_method: {
                         domain: "sequoiacap.com",
@@ -2413,11 +2453,11 @@
                         url: "https://www.sequoiacap.com/article/ais-600b-question/"
                     },
                     openai_burn: {
-                        domain: "nytimes.com",
+                        domain: "cnbc.com",
                         trustScore: 96,
-                        title: "OpenAI's Spending Spree",
-                        snippet: "OpenAI is reportedly burning $5 billion annually while generating approximately $3.4 billion in revenue.",
-                        url: "https://www.nytimes.com/2024/09/27/technology/openai-chatgpt-investors-funding.html"
+                        title: "OpenAI's Financial Outlook",
+                        snippet: "OpenAI is reportedly burning $5 billion annually while generating approximately $3.7 billion in revenue.",
+                        url: "https://www.cnbc.com/2024/09/27/openai-sees-5-billion-loss-this-year-on-3point7-billion-in-revenue.html"
                     },
                     aws_lifespan: {
                         domain: "aws.amazon.com",
@@ -2431,21 +2471,21 @@
                         trustScore: 100,
                         title: "Blackwell Architecture Announcement",
                         snippet: "The Blackwell B100 delivers 2.5x the inference performance of the H100 at equivalent power consumption.",
-                        url: "https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/"
+                        url: "https://nvidianews.nvidia.com/news/nvidia-blackwell-platform-arrives-to-power-a-new-era-of-computing"
                     },
                     iea_demand: {
                         domain: "iea.org",
                         trustScore: 99,
-                        title: "Electricity 2024: Analysis and Forecast to 2026",
-                        snippet: "Global data center electricity consumption is projected to double by 2026, reaching 1,000 TWh.",
-                        url: "https://www.iea.org/reports/electricity-2024"
+                        title: "Energy and AI: Energy Demand from AI",
+                        snippet: "Global data center electricity consumption is projected to double by 2030, reaching 945 TWh.",
+                        url: "https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai"
                     },
                     tmi_deal: {
-                        domain: "reuters.com",
+                        domain: "cnbc.com",
                         trustScore: 98,
                         title: "Microsoft Signs Three Mile Island Nuclear Deal",
                         snippet: "Microsoft announced a 20-year agreement to purchase power from the restarted Three Mile Island Unit 1 reactor.",
-                        url: "https://www.reuters.com/business/energy/constellation-restart-three-mile-island-nuclear-plant-sell-power-microsoft-2024-09-20/"
+                        url: "https://www.cnbc.com/2024/09/20/constellation-energy-to-restart-three-mile-island-and-sell-the-power-to-microsoft.html"
                     },
                     tmi_cost: {
                         domain: "utilitydive.com",
@@ -2455,18 +2495,18 @@
                         url: "https://www.utilitydive.com/news/constellation-microsoft-three-mile-island-restart-ppa/727150/"
                     },
                     amazon_nuclear: {
-                        domain: "wsj.com",
-                        trustScore: 98,
-                        title: "Amazon Acquires Nuclear-Powered Data Center",
-                        snippet: "Amazon purchased a 960 MW nuclear-powered data center campus adjacent to Susquehanna nuclear plant.",
-                        url: "https://www.wsj.com/business/amazon-nuclear-power-datacenter"
+                        domain: "utilitydive.com",
+                        trustScore: 97,
+                        title: "Amazon Talen Nuclear Data Center Deal",
+                        snippet: "Amazon acquired a 960 MW nuclear-powered data center campus adjacent to Susquehanna nuclear plant.",
+                        url: "https://www.utilitydive.com/news/talen-amazon-aws-susquehanna-nuclear-data-center/710440/"
                     },
                     dotcom_compare: {
-                        domain: "hbs.edu",
+                        domain: "goldmansachs.com",
                         trustScore: 96,
-                        title: "AI Investment vs. Dot-Com: A Comparative Analysis",
+                        title: "A Skeptical Look at AI Investment",
                         snippet: "In both eras, infrastructure spending dramatically outpaced actual revenue generation in the early years.",
-                        url: "https://www.hbs.edu/faculty/research/publications/pages/default.aspx"
+                        url: "https://www.goldmansachs.com/insights/goldman-sachs-exchanges/a-skeptical-look-at-ai-investment"
                     }
                 },
                 contextData: {
@@ -2496,14 +2536,14 @@
                     }
                 },
                 sources: [
-                    { name: "Goldman Sachs: Gen AI - Too Much Spend?", score: 98, url: "https://www.goldmansachs.com/intelligence/pages/gen-ai-too-much-spend-too-little-benefit.html" },
-                    { name: "Sequoia Capital: AI's $600B Question", score: 99, url: "https://www.sequoiacap.com/article/ais-600b-question/" },
-                    { name: "IEA: Electricity 2024", score: 99, url: "https://www.iea.org/reports/electricity-2024" },
-                    { name: "Reuters: Microsoft Three Mile Island Deal", score: 98, url: "https://www.reuters.com/business/energy/constellation-restart-three-mile-island-nuclear-plant-sell-power-microsoft-2024-09-20/" },
-                    { name: "Wall Street Journal: Amazon Nuclear Campus", score: 98, url: "https://www.wsj.com/business/amazon-nuclear-power-datacenter" },
-                    { name: "New York Times: OpenAI's Finances", score: 96, url: "https://www.nytimes.com/2024/09/27/technology/openai-chatgpt-investors-funding.html" },
-                    { name: "Nvidia Blackwell Architecture", score: 100, url: "https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/" },
-                    { name: "Synergy Research: Hyperscaler Capex", score: 94, url: "https://www.srgresearch.com/articles/hyperscale-capex" }
+                    { name: "Goldman Sachs: Gen AI - Too Much Spend?", score: 98, url: "https://www.goldmansachs.com/insights/top-of-mind/gen-ai-too-much-spend-too-little-benefit" },
+                    { name: "Sequoia Capital: AI's $600B Question", score: 99, url: "https://sequoiacap.com/article/ais-600b-question/" },
+                    { name: "IEA: Energy and AI Report", score: 99, url: "https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai" },
+                    { name: "CNBC: Constellation Energy Three Mile Island", score: 98, url: "https://www.cnbc.com/2024/09/20/constellation-energy-to-restart-three-mile-island-and-sell-the-power-to-microsoft.html" },
+                    { name: "Utility Dive: Amazon Talen Nuclear Deal", score: 97, url: "https://www.utilitydive.com/news/talen-amazon-aws-susquehanna-nuclear-data-centert/750440/" },
+                    { name: "CNBC: OpenAI $5 Billion Loss", score: 96, url: "https://www.cnbc.com/2024/09/27/openai-sees-5-billion-loss-this-year-on-3point7-billion-in-revenue.html" },
+                    { name: "Nvidia Blackwell Architecture", score: 100, url: "https://nvidianews.nvidia.com/news/nvidia-blackwell-platform-arrives-to-power-a-new-era-of-computing" },
+                    { name: "Tom's Hardware: AI $600B Revenue Requirement", score: 94, url: "https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-industry-needs-to-earn-dollar600-billion-per-year-to-pay-for-massive-hardware-spend-fears-of-an-ai-bubble-intensify-in-wake-of-sequoia-report" }
                 ]
             },
             'congress_trading': {
@@ -2553,7 +2593,7 @@
                         trustScore: 99,
                         title: "2024 Congressional Trading Report",
                         snippet: "House Democrats returned 31% in 2024 vs Republicans' 26%, both outperforming the S&P 500's 25% return.",
-                        url: "https://unusualwhales.com/politics/article/congress-trading-report-2024"
+                        url: "https://unusualwhales.com/congress-trading-report-2024"
                     },
                     trade_volume: {
                         domain: "quiverquant.com",
@@ -2591,11 +2631,11 @@
                         url: "https://www.etf.com/KRUZ"
                     },
                     pelosi_return: {
-                        domain: "businessinsider.com",
+                        domain: "fortune.com",
                         trustScore: 95,
-                        title: "Nancy Pelosi's 2024 Portfolio Analysis",
+                        title: "Congress Stock Trading: Pelosi 2024",
                         snippet: "Representative Pelosi's disclosed portfolio returned an estimated 71% in 2024, driven by Nvidia and tech call options.",
-                        url: "https://www.businessinsider.com/nancy-pelosi-stock-trades-portfolio-2024"
+                        url: "https://fortune.com/2025/01/08/congress-stock-trading-pelosi-2024/"
                     },
                     mtg_trades: {
                         domain: "opensecrets.org",
@@ -2680,14 +2720,14 @@
                     }
                 },
                 sources: [
-                    { name: "Unusual Whales: 2024 Congressional Trading Report", score: 99, url: "https://unusualwhales.com/politics/article/congress-trading-report-2024" },
+                    { name: "Unusual Whales: 2024 Congressional Trading Report", score: 99, url: "https://unusualwhales.com/congress-trading-report-2024" },
                     { name: "S&P Global: SPIVA Scorecard", score: 99, url: "https://www.spglobal.com/spdji/en/research-insights/spiva/" },
-                    { name: "Business Insider: Congressional Trading Tracker", score: 95, url: "https://www.businessinsider.com/congress-stock-act-violations" },
-                    { name: "Campaign Legal Center: STOCK Act Analysis", score: 96, url: "https://campaignlegal.org/update/stock-act-failure-transparency" },
+                    { name: "Fortune: Congress Stock Trading 2024", score: 95, url: "https://fortune.com/2025/01/08/congress-stock-trading-pelosi-2024/" },
+                    { name: "The Hill: Lawmakers Beat Stock Market", score: 96, url: "https://thehill.com/business/5072670-dozens-of-lawmakers-beat-stock-market-in-2024-report/" },
                     { name: "Quiver Quantitative: Congress Trading Data", score: 95, url: "https://www.quiverquant.com/congresstrading/" },
-                    { name: "OpenSecrets: Personal Finance Disclosures", score: 98, url: "https://www.opensecrets.org/personal-finances" },
-                    { name: "New York Times: Tuberville Trading Investigation", score: 97, url: "https://www.nytimes.com/2024/05/14/us/politics/tommy-tuberville-stocks.html" },
-                    { name: "Gallup: Public Opinion on Congress", score: 99, url: "https://news.gallup.com/poll/congressional-approval.aspx" }
+                    { name: "Capitol Trades: Politician Tracker", score: 98, url: "https://www.capitoltrades.com/politicians/P000197" },
+                    { name: "NPR: Congress Stock Trades", score: 97, url: "https://www.npr.org/2024/06/06/nx-s1-4974720/congress-stock-trades-profits" },
+                    { name: "Morningstar: ETFs Tracking Congress", score: 99, url: "https://www.morningstar.com/funds/2-etfs-that-track-congressional-stock-trades" }
                 ]
             },
             'political_grift': {
@@ -2737,7 +2777,7 @@
                         trustScore: 98,
                         title: "The Leadership PAC Loophole",
                         snippet: "Over 120 members of Congress used Leadership PACs to spend less than 50% of funds on actual political contributions.",
-                        url: "https://issueone.org/articles/new-report-leadership-pacs-spending/"
+                        url: "https://issueone.org/articles/all-expenses-paid-another-look-at-congressional-leadership-pacs-outlandish-spending/"
                     },
                     total_pac_spend: {
                         domain: "opensecrets.org",
@@ -2807,7 +2847,7 @@
                         trustScore: 99,
                         title: "The FEC's Partisan Paralysis",
                         snippet: "The FEC deadlocks 3-3 on nearly every enforcement case, rendering the agency effectively powerless.",
-                        url: "https://www.propublica.org/article/federal-election-commission-votes-impotent"
+                        url: "https://www.propublica.org/article/as-political-donors-push-envelope-fec-gridlock-gives-de-facto-green-light"
                     },
                     fec_dormant: {
                         domain: "fec.gov",
@@ -2874,12 +2914,12 @@
                     }
                 },
                 sources: [
-                    { name: "Issue One: The Leadership PAC Loophole", score: 98, url: "https://issueone.org/articles/new-report-leadership-pacs-spending/" },
+                    { name: "Issue One: The Leadership PAC Loophole", score: 98, url: "https://issueone.org/articles/all-expenses-paid-another-look-at-congressional-leadership-pacs-outlandish-spending/" },
                     { name: "OpenSecrets: Leadership PAC Database", score: 99, url: "https://www.opensecrets.org/political-action-committees-pacs/leadership-pacs" },
-                    { name: "Campaign Legal Center: PAC Abuse Analysis", score: 96, url: "https://campaignlegal.org/update/leadership-pacs-used-personal-slush-funds" },
-                    { name: "Bloomberg Government: Shelby War Chest", score: 97, url: "https://about.bgov.com/news/richard-shelby-leaves-senate-with-16-million-campaign-stockpile/" },
-                    { name: "ProPublica: FEC Dysfunction Investigation", score: 99, url: "https://www.propublica.org/article/federal-election-commission-votes-impotent" },
-                    { name: "Brennan Center: Campaign Finance Reform", score: 97, url: "https://www.brennancenter.org/our-work/research-reports/money-politics" },
+                    { name: "Scripps News: Leadership PAC Loophole", score: 96, url: "https://www.scrippsnews.com/politics/theme-parks-private-planes-and-paris-the-leadership-pac-loophole" },
+                    { name: "Issue One: 50+ Members Urge FEC Action", score: 97, url: "https://issueone.org/articles/more-than-50-former-members-of-congress-urge-the-fec-to-close-personal-use-loophole-for-leadership-pacs/" },
+                    { name: "ProPublica: FEC Gridlock Investigation", score: 99, url: "https://www.propublica.org/article/as-political-donors-push-envelope-fec-gridlock-gives-de-facto-green-light" },
+                    { name: "Issue One: Leadership PACs Overview", score: 97, url: "https://issueone.org/issues/money-in-politics/leadership-pacs/" },
                     { name: "FEC: Official Campaign Finance Database", score: 100, url: "https://www.fec.gov/data/" },
                     { name: "Politico: Zombie Campaign Analysis", score: 96, url: "https://www.politico.com/news/magazine/2020/02/23/zombie-campaigns-former-lawmakers-116843" }
                 ]
@@ -3177,6 +3217,15 @@
                     { name: "CSIS: China Semiconductor Report", score: 98, url: "https://www.csis.org/analysis/semiconductors-and-taiwan" },
                     { name: "SemiAnalysis: Hyperscaler AI Infrastructure", score: 94, url: "https://www.semianalysis.com/" }
                 ]
+            },
+            'plastic_bottles_bpa_toxins_bodies': {
+                title: "The Invisible Invasion: How Plastic Bottles Are Poisoning Our Bodies From Within",
+                cardTitle: "The Plastic Poison",
+                cardTag: "HEALTH // TOXINS",
+                cardTagColor: "text-green-400",
+                cardDescription: "BPA and microplastics are silently accumulating in 93% of Americans.",
+                chartType: 'dynamic',
+                _isDynamic: true
             }
         };
 
@@ -3185,6 +3234,35 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             window.scrollTo(0, 0);
+
+            // Refresh trending section when returning to portal (to show newly generated articles)
+            if (id === 'view-portal') {
+                renderTrendingSection();
+            }
+        }
+
+        // Toggle Sources First banner collapse/expand
+        function toggleSourcesBanner() {
+            const banner = document.getElementById('sources-banner');
+            const floatingBtn = document.getElementById('sources-floating-btn');
+
+            if (!banner || !floatingBtn) return;
+
+            const isCollapsed = banner.classList.contains('collapsed');
+
+            if (isCollapsed) {
+                // Expand
+                banner.classList.remove('collapsed');
+                floatingBtn.classList.remove('visible');
+                // Smooth scroll to banner
+                setTimeout(() => {
+                    banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            } else {
+                // Collapse
+                banner.classList.add('collapsed');
+                floatingBtn.classList.add('visible');
+            }
         }
 
         function loadReport(key) {
@@ -3192,6 +3270,12 @@
 
             // If report not in local database, try fetching from cache
             if (!data) {
+                loadCachedReport(key);
+                return;
+            }
+
+            // If report is marked as dynamic (cached on server), fetch from cache
+            if (data._isDynamic && !data.content) {
                 loadCachedReport(key);
                 return;
             }
@@ -3230,75 +3314,251 @@
 
         // Common function to render report data
         function renderReportData(data, isDynamic = false) {
+            // Hide any visible deep dive tooltip when loading new content
+            if (deepDiveTooltipEl) {
+                deepDiveTooltipEl.classList.remove('visible');
+            }
+
             switchView('view-report');
             document.getElementById('report-title').innerText = data.title;
             document.getElementById('report-body').innerHTML = data.content;
 
+            // Detect dynamic articles by checking for chartConfigs or chartType='dynamic'
+            const hasDynamicCharts = data.chartConfigs && Object.keys(data.chartConfigs).length > 0;
+            const isActuallyDynamic = isDynamic || hasDynamicCharts || data.chartType === 'dynamic';
+
             // Store dynamic citation database for hover/click handlers
-            if (isDynamic && data.citationDatabase) {
+            if (isActuallyDynamic && data.citationDatabase) {
                 window.dynamicCitationDatabase = data.citationDatabase;
             }
 
-            // Render Sources in sidebar
-            const sourceContainer = document.getElementById('report-sources');
-            sourceContainer.innerHTML = '';
-            (data.sources || []).forEach(s => {
-                const scoreClass = s.score >= 90 ? 'high' : s.score >= 70 ? 'medium' : 'low';
-                const domain = s.url ? new URL(s.url).hostname.replace('www.', '') : s.name;
+            // Sort sources by score (highest first)
+            const allSources = (data.sources || []).sort((a, b) => (b.score || 0) - (a.score || 0));
 
-                sourceContainer.innerHTML += `
-                    <div class="source-card" ${s.url ? `onclick="window.open('${s.url}', '_blank')" style="cursor: pointer;"` : ''}>
-                        <div class="source-card-domain">${domain}</div>
-                        <div class="source-card-title">${s.name}</div>
-                        <div class="source-card-score">
-                            <div class="source-score-bar">
-                                <div class="source-score-fill ${scoreClass}" style="width: ${s.score}%"></div>
+            // Split into tabs of 4 sources each
+            const tabNames = ['Primary', 'Secondary', 'Tertiary', 'Quaternary'];
+            const tabCTAs = [
+                'These are the most credible sources for this topic',
+                'Supporting evidence from trusted outlets',
+                'Additional context and perspectives',
+                'Extended research materials'
+            ];
+            const sourceGroups = [];
+            for (let i = 0; i < allSources.length; i += 4) {
+                sourceGroups.push(allSources.slice(i, i + 4));
+            }
+
+            // === SOURCES FIRST BANNER - TABBED VERSION ===
+            const sourcesFirstContainer = document.getElementById('sources-first-container');
+            if (allSources.length > 0) {
+                // Build tab buttons
+                const tabsHTML = sourceGroups.map((group, idx) => {
+                    const tabName = tabNames[idx] || `Set ${idx + 1}`;
+                    return `
+                        <button class="sources-tab ${idx === 0 ? 'active' : ''}" data-tab="${idx}">
+                            ${tabName}<span class="tab-count">${group.length}</span>
+                        </button>
+                    `;
+                }).join('');
+
+                // Build tab panels
+                const panelsHTML = sourceGroups.map((group, groupIdx) => {
+                    const cardsHTML = group.map((s, idx) => {
+                        const scoreClass = s.score >= 90 ? 'high' : s.score >= 70 ? 'medium' : 'low';
+                        const domain = s.url ? new URL(s.url).hostname.replace('www.', '') : 'Source';
+                        const globalRank = groupIdx * 4 + idx + 1;
+                        return `
+                            <div class="top-source-card" ${s.url ? `onclick="window.open('${s.url}', '_blank')"` : ''}>
+                                <div class="top-source-rank">#${globalRank}</div>
+                                <div class="top-source-domain">${domain}</div>
+                                <div class="top-source-title">${s.name}</div>
+                                <div class="top-source-score">
+                                    <div class="top-source-score-bar">
+                                        <div class="top-source-score-fill ${scoreClass}" style="width: ${s.score}%"></div>
+                                    </div>
+                                    <span class="top-source-score-value">${s.score}%</span>
+                                </div>
                             </div>
-                            <span class="source-score-value">${s.score}%</span>
+                        `;
+                    }).join('');
+
+                    const ctaText = tabCTAs[groupIdx] || 'Explore these sources';
+
+                    return `
+                        <div class="sources-tab-panel ${groupIdx === 0 ? 'active' : ''}" data-panel="${groupIdx}">
+                            <div class="sources-first-grid">${cardsHTML}</div>
+                            <div class="tab-cta">
+                                <i data-lucide="external-link" class="w-3 h-3"></i>
+                                <span>${ctaText}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                sourcesFirstContainer.innerHTML = `
+                    <div class="sources-first-banner" id="sources-banner">
+                        <div class="sources-first-inner">
+                            <div class="sources-first-header">
+                                <div class="sources-first-title">
+                                    <i data-lucide="shield-check" class="w-5 h-5 shield-icon"></i>
+                                    <h3>Sources First</h3>
+                                </div>
+                                <button class="sources-collapse-btn" onclick="toggleSourcesBanner()">
+                                    <i data-lucide="minimize-2" class="w-3 h-3"></i>
+                                    <span>Minimize</span>
+                                </button>
+                            </div>
+                            <p class="sources-first-byline">We encourage you to verify with primary sources before reading AI analysis.</p>
+                            <div class="sources-tabs">${tabsHTML}</div>
+                            <div class="sources-tab-panels">${panelsHTML}</div>
                         </div>
                     </div>
+                    <button class="sources-floating-btn" id="sources-floating-btn" onclick="toggleSourcesBanner()">
+                        <i data-lucide="shield-check" class="w-4 h-4 shield-mini"></i>
+                        <span>Sources</span>
+                        <span class="sources-floating-count">${allSources.length}</span>
+                    </button>
                 `;
-            });
-            // Re-init icons for the new external links
+
+                // Add tab switching functionality
+                setTimeout(() => {
+                    document.querySelectorAll('.sources-tab').forEach(tab => {
+                        tab.addEventListener('click', function() {
+                            const tabIdx = this.dataset.tab;
+                            // Update active tab
+                            document.querySelectorAll('.sources-tab').forEach(t => t.classList.remove('active'));
+                            this.classList.add('active');
+                            // Update active panel
+                            document.querySelectorAll('.sources-tab-panel').forEach(p => p.classList.remove('active'));
+                            document.querySelector(`.sources-tab-panel[data-panel="${tabIdx}"]`).classList.add('active');
+                        });
+                    });
+                }, 50);
+            } else {
+                sourcesFirstContainer.innerHTML = '';
+            }
+
+            // Sidebar now shows summary only (sources are in tabs above)
+            const sourceContainer = document.getElementById('report-sources');
+            if (allSources.length > 0) {
+                sourceContainer.innerHTML = `
+                    <p style="color: var(--text-muted); font-size: 0.8rem; font-style: italic; text-align: center; padding: 1rem;">
+                        <i data-lucide="info" class="w-4 h-4" style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;"></i>
+                        All ${allSources.length} sources are displayed in the Sources First panel above.
+                    </p>
+                `;
+            } else {
+                sourceContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.8rem; font-style: italic;">No sources available.</p>';
+            }
+
+            // Re-init icons for the new elements
             lucide.createIcons();
 
-            // Critical: Wait for DOM, then clean canvas, then render
+            // Critical: Wait for DOM to fully render, then initialize charts
+            // Use multiple requestAnimationFrame calls to ensure paint completes
             requestAnimationFrame(() => {
-                setTimeout(() => {
-                    // For dynamic articles, render their chartConfigs
-                    if (isDynamic && data.chartConfigs) {
-                        renderDynamicCharts(data.chartConfigs);
-                    } else {
-                        renderCharts(data.chartType);
-                    }
-                    initLivingNumbers(); // Re-run observer for new elements
-                    initDeepDiveTooltips(); // Add hover tooltips to deep dive buttons
-                }, 100);
+                requestAnimationFrame(() => {
+                    setTimeout(() => {
+                        // For dynamic articles with chartConfigs, render them
+                        if (isActuallyDynamic && data.chartConfigs) {
+                            console.log('[Charts] Rendering dynamic charts for article, chartConfigs:', Object.keys(data.chartConfigs));
+                            const chartsRendered = renderDynamicCharts(data.chartConfigs);
+
+                            // If charts didn't render (canvases not found), retry after longer delay
+                            if (!chartsRendered) {
+                                console.log('[Charts] First attempt failed, retrying in 300ms...');
+                                setTimeout(() => {
+                                    renderDynamicCharts(data.chartConfigs);
+                                }, 300);
+                            }
+                        } else if (data.chartType && data.chartType !== 'dynamic') {
+                            // For pre-defined articles with specific chart types
+                            renderCharts(data.chartType);
+                        }
+                        initLivingNumbers(); // Re-run observer for new elements
+                        initDeepDiveTooltips(); // Add hover tooltips to deep dive buttons
+                    }, 150);
+                });
             });
         }
 
-        // Initialize deep dive hover tooltips
+        // Initialize deep dive hover tooltips with a single global tooltip
+        let deepDiveTooltipEl = null;
+
         function initDeepDiveTooltips() {
-            document.querySelectorAll('.fig-deep-dive').forEach(element => {
-                // Skip if tooltip already exists
-                if (element.querySelector('.deep-dive-tooltip')) return;
-
-                // Get context from parent figure caption
-                const figCaption = element.closest('.fig-caption');
-                const figureTitle = figCaption ? figCaption.textContent.replace('DEEP DIVE', '').trim() : 'this topic';
-
-                // Create tooltip HTML
-                const tooltip = document.createElement('div');
-                tooltip.className = 'deep-dive-tooltip';
-                tooltip.innerHTML = `
-                    <div class="tooltip-context">Explore the data behind <strong>${figureTitle}</strong> with an AI-generated deep analysis.</div>
+            // Create global tooltip element if it doesn't exist
+            if (!deepDiveTooltipEl) {
+                deepDiveTooltipEl = document.createElement('div');
+                deepDiveTooltipEl.className = 'deep-dive-tooltip';
+                deepDiveTooltipEl.innerHTML = `
+                    <div class="tooltip-context"></div>
                     <div class="tooltip-action">
                         <span class="tooltip-rabbit">🐇</span>
                         <span>Go Down the Rabbit Hole</span>
                     </div>
+                    <div class="tooltip-cost" style="margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-color); font-size: 0.75rem;"></div>
                 `;
+                document.body.appendChild(deepDiveTooltipEl);
 
-                element.appendChild(tooltip);
+                // Hide tooltip on mouseleave from buttons
+                document.body.addEventListener('mouseover', (e) => {
+                    // If mouse is not over a fig-deep-dive button and not over the tooltip itself, hide it
+                    if (!e.target.closest('.fig-deep-dive') && !e.target.closest('.deep-dive-tooltip')) {
+                        deepDiveTooltipEl.classList.remove('visible');
+                    }
+                });
+
+                // Also hide on scroll and click anywhere
+                document.addEventListener('scroll', () => {
+                    deepDiveTooltipEl.classList.remove('visible');
+                }, true);
+
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.fig-deep-dive')) {
+                        deepDiveTooltipEl.classList.remove('visible');
+                    }
+                });
+            }
+
+            // Add hover listeners to all deep dive buttons
+            document.querySelectorAll('.fig-deep-dive').forEach(element => {
+                // Skip if already initialized
+                if (element.dataset.tooltipInit) return;
+                element.dataset.tooltipInit = 'true';
+
+                element.addEventListener('mouseenter', (e) => {
+                    // Get context from parent figure caption
+                    const figCaption = element.closest('.fig-caption');
+                    const figureTitle = figCaption ? figCaption.textContent.replace('DEEP DIVE', '').trim().replace(/^Fig\s*\d+\.\s*/i, '') : 'this topic';
+
+                    // Update tooltip content
+                    const contextEl = deepDiveTooltipEl.querySelector('.tooltip-context');
+                    const costEl = deepDiveTooltipEl.querySelector('.tooltip-cost');
+
+                    contextEl.innerHTML = `Explore the data behind <strong>${figureTitle}</strong> with an AI-generated deep analysis.`;
+
+                    // Show free/cost indicator
+                    const isFree = userRemainingDives > 0;
+                    if (isFree) {
+                        costEl.innerHTML = `<span style="color: #10b981;">✓ FREE</span> <span style="color: var(--text-muted);">(${userRemainingDives} remaining today)</span>`;
+                    } else {
+                        costEl.innerHTML = `<span style="color: #f59e0b;">⚠️ Uses token</span>`;
+                    }
+
+                    // Position tooltip above the button
+                    const rect = element.getBoundingClientRect();
+                    let x = rect.left + (rect.width / 2) - 140; // Center tooltip (280px / 2)
+                    let y = rect.top - 10;
+
+                    // Boundary checks
+                    if (x < 10) x = 10;
+                    if (x + 280 > window.innerWidth - 10) x = window.innerWidth - 290;
+
+                    deepDiveTooltipEl.style.left = x + 'px';
+                    deepDiveTooltipEl.style.bottom = (window.innerHeight - y) + 'px';
+                    deepDiveTooltipEl.style.top = 'auto';
+                    deepDiveTooltipEl.classList.add('visible');
+                });
             });
         }
 
@@ -3776,18 +4036,37 @@
         }
 
         // Render charts from AI-generated article chartConfigs
+        // Returns true if at least one chart was rendered, false otherwise
         function renderDynamicCharts(chartConfigs) {
+            console.log('[Charts] renderDynamicCharts called with:', chartConfigs);
+
             // Cleanup old charts
             activeCharts.forEach(c => c.destroy());
             activeCharts = [];
+
+            if (!chartConfigs || Object.keys(chartConfigs).length === 0) {
+                console.log('[Charts] No chartConfigs provided');
+                return false;
+            }
+
+            let chartsRendered = 0;
+            const chartKeys = Object.keys(chartConfigs);
 
             const chartTextColor = getChartTextColor();
             const themeColors = getThemeChartColors();
             const defaultColors = themeColors.palette.concat([themeColors.accent, themeColors.muted]);
 
             for (const [chartId, config] of Object.entries(chartConfigs)) {
+                console.log('[Charts] Looking for canvas with id:', chartId);
                 const canvas = document.getElementById(chartId);
-                if (!canvas) continue;
+                if (!canvas) {
+                    console.log('[Charts] Canvas NOT found for:', chartId);
+                    // List all canvases in the document for debugging
+                    const allCanvases = document.querySelectorAll('canvas');
+                    console.log('[Charts] Available canvases:', Array.from(allCanvases).map(c => c.id));
+                    continue;
+                }
+                console.log('[Charts] Canvas found for:', chartId);
 
                 const chartType = config.type || 'bar';
                 const data = config.data || {};
@@ -3835,10 +4114,15 @@
                         data: chartData,
                         options: options
                     }));
+                    chartsRendered++;
+                    console.log('[Charts] Successfully rendered chart:', chartId);
                 } catch (e) {
                     console.error('Failed to render chart:', chartId, e);
                 }
             }
+
+            console.log(`[Charts] Rendered ${chartsRendered}/${chartKeys.length} charts`);
+            return chartsRendered > 0;
         }
 
         // --- 4. FRACTAL CONTEXT LOGIC ---
@@ -4059,7 +4343,7 @@
         renderTrendingSection();
 
         // === PERIODIC LOGO ATTENTION ANIMATION ===
-        // Subtle bounce every 12-18 seconds when on portal view
+        // Soft roll every 24-36 seconds when on portal view (half as often, much gentler)
         function startLogoAttention() {
             const triggerAttention = () => {
                 const logo = document.getElementById('portal-logo');
@@ -4067,15 +4351,15 @@
                 // Only animate if portal view is visible
                 if (logo && portalView && portalView.classList.contains('active')) {
                     logo.classList.add('anim-attention');
-                    // Remove class after animation completes
-                    setTimeout(() => logo.classList.remove('anim-attention'), 800);
+                    // Remove class after animation completes (1.2s duration)
+                    setTimeout(() => logo.classList.remove('anim-attention'), 1200);
                 }
-                // Schedule next animation at random interval (12-18 seconds)
-                const nextDelay = 12000 + Math.random() * 6000;
+                // Schedule next animation at random interval (24-36 seconds - half as often)
+                const nextDelay = 24000 + Math.random() * 12000;
                 setTimeout(triggerAttention, nextDelay);
             };
-            // Start first animation after 8 seconds
-            setTimeout(triggerAttention, 8000);
+            // Start first animation after 15 seconds (more patience)
+            setTimeout(triggerAttention, 15000);
         }
         startLogoAttention();
 
@@ -4084,7 +4368,7 @@
         setTimeout(() => {
             const typewriter = document.querySelector('.typewriter');
             if (typewriter) typewriter.classList.add('done');
-        }, 2500); // 2s typing + 0.5s buffer
+        }, 4500); // 4s typing + 0.5s buffer
 
         // === DYNAMIC TRENDING SECTION ===
         function renderTrendingSection() {
@@ -4111,19 +4395,38 @@
             fetch('/api/cache/list')
                 .then(res => res.json())
                 .then(data => {
-                    // Add cached articles that aren't already in reports
+                    // Add cached articles that aren't already in reports or allArticles
                     if (data.articles) {
+                        // Helper to normalize titles for comparison
+                        const normalizeTitle = (title) => (title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                        // Get existing titles for dedup
+                        const existingTitles = new Set(allArticles.map(a => normalizeTitle(a.title)));
+                        const existingKeys = new Set(allArticles.map(a => a.key));
+
                         data.articles.forEach(article => {
-                            if (!reports[article.key]) {
-                                allArticles.push({
-                                    key: article.key,
-                                    title: article.title || article.topic || 'Untitled',
-                                    tag: 'AI GENERATED',
-                                    tagColor: 'text-emerald-400',
-                                    description: article.topic || '',
-                                    isCached: true
-                                });
+                            const articleTitle = article.title || article.topic || 'Untitled';
+                            const normalizedTitle = normalizeTitle(articleTitle);
+
+                            // Skip if key already exists, title is duplicate, or in reports
+                            if (reports[article.key] || existingKeys.has(article.key) || existingTitles.has(normalizedTitle)) {
+                                console.log('[Portal] Skipping duplicate:', article.key, articleTitle.substring(0, 40));
+                                return;
                             }
+
+                            existingKeys.add(article.key);
+                            existingTitles.add(normalizedTitle);
+
+                            allArticles.push({
+                                key: article.key,
+                                title: articleTitle,
+                                tag: article.parent_key ? 'DEEP DIVE' : 'INVESTIGATION',
+                                tagColor: article.parent_key ? 'text-purple-400' : 'text-blue-400',
+                                description: article.topic || '',
+                                isCached: true,
+                                parentKey: article.parent_key || '',
+                                parentTitle: article.parent_title || ''
+                            });
                         });
                     }
                     renderArticleCards(allArticles, featuredContainer, moreContainer);
@@ -4167,6 +4470,12 @@
             // Render main cards with 2-column layout (content left, sources right)
             featuredContainer.innerHTML = mainCards.map((article, i) => {
                 const sources = getArticleSources(article.key);
+                const parentLink = article.parentKey ? `
+                    <div class="parent-link" onclick="event.stopPropagation(); loadReport('${article.parentKey}')" style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem; cursor: pointer;">
+                        <span style="color: var(--accent-purple); opacity: 0.7;">&#8627;</span>
+                        From: <span style="color: var(--accent-blue); text-decoration: underline;">${article.parentTitle || 'Parent Article'}</span>
+                    </div>
+                ` : '';
                 return `
                 <div onclick="loadReport('${article.key}')" class="trending-card trending-card-${i + 1} anim-fade-up anim-delay-${4 + i}">
                     <div class="card-inner">
@@ -4174,6 +4483,7 @@
                             <div class="text-xs font-mono ${article.tagColor} mb-2">${article.tag}</div>
                             <h3 class="font-bold mb-1" style="color: var(--text-main);">${article.title}</h3>
                             <p style="color: var(--text-muted);">${article.description}</p>
+                            ${parentLink}
                         </div>
                         ${renderSources(sources)}
                     </div>
@@ -4188,6 +4498,12 @@
                         <div onclick="loadReport('${article.key}')" class="trending-card-list anim-fade-up" style="animation-delay: ${0.9 + i * 0.1}s;">
                             <div class="card-tag font-mono ${article.tagColor}">${article.tag}</div>
                             <h4 style="color: var(--text-main);">${article.title}</h4>
+                            ${article.parentKey ? `
+                                <div class="parent-link" onclick="event.stopPropagation(); loadReport('${article.parentKey}')" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; cursor: pointer;">
+                                    <span style="color: var(--accent-purple); opacity: 0.7;">&#8627;</span>
+                                    From: <span style="color: var(--accent-blue); text-decoration: underline;">${article.parentTitle || 'Parent Article'}</span>
+                                </div>
+                            ` : ''}
                         </div>
                     `).join('')}
                 `;
@@ -4292,6 +4608,83 @@
                 }
             });
 
+            // === FRACTAL TRIGGER TOOLTIP ===
+            const fractalTooltip = document.createElement('div');
+            fractalTooltip.className = 'fractal-tooltip';
+            fractalTooltip.innerHTML = `
+                <div class="fractal-tooltip-header">
+                    <span class="fractal-tooltip-title"></span>
+                    <span class="fractal-tooltip-action"></span>
+                </div>
+                <div class="fractal-tooltip-content"></div>
+                <div class="fractal-tooltip-cost" style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(59, 130, 246, 0.2); font-size: 10px;"></div>
+            `;
+            document.body.appendChild(fractalTooltip);
+
+            const fractalTitleEl = fractalTooltip.querySelector('.fractal-tooltip-title');
+            const fractalContentEl = fractalTooltip.querySelector('.fractal-tooltip-content');
+            const fractalActionEl = fractalTooltip.querySelector('.fractal-tooltip-action');
+            const fractalCostEl = fractalTooltip.querySelector('.fractal-tooltip-cost');
+
+            // Helper to get context data
+            function getContextData(key) {
+                const currentReport = reports[currentArticleKey];
+                if (currentReport?.contextData?.[key]) return currentReport.contextData[key];
+                if (window.dynamicContextData?.[key]) return window.dynamicContextData[key];
+                return null;
+            }
+
+            // Fractal trigger hover
+            document.body.addEventListener('mouseover', (e) => {
+                if (e.target.classList.contains('fractal-trigger')) {
+                    const onclickAttr = e.target.getAttribute('onclick');
+                    const keyMatch = onclickAttr?.match(/expandContext\(this,\s*'([^']+)'\)/);
+                    const key = keyMatch ? keyMatch[1] : null;
+                    const termText = e.target.textContent.trim();
+
+                    const contextData = key ? getContextData(key) : null;
+
+                    fractalTitleEl.textContent = termText;
+                    if (contextData && contextData.expanded) {
+                        fractalContentEl.textContent = contextData.expanded.substring(0, 200) + (contextData.expanded.length > 200 ? '...' : '');
+                        fractalActionEl.textContent = 'Click to explore';
+                    } else {
+                        fractalContentEl.textContent = 'Click to generate a deep dive on this topic';
+                        fractalActionEl.textContent = 'Generate';
+                    }
+
+                    // Show free/cost indicator
+                    const isFree = userRemainingDives > 0;
+                    if (isFree) {
+                        fractalCostEl.innerHTML = `<span style="color: #10b981;">✓ FREE</span> <span style="color: var(--text-muted);">(${userRemainingDives} remaining today)</span>`;
+                    } else {
+                        fractalCostEl.innerHTML = `<span style="color: #f59e0b;">⚠️ Uses token</span> <span style="color: var(--text-muted);">(daily limit reached)</span>`;
+                    }
+
+                    fractalTooltip.classList.add('visible');
+                }
+            });
+
+            document.body.addEventListener('mousemove', (e) => {
+                if (fractalTooltip.classList.contains('visible')) {
+                    let x = e.clientX + 15;
+                    let y = e.clientY + 15;
+
+                    // Boundary checks
+                    if (x + 300 > window.innerWidth) x = e.clientX - 315;
+                    if (y + 120 > window.innerHeight) y = e.clientY - 130;
+
+                    fractalTooltip.style.left = x + 'px';
+                    fractalTooltip.style.top = y + 'px';
+                }
+            });
+
+            document.body.addEventListener('mouseout', (e) => {
+                if (e.target.classList.contains('fractal-trigger')) {
+                    fractalTooltip.classList.remove('visible');
+                }
+            });
+
             // Init Living Numbers Observer
             initLivingNumbers();
         }
@@ -4346,6 +4739,146 @@
         }
 
         // --- 6. GENAI INTEGRATION (LOCAL) ---
+
+        // Extract chartConfigs from partial JSON - critical for timeout recovery
+        function extractChartConfigs(text) {
+            const charts = {};
+
+            // Look for chartConfigs section - now comes BEFORE content
+            const chartSection = text.match(/"chartConfigs"\s*:\s*\{([\s\S]*?)\}\s*,\s*"(?:contextData|citationDatabase|sources|content)"/);
+            if (!chartSection) return charts;
+
+            const section = chartSection[1];
+
+            // Extract individual chart definitions
+            const chartPattern = /"(chart_\w+)"\s*:\s*(\{[^}]*"type"\s*:\s*"[^"]+"\s*,[^}]*"data"\s*:\s*\{[^}]*\}[^}]*\})/g;
+            let match;
+
+            while ((match = chartPattern.exec(section)) !== null) {
+                const chartId = match[1];
+                const chartJson = match[2];
+                try {
+                    charts[chartId] = JSON.parse(chartJson);
+                    console.log('Extracted chart:', chartId);
+                } catch (e) {
+                    // Manual extraction fallback
+                    const typeMatch = chartJson.match(/"type"\s*:\s*"([^"]+)"/);
+                    const titleMatch = chartJson.match(/"title"\s*:\s*"([^"]+)"/);
+                    const labelsMatch = chartJson.match(/"labels"\s*:\s*\[([^\]]+)\]/);
+                    const valuesMatch = chartJson.match(/"values"\s*:\s*\[([^\]]+)\]/);
+                    const colorsMatch = chartJson.match(/"colors"\s*:\s*\[([^\]]+)\]/);
+
+                    if (typeMatch && labelsMatch && valuesMatch) {
+                        try {
+                            charts[chartId] = {
+                                type: typeMatch[1],
+                                data: {
+                                    labels: JSON.parse('[' + labelsMatch[1] + ']'),
+                                    values: JSON.parse('[' + valuesMatch[1] + ']'),
+                                    colors: colorsMatch ? JSON.parse('[' + colorsMatch[1] + ']') : ['#3b82f6']
+                                },
+                                title: titleMatch ? titleMatch[1] : 'Chart'
+                            };
+                            console.log('Manually extracted chart:', chartId);
+                        } catch (e2) {}
+                    }
+                }
+            }
+
+            return charts;
+        }
+
+        // Client-side JSON repair for truncated responses (global scope)
+        function repairTruncatedJSON(text) {
+            if (!text || typeof text !== 'string') return null;
+
+            text = text.trim();
+
+            // Remove markdown fences
+            if (text.startsWith('```json')) text = text.slice(7);
+            if (text.startsWith('```')) text = text.slice(3);
+            if (text.endsWith('```')) text = text.slice(0, -3);
+            text = text.trim();
+
+            // Try parsing as-is first
+            try {
+                return JSON.parse(text);
+            } catch (e) {}
+
+            // Count unclosed braces/brackets
+            let openBraces = 0, openBrackets = 0;
+            let inString = false;
+            for (let i = 0; i < text.length; i++) {
+                const c = text[i];
+                if (c === '"' && (i === 0 || text[i-1] !== '\\')) {
+                    inString = !inString;
+                }
+                if (!inString) {
+                    if (c === '{') openBraces++;
+                    else if (c === '}') openBraces--;
+                    else if (c === '[') openBrackets++;
+                    else if (c === ']') openBrackets--;
+                }
+            }
+
+            // Close string if needed
+            let repaired = text;
+            if (inString) repaired += '"';
+
+            // Close brackets then braces
+            repaired += ']'.repeat(Math.max(0, openBrackets));
+            repaired += '}'.repeat(Math.max(0, openBraces));
+
+            try {
+                const data = JSON.parse(repaired);
+                console.log('JSON repair successful');
+                data._partial = true;
+                return data;
+            } catch (e) {
+                console.log('JSON repair failed:', e);
+            }
+
+            // Last resort: extract key fields with regex - PRESERVE CHARTS!
+            try {
+                const keyMatch = text.match(/"key"\s*:\s*"([^"]+)"/);
+                const titleMatch = text.match(/"title"\s*:\s*"([^"]+)"/);
+                const cardTitleMatch = text.match(/"cardTitle"\s*:\s*"([^"]+)"/);
+                const cardTagMatch = text.match(/"cardTag"\s*:\s*"([^"]+)"/);
+                const cardDescMatch = text.match(/"cardDescription"\s*:\s*"([^"]+)"/);
+
+                if (keyMatch && titleMatch) {
+                    // CRITICAL: Extract chartConfigs even from truncated JSON
+                    const chartConfigs = extractChartConfigs(text);
+                    console.log('Extracted', Object.keys(chartConfigs).length, 'charts from truncated JSON');
+
+                    // Extract content - it comes AFTER chartConfigs now
+                    const contentMatch = text.match(/"content"\s*:\s*"([\s\S]*?)(?:"\s*[,}]|$)/);
+                    let content = contentMatch ? contentMatch[1] : '<p class="prose-text">Article content was truncated. The charts and data are preserved.</p>';
+
+                    // Unescape content
+                    content = content.replace(/\\"/g, '"').replace(/\\n/g, '\n');
+
+                    return {
+                        key: keyMatch[1],
+                        title: titleMatch[1],
+                        cardTitle: cardTitleMatch ? cardTitleMatch[1] : titleMatch[1].substring(0, 50),
+                        cardTag: cardTagMatch ? cardTagMatch[1] : 'INVESTIGATION',
+                        cardDescription: cardDescMatch ? cardDescMatch[1] : '',
+                        content: content,
+                        chartConfigs: chartConfigs,  // PRESERVE CHARTS!
+                        contextData: {},
+                        citationDatabase: {},
+                        sources: [],
+                        _partial: true
+                    };
+                }
+            } catch (e) {
+                console.log('Regex extraction failed:', e);
+            }
+
+            return null;
+        }
+
         // Progress update helper
         function updateProgress(stage, percent, message) {
             // Update subtitle
@@ -4533,64 +5066,65 @@
         // PHASE 1: QUICK WINS FEATURES
         // ============================================
 
-        // === THEME PICKER SYSTEM (12 Themes) ===
-        const ALL_THEMES = ['midnight', 'ocean', 'forest', 'ember', 'violet', 'slate', 'espresso', 'rose', 'cyan', 'light', 'sand', 'mint', 'kristie', 'aurora', 'cherry', 'cobalt'];
+        // === DARK/LIGHT THEME SYSTEM ===
         let currentArticleKey = 'congress_trading';
 
         function initTheme() {
             const saved = localStorage.getItem('genuverity-theme');
-            // Default to 'ocean' (deep sea blue)
-            const theme = saved || 'ocean';
-            document.documentElement.setAttribute('data-theme', theme);
-            updateActiveThemeSwatch();
-        }
-
-        function toggleThemePicker() {
-            const picker = document.getElementById('theme-picker');
-            picker.classList.toggle('visible');
-            if (picker.classList.contains('visible')) {
-                updateActiveThemeSwatch();
+            // If user has explicit preference, use it
+            // Otherwise, check system preference, defaulting to dark
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+            } else {
+                // Let CSS media query handle system preference
+                // Only set explicit theme if user has dark preference on a light-preferring system
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (prefersDark) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+                // Light mode handled by CSS media query
+            }
+            // Re-initialize lucide icons to ensure theme toggle icons render
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
             }
         }
 
         function setTheme(theme) {
             document.documentElement.setAttribute('data-theme', theme);
             localStorage.setItem('genuverity-theme', theme);
-            updateActiveThemeSwatch();
 
             // Re-render charts with new theme colors
             if (currentArticleKey && reports[currentArticleKey]) {
                 renderCharts(reports[currentArticleKey].chartType);
             }
 
-            // Close picker after selection
-            document.getElementById('theme-picker').classList.remove('visible');
+            // Re-initialize lucide icons for theme toggle
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
         }
 
-        function updateActiveThemeSwatch() {
-            const current = document.documentElement.getAttribute('data-theme') || 'midnight';
-            document.querySelectorAll('.theme-swatch').forEach(swatch => {
-                swatch.classList.toggle('active', swatch.dataset.theme === current);
-            });
+        // Toggle between dark and light mode
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            // If no explicit theme or dark, switch to light
+            // If light, switch to dark
+            const newTheme = (current === 'light') ? 'dark' : 'light';
+            setTheme(newTheme);
         }
 
-        // Close theme picker when clicking outside
-        document.addEventListener('click', (e) => {
-            const picker = document.getElementById('theme-picker');
-            if (!picker) return;
-            const toggle = e.target.closest('[onclick*="toggleThemePicker"]');
-            if (!picker.contains(e.target) && !toggle && picker.classList.contains('visible')) {
-                picker.classList.remove('visible');
+        // Listen for system preference changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            // Only auto-switch if user hasn't set explicit preference
+            if (!localStorage.getItem('genuverity-theme')) {
+                if (e.matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
             }
         });
-
-        // Keyboard shortcut (T key) cycles through themes
-        function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-theme') || 'midnight';
-            const currentIndex = ALL_THEMES.indexOf(current);
-            const nextIndex = (currentIndex + 1) % ALL_THEMES.length;
-            setTheme(ALL_THEMES[nextIndex]);
-        }
 
         // --- MARKDOWN EXPORT ---
         async function exportToMarkdown() {
@@ -4803,11 +5337,16 @@
 
         // Animate status indicators during deep dive generation
         function startStatusAnimation() {
-            const stages = ['status-research', 'status-verify', 'status-compose'];
+            const stages = ['status-init', 'status-connect', 'status-research', 'status-writing', 'status-analysis', 'status-charts', 'status-sources', 'status-complete'];
             const subtitles = [
+                'Initializing research pipeline...',
+                'Connecting to Claude AI...',
                 'Scanning authoritative sources and cross-referencing data...',
-                'Verifying claims against primary sources...',
-                'Synthesizing insights into your comprehensive report...'
+                'Writing investigative analysis...',
+                'Deep analysis in progress...',
+                'Generating data visualizations...',
+                'Verifying and compiling sources...',
+                'Finalizing your report...'
             ];
             const loaderSubtitle = document.getElementById('loader-subtitle');
             let currentStage = 0;
@@ -4846,25 +5385,20 @@
             }
         }
 
-        async function generateDeepDive(topic, context = '') {
+        async function generateDeepDive(topic, context = '', parentKey = '', parentTitle = '') {
             const loader = document.getElementById('deep-dive-loader');
             const loaderTitle = document.getElementById('loader-title');
             const progressBar = document.getElementById('loader-progress-bar');
+            const loaderSubtitle = document.getElementById('loader-subtitle');
             const contextPreview = document.getElementById('loader-context-preview');
             const contextText = document.getElementById('loader-context-text');
 
             // Show loading screen
             loaderTitle.textContent = `Investigating: ${topic}`;
-            progressBar.style.animation = 'none';
-            progressBar.offsetHeight; // Trigger reflow
-            progressBar.style.animation = 'progress 15s ease-out forwards';
 
             // Show context preview if context is provided
             if (context && context.trim()) {
-                // Truncate context for display if too long
-                const displayContext = context.length > 500
-                    ? context.substring(0, 500) + '...'
-                    : context;
+                const displayContext = context.length > 500 ? context.substring(0, 500) + '...' : context;
                 contextText.textContent = displayContext;
                 contextPreview.style.display = 'block';
             } else {
@@ -4882,62 +5416,140 @@
                 const response = await fetch('/api/deep-dive', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ topic, context }),
+                    body: JSON.stringify({
+                        topic,
+                        context,
+                        parent_key: parentKey,
+                        parent_title: parentTitle
+                    }),
                     signal: deepDiveAbortController.signal
                 });
 
-                if (!response.ok) {
+                // Check for HTTP errors (rate limiting, etc.)
+                if (response.status === 429) {
                     const error = await response.json();
+                    throw new Error(error.detail?.message || 'Daily limit exceeded');
+                }
+
+                if (!response.ok && !response.headers.get('content-type')?.includes('text/event-stream')) {
+                    const error = await response.json().catch(() => ({ detail: 'Generation failed' }));
                     throw new Error(error.detail || 'Generation failed');
                 }
 
-                const data = await response.json();
+                // Handle SSE streaming response
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = '';
+                let articleData = null;
+                let lastPartialContent = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop() || '';
+
+                    let currentEvent = null;
+                    for (const line of lines) {
+                        if (line.startsWith('event: ')) {
+                            currentEvent = line.slice(7).trim();
+                        } else if (line.startsWith('data: ') && currentEvent) {
+                            try {
+                                const data = JSON.parse(line.slice(6));
+
+                                console.log('[SSE] Event:', currentEvent, 'Data type:', typeof data);
+                                if (currentEvent === 'progress') {
+                                    // Use the unified updateProgress function
+                                    updateProgress(data.stage, data.percent, data.message);
+                                } else if (currentEvent === 'content') {
+                                    console.log('[SSE] Received content, keys:', Object.keys(data));
+                                    articleData = data;
+                                } else if (currentEvent === 'partial') {
+                                    // Store partial content in case of timeout
+                                    console.log('[SSE] Received partial content, length:', typeof data === 'string' ? data.length : 'object');
+                                    lastPartialContent = data;
+                                } else if (currentEvent === 'rawcontent') {
+                                    // Try client-side JSON repair
+                                    console.log('[SSE] Received raw content, attempting repair');
+                                    articleData = repairTruncatedJSON(data);
+                                } else if (currentEvent === 'error') {
+                                    console.error('[SSE] Error event:', data);
+                                    throw new Error(data);
+                                }
+                            } catch (parseError) {
+                                console.error('[SSE] Parse error:', parseError, 'for event:', currentEvent);
+                                if (currentEvent === 'error') throw parseError;
+                            }
+                            currentEvent = null;
+                        }
+                    }
+                }
+
+                // If no final content but we have partial, try to repair it
+                console.log('[SSE] Stream complete. articleData:', !!articleData, 'lastPartialContent:', !!lastPartialContent);
+                if (!articleData && lastPartialContent) {
+                    console.log('[SSE] Attempting to repair partial content, length:', typeof lastPartialContent === 'string' ? lastPartialContent.length : 'object');
+                    articleData = repairTruncatedJSON(lastPartialContent);
+                    console.log('[SSE] Repair result:', !!articleData);
+                }
+
+                if (!articleData) {
+                    console.error('[SSE] No article data - throwing error');
+                    throw new Error('No article data received');
+                }
+                console.log('[SSE] Article data ready, key:', articleData.key, 'title:', articleData.title?.substring(0, 50));
 
                 // Add to reports database
-                const key = data.key || topic.toLowerCase().replace(/[^a-z0-9]+/g, '_');
+                const key = articleData.key || topic.toLowerCase().replace(/[^a-z0-9]+/g, '_');
                 reports[key] = {
-                    title: data.title,
-                    content: data.content,
+                    title: articleData.title,
+                    content: articleData.content,
                     chartType: 'dynamic',
-                    chartConfigs: data.chartConfigs || {},
-                    contextData: data.contextData || {},
-                    citationDatabase: data.citationDatabase || {},
-                    sources: data.sources || []
+                    chartConfigs: articleData.chartConfigs || {},
+                    contextData: articleData.contextData || {},
+                    citationDatabase: articleData.citationDatabase || {},
+                    sources: articleData.sources || [],
+                    cardTitle: articleData.cardTitle || articleData.title?.substring(0, 50) || topic,
+                    cardTag: articleData.cardTag || 'INVESTIGATION',
+                    cardTagColor: articleData.cardTagColor || 'text-blue-400',
+                    cardDescription: articleData.cardDescription || topic
                 };
 
-                // Store dynamic chart/context data globally for this article
-                window.dynamicChartConfigs = data.chartConfigs || {};
-                window.dynamicContextData = data.contextData || {};
-                window.dynamicCitationDatabase = data.citationDatabase || {};
+                // Store dynamic data globally
+                window.dynamicChartConfigs = articleData.chartConfigs || {};
+                window.dynamicContextData = articleData.contextData || {};
+                window.dynamicCitationDatabase = articleData.citationDatabase || {};
 
                 // Update remaining dives count
-                if (data._remaining_today !== undefined) {
-                    userRemainingDives = data._remaining_today;
-                } else if (!data._from_cache) {
+                if (articleData._remaining_today !== undefined) {
+                    userRemainingDives = articleData._remaining_today;
+                } else if (!articleData._from_cache) {
                     userRemainingDives = Math.max(0, userRemainingDives - 1);
                 }
 
-                // Mark as cached locally and save to localStorage for persistence
+                // Mark as cached and save locally
                 cachedArticles[topic.toLowerCase()] = true;
                 saveGeneratedArticleLocally(key, reports[key]);
 
                 // Hide loader and load the report
+                // Note: loadReport -> renderReportData handles chart rendering automatically
                 stopStatusAnimation();
                 loader.classList.remove('visible');
                 loadReport(key);
 
-                // Render dynamic charts after load
+                // Update badge (charts are rendered by renderReportData)
                 setTimeout(() => {
-                    renderDynamicCharts(data.chartConfigs || {});
                     updateDeepDiveBadge();
                 }, 200);
 
             } catch (e) {
                 if (e.name === 'AbortError') {
                     console.log('Deep dive cancelled');
-                } else if (e.message?.includes('429') || e.message?.includes('daily_limit')) {
+                } else if (e.message?.includes('429') || e.message?.includes('daily_limit') || e.message?.includes('Daily limit')) {
                     console.error('Daily limit exceeded');
-                    alert('You\'ve used all 3 free deep dives for today. Come back tomorrow!');
+                    alert('You\'ve used all free deep dives for today. Come back tomorrow!');
                     userRemainingDives = 0;
                     updateBadgeRemaining();
                 } else {
@@ -4960,44 +5572,8 @@
             document.getElementById('loader-context-preview').style.display = 'none';
         }
 
-        // Render charts from dynamic config
-        function renderDynamicCharts(chartConfigs) {
-            const chartTextColor = getChartTextColor();
-
-            Object.entries(chartConfigs).forEach(([chartId, config]) => {
-                const canvas = document.getElementById(chartId);
-                if (!canvas) return;
-
-                const chartData = {
-                    labels: config.data.labels,
-                    datasets: [{
-                        label: config.title,
-                        data: config.data.values,
-                        backgroundColor: config.data.colors || ['#c9a227', '#7c9a5e', '#d4a574', '#c45c3e', '#8b6750'],
-                        borderColor: config.data.colors || ['#c9a227', '#7c9a5e', '#d4a574', '#c45c3e', '#8b6750'],
-                        borderWidth: config.type === 'line' ? 2 : 0,
-                        tension: 0.4
-                    }]
-                };
-
-                activeCharts.push(new Chart(canvas, {
-                    type: config.type,
-                    data: chartData,
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            title: { display: true, text: config.title, color: chartTextColor }
-                        },
-                        scales: config.type !== 'doughnut' && config.type !== 'radar' ? {
-                            x: { ticks: { color: chartTextColor } },
-                            y: { ticks: { color: chartTextColor } }
-                        } : undefined
-                    }
-                }));
-            });
-        }
+        // NOTE: renderDynamicCharts is defined earlier in the file (around line 3906)
+        // This duplicate has been removed to avoid conflicts
 
         // === DEEP DIVE CACHE & BADGE SYSTEM ===
         let cachedArticles = {};  // Local cache of known cached articles
@@ -5250,7 +5826,8 @@
                 : `Generate a deep-dive on "${topic}"?\n\nContext: From article "${articleTitle}"\n\n⚠️ No free generations remaining today.`;
 
             if (confirm(message)) {
-                generateDeepDive(topic, context);
+                // Pass parent article key and title for relationship tracking
+                generateDeepDive(topic, context, currentArticleKey, articleTitle);
             }
         }
 
@@ -5348,13 +5925,18 @@ ${currentContent}`;
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder();
                 let buffer = '';
+                let fullResponse = '';  // Keep full raw response as fallback
                 let articleContent = null;
+
+                console.log('[Enhance] Starting to read SSE stream...');
 
                 while (true) {
                     const { done, value } = await reader.read();
                     if (done) break;
 
-                    buffer += decoder.decode(value, { stream: true });
+                    const chunk = decoder.decode(value, { stream: true });
+                    fullResponse += chunk;  // Accumulate full response
+                    buffer += chunk;
                     const lines = buffer.split('\n');
                     buffer = lines.pop() || '';
 
@@ -5368,28 +5950,58 @@ ${currentContent}`;
                                 if (currentEvent === 'progress') {
                                     updateProgress(data.stage, data.percent, data.message);
                                 } else if (currentEvent === 'content') {
+                                    console.log('[Enhance] Received content event');
                                     articleContent = data;
+                                } else if (currentEvent === 'error') {
+                                    console.error('[Enhance] Server error:', data);
+                                    throw new Error(data);
                                 }
-                            } catch (e) { /* ignore parse errors */ }
+                            } catch (e) {
+                                console.log('[Enhance] Parse error for line:', line.substring(0, 100));
+                            }
                             currentEvent = null;
                         }
                     }
                 }
 
+                console.log('[Enhance] Stream complete. articleContent:', articleContent ? 'received' : 'null');
+
                 // Hide loader
                 document.getElementById('generate-loader').classList.add('hidden');
 
-                if (articleContent) {
-                    // Parse the enhanced article
-                    const parsed = typeof articleContent === 'string' ? JSON.parse(articleContent) : articleContent;
+                // Try to get article content from SSE or fallback to raw response
+                let parsed = null;
 
+                if (articleContent) {
+                    // Parse the enhanced article from SSE content event
+                    parsed = typeof articleContent === 'string' ? JSON.parse(articleContent) : articleContent;
+                } else if (fullResponse) {
+                    // Fallback: try to parse raw response (in case SSE parsing failed)
+                    console.log('[Enhance] No SSE content, trying to parse raw response...');
+                    try {
+                        // Try direct JSON parse
+                        parsed = JSON.parse(fullResponse);
+                    } catch (e) {
+                        // Try to extract JSON from SSE format
+                        const contentMatch = fullResponse.match(/data:\s*(\{[\s\S]*\})/);
+                        if (contentMatch) {
+                            try {
+                                parsed = JSON.parse(contentMatch[1]);
+                            } catch (e2) {
+                                console.error('[Enhance] Failed to parse extracted content:', e2);
+                            }
+                        }
+                    }
+                }
+
+                if (parsed && (parsed.content || parsed.body)) {
                     // Update the current report
                     const enhancedReport = {
                         title: parsed.title || title,
                         content: parsed.content || parsed.body,
                         sources: parsed.sources || [],
                         citationDatabase: parsed.citationDatabase || {},
-                        chartConfigs: parsed.chartConfigs || [],
+                        chartConfigs: parsed.chartConfigs || {},
                         chartType: 'dynamic'
                     };
 
@@ -5399,6 +6011,10 @@ ${currentContent}`;
 
                     // Show success notification
                     showNotification('Article enhanced successfully!', 'success');
+                } else {
+                    console.error('[Enhance] No valid article content received');
+                    console.log('[Enhance] Raw response preview:', fullResponse.substring(0, 500));
+                    showNotification('Enhancement failed - no valid content received.', 'error');
                 }
 
             } catch (error) {

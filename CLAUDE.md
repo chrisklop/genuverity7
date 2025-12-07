@@ -1,110 +1,217 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working with this repository. **Read this entirely before starting any work.**
+
+## Session Continuity
+
+**IMPORTANT FOR NEW SESSIONS**: This project has active development context. Before making changes:
+1. Check `docs/SESSION_STATE.md` for current work-in-progress
+2. Review recent git commits: `git log --oneline -10`
+3. Ask user about current priorities
 
 ## Project Overview
 
-GenuVerity is an AI-powered investigative journalism platform that generates data-driven exposé articles. It features a FastAPI backend using Google's Gemini AI and a single-page HTML/JavaScript frontend with magazine-style layouts and interactive data visualizations.
+**GenuVerity** is an AI-powered investigative journalism platform. It generates data-driven exposé articles with:
+- **Sources First** philosophy: Primary sources displayed ABOVE content
+- Tabbed source navigation (Primary/Secondary/Tertiary)
+- Interactive charts and visualizations
+- Collapsible source panel with floating restore button
 
-## Development Commands
+**Live URL**: https://genuverity7.vercel.app
 
-```bash
-# Install dependencies
-pip install -r requirements.txt
+## Quick Reference
 
-# Run the development server (serves both API and frontend)
-python server.py
-
-# Or with uvicorn directly (enables hot reload)
-uvicorn server:app --reload --host 0.0.0.0 --port 8000
-```
-
-The app runs at http://localhost:8000
+| Command | Purpose |
+|---------|---------|
+| `vercel --prod` | Deploy to production |
+| `python server.py` | Local dev server (port 8000) |
+| `vercel logs genuverity7.vercel.app` | View production logs |
 
 ## Architecture
 
-### Backend (server.py)
+### Backend (`api/index.py`)
+- **Framework**: FastAPI + Uvicorn
+- **AI Model**: Claude Sonnet 4.5 (`claude-sonnet-4-5-20250929`)
+- **Storage**: Vercel Blob Storage for article cache
+- **Key constant**: `ARTICLE_TEMPLATE` (line ~470) - controls AI generation schema
 
-- **Framework**: FastAPI with Uvicorn ASGI server
-- **AI Model**: Gemini 3 Pro (`gemini-3-pro-preview`)
-- **Single endpoint**: `POST /api/generate` accepts `{"topic": "string"}`, returns JSON report
-- Loads `docs/essay_schema.md` at runtime to guide AI generation
-- Serves static files from root directory (frontend)
-- Requires `GEMINI_API_KEY` in `.env` file
+**Endpoints**:
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/generate` | POST | Generate new article (SSE streaming) |
+| `/api/deep-dive` | POST | Generate deep-dive with rate limiting |
+| `/api/cache/check` | POST | Check if article exists in cache |
+| `/api/cache/list` | GET | List all cached articles |
 
-### Frontend (index.html)
+### Frontend (`index.html`)
+Single-page app with three views:
+- **Portal** (`view-portal`): Landing page with trending articles
+- **Report** (`view-report`): Article display with Sources First banner
+- **Static** (`view-static`): Auxiliary content pages
 
-Single-page application with three view states managed by `switchView()`:
-- **Portal**: Archive landing with trending report cards
-- **Report**: Full article display with sources panel
-- **Static**: Additional content views
+**Key Functions**:
+| Function | Location | Purpose |
+|----------|----------|---------|
+| `renderReportData()` | ~line 3750 | Renders article + Sources First tabs |
+| `toggleSourcesBanner()` | ~line 3692 | Collapse/expand Sources First |
+| `switchView()` | ~line 3681 | Navigate between views |
+| `renderDynamicCharts()` | ~line 3500 | Initialize Chart.js visualizations |
 
-**Tech Stack**:
-- Tailwind CSS (CDN) for styling
-- Chart.js + Plotly.js (CDN) for visualizations
-- Plus Jakarta Sans, JetBrains Mono, Crimson Pro fonts
+### Layout System (Current State)
+- **Single-column layout**: 720px max-width, centered
+- **NO sidebar** - removed Dec 2024
+- **Sources First banner**: Tabbed, collapsible, above article title
+- **Floating button**: Appears when Sources First is collapsed
 
-**Key Data Structures**:
-- `reports` object: All report content keyed by slug (e.g., `'ai_bubble'`, `'congress_trading'`)
-- `contextData` object: Fractal trigger expansion content
-- `citationDatabase` object: Source verification hover card data
+## Sources First Feature (v2)
 
-### Content Schema
+All sources displayed in tabbed banner ABOVE article title:
 
-Reports follow a JSON structure with HTML content containing:
-- `<div class="float-figure right/left">`: Magazine-style text wrapping (place BEFORE paragraph)
-- `<span class="living-number" data-target="X" data-suffix="Y">`: Animated counters
-- `<strong class="fractal-trigger" onclick="expandContext(this, 'key')">`: Expandable context
-- `<span class="citation-spade" data-id="source_key">♠</span>`: Hover verification cards
-- `<span class="highlight-glow">`: Emphasized text
+```
++------------------------------------------+
+|  [Shield] SOURCES FIRST      [Minimize]  |
+|  "We encourage you to verify..."         |
+|  [Primary|4] [Secondary|4] [Tertiary|2]  |
+|  +--------+ +--------+                   |
+|  | Source | | Source |  (4 per tab)     |
+|  +--------+ +--------+                   |
+|  "These are the most credible sources"   |
++------------------------------------------+
+|                                          |
+|  ARTICLE TITLE                           |
+|  Article content...                      |
++------------------------------------------+
+```
 
-See `docs/essay_schema.md` for full component documentation.
+**Tab Names**: Primary, Secondary, Tertiary, Quaternary (4 sources each)
 
-## Key Functions
+**Collapse Behavior**:
+- Click "Minimize" to collapse banner
+- Floating "Sources (N)" button appears at top
+- Click floating button to expand
 
-| Function | Purpose |
-|----------|---------|
-| `switchView(view)` | Toggle between 'portal', 'report', 'static' views |
-| `loadReport(key)` | Load report from `reports` object, render content and charts |
-| `renderCharts(type)` | Initialize Chart.js/Plotly visualizations by report type |
-| `expandContext(element, id)` | Toggle fractal context expansion inline |
-| `generateReport(topic)` | Call `/api/generate` and load new AI-generated report |
+## Color/Theme System
 
-## Chart Types
+### Current State (Implemented Dec 2024)
+**Dark/Light only** with Radix Colors-inspired WCAG-compliant palette.
 
-The `renderCharts(type)` function handles visualization based on report type:
-- `'ai'`: CapEx bar chart, line trends, Plotly scatter
-- `'congress'`: Trading performance bar, allocation doughnut
-- `'grift'`: PAC spending pie, allocation bar
-- `'regulatory'`: Enforcement bar charts
-- `'energy'`: Demand bar, timeline line chart
-- `'model'`: Quality degradation line chart
-- `'none'`: No charts rendered
-
-## CSS Architecture
-
-Dark theme using CSS variables:
+**CSS Variables** (Dark mode - default):
 ```css
---bg-deep: #050505
---text-main: #e2e2e5
---accent-blue: #3b82f6
---accent-green: #10b981
---glass: rgba(20, 20, 25, 0.98)
+--bg-deep: #111113      /* Radix slate-1: app background */
+--bg-card: #18191b      /* slate-2: subtle background */
+--bg-elevated: #212225  /* slate-3: UI element background */
+--text-main: #edeef0    /* slate-12: high contrast text */
+--text-muted: #9ba1a6   /* slate-11: low contrast text */
+--text-prose: #b0b4ba   /* body text */
+--accent-blue: #3e63dd  /* Radix blue-9 */
+--accent-green: #30a46c /* Radix green-9 */
+--accent-warm: #f76b15  /* Radix orange-9 */
 ```
 
-Key classes: `.prose-text`, `.prose-h2`, `.float-figure`, `.fractal-trigger`, `.citation-spade`, `.highlight-glow`
+**Light mode** (activated by toggle or system preference):
+```css
+--bg-deep: #fbfcfd
+--bg-card: #ffffff
+--text-main: #1c2024
+--text-muted: #60646c
+/* Same accent colors */
+```
 
-## Request/Response Flow
+### Theme Toggle
+- **Location**: Nav bar button with sun/moon icons
+- **Behavior**: Click to toggle, press T keyboard shortcut
+- **Persistence**: Saves to `localStorage.genuverity-theme`
+- **System preference**: Auto-detects via `prefers-color-scheme` media query
+
+### WCAG Compliance
+- Normal text: 4.5:1 contrast ratio (meets AA)
+- Large text: 3:1 contrast ratio (meets AA)
+- All colors verified against Radix Colors accessibility guidelines
+
+## Article JSON Schema
+
+Generated articles must include:
+```json
+{
+  "key": "article_slug",
+  "title": "Article Title",
+  "cardTitle": "Short title for cards",
+  "cardTag": "CATEGORY // SUBCATEGORY",
+  "cardDescription": "One-line teaser",
+  "chartConfigs": {
+    "chart_main": { "type": "bar", "data": {...}, "title": "..." },
+    "chart_secondary": { "type": "line", "data": {...}, "title": "..." }
+  },
+  "sources": [
+    { "name": "Source Name", "score": 95, "url": "https://..." }
+  ],
+  "contextData": { "term": { "expanded": "Explanation" } },
+  "citationDatabase": { "src1": { "domain": "...", "trustScore": 95, ... } },
+  "content": "<p class='prose-text'>HTML content...</p>"
+}
+```
+
+**CRITICAL**: Sources MUST include `score` field (0-100) for sorting in tabs.
+
+## Content HTML Classes
+
+| Class | Purpose |
+|-------|---------|
+| `.prose-text` | Body paragraphs |
+| `.prose-h2` | Section headings |
+| `.float-figure.right/left` | Magazine-style wrapped charts |
+| `.living-number` | Animated counters (data-target, data-suffix) |
+| `.fractal-trigger` | Expandable context terms |
+| `.citation-spade` | Source hover cards |
+| `.highlight-glow` | Emphasized text |
+
+## Known Issues / Technical Debt
+
+1. **Vercel 60s timeout**: Long articles may truncate. `chartConfigs` placed first in schema to preserve charts.
+2. **12 themes unused**: Users primarily want dark/light. Consider simplifying.
+3. **WCAG contrast**: Some color combinations may not meet AA standards.
+
+## Environment Variables
+
+Required in `.env.local` or Vercel dashboard:
+- `ANTHROPIC_API_KEY` - Claude API key
+- `BLOB_READ_WRITE_TOKEN` - Vercel Blob storage token
+
+## Deployment
+
+```bash
+# Deploy to production
+vercel --prod
+
+# Check deployment status
+vercel ls
+
+# View logs
+vercel logs genuverity7.vercel.app --limit 50
+```
+
+## File Structure
 
 ```
-Frontend                    Backend                     Gemini AI
-   |                           |                            |
-   |-- POST /api/generate ---->|                            |
-   |   {"topic": "..."}        |-- Load essay_schema.md     |
-   |                           |-- Compose prompt --------->|
-   |                           |<-- Generated content ------|
-   |<-- JSON report -----------|                            |
-   |                           |                            |
-   |-- loadReport(key) --------|                            |
-   |-- renderCharts(type) -----|                            |
+GenuVerity7/
+├── api/
+│   └── index.py          # FastAPI backend (main logic)
+├── templates/
+│   └── essay_config.json # Template configuration
+├── article_cache/        # Local cache (dev only)
+├── docs/
+│   └── SESSION_STATE.md  # Current work state (if exists)
+├── index.html            # Full frontend SPA
+├── CLAUDE.md             # This file
+├── requirements.txt      # Python dependencies
+└── vercel.json           # Vercel config
 ```
+
+## User Preferences
+
+The user prefers:
+- Dark mode by default
+- Sources prioritized over AI analysis
+- Professional, clean layouts
+- Mobile-responsive design
+- Minimal unnecessary features
