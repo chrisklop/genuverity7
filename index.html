@@ -3304,6 +3304,11 @@
             document.getElementById(id).classList.add('active');
             window.scrollTo(0, 0);
 
+            // Hide deep dive tooltip when switching views
+            if (deepDiveTooltipEl) {
+                deepDiveTooltipEl.classList.remove('visible');
+            }
+
             // Refresh trending section when returning to portal (to show newly generated articles)
             if (id === 'view-portal') {
                 renderTrendingSection();
@@ -5995,6 +6000,11 @@
 
         // Handle deep dive from infographic - extracts context automatically
         function handleDeepDive(topicOrElement) {
+            // Hide the deep dive tooltip immediately when clicked
+            if (deepDiveTooltipEl) {
+                deepDiveTooltipEl.classList.remove('visible');
+            }
+
             let topic, context;
 
             // If passed a string, use it as the topic (legacy support)
