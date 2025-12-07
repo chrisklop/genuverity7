@@ -726,6 +726,45 @@
             opacity: 0;
         }
 
+        /* Enhancement counter badge */
+        .enhance-count-badge {
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: 2px solid var(--bg-deep);
+            border-radius: 9px;
+            font-size: 10px;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
+            z-index: 10;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .enhance-count-badge.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .enhance-count-badge.pulse {
+            animation: badge-pulse 0.6s ease-out;
+        }
+
+        @keyframes badge-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
         /* --- VIEW MANAGEMENT --- */
         .view-section {
             display: none;
@@ -2686,6 +2725,7 @@
                                 </button>
                             </div>
                             <button onclick="enhanceArticle()" id="enhance-btn" class="action-btn enhance-btn" title="Enhance Article (E)">
+                                <span id="enhance-count-badge" class="enhance-count-badge">0</span>
                                 <i data-lucide="sparkles" class="w-4 h-4"></i>
                                 <span class="hidden sm:inline">Enhance</span>
                             </button>
@@ -3683,6 +3723,9 @@
 
         function loadReport(key) {
             const data = reports[key];
+
+            // Reset enhance count when loading a new article
+            resetEnhanceCount();
 
             // If report not in local database, try fetching from cache
             if (!data) {
@@ -5475,6 +5518,9 @@
             }
             if (!topic) return;
 
+            // Reset enhance count for new article
+            resetEnhanceCount();
+
             // Visual feedback on search box button
             const searchBtn = document.querySelector('#generate-search-box button');
             const searchInput = document.getElementById('generate-input');
@@ -5606,6 +5652,30 @@
 
         // === DARK/LIGHT THEME SYSTEM ===
         let currentArticleKey = 'congress_trading';
+        let currentEnhanceCount = 0; // Track how many times the current article has been enhanced
+
+        // Update the enhance count badge
+        function updateEnhanceCountBadge(count) {
+            const badge = document.getElementById('enhance-count-badge');
+            if (!badge) return;
+
+            badge.textContent = count;
+            if (count > 0) {
+                badge.classList.add('visible');
+                // Trigger pulse animation
+                badge.classList.remove('pulse');
+                void badge.offsetWidth; // Force reflow
+                badge.classList.add('pulse');
+            } else {
+                badge.classList.remove('visible');
+            }
+        }
+
+        // Reset enhance count when loading a new article
+        function resetEnhanceCount() {
+            currentEnhanceCount = 0;
+            updateEnhanceCountBadge(0);
+        }
 
         function initTheme() {
             const saved = localStorage.getItem('genuverity-theme');
@@ -6055,6 +6125,9 @@
         }
 
         async function generateDeepDive(topic, context = '', parentKey = '', parentTitle = '') {
+            // Reset enhance count for new article
+            resetEnhanceCount();
+
             const loader = document.getElementById('deep-dive-loader');
             const loaderTitle = document.getElementById('loader-title');
             const progressBar = document.getElementById('loader-progress-bar');
@@ -6798,8 +6871,12 @@ ${currentContent}`;
                     currentReport = enhancedReport;
                     renderReportData(enhancedReport, true);
 
+                    // Increment and update enhance count badge
+                    currentEnhanceCount++;
+                    updateEnhanceCountBadge(currentEnhanceCount);
+
                     // Show success notification
-                    showNotification('Article enhanced successfully!', 'success');
+                    showNotification(`Article enhanced successfully! (${currentEnhanceCount}x)`, 'success');
                 } else {
                     console.error('[Enhance] No valid article content received');
                     console.log('[Enhance] Raw response preview:', fullResponse.substring(0, 500));
