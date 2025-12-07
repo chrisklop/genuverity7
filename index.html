@@ -3735,6 +3735,13 @@
                 deepDiveTooltipEl.classList.remove('visible');
             }
 
+            // Activate cooldown to prevent tooltip from immediately reappearing
+            // This handles the case where mouse is already over a deep-dive button in new content
+            tooltipCooldownActive = true;
+            setTimeout(() => {
+                tooltipCooldownActive = false;
+            }, 500); // 500ms cooldown before tooltips can appear again
+
             switchView('view-report');
             document.getElementById('report-title').innerText = data.title;
             document.getElementById('report-body').innerHTML = data.content;
@@ -3910,6 +3917,7 @@
 
         // Initialize deep dive hover tooltips with a single global tooltip
         let deepDiveTooltipEl = null;
+        let tooltipCooldownActive = false; // Prevents tooltip from appearing immediately after content load
 
         function initDeepDiveTooltips() {
             // Create global tooltip element if it doesn't exist
@@ -3953,6 +3961,9 @@
                 element.dataset.tooltipInit = 'true';
 
                 element.addEventListener('mouseenter', (e) => {
+                    // Skip if cooldown is active (prevents tooltip from appearing right after content load)
+                    if (tooltipCooldownActive) return;
+
                     // Get context from parent figure caption
                     const figCaption = element.closest('.fig-caption');
                     const figureTitle = figCaption ? figCaption.textContent.replace('DEEP DIVE', '').trim().replace(/^Fig\s*\d+\.\s*/i, '') : 'this topic';
