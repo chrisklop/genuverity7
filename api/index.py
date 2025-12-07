@@ -15,8 +15,8 @@ import anthropic
 # Load from environment variables (Vercel sets these automatically)
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 BLOB_READ_WRITE_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")
-# Use Claude Sonnet 4.5 for quality investigative articles
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-5-20250929")
+# Use Claude Sonnet 4 for quality investigative articles
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
 
 # Vercel Blob Storage configuration
 BLOB_STORE_ID = "store_R5FvidKLuXLBeOEd"
@@ -584,27 +584,33 @@ async def generate_report(request: GenerateRequest, req: Request):
             yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Investigation complete!"})
 
             # Parse and cache the article for persistence
+            parsed_data = None
             try:
-                data = repair_truncated_json(full_text)
-                if data:
+                parsed_data = repair_truncated_json(full_text)
+                if parsed_data:
                     # Ensure required fields
-                    if "key" not in data:
-                        data["key"] = topic_slug
+                    if "key" not in parsed_data:
+                        parsed_data["key"] = topic_slug
                     # Mark as dynamic article for frontend chart rendering
-                    data["chartType"] = "dynamic"
-                    data.setdefault("chartConfigs", {})
-                    data.setdefault("contextData", {})
-                    data.setdefault("citationDatabase", {})
-                    data.setdefault("sources", [])
+                    parsed_data["chartType"] = "dynamic"
+                    parsed_data.setdefault("chartConfigs", {})
+                    parsed_data.setdefault("contextData", {})
+                    parsed_data.setdefault("citationDatabase", {})
+                    parsed_data.setdefault("sources", [])
 
                     # Cache to Blob storage for persistence
-                    cache_article(request.topic, data)
+                    cache_article(request.topic, parsed_data)
                     print(f"Article cached from /api/generate: {request.topic}")
             except Exception as cache_err:
                 print(f"Cache error (non-fatal): {cache_err}")
 
-            # Send the actual content
-            yield send_sse("content", full_text)
+            # Send the parsed data as a proper object (not double-encoded string)
+            # If parsing succeeded, send the clean object; otherwise fall back to raw text
+            if parsed_data:
+                yield f"event: content\ndata: {json.dumps(parsed_data)}\n\n"
+            else:
+                # Fallback: send raw text (frontend will try to parse it)
+                yield send_sse("content", full_text)
 
             # Signal done
             yield send_sse("done", "ok")
