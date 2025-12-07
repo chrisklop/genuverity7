@@ -4147,6 +4147,26 @@
                         }
                     }));
                 }
+                // Fig 3: STOCK Act Violations (2021-2024)
+                const ctx3 = document.getElementById('chart_violations');
+                if (ctx3) {
+                    activeCharts.push(new Chart(ctx3, {
+                        type: 'bar',
+                        data: {
+                            labels: ['2021', '2022', '2023', '2024'],
+                            datasets: [{
+                                label: 'Late Disclosures',
+                                data: [54, 72, 89, 78], // Based on BusinessInsider tracking
+                                backgroundColor: colors.tertiary,
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            ...commonOptions,
+                            plugins: { title: { display: true, text: 'STOCK Act Violations by Year', color: chartTextColor } }
+                        }
+                    }));
+                }
             } else if (type === 'grift') {
                 const ctx1 = document.getElementById('chart_spending');
                 if (ctx1) {
