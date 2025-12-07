@@ -583,6 +583,24 @@ async def generate_report(request: GenerateRequest, req: Request):
             # Stage: Complete
             yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Investigation complete!"})
 
+            # Parse and cache the article for persistence
+            try:
+                data = repair_truncated_json(full_text)
+                if data:
+                    # Ensure required fields
+                    if "key" not in data:
+                        data["key"] = topic_slug
+                    data.setdefault("chartConfigs", {})
+                    data.setdefault("contextData", {})
+                    data.setdefault("citationDatabase", {})
+                    data.setdefault("sources", [])
+
+                    # Cache to Blob storage for persistence
+                    cache_article(request.topic, data)
+                    print(f"Article cached from /api/generate: {request.topic}")
+            except Exception as cache_err:
+                print(f"Cache error (non-fatal): {cache_err}")
+
             # Send the actual content
             yield send_sse("content", full_text)
 
