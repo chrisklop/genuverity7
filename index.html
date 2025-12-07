@@ -497,6 +497,61 @@
             50% { background-position: -200% 0; opacity: 0.25; }
         }
 
+        /* === NAV ARTICLE TITLE === */
+        .nav-article-title {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+        }
+
+        /* === ARTICLE TIMESTAMP & REFRESH === */
+        .article-timestamp {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            padding: 4px 8px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+        }
+
+        .article-timestamp .timestamp-text {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .article-timestamp .regenerate-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+        }
+
+        .article-timestamp .regenerate-btn:hover {
+            background: var(--accent-blue);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .article-timestamp .regenerate-btn:active {
+            transform: rotate(180deg);
+        }
+
         /* === DARK/LIGHT THEME TOGGLE === */
         .theme-toggle-switch {
             display: flex;
@@ -2515,8 +2570,9 @@
                 <span class="font-bold text-xl tracking-tight">Genu<span style="color: var(--logo-accent);">Verity</span></span>
             </div>
 
-            <!-- Center: Sources Toggle (only visible on essay pages) -->
-            <div class="flex-1 flex justify-center">
+            <!-- Center: Article Title + Sources Toggle (only visible on essay pages) -->
+            <div class="flex-1 flex justify-center items-center gap-4">
+                <span id="nav-article-title" class="nav-article-title hidden"></span>
                 <button id="nav-sources-btn" class="nav-sources-btn" onclick="toggleSourcesBanner()" title="Toggle Sources (S)">
                     <i data-lucide="shield-check" class="w-4 h-4"></i>
                     <span class="nav-sources-label">Sources</span>
@@ -2622,6 +2678,13 @@
                             class="text-xs font-bold hover:text-blue-700 flex items-center gap-2" style="color: var(--text-muted);">← RETURN TO
                             ARCHIVE</button>
                         <div class="flex items-center gap-2">
+                            <!-- Generation timestamp and refresh -->
+                            <div id="article-timestamp" class="article-timestamp hidden">
+                                <span class="timestamp-text"></span>
+                                <button onclick="regenerateArticle()" class="regenerate-btn" title="Regenerate article with fresh data">
+                                    <i data-lucide="refresh-cw" class="w-3 h-3"></i>
+                                </button>
+                            </div>
                             <button onclick="enhanceArticle()" id="enhance-btn" class="action-btn enhance-btn" title="Enhance Article (E)">
                                 <i data-lucide="sparkles" class="w-4 h-4"></i>
                                 <span class="hidden sm:inline">Enhance</span>
@@ -3548,9 +3611,12 @@
                 deepDiveTooltipEl.classList.remove('visible');
             }
 
-            // Hide navbar sources button when leaving report view
+            // Hide navbar sources button and article title when leaving report view
             if (id !== 'view-report') {
                 updateNavSourcesButton(false);
+                // Hide navbar article title
+                const navArticleTitle = document.getElementById('nav-article-title');
+                if (navArticleTitle) navArticleTitle.classList.add('hidden');
             }
 
             // Refresh trending section when returning to portal (to show newly generated articles)
@@ -3672,6 +3738,16 @@
             switchView('view-report');
             document.getElementById('report-title').innerText = data.title;
             document.getElementById('report-body').innerHTML = data.content;
+
+            // Update navbar with article title (use cardTitle for shorter version)
+            const navArticleTitle = document.getElementById('nav-article-title');
+            if (navArticleTitle) {
+                navArticleTitle.textContent = data.cardTitle || data.title.substring(0, 30);
+                navArticleTitle.classList.remove('hidden');
+            }
+
+            // Update timestamp display
+            updateArticleTimestamp(data);
 
             // Detect dynamic articles by checking for chartConfigs or chartType='dynamic'
             const hasDynamicCharts = data.chartConfigs && Object.keys(data.chartConfigs).length > 0;
@@ -6395,6 +6471,115 @@
             }
 
             return 'This Topic';
+        }
+
+        // --- ARTICLE TIMESTAMP & REGENERATE ---
+        function updateArticleTimestamp(data) {
+            const timestampEl = document.getElementById('article-timestamp');
+            if (!timestampEl) return;
+
+            const timestampText = timestampEl.querySelector('.timestamp-text');
+
+            // Check for cached timestamp from API
+            const cachedAt = data._cached_at || data._generatedAt;
+
+            if (cachedAt) {
+                const date = new Date(cachedAt);
+                const now = new Date();
+                const diffMs = now - date;
+                const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                const diffMins = Math.floor(diffMs / (1000 * 60));
+
+                let timeAgo;
+                if (diffMins < 60) {
+                    timeAgo = `${diffMins}m ago`;
+                } else if (diffHours < 24) {
+                    timeAgo = `${diffHours}h ago`;
+                } else if (diffDays < 7) {
+                    timeAgo = `${diffDays}d ago`;
+                } else {
+                    timeAgo = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                }
+
+                timestampText.textContent = timeAgo;
+                timestampEl.classList.remove('hidden');
+            } else {
+                // For static articles without timestamps
+                timestampEl.classList.add('hidden');
+            }
+
+            // Reinitialize lucide icons for the refresh button
+            if (window.lucide) lucide.createIcons();
+        }
+
+        async function regenerateArticle() {
+            const title = document.getElementById('report-title').innerText;
+
+            if (!confirm(`Regenerate "${title}"?\n\nThis will create a fresh version of this article with the latest data and analysis. The current version will be replaced.`)) {
+                return;
+            }
+
+            // Get the topic from currentReport or derive from title
+            const topic = currentReport?._topic || currentReport?.key || title;
+
+            showNotification('Regenerating article...', 'info');
+
+            try {
+                // Use the generate endpoint to create a fresh article
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ topic })
+                });
+
+                if (!response.ok) throw new Error('Failed to regenerate');
+
+                // Read SSE stream
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let articleContent = null;
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value, { stream: true });
+                    const lines = chunk.split('\n');
+
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            const eventLine = lines[lines.indexOf(line) - 1];
+                            if (eventLine && eventLine.includes('content')) {
+                                try {
+                                    articleContent = JSON.parse(line.substring(6));
+                                } catch (e) {
+                                    articleContent = line.substring(6);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (articleContent) {
+                    // Parse if needed
+                    let data = typeof articleContent === 'string' ? JSON.parse(articleContent) : articleContent;
+
+                    // Add generation timestamp
+                    data._generatedAt = new Date().toISOString();
+
+                    // Render the regenerated article
+                    currentReport = data;
+                    renderReportData(data, true);
+
+                    showNotification('Article regenerated with fresh data!', 'success');
+                } else {
+                    throw new Error('No content received');
+                }
+            } catch (error) {
+                console.error('Regeneration failed:', error);
+                showNotification('Regeneration failed. Please try again.', 'error');
+            }
         }
 
         // --- BOOKMARKS ---
