@@ -70,7 +70,8 @@ def get_topic_key(topic: str) -> str:
     return hashlib.md5(normalized.encode()).hexdigest()[:16]
 
 def get_cached_article(topic: str) -> Optional[dict]:
-    """Check if an article exists in the cache."""
+    """Check if an article exists in the cache by topic hash OR by internal article key."""
+    # First try by topic hash (original behavior)
     key = get_topic_key(topic)
     cache_file = CACHE_DIR / f"{key}.json"
     if cache_file.exists():
@@ -78,7 +79,21 @@ def get_cached_article(topic: str) -> Optional[dict]:
             with open(cache_file, "r") as f:
                 return json.load(f)
         except:
-            return None
+            pass
+
+    # If not found, search all cached articles by internal key
+    for filename in CACHE_DIR.glob("*.json"):
+        try:
+            with open(filename, "r") as f:
+                data = json.load(f)
+                # Check if the internal "key" field matches
+                if data.get("key") == topic:
+                    return data
+                # Also check the topic field
+                if data.get("_topic", "").lower() == topic.lower():
+                    return data
+        except:
+            continue
     return None
 
 def cache_article(topic: str, article_data: dict):
@@ -197,11 +212,12 @@ You MUST return VALID JSON (no markdown code blocks, just raw JSON) with this EX
             "domain": "reuters.com",
             "trustScore": 92,
             "title": "Source Article Title",
-            "snippet": "Key quote or finding from this source..."
+            "snippet": "Key quote or finding from this source...",
+            "url": "https://www.reuters.com/real/article/url"
         }}
     }},
     "sources": [
-        {{ "name": "Source Name", "score": 95, "url": "https://example.com" }}
+        {{ "name": "Source Name", "score": 95, "url": "https://www.reuters.com/real/verified/url" }}
     ]
 }}
 
@@ -231,7 +247,16 @@ IMPORTANT REQUIREMENTS:
 - End with "What Lies Ahead" or similar forward-looking section
 - All data should be factually accurate or clearly realistic estimates
 - Generate unique chart IDs that won't conflict (e.g., "{topic_slug}_chart1")
-- Each citation should link to a real, reputable source (Reuters, AP, WSJ, NYT, government data, academic papers)
+
+CRITICAL SOURCE VERIFICATION REQUIREMENTS:
+- Every source URL MUST be a real, verified, working URL that exists on the internet
+- DO NOT fabricate or hallucinate URLs - use only URLs you know to be real
+- Prefer well-known, stable URLs from major publications: Reuters, AP, WSJ, NYT, CNBC, Bloomberg, BBC, The Guardian, government websites (.gov), academic institutions (.edu), and authoritative organizations (IEA, WHO, IMF, etc.)
+- For each source, the URL must point to an actual article/page that discusses the topic
+- If you cannot find a verified URL for a claim, link to the publication's homepage or search page for that topic
+- Examples of GOOD URLs: https://www.reuters.com/..., https://www.cnbc.com/..., https://www.iea.org/reports/..., https://www.congress.gov/...
+- NEVER use generic placeholder URLs or URLs that lead to 404 errors
+- All sources should be directly cited and leveraged in the body of the essay
 
 Return ONLY the JSON object, no explanations or markdown formatting.
 """

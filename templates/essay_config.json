@@ -1,0 +1,65 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2024-12-07",
+
+  "layout": {
+    "sourcesFirst": {
+      "enabled": true,
+      "topSourcesCount": 4,
+      "headerText": "Sources First",
+      "byline": "We encourage you to verify with primary sources before reading AI analysis.",
+      "showRemainingSourcesCTA": true,
+      "ctaText": "View All Sources",
+      "position": "above-title"
+    },
+
+    "sidebarSources": {
+      "enabled": true,
+      "showRemainingOnly": true,
+      "header": "Additional Sources",
+      "connectToTopSources": true
+    },
+
+    "articleOrder": [
+      "sources-first-banner",
+      "title",
+      "content"
+    ]
+  },
+
+  "animations": {
+    "sourceCards": {
+      "stagger": true,
+      "staggerDelay": 100,
+      "hoverScale": 1.02,
+      "pulseOnLoad": true
+    },
+    "ctaArrows": {
+      "enabled": true,
+      "style": "flowing",
+      "color": "accent"
+    },
+    "connectionLine": {
+      "enabled": true,
+      "style": "dashed-animated",
+      "showOnHover": true
+    }
+  },
+
+  "visual": {
+    "topSourcesBadge": {
+      "show": true,
+      "text": "TOP SOURCE",
+      "icon": "shield-check"
+    },
+    "trustScoreDisplay": "bar",
+    "domainHighlight": true
+  },
+
+  "content": {
+    "chartPlacement": "inline",
+    "floatFigureAlternate": true,
+    "minimumSections": 5,
+    "minimumCharts": 3
+  }
+}

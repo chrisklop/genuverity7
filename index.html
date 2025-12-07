@@ -803,7 +803,47 @@
         .sources-first-header {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             margin-bottom: 0.75rem;
+        }
+
+        .sources-first-title-group {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Minimize button in Sources First header */
+        .sources-minimize-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 6px 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sources-minimize-btn:hover {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .sources-minimize-btn:hover svg {
+            color: white;
+        }
+
+        .sources-minimize-btn svg {
+            color: var(--accent-green);
+            transition: transform 0.3s ease;
         }
 
         .sources-first-title {
@@ -3704,10 +3744,16 @@
                         <div class="sources-first-content" id="sources-content">
                             <div class="sources-first-inner">
                                 <div class="sources-first-header">
-                                    <div class="sources-first-title">
-                                        <i data-lucide="shield-check" class="w-5 h-5 shield-icon"></i>
-                                        <h3>Sources First</h3>
+                                    <div class="sources-first-title-group">
+                                        <div class="sources-first-title">
+                                            <i data-lucide="shield-check" class="w-5 h-5 shield-icon"></i>
+                                            <h3>Sources First</h3>
+                                        </div>
                                     </div>
+                                    <button class="sources-minimize-btn" onclick="toggleSourcesBanner()" title="Minimize sources panel (S)">
+                                        <i data-lucide="chevron-up" class="w-4 h-4"></i>
+                                        <span>Minimize</span>
+                                    </button>
                                 </div>
                                 <p class="sources-first-byline">We encourage you to verify with primary sources before reading AI analysis.</p>
                                 <div class="sources-tabs">${tabsHTML}</div>

@@ -2,6 +2,7 @@ import os
 import json
 import hashlib
 import re
+import requests
 from typing import Optional
 from datetime import datetime, date
 from fastapi import FastAPI, HTTPException, Request
@@ -13,21 +14,105 @@ import anthropic
 
 # Load from environment variables (Vercel sets these automatically)
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+BLOB_READ_WRITE_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")
 # Use Claude Sonnet 4.5 for quality investigative articles
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-5-20241022")
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-5-20250929")
 
-# For Vercel serverless, we use /tmp for any file operations
-# Note: File-based caching won't persist across serverless invocations
-# In production, consider using a database like Vercel KV or Supabase
+# Vercel Blob Storage configuration
+BLOB_STORE_ID = "store_R5FvidKLuXLBeOEd"
+BLOB_API_BASE = "https://blob.vercel-storage.com"
+
+# Fallback to /tmp for local development (ephemeral on Vercel)
 CACHE_DIR = "/tmp/article_cache"
 USER_USAGE_FILE = "/tmp/user_usage.json"
 FREE_DAILY_LIMIT = 5
 
-# Ensure cache directory exists
+# Ensure cache directory exists (fallback)
 os.makedirs(CACHE_DIR, exist_ok=True)
 
 # Configure Anthropic
 claude_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY) if ANTHROPIC_API_KEY else None
+
+# === VERCEL BLOB STORAGE UTILITIES ===
+
+def blob_put(path: str, content: str) -> Optional[str]:
+    """Upload content to Vercel Blob Storage. Returns blob URL on success."""
+    if not BLOB_READ_WRITE_TOKEN:
+        print("BLOB_READ_WRITE_TOKEN not set, skipping blob storage")
+        return None
+
+    try:
+        response = requests.put(
+            f"{BLOB_API_BASE}/{path}",
+            headers={
+                "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
+                "Content-Type": "application/json",
+                "x-api-version": "7"
+            },
+            data=content,
+            params={"access": "public"}
+        )
+        if response.status_code == 200:
+            result = response.json()
+            print(f"Blob stored: {path} -> {result.get('url', 'unknown')}")
+            return result.get("url")
+        else:
+            print(f"Blob PUT failed ({response.status_code}): {response.text}")
+            return None
+    except Exception as e:
+        print(f"Blob PUT error: {e}")
+        return None
+
+def blob_get(path: str) -> Optional[dict]:
+    """Fetch content from Vercel Blob Storage. Returns parsed JSON or None."""
+    if not BLOB_READ_WRITE_TOKEN:
+        return None
+
+    try:
+        # List blobs to find the URL for this path
+        response = requests.get(
+            f"{BLOB_API_BASE}",
+            headers={
+                "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
+                "x-api-version": "7"
+            },
+            params={"prefix": path, "limit": 1}
+        )
+        if response.status_code == 200:
+            result = response.json()
+            blobs = result.get("blobs", [])
+            if blobs:
+                blob_url = blobs[0].get("url")
+                # Fetch the actual content
+                content_response = requests.get(blob_url)
+                if content_response.status_code == 200:
+                    return content_response.json()
+        return None
+    except Exception as e:
+        print(f"Blob GET error: {e}")
+        return None
+
+def blob_list(prefix: str = "articles/") -> list:
+    """List all blobs with a given prefix."""
+    if not BLOB_READ_WRITE_TOKEN:
+        return []
+
+    try:
+        response = requests.get(
+            f"{BLOB_API_BASE}",
+            headers={
+                "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
+                "x-api-version": "7"
+            },
+            params={"prefix": prefix, "limit": 1000}
+        )
+        if response.status_code == 200:
+            result = response.json()
+            return result.get("blobs", [])
+        return []
+    except Exception as e:
+        print(f"Blob LIST error: {e}")
+        return []
 
 app = FastAPI()
 
@@ -45,6 +130,8 @@ class GenerateRequest(BaseModel):
 class DeepDiveRequest(BaseModel):
     topic: str
     context: str = ""
+    parent_key: str = ""  # Key of the parent article this deep dive originated from
+    parent_title: str = ""  # Title of the parent article
 
 class CacheCheckRequest(BaseModel):
     topic: str
@@ -57,44 +144,134 @@ def get_topic_key(topic: str) -> str:
     return hashlib.md5(normalized.encode()).hexdigest()[:16]
 
 def get_cached_article(topic: str) -> Optional[dict]:
-    """Check if an article exists in the cache."""
+    """Check if an article exists in the cache by topic hash OR by internal article key.
+    Tries Blob storage first, then falls back to filesystem.
+    """
     key = get_topic_key(topic)
+    blob_path = f"articles/{key}.json"
+
+    # 1. Try Blob storage by topic hash
+    data = blob_get(blob_path)
+    if data:
+        print(f"Found article in Blob storage: {blob_path}")
+        return data
+
+    # 2. Search Blob storage by internal key (scan all articles)
+    blobs = blob_list("articles/")
+    for blob in blobs:
+        try:
+            blob_url = blob.get("url")
+            if blob_url:
+                response = requests.get(blob_url)
+                if response.status_code == 200:
+                    article = response.json()
+                    # Check if internal key matches
+                    if article.get("key") == topic:
+                        print(f"Found article by internal key in Blob: {topic}")
+                        return article
+                    # Also check topic field
+                    if article.get("_topic", "").lower() == topic.lower():
+                        print(f"Found article by _topic in Blob: {topic}")
+                        return article
+        except:
+            continue
+
+    # 3. Fallback: Try filesystem by topic hash (local dev)
     cache_file = f"{CACHE_DIR}/{key}.json"
     if os.path.exists(cache_file):
         try:
             with open(cache_file, "r") as f:
                 return json.load(f)
         except:
-            return None
+            pass
+
+    # 4. Fallback: Search filesystem by internal key
+    if os.path.exists(CACHE_DIR):
+        for filename in os.listdir(CACHE_DIR):
+            if filename.endswith(".json"):
+                try:
+                    with open(f"{CACHE_DIR}/{filename}", "r") as f:
+                        data = json.load(f)
+                        if data.get("key") == topic:
+                            return data
+                        if data.get("_topic", "").lower() == topic.lower():
+                            return data
+                except:
+                    continue
     return None
 
-def cache_article(topic: str, article_data: dict):
-    """Save an article to the cache."""
+def cache_article(topic: str, article_data: dict, parent_key: str = "", parent_title: str = ""):
+    """Save an article to the cache. Uses Blob storage if available, with filesystem fallback."""
     key = get_topic_key(topic)
-    cache_file = f"{CACHE_DIR}/{key}.json"
     article_data["_cached_at"] = datetime.now().isoformat()
     article_data["_topic"] = topic
-    with open(cache_file, "w") as f:
-        json.dump(article_data, f)
+    if parent_key:
+        article_data["_parent_key"] = parent_key
+    if parent_title:
+        article_data["_parent_title"] = parent_title
+
+    # Try Blob storage first
+    blob_path = f"articles/{key}.json"
+    blob_url = blob_put(blob_path, json.dumps(article_data))
+
+    if blob_url:
+        print(f"Article cached to Blob: {blob_url}")
+    else:
+        # Fallback to filesystem
+        cache_file = f"{CACHE_DIR}/{key}.json"
+        with open(cache_file, "w") as f:
+            json.dump(article_data, f)
+        print(f"Article cached to filesystem: {cache_file}")
 
 def get_all_cached_articles() -> list:
-    """Get list of all cached article topics."""
+    """Get list of all cached article topics. Combines Blob storage and filesystem."""
     articles = []
-    if not os.path.exists(CACHE_DIR):
-        return articles
-    for filename in os.listdir(CACHE_DIR):
-        if filename.endswith(".json"):
-            try:
-                with open(f"{CACHE_DIR}/{filename}", "r") as f:
-                    data = json.load(f)
-                    articles.append({
-                        "key": data.get("key", filename[:-5]),
-                        "title": data.get("title", "Unknown"),
-                        "topic": data.get("_topic", ""),
-                        "cached_at": data.get("_cached_at", "")
-                    })
-            except:
-                continue
+    seen_keys = set()
+
+    # 1. Get articles from Blob storage (primary source)
+    blobs = blob_list("articles/")
+    for blob in blobs:
+        try:
+            blob_url = blob.get("url")
+            if blob_url:
+                response = requests.get(blob_url)
+                if response.status_code == 200:
+                    data = response.json()
+                    article_key = data.get("key", blob.get("pathname", "").split("/")[-1].replace(".json", ""))
+                    if article_key not in seen_keys:
+                        seen_keys.add(article_key)
+                        articles.append({
+                            "key": article_key,
+                            "title": data.get("title", "Unknown"),
+                            "topic": data.get("_topic", ""),
+                            "cached_at": data.get("_cached_at", ""),
+                            "parent_key": data.get("_parent_key", ""),
+                            "parent_title": data.get("_parent_title", "")
+                        })
+        except:
+            continue
+
+    # 2. Also check filesystem (for local dev and transition period)
+    if os.path.exists(CACHE_DIR):
+        for filename in os.listdir(CACHE_DIR):
+            if filename.endswith(".json"):
+                try:
+                    with open(f"{CACHE_DIR}/{filename}", "r") as f:
+                        data = json.load(f)
+                        article_key = data.get("key", filename[:-5])
+                        if article_key not in seen_keys:
+                            seen_keys.add(article_key)
+                            articles.append({
+                                "key": article_key,
+                                "title": data.get("title", "Unknown"),
+                                "topic": data.get("_topic", ""),
+                                "cached_at": data.get("_cached_at", ""),
+                                "parent_key": data.get("_parent_key", ""),
+                                "parent_title": data.get("_parent_title", "")
+                            })
+                except:
+                    continue
+
     return articles
 
 # === USER USAGE TRACKING ===
@@ -148,6 +325,56 @@ def get_remaining_free_dives(user_id: str) -> int:
     return max(0, FREE_DAILY_LIMIT - used)
 
 
+def extract_chartconfigs(text: str) -> dict:
+    """Extract chartConfigs from partial JSON using regex - critical for timeout recovery."""
+    charts = {}
+
+    # Look for chartConfigs section
+    chart_section = re.search(r'"chartConfigs"\s*:\s*\{([^}]*(?:\{[^}]*\}[^}]*)*)\}', text, re.DOTALL)
+    if not chart_section:
+        return charts
+
+    section = chart_section.group(1)
+
+    # Extract individual chart definitions
+    chart_patterns = [
+        r'"(chart_\w+)"\s*:\s*(\{[^}]*"type"\s*:\s*"[^"]+"\s*,[^}]*"data"\s*:\s*\{[^}]*\}[^}]*\})',
+    ]
+
+    for pattern in chart_patterns:
+        for match in re.finditer(pattern, section, re.DOTALL):
+            chart_id = match.group(1)
+            chart_json = match.group(2)
+            try:
+                # Clean up and parse
+                chart_json = chart_json.replace("'", '"')
+                charts[chart_id] = json.loads(chart_json)
+                print(f"Extracted chart: {chart_id}")
+            except:
+                # Try manual extraction
+                type_match = re.search(r'"type"\s*:\s*"([^"]+)"', chart_json)
+                title_match = re.search(r'"title"\s*:\s*"([^"]+)"', chart_json)
+                labels_match = re.search(r'"labels"\s*:\s*\[([^\]]+)\]', chart_json)
+                values_match = re.search(r'"values"\s*:\s*\[([^\]]+)\]', chart_json)
+                colors_match = re.search(r'"colors"\s*:\s*\[([^\]]+)\]', chart_json)
+
+                if type_match and labels_match and values_match:
+                    try:
+                        labels = json.loads(f"[{labels_match.group(1)}]")
+                        values = json.loads(f"[{values_match.group(1)}]")
+                        colors = json.loads(f"[{colors_match.group(1)}]") if colors_match else ["#3b82f6"]
+                        charts[chart_id] = {
+                            "type": type_match.group(1),
+                            "data": {"labels": labels, "values": values, "colors": colors},
+                            "title": title_match.group(1) if title_match else "Chart"
+                        }
+                        print(f"Manually extracted chart: {chart_id}")
+                    except:
+                        pass
+
+    return charts
+
+
 def repair_truncated_json(text: str) -> Optional[dict]:
     """Attempt to repair truncated JSON from timeout responses."""
     if not text or not text.strip():
@@ -176,19 +403,15 @@ def repair_truncated_json(text: str) -> Optional[dict]:
 
     # Find if we're inside a string (look for unmatched quotes)
     in_string = False
-    last_quote_pos = -1
     i = 0
     while i < len(text):
         if text[i] == '"' and (i == 0 or text[i-1] != '\\'):
             in_string = not in_string
-            if in_string:
-                last_quote_pos = i
         i += 1
 
     # If we're inside a string, try to close it
     repaired = text
     if in_string:
-        # Truncate to last complete-looking sentence or add closing quote
         repaired = text + '"'
 
     # Close brackets then braces
@@ -203,103 +426,79 @@ def repair_truncated_json(text: str) -> Optional[dict]:
     except Exception as e:
         print(f"JSON repair failed: {e}")
 
-    # Last resort: try to extract just the essential fields
+    # Last resort: extract fields with regex - PRESERVE CHARTS!
     try:
-        # Try to find key and title at minimum
         key_match = re.search(r'"key"\s*:\s*"([^"]+)"', text)
         title_match = re.search(r'"title"\s*:\s*"([^"]+)"', text)
+        card_title_match = re.search(r'"cardTitle"\s*:\s*"([^"]+)"', text)
+        card_tag_match = re.search(r'"cardTag"\s*:\s*"([^"]+)"', text)
+        card_desc_match = re.search(r'"cardDescription"\s*:\s*"([^"]+)"', text)
 
         if key_match and title_match:
-            # Extract content up to where it broke
-            content_match = re.search(r'"content"\s*:\s*"(.*?)(?:"\s*,\s*"chartConfigs|$)', text, re.DOTALL)
-            content = content_match.group(1) if content_match else f"<p class='prose-text'>Article generation was interrupted. Please try again.</p>"
+            # CRITICAL: Extract chartConfigs even from truncated JSON
+            chart_configs = extract_chartconfigs(text)
+            print(f"Extracted {len(chart_configs)} charts from truncated JSON")
+
+            # Extract content - it comes AFTER chartConfigs now
+            content_match = re.search(r'"content"\s*:\s*"(.*?)(?:"\s*[,}]|$)', text, re.DOTALL)
+            content = content_match.group(1) if content_match else "<p class='prose-text'>Article content was truncated. The charts and data are preserved.</p>"
+
+            # Unescape the content
+            content = content.replace('\\"', '"').replace('\\n', '\n')
 
             return {
                 "key": key_match.group(1),
                 "title": title_match.group(1),
+                "cardTitle": card_title_match.group(1) if card_title_match else title_match.group(1)[:50],
+                "cardTag": card_tag_match.group(1) if card_tag_match else "INVESTIGATION",
+                "cardDescription": card_desc_match.group(1) if card_desc_match else "",
                 "content": content,
-                "chartConfigs": {},
+                "chartConfigs": chart_configs,  # PRESERVE CHARTS!
                 "contextData": {},
                 "citationDatabase": {},
                 "sources": [],
                 "_partial": True
             }
-    except:
-        pass
+    except Exception as e:
+        print(f"Regex extraction failed: {e}")
 
     return None
 
 
-# Comprehensive investigative journalism template
+# Comprehensive investigative journalism template - OPTIMIZED FOR 60s TIMEOUT
+# Key optimization: chartConfigs comes FIRST so it's captured even if content is truncated
 ARTICLE_TEMPLATE = """
-You are an elite investigative journalist for GenuVerity, a premium research platform. Write a comprehensive deep-dive exposé on: "{topic}"
+Investigative exposé on: "{topic}"
 {context_section}
 
-RETURN ONLY VALID JSON (no markdown, no code fences). The JSON structure:
+RETURN ONLY VALID JSON. CRITICAL: Generate chartConfigs FIRST (before content) to ensure charts are captured.
 
 {{
   "key": "{topic_slug}",
-  "title": "Compelling investigative headline with specific hook",
-  "cardTitle": "Short card title (3-5 words)",
+  "title": "Compelling headline with specific hook",
+  "cardTitle": "3-5 word card title",
   "cardTag": "CATEGORY // SUBCATEGORY",
   "cardTagColor": "text-red-400",
-  "cardDescription": "One-line teaser for the card",
-  "content": "FULL HTML CONTENT HERE",
+  "cardDescription": "One-line teaser",
   "chartConfigs": {{
-    "chart_main": {{"type": "bar", "data": {{"labels": ["Label1", "Label2", "Label3", "Label4"], "values": [num1, num2, num3, num4], "colors": ["#3b82f6", "#10b981", "#f59e0b", "#ef4444"]}}, "title": "Chart Title"}},
-    "chart_secondary": {{"type": "line", "data": {{"labels": ["2020", "2021", "2022", "2023", "2024"], "values": [v1, v2, v3, v4, v5], "colors": ["#8b5cf6"]}}, "title": "Trend Title"}},
-    "chart_tertiary": {{"type": "pie", "data": {{"labels": ["A", "B", "C"], "values": [40, 35, 25], "colors": ["#3b82f6", "#10b981", "#f59e0b"]}}, "title": "Distribution Title"}}
+    "chart_main": {{"type": "bar", "data": {{"labels": ["A", "B", "C", "D"], "values": [num1, num2, num3, num4], "colors": ["#3b82f6", "#10b981", "#f59e0b", "#ef4444"]}}, "title": "Main Chart"}},
+    "chart_secondary": {{"type": "line", "data": {{"labels": ["2020", "2021", "2022", "2023", "2024"], "values": [v1, v2, v3, v4, v5], "colors": ["#8b5cf6"]}}, "title": "Trend"}},
+    "chart_tertiary": {{"type": "pie", "data": {{"labels": ["X", "Y", "Z"], "values": [40, 35, 25], "colors": ["#3b82f6", "#10b981", "#f59e0b"]}}, "title": "Distribution"}}
   }},
-  "citationDatabase": {{
-    "source_key": {{"domain": "reuters.com", "trustScore": 95, "title": "Article Title", "snippet": "Key quote from source", "url": "https://..."}}
-  }},
-  "contextData": {{
-    "term_key": {{"expanded": "2-3 sentence deep explanation of this concept for the fractal trigger popup"}}
-  }},
-  "sources": [
-    {{"name": "Source Name: Article Title", "score": 95, "url": "https://..."}}
-  ]
+  "contextData": {{"term1": {{"expanded": "Explanation"}}}},
+  "citationDatabase": {{"src1": {{"domain": "reuters.com", "trustScore": 95, "title": "Title", "snippet": "Quote", "url": "https://..."}}}},
+  "sources": [{{"name": "Source", "score": 95, "url": "https://..."}}],
+  "content": "HTML CONTENT HERE"
 }}
 
-HTML CONTENT STRUCTURE (use these exact classes):
+HTML structure for content field:
+- <p class="prose-text"><strong class="text-white">Executive Summary:</strong> Key finding with <span class="highlight-glow">stat</span> and <span class="living-number" data-target="NUM" data-suffix="SUFFIX">$0</span> <span class="citation-spade" data-id="src1">♠</span></p>
+- <h2 class="prose-h2">1. Section</h2> with <div class="float-figure right"><div style="height:250px"><canvas id="chart_main"></canvas></div><div class="fig-caption">Caption <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div></div>
+- <strong class="fractal-trigger" onclick="expandContext(this,'term1')">terms</strong> for deep-dives
+- 5 sections, 3 charts (bar, line, pie), 8+ living numbers, 6+ fractal triggers, 10+ citations
+- Alternate float-figure right/left
 
-1. EXECUTIVE SUMMARY (opening paragraph):
-<p class="prose-text"><strong class="text-white">Executive Summary:</strong> Hook the reader with the key finding. Include <span class="highlight-glow">highlighted key stat</span> and <span class="living-number" data-target="NUMBER" data-suffix="SUFFIX">$0</span> animated numbers <span class="citation-spade" data-id="source_key">♠</span>.</p>
-
-2. SECTION 1 with chart:
-<h2 class="prose-h2">1. Section Title</h2>
-<div class="float-figure right"><div style="height: 250px;"><canvas id="chart_main"></canvas></div><div class="fig-caption">Fig 1. Caption <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div></div>
-<p class="prose-text">Content with <strong class="fractal-trigger" onclick="expandContext(this, 'term_key')">clickable deep-dive terms</strong> and citations <span class="citation-spade" data-id="source_key">♠</span>.</p>
-
-3. SECTION 2 with chart:
-<h2 class="prose-h2">2. Section Title</h2>
-<div class="float-figure left"><div style="height: 250px;"><canvas id="chart_secondary"></canvas></div><div class="fig-caption">Fig 2. Caption <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div></div>
-<p class="prose-text">More investigative content...</p>
-
-4. SECTION 3 with chart:
-<h2 class="prose-h2">3. Section Title</h2>
-<div class="float-figure right"><div style="height: 250px;"><canvas id="chart_tertiary"></canvas></div><div class="fig-caption">Fig 3. Caption <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div></div>
-<p class="prose-text">Continue the investigation...</p>
-
-5. SECTIONS 4-5: Additional analysis sections with more content.
-
-6. CONCLUSION:
-<h2 class="prose-h2">5. Conclusion: [Provocative Question or Statement]</h2>
-<p class="prose-text">Synthesize findings and pose forward-looking questions.</p>
-
-REQUIREMENTS:
-- 5 distinct sections with numbered h2 headers
-- 3 charts minimum (bar, line, pie/doughnut) with REALISTIC data
-- 8-12 living numbers with real statistics
-- 6-8 fractal triggers with contextData entries
-- 10-15 citation spades with citationDatabase entries
-- 8-10 sources in the sources array
-- Investigative magazine tone (think: The Atlantic meets Bloomberg)
-- Use specific numbers, dates, names, and statistics
-- Each chart MUST have a DEEP DIVE button
-- Alternate float-figure right/left for visual balance
-
-IMPORTANT: Return ONLY the JSON object. No markdown, no explanation, no code fences.
+Return ONLY JSON. No markdown, no code fences.
 """
 
 @app.post("/api/generate")
@@ -339,10 +538,10 @@ async def generate_report(request: GenerateRequest, req: Request):
 
         try:
             # Stage 1: Initializing
-            yield send_sse("progress", {"stage": "init", "percent": 5, "message": "Initializing Sonnet 4.5..."})
+            yield send_sse("progress", {"stage": "init", "percent": 5, "message": "Preparing investigation..."})
 
             # Stage 2: Connecting
-            yield send_sse("progress", {"stage": "connect", "percent": 10, "message": "Connecting to Claude AI..."})
+            yield send_sse("progress", {"stage": "connect", "percent": 10, "message": "Initializing research pipeline..."})
 
             with claude_client.messages.stream(
                 model=CLAUDE_MODEL,
@@ -435,7 +634,7 @@ async def get_usage(request: Request):
 
 @app.post("/api/deep-dive")
 async def generate_deep_dive(request_body: DeepDiveRequest, request: Request):
-    """Claude-powered deep-dive article generation."""
+    """Claude-powered deep-dive article generation with SSE streaming."""
 
     # Check cache first
     cached = get_cached_article(request_body.topic)
@@ -444,19 +643,20 @@ async def generate_deep_dive(request_body: DeepDiveRequest, request: Request):
         cached["_from_cache"] = True
         return cached
 
-    # Check rate limiting
+    # Check rate limiting - DISABLED FOR DEVELOPMENT
     user_id = get_user_id(request)
     remaining = get_remaining_free_dives(user_id)
 
-    if remaining <= 0:
-        raise HTTPException(
-            status_code=429,
-            detail={
-                "error": "daily_limit_exceeded",
-                "message": f"You've used all {FREE_DAILY_LIMIT} free deep dives for today. Come back tomorrow!",
-                "remaining": 0
-            }
-        )
+    # Rate limiting disabled for dev - uncomment to re-enable
+    # if remaining <= 0:
+    #     raise HTTPException(
+    #         status_code=429,
+    #         detail={
+    #             "error": "daily_limit_exceeded",
+    #             "message": f"You've used all {FREE_DAILY_LIMIT} free deep dives for today. Come back tomorrow!",
+    #             "remaining": 0
+    #         }
+    #     )
 
     if not ANTHROPIC_API_KEY or not claude_client:
         raise HTTPException(status_code=500, detail="Server missing ANTHROPIC_API_KEY environment variable.")
@@ -475,48 +675,118 @@ async def generate_deep_dive(request_body: DeepDiveRequest, request: Request):
         topic_slug=topic_slug
     )
 
-    try:
-        response = claude_client.messages.create(
-            model=CLAUDE_MODEL,
-            max_tokens=8000,  # Full article with charts, sources, and contextData
-            messages=[{"role": "user", "content": prompt}]
-        )
+    def send_sse(event: str, data) -> str:
+        """Format a Server-Sent Event message."""
+        return f"event: {event}\ndata: {json.dumps(data)}\n\n"
 
-        text = response.content[0].text
+    async def stream_response():
+        """Stream SSE progress events and final content."""
+        full_text = ""
+        last_partial_len = 0
 
-        # Use repair function which handles markdown cleanup and truncation
-        data = repair_truncated_json(text)
+        # Progress stages
+        stages = {
+            "title": False,
+            "section_1": False,
+            "section_2": False,
+            "section_3": False,
+            "charts": False,
+            "sources": False
+        }
 
-        if not data:
-            raise json.JSONDecodeError("Could not parse or repair JSON", text[:100] if text else "", 0)
+        try:
+            yield send_sse("progress", {"stage": "init", "percent": 5, "message": "Preparing deep dive..."})
+            yield send_sse("progress", {"stage": "connect", "percent": 10, "message": "Initializing research pipeline..."})
 
-        # Ensure required fields
-        if "key" not in data:
-            data["key"] = topic_slug
-        if "chartConfigs" not in data:
-            data["chartConfigs"] = {}
-        if "contextData" not in data:
-            data["contextData"] = {}
-        if "citationDatabase" not in data:
-            data["citationDatabase"] = {}
-        if "sources" not in data:
-            data["sources"] = []
+            with claude_client.messages.stream(
+                model=CLAUDE_MODEL,
+                max_tokens=8000,
+                messages=[{"role": "user", "content": prompt}]
+            ) as stream:
+                yield send_sse("progress", {"stage": "research", "percent": 15, "message": "Researching topic..."})
 
-        # Cache and track usage (even for partial responses)
-        cache_article(request_body.topic, data)
-        increment_user_usage(user_id)
+                for text in stream.text_stream:
+                    full_text += text
 
-        data["_from_cache"] = False
-        data["_remaining_today"] = remaining - 1
+                    # Detect progress and send updates
+                    if '"title"' in full_text and not stages["title"]:
+                        stages["title"] = True
+                        yield send_sse("progress", {"stage": "title", "percent": 25, "message": "Crafting headline..."})
 
-        return data
+                    if '"content"' in full_text and not stages["section_1"]:
+                        stages["section_1"] = True
+                        yield send_sse("progress", {"stage": "writing", "percent": 35, "message": "Writing article..."})
 
-    except json.JSONDecodeError as e:
-        print(f"JSON Parse Error: {e}")
-        raise HTTPException(status_code=500, detail=f"Failed to parse AI response: {str(e)}")
-    except Exception as e:
-        print(f"Deep-dive Generation Error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+                    if '<h2 class="prose-h2">2.' in full_text and not stages["section_2"]:
+                        stages["section_2"] = True
+                        yield send_sse("progress", {"stage": "analysis", "percent": 50, "message": "Deep analysis..."})
+
+                    if '<h2 class="prose-h2">3.' in full_text and not stages["section_3"]:
+                        stages["section_3"] = True
+                        yield send_sse("progress", {"stage": "deep", "percent": 65, "message": "Building insights..."})
+
+                    if '"chartConfigs"' in full_text and not stages["charts"]:
+                        stages["charts"] = True
+                        yield send_sse("progress", {"stage": "charts", "percent": 80, "message": "Building charts..."})
+
+                    if '"sources"' in full_text and not stages["sources"]:
+                        stages["sources"] = True
+                        yield send_sse("progress", {"stage": "sources", "percent": 90, "message": "Verifying sources..."})
+
+                    # Send partial content every 2000 chars to prevent timeout loss
+                    if len(full_text) - last_partial_len > 2000:
+                        last_partial_len = len(full_text)
+                        yield send_sse("partial", full_text)
+
+            yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Complete!"})
+
+            # Parse and validate the response
+            data = repair_truncated_json(full_text)
+
+            if data:
+                # Ensure required fields
+                if "key" not in data:
+                    data["key"] = topic_slug
+                data.setdefault("chartConfigs", {})
+                data.setdefault("contextData", {})
+                data.setdefault("citationDatabase", {})
+                data.setdefault("sources", [])
+
+                # Cache and track usage (include parent info if provided)
+                cache_article(
+                    request_body.topic,
+                    data,
+                    parent_key=request_body.parent_key,
+                    parent_title=request_body.parent_title
+                )
+                increment_user_usage(user_id)
+
+                data["_from_cache"] = False
+                data["_remaining_today"] = remaining - 1
+
+                yield send_sse("content", data)
+            else:
+                # If parsing failed, send raw text for client-side repair
+                yield send_sse("rawcontent", full_text)
+
+            yield send_sse("done", "ok")
+
+        except Exception as e:
+            print(f"Deep-dive Streaming Error: {e}")
+            # If we have partial content, send it even on error
+            if full_text and len(full_text) > 100:
+                yield send_sse("partial", full_text)
+            yield send_sse("error", str(e))
+
+    return StreamingResponse(
+        stream_response(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no"
+        }
+    )
 
 
 # Health check endpoint
