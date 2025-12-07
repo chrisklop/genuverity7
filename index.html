@@ -412,6 +412,91 @@
             border-color: var(--accent-blue);
         }
 
+        /* === NAVBAR SOURCES BUTTON === */
+        .nav-sources-btn {
+            display: none; /* Hidden by default, shown on essay pages */
+            align-items: center;
+            gap: 0.5rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--accent-green);
+            background: transparent;
+            color: var(--text-main);
+            font-size: 0.75rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .nav-sources-btn.visible {
+            display: flex;
+        }
+
+        .nav-sources-btn svg {
+            color: var(--accent-green);
+        }
+
+        .nav-sources-btn .nav-sources-label {
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .nav-sources-btn .nav-sources-label {
+                display: inline;
+            }
+        }
+
+        .nav-sources-btn .nav-sources-count {
+            background: var(--accent-green);
+            color: var(--bg-deep);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .nav-sources-btn:hover {
+            background: var(--accent-green);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .nav-sources-btn:hover svg {
+            color: white;
+        }
+
+        .nav-sources-btn:hover .nav-sources-count {
+            background: white;
+            color: var(--accent-green);
+        }
+
+        /* Glow animation when sources are collapsed */
+        .nav-sources-btn.collapsed::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 22px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(16, 185, 129, 0.4) 25%,
+                rgba(16, 185, 129, 0.6) 50%,
+                rgba(16, 185, 129, 0.4) 75%,
+                transparent 100%
+            );
+            background-size: 200% 100%;
+            z-index: -1;
+            animation: nav-sources-glow 3s ease-in-out infinite;
+            filter: blur(4px);
+        }
+
+        @keyframes nav-sources-glow {
+            0%, 100% { background-position: 200% 0; opacity: 0.8; }
+            50% { background-position: -200% 0; opacity: 1; }
+        }
+
         /* === DARK/LIGHT THEME TOGGLE === */
         .theme-toggle-switch {
             display: flex;
@@ -968,129 +1053,6 @@
             color: var(--accent-green);
             min-width: 26px;
             text-align: right;
-        }
-
-        /* Persistent Sources Toggle Button - always visible at bottom of section */
-        .sources-toggle-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            width: 100%;
-            background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card));
-            border: 1px solid var(--border-color);
-            border-radius: 0 0 16px 16px;
-            padding: 0.6rem 1rem;
-            color: var(--text-main);
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s ease;
-            margin-top: -1px;
-        }
-
-        /* When expanded, button is inside the banner */
-        .sources-first-banner:not(.collapsed) .sources-toggle-btn {
-            border-top: 1px solid var(--border-color);
-            border-radius: 0 0 16px 16px;
-            background: rgba(16, 185, 129, 0.05);
-        }
-
-        /* When collapsed, button stands alone with full border */
-        .sources-first-banner.collapsed .sources-toggle-btn {
-            border: 1px solid var(--accent-green);
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card));
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
-        }
-
-        /* Circuit trace glow on button - only when collapsed */
-        .sources-toggle-btn::after {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 14px;
-            background: linear-gradient(90deg,
-                transparent 0%,
-                rgba(16, 185, 129, 0.3) 25%,
-                rgba(16, 185, 129, 0.5) 50%,
-                rgba(16, 185, 129, 0.3) 75%,
-                transparent 100%
-            );
-            background-size: 200% 100%;
-            opacity: 0;
-            z-index: -1;
-            animation: sources-btn-glow 3s ease-in-out infinite;
-            filter: blur(4px);
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .sources-first-banner.collapsed .sources-toggle-btn::after {
-            opacity: 1;
-        }
-
-        @keyframes sources-btn-glow {
-            0%, 100% { background-position: 200% 0; opacity: 0.6; }
-            50% { background-position: -200% 0; opacity: 0.8; }
-        }
-
-        .sources-toggle-btn:hover {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.1));
-            border-color: var(--accent-green);
-        }
-
-        .sources-first-banner.collapsed .sources-toggle-btn:hover {
-            background: linear-gradient(135deg, var(--accent-green), #0d9668);
-            color: white;
-            box-shadow: 0 6px 25px rgba(16, 185, 129, 0.3);
-        }
-
-        .sources-toggle-btn .toggle-icon {
-            color: var(--accent-green);
-            transition: transform 0.3s ease;
-        }
-
-        .sources-first-banner.collapsed .sources-toggle-btn:hover .toggle-icon {
-            color: white;
-        }
-
-        /* Rotate chevron based on state */
-        .sources-first-banner.collapsed .sources-toggle-btn .toggle-icon {
-            transform: rotate(180deg);
-        }
-
-        .sources-toggle-btn .toggle-text-expand,
-        .sources-toggle-btn .toggle-text-collapse {
-            transition: opacity 0.2s ease;
-        }
-
-        /* Show/hide text based on state */
-        .sources-first-banner:not(.collapsed) .sources-toggle-btn .toggle-text-expand {
-            display: none;
-        }
-        .sources-first-banner:not(.collapsed) .sources-toggle-btn .toggle-text-collapse {
-            display: inline;
-        }
-        .sources-first-banner.collapsed .sources-toggle-btn .toggle-text-expand {
-            display: inline;
-        }
-        .sources-first-banner.collapsed .sources-toggle-btn .toggle-text-collapse {
-            display: none;
-        }
-
-        .sources-toggle-count {
-            background: var(--accent-green);
-            color: var(--bg-deep);
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 2px 6px;
-            border-radius: 10px;
-        }
-
-        .sources-first-banner.collapsed .sources-toggle-btn:hover .sources-toggle-count {
-            background: white;
         }
 
         /* Portal Layout with Independent Scroll */
@@ -2517,6 +2479,12 @@
                     <a class="nav-link">Methods</a>
                 </div>
                 <div class="flex items-center gap-2">
+                    <!-- Sources Toggle (only visible on essay pages) -->
+                    <button id="nav-sources-btn" class="nav-sources-btn" onclick="toggleSourcesBanner()" title="Toggle Sources (S)">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        <span class="nav-sources-label">Sources</span>
+                        <span class="nav-sources-count" id="nav-sources-count">0</span>
+                    </button>
                     <!-- Bookmarks/Library -->
                     <button onclick="toggleBookmarksSidebar()" class="theme-toggle" title="Research Library (L)">
                         <i data-lucide="library" class="w-4 h-4"></i>
@@ -3534,6 +3502,11 @@
                 deepDiveTooltipEl.classList.remove('visible');
             }
 
+            // Hide navbar sources button when leaving report view
+            if (id !== 'view-report') {
+                updateNavSourcesButton(false);
+            }
+
             // Refresh trending section when returning to portal (to show newly generated articles)
             if (id === 'view-portal') {
                 renderTrendingSection();
@@ -3544,6 +3517,7 @@
         function toggleSourcesBanner() {
             const banner = document.getElementById('sources-banner');
             const content = document.getElementById('sources-content');
+            const navBtn = document.getElementById('nav-sources-btn');
 
             if (!banner || !content) return;
 
@@ -3553,6 +3527,7 @@
                 // Expand - set max-height to scrollHeight for smooth animation
                 content.style.maxHeight = content.scrollHeight + 'px';
                 banner.classList.remove('collapsed');
+                if (navBtn) navBtn.classList.remove('collapsed');
                 // Smooth scroll to banner
                 setTimeout(() => {
                     banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -3567,6 +3542,22 @@
                 // Force reflow
                 content.offsetHeight;
                 banner.classList.add('collapsed');
+                if (navBtn) navBtn.classList.add('collapsed');
+            }
+        }
+
+        // Show/hide navbar sources button based on view
+        function updateNavSourcesButton(show, count = 0) {
+            const navBtn = document.getElementById('nav-sources-btn');
+            const countEl = document.getElementById('nav-sources-count');
+            if (navBtn) {
+                if (show) {
+                    navBtn.classList.add('visible');
+                    if (countEl) countEl.textContent = count;
+                } else {
+                    navBtn.classList.remove('visible');
+                    navBtn.classList.remove('collapsed');
+                }
             }
         }
 
@@ -3723,14 +3714,11 @@
                                 <div class="sources-tab-panels">${panelsHTML}</div>
                             </div>
                         </div>
-                        <button class="sources-toggle-btn" onclick="toggleSourcesBanner()">
-                            <i data-lucide="chevron-up" class="w-4 h-4 toggle-icon"></i>
-                            <span class="toggle-text-collapse">Minimize Sources</span>
-                            <span class="toggle-text-expand">View Sources</span>
-                            <span class="sources-toggle-count">${allSources.length}</span>
-                        </button>
                     </div>
                 `;
+
+                // Show navbar sources button with count
+                updateNavSourcesButton(true, allSources.length);
 
                 // Add tab switching functionality
                 setTimeout(() => {
