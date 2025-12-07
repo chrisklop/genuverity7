@@ -232,6 +232,77 @@
             transition: background 0.3s, color 0.3s;
         }
 
+        /* === LOGO VERITY CIRCUIT TRACE === */
+        .logo-verity {
+            color: var(--logo-accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Circuit trace underline - thin line beneath the text */
+        .logo-verity::after {
+            content: '';
+            position: absolute;
+            bottom: 0.05em;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                var(--logo-accent) 50%,
+                transparent 100%
+            );
+            opacity: 0;
+            animation: circuit-trace 12s ease-in-out infinite;
+            animation-delay: 3s;
+        }
+
+        /* The traveling energy pulse */
+        .logo-verity::before {
+            content: '';
+            position: absolute;
+            bottom: 0.05em;
+            left: -10%;
+            width: 20%;
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(62, 99, 221, 0.8),
+                #fff,
+                rgba(62, 99, 221, 0.8),
+                transparent
+            );
+            opacity: 0;
+            filter: blur(0.5px);
+            box-shadow: 0 0 8px rgba(62, 99, 221, 0.6), 0 0 16px rgba(62, 99, 221, 0.3);
+            animation: circuit-pulse 12s ease-in-out infinite;
+            animation-delay: 3s;
+        }
+
+        @keyframes circuit-trace {
+            0%, 85%, 100% { opacity: 0; }
+            88%, 97% { opacity: 0.4; }
+        }
+
+        @keyframes circuit-pulse {
+            0%, 85% {
+                opacity: 0;
+                left: -20%;
+            }
+            88% {
+                opacity: 1;
+                left: -20%;
+            }
+            97% {
+                opacity: 1;
+                left: 100%;
+            }
+            100% {
+                opacity: 0;
+                left: 100%;
+            }
+        }
+
         /* === THEME TOGGLE BUTTON === */
         .theme-toggle {
             width: 36px;
@@ -2321,7 +2392,7 @@
             <div class="portal-left">
                 <div class="text-center lg:text-left">
                     <h1 id="portal-logo" class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tighter text-white anim-drop-in anim-delay-1">
-                        Genu<span style="color: var(--logo-accent);">Verity</span>
+                        Genu<span class="logo-verity">Verity</span>
                     </h1>
                     <p id="tagline" class="text-lg lg:text-xl text-gray-400 mb-8 max-w-md anim-drop-in anim-delay-2">
                         <span class="typewriter">Where curiosity meets evidence.</span>
