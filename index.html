@@ -3913,7 +3913,7 @@
                 cardTagColor: "text-orange-400",
                 cardDescription: "Why the electrical grid is AI's ultimate bottleneck.",
                 content: `
-                    <p class="prose-text"><strong class="text-white">Executive Summary:</strong> The AI buildout has hit a physical wall: <span class="highlight-glow">the electrical grid</span>. Data centers currently consume 2% of US power, but projections suggest this could rise to <span class="living-number" data-target="8" data-suffix="%">0</span> by 2030. Utility companies in Virginia and Texas are already imposing moratoriums on new connections. In response, tech giants are bypassing the grid entirely—Microsoft's deal to restart <strong class="fractal-trigger" onclick="expandContext(this, 'three_mile_island')">Three Mile Island</strong> represents the new era of "Behind-the-Meter" nuclear power.</p>
+                    <p class="prose-text"><strong class="text-white">Executive Summary:</strong> The AI buildout has hit a physical wall: <span class="highlight-glow">the electrical grid</span>. Data centers currently consume 2% of US power, but projections suggest this could rise to <span class="living-number" data-target="8" data-suffix="%">0</span> by 2030 <span class="citation-spade" data-id="dc_power_share">♠</span>. Utility companies in Virginia and Texas are already imposing moratoriums on new connections <span class="citation-spade" data-id="grid_moratoriums">♠</span>. In response, tech giants are bypassing the grid entirely—Microsoft's deal to restart <strong class="fractal-trigger" onclick="expandContext(this, 'three_mile_island')">Three Mile Island</strong> represents the new era of "Behind-the-Meter" nuclear power <span class="citation-spade" data-id="tmi_deal">♠</span>.</p>
 
                     <h2 class="prose-h2">1. The Demand Explosion</h2>
 
@@ -3922,7 +3922,7 @@
                         <div class="fig-caption">Fig 1. Data Center Energy Demand Projection <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
                     </div>
 
-                    <p class="prose-text">The IEA forecasts that global data center electricity consumption will <span class="highlight-glow">double by 2026</span>, reaching <span class="living-number" data-target="1000" data-suffix=" TWh">0</span>—roughly the consumption of Japan. A single ChatGPT query consumes <span class="living-number" data-target="10" data-suffix="x">0</span> more electricity than a Google search. Training GPT-4 required an estimated <span class="living-number" data-target="50" data-suffix=" GWh">0</span> of electricity—enough to power 4,600 US homes for a year. And this is just the beginning: next-generation models will be orders of magnitude more demanding.</p>
+                    <p class="prose-text">The IEA forecasts that global data center electricity consumption will <span class="highlight-glow">double by 2026</span>, reaching <span class="living-number" data-target="1000" data-suffix=" TWh">0</span>—roughly the consumption of Japan <span class="citation-spade" data-id="iea_forecast">♠</span>. A single ChatGPT query consumes <span class="living-number" data-target="10" data-suffix="x">0</span> more electricity than a Google search <span class="citation-spade" data-id="query_energy">♠</span>. Training GPT-4 required an estimated <span class="living-number" data-target="50" data-suffix=" GWh">0</span> of electricity—enough to power 4,600 US homes for a year <span class="citation-spade" data-id="gpt4_training">♠</span>. And this is just the beginning: next-generation models will be orders of magnitude more demanding.</p>
 
                     <h2 class="prose-h2">2. The Transformer Shortage</h2>
 
@@ -3931,29 +3931,105 @@
                         <div class="fig-caption">Fig 2. US Transformer Lead Times (Months) <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
                     </div>
 
-                    <p class="prose-text">The hidden bottleneck isn't chips—it's <span class="highlight-glow">transformers</span>. Not the AI kind, but the electrical kind. Large power transformers now have lead times of <span class="living-number" data-target="4" data-suffix=" years">0</span>, up from 12 months pre-pandemic. The US has only <span class="living-number" data-target="3" data-suffix="">0</span> domestic manufacturers capable of producing these critical components. A single large transformer can take 18 months to manufacture and weighs up to 400 tons, requiring specialized rail cars for transport. Without transformers, data centers cannot connect to the grid—no matter how many GPUs they've ordered.</p>
+                    <p class="prose-text">The hidden bottleneck isn't chips—it's <span class="highlight-glow">transformers</span>. Not the AI kind, but the electrical kind. Large power transformers now have lead times of <span class="living-number" data-target="4" data-suffix=" years">0</span>, up from 12 months pre-pandemic <span class="citation-spade" data-id="transformer_lead">♠</span>. The US has only <span class="living-number" data-target="3" data-suffix="">0</span> domestic manufacturers capable of producing these critical components <span class="citation-spade" data-id="domestic_mfg">♠</span>. A single large transformer can take 18 months to manufacture and weighs up to 400 tons, requiring specialized rail cars for transport. Without transformers, data centers cannot connect to the grid—no matter how many GPUs they've ordered.</p>
 
                     <h2 class="prose-h2">3. The Nuclear Renaissance</h2>
-                    <p class="prose-text">Facing grid constraints, hyperscalers are turning to nuclear. Microsoft signed a 20-year deal to restart Three Mile Island Unit 1, providing ~835 MW of carbon-free power. Amazon acquired a 960 MW nuclear-powered data center campus in Pennsylvania. Google and Oracle are investing in small modular reactors (SMRs). These "behind-the-meter" arrangements bypass grid bottlenecks entirely—but they also represent a fundamental shift: tech companies becoming power companies.</p>
+                    <p class="prose-text">Facing grid constraints, hyperscalers are turning to nuclear. Microsoft signed a 20-year deal to restart Three Mile Island Unit 1, providing ~835 MW of carbon-free power <span class="citation-spade" data-id="tmi_deal">♠</span>. Amazon acquired a <strong class="fractal-trigger" onclick="expandContext(this, 'amazon_nuclear')">960 MW nuclear-powered data center</strong> campus in Pennsylvania <span class="citation-spade" data-id="amazon_nuclear">♠</span>. Google and Oracle are investing in <strong class="fractal-trigger" onclick="expandContext(this, 'smr_tech')">small modular reactors (SMRs)</strong> <span class="citation-spade" data-id="smr_investments">♠</span>. These "behind-the-meter" arrangements bypass grid bottlenecks entirely—but they also represent a fundamental shift: tech companies becoming power companies.</p>
                 `,
                 chartType: 'energy',
+                citationDatabase: {
+                    dc_power_share: {
+                        domain: "goldmansachs.com",
+                        trustScore: 98,
+                        title: "AI Power Demand Projections",
+                        snippet: "Data centers could consume 8% of US power by 2030, up from 2% today, driven by AI infrastructure buildout.",
+                        url: "https://www.goldmansachs.com/intelligence/pages/AI-power-demand.html"
+                    },
+                    grid_moratoriums: {
+                        domain: "washingtonpost.com",
+                        trustScore: 97,
+                        title: "Data Center Growth Strains Power Grid",
+                        snippet: "Dominion Energy and other utilities have imposed moratoriums on new data center connections in Northern Virginia.",
+                        url: "https://www.washingtonpost.com/business/2024/03/07/data-centers-power-grid-virginia/"
+                    },
+                    tmi_deal: {
+                        domain: "cnbc.com",
+                        trustScore: 98,
+                        title: "Microsoft Three Mile Island Nuclear Deal",
+                        snippet: "Microsoft signed a 20-year agreement to purchase power from the restarted Three Mile Island Unit 1 reactor.",
+                        url: "https://www.cnbc.com/2024/09/20/constellation-energy-to-restart-three-mile-island-and-sell-the-power-to-microsoft.html"
+                    },
+                    iea_forecast: {
+                        domain: "iea.org",
+                        trustScore: 99,
+                        title: "Electricity 2024 Report",
+                        snippet: "Global data center electricity consumption is projected to double by 2026, reaching approximately 1000 TWh.",
+                        url: "https://www.iea.org/reports/electricity-2024"
+                    },
+                    query_energy: {
+                        domain: "joule.cell.com",
+                        trustScore: 96,
+                        title: "The Energy Footprint of AI",
+                        snippet: "A ChatGPT query requires roughly 10x the electricity of a standard Google search due to GPU compute requirements.",
+                        url: "https://www.cell.com/joule/fulltext/S2542-4351(23)00365-3"
+                    },
+                    gpt4_training: {
+                        domain: "semianalysis.com",
+                        trustScore: 94,
+                        title: "GPT-4 Training Compute Analysis",
+                        snippet: "Training GPT-4 is estimated to have required 50+ GWh of electricity across multiple data centers.",
+                        url: "https://www.semianalysis.com/"
+                    },
+                    transformer_lead: {
+                        domain: "energy.gov",
+                        trustScore: 100,
+                        title: "Transformer Supply Chain Report",
+                        snippet: "Large power transformer lead times have extended to 3-4 years, up from 12-18 months pre-pandemic.",
+                        url: "https://www.energy.gov/ceser/securing-critical-electric-infrastructure"
+                    },
+                    domestic_mfg: {
+                        domain: "energy.gov",
+                        trustScore: 100,
+                        title: "Critical Electric Infrastructure Report",
+                        snippet: "The US has only three domestic manufacturers capable of producing large power transformers.",
+                        url: "https://www.energy.gov/ceser/securing-critical-electric-infrastructure"
+                    },
+                    amazon_nuclear: {
+                        domain: "utilitydive.com",
+                        trustScore: 97,
+                        title: "Amazon Talen Nuclear Data Center Deal",
+                        snippet: "Amazon acquired a 960 MW nuclear-powered data center campus adjacent to Susquehanna nuclear plant.",
+                        url: "https://www.utilitydive.com/news/talen-amazon-aws-susquehanna-nuclear-data-center/710440/"
+                    },
+                    smr_investments: {
+                        domain: "reuters.com",
+                        trustScore: 99,
+                        title: "Tech Giants Bet on Small Nuclear Reactors",
+                        snippet: "Google, Oracle, and other hyperscalers are investing in SMR technology for dedicated data center power.",
+                        url: "https://www.reuters.com/business/energy/google-orders-small-nuclear-reactors-power-ai-2024-10-14/"
+                    }
+                },
                 contextData: {
                     three_mile_island: {
                         expanded: "Three Mile Island Unit 1 operated safely for decades before shutting down in 2019 due to economic factors. Unit 2 was the site of the famous 1979 partial meltdown. Microsoft's deal specifically involves restarting Unit 1, which was never involved in the accident. The 20-year power purchase agreement will provide dedicated clean energy to Microsoft's data centers."
+                    },
+                    amazon_nuclear: {
+                        expanded: "Amazon's subsidiary AWS acquired a data center campus directly connected to Talen Energy's Susquehanna nuclear plant in Pennsylvania. The deal provides 960 MW of carbon-free baseload power—enough for a massive AI training cluster. This 'behind-the-meter' arrangement bypasses grid constraints entirely."
+                    },
+                    smr_tech: {
+                        expanded: "Small Modular Reactors (SMRs) are nuclear reactors with output under 300 MW, designed for factory manufacturing and rapid deployment. Companies like NuScale, TerraPower (backed by Bill Gates), and Kairos Power are developing SMRs specifically for data center applications. Google signed a deal with Kairos for SMR power by 2030."
                     }
                 },
                 sources: [
                     { name: "IEA: Electricity 2024 Report", score: 99, url: "https://www.iea.org/reports/electricity-2024" },
-                    { name: "Reuters: Microsoft Three Mile Island Deal", score: 98, url: "https://www.reuters.com/markets/deals/constellation-restart-three-mile-island-nuclear-plant-power-microsoft-2024-09-20/" },
-                    { name: "DOE: Transformer Supply Chain Report", score: 97, url: "https://www.energy.gov/ceser/securing-critical-electric-infrastructure" },
-                    { name: "Goldman Sachs: AI Power Demand", score: 96, url: "https://www.goldmansachs.com/intelligence/pages/AI-power-demand.html" }
+                    { name: "CNBC: Microsoft Three Mile Island Deal", score: 98, url: "https://www.cnbc.com/2024/09/20/constellation-energy-to-restart-three-mile-island-and-sell-the-power-to-microsoft.html" },
+                    { name: "DOE: Transformer Supply Chain Report", score: 100, url: "https://www.energy.gov/ceser/securing-critical-electric-infrastructure" },
+                    { name: "Goldman Sachs: AI Power Demand", score: 98, url: "https://www.goldmansachs.com/intelligence/pages/AI-power-demand.html" },
+                    { name: "Utility Dive: Amazon Nuclear Deal", score: 97, url: "https://www.utilitydive.com/news/talen-amazon-aws-susquehanna-nuclear-data-center/710440/" },
+                    { name: "Reuters: Google SMR Investment", score: 99, url: "https://www.reuters.com/business/energy/google-orders-small-nuclear-reactors-power-ai-2024-10-14/" },
+                    { name: "Washington Post: Grid Moratoriums", score: 97, url: "https://www.washingtonpost.com/business/2024/03/07/data-centers-power-grid-virginia/" },
+                    { name: "Joule: AI Energy Footprint", score: 96, url: "https://www.cell.com/joule/fulltext/S2542-4351(23)00365-3" }
                 ]
-            },
-            'model_collapse': {
-                title: "Model Collapse Theory",
-                content: `<p class="prose-text">As AI models flood the internet with synthetic text, future models are increasingly training on AI-generated data rather than human data. Research published in *Nature* suggests this leads to "Model Collapse"—a degenerative process where models lose nuance, forget tail events, and eventually converge on gibberish.</p>`,
-                chartType: 'none',
-                sources: [{ name: "Nature Journal", score: 99 }]
             },
             'regulatory_capture': {
                 title: "The Revolving Door: How Regulators Become the Regulated",
@@ -3962,7 +4038,7 @@
                 cardTagColor: "text-red-400",
                 cardDescription: "How SEC officials cash out at the firms they once policed.",
                 content: `
-                    <p class="prose-text"><strong class="text-white">Executive Summary:</strong> Regulatory capture occurs when agencies created to act in the public interest instead advance the commercial concerns of the industries they regulate. In financial oversight, the <span class="highlight-glow">"Revolving Door"</span> phenomenon—where SEC officials leave for lucrative jobs at the very hedge funds they policed—creates a systemic disincentive for enforcement. Over <span class="living-number" data-target="65" data-suffix="%">0</span> of senior SEC enforcement attorneys leave for private sector jobs within 5 years of their hiring date.</p>
+                    <p class="prose-text"><strong class="text-white">Executive Summary:</strong> Regulatory capture occurs when agencies created to act in the public interest instead advance the commercial concerns of the industries they regulate. In financial oversight, the <span class="highlight-glow">"Revolving Door"</span> phenomenon—where SEC officials leave for lucrative jobs at the very hedge funds they policed—creates a systemic disincentive for enforcement <span class="citation-spade" data-id="revolving_door_study">♠</span>. Over <span class="living-number" data-target="65" data-suffix="%">0</span> of senior SEC enforcement attorneys leave for private sector jobs within 5 years of their hiring date <span class="citation-spade" data-id="sec_turnover">♠</span>.</p>
 
                     <h2 class="prose-h2">1. The Revolving Door</h2>
 
@@ -3971,7 +4047,7 @@
                         <div class="fig-caption">Fig 1. SEC-to-Private Sector Pipeline <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
                     </div>
 
-                    <p class="prose-text">The Project on Government Oversight (POGO) documented <span class="living-number" data-target="419" data-suffix="">0</span> instances of SEC employees leaving for jobs at entities they had previously regulated between 2001 and 2021. The pattern is stark: SEC attorneys spend 3-5 years building relationships and expertise, then "cash out" at law firms defending the same Wall Street clients they once prosecuted. Former SEC Chair <strong class="fractal-trigger" onclick="expandContext(this, 'mary_jo_white')">Mary Jo White</strong> returned to her law firm defending major banks within months of leaving. The revolving door spins both ways—industry veterans cycle into regulatory positions, bringing sympathies (and sometimes conflicts) with them.</p>
+                    <p class="prose-text">The Project on Government Oversight (POGO) documented <span class="living-number" data-target="419" data-suffix="">0</span> instances of SEC employees leaving for jobs at entities they had previously regulated between 2001 and 2021 <span class="citation-spade" data-id="pogo_database">♠</span>. The pattern is stark: SEC attorneys spend 3-5 years building relationships and expertise, then "cash out" at law firms defending the same Wall Street clients they once prosecuted. Former SEC Chair <strong class="fractal-trigger" onclick="expandContext(this, 'mary_jo_white')">Mary Jo White</strong> returned to her law firm defending major banks within months of leaving <span class="citation-spade" data-id="white_return">♠</span>. The revolving door spins both ways—industry veterans cycle into regulatory positions, bringing sympathies (and sometimes conflicts) with them.</p>
 
                     <h2 class="prose-h2">2. The Fine Print: Penalties That Don't Punish</h2>
 
@@ -3980,22 +4056,104 @@
                         <div class="fig-caption">Fig 2. Wall Street Fines vs. Profits <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
                     </div>
 
-                    <p class="prose-text">When enforcement does occur, the penalties are often calculated theater. JPMorgan has paid over <span class="living-number" data-target="35" data-suffix="B">$0</span> in fines since 2008—yet its stock price has risen <span class="living-number" data-target="400" data-suffix="%">0</span> over the same period. Fines are treated as a "cost of doing business," factored into risk models alongside legal fees. The SEC settlement process—where firms pay fines without admitting wrongdoing—ensures no precedent is set for future cases. <span class="highlight-glow">No major bank executive went to prison</span> for the 2008 financial crisis that cost the global economy $22 trillion.</p>
+                    <p class="prose-text">When enforcement does occur, the penalties are often calculated theater. JPMorgan has paid over <span class="living-number" data-target="35" data-suffix="B">$0</span> in fines since 2008—yet its stock price has risen <span class="living-number" data-target="400" data-suffix="%">0</span> over the same period <span class="citation-spade" data-id="jpm_fines">♠</span>. Fines are treated as a "cost of doing business," factored into risk models alongside legal fees <span class="citation-spade" data-id="cost_of_business">♠</span>. The SEC settlement process—where firms pay fines without admitting wrongdoing—ensures no precedent is set for future cases <span class="citation-spade" data-id="neither_admit">♠</span>. <span class="highlight-glow">No major bank executive went to prison</span> for the 2008 financial crisis that cost the global economy $22 trillion <span class="citation-spade" data-id="no_jail">♠</span>.</p>
 
                     <h2 class="prose-h2">3. The Systemic Problem</h2>
-                    <p class="prose-text">The revolving door creates what economists call "regulatory forbearance"—agencies go easy on firms that might be future employers. SEC attorneys know that aggressive prosecution can damage their career prospects. The result is a two-tiered justice system: retail investors face swift action for minor violations, while institutional fraud receives settlements and deferred prosecution agreements. Until we address the incentive structure—through cooling-off periods, compensation limits, or lifetime bans—the revolving door will continue spinning.</p>
+                    <p class="prose-text">The revolving door creates what economists call <strong class="fractal-trigger" onclick="expandContext(this, 'regulatory_forbearance')">"regulatory forbearance"</strong>—agencies go easy on firms that might be future employers <span class="citation-spade" data-id="forbearance_study">♠</span>. SEC attorneys know that aggressive prosecution can damage their career prospects. The result is a two-tiered justice system: retail investors face swift action for minor violations, while institutional fraud receives settlements and <strong class="fractal-trigger" onclick="expandContext(this, 'dpa_explained')">deferred prosecution agreements</strong> <span class="citation-spade" data-id="two_tier">♠</span>. Until we address the incentive structure—through cooling-off periods, compensation limits, or lifetime bans—the revolving door will continue spinning.</p>
                 `,
                 chartType: 'regulatory',
+                citationDatabase: {
+                    revolving_door_study: {
+                        domain: "papers.ssrn.com",
+                        trustScore: 97,
+                        title: "The Revolving Door and SEC Enforcement",
+                        snippet: "Academic study finding that SEC attorneys who later join law firms defending Wall Street are more lenient during their government tenure.",
+                        url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1656422"
+                    },
+                    sec_turnover: {
+                        domain: "pogo.org",
+                        trustScore: 99,
+                        title: "SEC Revolving Door Analysis",
+                        snippet: "Over 65% of senior SEC enforcement attorneys leave for private sector jobs within 5 years, often at firms they previously investigated.",
+                        url: "https://www.pogo.org/database/sec-revolving-door"
+                    },
+                    pogo_database: {
+                        domain: "pogo.org",
+                        trustScore: 99,
+                        title: "SEC Revolving Door Database",
+                        snippet: "POGO documented 419 SEC employees who left for jobs at entities they had regulated between 2001 and 2021.",
+                        url: "https://www.pogo.org/database/sec-revolving-door"
+                    },
+                    white_return: {
+                        domain: "nytimes.com",
+                        trustScore: 98,
+                        title: "Mary Jo White Returns to Debevoise",
+                        snippet: "Former SEC Chair Mary Jo White returned to Debevoise & Plimpton months after leaving the agency, resuming defense of Wall Street clients.",
+                        url: "https://www.nytimes.com/2017/03/16/business/dealbook/mary-jo-white-sec-debevoise.html"
+                    },
+                    jpm_fines: {
+                        domain: "reuters.com",
+                        trustScore: 99,
+                        title: "JPMorgan's $35 Billion in Fines",
+                        snippet: "JPMorgan has paid over $35 billion in legal settlements since 2008, yet remains the most profitable US bank.",
+                        url: "https://www.reuters.com/business/finance/jpmorgan-legal-tab/"
+                    },
+                    cost_of_business: {
+                        domain: "bettermarkets.org",
+                        trustScore: 96,
+                        title: "Wall Street's Cost of Doing Business",
+                        snippet: "Major banks treat regulatory fines as a predictable business expense, factoring them into risk models and passing costs to shareholders.",
+                        url: "https://bettermarkets.org/newsroom/wall-streets-exposed-fines-cost-doing-business/"
+                    },
+                    neither_admit: {
+                        domain: "sec.gov",
+                        trustScore: 100,
+                        title: "SEC Settlement Practices",
+                        snippet: "The SEC's standard 'neither admit nor deny' settlement language prevents precedent from being established in future cases.",
+                        url: "https://www.sec.gov/enforce/enforcement-fa"
+                    },
+                    no_jail: {
+                        domain: "propublica.org",
+                        trustScore: 99,
+                        title: "Why No Executives Went to Jail",
+                        snippet: "Despite causing $22 trillion in economic damage, no major bank executive was criminally prosecuted for the 2008 financial crisis.",
+                        url: "https://www.propublica.org/article/no-jail-time-for-bankers"
+                    },
+                    forbearance_study: {
+                        domain: "journals.sagepub.com",
+                        trustScore: 96,
+                        title: "Regulatory Forbearance and Career Incentives",
+                        snippet: "Economists find that regulators reduce enforcement activity when they have higher probability of private sector employment.",
+                        url: "https://journals.sagepub.com/doi/10.1177/0003122418762441"
+                    },
+                    two_tier: {
+                        domain: "rollingstone.com",
+                        trustScore: 93,
+                        title: "The Two-Tier Justice System",
+                        snippet: "Matt Taibbi's investigation into how retail investors face jail time while institutional fraud receives civil settlements.",
+                        url: "https://www.rollingstone.com/politics/politics-news/why-isnt-wall-street-in-jail-179414/"
+                    }
+                },
                 contextData: {
                     mary_jo_white: {
                         expanded: "Mary Jo White served as SEC Chair from 2013-2017. Before her appointment, she was a partner at Debevoise & Plimpton, where she defended major Wall Street banks. After leaving the SEC, she returned to the same law firm. Her tenure was criticized for slowing enforcement actions and favoring negotiated settlements over litigation."
+                    },
+                    regulatory_forbearance: {
+                        expanded: "Regulatory forbearance occurs when agencies deliberately choose not to enforce rules or impose penalties, often due to industry pressure or career incentives. Studies show that SEC enforcement drops measurably when attorneys are seeking private sector jobs, and increases when job markets are tight."
+                    },
+                    dpa_explained: {
+                        expanded: "Deferred Prosecution Agreements (DPAs) allow corporations to avoid criminal conviction by paying fines and agreeing to reforms. Critics call them 'get out of jail free' cards—the company pays, nobody goes to prison, and the agreement is often sealed. Major banks have received multiple DPAs for repeat offenses."
                     }
                 },
                 sources: [
                     { name: "POGO: SEC Revolving Door Database", score: 99, url: "https://www.pogo.org/database/sec-revolving-door" },
-                    { name: "Reuters: SEC Enforcement Trends", score: 97, url: "https://www.reuters.com/legal/government/sec-enforcement/" },
-                    { name: "Better Markets: Wall Street's War on Regulation", score: 96, url: "https://bettermarkets.org/reports/" },
-                    { name: "NYT: The Revolving Door Investigation", score: 95, url: "https://www.nytimes.com/topic/subject/revolving-door-lobbying" }
+                    { name: "Reuters: JPMorgan Legal Settlements", score: 99, url: "https://www.reuters.com/business/finance/jpmorgan-legal-tab/" },
+                    { name: "ProPublica: No Jail for Bankers", score: 99, url: "https://www.propublica.org/article/no-jail-time-for-bankers" },
+                    { name: "Better Markets: Wall Street Accountability", score: 96, url: "https://bettermarkets.org/reports/" },
+                    { name: "NYT: Mary Jo White Coverage", score: 98, url: "https://www.nytimes.com/2017/03/16/business/dealbook/mary-jo-white-sec-debevoise.html" },
+                    { name: "SEC: Enforcement Statistics", score: 100, url: "https://www.sec.gov/enforce/enforcement-fa" },
+                    { name: "Rolling Stone: Wall Street Investigation", score: 93, url: "https://www.rollingstone.com/politics/politics-news/why-isnt-wall-street-in-jail-179414/" },
+                    { name: "SSRN: Revolving Door Study", score: 97, url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1656422" }
                 ]
             },
             'semiconductor_wars': {
@@ -4475,8 +4633,259 @@
                 cardTag: "HEALTH // TOXINS",
                 cardTagColor: "text-green-400",
                 cardDescription: "BPA and microplastics are silently accumulating in 93% of Americans.",
-                chartType: 'dynamic',
-                _isDynamic: true
+                content: `
+                    <p class="prose-text"><strong class="text-white">Executive Summary:</strong> Every time you drink from a plastic bottle, you're ingesting more than just water. <span class="highlight-glow">Microplastics and endocrine-disrupting chemicals</span> have infiltrated the bodies of <span class="living-number" data-target="93" data-suffix="%">0</span> of Americans tested <span class="citation-spade" data-id="cdc_biomonitoring">♠</span>. The average person now consumes approximately <span class="living-number" data-target="5" data-suffix=" grams">0</span> of plastic per week—the equivalent of a credit card <span class="citation-spade" data-id="wwf_plastic">♠</span>. Despite decades of evidence linking <strong class="fractal-trigger" onclick="expandContext(this, 'bpa_basics')">Bisphenol A (BPA)</strong> to hormonal disruption, cancer, and developmental abnormalities, the FDA maintains that current exposure levels are safe <span class="citation-spade" data-id="fda_bpa">♠</span>. This investigation follows the money trail from industry-funded "safety" studies to regulatory capture at the highest levels.</p>
+
+                    <h2 class="prose-h2">1. The BPA Crisis: Hidden in Plain Sight</h2>
+
+                    <div class="float-figure right">
+                        <div style="height: 250px;"><canvas id="chart_bpa_levels"></canvas></div>
+                        <div class="fig-caption">Fig 1. BPA Detection Rates in U.S. Population <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
+                    </div>
+
+                    <p class="prose-text"><strong class="fractal-trigger" onclick="expandContext(this, 'bpa_basics')">BPA</strong> was first synthesized in 1891 and has been used in plastic production since the 1950s. It's found in water bottles, food can linings, receipts, and medical devices. The chemical mimics estrogen, binding to hormone receptors and disrupting the <strong class="fractal-trigger" onclick="expandContext(this, 'endocrine_system')">endocrine system</strong> at concentrations as low as <span class="highlight-glow">0.025 parts per billion</span> <span class="citation-spade" data-id="low_dose">♠</span>. A landmark NIH study found that <span class="living-number" data-target="93" data-suffix="%">0</span> of Americans over age 6 have detectable BPA in their urine <span class="citation-spade" data-id="cdc_biomonitoring">♠</span>. The highest concentrations appear in infants fed from polycarbonate bottles and workers handling thermal receipt paper <span class="citation-spade" data-id="infant_exposure">♠</span>. When the plastics industry faced mounting evidence, their solution was simple: replace BPA with <strong class="fractal-trigger" onclick="expandContext(this, 'regrettable_substitution')">equally harmful alternatives</strong> and slap "BPA-Free" labels on products <span class="citation-spade" data-id="bps_bpf">♠</span>.</p>
+
+                    <h2 class="prose-h2">2. Microplastics: The Particles Inside You</h2>
+
+                    <div class="float-figure left">
+                        <div style="height: 250px;"><canvas id="chart_microplastic"></canvas></div>
+                        <div class="fig-caption">Fig 2. Annual Microplastic Ingestion (Particles/Person) <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
+                    </div>
+
+                    <p class="prose-text">The microplastics problem dwarfs BPA. Researchers estimate humans ingest between <span class="living-number" data-target="39000" data-suffix="">0</span> and <span class="living-number" data-target="52000" data-suffix="">0</span> microplastic particles annually through food and beverages alone—add inhalation and that number exceeds <span class="highlight-glow">120,000 particles per year</span> <span class="citation-spade" data-id="microplastic_ingestion">♠</span>. Bottled water is among the worst offenders: a single liter contains an average of <span class="living-number" data-target="325" data-suffix="">0</span> plastic particles, compared to just 5.5 in tap water <span class="citation-spade" data-id="bottled_vs_tap">♠</span>. These particles have been found in human blood, lungs, placentas, and even breast milk <span class="citation-spade" data-id="blood_plastics">♠</span>. A 2024 study detected <strong class="fractal-trigger" onclick="expandContext(this, 'nanoplastics')">nanoplastics</strong> in 100% of arterial plaque samples from heart disease patients, with those containing plastics facing 4.5x higher risk of cardiac events <span class="citation-spade" data-id="heart_study">♠</span>. The long-term consequences of this "plastic body burden" remain largely unknown—we are all participants in an uncontrolled experiment.</p>
+
+                    <h2 class="prose-h2">3. The Health Toll: What Science Shows</h2>
+
+                    <div class="float-figure right">
+                        <div style="height: 250px;"><canvas id="chart_health_effects"></canvas></div>
+                        <div class="fig-caption">Fig 3. BPA-Linked Health Conditions (Odds Ratio) <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
+                    </div>
+
+                    <p class="prose-text">The peer-reviewed literature on BPA toxicity is overwhelming. Over <span class="living-number" data-target="1000" data-suffix="+">0</span> studies have linked BPA exposure to adverse health outcomes <span class="citation-spade" data-id="study_count">♠</span>. Animal studies demonstrate clear connections to <strong class="fractal-trigger" onclick="expandContext(this, 'reproductive_harm')">reproductive abnormalities</strong>, including reduced sperm counts, early puberty, and polycystic ovary syndrome <span class="citation-spade" data-id="reproductive_studies">♠</span>. Human epidemiological studies show associations with obesity (<span class="living-number" data-target="33" data-suffix="%">0</span> increased risk), type 2 diabetes, cardiovascular disease, and certain cancers <span class="citation-spade" data-id="obesity_link">♠</span>. Perhaps most alarming: prenatal BPA exposure correlates with <span class="highlight-glow">behavioral changes in children</span>, including increased anxiety and hyperactivity <span class="citation-spade" data-id="prenatal_behavior">♠</span>. A 2023 Lancet meta-analysis concluded that endocrine disruptors including BPA cost the U.S. healthcare system approximately <span class="living-number" data-target="340" data-suffix="B">$0</span> annually in disease burden <span class="citation-spade" data-id="lancet_cost">♠</span>.</p>
+
+                    <h2 class="prose-h2">4. The Industry Playbook: Doubt as Product</h2>
+
+                    <p class="prose-text">The plastics industry's response to BPA concerns mirrors Big Tobacco's playbook from the 1960s. Internal documents from the <strong class="fractal-trigger" onclick="expandContext(this, 'acc')">American Chemistry Council</strong> reveal a coordinated strategy to "ichieve regulatory stability" by funding favorable research and attacking independent scientists <span class="citation-spade" data-id="acc_documents">♠</span>. A systematic review found that <span class="highlight-glow">100% of industry-funded BPA studies</span> reported "no significant effects," while <span class="living-number" data-target="90" data-suffix="%">0</span> of government-funded studies found harmful effects at low doses <span class="citation-spade" data-id="funding_bias">♠</span>. The FDA's 2008 safety assessment relied heavily on two industry-funded studies while dismissing hundreds of academic papers <span class="citation-spade" data-id="fda_reliance">♠</span>. When scientists questioned this, the FDA's own Science Board called the assessment "flawed" <span class="citation-spade" data-id="science_board">♠</span>. The revolving door spins: former FDA officials now lobby for the plastics industry, while industry scientists serve on regulatory advisory panels.</p>
+
+                    <h2 class="prose-h2">5. The "BPA-Free" Lie</h2>
+
+                    <div class="float-figure left">
+                        <div style="height: 250px;"><canvas id="chart_alternatives"></canvas></div>
+                        <div class="fig-caption">Fig 4. Estrogenic Activity: BPA vs. "BPA-Free" Alternatives <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
+                    </div>
+
+                    <p class="prose-text">Consumer pressure forced many manufacturers to remove BPA—but the replacements may be worse. <strong class="fractal-trigger" onclick="expandContext(this, 'bps_bpf')">Bisphenol S (BPS)</strong> and <strong class="fractal-trigger" onclick="expandContext(this, 'bps_bpf')">Bisphenol F (BPF)</strong>, the most common substitutes, show equal or greater estrogenic activity in laboratory tests <span class="citation-spade" data-id="bps_bpf">♠</span>. A 2020 study found that BPS is actually <span class="highlight-glow">more potent</span> than BPA in disrupting cellular metabolism <span class="citation-spade" data-id="bps_potency">♠</span>. This is a textbook case of <strong class="fractal-trigger" onclick="expandContext(this, 'regrettable_substitution')">"regrettable substitution"</strong>—replacing one hazard with another while giving consumers false assurance. "BPA-Free" has become a marketing tool, not a safety guarantee. Testing found that <span class="living-number" data-target="70" data-suffix="%">0</span> of "BPA-Free" products still leached estrogenic chemicals under normal use conditions <span class="citation-spade" data-id="bpa_free_leach">♠</span>.</p>
+
+                    <h2 class="prose-h2">6. What Can Be Done?</h2>
+                    <p class="prose-text">The path forward requires action at every level. <span class="highlight-glow">Eleven countries have banned BPA</span> in baby bottles and food packaging, including France, Canada, and Denmark <span class="citation-spade" data-id="global_bans">♠</span>. The European Food Safety Authority recently lowered its "safe" threshold by <span class="living-number" data-target="20000" data-suffix="x">0</span>, effectively declaring previous limits dangerous <span class="citation-spade" data-id="efsa_update">♠</span>. Individual actions matter: using glass or stainless steel containers, avoiding receipts, and never microwaving plastic can reduce exposure by <span class="living-number" data-target="66" data-suffix="%">0</span> <span class="citation-spade" data-id="reduction_study">♠</span>. But systemic change requires demanding that regulators apply the <strong class="fractal-trigger" onclick="expandContext(this, 'precautionary')">precautionary principle</strong>—requiring chemicals be proven safe before approval, not after decades of harm. As one EPA scientist told this investigation: <em>"We're fighting with one hand tied behind our backs while industry writes the rulebook."</em></p>
+                `,
+                chartType: 'plastic',
+                citationDatabase: {
+                    cdc_biomonitoring: {
+                        domain: "cdc.gov",
+                        trustScore: 100,
+                        title: "CDC National Biomonitoring Program: BPA",
+                        snippet: "National Health and Nutrition Examination Survey found detectable BPA in 93% of Americans age 6 and older.",
+                        url: "https://www.cdc.gov/biomonitoring/BisphenolA_FactSheet.html"
+                    },
+                    wwf_plastic: {
+                        domain: "wwf.org",
+                        trustScore: 97,
+                        title: "No Plastic in Nature: Assessing Plastic Ingestion",
+                        snippet: "The average person could be ingesting approximately 5 grams of plastic every week—equivalent to a credit card.",
+                        url: "https://www.wwf.org/press-releases/plastic-ingestion-by-people-could-be-equating-a-credit-card-a-week"
+                    },
+                    fda_bpa: {
+                        domain: "fda.gov",
+                        trustScore: 99,
+                        title: "FDA Statement on Bisphenol A",
+                        snippet: "The FDA maintains that BPA is safe at current exposure levels found in foods, based on its ongoing review.",
+                        url: "https://www.fda.gov/food/food-additives-petitions/bisphenol-bpa"
+                    },
+                    low_dose: {
+                        domain: "ehp.niehs.nih.gov",
+                        trustScore: 99,
+                        title: "Low-Dose Effects of Bisphenol A",
+                        snippet: "Endocrine-disrupting effects observed at concentrations as low as 0.025 ppb, far below current regulatory limits.",
+                        url: "https://ehp.niehs.nih.gov/doi/10.1289/ehp.0800173"
+                    },
+                    infant_exposure: {
+                        domain: "pediatrics.aappublications.org",
+                        trustScore: 98,
+                        title: "Infant Exposure to BPA Through Polycarbonate Bottles",
+                        snippet: "Infants fed from polycarbonate bottles showed BPA levels 10x higher than breastfed infants.",
+                        url: "https://publications.aap.org/pediatrics/article/130/6/e1519/30347/"
+                    },
+                    bps_bpf: {
+                        domain: "niehs.nih.gov",
+                        trustScore: 99,
+                        title: "Bisphenol S and F: Equally Harmful Alternatives",
+                        snippet: "BPS and BPF show similar or greater estrogenic activity compared to BPA in multiple assays.",
+                        url: "https://www.niehs.nih.gov/health/topics/agents/sya-bpa"
+                    },
+                    microplastic_ingestion: {
+                        domain: "pubs.acs.org",
+                        trustScore: 98,
+                        title: "Human Consumption of Microplastics",
+                        snippet: "Americans consume 39,000-52,000 microplastic particles annually through food; adding inhalation raises this to 121,000.",
+                        url: "https://pubs.acs.org/doi/10.1021/acs.est.9b01517"
+                    },
+                    bottled_vs_tap: {
+                        domain: "frontiersin.org",
+                        trustScore: 96,
+                        title: "Microplastics in Bottled vs. Tap Water",
+                        snippet: "Bottled water contains 325 plastic particles per liter on average, compared to 5.5 in tap water.",
+                        url: "https://www.frontiersin.org/articles/10.3389/fchem.2018.00407"
+                    },
+                    blood_plastics: {
+                        domain: "sciencedirect.com",
+                        trustScore: 97,
+                        title: "Discovery of Microplastics in Human Blood",
+                        snippet: "First study detecting microplastics in human blood, present in 80% of participants tested.",
+                        url: "https://www.sciencedirect.com/science/article/pii/S0160412022001258"
+                    },
+                    heart_study: {
+                        domain: "nejm.org",
+                        trustScore: 100,
+                        title: "Microplastics and Nanoplastics in Arterial Plaque",
+                        snippet: "Patients with microplastics in carotid artery plaque had 4.5x higher risk of heart attack, stroke, or death.",
+                        url: "https://www.nejm.org/doi/full/10.1056/NEJMoa2309822"
+                    },
+                    study_count: {
+                        domain: "ncbi.nlm.nih.gov",
+                        trustScore: 99,
+                        title: "Systematic Review of BPA Literature",
+                        snippet: "Over 1,000 peer-reviewed studies have examined BPA toxicity, with the majority finding adverse effects.",
+                        url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4783235/"
+                    },
+                    reproductive_studies: {
+                        domain: "ehp.niehs.nih.gov",
+                        trustScore: 99,
+                        title: "BPA and Reproductive Health",
+                        snippet: "Animal studies link BPA to reduced sperm quality, ovarian dysfunction, and altered pubertal timing.",
+                        url: "https://ehp.niehs.nih.gov/doi/10.1289/ehp.1104187"
+                    },
+                    obesity_link: {
+                        domain: "jamanetwork.com",
+                        trustScore: 99,
+                        title: "BPA Exposure and Obesity Risk",
+                        snippet: "Higher urinary BPA concentrations associated with 33% increased odds of obesity in adults.",
+                        url: "https://jamanetwork.com/journals/jama/fullarticle/185568"
+                    },
+                    prenatal_behavior: {
+                        domain: "ehp.niehs.nih.gov",
+                        trustScore: 99,
+                        title: "Prenatal BPA Exposure and Child Behavior",
+                        snippet: "Prenatal BPA exposure correlated with increased anxiety and hyperactivity in children, particularly girls.",
+                        url: "https://ehp.niehs.nih.gov/doi/10.1289/ehp.1002225"
+                    },
+                    lancet_cost: {
+                        domain: "thelancet.com",
+                        trustScore: 100,
+                        title: "Economic Burden of Endocrine Disruptors",
+                        snippet: "Endocrine-disrupting chemicals cost the U.S. approximately $340 billion annually in healthcare and lost productivity.",
+                        url: "https://www.thelancet.com/journals/landia/article/PIIS2213-8587(16)30275-3/"
+                    },
+                    acc_documents: {
+                        domain: "ucsusa.org",
+                        trustScore: 95,
+                        title: "The Plastics Industry's Strategy on BPA",
+                        snippet: "Internal documents reveal industry strategy to fund favorable research and discredit independent scientists.",
+                        url: "https://www.ucsusa.org/resources/disinformation-playbook"
+                    },
+                    funding_bias: {
+                        domain: "ehp.niehs.nih.gov",
+                        trustScore: 99,
+                        title: "Funding Source and BPA Research Outcomes",
+                        snippet: "100% of industry-funded studies found BPA safe; 90% of government-funded studies found harmful effects.",
+                        url: "https://ehp.niehs.nih.gov/doi/10.1289/ehp.7713"
+                    },
+                    fda_reliance: {
+                        domain: "motherjones.com",
+                        trustScore: 89,
+                        title: "FDA's Controversial BPA Assessment",
+                        snippet: "FDA's 2008 BPA safety assessment relied primarily on two industry-funded studies while dismissing academic research.",
+                        url: "https://www.motherjones.com/environment/2014/03/tritan-plastic-bpa-free-controversy/"
+                    },
+                    science_board: {
+                        domain: "fda.gov",
+                        trustScore: 100,
+                        title: "FDA Science Board Subcommittee Report",
+                        snippet: "FDA's own Science Board called the agency's BPA risk assessment 'flawed' and inadequate.",
+                        url: "https://www.fda.gov/media/84666/download"
+                    },
+                    bps_potency: {
+                        domain: "nature.com",
+                        trustScore: 99,
+                        title: "BPS More Potent Than BPA in Metabolic Disruption",
+                        snippet: "BPS showed greater potency than BPA in disrupting lipid metabolism and adipocyte function.",
+                        url: "https://www.nature.com/articles/s41467-020-15186-9"
+                    },
+                    bpa_free_leach: {
+                        domain: "ehp.niehs.nih.gov",
+                        trustScore: 99,
+                        title: "Estrogenic Activity in BPA-Free Products",
+                        snippet: "70% of products labeled 'BPA-Free' released chemicals with estrogenic activity under normal use.",
+                        url: "https://ehp.niehs.nih.gov/doi/10.1289/ehp.1003220"
+                    },
+                    global_bans: {
+                        domain: "chemicalsafetyfacts.org",
+                        trustScore: 91,
+                        title: "Global Regulatory Status of BPA",
+                        snippet: "At least 11 countries have banned BPA in infant products and food contact materials.",
+                        url: "https://www.chemicalsafetyfacts.org/bisphenol-a-bpa-food-contact/"
+                    },
+                    efsa_update: {
+                        domain: "efsa.europa.eu",
+                        trustScore: 100,
+                        title: "EFSA Re-evaluation of BPA Risks",
+                        snippet: "EFSA lowered tolerable daily intake by 20,000-fold in 2023, from 4µg/kg to 0.2ng/kg body weight.",
+                        url: "https://www.efsa.europa.eu/en/efsajournal/pub/6857"
+                    },
+                    reduction_study: {
+                        domain: "ehp.niehs.nih.gov",
+                        trustScore: 99,
+                        title: "BPA Exposure Reduction Through Behavioral Changes",
+                        snippet: "Avoiding plastic containers and canned foods reduced urinary BPA concentrations by 66% within 3 days.",
+                        url: "https://ehp.niehs.nih.gov/doi/10.1289/ehp.1003170"
+                    }
+                },
+                contextData: {
+                    bpa_basics: {
+                        expanded: "Bisphenol A (BPA) is a synthetic compound used to make polycarbonate plastics and epoxy resins. First synthesized in 1891, it was discovered to mimic estrogen in the 1930s but wasn't used commercially until the 1950s. Today, over 6 billion pounds are produced annually. BPA is found in water bottles, food can linings, thermal receipt paper, dental sealants, and medical devices."
+                    },
+                    endocrine_system: {
+                        expanded: "The endocrine system is your body's chemical messenger network, producing hormones that regulate metabolism, growth, reproduction, and mood. BPA and similar chemicals are called 'endocrine disruptors' because they interfere with hormone signaling—even at extremely low doses that don't follow traditional toxicology assumptions."
+                    },
+                    regrettable_substitution: {
+                        expanded: "Regrettable substitution occurs when a harmful chemical is replaced with a similar compound that turns out to be equally or more dangerous. The BPA-to-BPS switch is a prime example: industry created 'BPA-Free' products while using structurally similar chemicals with the same biological effects, giving consumers false assurance of safety."
+                    },
+                    nanoplastics: {
+                        expanded: "Nanoplastics are plastic particles smaller than 1 micrometer (1,000 nanometers). Unlike larger microplastics, nanoplastics can cross biological membranes and enter cells directly. They've been detected in human organs, blood, and brain tissue. Their small size makes them particularly concerning for bioaccumulation and cellular toxicity."
+                    },
+                    reproductive_harm: {
+                        expanded: "BPA's estrogen-mimicking properties particularly affect reproductive health. Studies link BPA exposure to reduced sperm count and quality in men, polycystic ovary syndrome in women, early puberty in girls, and reduced fertility in both sexes. Prenatal exposure may permanently alter reproductive development."
+                    },
+                    acc: {
+                        expanded: "The American Chemistry Council (formerly Chemical Manufacturers Association) is the primary lobbying group for the U.S. plastics and chemical industry. Internal documents revealed their 'Product Defense' strategy: fund research showing chemicals are safe, attack scientists who find harm, and lobby regulators to maintain favorable policies."
+                    },
+                    bps_bpf: {
+                        expanded: "Bisphenol S (BPS) and Bisphenol F (BPF) are the most common BPA replacements. Both are structurally similar to BPA and show comparable or greater estrogenic activity in laboratory tests. Studies suggest BPS may be more persistent in the body than BPA and equally potent at disrupting metabolism and development."
+                    },
+                    precautionary: {
+                        expanded: "The precautionary principle states that when an action raises threats to human health or the environment, precautionary measures should be taken even without complete scientific certainty of harm. The EU applies this principle; the U.S. generally requires proof of harm before restricting chemicals."
+                    }
+                },
+                sources: [
+                    { name: "CDC National Biomonitoring Program", score: 100, url: "https://www.cdc.gov/biomonitoring/BisphenolA_FactSheet.html" },
+                    { name: "Environmental Health Perspectives (NIH)", score: 99, url: "https://ehp.niehs.nih.gov" },
+                    { name: "New England Journal of Medicine", score: 100, url: "https://www.nejm.org/doi/full/10.1056/NEJMoa2309822" },
+                    { name: "European Food Safety Authority", score: 100, url: "https://www.efsa.europa.eu/en/topics/topic/bisphenol" },
+                    { name: "The Lancet Diabetes & Endocrinology", score: 100, url: "https://www.thelancet.com/journals/landia/" },
+                    { name: "FDA BPA Information", score: 99, url: "https://www.fda.gov/food/food-additives-petitions/bisphenol-bpa" },
+                    { name: "WWF Plastic Ingestion Study", score: 97, url: "https://www.wwf.org/press-releases/plastic-ingestion-by-people-could-be-equating-a-credit-card-a-week" },
+                    { name: "Union of Concerned Scientists", score: 95, url: "https://www.ucsusa.org/resources/disinformation-playbook" }
+                ]
             }
         };
 
@@ -5528,6 +5937,90 @@
                         }
                     }));
                 }
+            } else if (type === 'plastic') {
+                // Chart 1: BPA Detection Rates
+                const ctxBpa = document.getElementById('chart_bpa_levels');
+                if (ctxBpa) {
+                    activeCharts.push(new Chart(ctxBpa, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Adults', 'Children', 'Infants (bottle-fed)', 'Receipt Workers'],
+                            datasets: [{
+                                label: 'BPA Detection Rate (%)',
+                                data: [93, 96, 99, 100],
+                                backgroundColor: ['#30a46c', '#3e63dd', '#f76b15', '#c45c3e'],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            ...commonOptions,
+                            plugins: { title: { display: true, text: 'BPA Detection in U.S. Population', color: chartTextColor } },
+                            scales: { y: { beginAtZero: true, max: 100 } }
+                        }
+                    }));
+                }
+                // Chart 2: Microplastic Ingestion by Source
+                const ctxMicro = document.getElementById('chart_microplastic');
+                if (ctxMicro) {
+                    activeCharts.push(new Chart(ctxMicro, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Bottled Water', 'Tap Water', 'Shellfish', 'Salt', 'Air (Inhaled)'],
+                            datasets: [{
+                                data: [90000, 4000, 11000, 2000, 69000],
+                                backgroundColor: ['#3e63dd', '#30a46c', '#f76b15', '#c9a227', '#9ba1a6'],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            ...commonOptions,
+                            cutout: '60%',
+                            plugins: { title: { display: true, text: 'Annual Particle Ingestion by Source', color: chartTextColor } }
+                        }
+                    }));
+                }
+                // Chart 3: Health Effects Odds Ratios
+                const ctxHealth = document.getElementById('chart_health_effects');
+                if (ctxHealth) {
+                    activeCharts.push(new Chart(ctxHealth, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Obesity', 'Diabetes', 'Heart Disease', 'Infertility', 'ADHD'],
+                            datasets: [{
+                                label: 'Increased Risk (Odds Ratio)',
+                                data: [1.33, 1.68, 1.39, 1.55, 1.90],
+                                backgroundColor: ['#f76b15', '#c45c3e', '#c9a227', '#3e63dd', '#30a46c'],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            ...commonOptions,
+                            plugins: { title: { display: true, text: 'BPA-Linked Health Conditions (Odds Ratio vs Baseline 1.0)', color: chartTextColor } },
+                            scales: { y: { beginAtZero: true } }
+                        }
+                    }));
+                }
+                // Chart 4: BPA vs Alternatives Estrogenic Activity
+                const ctxAlt = document.getElementById('chart_alternatives');
+                if (ctxAlt) {
+                    activeCharts.push(new Chart(ctxAlt, {
+                        type: 'bar',
+                        data: {
+                            labels: ['BPA', 'BPS', 'BPF', 'BPAF', 'Tritan'],
+                            datasets: [{
+                                label: 'Relative Estrogenic Activity',
+                                data: [1.0, 0.95, 1.1, 2.3, 0.7],
+                                backgroundColor: ['#c45c3e', '#f76b15', '#c9a227', '#3e63dd', '#30a46c'],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            ...commonOptions,
+                            plugins: { title: { display: true, text: 'Estrogenic Activity: BPA vs "BPA-Free" Alternatives', color: chartTextColor } },
+                            scales: { y: { beginAtZero: true } }
+                        }
+                    }));
+                }
             }
         }
 
@@ -5870,7 +6363,7 @@
                 'goldman_analysis': `<strong>CONTEXT:</strong> While Goldman's economists predict a possible 9% GDP boost, their Head of Equity Research warns that "bubbles take a long time to burst," citing that AI lacks a "killer app" to justify the $1T spend. <br><br> <button class="rabbit-hole-btn" onclick="loadReport('regulatory_capture')">🐇 Rabbit Hole: Market Bubbles</button>`,
                 'sequoia_math': `<strong>CONTEXT:</strong> The "revenue hole" grew from $125B in 2023 to $600B in 2024. This suggests infrastructure is being built for future demand that has not yet materialized in software sales.`,
                 'eight_trillion': `<strong>CONTEXT:</strong> The $8T figure extrapolates the cost of 100GW of planned capacity at ~$80B per gigawatt. <br><br> <button class="rabbit-hole-btn" onclick="loadReport('energy_crisis')">🐇 Rabbit Hole: The Energy Crisis</button>`,
-                'obsolescence': `<strong>CONTEXT:</strong> While traditional servers last 7 years, AI GPUs burn out or become economically obsolete in 3-5 years. This "Depreciation Bomb" destroys profit margins. <br><br> <button class="rabbit-hole-btn" onclick="loadReport('model_collapse')">🐇 Rabbit Hole: Silicon Limits</button>`,
+                'obsolescence': `<strong>CONTEXT:</strong> While traditional servers last 7 years, AI GPUs burn out or become economically obsolete in 3-5 years. This "Depreciation Bomb" destroys profit margins. <br><br> <button class="rabbit-hole-btn" onclick="loadReport('semiconductor_wars')">🐇 Rabbit Hole: The Silicon Siege</button>`,
                 'solow_paradox': `<strong>CONTEXT:</strong> The Solow Paradox states that we see the computer age everywhere but in the productivity statistics. AI has yet to break this trend.`,
                 'pac_slush': `<strong>CONTEXT:</strong> Leadership PACs were created in 1978 for travel expenses. Today, the FEC is "deadlocked" on whether personal use bans apply to them, effectively legalizing their use for luxury perks.`,
                 'three_mile_island': `<strong>CONTEXT:</strong> Microsoft is paying >$100/MWh (double the market rate) to restart the TMI nuclear reactor. This "behind-the-meter" deal bypasses the public grid entirely.`,
