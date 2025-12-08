@@ -6753,64 +6753,85 @@
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder();
                 let buffer = '';
-                let articleContent = '';
+                let articleContent = null;  // null = not received yet
+                let currentEvent = null;    // MUST be outside while loop for multi-chunk SSE
+                let debugLog = [];          // Collect debug info
+
+                debugLog.push(`[SSE] Starting stream for topic: ${topic}`);
 
                 while (true) {
                     const { done, value } = await reader.read();
-                    if (done) break;
+                    if (done) {
+                        debugLog.push(`[SSE] Stream ended. articleContent type: ${typeof articleContent}`);
+                        break;
+                    }
 
-                    buffer += decoder.decode(value, { stream: true });
+                    const chunk = decoder.decode(value, { stream: true });
+                    buffer += chunk;
+                    debugLog.push(`[SSE] Received chunk: ${chunk.length} bytes, buffer now: ${buffer.length} bytes`);
 
                     // Process complete SSE events
                     const lines = buffer.split('\n');
                     buffer = lines.pop() || ''; // Keep incomplete line in buffer
 
-                    let currentEvent = null;
                     for (const line of lines) {
                         if (line.startsWith('event: ')) {
-                            currentEvent = line.slice(7);
-                        } else if (line.startsWith('data: ') && currentEvent) {
-                            const data = JSON.parse(line.slice(6));
+                            currentEvent = line.slice(7).trim();
+                            debugLog.push(`[SSE] Event type: ${currentEvent}`);
+                        } else if (line.startsWith('data: ')) {
+                            if (!currentEvent) {
+                                debugLog.push(`[SSE] WARNING: data line without event type!`);
+                                continue;
+                            }
+                            try {
+                                const data = JSON.parse(line.slice(6));
+                                debugLog.push(`[SSE] Parsed ${currentEvent} data: ${typeof data}`);
 
-                            if (currentEvent === 'progress') {
-                                updateProgress(data.stage, data.percent, data.message);
-                            } else if (currentEvent === 'content') {
-                                articleContent = data;
-                            } else if (currentEvent === 'error') {
-                                throw new Error(data);
+                                if (currentEvent === 'progress') {
+                                    updateProgress(data.stage, data.percent, data.message);
+                                } else if (currentEvent === 'content') {
+                                    articleContent = data;
+                                    debugLog.push(`[SSE] Content received! Keys: ${Object.keys(data).join(', ')}`);
+                                } else if (currentEvent === 'error') {
+                                    debugLog.push(`[SSE] Error event: ${data}`);
+                                    throw new Error(data);
+                                }
+                            } catch (parseErr) {
+                                debugLog.push(`[SSE] JSON parse error: ${parseErr.message}`);
+                                debugLog.push(`[SSE] Raw data (first 200): ${line.slice(6, 206)}`);
                             }
                             currentEvent = null;
                         }
                     }
                 }
 
-                // Parse the article content (use repair function for robustness)
-                // Content may already be an object (if backend parsed successfully) or a string (fallback)
+                // Log debug info to console for Vercel/browser debugging
+                console.log('[Generate Debug Log]', debugLog.join('\n'));
+
+                // Store in localStorage for retrieval
+                try {
+                    const existingLogs = JSON.parse(localStorage.getItem('genuverity_debug') || '[]');
+                    existingLogs.push({ timestamp: new Date().toISOString(), topic, log: debugLog });
+                    // Keep only last 10 logs
+                    while (existingLogs.length > 10) existingLogs.shift();
+                    localStorage.setItem('genuverity_debug', JSON.stringify(existingLogs));
+                } catch (e) {}
+
+                // Validate we received content
+                if (articleContent === null) {
+                    console.error('[Generate] No content received! Debug log:', debugLog);
+                    throw new Error('No content received from server. Check console for debug log.');
+                }
+
+                // Content should always be an object now (backend guarantees this)
                 let data;
                 if (typeof articleContent === 'object' && articleContent !== null) {
-                    // Backend already parsed it for us
                     data = articleContent;
-                    console.log('[Generate] Received pre-parsed article object');
-                } else if (typeof articleContent === 'string') {
-                    // Need to parse the string
-                    let cleanText = articleContent.trim();
-                    if (cleanText.startsWith('```json')) cleanText = cleanText.slice(7);
-                    if (cleanText.startsWith('```')) cleanText = cleanText.slice(3);
-                    if (cleanText.endsWith('```')) cleanText = cleanText.slice(0, -3);
-                    cleanText = cleanText.trim();
-
-                    // Try direct parse first, fall back to repair function
-                    try {
-                        data = JSON.parse(cleanText);
-                    } catch (parseErr) {
-                        console.log('Direct JSON parse failed, attempting repair:', parseErr.message);
-                        data = repairTruncatedJSON(cleanText);
-                        if (!data) {
-                            throw new Error('Failed to parse response. The article may have been truncated due to timeout.');
-                        }
-                    }
+                    console.log('[Generate] Received article object with keys:', Object.keys(data));
                 } else {
-                    throw new Error('No valid article content received');
+                    // This shouldn't happen with new backend, but handle it
+                    console.error('[Generate] Unexpected content type:', typeof articleContent, articleContent);
+                    throw new Error(`Unexpected content type: ${typeof articleContent}. Check console.`);
                 }
 
                 // API returns the report directly with key, title, content, etc.
