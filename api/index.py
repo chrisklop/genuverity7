@@ -44,8 +44,11 @@ FREE_DAILY_LIMIT = 5
 # Ensure cache directory exists (fallback)
 os.makedirs(CACHE_DIR, exist_ok=True)
 
-# Configure Anthropic
-claude_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY) if ANTHROPIC_API_KEY else None
+# Configure Anthropic with 5-minute timeout (matches Vercel Pro maxDuration)
+claude_client = anthropic.Anthropic(
+    api_key=ANTHROPIC_API_KEY,
+    timeout=300.0  # 5 minutes - prevents premature timeout on long generations
+) if ANTHROPIC_API_KEY else None
 
 # === GEMINI INFOGRAPHIC GENERATION ===
 
@@ -146,7 +149,7 @@ Generate the infographic image now."""
                         "temperature": 0.4
                     }
                 },
-                timeout=120
+                timeout=180  # 3 minutes for infographic generation
             )
 
             if response.status_code == 200:
@@ -548,6 +551,47 @@ def extract_chartconfigs(text: str) -> dict:
     return charts
 
 
+def sanitize_json_string(text: str) -> str:
+    """Fix common LLM JSON issues before parsing."""
+    # Replace smart quotes with straight quotes
+    text = text.replace('"', '"').replace('"', '"')
+    text = text.replace(''', "'").replace(''', "'")
+
+    # Remove any BOM or zero-width characters
+    text = text.replace('\ufeff', '').replace('\u200b', '')
+
+    # Fix unescaped control characters inside strings (common LLM issue)
+    # This is tricky - we need to escape actual newlines/tabs that aren't already escaped
+    result = []
+    in_string = False
+    i = 0
+    while i < len(text):
+        c = text[i]
+        if c == '"' and (i == 0 or text[i-1] != '\\'):
+            in_string = not in_string
+            result.append(c)
+        elif in_string:
+            # Inside a string, escape control characters
+            if c == '\n':
+                result.append('\\n')
+            elif c == '\r':
+                result.append('\\r')
+            elif c == '\t':
+                result.append('\\t')
+            else:
+                result.append(c)
+        else:
+            result.append(c)
+        i += 1
+
+    text = ''.join(result)
+
+    # Remove trailing commas before } or ] (common LLM error)
+    text = re.sub(r',(\s*[}\]])', r'\1', text)
+
+    return text
+
+
 def repair_truncated_json(text: str) -> Optional[dict]:
     """Attempt to repair truncated JSON from timeout responses."""
     if not text or not text.strip():
@@ -564,11 +608,14 @@ def repair_truncated_json(text: str) -> Optional[dict]:
         text = text[:-3]
     text = text.strip()
 
+    # Sanitize common LLM JSON issues
+    text = sanitize_json_string(text)
+
     # Try parsing as-is first
     try:
         return json.loads(text)
-    except:
-        pass
+    except json.JSONDecodeError as e:
+        print(f"Initial JSON parse failed at position {e.pos}: {e.msg}")
 
     # Count unclosed braces/brackets and try to close them
     open_braces = text.count('{') - text.count('}')
@@ -762,11 +809,11 @@ async def generate_report(request: GenerateRequest, req: Request):
                         stages["sources"] = True
                         yield send_sse("progress", {"stage": "sources", "percent": 90, "message": "Verifying sources..."})
 
-            # Stage: Complete
-            yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Investigation complete!"})
+            # Parse the article BEFORE sending "complete"
+            yield send_sse("progress", {"stage": "parsing", "percent": 95, "message": "Parsing response..."})
 
-            # Parse and cache the article for persistence
             parsed_data = None
+            parse_error = None
             try:
                 parsed_data = repair_truncated_json(full_text)
                 if parsed_data:
@@ -781,18 +828,62 @@ async def generate_report(request: GenerateRequest, req: Request):
                     parsed_data.setdefault("sources", [])
 
                     # Cache to Blob storage for persistence
-                    cache_article(request.topic, parsed_data)
-                    print(f"Article cached from /api/generate: {request.topic}")
-            except Exception as cache_err:
-                print(f"Cache error (non-fatal): {cache_err}")
+                    try:
+                        cache_article(request.topic, parsed_data)
+                        print(f"Article cached from /api/generate: {request.topic}")
+                    except Exception as cache_err:
+                        print(f"Cache error (non-fatal): {cache_err}")
+            except Exception as parse_err:
+                parse_error = str(parse_err)
+                print(f"Parse error: {parse_err}")
 
-            # Send the parsed data as a proper object (not double-encoded string)
-            # If parsing succeeded, send the clean object; otherwise fall back to raw text
+            # Always send a valid JSON object - NEVER send raw text
             if parsed_data:
+                yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Investigation complete!"})
                 yield f"event: content\ndata: {json.dumps(parsed_data)}\n\n"
             else:
-                # Fallback: send raw text (frontend will try to parse it)
-                yield send_sse("content", full_text)
+                # Parsing failed - construct emergency fallback object
+                print(f"JSON parsing failed for {len(full_text)} chars, constructing fallback")
+                # Log first 500 chars of response for debugging
+                print(f"Response preview: {full_text[:500] if full_text else 'EMPTY'}...")
+
+                # Try to extract ANY useful content with aggressive regex
+                fallback_data = {
+                    "key": topic_slug,
+                    "title": request.topic[:100],
+                    "cardTitle": request.topic[:50],
+                    "cardTag": "INVESTIGATION",
+                    "cardDescription": "Article generated with parsing issues",
+                    "chartConfigs": extract_chartconfigs(full_text) if full_text else {},
+                    "contextData": {},
+                    "citationDatabase": {},
+                    "sources": [],
+                    "chartType": "dynamic",
+                    "_partial": True,
+                    "_parseError": True
+                }
+
+                # Try to extract content - look for HTML or just use raw text
+                if full_text:
+                    # Look for content field
+                    content_match = re.search(r'"content"\s*:\s*"(.*?)(?:"\s*[,}]|$)', full_text, re.DOTALL)
+                    if content_match:
+                        content = content_match.group(1).replace('\\"', '"').replace('\\n', '\n')
+                        fallback_data["content"] = content
+                    else:
+                        # Just wrap raw text as content
+                        # Strip markdown fences and JSON artifacts
+                        display_text = full_text
+                        if display_text.startswith("```"): display_text = display_text.split("\n", 1)[-1]
+                        if display_text.endswith("```"): display_text = display_text[:-3]
+                        # Remove obvious JSON structure but keep text
+                        display_text = re.sub(r'^[\s\S]*?"content"\s*:\s*"', '', display_text)
+                        fallback_data["content"] = f'<p class="prose-text">{display_text[:5000]}</p>'
+                else:
+                    fallback_data["content"] = '<p class="prose-text">Failed to generate article content. Please try again.</p>'
+
+                yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Finalizing..."})
+                yield f"event: content\ndata: {json.dumps(fallback_data)}\n\n"
 
             # Signal done
             yield send_sse("done", "ok")
@@ -801,12 +892,29 @@ async def generate_report(request: GenerateRequest, req: Request):
             print(f"Streaming Error: {e}")
             import traceback
             traceback.print_exc()
-            # Try to send partial content if we have any
+
+            # Always try to return SOMETHING useful
+            error_fallback = {
+                "key": topic_slug,
+                "title": f"Error: {request.topic[:80]}",
+                "cardTitle": request.topic[:50],
+                "cardTag": "ERROR",
+                "cardDescription": str(e)[:100],
+                "chartConfigs": {},
+                "contextData": {},
+                "citationDatabase": {},
+                "sources": [],
+                "chartType": "dynamic",
+                "_error": str(e),
+                "content": f'<p class="prose-text"><strong>Generation Error:</strong> {str(e)}</p>'
+            }
+
+            # Try to salvage any content we got
             if full_text and len(full_text) > 100:
                 print(f"Attempting to salvage partial content ({len(full_text)} chars)")
                 try:
                     partial_data = repair_truncated_json(full_text)
-                    if partial_data and partial_data.get("content"):
+                    if partial_data:
                         partial_data["_partial"] = True
                         partial_data["_error"] = str(e)
                         yield f"event: content\ndata: {json.dumps(partial_data)}\n\n"
@@ -814,7 +922,15 @@ async def generate_report(request: GenerateRequest, req: Request):
                         return
                 except Exception as salvage_err:
                     print(f"Salvage failed: {salvage_err}")
-            yield send_sse("error", str(e))
+
+                # Even if salvage failed, try to extract content
+                content_match = re.search(r'"content"\s*:\s*"(.*?)(?:"\s*[,}]|$)', full_text, re.DOTALL)
+                if content_match:
+                    error_fallback["content"] = content_match.group(1).replace('\\"', '"').replace('\\n', '\n')
+                    error_fallback["chartConfigs"] = extract_chartconfigs(full_text)
+
+            yield f"event: content\ndata: {json.dumps(error_fallback)}\n\n"
+            yield send_sse("done", "error")
 
     return StreamingResponse(
         stream_response(),
