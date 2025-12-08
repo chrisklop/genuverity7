@@ -233,3 +233,77 @@ The user prefers:
 - Professional, clean layouts
 - Mobile-responsive design
 - Minimal unnecessary features
+
+---
+
+## CURRENT SESSION CONTEXT (Dec 8, 2024)
+
+### Recently Completed (This Session)
+
+1. **Fixed Trending Links Bug** (commit b23cfe9)
+   - **Root cause**: JavaScript object keys starting with numbers (`14nm_stall`, `18a_tech`) caused syntax errors
+   - **Fix**: Renamed to `nm14_stall` and `tech_18a` in both object keys and `data-id` attributes
+   - Trending Investigations section now displays correctly
+
+2. **Sources Button Rework** (commit dd4e84f)
+   - Moved Sources button from floating position into navbar center
+   - Removed non-functional `nav-title-container` (text box + plus button)
+   - Cleaned up ~146 lines of obsolete CSS (collapsed glow, marquee title, add-to-queue)
+   - Button now shows: shield icon + "Sources" label + count badge + chevron
+   - Subtle pulse animation when closed, solid green when expanded
+   - Chevron rotates 180° when drawer opens
+
+3. **Parent/Child Essay Navigation** (earlier commits)
+   - Parent articles can have `childEssays: ['child_key']` array
+   - Child articles have `isChildEssay: true`, `parentEssay: 'parent_key'`
+   - Child essays excluded from Trending section via `if (report.isChildEssay) continue;`
+
+### Navbar Layout (Current)
+
+```
++----------------------------------------------------------+
+| [G] GenuVerity  |  [Sources ▼ 12]  |  Research Lab  T L ? |
++----------------------------------------------------------+
+```
+- Left: Logo (clickable → portal)
+- Center: Sources button (only visible on essay pages)
+- Right: Research Lab link, theme toggle, library, keyboard help
+
+### Pending Tasks
+
+- [ ] Add selection toolbar that works (Define/Ask/Deep Dive on text selection)
+- [ ] Add infographic generator tool to Research Lab
+- [ ] Increase to 15+ sources requirement for all articles
+- [ ] Plan bias analysis popup feature
+
+### Git Status
+
+```bash
+# Latest commits:
+dd4e84f refactor: Move Sources button into navbar center and cleanup
+b23cfe9 fix: Fix JavaScript syntax errors breaking trending section
+
+# Branch: main
+# Remote: origin/main (up to date)
+```
+
+### Quick Commands
+
+```bash
+# Start local dev server
+python3 server.py   # runs on port 8000
+
+# Deploy to Vercel
+vercel --prod
+
+# View logs
+vercel logs genuverity7.vercel.app --limit 50
+
+# Check recent commits
+git log --oneline -5
+```
+
+### Related Projects
+
+- **Research Lab Demo**: /Users/klop/Desktop/projects/gen-ui-essay-demo (Next.js on port 3001)
+- **Live URL**: https://gen-ui-essay-demo.vercel.app
