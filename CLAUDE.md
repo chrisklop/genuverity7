@@ -31,9 +31,25 @@ This file provides guidance to Claude Code when working with this repository. **
 
 ### Backend (`api/index.py`)
 - **Framework**: FastAPI + Uvicorn
-- **AI Model**: Claude Sonnet 4.5 (`claude-sonnet-4-5-20250929`)
 - **Storage**: Vercel Blob Storage for article cache
 - **Key constant**: `ARTICLE_TEMPLATE` (line ~470) - controls AI generation schema
+
+## AI Model Requirements (MANDATORY)
+
+**⚠️ CRITICAL: DO NOT CHANGE THESE MODELS ⚠️**
+
+| Purpose | Model | Model ID |
+|---------|-------|----------|
+| **Article Text Generation** | Claude Sonnet 4/4.5 | `claude-sonnet-4-20250514` or `claude-sonnet-4-5-20250929` |
+| **Infographic Generation** | Gemini 3 Pro Image Preview | `gemini-3-pro-image-preview` |
+
+**NEVER use other models for these tasks:**
+- ❌ Do NOT use `gemini-2.0-flash-exp` for infographics
+- ❌ Do NOT use any other Gemini model for images
+- ❌ Do NOT use Claude for infographics
+- ❌ Do NOT use Gemini for article text
+
+The Midnight Tech visual style ONLY works correctly with `gemini-3-pro-image-preview`. Using other models produces incorrect styling that does not match the established aesthetic.
 
 **Endpoints**:
 | Endpoint | Method | Purpose |
