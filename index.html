@@ -4548,29 +4548,6 @@
             document.getElementById('report-title').innerText = data.title;
             document.getElementById('report-body').innerHTML = data.content;
 
-            // Update navbar with article title (full title with marquee for long ones)
-            const navTitleContainer = document.getElementById('nav-title-container');
-            const navArticleTitle = document.getElementById('nav-article-title');
-            if (navArticleTitle && navTitleContainer) {
-                const fullTitle = data.cardTitle || data.title;
-                const titleText = navArticleTitle.querySelector('.title-text');
-
-                // Set the title text
-                if (titleText) {
-                    // For marquee, duplicate the text with a separator
-                    if (fullTitle.length > 35) {
-                        titleText.innerHTML = fullTitle + ' &nbsp;&nbsp;&nbsp; ' + fullTitle + ' &nbsp;&nbsp;&nbsp; ';
-                        navArticleTitle.classList.add('marquee');
-                    } else {
-                        titleText.textContent = fullTitle;
-                        navArticleTitle.classList.remove('marquee');
-                    }
-                }
-
-                navTitleContainer.classList.remove('hidden');
-                lucide.createIcons();
-            }
-
             // Update timestamp display
             updateArticleTimestamp(data);
 
