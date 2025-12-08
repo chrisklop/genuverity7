@@ -5594,7 +5594,7 @@
                 img.alt = elementId;
                 img.className = 'gemini-infographic';
                 img.style.cssText = 'width: 100%; height: auto; border-radius: 8px;';
-                img.loading = 'lazy';
+                img.loading = 'eager'; // Load immediately, not lazily
                 parent.innerHTML = '';
                 parent.appendChild(img);
                 return true;
