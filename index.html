@@ -1655,6 +1655,118 @@
             background: rgba(59, 130, 246, 0.08);
         }
 
+        /* Infographic Lightbox Modal */
+        #infographic-lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #infographic-lightbox.visible {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 85vh;
+            background: var(--chart-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        #infographic-lightbox.visible .lightbox-content {
+            transform: scale(1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            width: 36px;
+            height: 36px;
+            background: var(--bg-deep);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            color: var(--text-main);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            z-index: 10001;
+        }
+
+        .lightbox-close:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            transform: scale(1.1);
+        }
+
+        .lightbox-image-container {
+            max-width: 80vw;
+            max-height: 65vh;
+            overflow: hidden;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-image-container img {
+            max-width: 100%;
+            max-height: 65vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .lightbox-image-container canvas {
+            max-width: 100%;
+            max-height: 65vh;
+        }
+
+        .lightbox-caption {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 1rem;
+        }
+
+        .lightbox-caption .fig-deep-dive {
+            font-size: 0.75rem;
+            padding: 4px 12px;
+        }
+
+        /* Make float-figure clickable */
+        .float-figure {
+            cursor: zoom-in;
+        }
+
+        .float-figure .fig-deep-dive {
+            cursor: pointer;
+        }
+
         /* Deep Dive Hover Preview Tooltip */
         .deep-dive-tooltip {
             position: fixed;
@@ -2908,6 +3020,19 @@
             <div class="badge-remaining" id="badge-remaining">
                 <i data-lucide="zap" class="w-3 h-3"></i>
                 <span id="badge-remaining-text">3 remaining free today</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Infographic Lightbox Modal -->
+    <div id="infographic-lightbox" onclick="closeLightbox(event)">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+            <div class="lightbox-image-container" id="lightbox-image-container">
+                <!-- Image/canvas will be cloned here -->
+            </div>
+            <div class="lightbox-caption" id="lightbox-caption">
+                <!-- Caption with Deep Dive button will be cloned here -->
             </div>
         </div>
     </div>
@@ -4305,6 +4430,7 @@
                             renderCharts(data.chartType);
                         }
                         initLivingNumbers(); // Re-run observer for new elements
+                        initLightboxHandlers(); // Initialize lightbox for infographics
                         initDeepDiveTooltips(); // Add hover tooltips to deep dive buttons
                     }, 150);
                 });
@@ -7058,6 +7184,132 @@
                 generateDeepDive(topic);
             }
         }
+
+        // === INFOGRAPHIC LIGHTBOX ===
+        let currentLightboxFigure = null;
+
+        function openLightbox(floatFigure) {
+            const lightbox = document.getElementById('infographic-lightbox');
+            const imageContainer = document.getElementById('lightbox-image-container');
+            const captionContainer = document.getElementById('lightbox-caption');
+
+            if (!lightbox || !floatFigure) return;
+
+            currentLightboxFigure = floatFigure;
+
+            // Clear previous content
+            imageContainer.innerHTML = '';
+            captionContainer.innerHTML = '';
+
+            // Get the image/canvas container (first div child with height)
+            const chartContainer = floatFigure.querySelector('div[style*="height"], .gemini-infographic, img');
+            const caption = floatFigure.querySelector('.fig-caption');
+
+            // Clone the image or canvas
+            if (chartContainer) {
+                const img = floatFigure.querySelector('img');
+                const canvas = floatFigure.querySelector('canvas');
+
+                if (img) {
+                    // For Gemini infographics (images)
+                    const clonedImg = img.cloneNode(true);
+                    clonedImg.style.maxWidth = '100%';
+                    clonedImg.style.maxHeight = '65vh';
+                    clonedImg.style.width = 'auto';
+                    clonedImg.style.height = 'auto';
+                    imageContainer.appendChild(clonedImg);
+                } else if (canvas) {
+                    // For Chart.js canvases - convert to image
+                    try {
+                        const dataUrl = canvas.toDataURL('image/png');
+                        const newImg = document.createElement('img');
+                        newImg.src = dataUrl;
+                        newImg.style.maxWidth = '100%';
+                        newImg.style.maxHeight = '65vh';
+                        imageContainer.appendChild(newImg);
+                    } catch (e) {
+                        console.log('[Lightbox] Could not convert canvas:', e);
+                        // Fallback: clone the container
+                        const cloned = chartContainer.cloneNode(true);
+                        cloned.style.height = 'auto';
+                        cloned.style.maxHeight = '65vh';
+                        imageContainer.appendChild(cloned);
+                    }
+                }
+            }
+
+            // Clone the caption with Deep Dive button
+            if (caption) {
+                captionContainer.innerHTML = caption.innerHTML;
+                // Re-attach click handlers for Deep Dive buttons in lightbox
+                const deepDiveBtn = captionContainer.querySelector('.fig-deep-dive');
+                if (deepDiveBtn) {
+                    deepDiveBtn.onclick = function(e) {
+                        e.stopPropagation();
+                        closeLightbox(e);
+                        // Small delay to let lightbox close
+                        setTimeout(() => {
+                            handleDeepDive(deepDiveBtn);
+                        }, 100);
+                    };
+                }
+            }
+
+            // Show the lightbox
+            lightbox.style.display = 'flex';
+            requestAnimationFrame(() => {
+                lightbox.classList.add('visible');
+            });
+
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            const lightbox = document.getElementById('infographic-lightbox');
+            if (!lightbox) return;
+
+            lightbox.classList.remove('visible');
+            setTimeout(() => {
+                lightbox.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 300);
+
+            currentLightboxFigure = null;
+        }
+
+        // Escape key to close lightbox
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const lightbox = document.getElementById('infographic-lightbox');
+                if (lightbox && lightbox.classList.contains('visible')) {
+                    closeLightbox();
+                }
+            }
+        });
+
+        // Attach click handlers to all float-figures
+        function initLightboxHandlers() {
+            document.querySelectorAll('.float-figure').forEach(figure => {
+                // Only add click if not already added
+                if (!figure.dataset.lightboxEnabled) {
+                    figure.dataset.lightboxEnabled = 'true';
+                    figure.addEventListener('click', (e) => {
+                        // Don't open lightbox if clicking the Deep Dive button
+                        if (e.target.classList.contains('fig-deep-dive')) {
+                            return;
+                        }
+                        openLightbox(figure);
+                    });
+                }
+            });
+        }
+
+        // Initialize on page load and after article loads
+        document.addEventListener('DOMContentLoaded', initLightboxHandlers);
 
         // Handle deep dive from infographic - extracts context automatically
         function handleDeepDive(topicOrElement) {
