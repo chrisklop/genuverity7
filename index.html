@@ -5599,7 +5599,8 @@
                 return {};
             }
 
-            console.log('[Gemini] Generating Gemini 3 Pro infographics for:', Object.keys(chartConfigs));
+            const chartIds = Object.keys(chartConfigs);
+            console.log('[Gemini] Requesting Gemini 3 Pro Midnight Tech infographics for:', chartIds);
 
             try {
                 const response = await fetch('/api/infographics/batch', {
@@ -5612,24 +5613,36 @@
                 });
 
                 if (!response.ok) {
-                    console.error('[Gemini] Batch infographic API error:', response.status);
+                    const errorText = await response.text();
+                    console.error('[Gemini] API error:', response.status, errorText);
+                    console.warn('[Gemini] Falling back to Chart.js - Gemini infographics unavailable');
                     return {};
                 }
 
                 const result = await response.json();
-                console.log(`[Gemini] Generated ${result.generated}/${result.total} infographics`);
+                console.log(`[Gemini] Generated ${result.generated}/${result.total} Midnight Tech infographics`);
+
+                if (result.generated === 0) {
+                    console.warn('[Gemini] No infographics generated - using Chart.js fallback');
+                }
 
                 // Store the generated infographics
                 const infographics = result.infographics || {};
+                let stored = 0;
                 for (const [chartId, base64Data] of Object.entries(infographics)) {
                     if (base64Data) {
-                        window.dynamicGeminiInfographics[chartId] = `data:image/png;base64,${base64Data}`;
+                        window.dynamicGeminiInfographics[chartId] = base64Data.startsWith('data:')
+                            ? base64Data
+                            : `data:image/png;base64,${base64Data}`;
+                        stored++;
                     }
                 }
+                console.log(`[Gemini] Stored ${stored} infographics in dynamicGeminiInfographics`);
 
                 return infographics;
             } catch (e) {
                 console.error('[Gemini] Failed to generate infographics:', e);
+                console.warn('[Gemini] Using Chart.js fallback due to error');
                 return {};
             }
         }
@@ -5681,6 +5694,16 @@
         // Returns true if at least one chart was rendered, false otherwise
         async function renderDynamicCharts(chartConfigs, articleTitle = 'Investigation', skipGeminiGeneration = false) {
             console.log('[Charts] renderDynamicCharts called with:', chartConfigs);
+
+            // Check if we already have Gemini images rendered in the DOM - PRESERVE THEM
+            const existingGeminiImages = document.querySelectorAll('.gemini-infographic');
+            if (existingGeminiImages.length > 0 && skipGeminiGeneration) {
+                console.log(`[Charts] Preserving ${existingGeminiImages.length} existing Gemini infographics on theme change`);
+                // Just update Chart.js colors if any are still active
+                activeCharts.forEach(c => c.destroy());
+                activeCharts = [];
+                return true; // Images are preserved, nothing to do
+            }
 
             // Cleanup old Chart.js charts (but preserve Gemini images)
             activeCharts.forEach(c => c.destroy());
@@ -6936,7 +6959,15 @@
 
             // Re-render charts with new theme colors
             if (currentArticleKey && reports[currentArticleKey]) {
-                renderCharts(reports[currentArticleKey].chartType);
+                const report = reports[currentArticleKey];
+                // For dynamic articles with chartConfigs, use renderDynamicCharts
+                if (report.chartType === 'dynamic' && report.chartConfigs) {
+                    console.log('[Theme] Re-rendering dynamic charts after theme change');
+                    // Skip Gemini generation since we already have them (or already tried)
+                    renderDynamicCharts(report.chartConfigs, report.title || 'Investigation', true);
+                } else {
+                    renderCharts(report.chartType);
+                }
             }
 
             // Re-initialize lucide icons for theme toggle
