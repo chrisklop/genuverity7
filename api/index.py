@@ -19,8 +19,8 @@ BLOB_READ_WRITE_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyDRIHmMIQow7BlfROmeaJlfOI6FKYcA1l0")
 # Use Claude Sonnet 4 for quality investigative articles
 CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
-# Gemini 3 Pro for image generation
-GEMINI_IMAGE_MODEL = "gemini-2.0-flash-preview-image-generation"
+# Gemini for image generation - using the image generation model
+GEMINI_IMAGE_MODEL = "gemini-2.0-flash-exp-image-generation"  # Latest Gemini image generation
 GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models"
 
 # Vercel Blob Storage configuration
@@ -122,19 +122,23 @@ Generate a 800x500 pixel infographic image."""
 
         if response.status_code == 200:
             result = response.json()
+            print(f"Gemini API response keys: {result.keys()}")
             # Extract image from response
             candidates = result.get("candidates", [])
             if candidates:
                 parts = candidates[0].get("content", {}).get("parts", [])
                 for part in parts:
+                    print(f"Part keys: {part.keys()}")
                     if "inlineData" in part:
                         image_data = part["inlineData"].get("data")
                         mime_type = part["inlineData"].get("mimeType", "image/png")
                         if image_data:
                             print(f"Generated infographic for {chart_id}: {len(image_data)} bytes")
                             return f"data:{mime_type};base64,{image_data}"
+            else:
+                print(f"No candidates in response: {result}")
         else:
-            print(f"Gemini API error ({response.status_code}): {response.text[:200]}")
+            print(f"Gemini API error ({response.status_code}): {response.text[:500]}")
 
     except Exception as e:
         print(f"Gemini infographic generation error: {e}")
