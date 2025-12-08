@@ -2277,7 +2277,7 @@
             min-width: 0;
         }
         .card-sources {
-            width: 100px;
+            width: 180px;
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
@@ -2292,6 +2292,10 @@
             gap: 0.25rem;
             color: var(--text-muted);
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .card-sources .source-name {
             overflow: hidden;
             text-overflow: ellipsis;
         }
@@ -6821,7 +6825,7 @@
                         const score = s.score || 80;
                         const level = score >= 85 ? 'high' : score >= 70 ? 'medium' : 'low';
                         const name = s.name || s.domain || 'Source';
-                        return `<div class="source-item"><span class="source-dot ${level}"></span>${name.substring(0, 12)}</div>`;
+                        return `<div class="source-item"><span class="source-dot ${level}"></span><span class="source-name">${name.substring(0, 28)}</span></div>`;
                     }).join('')}
                 </div>`;
             }
