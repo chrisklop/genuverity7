@@ -545,7 +545,7 @@ async def generate_report(request: GenerateRequest, req: Request):
 
             with claude_client.messages.stream(
                 model=CLAUDE_MODEL,
-                max_tokens=4000,  # Reduced to complete within Vercel timeout
+                max_tokens=6000,  # Allow longer articles with 5-min Vercel timeout
                 messages=[{"role": "user", "content": prompt}]
             ) as stream:
                 # Stage 3: Researching
@@ -745,7 +745,7 @@ async def generate_deep_dive(request_body: DeepDiveRequest, request: Request):
 
             with claude_client.messages.stream(
                 model=CLAUDE_MODEL,
-                max_tokens=4000,  # Reduced to complete within Vercel timeout
+                max_tokens=6000,  # Allow longer articles with 5-min Vercel timeout
                 messages=[{"role": "user", "content": prompt}]
             ) as stream:
                 yield send_sse("progress", {"stage": "research", "percent": 15, "message": "Researching topic..."})
