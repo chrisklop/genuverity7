@@ -545,7 +545,7 @@ async def generate_report(request: GenerateRequest, req: Request):
 
             with claude_client.messages.stream(
                 model=CLAUDE_MODEL,
-                max_tokens=8000,
+                max_tokens=4000,  # Reduced to complete within Vercel timeout
                 messages=[{"role": "user", "content": prompt}]
             ) as stream:
                 # Stage 3: Researching
@@ -617,6 +617,21 @@ async def generate_report(request: GenerateRequest, req: Request):
 
         except Exception as e:
             print(f"Streaming Error: {e}")
+            import traceback
+            traceback.print_exc()
+            # Try to send partial content if we have any
+            if full_text and len(full_text) > 100:
+                print(f"Attempting to salvage partial content ({len(full_text)} chars)")
+                try:
+                    partial_data = repair_truncated_json(full_text)
+                    if partial_data and partial_data.get("content"):
+                        partial_data["_partial"] = True
+                        partial_data["_error"] = str(e)
+                        yield f"event: content\ndata: {json.dumps(partial_data)}\n\n"
+                        yield send_sse("done", "partial")
+                        return
+                except Exception as salvage_err:
+                    print(f"Salvage failed: {salvage_err}")
             yield send_sse("error", str(e))
 
     return StreamingResponse(
@@ -730,7 +745,7 @@ async def generate_deep_dive(request_body: DeepDiveRequest, request: Request):
 
             with claude_client.messages.stream(
                 model=CLAUDE_MODEL,
-                max_tokens=8000,
+                max_tokens=4000,  # Reduced to complete within Vercel timeout
                 messages=[{"role": "user", "content": prompt}]
             ) as stream:
                 yield send_sse("progress", {"stage": "research", "percent": 15, "message": "Researching topic..."})

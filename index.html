@@ -7007,6 +7007,7 @@
         // --- INLINE ENHANCEMENT WIDGET FUNCTIONS ---
         function showEnhanceWidget() {
             console.log('[EnhanceWidget] Showing widget...');
+            enhanceCharsReceived = 0; // Reset char counter
             const widget = document.getElementById('enhance-progress-widget');
             if (widget) {
                 widget.classList.add('visible');
@@ -7034,15 +7035,24 @@
             }
         }
 
-        function updateEnhanceWidget(percent, message) {
-            console.log('[EnhanceWidget] Update:', percent + '%', message);
+        let enhanceCharsReceived = 0;
+        function updateEnhanceWidget(percent, message, charsReceived = null) {
+            console.log('[EnhanceWidget] Update:', percent + '%', message, charsReceived ? `(${charsReceived} chars)` : '');
             const bar = document.getElementById('enhance-widget-bar');
             const percentEl = document.getElementById('enhance-widget-percent');
             const statusEl = document.getElementById('enhance-widget-status');
 
             if (bar) bar.style.width = `${percent}%`;
             if (percentEl) percentEl.textContent = `${percent}%`;
-            if (statusEl) statusEl.textContent = message;
+
+            // Show message with live char count if available
+            if (statusEl) {
+                if (charsReceived !== null) {
+                    enhanceCharsReceived = charsReceived;
+                }
+                const charInfo = enhanceCharsReceived > 0 ? ` (${Math.round(enhanceCharsReceived/1000)}k chars)` : '';
+                statusEl.textContent = message + charInfo;
+            }
         }
 
         function showEnhanceWidgetComplete() {
@@ -7208,21 +7218,15 @@
                     plainText = plainText.substring(0, 3000) + '... [content truncated for processing]';
                 }
 
-                // Build a more compact enhancement prompt
-                const enhancePrompt = `ENHANCE this investigative article titled: "${title}"
+                // SHORTENED prompt to avoid Vercel timeout - limit context to 1500 chars
+                const shortPlainText = plainText.length > 1500 ? plainText.substring(0, 1500) + '...' : plainText;
+                const enhancePrompt = `ENHANCE "${title}"
 
-EXISTING SECTIONS: ${headers}
+SECTIONS: ${headers}
 
-ARTICLE SUMMARY (first 3000 chars):
-${plainText}
+SUMMARY: ${shortPlainText}
 
-GENERATE an ENHANCED version with:
-- Same title and thesis
-- 2-3 NEW sections with deeper analysis
-- More living numbers with data-target and data-suffix attributes
-- More citation spades and fractal triggers
-- Magazine-style HTML formatting
-- Roughly 2x the original length`;
+ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-target="X" data-suffix="Y">), citation-spades, fractal-triggers. Keep same title/thesis. Return JSON with content field.`;
 
                 const response = await fetch('/api/generate', {
                     method: 'POST',
@@ -7251,6 +7255,16 @@ GENERATE an ENHANCED version with:
                     const chunk = decoder.decode(value, { stream: true });
                     fullResponse += chunk;
                     buffer += chunk;
+
+                    // Update char count in widget on every chunk for live feedback
+                    const statusEl = document.getElementById('enhance-widget-status');
+                    if (statusEl && fullResponse.length > 0) {
+                        enhanceCharsReceived = fullResponse.length;
+                        // Keep current status text, just update char count
+                        const currentMsg = statusEl.textContent.split(' (')[0]; // Strip old char count
+                        statusEl.textContent = `${currentMsg} (${Math.round(fullResponse.length/1000)}k)`;
+                    }
+
                     const lines = buffer.split('\n');
                     buffer = lines.pop() || '';
 
@@ -7264,7 +7278,8 @@ GENERATE an ENHANCED version with:
                                 const data = JSON.parse(rawData);
                                 if (currentEvent === 'progress') {
                                     // Update the inline widget instead of the full-screen loader
-                                    updateEnhanceWidget(data.percent, data.message);
+                                    // Pass fullResponse.length for live char count display
+                                    updateEnhanceWidget(data.percent, data.message, fullResponse.length);
                                 } else if (currentEvent === 'content') {
                                     console.log('[Enhance] Received content event, keys:', data ? Object.keys(data) : 'null');
                                     articleContent = data;
