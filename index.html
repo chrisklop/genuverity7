@@ -3901,9 +3901,47 @@
                 ]
             },
             'energy_crisis': {
-                content: `<p class="prose-text">The AI buildout has hit a physical wall: the electrical grid. Data centers currently consume 2% of US power, but projections suggest this could rise to 8% by 2030. Utility companies in Virginia and Texas are already imposing moratoriums on new connections. In response, tech giants are bypassing the grid entirely. Microsoft's deal to restart Three Mile Island represents the new era of "Behind-the-Meter" nuclear power.</p><div class="float-figure right"><div style="height: 300px;"><canvas id="chart_energy"></canvas></div><div class="fig-caption">Fig 1. Energy Demand Projections (GW)</div></div>`,
+                title: "The Grid Cannot Scale: AI's Energy Crisis",
+                cardTitle: "AI's Energy Crisis",
+                cardTag: "INFRASTRUCTURE // ENERGY",
+                cardTagColor: "text-orange-400",
+                cardDescription: "Why the electrical grid is AI's ultimate bottleneck.",
+                content: `
+                    <p class="prose-text"><strong class="text-white">Executive Summary:</strong> The AI buildout has hit a physical wall: <span class="highlight-glow">the electrical grid</span>. Data centers currently consume 2% of US power, but projections suggest this could rise to <span class="living-number" data-target="8" data-suffix="%">0</span> by 2030. Utility companies in Virginia and Texas are already imposing moratoriums on new connections. In response, tech giants are bypassing the grid entirely—Microsoft's deal to restart <strong class="fractal-trigger" onclick="expandContext(this, 'three_mile_island')">Three Mile Island</strong> represents the new era of "Behind-the-Meter" nuclear power.</p>
+
+                    <h2 class="prose-h2">1. The Demand Explosion</h2>
+
+                    <div class="float-figure right">
+                        <div style="height: 250px;"><canvas id="chart_energy"></canvas></div>
+                        <div class="fig-caption">Fig 1. Data Center Energy Demand Projection <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
+                    </div>
+
+                    <p class="prose-text">The IEA forecasts that global data center electricity consumption will <span class="highlight-glow">double by 2026</span>, reaching <span class="living-number" data-target="1000" data-suffix=" TWh">0</span>—roughly the consumption of Japan. A single ChatGPT query consumes <span class="living-number" data-target="10" data-suffix="x">0</span> more electricity than a Google search. Training GPT-4 required an estimated <span class="living-number" data-target="50" data-suffix=" GWh">0</span> of electricity—enough to power 4,600 US homes for a year. And this is just the beginning: next-generation models will be orders of magnitude more demanding.</p>
+
+                    <h2 class="prose-h2">2. The Transformer Shortage</h2>
+
+                    <div class="float-figure left">
+                        <div style="height: 250px;"><canvas id="chart_transformers"></canvas></div>
+                        <div class="fig-caption">Fig 2. US Transformer Lead Times (Months) <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
+                    </div>
+
+                    <p class="prose-text">The hidden bottleneck isn't chips—it's <span class="highlight-glow">transformers</span>. Not the AI kind, but the electrical kind. Large power transformers now have lead times of <span class="living-number" data-target="4" data-suffix=" years">0</span>, up from 12 months pre-pandemic. The US has only <span class="living-number" data-target="3" data-suffix="">0</span> domestic manufacturers capable of producing these critical components. A single large transformer can take 18 months to manufacture and weighs up to 400 tons, requiring specialized rail cars for transport. Without transformers, data centers cannot connect to the grid—no matter how many GPUs they've ordered.</p>
+
+                    <h2 class="prose-h2">3. The Nuclear Renaissance</h2>
+                    <p class="prose-text">Facing grid constraints, hyperscalers are turning to nuclear. Microsoft signed a 20-year deal to restart Three Mile Island Unit 1, providing ~835 MW of carbon-free power. Amazon acquired a 960 MW nuclear-powered data center campus in Pennsylvania. Google and Oracle are investing in small modular reactors (SMRs). These "behind-the-meter" arrangements bypass grid bottlenecks entirely—but they also represent a fundamental shift: tech companies becoming power companies.</p>
+                `,
                 chartType: 'energy',
-                sources: [{ name: "Reuters", score: 99 }]
+                contextData: {
+                    three_mile_island: {
+                        expanded: "Three Mile Island Unit 1 operated safely for decades before shutting down in 2019 due to economic factors. Unit 2 was the site of the famous 1979 partial meltdown. Microsoft's deal specifically involves restarting Unit 1, which was never involved in the accident. The 20-year power purchase agreement will provide dedicated clean energy to Microsoft's data centers."
+                    }
+                },
+                sources: [
+                    { name: "IEA: Electricity 2024 Report", score: 99, url: "https://www.iea.org/reports/electricity-2024" },
+                    { name: "Reuters: Microsoft Three Mile Island Deal", score: 98, url: "https://www.reuters.com/markets/deals/constellation-restart-three-mile-island-nuclear-plant-power-microsoft-2024-09-20/" },
+                    { name: "DOE: Transformer Supply Chain Report", score: 97, url: "https://www.energy.gov/ceser/securing-critical-electric-infrastructure" },
+                    { name: "Goldman Sachs: AI Power Demand", score: 96, url: "https://www.goldmansachs.com/intelligence/pages/AI-power-demand.html" }
+                ]
             },
             'model_collapse': {
                 title: "Model Collapse Theory",
@@ -3912,10 +3950,47 @@
                 sources: [{ name: "Nature Journal", score: 99 }]
             },
             'regulatory_capture': {
-                title: "Regulatory Capture: The Mechanism",
-                content: `<p class="prose-text">Regulatory capture occurs when a regulatory agency, created to act in the public interest, instead advances the commercial or political concerns of special interest groups that dominate the industry or sector it is charged with regulating. In the context of financial oversight, the "Revolving Door" phenomenon—where SEC officials leave for lucrative jobs at the very Hedge Funds they regulated—creates a systemic disincentive for enforcement.</p><div class="float-figure left"><div style="height: 300px;"><canvas id="chart_regulatory"></canvas></div><div class="fig-caption">Fig 1. SEC to Private Sector Turnover Rate</div></div>`,
+                title: "The Revolving Door: How Regulators Become the Regulated",
+                cardTitle: "The Revolving Door",
+                cardTag: "CORRUPTION // FINANCE",
+                cardTagColor: "text-red-400",
+                cardDescription: "How SEC officials cash out at the firms they once policed.",
+                content: `
+                    <p class="prose-text"><strong class="text-white">Executive Summary:</strong> Regulatory capture occurs when agencies created to act in the public interest instead advance the commercial concerns of the industries they regulate. In financial oversight, the <span class="highlight-glow">"Revolving Door"</span> phenomenon—where SEC officials leave for lucrative jobs at the very hedge funds they policed—creates a systemic disincentive for enforcement. Over <span class="living-number" data-target="65" data-suffix="%">0</span> of senior SEC enforcement attorneys leave for private sector jobs within 5 years of their hiring date.</p>
+
+                    <h2 class="prose-h2">1. The Revolving Door</h2>
+
+                    <div class="float-figure right">
+                        <div style="height: 250px;"><canvas id="chart_revolving"></canvas></div>
+                        <div class="fig-caption">Fig 1. SEC-to-Private Sector Pipeline <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
+                    </div>
+
+                    <p class="prose-text">The Project on Government Oversight (POGO) documented <span class="living-number" data-target="419" data-suffix="">0</span> instances of SEC employees leaving for jobs at entities they had previously regulated between 2001 and 2021. The pattern is stark: SEC attorneys spend 3-5 years building relationships and expertise, then "cash out" at law firms defending the same Wall Street clients they once prosecuted. Former SEC Chair <strong class="fractal-trigger" onclick="expandContext(this, 'mary_jo_white')">Mary Jo White</strong> returned to her law firm defending major banks within months of leaving. The revolving door spins both ways—industry veterans cycle into regulatory positions, bringing sympathies (and sometimes conflicts) with them.</p>
+
+                    <h2 class="prose-h2">2. The Fine Print: Penalties That Don't Punish</h2>
+
+                    <div class="float-figure left">
+                        <div style="height: 250px;"><canvas id="chart_fines"></canvas></div>
+                        <div class="fig-caption">Fig 2. Wall Street Fines vs. Profits <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
+                    </div>
+
+                    <p class="prose-text">When enforcement does occur, the penalties are often calculated theater. JPMorgan has paid over <span class="living-number" data-target="35" data-suffix="B">$0</span> in fines since 2008—yet its stock price has risen <span class="living-number" data-target="400" data-suffix="%">0</span> over the same period. Fines are treated as a "cost of doing business," factored into risk models alongside legal fees. The SEC settlement process—where firms pay fines without admitting wrongdoing—ensures no precedent is set for future cases. <span class="highlight-glow">No major bank executive went to prison</span> for the 2008 financial crisis that cost the global economy $22 trillion.</p>
+
+                    <h2 class="prose-h2">3. The Systemic Problem</h2>
+                    <p class="prose-text">The revolving door creates what economists call "regulatory forbearance"—agencies go easy on firms that might be future employers. SEC attorneys know that aggressive prosecution can damage their career prospects. The result is a two-tiered justice system: retail investors face swift action for minor violations, while institutional fraud receives settlements and deferred prosecution agreements. Until we address the incentive structure—through cooling-off periods, compensation limits, or lifetime bans—the revolving door will continue spinning.</p>
+                `,
                 chartType: 'regulatory',
-                sources: [{ name: "Project on Government Oversight", score: 97 }]
+                contextData: {
+                    mary_jo_white: {
+                        expanded: "Mary Jo White served as SEC Chair from 2013-2017. Before her appointment, she was a partner at Debevoise & Plimpton, where she defended major Wall Street banks. After leaving the SEC, she returned to the same law firm. Her tenure was criticized for slowing enforcement actions and favoring negotiated settlements over litigation."
+                    }
+                },
+                sources: [
+                    { name: "POGO: SEC Revolving Door Database", score: 99, url: "https://www.pogo.org/database/sec-revolving-door" },
+                    { name: "Reuters: SEC Enforcement Trends", score: 97, url: "https://www.reuters.com/legal/government/sec-enforcement/" },
+                    { name: "Better Markets: Wall Street's War on Regulation", score: 96, url: "https://bettermarkets.org/reports/" },
+                    { name: "NYT: The Revolving Door Investigation", score: 95, url: "https://www.nytimes.com/topic/subject/revolving-door-lobbying" }
+                ]
             },
             'semiconductor_wars': {
                 title: "The Silicon Siege: How Taiwan Holds the World Hostage",
