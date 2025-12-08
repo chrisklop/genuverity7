@@ -4997,8 +4997,8 @@
             }
         }
 
-        // Store for Gemini-generated infographics (chart_id -> image data URL)
-        let geminiInfographics = {};
+        // Store for dynamically-generated Gemini infographics (chart_id -> image data URL)
+        let dynamicGeminiInfographics = {};
 
         // Fetch Gemini-generated infographics for chart configs
         async function fetchGeminiInfographics(chartConfigs, articleTitle) {
