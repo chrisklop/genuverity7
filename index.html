@@ -7426,6 +7426,7 @@
                 let buffer = '';
                 let articleData = null;
                 let lastPartialContent = '';
+                let currentEvent = null;  // MUST be outside while loop!
 
                 while (true) {
                     const { done, value } = await reader.read();
@@ -7435,7 +7436,6 @@
                     const lines = buffer.split('\n');
                     buffer = lines.pop() || '';
 
-                    let currentEvent = null;
                     for (const line of lines) {
                         if (line.startsWith('event: ')) {
                             currentEvent = line.slice(7).trim();
@@ -8401,6 +8401,7 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
                 let buffer = '';
                 let fullResponse = '';
                 let articleContent = null;
+                let currentEvent = null;  // MUST be outside while loop!
 
                 console.log('[Enhance] Starting to read SSE stream...');
 
@@ -8424,7 +8425,6 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
                     const lines = buffer.split('\n');
                     buffer = lines.pop() || '';
 
-                    let currentEvent = null;
                     for (const line of lines) {
                         if (line.startsWith('event: ')) {
                             currentEvent = line.slice(7).trim();
