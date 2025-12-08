@@ -551,6 +551,47 @@ def extract_chartconfigs(text: str) -> dict:
     return charts
 
 
+def sanitize_json_string(text: str) -> str:
+    """Fix common LLM JSON issues before parsing."""
+    # Replace smart quotes with straight quotes
+    text = text.replace('"', '"').replace('"', '"')
+    text = text.replace(''', "'").replace(''', "'")
+
+    # Remove any BOM or zero-width characters
+    text = text.replace('\ufeff', '').replace('\u200b', '')
+
+    # Fix unescaped control characters inside strings (common LLM issue)
+    # This is tricky - we need to escape actual newlines/tabs that aren't already escaped
+    result = []
+    in_string = False
+    i = 0
+    while i < len(text):
+        c = text[i]
+        if c == '"' and (i == 0 or text[i-1] != '\\'):
+            in_string = not in_string
+            result.append(c)
+        elif in_string:
+            # Inside a string, escape control characters
+            if c == '\n':
+                result.append('\\n')
+            elif c == '\r':
+                result.append('\\r')
+            elif c == '\t':
+                result.append('\\t')
+            else:
+                result.append(c)
+        else:
+            result.append(c)
+        i += 1
+
+    text = ''.join(result)
+
+    # Remove trailing commas before } or ] (common LLM error)
+    text = re.sub(r',(\s*[}\]])', r'\1', text)
+
+    return text
+
+
 def repair_truncated_json(text: str) -> Optional[dict]:
     """Attempt to repair truncated JSON from timeout responses."""
     if not text or not text.strip():
@@ -567,11 +608,14 @@ def repair_truncated_json(text: str) -> Optional[dict]:
         text = text[:-3]
     text = text.strip()
 
+    # Sanitize common LLM JSON issues
+    text = sanitize_json_string(text)
+
     # Try parsing as-is first
     try:
         return json.loads(text)
-    except:
-        pass
+    except json.JSONDecodeError as e:
+        print(f"Initial JSON parse failed at position {e.pos}: {e.msg}")
 
     # Count unclosed braces/brackets and try to close them
     open_braces = text.count('{') - text.count('}')
@@ -765,11 +809,11 @@ async def generate_report(request: GenerateRequest, req: Request):
                         stages["sources"] = True
                         yield send_sse("progress", {"stage": "sources", "percent": 90, "message": "Verifying sources..."})
 
-            # Stage: Complete
-            yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Investigation complete!"})
+            # Parse the article BEFORE sending "complete"
+            yield send_sse("progress", {"stage": "parsing", "percent": 95, "message": "Parsing response..."})
 
-            # Parse and cache the article for persistence
             parsed_data = None
+            parse_error = None
             try:
                 parsed_data = repair_truncated_json(full_text)
                 if parsed_data:
@@ -784,17 +828,24 @@ async def generate_report(request: GenerateRequest, req: Request):
                     parsed_data.setdefault("sources", [])
 
                     # Cache to Blob storage for persistence
-                    cache_article(request.topic, parsed_data)
-                    print(f"Article cached from /api/generate: {request.topic}")
-            except Exception as cache_err:
-                print(f"Cache error (non-fatal): {cache_err}")
+                    try:
+                        cache_article(request.topic, parsed_data)
+                        print(f"Article cached from /api/generate: {request.topic}")
+                    except Exception as cache_err:
+                        print(f"Cache error (non-fatal): {cache_err}")
+            except Exception as parse_err:
+                parse_error = str(parse_err)
+                print(f"Parse error: {parse_err}")
 
-            # Send the parsed data as a proper object (not double-encoded string)
-            # If parsing succeeded, send the clean object; otherwise fall back to raw text
+            # Only send "complete" if parsing succeeded
             if parsed_data:
+                yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Investigation complete!"})
                 yield f"event: content\ndata: {json.dumps(parsed_data)}\n\n"
             else:
-                # Fallback: send raw text (frontend will try to parse it)
+                # Parsing failed - try to send raw text as fallback
+                print(f"JSON parsing failed, sending raw text ({len(full_text)} chars)")
+                yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Finalizing (partial)..."})
+                # Send raw text - frontend will try to parse it
                 yield send_sse("content", full_text)
 
             # Signal done
