@@ -765,6 +765,219 @@
             100% { transform: scale(1); }
         }
 
+        /* Inline Enhancement Progress Widget */
+        .enhance-progress-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 320px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(99, 102, 241, 0.15));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.2), 0 0 0 1px rgba(255,255,255,0.05) inset;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .enhance-progress-widget.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .enhance-progress-widget.complete {
+            border-color: rgba(16, 185, 129, 0.5);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.15));
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.25), 0 0 0 1px rgba(255,255,255,0.05) inset;
+        }
+
+        .enhance-widget-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .enhance-widget-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .enhance-progress-widget.complete .enhance-widget-icon {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .enhance-widget-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .enhance-widget-icon.spinning svg {
+            animation: spin 1.5s linear infinite;
+        }
+
+        .enhance-widget-title {
+            flex: 1;
+        }
+
+        .enhance-widget-title h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 0 0 2px 0;
+        }
+
+        .enhance-widget-title span {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .enhance-widget-progress {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .enhance-widget-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa, #8b5cf6);
+            background-size: 200% 100%;
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.3s ease-out;
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        .enhance-progress-widget.complete .enhance-widget-progress-bar {
+            background: linear-gradient(90deg, #10b981, #34d399, #10b981);
+            width: 100% !important;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .enhance-widget-status {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .enhance-widget-status .status-dot {
+            width: 6px;
+            height: 6px;
+            background: #8b5cf6;
+            border-radius: 50%;
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+
+        .enhance-progress-widget.complete .enhance-widget-status .status-dot {
+            background: #10b981;
+            animation: none;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .enhance-widget-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: all 0.3s ease;
+        }
+
+        .enhance-progress-widget.complete .enhance-widget-actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .enhance-widget-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .enhance-widget-btn.primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .enhance-widget-btn.primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .enhance-widget-btn.secondary {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-main);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .enhance-widget-btn.secondary:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* Confetti animation for completion */
+        .enhance-confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            animation: confetti-fall 1s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-20px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(60px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-10px) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            20% {
+                transform: translateY(0) rotate(90deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(80px) rotate(720deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
         /* --- VIEW MANAGEMENT --- */
         .view-section {
             display: none;
@@ -2526,6 +2739,35 @@
         <button onclick="cancelDeepDive()" class="action-btn" style="margin-top: 1rem; opacity: 0.7;">
             <i data-lucide="x" class="w-4 h-4"></i> Cancel
         </button>
+    </div>
+
+    <!-- INLINE ENHANCEMENT PROGRESS WIDGET -->
+    <div id="enhance-progress-widget" class="enhance-progress-widget">
+        <div class="enhance-widget-header">
+            <div class="enhance-widget-icon spinning" id="enhance-widget-icon">
+                <i data-lucide="sparkles"></i>
+            </div>
+            <div class="enhance-widget-title">
+                <h4 id="enhance-widget-title">Enhancing Article</h4>
+                <span id="enhance-widget-percent">0%</span>
+            </div>
+        </div>
+        <div class="enhance-widget-progress">
+            <div class="enhance-widget-progress-bar" id="enhance-widget-bar"></div>
+        </div>
+        <div class="enhance-widget-status">
+            <span class="status-dot"></span>
+            <span id="enhance-widget-status">Preparing enhancement...</span>
+        </div>
+        <div class="enhance-widget-actions">
+            <button class="enhance-widget-btn primary" onclick="applyEnhancement()">
+                <i data-lucide="check" class="w-4 h-4 inline mr-1"></i>
+                Apply Enhancement
+            </button>
+            <button class="enhance-widget-btn secondary" onclick="dismissEnhancement()">
+                Dismiss
+            </button>
+        </div>
     </div>
 
     <!-- BOOKMARKS SIDEBAR -->
@@ -5255,6 +5497,14 @@
                 }
             });
 
+            // Global click handler to hide fractal tooltip when clicking anywhere
+            document.addEventListener('click', (e) => {
+                // Hide fractal tooltip unless clicking on the fractal-trigger itself
+                if (!e.target.classList.contains('fractal-trigger') && !e.target.closest('.fractal-tooltip')) {
+                    fractalTooltip.classList.remove('visible');
+                }
+            });
+
             // Init Living Numbers Observer
             initLivingNumbers();
         }
@@ -5591,22 +5841,32 @@
                 }
 
                 // Parse the article content (use repair function for robustness)
-                let cleanText = articleContent.trim();
-                if (cleanText.startsWith('```json')) cleanText = cleanText.slice(7);
-                if (cleanText.startsWith('```')) cleanText = cleanText.slice(3);
-                if (cleanText.endsWith('```')) cleanText = cleanText.slice(0, -3);
-                cleanText = cleanText.trim();
-
-                // Try direct parse first, fall back to repair function
+                // Content may already be an object (if backend parsed successfully) or a string (fallback)
                 let data;
-                try {
-                    data = JSON.parse(cleanText);
-                } catch (parseErr) {
-                    console.log('Direct JSON parse failed, attempting repair:', parseErr.message);
-                    data = repairTruncatedJSON(cleanText);
-                    if (!data) {
-                        throw new Error('Failed to parse response. The article may have been truncated due to timeout.');
+                if (typeof articleContent === 'object' && articleContent !== null) {
+                    // Backend already parsed it for us
+                    data = articleContent;
+                    console.log('[Generate] Received pre-parsed article object');
+                } else if (typeof articleContent === 'string') {
+                    // Need to parse the string
+                    let cleanText = articleContent.trim();
+                    if (cleanText.startsWith('```json')) cleanText = cleanText.slice(7);
+                    if (cleanText.startsWith('```')) cleanText = cleanText.slice(3);
+                    if (cleanText.endsWith('```')) cleanText = cleanText.slice(0, -3);
+                    cleanText = cleanText.trim();
+
+                    // Try direct parse first, fall back to repair function
+                    try {
+                        data = JSON.parse(cleanText);
+                    } catch (parseErr) {
+                        console.log('Direct JSON parse failed, attempting repair:', parseErr.message);
+                        data = repairTruncatedJSON(cleanText);
+                        if (!data) {
+                            throw new Error('Failed to parse response. The article may have been truncated due to timeout.');
+                        }
                     }
+                } else {
+                    throw new Error('No valid article content received');
                 }
 
                 // API returns the report directly with key, title, content, etc.
@@ -5653,6 +5913,8 @@
         // === DARK/LIGHT THEME SYSTEM ===
         let currentArticleKey = 'congress_trading';
         let currentEnhanceCount = 0; // Track how many times the current article has been enhanced
+        let pendingEnhancedReport = null; // Store the enhanced report until user clicks "Apply"
+        let isEnhancing = false; // Track if enhancement is in progress
 
         // Update the enhance count badge
         function updateEnhanceCountBadge(count) {
@@ -6125,6 +6387,15 @@
         }
 
         async function generateDeepDive(topic, context = '', parentKey = '', parentTitle = '') {
+            // IMMEDIATELY hide any floating tooltips
+            const fractalTooltip = document.querySelector('.fractal-tooltip');
+            if (fractalTooltip) {
+                fractalTooltip.classList.remove('visible');
+            }
+            if (deepDiveTooltipEl) {
+                deepDiveTooltipEl.classList.remove('visible');
+            }
+
             // Reset enhance count for new article
             resetEnhanceCount();
 
@@ -6462,6 +6733,12 @@
 
         // Hook fractal triggers to generate deep dives
         async function expandContext(element, key) {
+            // IMMEDIATELY hide the fractal tooltip when clicking a trigger
+            const fractalTooltip = document.querySelector('.fractal-tooltip');
+            if (fractalTooltip) {
+                fractalTooltip.classList.remove('visible');
+            }
+
             // Check for existing context data
             const contextData = window.dynamicContextData || {};
 
@@ -6527,6 +6804,12 @@
 
         // Prompt user before generating (shows if free or costs token)
         function promptDeepDive(topic) {
+            // Hide any floating tooltips
+            const fractalTooltip = document.querySelector('.fractal-tooltip');
+            if (fractalTooltip) {
+                fractalTooltip.classList.remove('visible');
+            }
+
             const isFree = userRemainingDives > 0;
             const message = isFree
                 ? `Generate a deep-dive article on "${topic}"?\n\nYou have ${userRemainingDives} remaining free today.`
@@ -6721,18 +7004,182 @@
             localStorage.setItem('genuverity-bookmarks', JSON.stringify(bookmarks));
         }
 
+        // --- INLINE ENHANCEMENT WIDGET FUNCTIONS ---
+        function showEnhanceWidget() {
+            console.log('[EnhanceWidget] Showing widget...');
+            const widget = document.getElementById('enhance-progress-widget');
+            if (widget) {
+                widget.classList.add('visible');
+                widget.classList.remove('complete');
+                // Reset state
+                const bar = document.getElementById('enhance-widget-bar');
+                const percent = document.getElementById('enhance-widget-percent');
+                const status = document.getElementById('enhance-widget-status');
+                const title = document.getElementById('enhance-widget-title');
+                const icon = document.getElementById('enhance-widget-icon');
+
+                if (bar) bar.style.width = '0%';
+                if (percent) percent.textContent = '0%';
+                if (status) status.textContent = 'Preparing enhancement...';
+                if (title) title.textContent = 'Enhancing Article';
+                if (icon) {
+                    icon.classList.add('spinning');
+                    icon.classList.remove('complete');
+                    icon.innerHTML = '<i data-lucide="sparkles"></i>';
+                }
+                lucide.createIcons();
+                console.log('[EnhanceWidget] Widget is now visible');
+            } else {
+                console.error('[EnhanceWidget] Widget element not found!');
+            }
+        }
+
+        function updateEnhanceWidget(percent, message) {
+            console.log('[EnhanceWidget] Update:', percent + '%', message);
+            const bar = document.getElementById('enhance-widget-bar');
+            const percentEl = document.getElementById('enhance-widget-percent');
+            const statusEl = document.getElementById('enhance-widget-status');
+
+            if (bar) bar.style.width = `${percent}%`;
+            if (percentEl) percentEl.textContent = `${percent}%`;
+            if (statusEl) statusEl.textContent = message;
+        }
+
+        function showEnhanceWidgetComplete() {
+            const widget = document.getElementById('enhance-progress-widget');
+            const icon = document.getElementById('enhance-widget-icon');
+            const title = document.getElementById('enhance-widget-title');
+            const statusEl = document.getElementById('enhance-widget-status');
+
+            if (widget) {
+                widget.classList.add('complete');
+                // Create confetti burst
+                createEnhanceConfetti();
+            }
+            if (icon) {
+                icon.classList.remove('spinning');
+                icon.classList.add('complete');
+                icon.innerHTML = '<i data-lucide="check-circle" class="w-6 h-6"></i>';
+            }
+            if (title) title.textContent = 'Enhancement Ready!';
+            if (statusEl) statusEl.textContent = 'Click below to apply the enhanced version';
+
+            lucide.createIcons();
+        }
+
+        function createEnhanceConfetti() {
+            const widget = document.getElementById('enhance-progress-widget');
+            if (!widget) return;
+
+            const colors = ['#10b981', '#3b82f6', '#8b5cf6', '#f59e0b', '#ec4899'];
+            const confettiContainer = document.createElement('div');
+            confettiContainer.className = 'enhance-confetti-container';
+            confettiContainer.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;border-radius:inherit;';
+
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.cssText = `
+                    position: absolute;
+                    width: ${Math.random() * 8 + 4}px;
+                    height: ${Math.random() * 8 + 4}px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    left: ${Math.random() * 100}%;
+                    top: 50%;
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+                    animation: confettiFall ${Math.random() * 1.5 + 1}s ease-out forwards;
+                    opacity: 0;
+                `;
+                confettiContainer.appendChild(confetti);
+            }
+
+            widget.appendChild(confettiContainer);
+
+            // Clean up confetti after animation
+            setTimeout(() => confettiContainer.remove(), 3000);
+        }
+
+        function hideEnhanceWidget() {
+            const widget = document.getElementById('enhance-progress-widget');
+            if (widget) {
+                widget.classList.remove('visible', 'complete');
+            }
+        }
+
+        function applyEnhancement() {
+            if (!pendingEnhancedReport) {
+                showNotification('No enhancement available to apply.', 'error');
+                return;
+            }
+
+            // Render the enhanced article
+            currentReport = pendingEnhancedReport;
+            renderReportData(pendingEnhancedReport, true);
+
+            // Increment and update enhance count badge
+            currentEnhanceCount++;
+            updateEnhanceCountBadge(currentEnhanceCount);
+
+            // Clear pending and hide widget
+            pendingEnhancedReport = null;
+            isEnhancing = false;
+            hideEnhanceWidget();
+
+            // Reset button state
+            const btn = document.getElementById('enhance-btn');
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = '<i data-lucide="sparkles" class="w-4 h-4"></i><span class="hidden sm:inline">Enhance</span>';
+                lucide.createIcons();
+            }
+
+            // Scroll to top of article
+            document.getElementById('report-body').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Show success notification
+            showNotification(`Article enhanced successfully! (${currentEnhanceCount}x)`, 'success');
+        }
+
+        function dismissEnhancement() {
+            pendingEnhancedReport = null;
+            isEnhancing = false;
+            hideEnhanceWidget();
+
+            // Reset button state
+            const btn = document.getElementById('enhance-btn');
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = '<i data-lucide="sparkles" class="w-4 h-4"></i><span class="hidden sm:inline">Enhance</span>';
+                lucide.createIcons();
+            }
+
+            showNotification('Enhancement dismissed.', 'info');
+        }
+
         // --- ENHANCE ARTICLE ---
         async function enhanceArticle() {
+            console.log('[Enhance] ========== enhanceArticle CALLED ==========');
+            console.log('[Enhance] Time:', new Date().toISOString());
+
+            // DEBUG: Make absolutely sure we're in the right function
+            const debugBanner = document.createElement('div');
+            debugBanner.id = 'enhance-debug-banner';
+            debugBanner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:purple;color:white;padding:10px;text-align:center;z-index:99999;font-size:16px;font-weight:bold;';
+            debugBanner.textContent = 'ENHANCE STARTED - Using inline widget (not deep-dive loader)';
+            document.body.appendChild(debugBanner);
+            setTimeout(() => debugBanner.remove(), 5000);
+
+            // Prevent multiple enhancements at once
+            if (isEnhancing) {
+                showNotification('Enhancement already in progress. Please wait.', 'info');
+                return;
+            }
+
             const title = document.getElementById('report-title').innerText;
             const currentContent = document.getElementById('report-body').innerHTML;
             const btn = document.getElementById('enhance-btn');
 
-            // Confirm with user
-            const confirmed = confirm(
-                `Enhance "${title}"?\n\nThis will expand the article with additional sections, deeper analysis, and more comprehensive coverage while maintaining the same journalistic style.\n\nThis may take a minute to generate.`
-            );
-
-            if (!confirmed) return;
+            console.log('[Enhance] Title:', title);
+            console.log('[Enhance] Content length:', currentContent?.length);
 
             // Disable button and show loading state
             if (btn) {
@@ -6741,35 +7188,41 @@
                 lucide.createIcons();
             }
 
+            isEnhancing = true;
+            pendingEnhancedReport = null;
+
+            // Show the inline enhancement widget
+            showEnhanceWidget();
+
             try {
-                // Show loader (use deep-dive-loader since generate-loader doesn't exist)
-                const loader = document.getElementById('deep-dive-loader');
-                const loaderTitle = document.getElementById('loader-title');
-                if (loader) {
-                    if (loaderTitle) loaderTitle.textContent = `Enhancing: ${title}`;
-                    loader.classList.add('visible');
+                // Extract key content from the article (strip HTML, limit length)
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = currentContent;
+
+                // Get section headers
+                const headers = Array.from(tempDiv.querySelectorAll('h2')).map(h => h.textContent).join(', ');
+
+                // Get plain text, limited to ~3000 chars for API efficiency
+                let plainText = tempDiv.textContent.replace(/\s+/g, ' ').trim();
+                if (plainText.length > 3000) {
+                    plainText = plainText.substring(0, 3000) + '... [content truncated for processing]';
                 }
-                startStatusAnimation();
 
-                // Build enhancement prompt with article context
-                const enhancePrompt = `ENHANCE AND EXPAND the following investigative article.
+                // Build a more compact enhancement prompt
+                const enhancePrompt = `ENHANCE this investigative article titled: "${title}"
 
-ORIGINAL TITLE: ${title}
+EXISTING SECTIONS: ${headers}
 
-INSTRUCTIONS:
-- Keep the same title, thesis, and core arguments
-- Add 2-3 NEW substantial sections with deeper analysis
-- Expand existing sections with more data points, examples, and expert perspectives
-- Add more living numbers with verified statistics
-- Include additional citation spades for new claims
-- Add fractal triggers for key terms that deserve expanded context
-- Maintain the same journalistic tone and magazine-style formatting
-- Total output should be roughly 2x the original length
+ARTICLE SUMMARY (first 3000 chars):
+${plainText}
 
-The enhanced article should feel like the "premium" or "full" version of the original piece.
-
-ORIGINAL CONTENT FOR CONTEXT (HTML):
-${currentContent}`;
+GENERATE an ENHANCED version with:
+- Same title and thesis
+- 2-3 NEW sections with deeper analysis
+- More living numbers with data-target and data-suffix attributes
+- More citation spades and fractal triggers
+- Magazine-style HTML formatting
+- Roughly 2x the original length`;
 
                 const response = await fetch('/api/generate', {
                     method: 'POST',
@@ -6786,7 +7239,7 @@ ${currentContent}`;
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder();
                 let buffer = '';
-                let fullResponse = '';  // Keep full raw response as fallback
+                let fullResponse = '';
                 let articleContent = null;
 
                 console.log('[Enhance] Starting to read SSE stream...');
@@ -6796,7 +7249,7 @@ ${currentContent}`;
                     if (done) break;
 
                     const chunk = decoder.decode(value, { stream: true });
-                    fullResponse += chunk;  // Accumulate full response
+                    fullResponse += chunk;
                     buffer += chunk;
                     const lines = buffer.split('\n');
                     buffer = lines.pop() || '';
@@ -6807,58 +7260,101 @@ ${currentContent}`;
                             currentEvent = line.slice(7).trim();
                         } else if (line.startsWith('data: ') && currentEvent) {
                             try {
-                                const data = JSON.parse(line.slice(6));
+                                const rawData = line.slice(6);
+                                const data = JSON.parse(rawData);
                                 if (currentEvent === 'progress') {
-                                    updateProgress(data.stage, data.percent, data.message);
+                                    // Update the inline widget instead of the full-screen loader
+                                    updateEnhanceWidget(data.percent, data.message);
                                 } else if (currentEvent === 'content') {
-                                    console.log('[Enhance] Received content event');
+                                    console.log('[Enhance] Received content event, keys:', data ? Object.keys(data) : 'null');
                                     articleContent = data;
                                 } else if (currentEvent === 'error') {
                                     console.error('[Enhance] Server error:', data);
                                     throw new Error(data);
                                 }
                             } catch (e) {
-                                console.log('[Enhance] Parse error for line:', line.substring(0, 100));
+                                console.log('[Enhance] Parse error for line (length=' + line.length + '):', line.substring(0, 200));
+                                // For content events, try to extract from fullResponse later
                             }
                             currentEvent = null;
                         }
                     }
                 }
 
-                console.log('[Enhance] Stream complete. articleContent:', articleContent ? 'received' : 'null');
+                console.log('[Enhance] ========== STREAM COMPLETE ==========');
+                console.log('[Enhance] articleContent:', articleContent ? 'RECEIVED' : 'NULL');
+                console.log('[Enhance] articleContent type:', typeof articleContent);
+                console.log('[Enhance] Full response length:', fullResponse.length);
+                console.log('[Enhance] Full response first 500 chars:', fullResponse.substring(0, 500));
 
-                // Hide loader
-                stopStatusAnimation();
-                document.getElementById('deep-dive-loader').classList.remove('visible');
+                // Update debug banner
+                const banner = document.getElementById('enhance-debug-banner');
+                if (banner) {
+                    banner.textContent = `Stream done: content=${articleContent ? 'YES' : 'NO'}, response=${fullResponse.length} chars`;
+                    banner.style.background = articleContent ? 'green' : 'red';
+                }
 
                 // Try to get article content from SSE or fallback to raw response
                 let parsed = null;
 
                 if (articleContent) {
-                    // Parse the enhanced article from SSE content event
                     parsed = typeof articleContent === 'string' ? JSON.parse(articleContent) : articleContent;
+                    console.log('[Enhance] Using SSE articleContent directly');
                 } else if (fullResponse) {
-                    // Fallback: try to parse raw response (in case SSE parsing failed)
-                    console.log('[Enhance] No SSE content, trying to parse raw response...');
-                    try {
-                        // Try direct JSON parse
-                        parsed = JSON.parse(fullResponse);
-                    } catch (e) {
-                        // Try to extract JSON from SSE format
-                        const contentMatch = fullResponse.match(/data:\s*(\{[\s\S]*\})/);
-                        if (contentMatch) {
+                    console.log('[Enhance] No SSE content, trying to extract from raw response...');
+
+                    // Look for the content event in the SSE stream
+                    const contentEventMatch = fullResponse.match(/event:\s*content\s*\ndata:\s*(\{[\s\S]*?)(?=\n\nevent:|$)/);
+                    if (contentEventMatch) {
+                        try {
+                            parsed = JSON.parse(contentEventMatch[1]);
+                            console.log('[Enhance] Extracted content from SSE event match');
+                        } catch (e) {
+                            console.log('[Enhance] Failed to parse content event match, trying repair...');
+                            parsed = repairTruncatedJSON(contentEventMatch[1]);
+                        }
+                    }
+
+                    // Fallback: try to find any JSON object in the response
+                    if (!parsed) {
+                        const jsonMatch = fullResponse.match(/data:\s*(\{"key"[\s\S]*?"content"[\s\S]*?\})\s*$/);
+                        if (jsonMatch) {
                             try {
-                                parsed = JSON.parse(contentMatch[1]);
+                                parsed = JSON.parse(jsonMatch[1]);
+                                console.log('[Enhance] Extracted from JSON pattern match');
                             } catch (e2) {
-                                console.error('[Enhance] Failed to parse extracted content:', e2);
+                                console.log('[Enhance] Pattern match failed, using repairTruncatedJSON');
+                                parsed = repairTruncatedJSON(jsonMatch[1]);
                             }
                         }
                     }
+
+                    // Last resort: try repairTruncatedJSON on the whole response
+                    if (!parsed) {
+                        console.log('[Enhance] Last resort: trying repairTruncatedJSON on fullResponse');
+                        parsed = repairTruncatedJSON(fullResponse);
+                    }
+                }
+
+                console.log('[Enhance] ========== PARSE RESULT ==========');
+                console.log('[Enhance] Parsed:', parsed ? 'SUCCESS' : 'FAILED');
+                console.log('[Enhance] Parsed keys:', parsed ? Object.keys(parsed) : 'null');
+                if (parsed) {
+                    console.log('[Enhance] Has content:', !!parsed.content, 'Has body:', !!parsed.body);
+                    console.log('[Enhance] Content length:', parsed.content?.length || parsed.body?.length || 0);
+                }
+
+                // Visual debug
+                const banner2 = document.getElementById('enhance-debug-banner');
+                if (banner2) {
+                    const hasContent = parsed && (parsed.content || parsed.body);
+                    banner2.textContent = `Parse: ${parsed ? 'OK' : 'FAIL'}, Content: ${hasContent ? 'YES' : 'NO'}`;
+                    banner2.style.background = hasContent ? 'green' : 'orange';
                 }
 
                 if (parsed && (parsed.content || parsed.body)) {
-                    // Update the current report
-                    const enhancedReport = {
+                    // Store the enhanced report for user to apply
+                    pendingEnhancedReport = {
                         title: parsed.title || title,
                         content: parsed.content || parsed.body,
                         sources: parsed.sources || [],
@@ -6867,28 +7363,33 @@ ${currentContent}`;
                         chartType: 'dynamic'
                     };
 
-                    // Render the enhanced article
-                    currentReport = enhancedReport;
-                    renderReportData(enhancedReport, true);
-
-                    // Increment and update enhance count badge
-                    currentEnhanceCount++;
-                    updateEnhanceCountBadge(currentEnhanceCount);
-
-                    // Show success notification
-                    showNotification(`Article enhanced successfully! (${currentEnhanceCount}x)`, 'success');
+                    // Show completion state with confetti
+                    updateEnhanceWidget(100, 'Enhancement complete!');
+                    showEnhanceWidgetComplete();
                 } else {
                     console.error('[Enhance] No valid article content received');
-                    console.log('[Enhance] Raw response preview:', fullResponse.substring(0, 500));
-                    showNotification('Enhancement failed - no valid content received.', 'error');
+                    console.log('[Enhance] Parsed keys:', parsed ? Object.keys(parsed) : 'null');
+                    console.log('[Enhance] Raw response first 1000 chars:', fullResponse.substring(0, 1000));
+                    console.log('[Enhance] Raw response last 500 chars:', fullResponse.substring(fullResponse.length - 500));
+                    hideEnhanceWidget();
+                    isEnhancing = false;
+                    const errorDetails = parsed ? `Got keys: ${Object.keys(parsed).join(', ')}` : 'Parse failed completely';
+                    showNotification(`Enhancement failed - ${errorDetails}`, 'error');
+
+                    // Reset button state
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i data-lucide="sparkles" class="w-4 h-4"></i><span class="hidden sm:inline">Enhance</span>';
+                        lucide.createIcons();
+                    }
                 }
 
             } catch (error) {
                 console.error('Enhancement failed:', error);
-                stopStatusAnimation();
-                document.getElementById('deep-dive-loader').classList.remove('visible');
+                hideEnhanceWidget();
+                isEnhancing = false;
                 showNotification('Enhancement failed. Please try again.', 'error');
-            } finally {
+
                 // Reset button state
                 if (btn) {
                     btn.disabled = false;
@@ -6901,9 +7402,11 @@ ${currentContent}`;
         // Simple notification helper
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
-            notification.className = `fixed bottom-4 right-4 px-4 py-3 rounded-lg shadow-lg z-50 animate-fade-in`;
+            notification.className = `fixed bottom-20 right-4 px-4 py-3 rounded-lg shadow-lg animate-fade-in`;
             notification.style.background = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6';
             notification.style.color = 'white';
+            notification.style.zIndex = '9999';
+            notification.style.maxWidth = '400px';
             notification.innerHTML = message;
             document.body.appendChild(notification);
 
@@ -6911,7 +7414,7 @@ ${currentContent}`;
                 notification.style.opacity = '0';
                 notification.style.transition = 'opacity 0.3s ease';
                 setTimeout(() => notification.remove(), 300);
-            }, 3000);
+            }, 4000);
         }
 
         function toggleBookmark() {
