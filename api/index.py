@@ -837,16 +837,53 @@ async def generate_report(request: GenerateRequest, req: Request):
                 parse_error = str(parse_err)
                 print(f"Parse error: {parse_err}")
 
-            # Only send "complete" if parsing succeeded
+            # Always send a valid JSON object - NEVER send raw text
             if parsed_data:
                 yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Investigation complete!"})
                 yield f"event: content\ndata: {json.dumps(parsed_data)}\n\n"
             else:
-                # Parsing failed - try to send raw text as fallback
-                print(f"JSON parsing failed, sending raw text ({len(full_text)} chars)")
-                yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Finalizing (partial)..."})
-                # Send raw text - frontend will try to parse it
-                yield send_sse("content", full_text)
+                # Parsing failed - construct emergency fallback object
+                print(f"JSON parsing failed for {len(full_text)} chars, constructing fallback")
+                # Log first 500 chars of response for debugging
+                print(f"Response preview: {full_text[:500] if full_text else 'EMPTY'}...")
+
+                # Try to extract ANY useful content with aggressive regex
+                fallback_data = {
+                    "key": topic_slug,
+                    "title": request.topic[:100],
+                    "cardTitle": request.topic[:50],
+                    "cardTag": "INVESTIGATION",
+                    "cardDescription": "Article generated with parsing issues",
+                    "chartConfigs": extract_chartconfigs(full_text) if full_text else {},
+                    "contextData": {},
+                    "citationDatabase": {},
+                    "sources": [],
+                    "chartType": "dynamic",
+                    "_partial": True,
+                    "_parseError": True
+                }
+
+                # Try to extract content - look for HTML or just use raw text
+                if full_text:
+                    # Look for content field
+                    content_match = re.search(r'"content"\s*:\s*"(.*?)(?:"\s*[,}]|$)', full_text, re.DOTALL)
+                    if content_match:
+                        content = content_match.group(1).replace('\\"', '"').replace('\\n', '\n')
+                        fallback_data["content"] = content
+                    else:
+                        # Just wrap raw text as content
+                        # Strip markdown fences and JSON artifacts
+                        display_text = full_text
+                        if display_text.startswith("```"): display_text = display_text.split("\n", 1)[-1]
+                        if display_text.endswith("```"): display_text = display_text[:-3]
+                        # Remove obvious JSON structure but keep text
+                        display_text = re.sub(r'^[\s\S]*?"content"\s*:\s*"', '', display_text)
+                        fallback_data["content"] = f'<p class="prose-text">{display_text[:5000]}</p>'
+                else:
+                    fallback_data["content"] = '<p class="prose-text">Failed to generate article content. Please try again.</p>'
+
+                yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Finalizing..."})
+                yield f"event: content\ndata: {json.dumps(fallback_data)}\n\n"
 
             # Signal done
             yield send_sse("done", "ok")
@@ -855,12 +892,29 @@ async def generate_report(request: GenerateRequest, req: Request):
             print(f"Streaming Error: {e}")
             import traceback
             traceback.print_exc()
-            # Try to send partial content if we have any
+
+            # Always try to return SOMETHING useful
+            error_fallback = {
+                "key": topic_slug,
+                "title": f"Error: {request.topic[:80]}",
+                "cardTitle": request.topic[:50],
+                "cardTag": "ERROR",
+                "cardDescription": str(e)[:100],
+                "chartConfigs": {},
+                "contextData": {},
+                "citationDatabase": {},
+                "sources": [],
+                "chartType": "dynamic",
+                "_error": str(e),
+                "content": f'<p class="prose-text"><strong>Generation Error:</strong> {str(e)}</p>'
+            }
+
+            # Try to salvage any content we got
             if full_text and len(full_text) > 100:
                 print(f"Attempting to salvage partial content ({len(full_text)} chars)")
                 try:
                     partial_data = repair_truncated_json(full_text)
-                    if partial_data and partial_data.get("content"):
+                    if partial_data:
                         partial_data["_partial"] = True
                         partial_data["_error"] = str(e)
                         yield f"event: content\ndata: {json.dumps(partial_data)}\n\n"
@@ -868,7 +922,15 @@ async def generate_report(request: GenerateRequest, req: Request):
                         return
                 except Exception as salvage_err:
                     print(f"Salvage failed: {salvage_err}")
-            yield send_sse("error", str(e))
+
+                # Even if salvage failed, try to extract content
+                content_match = re.search(r'"content"\s*:\s*"(.*?)(?:"\s*[,}]|$)', full_text, re.DOTALL)
+                if content_match:
+                    error_fallback["content"] = content_match.group(1).replace('\\"', '"').replace('\\n', '\n')
+                    error_fallback["chartConfigs"] = extract_chartconfigs(full_text)
+
+            yield f"event: content\ndata: {json.dumps(error_fallback)}\n\n"
+            yield send_sse("done", "error")
 
     return StreamingResponse(
         stream_response(),
