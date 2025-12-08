@@ -2572,13 +2572,16 @@
 
         .loader-text {
             font-family: 'Inter', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.25rem;
+            font-weight: 600;
             color: #e2e2e5;
             text-align: center;
-            max-width: 600px;
+            max-width: 90vw;
+            width: 600px;
             padding: 0 1rem;
-            line-height: 1.4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .loader-subtext {
@@ -6728,7 +6731,9 @@
             const loader = document.getElementById('deep-dive-loader');
             if (loader) {
                 loader.style.display = 'flex';
-                document.getElementById('loader-title').textContent = `Investigating: ${topic}`;
+                // Truncate long topics for display
+                const displayTopic = topic.length > 60 ? topic.substring(0, 57) + '...' : topic;
+                document.getElementById('loader-title').textContent = displayTopic;
                 resetProgressUI();
             }
 
@@ -7350,8 +7355,9 @@
             const contextPreview = document.getElementById('loader-context-preview');
             const contextText = document.getElementById('loader-context-text');
 
-            // Show loading screen
-            loaderTitle.textContent = `Investigating: ${topic}`;
+            // Show loading screen - truncate long topics
+            const displayTopic = topic.length > 60 ? topic.substring(0, 57) + '...' : topic;
+            loaderTitle.textContent = displayTopic;
 
             // Show context preview if context is provided
             if (context && context.trim()) {
