@@ -4367,7 +4367,7 @@
                     <p class="prose-text">In August 2024, Intel announced plans to cut <span class="living-number" data-target="15" data-suffix=",000">0</span> jobs—more than 15% of its workforce <span class="citation-spade" data-id="layoffs">♠</span>. The cuts spanned engineering, sales, and manufacturing. Oregon communities that had depended on Intel for generations faced economic devastation <span class="citation-spade" data-id="oregon_impact">♠</span>. Former employees described a culture of denial, where bad news was suppressed and problems blamed on individuals rather than systemic failures <span class="citation-spade" data-id="culture">♠</span>. "We knew we were falling behind," one engineer told Bloomberg. "But anyone who said it out loud got pushed out."</p>
 
                     <h2 class="prose-h2">5. The 18A Last Stand</h2>
-                    <p class="prose-text"><strong class="fractal-trigger" onclick="expandContext(this, 'intel_18a')">Intel 18A</strong> is the company's final chance at redemption. The node—roughly equivalent to TSMC's 2nm—features RibbonFET transistors and PowerVia backside power delivery <span class="citation-spade" data-id="18a_tech">♠</span>. If 18A succeeds, Intel could finally catch TSMC. If it fails, the company may have no choice but to <span class="highlight-glow">split in two</span>—separating design from manufacturing, just as AMD did in 2008. Analysts at Raymond James put the probability of an Intel breakup at <span class="living-number" data-target="40" data-suffix="%">0</span> <span class="citation-spade" data-id="breakup_odds">♠</span>. Others suggest acquisition by private equity or even a government takeover as a "national champion."</p>
+                    <p class="prose-text"><strong class="fractal-trigger" onclick="expandContext(this, 'intel_18a')">Intel 18A</strong> is the company's final chance at redemption. The node—roughly equivalent to TSMC's 2nm—features RibbonFET transistors and PowerVia backside power delivery <span class="citation-spade" data-id="tech_18a">♠</span>. If 18A succeeds, Intel could finally catch TSMC. If it fails, the company may have no choice but to <span class="highlight-glow">split in two</span>—separating design from manufacturing, just as AMD did in 2008. Analysts at Raymond James put the probability of an Intel breakup at <span class="living-number" data-target="40" data-suffix="%">0</span> <span class="citation-spade" data-id="breakup_odds">♠</span>. Others suggest acquisition by private equity or even a government takeover as a "national champion."</p>
 
                     <h2 class="prose-h2">6. What Comes Next</h2>
                     <p class="prose-text">Gelsinger's December 2024 departure leaves Intel rudderless at the worst possible moment <span class="citation-spade" data-id="gelsinger_exit">♠</span>. Interim co-CEOs CFO David Zinsner and product chief Michelle Holthaus have no manufacturing experience. The board is reportedly divided between those who want to stay the course on IDM 2.0 and those pushing for a radical breakup <span class="citation-spade" data-id="board_divide">♠</span>. Meanwhile, TSMC marches ahead—2nm production starts in 2025, angstrom-scale nodes are roadmapped through 2030. For America's semiconductor champion, time has run out.</p>
@@ -4388,7 +4388,7 @@
                         snippet: "Former Intel CEO Paul Otellini called rejecting Apple's iPhone chip deal his biggest regret.",
                         url: "https://www.theatlantic.com/technology/archive/2013/05/paul-otellinis-intel-can-the-company-that-built-the-future-find-it-again/275821/"
                     },
-                    14nm_stall: {
+                    'nm14_stall': {
                         domain: "anandtech.com",
                         trustScore: 95,
                         title: "Intel's 14nm Era: 2014-2019",
@@ -4458,7 +4458,7 @@
                         snippet: "Former employees describe a culture where bad news was suppressed and critics pushed out.",
                         url: "https://www.bloomberg.com/news/features/intel-culture"
                     },
-                    18a_tech: {
+                    tech_18a: {
                         domain: "anandtech.com",
                         trustScore: 95,
                         title: "Intel 18A Technology Deep Dive",
@@ -6171,30 +6171,22 @@
 
         // === DYNAMIC TRENDING SECTION ===
         function renderTrendingSection() {
-            console.log('[Trending] Starting renderTrendingSection...');
             const featuredContainer = document.getElementById('trending-featured');
             const moreContainer = document.getElementById('trending-more');
 
-            console.log('[Trending] featuredContainer:', featuredContainer);
-            console.log('[Trending] moreContainer:', moreContainer);
-
             if (!featuredContainer) {
-                console.error('[Trending] ERROR: featuredContainer not found!');
                 return;
             }
 
             // Get all reports with card metadata (excluding child essays)
             const allArticles = [];
-            console.log('[Trending] reports object:', typeof reports, Object.keys(reports));
             for (const [key, report] of Object.entries(reports)) {
                 // Skip child essays - they're accessed via parent articles
                 if (report.isChildEssay) {
-                    console.log('[Trending] Skipping child essay:', key);
                     continue;
                 }
 
                 if (report.cardTitle) {
-                    console.log('[Trending] Adding article:', key, report.cardTitle);
                     allArticles.push({
                         key,
                         title: report.cardTitle,
@@ -6205,7 +6197,6 @@
                     });
                 }
             }
-            console.log('[Trending] allArticles after loop:', allArticles.length, allArticles.map(a => a.key));
 
             // Also fetch cached articles from server
             fetch('/api/cache/list')
@@ -6254,8 +6245,6 @@
         }
 
         function renderArticleCards(articles, featuredContainer, moreContainer) {
-            console.log('[Trending] renderArticleCards called with', articles.length, 'articles');
-            console.log('[Trending] articles:', articles.map(a => a.title));
             // Helper to get sources for an article
             function getArticleSources(key) {
                 const report = reports[key];
