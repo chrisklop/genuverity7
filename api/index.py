@@ -16,12 +16,21 @@ import anthropic
 # Load from environment variables (Vercel sets these automatically)
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 BLOB_READ_WRITE_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyDRIHmMIQow7BlfROmeaJlfOI6FKYcA1l0")
+# Gemini API keys with rotation for rate limits
+GEMINI_API_KEYS = [
+    os.getenv("GEMINI_API_KEY", "AIzaSyAEros8DbhXYeADSnoUs6a3p5qWNTZWgsY"),  # Primary key
+    "AIzaSyAPlwFlIZZ3UBZn-OoH8RABbzOZrYbNZRg",  # Backup key 1
+    "AIzaSyDRIHmMIQow7BlfROmeaJlfOI6FKYcA1l0",  # Backup key 2
+]
+GEMINI_API_KEY = GEMINI_API_KEYS[0]  # Default to primary
 # Use Claude Sonnet 4 for quality investigative articles
 CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
-# Gemini for image generation - using the image generation model
-GEMINI_IMAGE_MODEL = "gemini-2.0-flash-exp-image-generation"  # Latest Gemini image generation
+# Gemini 3 Pro Image for infographic generation (superior quality)
+GEMINI_IMAGE_MODEL = "gemini-3-pro-image-preview"
 GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models"
+
+# Track which key to use (rotates on rate limit)
+_current_key_index = 0
 
 # Vercel Blob Storage configuration
 BLOB_STORE_ID = "store_R5FvidKLuXLBeOEd"
@@ -40,21 +49,29 @@ claude_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY) if ANTHROPIC_API_
 
 # === GEMINI INFOGRAPHIC GENERATION ===
 
-# GenuVerity style guide for consistent infographics
+# GenuVerity "Midnight Tech" Style - professional investigative journalism aesthetic
 INFOGRAPHIC_STYLE = """
-VISUAL STYLE REQUIREMENTS:
-- Dark theme with deep blue/black background (#050505 to #0a0a0f gradient)
-- Primary accent color: Electric blue (#3b82f6)
-- Secondary accents: Emerald green (#10b981), Amber (#f59e0b), Red (#ef4444)
-- Modern, clean data visualization aesthetic
-- Subtle grid lines in dark gray (#1a1a2e)
-- White text (#e2e2e5) for labels and values
-- Professional investigative journalism style
-- Include subtle "GenuVerity" watermark text in bottom-left corner at 30% opacity in blue (#3b82f6)
+VISUAL STYLE: "MIDNIGHT TECH"
+- Background: Deep gradient from #050505 (near black) to #0a0a1a (dark blue-black)
+- Primary accent: Electric blue (#3b82f6) for key data elements
+- Secondary accents: Cyan (#06b6d4), Purple (#8b5cf6)
+- Grid/lines: Very subtle dark blue (#1a1a3e) with slight glow
+- Text: Crisp white (#ffffff) for values, light gray (#a0a0b0) for labels
+- Effects: Subtle blue glow on key elements, sleek futuristic feel
+- Chart style: Clean geometric shapes, glowing edges, tech-forward
+- Overall mood: High-tech data dashboard, investigative journalism
+
+BRANDING REQUIREMENT (MANDATORY):
+In the bottom-left corner of the image, include the text logo "GenuVerity" where:
+- "Genu" is in WHITE color (#FFFFFF)
+- "Verity" is in BLUE color (#3b82f6)
+- Font should be clean, modern sans-serif
+- Size: Medium-small, professional watermark style
+- Position: Bottom-left corner with small padding from edges
 """
 
 def generate_gemini_infographic(chart_config: dict, title: str, chart_id: str) -> Optional[str]:
-    """Generate an infographic image using Gemini 3 Pro.
+    """Generate an infographic image using Gemini 3 Pro Image.
 
     Args:
         chart_config: Dict with type, data (labels, values, colors), title
@@ -64,8 +81,10 @@ def generate_gemini_infographic(chart_config: dict, title: str, chart_id: str) -
     Returns:
         Base64-encoded PNG image or None if generation fails
     """
-    if not GEMINI_API_KEY:
-        print("GEMINI_API_KEY not configured, skipping infographic generation")
+    global _current_key_index
+
+    if not GEMINI_API_KEYS:
+        print("No GEMINI_API_KEYS configured, skipping infographic generation")
         return None
 
     chart_type = chart_config.get("type", "bar")
@@ -82,7 +101,7 @@ def generate_gemini_infographic(chart_config: dict, title: str, chart_id: str) -
         data_points.append(f"- {label}: {value} (color: {color})")
     data_description = "\n".join(data_points)
 
-    # Craft the infographic generation prompt
+    # Craft the infographic generation prompt with Midnight Tech style
     prompt = f"""Generate a professional data visualization infographic.
 
 {INFOGRAPHIC_STYLE}
@@ -98,50 +117,67 @@ REQUIREMENTS:
 2. Use the exact colors specified for each data point
 3. Include clear labels and values
 4. Add the title prominently at the top
-5. Dark background matching the style guide
-6. IMPORTANT: Add subtle "GenuVerity" text watermark in bottom-left corner, blue color (#3b82f6), 30% opacity
+5. Follow the Midnight Tech style guide exactly
+6. Size: 800x500 pixels
 
-Generate a 800x500 pixel infographic image."""
+Generate the infographic image now."""
 
-    try:
-        # Call Gemini API for image generation
-        response = requests.post(
-            f"{GEMINI_API_URL}/{GEMINI_IMAGE_MODEL}:generateContent?key={GEMINI_API_KEY}",
-            headers={"Content-Type": "application/json"},
-            json={
-                "contents": [{
-                    "parts": [{"text": prompt}]
-                }],
-                "generationConfig": {
-                    "responseModalities": ["TEXT", "IMAGE"],
-                    "temperature": 0.4
-                }
-            },
-            timeout=60
-        )
+    # Try each API key with retry logic
+    import time
+    max_retries = len(GEMINI_API_KEYS) * 2
+    retry_delay = 5
 
-        if response.status_code == 200:
-            result = response.json()
-            print(f"Gemini API response keys: {result.keys()}")
-            # Extract image from response
-            candidates = result.get("candidates", [])
-            if candidates:
-                parts = candidates[0].get("content", {}).get("parts", [])
-                for part in parts:
-                    print(f"Part keys: {part.keys()}")
-                    if "inlineData" in part:
-                        image_data = part["inlineData"].get("data")
-                        mime_type = part["inlineData"].get("mimeType", "image/png")
-                        if image_data:
-                            print(f"Generated infographic for {chart_id}: {len(image_data)} bytes")
-                            return f"data:{mime_type};base64,{image_data}"
+    for attempt in range(max_retries):
+        current_key = GEMINI_API_KEYS[_current_key_index % len(GEMINI_API_KEYS)]
+
+        try:
+            print(f"Infographic attempt {attempt + 1}/{max_retries} with key index {_current_key_index % len(GEMINI_API_KEYS)}")
+
+            response = requests.post(
+                f"{GEMINI_API_URL}/{GEMINI_IMAGE_MODEL}:generateContent?key={current_key}",
+                headers={"Content-Type": "application/json"},
+                json={
+                    "contents": [{
+                        "role": "user",
+                        "parts": [{"text": prompt}]
+                    }],
+                    "generationConfig": {
+                        "responseModalities": ["TEXT", "IMAGE"],
+                        "temperature": 0.4
+                    }
+                },
+                timeout=120
+            )
+
+            if response.status_code == 200:
+                result = response.json()
+                # Extract image from response
+                candidates = result.get("candidates", [])
+                if candidates:
+                    parts = candidates[0].get("content", {}).get("parts", [])
+                    for part in parts:
+                        if "inlineData" in part:
+                            image_data = part["inlineData"].get("data")
+                            mime_type = part["inlineData"].get("mimeType", "image/png")
+                            if image_data:
+                                print(f"Generated infographic for {chart_id}: {len(image_data)} bytes")
+                                return f"data:{mime_type};base64,{image_data}"
+                print(f"No image in Gemini response")
+            elif response.status_code == 429:
+                # Rate limited - rotate to next key
+                print(f"Rate limited on key {_current_key_index % len(GEMINI_API_KEYS)}, rotating...")
+                _current_key_index += 1
+                time.sleep(retry_delay)
+                continue
             else:
-                print(f"No candidates in response: {result}")
-        else:
-            print(f"Gemini API error ({response.status_code}): {response.text[:500]}")
+                print(f"Gemini API error ({response.status_code}): {response.text[:200]}")
+                _current_key_index += 1
 
-    except Exception as e:
-        print(f"Gemini infographic generation error: {e}")
+        except Exception as e:
+            print(f"Gemini infographic generation error: {e}")
+            _current_key_index += 1
+
+        time.sleep(2)  # Brief pause between attempts
 
     return None
 
