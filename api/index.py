@@ -44,8 +44,11 @@ FREE_DAILY_LIMIT = 5
 # Ensure cache directory exists (fallback)
 os.makedirs(CACHE_DIR, exist_ok=True)
 
-# Configure Anthropic
-claude_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY) if ANTHROPIC_API_KEY else None
+# Configure Anthropic with 5-minute timeout (matches Vercel Pro maxDuration)
+claude_client = anthropic.Anthropic(
+    api_key=ANTHROPIC_API_KEY,
+    timeout=300.0  # 5 minutes - prevents premature timeout on long generations
+) if ANTHROPIC_API_KEY else None
 
 # === GEMINI INFOGRAPHIC GENERATION ===
 
@@ -146,7 +149,7 @@ Generate the infographic image now."""
                         "temperature": 0.4
                     }
                 },
-                timeout=120
+                timeout=180  # 3 minutes for infographic generation
             )
 
             if response.status_code == 200:
