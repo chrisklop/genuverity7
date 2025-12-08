@@ -6171,18 +6171,30 @@
 
         // === DYNAMIC TRENDING SECTION ===
         function renderTrendingSection() {
+            console.log('[Trending] Starting renderTrendingSection...');
             const featuredContainer = document.getElementById('trending-featured');
             const moreContainer = document.getElementById('trending-more');
 
-            if (!featuredContainer) return;
+            console.log('[Trending] featuredContainer:', featuredContainer);
+            console.log('[Trending] moreContainer:', moreContainer);
+
+            if (!featuredContainer) {
+                console.error('[Trending] ERROR: featuredContainer not found!');
+                return;
+            }
 
             // Get all reports with card metadata (excluding child essays)
             const allArticles = [];
+            console.log('[Trending] reports object:', typeof reports, Object.keys(reports));
             for (const [key, report] of Object.entries(reports)) {
                 // Skip child essays - they're accessed via parent articles
-                if (report.isChildEssay) continue;
+                if (report.isChildEssay) {
+                    console.log('[Trending] Skipping child essay:', key);
+                    continue;
+                }
 
                 if (report.cardTitle) {
+                    console.log('[Trending] Adding article:', key, report.cardTitle);
                     allArticles.push({
                         key,
                         title: report.cardTitle,
@@ -6193,6 +6205,7 @@
                     });
                 }
             }
+            console.log('[Trending] allArticles after loop:', allArticles.length, allArticles.map(a => a.key));
 
             // Also fetch cached articles from server
             fetch('/api/cache/list')
@@ -6241,6 +6254,8 @@
         }
 
         function renderArticleCards(articles, featuredContainer, moreContainer) {
+            console.log('[Trending] renderArticleCards called with', articles.length, 'articles');
+            console.log('[Trending] articles:', articles.map(a => a.title));
             // Helper to get sources for an article
             function getArticleSources(key) {
                 const report = reports[key];
