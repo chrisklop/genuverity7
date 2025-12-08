@@ -42,6 +42,9 @@ This file provides guidance to Claude Code when working with this repository. **
 | `/api/deep-dive` | POST | Generate deep-dive with rate limiting |
 | `/api/cache/check` | POST | Check if article exists in cache |
 | `/api/cache/list` | GET | List all cached articles |
+| `/api/infographic` | POST | Generate Gemini 3 Pro infographic |
+| `/api/infographics/batch` | POST | Generate multiple infographics |
+| `/api/generate-gemini` | POST | Full Gemini 3 pipeline (article + infographics) |
 
 ### Frontend (`index.html`)
 Single-page app with three views:
@@ -171,11 +174,61 @@ Generated articles must include:
 2. **12 themes unused**: Users primarily want dark/light. Consider simplifying.
 3. **WCAG contrast**: Some color combinations may not meet AA standards.
 
+## Gemini 3 Pro Pipeline
+
+The platform uses **Gemini 3 Pro** for a complete AI pipeline:
+
+### Model Configuration
+
+```python
+# Model settings in api/index.py
+GEMINI_TEXT_MODEL = "gemini-3-pro-preview"        # Article text generation
+GEMINI_IMAGE_MODEL = "gemini-3-pro-image-preview" # Infographic generation
+GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models"
+USE_GEMINI_FOR_ARTICLES = True  # Feature flag
+```
+
+### API Request Format
+
+```python
+{
+    "contents": [{
+        "role": "user",
+        "parts": [{"text": prompt}]
+    }],
+    "generationConfig": {
+        "responseModalities": ["TEXT", "IMAGE"],
+        "temperature": 0.4,
+        "imageConfig": {
+            "aspectRatio": "16:9",  # Wide format for data visualizations
+            "imageSize": "1K"       # Options: 1K, 2K, 4K
+        }
+    }
+}
+```
+
+### Endpoints
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/infographic` | POST | Generate single infographic |
+| `/api/infographics/batch` | POST | Generate multiple infographics |
+
+### Image Config Options
+
+- **aspectRatio**: `"1:1"`, `"3:4"`, `"4:3"`, `"9:16"`, `"16:9"`
+- **imageSize**: `"1K"` (1024px), `"2K"` (2048px), `"4K"` (4096px)
+
+### Rate Limiting
+
+Multiple API keys configured for rotation on 429 errors. Keys checked in order until one succeeds.
+
 ## Environment Variables
 
 Required in `.env.local` or Vercel dashboard:
 - `ANTHROPIC_API_KEY` - Claude API key
 - `BLOB_READ_WRITE_TOKEN` - Vercel Blob storage token
+- `GEMINI_API_KEY` - Gemini API key for infographic generation
 
 ## Deployment
 

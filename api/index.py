@@ -16,12 +16,28 @@ import anthropic
 # Load from environment variables (Vercel sets these automatically)
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 BLOB_READ_WRITE_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyDRIHmMIQow7BlfROmeaJlfOI6FKYcA1l0")
-# Use Claude Sonnet 4 for quality investigative articles
+# Gemini API keys - multiple keys for rate limit rotation
+GEMINI_API_KEYS = [
+    os.getenv("GEMINI_API_KEY", "AIzaSyAEros8DbhXYeADSnoUs6a3p5qWNTZWgsY"),  # Primary key
+    "AIzaSyAPlwFlIZZ3UBZn-OoH8RABbzOZrYbNZRg",  # Backup key 1
+    "AIzaSyDRIHmMIQow7BlfROmeaJlfOI6FKYcA1l0",  # Backup key 2
+]
+GEMINI_API_KEY = GEMINI_API_KEYS[0]  # Default to primary
+# Use Claude Sonnet 4 for quality investigative articles (fallback)
 CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
-# Gemini for image generation - using the image generation model
-GEMINI_IMAGE_MODEL = "gemini-2.0-flash-exp-image-generation"  # Latest Gemini image generation
+
+# === GEMINI 3 MODEL CONFIGURATION ===
+# Gemini 3 Pro for text generation (article content)
+GEMINI_TEXT_MODEL = "gemini-3-pro-preview"  # Advanced text generation for articles
+# Gemini 3 Pro Image for infographic/chart generation
+GEMINI_IMAGE_MODEL = "gemini-3-pro-image-preview"  # Professional-grade image model with 2K/4K output
 GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models"
+
+# Feature flag: Use Gemini for article generation instead of Claude
+USE_GEMINI_FOR_ARTICLES = os.getenv("USE_GEMINI_FOR_ARTICLES", "true").lower() == "true"
+
+# Track which key to use (rotates on rate limit)
+_current_key_index = 0
 
 # Vercel Blob Storage configuration
 BLOB_STORE_ID = "store_R5FvidKLuXLBeOEd"
@@ -64,8 +80,10 @@ def generate_gemini_infographic(chart_config: dict, title: str, chart_id: str) -
     Returns:
         Base64-encoded PNG image or None if generation fails
     """
-    if not GEMINI_API_KEY:
-        print("GEMINI_API_KEY not configured, skipping infographic generation")
+    global _current_key_index
+
+    if not GEMINI_API_KEYS:
+        print("No GEMINI_API_KEYS configured, skipping infographic generation")
         return None
 
     chart_type = chart_config.get("type", "bar")
@@ -103,46 +121,88 @@ REQUIREMENTS:
 
 Generate a 800x500 pixel infographic image."""
 
-    try:
-        # Call Gemini API for image generation
-        response = requests.post(
-            f"{GEMINI_API_URL}/{GEMINI_IMAGE_MODEL}:generateContent?key={GEMINI_API_KEY}",
-            headers={"Content-Type": "application/json"},
-            json={
-                "contents": [{
-                    "parts": [{"text": prompt}]
-                }],
-                "generationConfig": {
-                    "responseModalities": ["TEXT", "IMAGE"],
-                    "temperature": 0.4
-                }
-            },
-            timeout=60
-        )
+    # Try each API key with retry logic
+    max_retries = len(GEMINI_API_KEYS) * 2  # Try each key twice
+    retry_delay = 30  # Wait 30s between retries for rate limits
 
-        if response.status_code == 200:
-            result = response.json()
-            print(f"Gemini API response keys: {result.keys()}")
-            # Extract image from response
-            candidates = result.get("candidates", [])
-            if candidates:
-                parts = candidates[0].get("content", {}).get("parts", [])
-                for part in parts:
-                    print(f"Part keys: {part.keys()}")
-                    if "inlineData" in part:
-                        image_data = part["inlineData"].get("data")
-                        mime_type = part["inlineData"].get("mimeType", "image/png")
-                        if image_data:
-                            print(f"Generated infographic for {chart_id}: {len(image_data)} bytes")
-                            return f"data:{mime_type};base64,{image_data}"
+    for attempt in range(max_retries):
+        current_key = GEMINI_API_KEYS[_current_key_index % len(GEMINI_API_KEYS)]
+
+        try:
+            print(f"Attempt {attempt + 1}/{max_retries} with key index {_current_key_index % len(GEMINI_API_KEYS)}")
+
+            # Call Gemini 3 Pro Image API with proper config
+            response = requests.post(
+                f"{GEMINI_API_URL}/{GEMINI_IMAGE_MODEL}:generateContent?key={current_key}",
+                headers={"Content-Type": "application/json"},
+                json={
+                    "contents": [{
+                        "role": "user",
+                        "parts": [{"text": prompt}]
+                    }],
+                    "generationConfig": {
+                        "responseModalities": ["TEXT", "IMAGE"],
+                        "temperature": 0.4,
+                        "imageConfig": {
+                            "aspectRatio": "16:9",  # Wide format for data visualizations
+                            "imageSize": "1K"       # 1K resolution for web display
+                        }
+                    }
+                },
+                timeout=90  # Longer timeout for high-quality image generation
+            )
+
+            if response.status_code == 200:
+                result = response.json()
+                print(f"Gemini API response keys: {result.keys()}")
+                # Extract image from response
+                candidates = result.get("candidates", [])
+                if candidates:
+                    parts = candidates[0].get("content", {}).get("parts", [])
+                    for part in parts:
+                        print(f"Part keys: {part.keys()}")
+                        if "inlineData" in part:
+                            image_data = part["inlineData"].get("data")
+                            mime_type = part["inlineData"].get("mimeType", "image/png")
+                            if image_data:
+                                print(f"Generated infographic for {chart_id}: {len(image_data)} bytes")
+                                return f"data:{mime_type};base64,{image_data}"
+                else:
+                    print(f"No candidates in response: {result}")
+
+            elif response.status_code == 429:
+                # Rate limited - rotate to next key and retry after delay
+                print(f"Rate limited on key {_current_key_index}. Rotating key...")
+                _current_key_index += 1
+
+                # Check for retry delay in response
+                try:
+                    error_data = response.json()
+                    details = error_data.get("error", {}).get("details", [])
+                    for detail in details:
+                        if detail.get("@type", "").endswith("RetryInfo"):
+                            delay_str = detail.get("retryDelay", "30s")
+                            delay_secs = int(''.join(filter(str.isdigit, delay_str.split('.')[0]))) or 30
+                            if delay_secs < 60 and attempt < max_retries - 1:
+                                print(f"Waiting {delay_secs}s before retry...")
+                                import time
+                                time.sleep(delay_secs + 1)
+                except:
+                    pass
+
+                continue
             else:
-                print(f"No candidates in response: {result}")
-        else:
-            print(f"Gemini API error ({response.status_code}): {response.text[:500]}")
+                print(f"Gemini API error ({response.status_code}): {response.text[:500]}")
+                # Try next key on other errors
+                _current_key_index += 1
+                continue
 
-    except Exception as e:
-        print(f"Gemini infographic generation error: {e}")
+        except Exception as e:
+            print(f"Gemini infographic generation error: {e}")
+            _current_key_index += 1
+            continue
 
+    print(f"All {max_retries} attempts failed for chart {chart_id}")
     return None
 
 
@@ -168,6 +228,140 @@ def generate_infographics_for_article(chart_configs: dict, article_title: str) -
             infographics[chart_id] = None
 
     return infographics
+
+
+# === GEMINI 3 PRO TEXT GENERATION ===
+
+def generate_gemini_article(topic: str, system_prompt: str) -> Optional[str]:
+    """Generate article content using Gemini 3 Pro text model.
+
+    Args:
+        topic: The topic to generate an article about
+        system_prompt: The system prompt with article schema/format instructions
+
+    Returns:
+        Generated article text (JSON string) or None if failed
+    """
+    global _current_key_index
+
+    if not GEMINI_API_KEYS:
+        print("No GEMINI_API_KEYS configured, falling back to Claude")
+        return None
+
+    # Combine system prompt and user request
+    full_prompt = f"""{system_prompt}
+
+USER REQUEST: Generate a comprehensive investigative article about: {topic}
+
+IMPORTANT: Return ONLY valid JSON matching the schema above. No markdown code blocks, no explanations."""
+
+    max_retries = len(GEMINI_API_KEYS) * 2
+
+    for attempt in range(max_retries):
+        current_key = GEMINI_API_KEYS[_current_key_index % len(GEMINI_API_KEYS)]
+
+        try:
+            print(f"[Gemini Text] Attempt {attempt + 1}/{max_retries} with key index {_current_key_index % len(GEMINI_API_KEYS)}")
+
+            response = requests.post(
+                f"{GEMINI_API_URL}/{GEMINI_TEXT_MODEL}:generateContent?key={current_key}",
+                headers={"Content-Type": "application/json"},
+                json={
+                    "contents": [{
+                        "role": "user",
+                        "parts": [{"text": full_prompt}]
+                    }],
+                    "generationConfig": {
+                        "temperature": 0.7,
+                        "maxOutputTokens": 8192,
+                        "responseMimeType": "application/json"
+                    }
+                },
+                timeout=120
+            )
+
+            if response.status_code == 200:
+                result = response.json()
+                candidates = result.get("candidates", [])
+                if candidates:
+                    text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                    if text:
+                        print(f"[Gemini Text] Successfully generated article ({len(text)} chars)")
+                        return text
+
+            elif response.status_code == 429:
+                print(f"[Gemini Text] Rate limited on key {_current_key_index}. Rotating...")
+                _current_key_index += 1
+                continue
+            else:
+                print(f"[Gemini Text] API error ({response.status_code}): {response.text[:300]}")
+                _current_key_index += 1
+                continue
+
+        except Exception as e:
+            print(f"[Gemini Text] Generation error: {e}")
+            _current_key_index += 1
+            continue
+
+    print(f"[Gemini Text] All {max_retries} attempts failed, falling back to Claude")
+    return None
+
+
+async def generate_gemini_article_stream(topic: str, system_prompt: str):
+    """Stream article content using Gemini 3 Pro text model.
+
+    Yields chunks of generated text for SSE streaming.
+    """
+    global _current_key_index
+
+    if not GEMINI_API_KEYS:
+        print("No GEMINI_API_KEYS configured")
+        return
+
+    full_prompt = f"""{system_prompt}
+
+USER REQUEST: Generate a comprehensive investigative article about: {topic}
+
+IMPORTANT: Return ONLY valid JSON matching the schema above. No markdown code blocks, no explanations."""
+
+    current_key = GEMINI_API_KEYS[_current_key_index % len(GEMINI_API_KEYS)]
+
+    try:
+        # Use streaming endpoint
+        response = requests.post(
+            f"{GEMINI_API_URL}/{GEMINI_TEXT_MODEL}:streamGenerateContent?key={current_key}",
+            headers={"Content-Type": "application/json"},
+            json={
+                "contents": [{
+                    "role": "user",
+                    "parts": [{"text": full_prompt}]
+                }],
+                "generationConfig": {
+                    "temperature": 0.7,
+                    "maxOutputTokens": 8192
+                }
+            },
+            stream=True,
+            timeout=120
+        )
+
+        if response.status_code == 200:
+            for line in response.iter_lines():
+                if line:
+                    try:
+                        data = json.loads(line.decode('utf-8').lstrip(','))
+                        candidates = data.get("candidates", [])
+                        if candidates:
+                            text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                            if text:
+                                yield text
+                    except json.JSONDecodeError:
+                        continue
+        else:
+            print(f"[Gemini Stream] Error ({response.status_code}): {response.text[:300]}")
+
+    except Exception as e:
+        print(f"[Gemini Stream] Error: {e}")
 
 
 # === VERCEL BLOB STORAGE UTILITIES ===
@@ -791,6 +985,136 @@ async def generate_report(request: GenerateRequest, req: Request):
     )
 
 
+@app.post("/api/generate-gemini")
+async def generate_report_gemini(request: GenerateRequest, req: Request):
+    """Gemini 3 Pro powered report generation with infographics.
+
+    Uses:
+    - Gemini 3 Pro Preview for article text generation
+    - Gemini 3 Pro Image Preview for chart/infographic generation
+    """
+    print(f"[Gemini Pipeline] Generating report for: {request.topic}")
+
+    topic_slug = request.topic.lower().replace(" ", "_").replace("-", "_")[:20]
+
+    # Use the same article template
+    prompt = ARTICLE_TEMPLATE.format(
+        topic=request.topic,
+        context_section="",
+        topic_slug=topic_slug
+    )
+
+    def send_sse(event: str, data) -> str:
+        """Format a Server-Sent Event message."""
+        if isinstance(data, dict):
+            return f"event: {event}\ndata: {json.dumps(data)}\n\n"
+        return f"event: {event}\ndata: {json.dumps(data)}\n\n"
+
+    async def stream_response():
+        """Stream SSE progress events and final content with Gemini."""
+        full_text = ""
+
+        try:
+            # Stage 1: Initializing with Gemini
+            yield send_sse("progress", {"stage": "init", "percent": 5, "message": "Initializing Gemini 3 Pro..."})
+
+            # Stage 2: Generate article with Gemini Text Model
+            yield send_sse("progress", {"stage": "research", "percent": 10, "message": "Researching with Gemini 3 Pro..."})
+
+            # Use non-streaming Gemini call (simpler for now)
+            gemini_result = generate_gemini_article(request.topic, prompt)
+
+            if gemini_result:
+                full_text = gemini_result
+                yield send_sse("progress", {"stage": "writing", "percent": 50, "message": "Article generated, processing..."})
+            else:
+                # Fallback to Claude if Gemini fails
+                yield send_sse("progress", {"stage": "fallback", "percent": 15, "message": "Falling back to Claude..."})
+
+                if not claude_client:
+                    yield send_sse("error", "No AI backend available")
+                    return
+
+                with claude_client.messages.stream(
+                    model=CLAUDE_MODEL,
+                    max_tokens=6000,
+                    messages=[{"role": "user", "content": prompt}]
+                ) as stream:
+                    for text in stream.text_stream:
+                        full_text += text
+
+                yield send_sse("progress", {"stage": "writing", "percent": 50, "message": "Article generated (Claude fallback)..."})
+
+            # Parse the article JSON
+            parsed_data = None
+            try:
+                parsed_data = repair_truncated_json(full_text)
+            except Exception as parse_err:
+                print(f"[Gemini Pipeline] Parse error: {parse_err}")
+
+            if parsed_data:
+                # Ensure required fields
+                if "key" not in parsed_data:
+                    parsed_data["key"] = topic_slug
+                parsed_data["chartType"] = "dynamic"
+                parsed_data.setdefault("chartConfigs", {})
+                parsed_data.setdefault("contextData", {})
+                parsed_data.setdefault("citationDatabase", {})
+                parsed_data.setdefault("sources", [])
+
+                # Stage 3: Generate infographics with Gemini Image Model
+                chart_configs = parsed_data.get("chartConfigs", {})
+                if chart_configs:
+                    yield send_sse("progress", {"stage": "infographics", "percent": 70, "message": f"Generating {len(chart_configs)} infographics with Gemini 3 Pro Image..."})
+
+                    infographics = generate_infographics_for_article(
+                        chart_configs,
+                        parsed_data.get("title", request.topic)
+                    )
+
+                    # Add infographic images to the article data
+                    parsed_data["geminiInfographics"] = infographics
+
+                    # Count successful generations
+                    success_count = sum(1 for v in infographics.values() if v is not None)
+                    yield send_sse("progress", {"stage": "infographics_done", "percent": 90, "message": f"Generated {success_count}/{len(chart_configs)} infographics"})
+
+                # Mark as generated by Gemini pipeline
+                parsed_data["_generatedBy"] = "gemini-3-pro"
+                parsed_data["_infographicModel"] = "gemini-3-pro-image-preview"
+
+                # Cache the article
+                try:
+                    cache_article(request.topic, parsed_data)
+                    print(f"[Gemini Pipeline] Article cached: {request.topic}")
+                except Exception as cache_err:
+                    print(f"[Gemini Pipeline] Cache error: {cache_err}")
+
+                yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Investigation complete!"})
+                yield f"event: content\ndata: {json.dumps(parsed_data)}\n\n"
+            else:
+                # Fallback: send raw text
+                yield send_sse("content", full_text)
+
+            yield send_sse("done", "ok")
+
+        except Exception as e:
+            print(f"[Gemini Pipeline] Error: {e}")
+            import traceback
+            traceback.print_exc()
+            yield send_sse("error", str(e))
+
+    return StreamingResponse(
+        stream_response(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no"
+        }
+    )
+
+
 @app.post("/api/cache/check")
 async def check_cache(request: CacheCheckRequest):
     """Check if an article is already cached."""
@@ -1002,8 +1326,8 @@ class BatchInfographicRequest(BaseModel):
 @app.post("/api/infographic")
 async def generate_single_infographic(request: InfographicRequest):
     """Generate a single Gemini infographic for a chart configuration."""
-    if not GEMINI_API_KEY:
-        raise HTTPException(status_code=500, detail="GEMINI_API_KEY not configured")
+    if not GEMINI_API_KEYS:
+        raise HTTPException(status_code=500, detail="No GEMINI_API_KEYS configured")
 
     image_data = generate_gemini_infographic(
         request.chart_config,
@@ -1020,8 +1344,8 @@ async def generate_single_infographic(request: InfographicRequest):
 @app.post("/api/infographics/batch")
 async def generate_batch_infographics(request: BatchInfographicRequest):
     """Generate Gemini infographics for multiple charts in batch."""
-    if not GEMINI_API_KEY:
-        raise HTTPException(status_code=500, detail="GEMINI_API_KEY not configured")
+    if not GEMINI_API_KEYS:
+        raise HTTPException(status_code=500, detail="No GEMINI_API_KEYS configured")
 
     results = generate_infographics_for_article(
         request.chart_configs,
