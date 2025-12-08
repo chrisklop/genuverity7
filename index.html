@@ -497,19 +497,77 @@
             50% { background-position: -200% 0; opacity: 0.25; }
         }
 
-        /* === NAV ARTICLE TITLE === */
+        /* === NAV ARTICLE TITLE WITH MARQUEE === */
+        .nav-title-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            max-width: 320px;
+        }
+
         .nav-article-title {
             font-size: 0.75rem;
             font-weight: 500;
             color: var(--text-muted);
-            max-width: 200px;
+            max-width: 260px;
             overflow: hidden;
-            text-overflow: ellipsis;
             white-space: nowrap;
             padding: 4px 10px;
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .nav-article-title .title-text {
+            display: inline-block;
+            padding-right: 50px; /* Space before repeat */
+        }
+
+        /* Marquee animation for long titles */
+        .nav-article-title.marquee .title-text {
+            animation: nav-title-scroll 12s linear infinite;
+        }
+
+        .nav-article-title:hover .title-text {
+            animation-play-state: paused;
+        }
+
+        @keyframes nav-title-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Add to queue button */
+        .nav-add-queue-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: var(--accent-blue);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .nav-add-queue-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-blue);
+            transform: scale(1.05);
+        }
+
+        .nav-add-queue-btn:active {
+            transform: scale(0.95);
+        }
+
+        .nav-add-queue-btn.added {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: var(--accent-green);
         }
 
         /* === ARTICLE TIMESTAMP & REFRESH === */
@@ -763,6 +821,32 @@
             0% { transform: scale(1); }
             50% { transform: scale(1.3); }
             100% { transform: scale(1); }
+        }
+
+        /* Version Toggle Button */
+        .action-btn.version-toggle-btn {
+            position: relative;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: #a78bfa;
+        }
+
+        .action-btn.version-toggle-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #a78bfa;
+            color: #c4b5fd;
+        }
+
+        .action-btn.version-toggle-btn.showing-original {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: rgba(251, 191, 36, 0.3);
+            color: #fbbf24;
+        }
+
+        .action-btn.version-toggle-btn.showing-original:hover {
+            background: rgba(251, 191, 36, 0.2);
+            border-color: #fbbf24;
+            color: #fcd34d;
         }
 
         /* Inline Enhancement Progress Widget */
@@ -2853,7 +2937,14 @@
 
             <!-- Center: Article Title + Sources Toggle (only visible on essay pages) -->
             <div class="flex-1 flex justify-center items-center gap-4">
-                <span id="nav-article-title" class="nav-article-title hidden"></span>
+                <div id="nav-title-container" class="nav-title-container hidden">
+                    <span id="nav-article-title" class="nav-article-title">
+                        <span class="title-text"></span>
+                    </span>
+                    <button id="nav-add-queue-btn" class="nav-add-queue-btn" onclick="addCurrentToQueue()" title="Add to research queue">
+                        <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
                 <button id="nav-sources-btn" class="nav-sources-btn" onclick="toggleSourcesBanner()" title="Toggle Sources (S)">
                     <i data-lucide="shield-check" class="w-4 h-4"></i>
                     <span class="nav-sources-label">Sources</span>
@@ -2970,6 +3061,10 @@
                                 <span id="enhance-count-badge" class="enhance-count-badge">0</span>
                                 <i data-lucide="sparkles" class="w-4 h-4"></i>
                                 <span class="hidden sm:inline">Enhance</span>
+                            </button>
+                            <button onclick="toggleArticleVersion()" id="version-toggle-btn" class="action-btn version-toggle-btn hidden" title="View original version">
+                                <i data-lucide="history" class="w-4 h-4"></i>
+                                <span class="hidden sm:inline">Original</span>
                             </button>
                             <button onclick="toggleBookmark()" id="bookmark-btn" class="action-btn" title="Bookmark (B)">
                                 <i data-lucide="bookmark" class="w-4 h-4"></i>
@@ -4031,11 +4126,27 @@
             document.getElementById('report-title').innerText = data.title;
             document.getElementById('report-body').innerHTML = data.content;
 
-            // Update navbar with article title (use cardTitle for shorter version)
+            // Update navbar with article title (full title with marquee for long ones)
+            const navTitleContainer = document.getElementById('nav-title-container');
             const navArticleTitle = document.getElementById('nav-article-title');
-            if (navArticleTitle) {
-                navArticleTitle.textContent = data.cardTitle || data.title.substring(0, 30);
-                navArticleTitle.classList.remove('hidden');
+            if (navArticleTitle && navTitleContainer) {
+                const fullTitle = data.cardTitle || data.title;
+                const titleText = navArticleTitle.querySelector('.title-text');
+
+                // Set the title text
+                if (titleText) {
+                    // For marquee, duplicate the text with a separator
+                    if (fullTitle.length > 35) {
+                        titleText.innerHTML = fullTitle + ' &nbsp;&nbsp;&nbsp; ' + fullTitle + ' &nbsp;&nbsp;&nbsp; ';
+                        navArticleTitle.classList.add('marquee');
+                    } else {
+                        titleText.textContent = fullTitle;
+                        navArticleTitle.classList.remove('marquee');
+                    }
+                }
+
+                navTitleContainer.classList.remove('hidden');
+                lucide.createIcons();
             }
 
             // Update timestamp display
@@ -5915,6 +6026,8 @@
         let currentEnhanceCount = 0; // Track how many times the current article has been enhanced
         let pendingEnhancedReport = null; // Store the enhanced report until user clicks "Apply"
         let isEnhancing = false; // Track if enhancement is in progress
+        let originalVersions = {}; // Store original article versions before enhancement
+        let isShowingOriginal = false; // Track if currently showing original version
 
         // Update the enhance count badge
         function updateEnhanceCountBadge(count) {
@@ -5934,7 +6047,10 @@
         }
 
         // Reset enhance count when loading a new article
+        // Note: If article was previously enhanced, this will be overridden in loadReport
         function resetEnhanceCount() {
+            // Don't reset here - let loadReport handle restoring the correct count
+            // This is kept for backwards compatibility with other callers
             currentEnhanceCount = 0;
             updateEnhanceCountBadge(0);
         }
@@ -7121,13 +7237,27 @@
                 return;
             }
 
+            // Save original version if this is the first enhancement
+            if (!originalVersions[currentArticleKey] && reports[currentArticleKey]) {
+                originalVersions[currentArticleKey] = JSON.parse(JSON.stringify(reports[currentArticleKey]));
+            }
+
+            // Update the reports object with enhanced version (persists when navigating)
+            const enhancedData = pendingEnhancedReport;
+            enhancedData._isEnhanced = true;
+            enhancedData._enhanceCount = (reports[currentArticleKey]?._enhanceCount || 0) + 1;
+            reports[currentArticleKey] = enhancedData;
+
             // Render the enhanced article
-            currentReport = pendingEnhancedReport;
-            renderReportData(pendingEnhancedReport, true);
+            renderReportData(enhancedData, true);
 
             // Increment and update enhance count badge
             currentEnhanceCount++;
             updateEnhanceCountBadge(currentEnhanceCount);
+
+            // Show version toggle button
+            updateVersionToggle(true);
+            isShowingOriginal = false;
 
             // Clear pending and hide widget
             pendingEnhancedReport = null;
@@ -7147,6 +7277,51 @@
 
             // Show success notification
             showNotification(`Article enhanced successfully! (${currentEnhanceCount}x)`, 'success');
+        }
+
+        // Update version toggle button visibility
+        function updateVersionToggle(hasOriginal) {
+            const toggleBtn = document.getElementById('version-toggle-btn');
+            if (toggleBtn) {
+                if (hasOriginal) {
+                    toggleBtn.classList.remove('hidden');
+                } else {
+                    toggleBtn.classList.add('hidden');
+                }
+            }
+        }
+
+        // Toggle between original and enhanced versions
+        function toggleArticleVersion() {
+            if (!originalVersions[currentArticleKey]) {
+                showNotification('No original version available.', 'info');
+                return;
+            }
+
+            const toggleBtn = document.getElementById('version-toggle-btn');
+
+            if (isShowingOriginal) {
+                // Switch to enhanced version
+                renderReportData(reports[currentArticleKey], true);
+                isShowingOriginal = false;
+                if (toggleBtn) {
+                    toggleBtn.innerHTML = '<i data-lucide="history" class="w-4 h-4"></i><span class="hidden sm:inline">Original</span>';
+                    toggleBtn.title = 'View original version';
+                    toggleBtn.classList.remove('showing-original');
+                }
+                showNotification('Showing enhanced version', 'info');
+            } else {
+                // Switch to original version
+                renderReportData(originalVersions[currentArticleKey], true);
+                isShowingOriginal = true;
+                if (toggleBtn) {
+                    toggleBtn.innerHTML = '<i data-lucide="sparkles" class="w-4 h-4"></i><span class="hidden sm:inline">Enhanced</span>';
+                    toggleBtn.title = 'View enhanced version';
+                    toggleBtn.classList.add('showing-original');
+                }
+                showNotification('Showing original version', 'info');
+            }
+            lucide.createIcons();
         }
 
         function dismissEnhancement() {
@@ -7848,11 +8023,27 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
         const originalLoadReport = loadReport;
         loadReport = function(key) {
             currentArticleKey = key;
+            // Reset version toggle state when loading a new article
+            isShowingOriginal = false;
             originalLoadReport(key);
             setTimeout(() => {
                 initReadingProgress();
                 updateBookmarkButton();
                 updateDeepDiveBadge();
+                // Update version toggle visibility and state
+                const hasOriginal = !!originalVersions[key];
+                updateVersionToggle(hasOriginal);
+                const toggleBtn = document.getElementById('version-toggle-btn');
+                if (toggleBtn) {
+                    toggleBtn.classList.remove('showing-original');
+                    toggleBtn.innerHTML = '<i data-lucide="history" class="w-4 h-4"></i><span class="hidden sm:inline">Original</span>';
+                    toggleBtn.title = 'View original version';
+                }
+                // Also update enhance count if article was previously enhanced
+                if (reports[key]?._enhanceCount) {
+                    currentEnhanceCount = reports[key]._enhanceCount;
+                    updateEnhanceCountBadge(currentEnhanceCount);
+                }
                 lucide.createIcons();
             }, 100);
         };
