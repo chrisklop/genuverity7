@@ -4492,10 +4492,75 @@
             return colorSchemes[theme] || colorSchemes.midnight;
         }
 
+        // Gemini 3 Pro infographic mappings for pre-generated images
+        const geminiInfographics = {
+            'ai': {
+                'chart_capex': '/infographics/ai_bubble_chart_capex.png',
+                'chart_allocation': '/infographics/ai_bubble_chart_allocation.png',
+                'chart_energy_demand': '/infographics/ai_bubble_chart_energy_demand.png',
+                'plotlyForceChart': '/infographics/ai_bubble_chart_bubbles.png'
+            },
+            'congress': {
+                'chart_returns': '/infographics/congress_trading_chart_returns.png',
+                'chart_sectors': '/infographics/congress_trading_chart_sectors.png',
+                'chart_violations': '/infographics/congress_trading_chart_violations.png'
+            },
+            'grift': {
+                'chart_spending': '/infographics/campaign_grift_chart_spending.png',
+                'chart_zombies': '/infographics/campaign_grift_chart_zombies.png',
+                'chart_family_pay': '/infographics/campaign_grift_chart_family_pay.png'
+            },
+            'energy': {
+                'chart_energy': '/infographics/energy_crisis_chart_energy.png',
+                'chart_transformers': '/infographics/energy_crisis_chart_transformers.png'
+            },
+            'regulatory': {
+                'chart_revolving': '/infographics/regulatory_capture_chart_revolving.png',
+                'chart_fines': '/infographics/regulatory_capture_chart_fines.png'
+            },
+            'semiconductor': {
+                'chart_tsmc_share': '/infographics/semiconductor_crisis_chart_tsmc_share.png',
+                'chart_intel_decline': '/infographics/semiconductor_crisis_chart_intel_decline.png',
+                'chart_nvidia_growth': '/infographics/semiconductor_crisis_chart_nvidia_growth.png'
+            }
+        };
+
+        // Helper function to render Gemini infographic image
+        function renderGeminiInfographic(elementId, imagePath) {
+            const container = document.getElementById(elementId);
+            if (!container) return false;
+
+            // Replace canvas with img if canvas exists
+            const parent = container.parentElement;
+            if (container.tagName === 'CANVAS' || container.tagName === 'DIV') {
+                const img = document.createElement('img');
+                img.src = imagePath;
+                img.alt = elementId;
+                img.className = 'gemini-infographic';
+                img.style.cssText = 'width: 100%; height: auto; border-radius: 8px;';
+                img.loading = 'lazy';
+                parent.innerHTML = '';
+                parent.appendChild(img);
+                return true;
+            }
+            return false;
+        }
+
         function renderCharts(type) {
             // Cleanup old charts
             activeCharts.forEach(c => c.destroy());
             activeCharts = [];
+
+            // Check if we have Gemini infographics for this type
+            const infographics = geminiInfographics[type];
+            if (infographics) {
+                // Use Gemini-generated infographics instead of Chart.js
+                console.log(`Using Gemini infographics for type: ${type}`);
+                for (const [chartId, imagePath] of Object.entries(infographics)) {
+                    renderGeminiInfographic(chartId, imagePath);
+                }
+                return; // Skip Chart.js rendering
+            }
 
             const chartTextColor = getChartTextColor();
             const colors = getThemeChartColors();
