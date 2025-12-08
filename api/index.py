@@ -3,6 +3,7 @@ import json
 import hashlib
 import re
 import requests
+import base64
 from typing import Optional
 from datetime import datetime, date
 from fastapi import FastAPI, HTTPException, Request
@@ -15,8 +16,12 @@ import anthropic
 # Load from environment variables (Vercel sets these automatically)
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 BLOB_READ_WRITE_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyDRIHmMIQow7BlfROmeaJlfOI6FKYcA1l0")
 # Use Claude Sonnet 4 for quality investigative articles
 CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
+# Gemini 3 Pro for image generation
+GEMINI_IMAGE_MODEL = "gemini-2.0-flash-preview-image-generation"
+GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models"
 
 # Vercel Blob Storage configuration
 BLOB_STORE_ID = "store_R5FvidKLuXLBeOEd"
@@ -32,6 +37,134 @@ os.makedirs(CACHE_DIR, exist_ok=True)
 
 # Configure Anthropic
 claude_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY) if ANTHROPIC_API_KEY else None
+
+# === GEMINI INFOGRAPHIC GENERATION ===
+
+# GenuVerity style guide for consistent infographics
+INFOGRAPHIC_STYLE = """
+VISUAL STYLE REQUIREMENTS:
+- Dark theme with deep blue/black background (#050505 to #0a0a0f gradient)
+- Primary accent color: Electric blue (#3b82f6)
+- Secondary accents: Emerald green (#10b981), Amber (#f59e0b), Red (#ef4444)
+- Modern, clean data visualization aesthetic
+- Subtle grid lines in dark gray (#1a1a2e)
+- White text (#e2e2e5) for labels and values
+- Professional investigative journalism style
+- Include subtle "GenuVerity" watermark text in bottom-left corner at 30% opacity in blue (#3b82f6)
+"""
+
+def generate_gemini_infographic(chart_config: dict, title: str, chart_id: str) -> Optional[str]:
+    """Generate an infographic image using Gemini 3 Pro.
+
+    Args:
+        chart_config: Dict with type, data (labels, values, colors), title
+        title: Overall title for the infographic
+        chart_id: Unique identifier for caching
+
+    Returns:
+        Base64-encoded PNG image or None if generation fails
+    """
+    if not GEMINI_API_KEY:
+        print("GEMINI_API_KEY not configured, skipping infographic generation")
+        return None
+
+    chart_type = chart_config.get("type", "bar")
+    data = chart_config.get("data", {})
+    chart_title = chart_config.get("title", title)
+    labels = data.get("labels", [])
+    values = data.get("values", [])
+    colors = data.get("colors", ["#3b82f6"])
+
+    # Build data description for the prompt
+    data_points = []
+    for i, (label, value) in enumerate(zip(labels, values)):
+        color = colors[i % len(colors)] if colors else "#3b82f6"
+        data_points.append(f"- {label}: {value} (color: {color})")
+    data_description = "\n".join(data_points)
+
+    # Craft the infographic generation prompt
+    prompt = f"""Generate a professional data visualization infographic.
+
+{INFOGRAPHIC_STYLE}
+
+CHART SPECIFICATIONS:
+- Chart Type: {chart_type.upper()} CHART
+- Title: "{chart_title}"
+- Data Points:
+{data_description}
+
+REQUIREMENTS:
+1. Create a visually striking {chart_type} chart/graph
+2. Use the exact colors specified for each data point
+3. Include clear labels and values
+4. Add the title prominently at the top
+5. Dark background matching the style guide
+6. IMPORTANT: Add subtle "GenuVerity" text watermark in bottom-left corner, blue color (#3b82f6), 30% opacity
+
+Generate a 800x500 pixel infographic image."""
+
+    try:
+        # Call Gemini API for image generation
+        response = requests.post(
+            f"{GEMINI_API_URL}/{GEMINI_IMAGE_MODEL}:generateContent?key={GEMINI_API_KEY}",
+            headers={"Content-Type": "application/json"},
+            json={
+                "contents": [{
+                    "parts": [{"text": prompt}]
+                }],
+                "generationConfig": {
+                    "responseModalities": ["TEXT", "IMAGE"],
+                    "temperature": 0.4
+                }
+            },
+            timeout=60
+        )
+
+        if response.status_code == 200:
+            result = response.json()
+            # Extract image from response
+            candidates = result.get("candidates", [])
+            if candidates:
+                parts = candidates[0].get("content", {}).get("parts", [])
+                for part in parts:
+                    if "inlineData" in part:
+                        image_data = part["inlineData"].get("data")
+                        mime_type = part["inlineData"].get("mimeType", "image/png")
+                        if image_data:
+                            print(f"Generated infographic for {chart_id}: {len(image_data)} bytes")
+                            return f"data:{mime_type};base64,{image_data}"
+        else:
+            print(f"Gemini API error ({response.status_code}): {response.text[:200]}")
+
+    except Exception as e:
+        print(f"Gemini infographic generation error: {e}")
+
+    return None
+
+
+def generate_infographics_for_article(chart_configs: dict, article_title: str) -> dict:
+    """Generate Gemini infographics for all charts in an article.
+
+    Args:
+        chart_configs: Dict of chart_id -> chart_config
+        article_title: Title of the article for context
+
+    Returns:
+        Dict of chart_id -> base64 image data URL (or None if failed)
+    """
+    infographics = {}
+
+    for chart_id, config in chart_configs.items():
+        print(f"Generating infographic: {chart_id}")
+        image_data = generate_gemini_infographic(config, article_title, chart_id)
+        if image_data:
+            infographics[chart_id] = image_data
+        else:
+            # Keep None to signal fallback to Chart.js
+            infographics[chart_id] = None
+
+    return infographics
+
 
 # === VERCEL BLOB STORAGE UTILITIES ===
 
@@ -849,3 +982,54 @@ async def generate_deep_dive(request_body: DeepDiveRequest, request: Request):
 @app.get("/api/health")
 async def health_check():
     return {"status": "ok", "api_configured": bool(ANTHROPIC_API_KEY)}
+
+
+class InfographicRequest(BaseModel):
+    chart_config: dict
+    title: str = "Data Visualization"
+    chart_id: str = "chart_main"
+
+
+class BatchInfographicRequest(BaseModel):
+    chart_configs: dict  # Dict of chart_id -> chart_config
+    article_title: str = "Article"
+
+
+@app.post("/api/infographic")
+async def generate_single_infographic(request: InfographicRequest):
+    """Generate a single Gemini infographic for a chart configuration."""
+    if not GEMINI_API_KEY:
+        raise HTTPException(status_code=500, detail="GEMINI_API_KEY not configured")
+
+    image_data = generate_gemini_infographic(
+        request.chart_config,
+        request.title,
+        request.chart_id
+    )
+
+    if image_data:
+        return {"success": True, "image": image_data, "chart_id": request.chart_id}
+    else:
+        return {"success": False, "error": "Failed to generate infographic", "chart_id": request.chart_id}
+
+
+@app.post("/api/infographics/batch")
+async def generate_batch_infographics(request: BatchInfographicRequest):
+    """Generate Gemini infographics for multiple charts in batch."""
+    if not GEMINI_API_KEY:
+        raise HTTPException(status_code=500, detail="GEMINI_API_KEY not configured")
+
+    results = generate_infographics_for_article(
+        request.chart_configs,
+        request.article_title
+    )
+
+    # Count successes
+    success_count = sum(1 for v in results.values() if v is not None)
+
+    return {
+        "success": True,
+        "generated": success_count,
+        "total": len(request.chart_configs),
+        "infographics": results
+    }

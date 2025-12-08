@@ -4932,6 +4932,64 @@
             }
         }
 
+        // Store for Gemini-generated infographics (chart_id -> image data URL)
+        let geminiInfographics = {};
+
+        // Fetch Gemini-generated infographics for chart configs
+        async function fetchGeminiInfographics(chartConfigs, articleTitle) {
+            if (!chartConfigs || Object.keys(chartConfigs).length === 0) {
+                return {};
+            }
+
+            console.log('[Infographics] Fetching Gemini infographics for:', Object.keys(chartConfigs));
+
+            try {
+                const response = await fetch('/api/infographics/batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chart_configs: chartConfigs,
+                        article_title: articleTitle || 'Article'
+                    })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log(`[Infographics] Generated ${result.generated}/${result.total} infographics`);
+                    return result.infographics || {};
+                } else {
+                    console.log('[Infographics] API error:', response.status);
+                    return {};
+                }
+            } catch (e) {
+                console.log('[Infographics] Fetch error:', e);
+                return {};
+            }
+        }
+
+        // Replace canvas with Gemini-generated infographic image
+        function renderInfographic(chartId, imageData, canvas) {
+            if (!imageData || !canvas) return false;
+
+            // Create container for the infographic
+            const container = canvas.parentElement;
+            if (!container) return false;
+
+            // Create image element
+            const img = document.createElement('img');
+            img.src = imageData;
+            img.alt = `Infographic: ${chartId}`;
+            img.className = 'gemini-infographic';
+            img.style.cssText = 'width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);';
+
+            // Hide canvas and insert image
+            canvas.style.display = 'none';
+            container.insertBefore(img, canvas);
+
+            console.log('[Infographics] Rendered infographic for:', chartId);
+            return true;
+        }
+
         // Render charts from AI-generated article chartConfigs
         // Returns true if at least one chart was rendered, false otherwise
         function renderDynamicCharts(chartConfigs) {
