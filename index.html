@@ -412,36 +412,25 @@
             border-color: var(--accent-blue);
         }
 
-        /* === SOURCES DRAWER TAB (Fixed below navbar) === */
+        /* === SOURCES BUTTON (In navbar center) === */
         .nav-sources-btn {
             display: none; /* Hidden by default, shown on essay pages */
-            position: fixed;
-            top: 64px; /* Navbar height */
-            left: 50%;
-            transform: translateX(-50%) translateY(-75%); /* 25% visible below navbar */
-            z-index: 45;
             align-items: center;
             gap: 0.5rem;
-            padding: 10px 20px 14px 20px; /* Extra bottom padding for peek */
-            border-radius: 0 0 16px 16px; /* Only bottom corners rounded */
+            padding: 8px 16px;
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s ease;
             border: 1px solid var(--accent-green);
-            border-top: none;
-            background: linear-gradient(180deg, var(--bg-elevated), var(--bg-card));
+            background: rgba(16, 185, 129, 0.1);
             color: var(--text-main);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
+            letter-spacing: 0.02em;
         }
 
         .nav-sources-btn.visible {
             display: flex;
-        }
-
-        /* Slide down when expanded (drawer open) */
-        .nav-sources-btn.expanded {
-            transform: translateX(-50%) translateY(0);
         }
 
         .nav-sources-btn .sources-shield {
@@ -459,14 +448,10 @@
             transform: rotate(180deg);
         }
 
+        /* Always show the Sources label */
         .nav-sources-btn .nav-sources-label {
-            display: none;
-        }
-
-        @media (min-width: 640px) {
-            .nav-sources-btn .nav-sources-label {
-                display: inline;
-            }
+            display: inline;
+            color: var(--accent-green);
         }
 
         .nav-sources-btn .nav-sources-count {
@@ -474,25 +459,22 @@
             color: var(--bg-deep);
             font-size: 0.7rem;
             font-weight: 700;
-            padding: 3px 8px;
+            padding: 2px 7px;
             border-radius: 10px;
-            min-width: 22px;
+            min-width: 20px;
             text-align: center;
         }
 
         .nav-sources-btn:hover {
-            background: linear-gradient(180deg, var(--accent-green), rgba(16, 185, 129, 0.85));
+            background: var(--accent-green);
             color: white;
-            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);
-            transform: translateX(-50%) translateY(-60%); /* Rise up slightly on hover */
-        }
-
-        .nav-sources-btn.expanded:hover {
-            transform: translateX(-50%) translateY(0);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            transform: scale(1.02);
         }
 
         .nav-sources-btn:hover .sources-shield,
-        .nav-sources-btn:hover .sources-chevron {
+        .nav-sources-btn:hover .sources-chevron,
+        .nav-sources-btn:hover .nav-sources-label {
             color: white;
         }
 
@@ -501,140 +483,30 @@
             color: var(--accent-green);
         }
 
-        /* Breathing pulse animation when drawer is closed */
-        .nav-sources-btn:not(.expanded)::before {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 0 0 18px 18px;
-            background: linear-gradient(180deg,
-                transparent,
-                rgba(16, 185, 129, 0.3)
-            );
-            z-index: -1;
-            animation: sources-pulse 2s ease-in-out infinite;
+        /* Subtle pulse when drawer is closed */
+        .nav-sources-btn:not(.expanded) {
+            animation: sources-glow 3s ease-in-out infinite;
         }
 
-        @keyframes sources-pulse {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.02); }
+        @keyframes sources-glow {
+            0%, 100% { box-shadow: 0 0 0 rgba(16, 185, 129, 0); }
+            50% { box-shadow: 0 0 12px rgba(16, 185, 129, 0.3); }
         }
 
-        /* Shimmer effect for "alive" appearance */
-        .nav-sources-btn:not(.expanded)::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg,
-                transparent,
-                rgba(255, 255, 255, 0.15),
-                transparent
-            );
-            animation: sources-shimmer 3s ease-in-out infinite;
+        /* Active/expanded state */
+        .nav-sources-btn.expanded {
+            background: var(--accent-green);
+            color: white;
         }
 
-        @keyframes sources-shimmer {
-            0% { left: -100%; }
-            50%, 100% { left: 100%; }
+        .nav-sources-btn.expanded .sources-shield,
+        .nav-sources-btn.expanded .sources-chevron,
+        .nav-sources-btn.expanded .nav-sources-label {
+            color: white;
         }
 
-        /* Glow animation when sources are collapsed - subtle and slow */
-        .nav-sources-btn.collapsed::after {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 0 0 18px 18px;
-            background: linear-gradient(90deg,
-                transparent 0%,
-                rgba(16, 185, 129, 0.1) 25%,
-                rgba(16, 185, 129, 0.15) 50%,
-                rgba(16, 185, 129, 0.1) 75%,
-                transparent 100%
-            );
-            background-size: 200% 100%;
-            z-index: -1;
-            animation: nav-sources-glow 30s ease-in-out infinite;
-            filter: blur(4px);
-        }
-
-        @keyframes nav-sources-glow {
-            0%, 100% { background-position: 200% 0; opacity: 0.2; }
-            50% { background-position: -200% 0; opacity: 0.25; }
-        }
-
-        /* === NAV ARTICLE TITLE WITH MARQUEE === */
-        .nav-title-container {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            max-width: 320px;
-        }
-
-        .nav-article-title {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            max-width: 260px;
-            overflow: hidden;
-            white-space: nowrap;
-            padding: 4px 10px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        .nav-article-title .title-text {
-            display: inline-block;
-            padding-right: 50px; /* Space before repeat */
-        }
-
-        /* Marquee animation for long titles */
-        .nav-article-title.marquee .title-text {
-            animation: nav-title-scroll 12s linear infinite;
-        }
-
-        .nav-article-title:hover .title-text {
-            animation-play-state: paused;
-        }
-
-        @keyframes nav-title-scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Add to queue button */
-        .nav-add-queue-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            color: var(--accent-blue);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-        }
-
-        .nav-add-queue-btn:hover {
-            background: rgba(59, 130, 246, 0.2);
-            border-color: var(--accent-blue);
-            transform: scale(1.05);
-        }
-
-        .nav-add-queue-btn:active {
-            transform: scale(0.95);
-        }
-
-        .nav-add-queue-btn.added {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: rgba(16, 185, 129, 0.3);
+        .nav-sources-btn.expanded .nav-sources-count {
+            background: white;
             color: var(--accent-green);
         }
 
@@ -3292,16 +3164,14 @@
                 <span class="font-bold text-xl tracking-tight">Genu<span style="color: var(--logo-accent);">Verity</span></span>
             </div>
 
-            <!-- Center: Article Title (only visible on essay pages) -->
-            <div class="flex-1 flex justify-center items-center gap-4" style="z-index: 51; position: relative;">
-                <div id="nav-title-container" class="nav-title-container hidden">
-                    <span id="nav-article-title" class="nav-article-title">
-                        <span class="title-text"></span>
-                    </span>
-                    <button id="nav-add-queue-btn" class="nav-add-queue-btn" onclick="addCurrentToQueue()" title="Add to research queue">
-                        <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                    </button>
-                </div>
+            <!-- Center: Sources Button (only visible on essay pages) -->
+            <div class="flex-1 flex justify-center items-center" style="z-index: 51; position: relative;">
+                <button id="nav-sources-btn" class="nav-sources-btn" onclick="toggleSourcesBanner()" title="Toggle Sources (S)">
+                    <i data-lucide="shield-check" class="w-4 h-4 sources-shield"></i>
+                    <span class="nav-sources-label">Sources</span>
+                    <span class="nav-sources-count" id="nav-sources-count">0</span>
+                    <i data-lucide="chevron-down" class="w-3 h-3 sources-chevron"></i>
+                </button>
             </div>
 
             <!-- Right: Other buttons -->
@@ -3331,16 +3201,6 @@
             </div>
         </div>
     </nav>
-
-    <!-- Sources Drawer Tab (fixed, positioned below navbar) -->
-    <button id="nav-sources-btn" class="nav-sources-btn" onclick="toggleSourcesBanner()" title="Toggle Sources (S)">
-        <i data-lucide="shield-check" class="w-4 h-4 sources-shield"></i>
-        <span class="nav-sources-label">Sources</span>
-        <span class="nav-sources-count" id="nav-sources-count">0</span>
-        <i data-lucide="chevron-down" class="w-3 h-3 sources-chevron"></i>
-    </button>
-
-    <!-- Theme picker removed - using simple dark/light toggle in nav -->
 
     <!-- VIEW 1: PORTAL -->
     <section id="view-portal" class="view-section active">
@@ -4578,18 +4438,12 @@
                 // Close drawer
                 banner.classList.remove('drawer-open');
                 if (overlay) overlay.classList.remove('active');
-                if (navBtn) {
-                    navBtn.classList.remove('expanded');
-                    navBtn.classList.add('collapsed');
-                }
+                if (navBtn) navBtn.classList.remove('expanded');
             } else {
                 // Open drawer
                 banner.classList.add('drawer-open');
                 if (overlay) overlay.classList.add('active');
-                if (navBtn) {
-                    navBtn.classList.add('expanded');
-                    navBtn.classList.remove('collapsed');
-                }
+                if (navBtn) navBtn.classList.add('expanded');
             }
         }
 
@@ -4613,7 +4467,7 @@
                     if (countEl) countEl.textContent = count;
                 } else {
                     navBtn.classList.remove('visible');
-                    navBtn.classList.remove('collapsed');
+                    navBtn.classList.remove('expanded');
                 }
             }
         }
