@@ -1670,6 +1670,109 @@
             /* Ensure text is above any weird float issues */
         }
 
+        /* === PARENT/CHILD ESSAY NAVIGATION === */
+        .parent-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+            padding: 10px 16px;
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+            border-left: 3px solid var(--accent-blue);
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+
+        .parent-breadcrumb:hover {
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0.1));
+            transform: translateX(4px);
+        }
+
+        .parent-breadcrumb i {
+            opacity: 0.7;
+            transition: transform 0.2s ease;
+        }
+
+        .parent-breadcrumb:hover i {
+            transform: translateX(-3px);
+        }
+
+        /* Child essay badge for Deep Dive label */
+        .child-essay-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #f87171;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 10px;
+        }
+
+        /* Child essay indicator dots on parent article */
+        .child-essays-rail {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 30;
+        }
+
+        .child-essay-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .child-essay-dot:hover {
+            transform: scale(1.4);
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+        }
+
+        .child-essay-dot::after {
+            content: attr(data-title);
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            background: var(--bg-card);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-main);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .child-essay-dot:hover::after {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .child-essays-rail {
+                display: none;
+            }
+        }
+
         /* FLOATS (The Wrapping) */
         /* === STYLE E: HOVER REVEAL INFOGRAPHICS === */
         .float-figure {
@@ -1696,6 +1799,12 @@
             transition: transform 0.3s ease;
         }
 
+        /* Override inline height on inner wrapper to eliminate gap below infographics */
+        .float-figure > div[style*="height"] {
+            height: auto !important;
+            min-height: 150px; /* Ensure charts have minimum space */
+        }
+
         .float-figure:hover img,
         .float-figure:hover canvas {
             transform: scale(1.02);
@@ -1712,8 +1821,8 @@
                 float: right;
                 width: 40%;
                 margin-left: 3rem;
-                margin-bottom: 1.5rem;
-                margin-top: 0.8rem;
+                margin-bottom: 0.75rem;
+                margin-top: 0.5rem;
                 shape-margin: 2rem;
             }
 
@@ -1721,8 +1830,8 @@
                 float: left;
                 width: 40%;
                 margin-right: 3rem;
-                margin-bottom: 1.5rem;
-                margin-top: 0.8rem;
+                margin-bottom: 0.75rem;
+                margin-top: 0.5rem;
                 shape-margin: 2rem;
             }
         }
@@ -3184,7 +3293,7 @@
             </div>
 
             <!-- Center: Article Title (only visible on essay pages) -->
-            <div class="flex-1 flex justify-center items-center gap-4">
+            <div class="flex-1 flex justify-center items-center gap-4" style="z-index: 51; position: relative;">
                 <div id="nav-title-container" class="nav-title-container hidden">
                     <span id="nav-article-title" class="nav-article-title">
                         <span class="title-text"></span>
@@ -3195,17 +3304,12 @@
                 </div>
             </div>
 
-            <!-- Sources Drawer Tab (fixed, positioned below navbar) -->
-            <button id="nav-sources-btn" class="nav-sources-btn" onclick="toggleSourcesBanner()" title="Toggle Sources (S)">
-                <i data-lucide="shield-check" class="w-4 h-4 sources-shield"></i>
-                <span class="nav-sources-label">Sources</span>
-                <span class="nav-sources-count" id="nav-sources-count">0</span>
-                <i data-lucide="chevron-down" class="w-3 h-3 sources-chevron"></i>
-            </button>
-
             <!-- Right: Other buttons -->
             <div class="flex items-center gap-4 flex-1 justify-end">
                 <div class="hidden md:flex gap-6 text-sm font-medium">
+                    <a href="https://gen-ui-essay-demo.vercel.app" target="_blank" class="nav-link" style="color: var(--accent-blue);">
+                        <i data-lucide="flask-conical" class="w-3.5 h-3.5 inline mr-1"></i>Research Lab
+                    </a>
                     <a class="nav-link">Manifesto</a>
                     <a class="nav-link">Methods</a>
                 </div>
@@ -3227,6 +3331,14 @@
             </div>
         </div>
     </nav>
+
+    <!-- Sources Drawer Tab (fixed, positioned below navbar) -->
+    <button id="nav-sources-btn" class="nav-sources-btn" onclick="toggleSourcesBanner()" title="Toggle Sources (S)">
+        <i data-lucide="shield-check" class="w-4 h-4 sources-shield"></i>
+        <span class="nav-sources-label">Sources</span>
+        <span class="nav-sources-count" id="nav-sources-count">0</span>
+        <i data-lucide="chevron-down" class="w-3 h-3 sources-chevron"></i>
+    </button>
 
     <!-- Theme picker removed - using simple dark/light toggle in nav -->
 
@@ -3340,6 +3452,9 @@
 
             <!-- Hidden container for JS compatibility (sources now in tabbed banner above) -->
             <div id="report-sources" style="display: none;"></div>
+
+            <!-- Child Essays Rail (shown when article has child essays) -->
+            <div id="child-essays-rail" class="child-essays-rail hidden"></div>
         </div>
     </section>
 
@@ -4217,6 +4332,200 @@
                     { name: "Reuters: Intel Layoffs Announcement", score: 99, url: "https://www.reuters.com/technology/intel-lay-off-over-15000-employees-part-cost-cutting-plan-2024-08-01/" },
                     { name: "CSIS: China Semiconductor Report", score: 98, url: "https://www.csis.org/analysis/semiconductors-and-taiwan" },
                     { name: "SemiAnalysis: Hyperscaler AI Infrastructure", score: 94, url: "https://www.semianalysis.com/" }
+                ],
+                childEssays: ['intel_collapse_deep_dive']  // Links to child essays
+            },
+            // CHILD ESSAY: Deep dive into Intel's collapse from semiconductor_wars Section 2
+            'intel_collapse_deep_dive': {
+                title: "Death of a Giant: Inside Intel's $200 Billion Collapse",
+                cardTitle: "Intel's Collapse",
+                cardTag: "DEEP DIVE // TECH",
+                cardTagColor: "text-red-400",
+                cardDescription: "How America's chip champion lost the AI race and $200B in market value.",
+                isChildEssay: true,
+                parentEssay: 'semiconductor_wars',
+                parentSection: 'The Intel Implosion',
+                content: `
+                    <!-- Parent Essay Breadcrumb -->
+                    <div class="parent-breadcrumb" onclick="loadReport('semiconductor_wars')">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        <span>Part of: The Silicon Siege</span>
+                    </div>
+
+                    <p class="prose-text"><strong class="text-white">Executive Summary:</strong> Intel was once synonymous with silicon. For decades, <span class="highlight-glow">"Intel Inside"</span> was the most recognized brand in computing. Today, the company is fighting for survival. A catastrophic series of missteps—missed mobile, botched manufacturing transitions, and a complete whiff on AI—has erased over <span class="living-number" data-target="200" data-suffix="B">$0</span> in market value since 2020 <span class="citation-spade" data-id="intel_mcap_loss">♠</span>. CEO <strong class="fractal-trigger" onclick="expandContext(this, 'gelsinger_intel')">Pat Gelsinger's</strong> turnaround plan has failed. The question is no longer whether Intel can catch TSMC—it's whether Intel can survive as an independent company.</p>
+
+                    <h2 class="prose-h2">1. The Road to Ruin: A Timeline of Failure</h2>
+                    <p class="prose-text">Intel's decline wasn't sudden—it was a slow-motion train wreck spanning two decades. In <span class="highlight-glow">2005</span>, then-CEO Paul Otellini rejected Apple's offer to make chips for the iPhone <span class="citation-spade" data-id="apple_reject">♠</span>. He later called it his biggest regret. That single decision handed the mobile revolution to ARM and Samsung. Then came the <strong class="fractal-trigger" onclick="expandContext(this, 'tick_tock')">tick-tock</strong> collapse: Intel's legendary two-year cadence of shrinking transistors stalled at 14nm for <span class="living-number" data-target="5" data-suffix=" years">0</span>, from 2014 to 2019 <span class="citation-spade" data-id="14nm_stall">♠</span>. Meanwhile, TSMC raced ahead. By the time Intel shipped 7nm chips, TSMC was on 3nm.</p>
+
+                    <h2 class="prose-h2">2. The Gelsinger Gambit</h2>
+                    <p class="prose-text">When Pat Gelsinger returned as CEO in 2021, he inherited a company in crisis. His response was audacious: <strong class="fractal-trigger" onclick="expandContext(this, 'idm_2')">IDM 2.0</strong>—a plan to simultaneously build cutting-edge fabs, launch a third-party foundry business, and compete with Nvidia in AI chips <span class="citation-spade" data-id="idm_2_plan">♠</span>. The CHIPS Act promised <span class="living-number" data-target="8.5" data-suffix="B">$0</span> in subsidies <span class="citation-spade" data-id="chips_intel">♠</span>. But execution proved impossible. Intel's <strong class="fractal-trigger" onclick="expandContext(this, 'intel_4')">Intel 4</strong> node was late and disappointing. The foundry division bled <span class="living-number" data-target="7" data-suffix="B">$0</span> in a single year <span class="citation-spade" data-id="foundry_loss">♠</span>. Major customers like Amazon and Microsoft—initially enthusiastic—grew skeptical as deadlines slipped.</p>
+
+                    <h2 class="prose-h2">3. The AI Apocalypse</h2>
+                    <p class="prose-text">Intel's existential crisis crystallized with the AI boom. The company had no answer to Nvidia's H100. <strong class="fractal-trigger" onclick="expandContext(this, 'gaudi')">Intel Gaudi</strong> accelerators shipped to lukewarm reviews and minimal adoption <span class="citation-spade" data-id="gaudi_review">♠</span>. While Nvidia's data center revenue exploded <span class="highlight-glow">216%</span>, Intel's flatlined <span class="citation-spade" data-id="dc_revenue">♠</span>. Even Intel's traditional stronghold—x86 server CPUs—faces extinction as hyperscalers migrate to ARM-based chips like <strong class="fractal-trigger" onclick="expandContext(this, 'graviton')">AWS Graviton</strong> and Google's Axion <span class="citation-spade" data-id="arm_servers">♠</span>. The company that once defined the data center is being pushed out of it.</p>
+
+                    <h2 class="prose-h2">4. The Human Cost: 15,000 Layoffs</h2>
+                    <p class="prose-text">In August 2024, Intel announced plans to cut <span class="living-number" data-target="15" data-suffix=",000">0</span> jobs—more than 15% of its workforce <span class="citation-spade" data-id="layoffs">♠</span>. The cuts spanned engineering, sales, and manufacturing. Oregon communities that had depended on Intel for generations faced economic devastation <span class="citation-spade" data-id="oregon_impact">♠</span>. Former employees described a culture of denial, where bad news was suppressed and problems blamed on individuals rather than systemic failures <span class="citation-spade" data-id="culture">♠</span>. "We knew we were falling behind," one engineer told Bloomberg. "But anyone who said it out loud got pushed out."</p>
+
+                    <h2 class="prose-h2">5. The 18A Last Stand</h2>
+                    <p class="prose-text"><strong class="fractal-trigger" onclick="expandContext(this, 'intel_18a')">Intel 18A</strong> is the company's final chance at redemption. The node—roughly equivalent to TSMC's 2nm—features RibbonFET transistors and PowerVia backside power delivery <span class="citation-spade" data-id="18a_tech">♠</span>. If 18A succeeds, Intel could finally catch TSMC. If it fails, the company may have no choice but to <span class="highlight-glow">split in two</span>—separating design from manufacturing, just as AMD did in 2008. Analysts at Raymond James put the probability of an Intel breakup at <span class="living-number" data-target="40" data-suffix="%">0</span> <span class="citation-spade" data-id="breakup_odds">♠</span>. Others suggest acquisition by private equity or even a government takeover as a "national champion."</p>
+
+                    <h2 class="prose-h2">6. What Comes Next</h2>
+                    <p class="prose-text">Gelsinger's December 2024 departure leaves Intel rudderless at the worst possible moment <span class="citation-spade" data-id="gelsinger_exit">♠</span>. Interim co-CEOs CFO David Zinsner and product chief Michelle Holthaus have no manufacturing experience. The board is reportedly divided between those who want to stay the course on IDM 2.0 and those pushing for a radical breakup <span class="citation-spade" data-id="board_divide">♠</span>. Meanwhile, TSMC marches ahead—2nm production starts in 2025, angstrom-scale nodes are roadmapped through 2030. For America's semiconductor champion, time has run out.</p>
+                `,
+                chartType: 'none',
+                citationDatabase: {
+                    intel_mcap_loss: {
+                        domain: "yahoo.com",
+                        trustScore: 97,
+                        title: "Intel Market Cap Historical Data",
+                        snippet: "Intel's market cap fell from $290B in early 2020 to under $90B by late 2024.",
+                        url: "https://finance.yahoo.com/quote/INTC/"
+                    },
+                    apple_reject: {
+                        domain: "theatlantic.com",
+                        trustScore: 98,
+                        title: "Paul Otellini's Biggest Regret",
+                        snippet: "Former Intel CEO Paul Otellini called rejecting Apple's iPhone chip deal his biggest regret.",
+                        url: "https://www.theatlantic.com/technology/archive/2013/05/paul-otellinis-intel-can-the-company-that-built-the-future-find-it-again/275821/"
+                    },
+                    14nm_stall: {
+                        domain: "anandtech.com",
+                        trustScore: 95,
+                        title: "Intel's 14nm Era: 2014-2019",
+                        snippet: "Intel remained on its 14nm process for five years, from Broadwell (2014) to Ice Lake (2019).",
+                        url: "https://www.anandtech.com/show/16084/intel-10nm-ice-lake"
+                    },
+                    idm_2_plan: {
+                        domain: "intel.com",
+                        trustScore: 100,
+                        title: "Intel IDM 2.0 Strategy Announcement",
+                        snippet: "Pat Gelsinger unveiled IDM 2.0 in March 2021, promising $20B in fab investments.",
+                        url: "https://www.intel.com/content/www/us/en/newsroom/news/idm-manufacturing-innovation-product-702702.html"
+                    },
+                    chips_intel: {
+                        domain: "commerce.gov",
+                        trustScore: 100,
+                        title: "CHIPS Act Awards: Intel",
+                        snippet: "Intel to receive up to $8.5 billion in CHIPS Act funding for U.S. manufacturing expansion.",
+                        url: "https://www.commerce.gov/news/press-releases/2024/03/biden-harris-administration-announces-preliminary-terms-intel"
+                    },
+                    foundry_loss: {
+                        domain: "cnbc.com",
+                        trustScore: 98,
+                        title: "Intel Foundry $7B Loss",
+                        snippet: "Intel's foundry business posted a $7 billion operating loss in 2023.",
+                        url: "https://www.cnbc.com/2024/04/02/intel-foundry-lost-7-billion-from-operations-last-year.html"
+                    },
+                    gaudi_review: {
+                        domain: "semianalysis.com",
+                        trustScore: 94,
+                        title: "Intel Gaudi Analysis",
+                        snippet: "Intel's Gaudi AI accelerators lag Nvidia's offerings in both performance and software ecosystem.",
+                        url: "https://www.semianalysis.com/"
+                    },
+                    dc_revenue: {
+                        domain: "intel.com",
+                        trustScore: 100,
+                        title: "Intel Q3 2024 Earnings",
+                        snippet: "Intel's data center group revenue remained flat year-over-year as AI workloads shifted to GPUs.",
+                        url: "https://www.intc.com/news-events/press-releases/"
+                    },
+                    arm_servers: {
+                        domain: "techcrunch.com",
+                        trustScore: 96,
+                        title: "ARM Server Adoption Accelerates",
+                        snippet: "AWS Graviton, Google Axion, and Microsoft Cobalt are displacing Intel Xeon in cloud data centers.",
+                        url: "https://techcrunch.com/tag/arm-servers/"
+                    },
+                    layoffs: {
+                        domain: "reuters.com",
+                        trustScore: 99,
+                        title: "Intel Layoffs August 2024",
+                        snippet: "Intel announced plans to cut 15,000+ jobs as part of $10 billion cost reduction plan.",
+                        url: "https://www.reuters.com/technology/intel-cut-over-15-workforce-part-cost-reduction-plan-2024-08-01/"
+                    },
+                    oregon_impact: {
+                        domain: "oregonlive.com",
+                        trustScore: 93,
+                        title: "Intel Layoffs Hit Oregon Hard",
+                        snippet: "Intel's cuts devastate Oregon communities that have depended on the chipmaker for decades.",
+                        url: "https://www.oregonlive.com/business/"
+                    },
+                    culture: {
+                        domain: "bloomberg.com",
+                        trustScore: 99,
+                        title: "Inside Intel's Culture Problems",
+                        snippet: "Former employees describe a culture where bad news was suppressed and critics pushed out.",
+                        url: "https://www.bloomberg.com/news/features/intel-culture"
+                    },
+                    18a_tech: {
+                        domain: "anandtech.com",
+                        trustScore: 95,
+                        title: "Intel 18A Technology Deep Dive",
+                        snippet: "Intel 18A features RibbonFET GAA transistors and PowerVia backside power delivery.",
+                        url: "https://www.anandtech.com/show/intel-18a"
+                    },
+                    breakup_odds: {
+                        domain: "barrons.com",
+                        trustScore: 97,
+                        title: "Intel Breakup Analysis",
+                        snippet: "Raymond James analysts estimate 40% probability Intel splits manufacturing from design.",
+                        url: "https://www.barrons.com/articles/intel-stock-breakup/"
+                    },
+                    gelsinger_exit: {
+                        domain: "wsj.com",
+                        trustScore: 99,
+                        title: "Pat Gelsinger Forced Out at Intel",
+                        snippet: "Intel CEO Pat Gelsinger was forced to retire in December 2024 after board lost confidence.",
+                        url: "https://www.wsj.com/tech/intel-ceo-pat-gelsinger-retire"
+                    },
+                    board_divide: {
+                        domain: "ft.com",
+                        trustScore: 98,
+                        title: "Intel Board Divided on Strategy",
+                        snippet: "Intel's board reportedly split between continuing IDM 2.0 and pursuing a radical breakup.",
+                        url: "https://www.ft.com/content/intel-board-strategy"
+                    }
+                },
+                contextData: {
+                    gelsinger_intel: {
+                        expanded: "Pat Gelsinger spent 30 years at Intel before leaving in 2009. He returned as CEO in February 2021 with a mandate to restore Intel's manufacturing leadership. His IDM 2.0 strategy bet everything on simultaneously competing with TSMC in foundry services while catching up in process technology. The bet failed—Intel fell further behind during his tenure."
+                    },
+                    tick_tock: {
+                        expanded: "Intel's 'tick-tock' model alternated between shrinking transistors (tick) and improving architecture (tock) every year. This cadence made Intel the undisputed leader in semiconductor manufacturing for decades. The model broke down at 14nm due to manufacturing complexity, and Intel never recovered its rhythm."
+                    },
+                    idm_2: {
+                        expanded: "IDM 2.0 (Integrated Device Manufacturing 2.0) was Gelsinger's master plan: build cutting-edge fabs in the U.S., launch Intel Foundry Services to compete with TSMC, and use third-party fabs for some products. The strategy required executing on multiple fronts simultaneously—something Intel proved unable to do."
+                    },
+                    intel_4: {
+                        expanded: "Intel 4 (formerly Intel 7nm) was the company's first EUV-based process node. It debuted in late 2023, years behind schedule. While competitive with TSMC's 7nm, it arrived when TSMC was already shipping 3nm products. The node powers Meteor Lake laptop chips but has seen limited adoption."
+                    },
+                    gaudi: {
+                        expanded: "Intel Gaudi is an AI accelerator family acquired from Habana Labs in 2019 for $2 billion. Despite competitive benchmarks in some workloads, Gaudi has gained minimal market share due to Nvidia's dominant CUDA software ecosystem. Intel's AI revenue remains a rounding error compared to Nvidia's billions."
+                    },
+                    graviton: {
+                        expanded: "AWS Graviton is Amazon's custom ARM-based server CPU, now in its fourth generation. Graviton offers better price-performance than Intel Xeon for many cloud workloads, driving AWS to migrate internal services away from Intel. Google's Axion and Microsoft's Cobalt follow similar strategies."
+                    },
+                    intel_18a: {
+                        expanded: "Intel 18A is the company's most advanced planned process node, featuring RibbonFET (Intel's gate-all-around transistor) and PowerVia (backside power delivery). Scheduled for late 2025, it represents Intel's last chance to regain process leadership. Microsoft has committed to using 18A, but the deal is reportedly troubled."
+                    }
+                },
+                sources: [
+                    { name: "CNBC: Intel Gelsinger Exit", score: 98, url: "https://www.cnbc.com/2024/12/02/intel-ceo-pat-gelsinger-to-retire.html" },
+                    { name: "Reuters: Intel 15,000 Layoffs", score: 99, url: "https://www.reuters.com/technology/intel-cut-over-15-workforce-part-cost-reduction-plan-2024-08-01/" },
+                    { name: "AnandTech: Intel Process Technology", score: 95, url: "https://www.anandtech.com/tag/intel" },
+                    { name: "Commerce.gov: CHIPS Act Intel Award", score: 100, url: "https://www.commerce.gov/news/press-releases/2024/03/biden-harris-administration-announces-preliminary-terms-intel" },
+                    { name: "Wall Street Journal: Intel Strategy Crisis", score: 99, url: "https://www.wsj.com/tech/intel" },
+                    { name: "SemiAnalysis: Intel Foundry Analysis", score: 94, url: "https://www.semianalysis.com/" },
+                    { name: "Financial Times: Intel Board Dynamics", score: 98, url: "https://www.ft.com/content/intel" },
+                    { name: "Bloomberg: Intel Culture Investigation", score: 99, url: "https://www.bloomberg.com/news/features/intel" },
+                    { name: "TechCrunch: ARM Server Market", score: 96, url: "https://techcrunch.com/tag/arm-servers/" },
+                    { name: "Barron's: Intel Breakup Analysis", score: 97, url: "https://www.barrons.com/articles/intel-stock" },
+                    { name: "The Atlantic: Otellini's Regret", score: 98, url: "https://www.theatlantic.com/technology/" },
+                    { name: "OregonLive: Intel Local Impact", score: 93, url: "https://www.oregonlive.com/business/" },
+                    { name: "Intel Investor Relations", score: 100, url: "https://www.intc.com/" },
+                    { name: "Yahoo Finance: Intel Historical Data", score: 97, url: "https://finance.yahoo.com/quote/INTC/" },
+                    { name: "Deloitte: Semiconductor Outlook 2025", score: 99, url: "https://www.deloitte.com/us/en/insights/industry/technology/technology-media-telecom-outlooks/semiconductor-industry-outlook.html" }
                 ]
             },
             'plastic_bottles_bpa_toxins_bodies': {
@@ -4537,6 +4846,36 @@
                 `;
             } else {
                 sourceContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.8rem; font-style: italic;">No sources available.</p>';
+            }
+
+            // === CHILD ESSAYS RAIL ===
+            const childEssaysRail = document.getElementById('child-essays-rail');
+            if (data.childEssays && data.childEssays.length > 0) {
+                // Build child essays indicators
+                const childEssaysHTML = data.childEssays.map((childKey, idx) => {
+                    const childData = reports[childKey];
+                    if (!childData) return '';
+                    return `
+                        <div class="child-essay-dot" onclick="loadReport('${childKey}')" title="${childData.cardTitle || childData.title}">
+                            <div class="dot-indicator"></div>
+                            <div class="dot-label">${childData.cardTitle || 'Deep Dive ' + (idx + 1)}</div>
+                        </div>
+                    `;
+                }).join('');
+
+                childEssaysRail.innerHTML = `
+                    <div class="rail-header">
+                        <i data-lucide="git-branch" class="w-4 h-4"></i>
+                        <span>Deep Dives</span>
+                    </div>
+                    <div class="rail-dots">
+                        ${childEssaysHTML}
+                    </div>
+                `;
+                childEssaysRail.classList.remove('hidden');
+            } else {
+                childEssaysRail.classList.add('hidden');
+                childEssaysRail.innerHTML = '';
             }
 
             // Re-init icons for the new elements
@@ -5837,16 +6176,20 @@
 
             if (!featuredContainer) return;
 
-            // Get all reports with card metadata
+            // Get all reports with card metadata (excluding child essays)
             const allArticles = [];
             for (const [key, report] of Object.entries(reports)) {
+                // Skip child essays - they're accessed via parent articles
+                if (report.isChildEssay) continue;
+
                 if (report.cardTitle) {
                     allArticles.push({
                         key,
                         title: report.cardTitle,
                         tag: report.cardTag || 'INVESTIGATION',
                         tagColor: report.cardTagColor || 'text-blue-700',
-                        description: report.cardDescription || ''
+                        description: report.cardDescription || '',
+                        hasChildEssays: report.childEssays && report.childEssays.length > 0
                     });
                 }
             }

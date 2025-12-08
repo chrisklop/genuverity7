@@ -5,7 +5,7 @@ This file provides guidance to Claude Code when working with this repository. **
 ## Session Continuity
 
 **IMPORTANT FOR NEW SESSIONS**: This project has active development context. Before making changes:
-1. Check `docs/SESSION_STATE.md` for current work-in-progress
+1. Check `docs/ROADMAP.md` for current priorities and future plans
 2. Review recent git commits: `git log --oneline -10`
 3. Ask user about current priorities
 
@@ -215,9 +215,11 @@ GenuVerity7/
 ├── templates/
 │   └── essay_config.json # Template configuration
 ├── article_cache/        # Local cache (dev only)
+├── infographics/         # Pre-generated Gemini infographics (PNG)
 ├── docs/
-│   └── SESSION_STATE.md  # Current work state (if exists)
+│   └── ROADMAP.md        # Feature roadmap & future plans
 ├── index.html            # Full frontend SPA
+├── comparison.html       # Infographic style comparison tool
 ├── CLAUDE.md             # This file
 ├── requirements.txt      # Python dependencies
 └── vercel.json           # Vercel config

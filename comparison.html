@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic Style Comparison</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #050505;
+            --bg-surface: #0a0a0f;
+            --text-main: #e2e2e5;
+            --text-muted: #8a8a9a;
+            --accent-blue: #3b82f6;
+            --border-color: rgba(100, 100, 120, 0.2);
+            --chart-bg: rgba(15, 15, 20, 0.95);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .style-section {
+            padding: 1.5rem;
+            background: var(--bg-surface);
+            border-radius: 16px;
+        }
+
+        .style-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--accent-blue);
+        }
+
+        .sample-article {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-main);
+        }
+
+        /* ============================================ */
+        /* STYLE A: CURRENT (Card Frame) */
+        /* ============================================ */
+        .style-a .float-figure {
+            width: 100%;
+            margin: 1.5rem 0;
+            background: var(--chart-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .style-a .float-figure img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .style-a .fig-caption {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .style-a .fig-deep-dive {
+            color: var(--accent-blue);
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        /* ============================================ */
+        /* STYLE B: FRAMELESS */
+        /* ============================================ */
+        .style-b .float-figure {
+            width: 100%;
+            margin: 1.5rem 0;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .style-b .float-figure img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .style-b .fig-caption {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-align: left;
+            margin-top: 8px;
+            padding-left: 4px;
+        }
+
+        .style-b .fig-deep-dive {
+            color: var(--accent-blue);
+            cursor: pointer;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+
+        /* ============================================ */
+        /* STYLE C: ACCENT LINE */
+        /* ============================================ */
+        .style-c .float-figure {
+            width: 100%;
+            margin: 1.5rem 0;
+            background: transparent;
+            border: none;
+            border-left: 3px solid var(--accent-blue);
+            padding: 0 0 0 12px;
+        }
+
+        .style-c .float-figure img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        .style-c .fig-caption {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-align: left;
+            margin-top: 8px;
+        }
+
+        .style-c .fig-deep-dive {
+            color: var(--accent-blue);
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        /* ============================================ */
+        /* STYLE D: OVERLAY CAPTION */
+        /* ============================================ */
+        .style-d .float-figure {
+            width: 100%;
+            margin: 1.5rem 0;
+            background: transparent;
+            border: none;
+            padding: 0;
+            position: relative;
+        }
+
+        .style-d .float-figure img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .style-d .fig-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: #fff;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 2rem 0.75rem 0.5rem;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .style-d .fig-deep-dive {
+            color: var(--accent-blue);
+            cursor: pointer;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        /* ============================================ */
+        /* STYLE E: HOVER REVEAL */
+        /* ============================================ */
+        .style-e .float-figure {
+            width: 100%;
+            margin: 1.5rem 0;
+            background: transparent;
+            border: none;
+            padding: 0;
+            position: relative;
+        }
+
+        .style-e .float-figure img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.2s ease;
+        }
+
+        .style-e .float-figure:hover img {
+            transform: scale(1.01);
+        }
+
+        .style-e .fig-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: #fff;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 2rem 0.75rem 0.5rem;
+            border-radius: 0 0 8px 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .style-e .float-figure:hover .fig-caption {
+            opacity: 1;
+        }
+
+        .style-e .fig-deep-dive {
+            color: var(--accent-blue);
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        /* ============================================ */
+        /* STYLE F: MINIMAL BOTTOM LINE */
+        /* ============================================ */
+        .style-f .float-figure {
+            width: 100%;
+            margin: 1.5rem 0;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .style-f .float-figure img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .style-f .fig-caption {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: linear-gradient(90deg, var(--accent-blue), transparent);
+            padding: 8px 12px;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .style-f .fig-deep-dive {
+            color: #fff;
+            cursor: pointer;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <h1>Infographic Style Comparison</h1>
+
+    <div class="comparison-grid">
+        <!-- Style A: Current -->
+        <div class="style-section style-a">
+            <div class="style-title">A. Current (Card Frame)</div>
+            <div class="sample-article">
+                <p>The semiconductor industry faces unprecedented challenges as TSMC maintains its dominant position...</p>
+
+                <div class="float-figure">
+                    <img src="/infographics/semiconductor_crisis_chart_tsmc_share.png" alt="TSMC Market Share">
+                    <div class="fig-caption">Fig 1. TSMC Global Foundry Market Share <span class="fig-deep-dive">DEEP DIVE</span></div>
+                </div>
+
+                <p>This concentration of manufacturing capability creates systemic risks for the entire global technology supply chain.</p>
+            </div>
+        </div>
+
+        <!-- Style B: Frameless -->
+        <div class="style-section style-b">
+            <div class="style-title">B. Frameless (Clean)</div>
+            <div class="sample-article">
+                <p>The semiconductor industry faces unprecedented challenges as TSMC maintains its dominant position...</p>
+
+                <div class="float-figure">
+                    <img src="/infographics/semiconductor_crisis_chart_tsmc_share.png" alt="TSMC Market Share">
+                    <div class="fig-caption">Fig 1. TSMC Global Foundry Market Share <span class="fig-deep-dive">DEEP DIVE</span></div>
+                </div>
+
+                <p>This concentration of manufacturing capability creates systemic risks for the entire global technology supply chain.</p>
+            </div>
+        </div>
+
+        <!-- Style C: Accent Line -->
+        <div class="style-section style-c">
+            <div class="style-title">C. Accent Line (Editorial)</div>
+            <div class="sample-article">
+                <p>The semiconductor industry faces unprecedented challenges as TSMC maintains its dominant position...</p>
+
+                <div class="float-figure">
+                    <img src="/infographics/semiconductor_crisis_chart_tsmc_share.png" alt="TSMC Market Share">
+                    <div class="fig-caption">Fig 1. TSMC Global Foundry Market Share <span class="fig-deep-dive">DEEP DIVE</span></div>
+                </div>
+
+                <p>This concentration of manufacturing capability creates systemic risks for the entire global technology supply chain.</p>
+            </div>
+        </div>
+
+        <!-- Style D: Overlay Caption -->
+        <div class="style-section style-d">
+            <div class="style-title">D. Overlay Caption</div>
+            <div class="sample-article">
+                <p>The semiconductor industry faces unprecedented challenges as TSMC maintains its dominant position...</p>
+
+                <div class="float-figure">
+                    <img src="/infographics/semiconductor_crisis_chart_tsmc_share.png" alt="TSMC Market Share">
+                    <div class="fig-caption">Fig 1. TSMC Global Foundry Market Share <span class="fig-deep-dive">DEEP DIVE</span></div>
+                </div>
+
+                <p>This concentration of manufacturing capability creates systemic risks for the entire global technology supply chain.</p>
+            </div>
+        </div>
+
+        <!-- Style E: Hover Reveal -->
+        <div class="style-section style-e">
+            <div class="style-title">E. Hover Reveal (hover to see caption)</div>
+            <div class="sample-article">
+                <p>The semiconductor industry faces unprecedented challenges as TSMC maintains its dominant position...</p>
+
+                <div class="float-figure">
+                    <img src="/infographics/semiconductor_crisis_chart_tsmc_share.png" alt="TSMC Market Share">
+                    <div class="fig-caption">Fig 1. TSMC Global Foundry Market Share <span class="fig-deep-dive">DEEP DIVE</span></div>
+                </div>
+
+                <p>This concentration of manufacturing capability creates systemic risks for the entire global technology supply chain.</p>
+            </div>
+        </div>
+
+        <!-- Style F: Bottom Accent -->
+        <div class="style-section style-f">
+            <div class="style-title">F. Bottom Accent Bar</div>
+            <div class="sample-article">
+                <p>The semiconductor industry faces unprecedented challenges as TSMC maintains its dominant position...</p>
+
+                <div class="float-figure">
+                    <img src="/infographics/semiconductor_crisis_chart_tsmc_share.png" alt="TSMC Market Share">
+                    <div class="fig-caption">Fig 1. TSMC Global Foundry Market Share <span class="fig-deep-dive">DEEP DIVE</span></div>
+                </div>
+
+                <p>This concentration of manufacturing capability creates systemic risks for the entire global technology supply chain.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
