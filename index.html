@@ -3358,7 +3358,7 @@
                 content: `
                     <p class="prose-text"><strong class="text-white">Executive Summary:</strong> The technology sector is navigating a <span class="highlight-glow">"Capital Intensity" mismatch</span> of historic proportions. As of June 2024, the gap between AI infrastructure spending and revenue has widened to <span class="living-number" data-target="600" data-suffix="B">$0</span> annually <span class="citation-spade" data-id="sequoia_gap">♠</span>. This investigation analyzes the "Capex Wall," led by a disconnect between the projected <span class="living-number" data-target="1000" data-suffix="B">$0</span> spending spree <span class="citation-spade" data-id="goldman_trillion">♠</span> and the physical realities of depreciation and energy. The concentration of AI spending among just five hyperscalers—Microsoft, Google, Amazon, Meta, and Oracle—represents <span class="living-number" data-target="65" data-suffix="%">0</span> of all data center capex <span class="citation-spade" data-id="hyperscaler_share">♠</span>.</p>
 
-                    <h2 class="prose-h2">1. The Capex Reality Check</h2>
+                    <h2 class="prose-h2">1. The Capex Reality Check <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="AI Infrastructure Capital Expenditure Analysis">DEEP DIVE</span></h2>
 
                     <div class="float-figure right">
                          <div style="height: 250px;"><canvas id="chart_capex"></canvas></div>
@@ -3367,10 +3367,10 @@
 
                     <p class="prose-text">The arithmetic of the AI boom is unforgiving. According to Goldman Sachs, tech giants and utilities are set to invest over <span class="highlight-glow">$1 Trillion</span> in capacity over the next few years <span class="citation-spade" data-id="goldman_trillion">♠</span>. Jim Covello, Head of Global Equity Research, argues that the technology is <strong>"exceptionally expensive"</strong> and must solve <strong>"extremely complex problems"</strong> to justify this cost—something it is not currently doing <span class="citation-spade" data-id="covello_skeptic">♠</span>. Unlike the internet transition, which replaced high-cost barriers with low-cost software, AI replaces low-cost labor with high-cost compute. For context, the entire current generative AI market generates less than <span class="living-number" data-target="100" data-suffix="B">$0</span> in revenue, creating a massive disparity between money out the door and money coming in <span class="citation-spade" data-id="gen_ai_revenue">♠</span>. Microsoft's AI-related capex alone hit <span class="living-number" data-target="55" data-suffix="B">$0</span> in fiscal 2024 <span class="citation-spade" data-id="msft_capex">♠</span>.</p>
 
-                    <h2 class="prose-h2">2. The $600 Billion Question</h2>
+                    <h2 class="prose-h2">2. The $600 Billion Question <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Sequoia's AI Revenue Math and the $600B Gap">DEEP DIVE</span></h2>
                     <p class="prose-text">Sequoia Capital partner David Cahn updated his famous "AI Revenue Math" in June 2024, revealing that the "hole" has <span class="highlight-glow">tripled</span>. The industry now needs to generate <strong class="fractal-trigger" onclick="expandContext(this, 'sequoia_math')">$600 billion in annual revenue</strong> just to pay back the current hardware investment <span class="citation-spade" data-id="sequoia_gap">♠</span>. This figure is derived by doubling Nvidia's run-rate revenue (to account for total data center costs) and doubling it again to account for a 50% gross margin for end-users <span class="citation-spade" data-id="sequoia_method">♠</span>. This implies that for every $1 spent on a GPU, the end ecosystem needs to produce $4 in value—a multiple that we are historically far from achieving. OpenAI, the flagship AI company, is reportedly burning <span class="living-number" data-target="5" data-suffix="B">$0</span> annually while generating only $3.4B in revenue <span class="citation-spade" data-id="openai_burn">♠</span>.</p>
 
-                    <h2 class="prose-h2">3. The Depreciation Bomb</h2>
+                    <h2 class="prose-h2">3. The Depreciation Bomb <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="GPU Depreciation Cycles and the Red Queen Effect">DEEP DIVE</span></h2>
                     <div class="float-figure left">
                         <div style="height: 250px;"><canvas id="chart_allocation"></canvas></div>
                         <div class="fig-caption">Fig 2. The Value Decay (H100 vs Standard Server) <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
@@ -3378,7 +3378,7 @@
 
                     <p class="prose-text">The core risk is not demand, but <strong>depreciation</strong>. In the Cloud 1.0 era, AWS and Azure servers had a useful lifespan of <span class="living-number" data-target="6" data-suffix=" Years">0</span> <span class="citation-spade" data-id="aws_lifespan">♠</span>. AI infrastructure, however, relies on GPUs like the Nvidia H100. Due to the <strong class="fractal-trigger" onclick="expandContext(this, 'red_queen')">Red Queen</strong> race, these chips face a <strong class="fractal-trigger" onclick="expandContext(this, 'obsolescence')">3-4 year obsolescence cycle</strong>. Nvidia's Blackwell B100 offers <span class="highlight-glow">2.5x the performance</span> of the H100 <span class="citation-spade" data-id="nvidia_perf">♠</span>, rendering previous clusters economically obsolete before they can be paid off. By the time a $5 billion supercluster is fully operational, the silicon inside it is already being outperformed by a chip that is faster and cheaper, destroying the unit economics of the original fleet.</p>
 
-                    <h2 class="prose-h2">4. The Physical Limits: Energy</h2>
+                    <h2 class="prose-h2">4. The Physical Limits: Energy <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Data Center Energy Crisis and Nuclear Power Deals">DEEP DIVE</span></h2>
                     <div class="float-figure right">
                         <div style="height: 250px;"><canvas id="chart_energy_demand"></canvas></div>
                         <div class="fig-caption">Fig 3. Data Center Energy Demand Projection <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
@@ -3386,7 +3386,7 @@
 
                     <p class="prose-text">The digital world is hitting a physical wall. The IEA forecasts that global data center electricity consumption will <span class="highlight-glow">double by 2026</span>, reaching <span class="living-number" data-target="1000" data-suffix=" TWh">0</span>—roughly the consumption of Japan <span class="citation-spade" data-id="iea_demand">♠</span>. This demand has forced Microsoft to sign a 20-year deal to restart the <strong class="fractal-trigger" onclick="expandContext(this, 'three_mile_island')">Three Mile Island</strong> nuclear plant <span class="citation-spade" data-id="tmi_deal">♠</span>. The facility will provide ~835 MW of carbon-free energy, but at a premium price of over <span class="living-number" data-target="100" data-suffix="/MWh">$0</span> <span class="citation-spade" data-id="tmi_cost">♠</span>. Amazon has similarly acquired a <strong class="fractal-trigger" onclick="expandContext(this, 'nuclear_deals')">960 MW nuclear-powered data center</strong> in Pennsylvania <span class="citation-spade" data-id="amazon_nuclear">♠</span>. This energy constraint acts as a hard ceiling on how fast the "intelligence" can actually scale.</p>
 
-                    <h2 class="prose-h2">5. Conclusion: Railroad or Enron?</h2>
+                    <h2 class="prose-h2">5. Conclusion: Railroad or Enron? <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Historical Tech Bubble Comparisons: Railroads, Dot-com, and AI">DEEP DIVE</span></h2>
                     <div class="float-figure left">
                         <div id="plotlyForceChart" style="height: 350px;"></div>
                         <div class="fig-caption">Fig 4. Historical Bubbles: Investment Scale <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
@@ -3548,7 +3548,7 @@
                 content: `
                     <p class="prose-text"><strong class="text-white">Executive Summary:</strong> The "Smart Money" isn't on Wall Street; it's on Capitol Hill. In 2024, the average trading member of Congress <span class="highlight-glow">outperformed the S&P 500</span> yet again. House Democrats achieved an unrivaled <span class="living-number" data-target="31" data-suffix="%">0</span> return, while Republicans secured <span class="living-number" data-target="26" data-suffix="%">0</span> <span class="citation-spade" data-id="unusual_whales_2024">♠</span>. This statistical anomaly suggests systemic access to <strong class="fractal-trigger" onclick="expandContext(this, 'legislative_alpha')">"Legislative Alpha"</strong>—non-public information that moves markets before the public knows why. Over <span class="living-number" data-target="9000" data-suffix="">0</span> individual trades were made by members in 2024 <span class="citation-spade" data-id="trade_volume">♠</span>.</p>
 
-                    <h2 class="prose-h2">1. The Performance Gap</h2>
+                    <h2 class="prose-h2">1. The Performance Gap <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Congressional Stock Trading Returns vs Market Benchmarks">DEEP DIVE</span></h2>
 
                     <div class="float-figure right">
                         <div style="height: 250px;"><canvas id="chart_returns"></canvas></div>
@@ -3557,7 +3557,7 @@
 
                     <p class="prose-text">Beating the market is notoriously difficult; <span class="living-number" data-target="90" data-suffix="%">0</span> of active fund managers fail to do it over a 10-year period <span class="citation-spade" data-id="spiva_report">♠</span>. Yet, Congress does it consistently. The S&P 500 delivered a respectable <span class="living-number" data-target="25" data-suffix="%">0</span> return in 2024, driven by the "Magnificent 7" tech rally <span class="citation-spade" data-id="sp500_stat">♠</span>. However, elected officials significantly outpaced this benchmark. This "Alpha" is not evenly distributed; it is highly concentrated in members who sit on influential committees like <strong class="fractal-trigger" onclick="expandContext(this, 'armed_services')">Armed Services</strong> and <strong class="fractal-trigger" onclick="expandContext(this, 'energy_committee')">Energy and Commerce</strong>, where contract awards are decided weeks in advance.</p>
 
-                    <h2 class="prose-h2">2. The "Sector Bias" Strategy</h2>
+                    <h2 class="prose-h2">2. The "Sector Bias" Strategy <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Partisan Portfolio Construction and Legislative Calendar Correlation">DEEP DIVE</span></h2>
                     <p class="prose-text">The data reveals a stark partisan divide in portfolio construction. Democrats leaned heavily into <span class="highlight-glow">Technology</span> ($NANC ETF up 27%), riding the AI wave early <span class="citation-spade" data-id="nanc_return">♠</span>. Republicans favored <span class="highlight-glow">Energy & Financials</span> ($KRUZ ETF up 14%), aligning with deregulatory agendas <span class="citation-spade" data-id="kruz_return">♠</span>. This is not just investing; it is specific, sector-level betting that correlates alarmingly well with the legislative calendar. Representative <strong class="fractal-trigger" onclick="expandContext(this, 'nancy_pelosi')">Nancy Pelosi's</strong> portfolio gained an estimated <span class="living-number" data-target="71" data-suffix="%">0</span> in 2024 <span class="citation-spade" data-id="pelosi_return">♠</span>. When a new defense bill is drafted, defense stocks in congressional portfolios mysteriously tick up <em>before</em> the text is public.</p>
 
                     <div class="float-figure left">
@@ -3565,10 +3565,10 @@
                         <div class="fig-caption">Fig 2. The Partisan Portfolio Split <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
                     </div>
 
-                    <h2 class="prose-h2">3. The Top Traders of 2024</h2>
+                    <h2 class="prose-h2">3. The Top Traders of 2024 <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Individual Congressional Traders and Suspicious Trading Patterns">DEEP DIVE</span></h2>
                     <p class="prose-text">While aggregate performance is striking, individual members exhibit even more suspicious patterns. Representative <strong class="fractal-trigger" onclick="expandContext(this, 'marjorie_greene')">Marjorie Taylor Greene</strong> reported over <span class="living-number" data-target="700" data-suffix="">0</span> trades in 2024, many in volatile tech stocks <span class="citation-spade" data-id="mtg_trades">♠</span>. Senator <strong class="fractal-trigger" onclick="expandContext(this, 'tommy_tuberville')">Tommy Tuberville</strong>, who sits on the Armed Services Committee, made trades in defense contractors within days of committee briefings <span class="citation-spade" data-id="tuberville_timing">♠</span>. The pattern is clear: those with the most access to material non-public information trade the most aggressively.</p>
 
-                    <h2 class="prose-h2">4. The $200 "Speed Bump"</h2>
+                    <h2 class="prose-h2">4. The $200 "Speed Bump" <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="STOCK Act Enforcement Failures and Penalty Analysis">DEEP DIVE</span></h2>
                     <div class="float-figure right">
                         <div style="height: 250px;"><canvas id="chart_violations"></canvas></div>
                         <div class="fig-caption">Fig 3. STOCK Act Violations (2021-2024) <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
@@ -3576,7 +3576,7 @@
 
                     <p class="prose-text">Why does this persist? Because the penalty for corruption is cheaper than a parking ticket. The <strong class="fractal-trigger" onclick="expandContext(this, 'stock_act')">STOCK Act</strong> requires trades to be disclosed within 45 days. The fine for violating this law is a mere <span class="living-number" data-target="200" data-suffix=" Dollars">$0</span> <span class="citation-spade" data-id="stock_fine">♠</span>. In 2024, <span class="living-number" data-target="78" data-suffix="">0</span> members filed late disclosures—sometimes months overdue <span class="citation-spade" data-id="late_filers">♠</span>. Without a <strong class="fractal-trigger" onclick="expandContext(this, 'blind_trust')">blind trust mandate</strong>, this $200 fee is simply the cost of doing business. Representative <strong class="fractal-trigger" onclick="expandContext(this, 'dan_crenshaw')">Dan Crenshaw</strong> was fined $200 for filing 11 months late—while sitting on the Energy and Commerce Committee <span class="citation-spade" data-id="crenshaw_fine">♠</span>.</p>
 
-                    <h2 class="prose-h2">5. The Path Forward: Ban or Regulate?</h2>
+                    <h2 class="prose-h2">5. The Path Forward: Ban or Regulate? <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Congressional Trading Reform Proposals and Political Obstacles">DEEP DIVE</span></h2>
                     <p class="prose-text">Reform proposals range from complete trading bans to enhanced disclosure requirements. The <strong class="fractal-trigger" onclick="expandContext(this, 'bipartisan_ban')">bipartisan TRUST in Congress Act</strong> would require members to place assets in blind trusts, but it has stalled in committee for three years <span class="citation-spade" data-id="trust_act">♠</span>. Public polling shows <span class="living-number" data-target="76" data-suffix="%">0</span> of Americans support banning congressional stock trading <span class="citation-spade" data-id="public_polling">♠</span>—but the foxes guarding the henhouse show little appetite for self-regulation. Until voters demand action, the Congressional Alpha will continue to compound.</p>
                 `,
                 chartType: 'congress',
@@ -3732,7 +3732,7 @@
                 content: `
                     <p class="prose-text"><strong class="text-white">Executive Summary:</strong> The US campaign finance system has evolved from a regulatory framework into a mechanism for personal enrichment. Recent analysis by <em>Issue One</em> reveals that over <span class="living-number" data-target="120" data-suffix="">0</span> members of Congress used their <strong class="fractal-trigger" onclick="expandContext(this, 'leadership_pacs')">Leadership PACs</strong> to spend less than <span class="living-number" data-target="50" data-suffix="%">0</span> of their funds on actual political contributions <span class="citation-spade" data-id="issue_one_report">♠</span>. The rest was funneled into "lifestyle amenities"—five-star resorts, fine dining, and country club memberships—exploiting a legal gray area that the <strong class="fractal-trigger" onclick="expandContext(this, 'fec_dysfunction')">FEC</strong> has refused to close. Total Leadership PAC spending exceeded <span class="living-number" data-target="200" data-suffix="M">$0</span> in the 2024 cycle <span class="citation-spade" data-id="total_pac_spend">♠</span>.</p>
 
-                    <h2 class="prose-h2">1. The "Lifestyle" Loophole</h2>
+                    <h2 class="prose-h2">1. The "Lifestyle" Loophole <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Leadership PAC Spending Abuse and Legal Loopholes">DEEP DIVE</span></h2>
 
                     <div class="float-figure right">
                         <div style="height: 250px;"><canvas id="chart_spending"></canvas></div>
@@ -3741,7 +3741,7 @@
 
                     <p class="prose-text">Leadership PACs were originally designed to allow ambitious politicians to donate to their colleagues, building coalitions for leadership bids. Today, they are essentially <span class="highlight-glow">tax-exempt slush funds</span>. Because the "Personal Use" prohibition strictly applies to <em>campaign</em> accounts but is loosely interpreted for <em>PACs</em>, politicians use them to subsidize a lavish lifestyle. Examples include $4,000 limo rides in Rome and <span class="living-number" data-target="40" data-suffix="K">$0</span> spent at <strong class="fractal-trigger" onclick="expandContext(this, 'disney_spending')">Disney World</strong> under the guise of "fundraising" <span class="citation-spade" data-id="disney_grift">♠</span>. This is not political speech; it is a perks package paid for by donors. Senator <strong class="fractal-trigger" onclick="expandContext(this, 'menendez_case')">Bob Menendez</strong>'s Leadership PAC spent over <span class="living-number" data-target="70" data-suffix="K">$0</span> at a private country club <span class="citation-spade" data-id="menendez_club">♠</span>.</p>
 
-                    <h2 class="prose-h2">2. The "Zombie" Campaigns</h2>
+                    <h2 class="prose-h2">2. The "Zombie" Campaigns <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Retired Politicians Hoarding Campaign Funds">DEEP DIVE</span></h2>
                     <div class="float-figure left">
                         <div style="height: 250px;"><canvas id="chart_zombies"></canvas></div>
                         <div class="fig-caption">Fig 2. The Zombie Hoards (Top Retiree War Chests) <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
@@ -3749,7 +3749,7 @@
 
                     <p class="prose-text">The grift continues even after they leave office. A <strong class="fractal-trigger" onclick="expandContext(this, 'zombie_campaigns')">"Zombie Campaign"</strong> occurs when a retired politician keeps their war chest active for years, paying family members salaries or covering "consulting fees." Senator <strong class="fractal-trigger" onclick="expandContext(this, 'richard_shelby')">Richard Shelby</strong> retired with a staggering <span class="living-number" data-target="16" data-suffix="M">$0</span> sitting in dormant accounts <span class="citation-spade" data-id="shelby_zombie">♠</span>. Former Representative <strong class="fractal-trigger" onclick="expandContext(this, 'tim_murphy')">Tim Murphy</strong> has maintained $2.3 million since resigning in 2017 <span class="citation-spade" data-id="murphy_zombie">♠</span>. Instead of returning this money or donating it, these former officials act as shadow power-brokers, dripping out funds to maintain influence without ever facing voters again. Over <span class="living-number" data-target="200" data-suffix="">0</span> former members currently maintain zombie accounts <span class="citation-spade" data-id="zombie_count">♠</span>.</p>
 
-                    <h2 class="prose-h2">3. The Family Employment Scheme</h2>
+                    <h2 class="prose-h2">3. The Family Employment Scheme <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Nepotism in Campaign Finance: Family Payroll Analysis">DEEP DIVE</span></h2>
                     <div class="float-figure right">
                         <div style="height: 250px;"><canvas id="chart_family_pay"></canvas></div>
                         <div class="fig-caption">Fig 3. Top Family Payments from Campaign Funds <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
@@ -3757,10 +3757,10 @@
 
                     <p class="prose-text">Perhaps the most brazen mechanism is <strong class="fractal-trigger" onclick="expandContext(this, 'family_payroll')">family payroll</strong>. At least <span class="living-number" data-target="55" data-suffix="">0</span> members of Congress paid family members from campaign accounts in the last cycle <span class="citation-spade" data-id="family_payments">♠</span>. Representative <strong class="fractal-trigger" onclick="expandContext(this, 'maxine_waters')">Maxine Waters</strong> paid her daughter Karen over <span class="living-number" data-target="1" data-suffix="M">$0</span> for "slate mailer" services since 2003 <span class="citation-spade" data-id="waters_daughter">♠</span>. Representative <strong class="fractal-trigger" onclick="expandContext(this, 'ilhan_omar')">Ilhan Omar's</strong> campaign paid her husband's consulting firm over $2.8 million <span class="citation-spade" data-id="omar_husband">♠</span>. While technically legal if the family member provides legitimate services, critics argue these arrangements create unaccountable taxpayer-subsidized nepotism.</p>
 
-                    <h2 class="prose-h2">4. The Enforcement Vacuum</h2>
+                    <h2 class="prose-h2">4. The Enforcement Vacuum <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="FEC Deadlock and Campaign Finance Enforcement Failures">DEEP DIVE</span></h2>
                     <p class="prose-text">The <strong class="fractal-trigger" onclick="expandContext(this, 'fec_dysfunction')">Federal Election Commission</strong> is the only agency capable of stopping this, but it is paralyzed by partisan gridlock. The six-member commission requires four votes to take enforcement action—but the three Republican and three Democratic commissioners deadlock on virtually every case <span class="citation-spade" data-id="fec_deadlock">♠</span>. In 2024, dormant campaigns still held nearly <span class="living-number" data-target="100" data-suffix="M">$0</span> in combined cash <span class="citation-spade" data-id="fec_dormant">♠</span>. The FEC has not issued a single significant fine for Leadership PAC abuse in over a decade. Proposals to apply strict "Personal Use" bans to Leadership PACs have been repeatedly blocked or ignored <span class="citation-spade" data-id="reform_blocked">♠</span>.</p>
 
-                    <h2 class="prose-h2">5. What Lies Ahead: The Reform Mirage</h2>
+                    <h2 class="prose-h2">5. What Lies Ahead: The Reform Mirage <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Campaign Finance Reform Proposals and Political Obstacles">DEEP DIVE</span></h2>
                     <p class="prose-text">Reform efforts exist but face steep odds. The <strong class="fractal-trigger" onclick="expandContext(this, 'honest_ads_act')">DISCLOSE Act</strong> would require greater transparency in political spending, but it has failed to pass multiple times <span class="citation-spade" data-id="disclose_act">♠</span>. Some states have implemented their own reforms: <span class="highlight-glow">California</span> now bans Leadership PACs entirely for state legislators <span class="citation-spade" data-id="california_ban">♠</span>. Until federal law treats a PAC dollar the same as a Campaign dollar, the Grift Machine will continue to print money for the political class. The system isn't broken—it's working exactly as those who benefit from it intended.</p>
                 `,
                 chartType: 'grift',
@@ -3926,7 +3926,7 @@
                 content: `
                     <p class="prose-text"><strong class="text-white">Executive Summary:</strong> The AI buildout has hit a physical wall: <span class="highlight-glow">the electrical grid</span>. Data centers currently consume 2% of US power, but projections suggest this could rise to <span class="living-number" data-target="8" data-suffix="%">0</span> by 2030 <span class="citation-spade" data-id="dc_power_share">♠</span>. Utility companies in Virginia and Texas are already imposing moratoriums on new connections <span class="citation-spade" data-id="grid_moratoriums">♠</span>. In response, tech giants are bypassing the grid entirely—Microsoft's deal to restart <strong class="fractal-trigger" onclick="expandContext(this, 'three_mile_island')">Three Mile Island</strong> represents the new era of "Behind-the-Meter" nuclear power <span class="citation-spade" data-id="tmi_deal">♠</span>.</p>
 
-                    <h2 class="prose-h2">1. The Demand Explosion</h2>
+                    <h2 class="prose-h2">1. The Demand Explosion <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="AI Data Center Energy Consumption Growth Projections">DEEP DIVE</span></h2>
 
                     <div class="float-figure right">
                         <div style="height: 250px;"><canvas id="chart_energy"></canvas></div>
@@ -3935,7 +3935,7 @@
 
                     <p class="prose-text">The IEA forecasts that global data center electricity consumption will <span class="highlight-glow">double by 2026</span>, reaching <span class="living-number" data-target="1000" data-suffix=" TWh">0</span>—roughly the consumption of Japan <span class="citation-spade" data-id="iea_forecast">♠</span>. A single ChatGPT query consumes <span class="living-number" data-target="10" data-suffix="x">0</span> more electricity than a Google search <span class="citation-spade" data-id="query_energy">♠</span>. Training GPT-4 required an estimated <span class="living-number" data-target="50" data-suffix=" GWh">0</span> of electricity—enough to power 4,600 US homes for a year <span class="citation-spade" data-id="gpt4_training">♠</span>. And this is just the beginning: next-generation models will be orders of magnitude more demanding.</p>
 
-                    <h2 class="prose-h2">2. The Transformer Shortage</h2>
+                    <h2 class="prose-h2">2. The Transformer Shortage <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Electrical Grid Infrastructure Bottlenecks and Lead Times">DEEP DIVE</span></h2>
 
                     <div class="float-figure left">
                         <div style="height: 250px;"><canvas id="chart_transformers"></canvas></div>
@@ -3944,7 +3944,7 @@
 
                     <p class="prose-text">The hidden bottleneck isn't chips—it's <span class="highlight-glow">transformers</span>. Not the AI kind, but the electrical kind. Large power transformers now have lead times of <span class="living-number" data-target="4" data-suffix=" years">0</span>, up from 12 months pre-pandemic <span class="citation-spade" data-id="transformer_lead">♠</span>. The US has only <span class="living-number" data-target="3" data-suffix="">0</span> domestic manufacturers capable of producing these critical components <span class="citation-spade" data-id="domestic_mfg">♠</span>. A single large transformer can take 18 months to manufacture and weighs up to 400 tons, requiring specialized rail cars for transport. Without transformers, data centers cannot connect to the grid—no matter how many GPUs they've ordered.</p>
 
-                    <h2 class="prose-h2">3. The Nuclear Renaissance</h2>
+                    <h2 class="prose-h2">3. The Nuclear Renaissance <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Tech Giants Behind-the-Meter Nuclear Power Deals">DEEP DIVE</span></h2>
                     <p class="prose-text">Facing grid constraints, hyperscalers are turning to nuclear. Microsoft signed a 20-year deal to restart Three Mile Island Unit 1, providing ~835 MW of carbon-free power <span class="citation-spade" data-id="tmi_deal">♠</span>. Amazon acquired a <strong class="fractal-trigger" onclick="expandContext(this, 'amazon_nuclear')">960 MW nuclear-powered data center</strong> campus in Pennsylvania <span class="citation-spade" data-id="amazon_nuclear">♠</span>. Google and Oracle are investing in <strong class="fractal-trigger" onclick="expandContext(this, 'smr_tech')">small modular reactors (SMRs)</strong> <span class="citation-spade" data-id="smr_investments">♠</span>. These "behind-the-meter" arrangements bypass grid bottlenecks entirely—but they also represent a fundamental shift: tech companies becoming power companies.</p>
                 `,
                 chartType: 'energy',
@@ -4051,7 +4051,7 @@
                 content: `
                     <p class="prose-text"><strong class="text-white">Executive Summary:</strong> Regulatory capture occurs when agencies created to act in the public interest instead advance the commercial concerns of the industries they regulate. In financial oversight, the <span class="highlight-glow">"Revolving Door"</span> phenomenon—where SEC officials leave for lucrative jobs at the very hedge funds they policed—creates a systemic disincentive for enforcement <span class="citation-spade" data-id="revolving_door_study">♠</span>. Over <span class="living-number" data-target="65" data-suffix="%">0</span> of senior SEC enforcement attorneys leave for private sector jobs within 5 years of their hiring date <span class="citation-spade" data-id="sec_turnover">♠</span>.</p>
 
-                    <h2 class="prose-h2">1. The Revolving Door</h2>
+                    <h2 class="prose-h2">1. The Revolving Door <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="SEC-to-Wall Street Career Pipeline Analysis">DEEP DIVE</span></h2>
 
                     <div class="float-figure right">
                         <div style="height: 250px;"><canvas id="chart_revolving"></canvas></div>
@@ -4060,7 +4060,7 @@
 
                     <p class="prose-text">The Project on Government Oversight (POGO) documented <span class="living-number" data-target="419" data-suffix="">0</span> instances of SEC employees leaving for jobs at entities they had previously regulated between 2001 and 2021 <span class="citation-spade" data-id="pogo_database">♠</span>. The pattern is stark: SEC attorneys spend 3-5 years building relationships and expertise, then "cash out" at law firms defending the same Wall Street clients they once prosecuted. Former SEC Chair <strong class="fractal-trigger" onclick="expandContext(this, 'mary_jo_white')">Mary Jo White</strong> returned to her law firm defending major banks within months of leaving <span class="citation-spade" data-id="white_return">♠</span>. The revolving door spins both ways—industry veterans cycle into regulatory positions, bringing sympathies (and sometimes conflicts) with them.</p>
 
-                    <h2 class="prose-h2">2. The Fine Print: Penalties That Don't Punish</h2>
+                    <h2 class="prose-h2">2. The Fine Print: Penalties That Don't Punish <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Wall Street Fines as Cost of Business Analysis">DEEP DIVE</span></h2>
 
                     <div class="float-figure left">
                         <div style="height: 250px;"><canvas id="chart_fines"></canvas></div>
@@ -4069,7 +4069,7 @@
 
                     <p class="prose-text">When enforcement does occur, the penalties are often calculated theater. JPMorgan has paid over <span class="living-number" data-target="35" data-suffix="B">$0</span> in fines since 2008—yet its stock price has risen <span class="living-number" data-target="400" data-suffix="%">0</span> over the same period <span class="citation-spade" data-id="jpm_fines">♠</span>. Fines are treated as a "cost of doing business," factored into risk models alongside legal fees <span class="citation-spade" data-id="cost_of_business">♠</span>. The SEC settlement process—where firms pay fines without admitting wrongdoing—ensures no precedent is set for future cases <span class="citation-spade" data-id="neither_admit">♠</span>. <span class="highlight-glow">No major bank executive went to prison</span> for the 2008 financial crisis that cost the global economy $22 trillion <span class="citation-spade" data-id="no_jail">♠</span>.</p>
 
-                    <h2 class="prose-h2">3. The Systemic Problem</h2>
+                    <h2 class="prose-h2">3. The Systemic Problem <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Regulatory Forbearance and Two-Tier Justice System">DEEP DIVE</span></h2>
                     <p class="prose-text">The revolving door creates what economists call <strong class="fractal-trigger" onclick="expandContext(this, 'regulatory_forbearance')">"regulatory forbearance"</strong>—agencies go easy on firms that might be future employers <span class="citation-spade" data-id="forbearance_study">♠</span>. SEC attorneys know that aggressive prosecution can damage their career prospects. The result is a two-tiered justice system: retail investors face swift action for minor violations, while institutional fraud receives settlements and <strong class="fractal-trigger" onclick="expandContext(this, 'dpa_explained')">deferred prosecution agreements</strong> <span class="citation-spade" data-id="two_tier">♠</span>. Until we address the incentive structure—through cooling-off periods, compensation limits, or lifetime bans—the revolving door will continue spinning.</p>
                 `,
                 chartType: 'regulatory',
@@ -4176,7 +4176,7 @@
                 content: `
                     <p class="prose-text"><strong class="text-white">Executive Summary:</strong> The global economy runs on silicon, and <span class="highlight-glow">90% of the world's most advanced chips</span> come from a single island 100 miles off the coast of China. <strong class="fractal-trigger" onclick="expandContext(this, 'tsmc')">Taiwan Semiconductor Manufacturing Company (TSMC)</strong> has become the most strategically important company on Earth, with a <span class="living-number" data-target="64" data-suffix="%">0</span> share of the global foundry market <span class="citation-spade" data-id="tsmc_share">♠</span>. This concentration of capability has created what geopolitical analysts call the <strong class="fractal-trigger" onclick="expandContext(this, 'silicon_shield')">"Silicon Shield"</strong>—a deterrent that may be the only thing preventing a Chinese invasion <span class="citation-spade" data-id="silicon_shield_article">♠</span>. Meanwhile, America's attempt to reshore chip manufacturing is hemorrhaging billions, with Intel posting a staggering <span class="living-number" data-target="19" data-suffix="B">$0</span> net loss in 2024 <span class="citation-spade" data-id="intel_loss">♠</span>.</p>
 
-                    <h2 class="prose-h2">1. The Taiwan Chokepoint</h2>
+                    <h2 class="prose-h2">1. The Taiwan Chokepoint <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="TSMC Dominance and Taiwan's Silicon Shield Strategy">DEEP DIVE</span></h2>
 
                     <div class="float-figure right">
                          <div style="height: 250px;"><canvas id="chart_tsmc_share"></canvas></div>
@@ -4185,7 +4185,7 @@
 
                     <p class="prose-text">The numbers are staggering: Taiwan accounts for <span class="highlight-glow">68% of global semiconductor manufacturing</span> and over <span class="living-number" data-target="90" data-suffix="%">0</span> of the most advanced logic chips under 7nm <span class="citation-spade" data-id="taiwan_dominance">♠</span>. TSMC alone produces 70% of the world's smartphone chipsets and 35% of automotive microcontrollers <span class="citation-spade" data-id="tsmc_products">♠</span>. In cutting-edge nodes (5nm and below), TSMC's market share exceeds 90%—only <strong class="fractal-trigger" onclick="expandContext(this, 'samsung_foundry')">Samsung</strong> even attempts to compete <span class="citation-spade" data-id="cutting_edge">♠</span>. A single earthquake, a <strong class="fractal-trigger" onclick="expandContext(this, 'china_blockade')">Chinese blockade</strong>, or a miscalculated military exercise could trigger a global economic seizure. The Institute for Economics and Peace estimates a full-scale Taiwan conflict would cost the global economy <span class="living-number" data-target="10" data-suffix=" Trillion">$0</span> <span class="citation-spade" data-id="iep_cost">♠</span>.</p>
 
-                    <h2 class="prose-h2">2. The Intel Implosion</h2>
+                    <h2 class="prose-h2">2. The Intel Implosion <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Intel's Foundry Losses and CEO Pat Gelsinger's Ouster">DEEP DIVE</span></h2>
                     <div class="float-figure left">
                         <div style="height: 250px;"><canvas id="chart_intel_decline"></canvas></div>
                         <div class="fig-caption">Fig 2. Intel's Market Cap Collapse (2020-2024) <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
@@ -4193,7 +4193,7 @@
 
                     <p class="prose-text">America's great hope for semiconductor independence is bleeding out. <strong class="fractal-trigger" onclick="expandContext(this, 'intel_foundry_services')">Intel's foundry division</strong> posted a <span class="living-number" data-target="7" data-suffix="B">$0</span> operating loss in 2023 alone <span class="citation-spade" data-id="intel_foundry">♠</span>. CEO <strong class="fractal-trigger" onclick="expandContext(this, 'gelsinger_exit')">Pat Gelsinger was ousted in December 2024</strong> after the stock cratered 62% under his watch, falling below $100 billion market cap for the first time since 2012 <span class="citation-spade" data-id="intel_stock">♠</span>. The company announced <span class="highlight-glow">15,000+ layoffs</span>—more than 15% of its workforce—as restructuring charges pushed the nine-month net loss to $19 billion <span class="citation-spade" data-id="intel_layoffs">♠</span>. Intel has fallen out of the top 10 chipmakers by market cap, a list now dominated by Nvidia and TSMC. The <strong class="fractal-trigger" onclick="expandContext(this, 'intel_18a')">Intel 18A</strong> process node—the company's last hope—faces delays and yield issues <span class="citation-spade" data-id="intel_18a_delays">♠</span>.</p>
 
-                    <h2 class="prose-h2">3. The Nvidia Supernova</h2>
+                    <h2 class="prose-h2">3. The Nvidia Supernova <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Nvidia's AI Chip Monopoly and Jensen Huang's Strategy">DEEP DIVE</span></h2>
                     <div class="float-figure right">
                         <div style="height: 250px;"><canvas id="chart_nvidia_mcap"></canvas></div>
                         <div class="fig-caption">Fig 3. Nvidia Market Cap Explosion (2023-2024) <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
@@ -4201,10 +4201,10 @@
 
                     <p class="prose-text">While Intel burns, <strong class="fractal-trigger" onclick="expandContext(this, 'nvidia_dominance')">Nvidia</strong> has become a financial supernova. The company crossed <span class="living-number" data-target="4" data-suffix=" Trillion">$0</span> in market capitalization in late 2024—the only publicly traded company to ever reach that milestone <span class="citation-spade" data-id="nvidia_mcap">♠</span>. Data center revenue exploded <span class="highlight-glow">216%</span> year-over-year, reaching $47.5 billion in fiscal 2024 <span class="citation-spade" data-id="nvidia_revenue">♠</span>. CEO <strong class="fractal-trigger" onclick="expandContext(this, 'jensen_huang')">Jensen Huang</strong> declared "Blackwell sales are off the charts"—and he's not exaggerating. Microsoft alone purchased <span class="living-number" data-target="485" data-suffix="K">0</span> Hopper AI chips in 2024, twice as many as its nearest competitor <span class="citation-spade" data-id="msft_chips">♠</span>. Nvidia's <span class="living-number" data-target="78" data-suffix="%">0</span> gross margin—unheard of for a hardware company—reflects absolute monopoly pricing power <span class="citation-spade" data-id="nvidia_margin">♠</span>.</p>
 
-                    <h2 class="prose-h2">4. The CHIPS Act Gamble</h2>
+                    <h2 class="prose-h2">4. The CHIPS Act Gamble <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="US Semiconductor Reshoring Challenges and CHIPS Act Implementation">DEEP DIVE</span></h2>
                     <p class="prose-text">Washington's response has been the $52.7 billion <strong class="fractal-trigger" onclick="expandContext(this, 'chips_act')">CHIPS and Science Act</strong>, signed in 2022 with promises of American semiconductor renaissance <span class="citation-spade" data-id="chips_act_text">♠</span>. Reality has been humbling. <strong class="fractal-trigger" onclick="expandContext(this, 'tsmc_arizona')">TSMC's $40 billion Arizona fab</strong> has suffered <span class="highlight-glow">repeated delays</span>; the facility likely won't be operational until 2028 <span class="citation-spade" data-id="tsmc_arizona_delay">♠</span>. Five suppliers to Intel and TSMC have postponed or scaled back Arizona construction, citing labor shortages and cost overruns <span class="citation-spade" data-id="supplier_delays">♠</span>. The Commerce Department has committed $6.6 billion to TSMC's expansion, but critics argue the U.S. is paying premium prices for yesterday's technology—these American fabs will produce 4nm chips while Taiwan moves to <strong class="fractal-trigger" onclick="expandContext(this, 'tsmc_2nm')">2nm</strong> <span class="citation-spade" data-id="fab_tech_gap">♠</span>.</p>
 
-                    <h2 class="prose-h2">5. The New Bottleneck: Packaging</h2>
+                    <h2 class="prose-h2">5. The New Bottleneck: Packaging <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="CoWoS Advanced Packaging Shortage and Capacity Constraints">DEEP DIVE</span></h2>
                     <div class="float-figure left">
                         <div style="height: 250px;"><canvas id="chart_packaging"></canvas></div>
                         <div class="fig-caption">Fig 4. Advanced Packaging Capacity (Wafers/Month) <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div>
@@ -4212,7 +4212,7 @@
 
                     <p class="prose-text">Even if fabs ramp up, a new chokepoint has emerged: <span class="highlight-glow">advanced packaging</span>. TSMC Chairman Mark Liu admitted the quiet part out loud: "It is not the shortage of AI chips, it is the shortage of our packaging capacity" <span class="citation-spade" data-id="tsmc_packaging">♠</span>. The company's <strong class="fractal-trigger" onclick="expandContext(this, 'cowos')">CoWoS</strong> (chip-on-wafer-on-substrate) 2.5D packaging is fully booked through 2025 by just two clients: Nvidia and AMD. Current capacity of 35,000 wafers/month is racing to reach 90,000 by end of 2026—a <span class="living-number" data-target="157" data-suffix="%">0</span> increase <span class="citation-spade" data-id="cowos_capacity">♠</span>. The U.S. has allocated $3 billion of CHIPS Act funds specifically for packaging, but building this expertise domestically will take years. <strong class="fractal-trigger" onclick="expandContext(this, 'china_chips')">China</strong>, meanwhile, remains stuck at <span class="living-number" data-target="16" data-suffix="%">0</span> chip self-sufficiency despite targeting 70% by 2025 <span class="citation-spade" data-id="china_self">♠</span>—proof that throwing money at semiconductors doesn't guarantee success.</p>
 
-                    <h2 class="prose-h2">6. What Lies Ahead: The Race to 2nm</h2>
+                    <h2 class="prose-h2">6. What Lies Ahead: The Race to 2nm <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Next-Gen Semiconductor Technology: 2nm and Angstrom-Scale Manufacturing">DEEP DIVE</span></h2>
                     <p class="prose-text">The semiconductor arms race shows no signs of slowing. TSMC plans to begin <strong class="fractal-trigger" onclick="expandContext(this, 'tsmc_2nm')">2nm mass production</strong> in 2025, with yields reportedly exceeding expectations <span class="citation-spade" data-id="tsmc_2nm_yield">♠</span>. Samsung is desperately trying to catch up with its gate-all-around (GAA) transistor architecture, but yield problems have cost it key customers including Qualcomm <span class="citation-spade" data-id="samsung_yields">♠</span>. Intel's 18A node—the cornerstone of its comeback strategy—won't be ready until late 2025 at the earliest. The ultimate prize: whoever masters <strong class="fractal-trigger" onclick="expandContext(this, 'angstrom_era')">angstrom-scale</strong> manufacturing (sub-1nm) will dominate the AI era. For now, that future runs through Taiwan.</p>
                 `,
                 chartType: 'semiconductor',
@@ -4647,7 +4647,7 @@
                 content: `
                     <p class="prose-text"><strong class="text-white">Executive Summary:</strong> Every time you drink from a plastic bottle, you're ingesting more than just water. <span class="highlight-glow">Microplastics and endocrine-disrupting chemicals</span> have infiltrated the bodies of <span class="living-number" data-target="93" data-suffix="%">0</span> of Americans tested <span class="citation-spade" data-id="cdc_biomonitoring">♠</span>. The average person now consumes approximately <span class="living-number" data-target="5" data-suffix=" grams">0</span> of plastic per week—the equivalent of a credit card <span class="citation-spade" data-id="wwf_plastic">♠</span>. Despite decades of evidence linking <strong class="fractal-trigger" onclick="expandContext(this, 'bpa_basics')">Bisphenol A (BPA)</strong> to hormonal disruption, cancer, and developmental abnormalities, the FDA maintains that current exposure levels are safe <span class="citation-spade" data-id="fda_bpa">♠</span>. This investigation follows the money trail from industry-funded "safety" studies to regulatory capture at the highest levels.</p>
 
-                    <h2 class="prose-h2">1. The BPA Crisis: Hidden in Plain Sight</h2>
+                    <h2 class="prose-h2">1. The BPA Crisis: Hidden in Plain Sight <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Bisphenol A Exposure Sources and Detection Rates">DEEP DIVE</span></h2>
 
                     <div class="float-figure right">
                         <div style="height: 250px;"><canvas id="chart_bpa_levels"></canvas></div>
@@ -4656,7 +4656,7 @@
 
                     <p class="prose-text"><strong class="fractal-trigger" onclick="expandContext(this, 'bpa_basics')">BPA</strong> was first synthesized in 1891 and has been used in plastic production since the 1950s. It's found in water bottles, food can linings, receipts, and medical devices. The chemical mimics estrogen, binding to hormone receptors and disrupting the <strong class="fractal-trigger" onclick="expandContext(this, 'endocrine_system')">endocrine system</strong> at concentrations as low as <span class="highlight-glow">0.025 parts per billion</span> <span class="citation-spade" data-id="low_dose">♠</span>. A landmark NIH study found that <span class="living-number" data-target="93" data-suffix="%">0</span> of Americans over age 6 have detectable BPA in their urine <span class="citation-spade" data-id="cdc_biomonitoring">♠</span>. The highest concentrations appear in infants fed from polycarbonate bottles and workers handling thermal receipt paper <span class="citation-spade" data-id="infant_exposure">♠</span>. When the plastics industry faced mounting evidence, their solution was simple: replace BPA with <strong class="fractal-trigger" onclick="expandContext(this, 'regrettable_substitution')">equally harmful alternatives</strong> and slap "BPA-Free" labels on products <span class="citation-spade" data-id="bps_bpf">♠</span>.</p>
 
-                    <h2 class="prose-h2">2. Microplastics: The Particles Inside You</h2>
+                    <h2 class="prose-h2">2. Microplastics: The Particles Inside You <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Human Microplastic and Nanoplastic Body Burden Analysis">DEEP DIVE</span></h2>
 
                     <div class="float-figure left">
                         <div style="height: 250px;"><canvas id="chart_microplastic"></canvas></div>
@@ -4665,7 +4665,7 @@
 
                     <p class="prose-text">The microplastics problem dwarfs BPA. Researchers estimate humans ingest between <span class="living-number" data-target="39000" data-suffix="">0</span> and <span class="living-number" data-target="52000" data-suffix="">0</span> microplastic particles annually through food and beverages alone—add inhalation and that number exceeds <span class="highlight-glow">120,000 particles per year</span> <span class="citation-spade" data-id="microplastic_ingestion">♠</span>. Bottled water is among the worst offenders: a single liter contains an average of <span class="living-number" data-target="325" data-suffix="">0</span> plastic particles, compared to just 5.5 in tap water <span class="citation-spade" data-id="bottled_vs_tap">♠</span>. These particles have been found in human blood, lungs, placentas, and even breast milk <span class="citation-spade" data-id="blood_plastics">♠</span>. A 2024 study detected <strong class="fractal-trigger" onclick="expandContext(this, 'nanoplastics')">nanoplastics</strong> in 100% of arterial plaque samples from heart disease patients, with those containing plastics facing 4.5x higher risk of cardiac events <span class="citation-spade" data-id="heart_study">♠</span>. The long-term consequences of this "plastic body burden" remain largely unknown—we are all participants in an uncontrolled experiment.</p>
 
-                    <h2 class="prose-h2">3. The Health Toll: What Science Shows</h2>
+                    <h2 class="prose-h2">3. The Health Toll: What Science Shows <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="BPA Health Effects: Obesity, Diabetes, and Reproductive Harm">DEEP DIVE</span></h2>
 
                     <div class="float-figure right">
                         <div style="height: 250px;"><canvas id="chart_health_effects"></canvas></div>
@@ -4674,11 +4674,11 @@
 
                     <p class="prose-text">The peer-reviewed literature on BPA toxicity is overwhelming. Over <span class="living-number" data-target="1000" data-suffix="+">0</span> studies have linked BPA exposure to adverse health outcomes <span class="citation-spade" data-id="study_count">♠</span>. Animal studies demonstrate clear connections to <strong class="fractal-trigger" onclick="expandContext(this, 'reproductive_harm')">reproductive abnormalities</strong>, including reduced sperm counts, early puberty, and polycystic ovary syndrome <span class="citation-spade" data-id="reproductive_studies">♠</span>. Human epidemiological studies show associations with obesity (<span class="living-number" data-target="33" data-suffix="%">0</span> increased risk), type 2 diabetes, cardiovascular disease, and certain cancers <span class="citation-spade" data-id="obesity_link">♠</span>. Perhaps most alarming: prenatal BPA exposure correlates with <span class="highlight-glow">behavioral changes in children</span>, including increased anxiety and hyperactivity <span class="citation-spade" data-id="prenatal_behavior">♠</span>. A 2023 Lancet meta-analysis concluded that endocrine disruptors including BPA cost the U.S. healthcare system approximately <span class="living-number" data-target="340" data-suffix="B">$0</span> annually in disease burden <span class="citation-spade" data-id="lancet_cost">♠</span>.</p>
 
-                    <h2 class="prose-h2">4. The Industry Playbook: Doubt as Product</h2>
+                    <h2 class="prose-h2">4. The Industry Playbook: Doubt as Product <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Plastics Industry Disinformation Campaign and Funding Bias">DEEP DIVE</span></h2>
 
                     <p class="prose-text">The plastics industry's response to BPA concerns mirrors Big Tobacco's playbook from the 1960s. Internal documents from the <strong class="fractal-trigger" onclick="expandContext(this, 'acc')">American Chemistry Council</strong> reveal a coordinated strategy to "ichieve regulatory stability" by funding favorable research and attacking independent scientists <span class="citation-spade" data-id="acc_documents">♠</span>. A systematic review found that <span class="highlight-glow">100% of industry-funded BPA studies</span> reported "no significant effects," while <span class="living-number" data-target="90" data-suffix="%">0</span> of government-funded studies found harmful effects at low doses <span class="citation-spade" data-id="funding_bias">♠</span>. The FDA's 2008 safety assessment relied heavily on two industry-funded studies while dismissing hundreds of academic papers <span class="citation-spade" data-id="fda_reliance">♠</span>. When scientists questioned this, the FDA's own Science Board called the assessment "flawed" <span class="citation-spade" data-id="science_board">♠</span>. The revolving door spins: former FDA officials now lobby for the plastics industry, while industry scientists serve on regulatory advisory panels.</p>
 
-                    <h2 class="prose-h2">5. The "BPA-Free" Lie</h2>
+                    <h2 class="prose-h2">5. The "BPA-Free" Lie <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="Regrettable Substitution: BPS and BPF Alternatives Analysis">DEEP DIVE</span></h2>
 
                     <div class="float-figure left">
                         <div style="height: 250px;"><canvas id="chart_alternatives"></canvas></div>
@@ -4687,7 +4687,7 @@
 
                     <p class="prose-text">Consumer pressure forced many manufacturers to remove BPA—but the replacements may be worse. <strong class="fractal-trigger" onclick="expandContext(this, 'bps_bpf')">Bisphenol S (BPS)</strong> and <strong class="fractal-trigger" onclick="expandContext(this, 'bps_bpf')">Bisphenol F (BPF)</strong>, the most common substitutes, show equal or greater estrogenic activity in laboratory tests <span class="citation-spade" data-id="bps_bpf">♠</span>. A 2020 study found that BPS is actually <span class="highlight-glow">more potent</span> than BPA in disrupting cellular metabolism <span class="citation-spade" data-id="bps_potency">♠</span>. This is a textbook case of <strong class="fractal-trigger" onclick="expandContext(this, 'regrettable_substitution')">"regrettable substitution"</strong>—replacing one hazard with another while giving consumers false assurance. "BPA-Free" has become a marketing tool, not a safety guarantee. Testing found that <span class="living-number" data-target="70" data-suffix="%">0</span> of "BPA-Free" products still leached estrogenic chemicals under normal use conditions <span class="citation-spade" data-id="bpa_free_leach">♠</span>.</p>
 
-                    <h2 class="prose-h2">6. What Can Be Done?</h2>
+                    <h2 class="prose-h2">6. What Can Be Done? <span class="fig-deep-dive" onclick="handleDeepDive(this)" data-topic="BPA Regulation: Global Bans and Precautionary Principle">DEEP DIVE</span></h2>
                     <p class="prose-text">The path forward requires action at every level. <span class="highlight-glow">Eleven countries have banned BPA</span> in baby bottles and food packaging, including France, Canada, and Denmark <span class="citation-spade" data-id="global_bans">♠</span>. The European Food Safety Authority recently lowered its "safe" threshold by <span class="living-number" data-target="20000" data-suffix="x">0</span>, effectively declaring previous limits dangerous <span class="citation-spade" data-id="efsa_update">♠</span>. Individual actions matter: using glass or stainless steel containers, avoiding receipts, and never microwaving plastic can reduce exposure by <span class="living-number" data-target="66" data-suffix="%">0</span> <span class="citation-spade" data-id="reduction_study">♠</span>. But systemic change requires demanding that regulators apply the <strong class="fractal-trigger" onclick="expandContext(this, 'precautionary')">precautionary principle</strong>—requiring chemicals be proven safe before approval, not after decades of harm. As one EPA scientist told this investigation: <em>"We're fighting with one hand tied behind our backs while industry writes the rulebook."</em></p>
                 `,
                 chartType: 'plastic',
@@ -8617,8 +8617,13 @@
             }
         }
 
-        // Extract topic from figure caption context
+        // Extract topic from figure caption context or data-topic attribute
         function extractDeepDiveTopic(element) {
+            // Check for explicit data-topic attribute first (for inline deep dives)
+            if (element.dataset && element.dataset.topic) {
+                return element.dataset.topic;
+            }
+
             // Get the figure caption (parent element)
             const figCaption = element.closest('.fig-caption');
             if (figCaption) {
@@ -8627,6 +8632,12 @@
                 // Remove "Fig X. " prefix
                 captionText = captionText.replace(/^Fig\s*\d+\.\s*/i, '');
                 return captionText;
+            }
+
+            // Check for section heading deep dive
+            const h2Parent = element.closest('.prose-h2');
+            if (h2Parent) {
+                return h2Parent.textContent.replace('DEEP DIVE', '').replace(/^\d+\.\s*/, '').trim();
             }
 
             // Fallback: look for nearby heading
