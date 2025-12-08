@@ -4889,6 +4889,124 @@
             }
         };
 
+        // --- ESSAY VALIDATION SYSTEM ---
+        // Gold standard schema - required fields for complete essays
+        const ESSAY_SCHEMA = {
+            required: ['title', 'cardTitle', 'cardTag', 'cardTagColor', 'cardDescription', 'content', 'chartType', 'sources'],
+            recommended: ['citationDatabase', 'contextData'],
+            contentChecks: {
+                minLength: 500,           // Minimum content length (chars)
+                hasProseText: true,       // Must have .prose-text paragraphs
+                hasProseH2: true,         // Must have .prose-h2 headings
+                hasCitationSpades: true,  // Must have citation spades
+                hasSources: 4             // Minimum number of sources
+            }
+        };
+
+        // Validate a single essay against gold standard
+        function validateEssay(key, essay) {
+            const issues = { critical: [], warnings: [], info: [] };
+
+            // Check if it's a dynamic placeholder (allowed to be incomplete)
+            if (essay._isDynamic && !essay.content) {
+                issues.info.push('Dynamic placeholder - will be generated on demand');
+                return issues;
+            }
+
+            // Check required fields
+            for (const field of ESSAY_SCHEMA.required) {
+                if (!essay[field]) {
+                    issues.critical.push(`Missing required field: ${field}`);
+                }
+            }
+
+            // Check recommended fields
+            for (const field of ESSAY_SCHEMA.recommended) {
+                if (!essay[field]) {
+                    issues.warnings.push(`Missing recommended field: ${field}`);
+                }
+            }
+
+            // Content quality checks
+            if (essay.content) {
+                if (essay.content.length < ESSAY_SCHEMA.contentChecks.minLength) {
+                    issues.warnings.push(`Content too short: ${essay.content.length} chars (min: ${ESSAY_SCHEMA.contentChecks.minLength})`);
+                }
+                if (!essay.content.includes('class="prose-text"')) {
+                    issues.warnings.push('Missing .prose-text paragraphs');
+                }
+                if (!essay.content.includes('class="prose-h2"')) {
+                    issues.warnings.push('Missing .prose-h2 section headings');
+                }
+                if (!essay.content.includes('citation-spade')) {
+                    issues.critical.push('Missing citation spades - sources not linked to content');
+                }
+            }
+
+            // Sources check
+            if (essay.sources && essay.sources.length < ESSAY_SCHEMA.contentChecks.hasSources) {
+                issues.warnings.push(`Insufficient sources: ${essay.sources.length} (min: ${ESSAY_SCHEMA.contentChecks.hasSources})`);
+            }
+
+            // Citation database consistency check
+            if (essay.content && essay.citationDatabase) {
+                const spadeMatches = essay.content.match(/data-id="([^"]+)"/g) || [];
+                const spadeIds = spadeMatches.map(m => m.match(/data-id="([^"]+)"/)[1]);
+                const dbIds = Object.keys(essay.citationDatabase);
+
+                for (const id of spadeIds) {
+                    if (!dbIds.includes(id)) {
+                        issues.critical.push(`Citation spade '${id}' has no entry in citationDatabase`);
+                    }
+                }
+            }
+
+            return issues;
+        }
+
+        // Validate all essays and return summary
+        function validateAllEssays() {
+            const results = {};
+            let totalCritical = 0;
+            let totalWarnings = 0;
+
+            for (const [key, essay] of Object.entries(reports)) {
+                const issues = validateEssay(key, essay);
+                results[key] = issues;
+                totalCritical += issues.critical.length;
+                totalWarnings += issues.warnings.length;
+            }
+
+            return { results, totalCritical, totalWarnings };
+        }
+
+        // Run validation on startup (development aid)
+        (function runStartupAudit() {
+            const { results, totalCritical, totalWarnings } = validateAllEssays();
+
+            if (totalCritical > 0 || totalWarnings > 0) {
+                console.group('%c📋 GenuVerity Essay Audit', 'color: #f76b15; font-weight: bold; font-size: 14px;');
+                console.log(`%cTotal: ${Object.keys(results).length} essays | ${totalCritical} critical issues | ${totalWarnings} warnings`,
+                    totalCritical > 0 ? 'color: #c45c3e;' : 'color: #30a46c;');
+
+                for (const [key, issues] of Object.entries(results)) {
+                    if (issues.critical.length > 0 || issues.warnings.length > 0) {
+                        console.group(`%c${key}`, issues.critical.length > 0 ? 'color: #c45c3e;' : 'color: #f76b15;');
+                        issues.critical.forEach(i => console.error(`❌ ${i}`));
+                        issues.warnings.forEach(i => console.warn(`⚠️ ${i}`));
+                        issues.info.forEach(i => console.info(`ℹ️ ${i}`));
+                        console.groupEnd();
+                    }
+                }
+                console.groupEnd();
+            } else {
+                console.log('%c✅ GenuVerity Essay Audit: All essays pass validation', 'color: #30a46c; font-weight: bold;');
+            }
+
+            // Store results for programmatic access
+            window.essayValidation = { results, totalCritical, totalWarnings };
+        })();
+
         // --- 2. VIEW LOGIC ---
         function switchView(id) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
@@ -4986,6 +5104,16 @@
             if (data._isDynamic && !data.content) {
                 loadCachedReport(key);
                 return;
+            }
+
+            // Validate essay before rendering (graceful degradation)
+            const validation = validateEssay(key, data);
+            if (validation.critical.length > 0) {
+                console.warn(`Essay '${key}' has ${validation.critical.length} critical validation issues:`, validation.critical);
+                // Show warning banner for development but still render what we have
+                if (data.content) {
+                    console.warn('Rendering essay with validation warnings - some features may not work correctly');
+                }
             }
 
             renderReportData(data);
