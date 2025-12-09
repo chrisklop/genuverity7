@@ -1599,55 +1599,351 @@
 
         /* Child essay indicator dots on parent article */
         .child-essays-rail {
-            position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 30;
+            display: none; /* Replaced by edge peek cards */
         }
 
-        .child-essay-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--accent-blue);
+        /* === EDGE PEEK NAVIGATION === */
+        .edge-peek {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 80;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .edge-peek.hidden {
+            display: none;
+        }
+
+        /* Left edge - Parent article */
+        .edge-peek-left {
+            left: 0;
+            transform: translateY(-50%) translateX(-90%);
+        }
+
+        .edge-peek-left:hover,
+        .edge-peek-left.expanded {
+            transform: translateY(-50%) translateX(0);
+        }
+
+        /* Right edge - Child articles */
+        .edge-peek-right {
+            right: 0;
+            transform: translateY(-50%) translateX(90%);
+            align-items: flex-end;
+        }
+
+        .edge-peek-right:hover,
+        .edge-peek-right.expanded {
+            transform: translateY(-50%) translateX(0);
+        }
+
+        /* Peek card base */
+        .peek-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            min-width: 200px;
+            max-width: 280px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .edge-peek-left .peek-card {
+            border-left: 3px solid var(--accent-blue);
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .edge-peek-right .peek-card {
+            border-right: 3px solid var(--accent-green);
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .peek-card:hover {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        .edge-peek-right .peek-card:hover {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(48, 164, 108, 0.2);
+            border-color: var(--accent-green);
+        }
+
+        /* Peek tab (visible part when collapsed) */
+        .peek-tab {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+
+        .edge-peek-left .peek-tab {
+            right: -33px;
+            border-radius: 0 8px 8px 0;
+            border-left: none;
+        }
+
+        .edge-peek-right .peek-tab {
+            left: -33px;
+            border-radius: 8px 0 0 8px;
+            border-right: none;
+        }
+
+        .peek-tab i {
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+
+        .peek-card:hover .peek-tab i {
+            color: var(--accent-blue);
+        }
+
+        .edge-peek-right .peek-card:hover .peek-tab i {
+            color: var(--accent-green);
+        }
+
+        /* Peek card content */
+        .peek-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .peek-card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .edge-peek-left .peek-card-icon {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .edge-peek-right .peek-card-icon {
+            background: rgba(48, 164, 108, 0.15);
+            color: var(--accent-green);
+        }
+
+        .peek-card-icon i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .peek-card-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .edge-peek-left .peek-card-label {
+            color: var(--accent-blue);
+        }
+
+        .edge-peek-right .peek-card-label {
+            color: var(--accent-green);
+        }
+
+        .peek-card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.3;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .peek-card-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .peek-card-action {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .edge-peek-left .peek-card-action {
+            color: var(--accent-blue);
+        }
+
+        .edge-peek-right .peek-card-action {
+            color: var(--accent-green);
+        }
+
+        .peek-card-action i {
+            width: 14px;
+            height: 14px;
+        }
+
+        .peek-card-shortcut {
+            margin-left: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: var(--text-muted);
+        }
+
+        /* Multiple children - stacked cards effect */
+        .edge-peek-right .peek-card {
             position: relative;
         }
 
-        .child-essay-dot:hover {
-            transform: scale(1.4);
-            box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
-        }
-
-        .child-essay-dot::after {
-            content: attr(data-title);
+        .peek-card-number {
             position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            white-space: nowrap;
-            background: var(--bg-card);
-            padding: 6px 12px;
-            border-radius: 6px;
+            top: -8px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            color: #000;
             font-size: 0.75rem;
-            color: var(--text-main);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Stacked cards visual */
+        .peek-stack {
+            position: relative;
+        }
+
+        .peek-stack::before,
+        .peek-stack::after {
+            content: '';
+            position: absolute;
+            background: var(--bg-elevated);
             border: 1px solid var(--border-color);
+            border-radius: 12px;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
         }
 
-        .child-essay-dot:hover::after {
-            opacity: 1;
+        .peek-stack::before {
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: -6px;
+            z-index: -1;
+            opacity: 0.7;
         }
 
-        @media (max-width: 768px) {
-            .child-essays-rail {
+        .peek-stack::after {
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: -12px;
+            z-index: -2;
+            opacity: 0.4;
+        }
+
+        /* Child cards list (when expanded) */
+        .peek-children-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, margin 0.3s ease;
+        }
+
+        .edge-peek-right:hover .peek-children-list,
+        .edge-peek-right.expanded .peek-children-list {
+            max-height: 400px;
+            margin-top: 8px;
+        }
+
+        .peek-child-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .peek-child-item:hover {
+            border-color: var(--accent-green);
+            background: rgba(48, 164, 108, 0.1);
+        }
+
+        .peek-child-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(48, 164, 108, 0.2);
+            color: var(--accent-green);
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .peek-child-item:hover .peek-child-number {
+            background: var(--accent-green);
+            color: #000;
+        }
+
+        .peek-child-title {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-main);
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 1200px) {
+            .edge-peek {
                 display: none;
             }
         }
@@ -3740,7 +4036,18 @@
             <!-- Hidden container for JS compatibility (sources now in tabbed banner above) -->
             <div id="report-sources" style="display: none;"></div>
 
-            <!-- Child Essays Rail (shown when article has child essays) -->
+            <!-- Edge Peek Navigation -->
+            <!-- Left: Parent Article (when viewing child essay) -->
+            <div id="edge-peek-left" class="edge-peek edge-peek-left hidden">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Right: Child Articles (when article has children) -->
+            <div id="edge-peek-right" class="edge-peek edge-peek-right hidden">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Legacy rail (hidden, kept for compatibility) -->
             <div id="child-essays-rail" class="child-essays-rail hidden"></div>
         </div>
     </section>
@@ -5509,7 +5816,106 @@
             }
         }
 
+        // === EDGE PEEK NAVIGATION ===
+        function updateEdgePeekNavigation(data, currentKey) {
+            const leftPeek = document.getElementById('edge-peek-left');
+            const rightPeek = document.getElementById('edge-peek-right');
+
+            // Reset both
+            leftPeek.classList.add('hidden');
+            leftPeek.innerHTML = '';
+            rightPeek.classList.add('hidden');
+            rightPeek.innerHTML = '';
+
+            // LEFT SIDE: Parent article (when viewing a child essay)
+            if (data.isChildEssay && data.parentEssay) {
+                const parentData = reports[data.parentEssay];
+                if (parentData) {
+                    leftPeek.dataset.articleKey = data.parentEssay;
+                    leftPeek.innerHTML = `
+                        <div class="peek-card" data-article-key="${data.parentEssay}" onclick="loadReport('${data.parentEssay}')">
+                            <div class="peek-tab">
+                                <i data-lucide="chevron-left"></i>
+                            </div>
+                            <div class="peek-card-header">
+                                <div class="peek-card-icon">
+                                    <i data-lucide="file-text"></i>
+                                </div>
+                                <span class="peek-card-label">Parent Article</span>
+                            </div>
+                            <div class="peek-card-title">${parentData.cardTitle || parentData.title}</div>
+                            <div class="peek-card-desc">${parentData.cardDescription || 'Return to the main investigation'}</div>
+                            <div class="peek-card-action">
+                                <i data-lucide="arrow-left"></i>
+                                Return to main
+                                <span class="peek-card-shortcut">←</span>
+                            </div>
+                        </div>
+                    `;
+                    leftPeek.classList.remove('hidden');
+                }
+            }
+
+            // RIGHT SIDE: Child essays (when article has children)
+            if (data.childEssays && data.childEssays.length > 0) {
+                const childCount = data.childEssays.length;
+                const hasMultiple = childCount > 1;
+
+                // Build child items list
+                const childItemsHTML = data.childEssays.map((childKey, idx) => {
+                    const childData = reports[childKey];
+                    if (!childData) return '';
+                    return `
+                        <div class="peek-child-item" onclick="loadReport('${childKey}')">
+                            <span class="peek-child-number">${idx + 1}</span>
+                            <span class="peek-child-title">${childData.cardTitle || childData.title || 'Deep Dive'}</span>
+                        </div>
+                    `;
+                }).join('');
+
+                // Get first child for preview
+                const firstChildKey = data.childEssays[0];
+                const firstChildData = reports[firstChildKey];
+
+                rightPeek.innerHTML = `
+                    <div class="peek-card ${hasMultiple ? 'peek-stack' : ''}" data-article-key="${firstChildKey}" ${!hasMultiple ? `onclick="loadReport('${firstChildKey}')"` : ''}>
+                        ${hasMultiple ? `<span class="peek-card-number">${childCount}</span>` : ''}
+                        <div class="peek-tab">
+                            <i data-lucide="chevron-right"></i>
+                        </div>
+                        <div class="peek-card-header">
+                            <div class="peek-card-icon">
+                                <i data-lucide="git-branch"></i>
+                            </div>
+                            <span class="peek-card-label">${hasMultiple ? 'Deep Dives' : 'Deep Dive'}</span>
+                        </div>
+                        <div class="peek-card-title">${hasMultiple ? `${childCount} Related Investigations` : (firstChildData?.cardTitle || firstChildData?.title || 'Deep Dive')}</div>
+                        <div class="peek-card-desc">${hasMultiple ? 'Explore detailed analyses on specific topics' : (firstChildData?.cardDescription || 'Dive deeper into this topic')}</div>
+                        ${hasMultiple ? `
+                            <div class="peek-children-list">
+                                ${childItemsHTML}
+                            </div>
+                        ` : `
+                            <div class="peek-card-action">
+                                <i data-lucide="arrow-right"></i>
+                                Read deep dive
+                                <span class="peek-card-shortcut">→</span>
+                            </div>
+                        `}
+                    </div>
+                `;
+                rightPeek.classList.remove('hidden');
+            }
+
+            // Re-init Lucide icons for the new elements
+            if (window.lucide) lucide.createIcons();
+        }
+
+        // Store current article key for keyboard navigation
+        let currentArticleKey = null;
+
         function loadReport(key) {
+            currentArticleKey = key;
             const data = reports[key];
 
             // Reset enhance count when loading a new article
@@ -5714,35 +6120,8 @@
                 sourceContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.8rem; font-style: italic;">No sources available.</p>';
             }
 
-            // === CHILD ESSAYS RAIL ===
-            const childEssaysRail = document.getElementById('child-essays-rail');
-            if (data.childEssays && data.childEssays.length > 0) {
-                // Build child essays indicators
-                const childEssaysHTML = data.childEssays.map((childKey, idx) => {
-                    const childData = reports[childKey];
-                    if (!childData) return '';
-                    return `
-                        <div class="child-essay-dot" onclick="loadReport('${childKey}')" title="${childData.cardTitle || childData.title}">
-                            <div class="dot-indicator"></div>
-                            <div class="dot-label">${childData.cardTitle || 'Deep Dive ' + (idx + 1)}</div>
-                        </div>
-                    `;
-                }).join('');
-
-                childEssaysRail.innerHTML = `
-                    <div class="rail-header">
-                        <i data-lucide="git-branch" class="w-4 h-4"></i>
-                        <span>Deep Dives</span>
-                    </div>
-                    <div class="rail-dots">
-                        ${childEssaysHTML}
-                    </div>
-                `;
-                childEssaysRail.classList.remove('hidden');
-            } else {
-                childEssaysRail.classList.add('hidden');
-                childEssaysRail.innerHTML = '';
-            }
+            // === EDGE PEEK NAVIGATION ===
+            updateEdgePeekNavigation(data, key);
 
             // Re-init icons for the new elements
             lucide.createIcons();
@@ -10400,6 +10779,28 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
                         exportToMarkdown();
                     }
                     break;
+                case 'arrowleft':
+                    if (isReportView) {
+                        const leftPeek = document.getElementById('edge-peek-left');
+                        if (leftPeek && !leftPeek.classList.contains('hidden')) {
+                            e.preventDefault();
+                            const parentKey = leftPeek.dataset.articleKey;
+                            if (parentKey) loadReport(parentKey);
+                        }
+                    }
+                    break;
+                case 'arrowright':
+                    if (isReportView) {
+                        const rightPeek = document.getElementById('edge-peek-right');
+                        if (rightPeek && !rightPeek.classList.contains('hidden')) {
+                            e.preventDefault();
+                            const firstChild = rightPeek.querySelector('.peek-card');
+                            if (firstChild && firstChild.dataset.articleKey) {
+                                loadReport(firstChild.dataset.articleKey);
+                            }
+                        }
+                    }
+                    break;
                 case 't':
                     e.preventDefault();
                     toggleTheme();
@@ -10504,6 +10905,14 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
                 <div class="shortcut-row">
                     <span style="color: var(--text-muted);">Research library</span>
                     <kbd>L</kbd>
+                </div>
+                <div class="shortcut-row">
+                    <span style="color: var(--text-muted);">Parent article</span>
+                    <kbd>←</kbd>
+                </div>
+                <div class="shortcut-row">
+                    <span style="color: var(--text-muted);">Child article</span>
+                    <kbd>→</kbd>
                 </div>
                 <div class="shortcut-row">
                     <span style="color: var(--text-muted);">Return to portal</span>
