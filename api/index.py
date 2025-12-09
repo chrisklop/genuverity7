@@ -980,6 +980,41 @@ async def list_cached():
     return {"articles": get_all_cached_articles()}
 
 
+@app.get("/api/infographic/{filename}")
+async def serve_infographic(filename: str):
+    """Serve infographic images from the infographics directory."""
+    from fastapi.responses import FileResponse
+    import os
+
+    # Security: only allow .png files and prevent directory traversal
+    if not filename.endswith('.png') or '/' in filename or '\\' in filename or '..' in filename:
+        return {"error": "Invalid filename"}
+
+    # Look for the file in infographics directory
+    file_path = f"infographics/{filename}"
+    if os.path.exists(file_path):
+        return FileResponse(
+            file_path,
+            media_type="image/png",
+            headers={"Cache-Control": "public, max-age=31536000, immutable"}
+        )
+
+    # Also try from project root (different working directory scenarios)
+    alt_paths = [
+        f"../infographics/{filename}",
+        f"/var/task/infographics/{filename}",  # Vercel function path
+    ]
+    for alt_path in alt_paths:
+        if os.path.exists(alt_path):
+            return FileResponse(
+                alt_path,
+                media_type="image/png",
+                headers={"Cache-Control": "public, max-age=31536000, immutable"}
+            )
+
+    return {"error": f"Infographic not found: {filename}"}
+
+
 @app.get("/api/usage")
 async def get_usage(request: Request):
     """Get user's remaining free deep dives."""

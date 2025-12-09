@@ -6505,43 +6505,53 @@
         }
 
         // Gemini 3 Pro infographic mappings for pre-generated images
+        // Using API route to bypass Vercel static file routing issues
         const geminiInfographics = {
             'ai': {
-                'chart_capex': '/infographics/ai_bubble_chart_capex.png',
-                'chart_allocation': '/infographics/ai_bubble_chart_allocation.png',
-                'chart_energy_demand': '/infographics/ai_bubble_chart_energy_demand.png',
-                'plotlyForceChart': '/infographics/ai_bubble_chart_bubbles.png'
+                'chart_capex': '/api/infographic/ai_bubble_chart_capex.png',
+                'chart_allocation': '/api/infographic/ai_bubble_chart_allocation.png',
+                'chart_energy_demand': '/api/infographic/ai_bubble_chart_energy_demand.png',
+                'plotlyForceChart': '/api/infographic/ai_bubble_chart_bubbles.png'
             },
             'congress': {
-                'chart_returns': '/infographics/congress_trading_chart_returns.png',
-                'chart_sectors': '/infographics/congress_trading_chart_sectors.png',
-                'chart_violations': '/infographics/congress_trading_chart_violations.png'
+                'chart_returns': '/api/infographic/congress_trading_chart_returns.png',
+                'chart_sectors': '/api/infographic/congress_trading_chart_sectors.png',
+                'chart_violations': '/api/infographic/congress_trading_chart_violations.png'
             },
             'grift': {
-                'chart_spending': '/infographics/campaign_grift_chart_spending.png',
-                'chart_zombies': '/infographics/campaign_grift_chart_zombies.png',
-                'chart_family_pay': '/infographics/campaign_grift_chart_family_pay.png'
+                'chart_spending': '/api/infographic/campaign_grift_chart_spending.png',
+                'chart_zombies': '/api/infographic/campaign_grift_chart_zombies.png',
+                'chart_family_pay': '/api/infographic/campaign_grift_chart_family_pay.png'
             },
             'energy': {
-                'chart_energy': '/infographics/energy_crisis_chart_energy.png',
-                'chart_transformers': '/infographics/energy_crisis_chart_transformers.png'
+                'chart_energy': '/api/infographic/energy_crisis_chart_energy.png',
+                'chart_transformers': '/api/infographic/energy_crisis_chart_transformers.png'
             },
             'regulatory': {
-                'chart_revolving': '/infographics/regulatory_capture_chart_revolving.png',
-                'chart_fines': '/infographics/regulatory_capture_chart_fines.png'
+                'chart_revolving': '/api/infographic/regulatory_capture_chart_revolving.png',
+                'chart_fines': '/api/infographic/regulatory_capture_chart_fines.png'
             },
             'semiconductor': {
-                'chart_tsmc_share': '/infographics/semiconductor_crisis_chart_tsmc_share.png',
-                'chart_intel_decline': '/infographics/semiconductor_crisis_chart_intel_decline.png',
-                'chart_nvidia_mcap': '/infographics/semiconductor_crisis_chart_nvidia_mcap.png',
-                'chart_packaging': '/infographics/semiconductor_crisis_chart_packaging.png'
+                'chart_tsmc_share': '/api/infographic/semiconductor_crisis_chart_tsmc_share.png',
+                'chart_intel_decline': '/api/infographic/semiconductor_crisis_chart_intel_decline.png',
+                'chart_nvidia_mcap': '/api/infographic/semiconductor_crisis_chart_nvidia_mcap.png',
+                'chart_packaging': '/api/infographic/semiconductor_crisis_chart_packaging.png'
             }
         };
 
         // Helper function to render Gemini infographic image
         function renderGeminiInfographic(elementId, imagePath) {
+            console.log(`[Infographic] Attempting to render ${elementId} from ${imagePath}`);
             const container = document.getElementById(elementId);
-            if (!container) return false;
+            if (!container) {
+                console.warn(`[Infographic] Element NOT FOUND: ${elementId}`);
+                // Try finding any canvas in report-body as fallback
+                const allCanvases = document.querySelectorAll('#report-body canvas');
+                console.log(`[Infographic] All canvases in report-body:`, Array.from(allCanvases).map(c => c.id));
+                return false;
+            }
+
+            console.log(`[Infographic] Found element: ${elementId}, tagName: ${container.tagName}`);
 
             // Replace canvas with img if canvas exists
             const parent = container.parentElement;
@@ -6552,14 +6562,23 @@
                 img.className = 'gemini-infographic';
                 img.style.cssText = 'width: 100%; height: auto; border-radius: 8px;';
                 img.loading = 'eager'; // Load immediately, not lazily
+
+                // Add load/error handlers for debugging
+                img.onload = () => console.log(`[Infographic] SUCCESS loaded: ${imagePath}`);
+                img.onerror = (e) => console.error(`[Infographic] FAILED to load: ${imagePath}`, e);
+
                 parent.innerHTML = '';
                 parent.appendChild(img);
+                console.log(`[Infographic] Replaced ${elementId} with img`);
                 return true;
             }
+            console.warn(`[Infographic] Element ${elementId} is not CANVAS or DIV: ${container.tagName}`);
             return false;
         }
 
         function renderCharts(type) {
+            console.log(`[Charts] renderCharts called with type: "${type}"`);
+
             // Check if Gemini infographics are already rendered - NEVER overwrite them
             const existingGeminiImages = document.querySelectorAll('.gemini-infographic');
             if (existingGeminiImages.length > 0) {
@@ -6575,13 +6594,19 @@
             activeCharts = [];
 
             // Check if we have Gemini infographics for this type
+            console.log(`[Charts] Available infographic types:`, Object.keys(geminiInfographics));
             const infographics = geminiInfographics[type];
+            console.log(`[Charts] Infographics for type "${type}":`, infographics ? Object.keys(infographics) : 'NONE');
+
             if (infographics) {
                 // Use Gemini-generated infographics instead of Chart.js
-                console.log(`Using Gemini infographics for type: ${type}`);
+                console.log(`[Charts] Using Gemini infographics for type: ${type}`);
+                let successCount = 0;
                 for (const [chartId, imagePath] of Object.entries(infographics)) {
-                    renderGeminiInfographic(chartId, imagePath);
+                    const result = renderGeminiInfographic(chartId, imagePath);
+                    if (result) successCount++;
                 }
+                console.log(`[Charts] Rendered ${successCount}/${Object.keys(infographics).length} infographics`);
                 return; // Skip Chart.js rendering
             }
 
