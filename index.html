@@ -2846,6 +2846,204 @@
             background: rgba(59, 130, 246, 0.05);
         }
 
+        /* === RADIAL SAVE MENU === */
+        #radial-menu-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        #radial-menu-overlay.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        .radial-menu {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .radial-menu-center {
+            position: absolute;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), #2563eb);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5), 0 4px 20px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: auto;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .radial-menu-center:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        #radial-menu-overlay.visible .radial-menu-center {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .radial-menu-center i {
+            color: white;
+            width: 24px;
+            height: 24px;
+        }
+
+        .radial-item {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px 10px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            color: var(--text-main);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            pointer-events: auto;
+            white-space: nowrap;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .radial-item:hover {
+            background: var(--bg-elevated);
+            border-color: var(--accent-blue);
+            transform: translate(-50%, -50%) scale(1.08) !important;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3), 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .radial-item.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+
+        .radial-item .radial-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+            flex-shrink: 0;
+        }
+
+        .radial-item:hover .radial-icon {
+            background: rgba(59, 130, 246, 0.25);
+        }
+
+        .radial-item.active .radial-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .radial-item .radial-icon i {
+            width: 16px;
+            height: 16px;
+        }
+
+        .radial-item-label {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .radial-item-name {
+            font-weight: 600;
+        }
+
+        .radial-item-count {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .radial-item:hover .radial-item-count {
+            color: var(--text-main);
+        }
+
+        .radial-item.active .radial-item-count {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .radial-item-shortcut {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: var(--text-muted);
+            margin-left: 8px;
+        }
+
+        .radial-item:hover .radial-item-shortcut {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+        }
+
+        .radial-item.active .radial-item-shortcut {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .radial-item.new-pipeline {
+            border-style: dashed;
+        }
+
+        .radial-item.new-pipeline .radial-icon {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+        }
+
+        .radial-item.new-pipeline:hover {
+            border-color: var(--accent-green);
+            border-style: solid;
+        }
+
+        .radial-item.new-pipeline:hover .radial-icon {
+            background: rgba(16, 185, 129, 0.25);
+        }
+
+        /* Staggered animation delays */
+        .radial-item:nth-child(1) { transition-delay: 0.05s; }
+        .radial-item:nth-child(2) { transition-delay: 0.1s; }
+        .radial-item:nth-child(3) { transition-delay: 0.15s; }
+        .radial-item:nth-child(4) { transition-delay: 0.2s; }
+        .radial-item:nth-child(5) { transition-delay: 0.25s; }
+        .radial-item:nth-child(6) { transition-delay: 0.3s; }
+
+        #radial-menu-overlay.visible .radial-item {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Pulse animation for center button */
+        @keyframes radial-pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.5), 0 4px 20px rgba(0, 0, 0, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.7), 0 4px 20px rgba(0, 0, 0, 0.4); }
+        }
+
+        #radial-menu-overlay.visible .radial-menu-center {
+            animation: radial-pulse 2s ease-in-out infinite;
+        }
+
         /* === FLOATING DEEP DIVE BADGE === */
         #deep-dive-badge {
             position: fixed;
@@ -3298,6 +3496,16 @@
                 <i data-lucide="folder-plus" class="w-4 h-4"></i>
                 Create New Pipeline
             </button>
+        </div>
+    </div>
+
+    <!-- RADIAL SAVE MENU -->
+    <div id="radial-menu-overlay" onclick="closeRadialMenu(event)">
+        <div class="radial-menu" id="radial-menu">
+            <div class="radial-menu-center" onclick="event.stopPropagation(); closeRadialMenu();" title="Cancel">
+                <i data-lucide="x"></i>
+            </div>
+            <!-- Items populated by JavaScript -->
         </div>
     </div>
 
@@ -9705,7 +9913,7 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
                                 <div class="bookmark-item" onclick="loadBookmark('${b.key}')">
                                     <i data-lucide="file-text" class="w-4 h-4" style="color: var(--text-muted);"></i>
                                     <span class="bookmark-item-title">${b.title}</span>
-                                    <button onclick="event.stopPropagation(); showAddToPipelineMenu('${b.key}')" style="color: var(--text-muted);" title="Add to pipeline">
+                                    <button onclick="event.stopPropagation(); showAddToPipelineMenu('${b.key}', event)" style="color: var(--text-muted);" title="Add to collection">
                                         <i data-lucide="folder-plus" class="w-4 h-4"></i>
                                     </button>
                                     <button onclick="event.stopPropagation(); removeBookmark('${b.key}')" style="color: var(--text-muted);" title="Remove">
@@ -9833,25 +10041,217 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
             renderBookmarksSidebar();
         }
 
-        function showAddToPipelineMenu(bookmarkKey) {
-            const pipelines = getPipelines();
-            const pipelineNames = pipelines.map((p, i) => `${i + 1}. ${p.name}`).join('\n');
-            const choice = prompt(`Add to which pipeline?\n${pipelineNames}\n\nEnter number:`);
+        // === RADIAL SAVE MENU ===
+        let radialMenuBookmarkKey = null;
+        let radialMenuSelectedIndex = -1;
 
-            if (!choice) return;
-            const index = parseInt(choice) - 1;
-            if (index < 0 || index >= pipelines.length) {
-                alert('Invalid choice');
+        function showAddToPipelineMenu(bookmarkKey, event) {
+            radialMenuBookmarkKey = bookmarkKey;
+            radialMenuSelectedIndex = -1;
+
+            const overlay = document.getElementById('radial-menu-overlay');
+            const menu = document.getElementById('radial-menu');
+            const pipelines = getPipelines();
+            const bookmarks = getBookmarks();
+            const bookmark = bookmarks.find(b => b.key === bookmarkKey);
+            const currentPipelineId = bookmark?.pipelineId;
+
+            // Get click position or center of screen
+            let x = window.innerWidth / 2;
+            let y = window.innerHeight / 2;
+            if (event) {
+                const rect = event.target.getBoundingClientRect();
+                x = rect.left + rect.width / 2;
+                y = rect.top + rect.height / 2;
+            }
+
+            // Ensure menu stays within viewport
+            const margin = 200;
+            x = Math.max(margin, Math.min(window.innerWidth - margin, x));
+            y = Math.max(margin, Math.min(window.innerHeight - margin, y));
+
+            menu.style.left = `${x}px`;
+            menu.style.top = `${y}px`;
+
+            // Build radial items
+            const radius = 130;
+            const startAngle = -90; // Start from top
+            const totalItems = pipelines.length + 1; // +1 for "New Pipeline"
+            const angleStep = Math.min(45, 180 / Math.max(totalItems - 1, 1));
+            const totalAngle = angleStep * (totalItems - 1);
+            const offsetAngle = startAngle - totalAngle / 2;
+
+            let itemsHtml = '';
+
+            // Pipeline items
+            pipelines.forEach((pipeline, i) => {
+                const angle = offsetAngle + (i * angleStep);
+                const rad = (angle * Math.PI) / 180;
+                const itemX = Math.cos(rad) * radius;
+                const itemY = Math.sin(rad) * radius;
+                const pipelineBookmarks = bookmarks.filter(b => b.pipelineId === pipeline.id);
+                const isActive = currentPipelineId === pipeline.id;
+                const icon = pipeline.id === 'default' ? 'book-open' :
+                            pipeline.id === 'research' ? 'flask-conical' : 'folder';
+
+                itemsHtml += `
+                    <div class="radial-item ${isActive ? 'active' : ''}"
+                         style="left: ${itemX}px; top: ${itemY}px;"
+                         onclick="event.stopPropagation(); selectRadialPipeline('${pipeline.id}')"
+                         data-index="${i}">
+                        <div class="radial-icon">
+                            <i data-lucide="${icon}"></i>
+                        </div>
+                        <div class="radial-item-label">
+                            <span class="radial-item-name">${pipeline.name}</span>
+                            <span class="radial-item-count">${pipelineBookmarks.length} article${pipelineBookmarks.length !== 1 ? 's' : ''}</span>
+                        </div>
+                        <span class="radial-item-shortcut">${i + 1}</span>
+                    </div>
+                `;
+            });
+
+            // "New Pipeline" item
+            const newAngle = offsetAngle + (pipelines.length * angleStep);
+            const newRad = (newAngle * Math.PI) / 180;
+            const newX = Math.cos(newRad) * radius;
+            const newY = Math.sin(newRad) * radius;
+
+            itemsHtml += `
+                <div class="radial-item new-pipeline"
+                     style="left: ${newX}px; top: ${newY}px;"
+                     onclick="event.stopPropagation(); createNewPipelineFromRadial()"
+                     data-index="${pipelines.length}">
+                    <div class="radial-icon">
+                        <i data-lucide="folder-plus"></i>
+                    </div>
+                    <div class="radial-item-label">
+                        <span class="radial-item-name">New Collection</span>
+                        <span class="radial-item-count">Create new</span>
+                    </div>
+                    <span class="radial-item-shortcut">N</span>
+                </div>
+            `;
+
+            // Keep center button, add items after it
+            const centerBtn = menu.querySelector('.radial-menu-center');
+            menu.innerHTML = '';
+            menu.appendChild(centerBtn);
+            menu.insertAdjacentHTML('beforeend', itemsHtml);
+
+            // Show overlay
+            overlay.classList.add('visible');
+            if (window.lucide) lucide.createIcons();
+
+            // Add keyboard listener
+            document.addEventListener('keydown', handleRadialKeydown);
+        }
+
+        function selectRadialPipeline(pipelineId) {
+            if (!radialMenuBookmarkKey) return;
+
+            const bookmarks = getBookmarks();
+            const bookmark = bookmarks.find(b => b.key === radialMenuBookmarkKey);
+            if (bookmark) {
+                bookmark.pipelineId = pipelineId;
+                saveBookmarks(bookmarks);
+                renderBookmarksSidebar();
+                showNotification('Added to collection', 'success');
+            }
+            closeRadialMenu();
+        }
+
+        function createNewPipelineFromRadial() {
+            closeRadialMenu();
+            const name = prompt('Enter a name for the new collection:');
+            if (!name) return;
+
+            const pipelines = getPipelines();
+            const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '_') + '_' + Date.now();
+            pipelines.push({ id, name, bookmarks: [] });
+            savePipelines(pipelines);
+
+            // Also add the bookmark to this new pipeline
+            if (radialMenuBookmarkKey) {
+                const bookmarks = getBookmarks();
+                const bookmark = bookmarks.find(b => b.key === radialMenuBookmarkKey);
+                if (bookmark) {
+                    bookmark.pipelineId = id;
+                    saveBookmarks(bookmarks);
+                }
+            }
+
+            renderBookmarksSidebar();
+            showNotification(`Created "${name}" collection`, 'success');
+        }
+
+        function closeRadialMenu(event) {
+            if (event && event.target.closest('.radial-item')) return;
+
+            const overlay = document.getElementById('radial-menu-overlay');
+            overlay.classList.remove('visible');
+            radialMenuBookmarkKey = null;
+            radialMenuSelectedIndex = -1;
+            document.removeEventListener('keydown', handleRadialKeydown);
+        }
+
+        function handleRadialKeydown(e) {
+            const pipelines = getPipelines();
+
+            // Number keys 1-9 for quick selection
+            if (e.key >= '1' && e.key <= '9') {
+                const index = parseInt(e.key) - 1;
+                if (index < pipelines.length) {
+                    selectRadialPipeline(pipelines[index].id);
+                }
+                e.preventDefault();
                 return;
             }
 
-            const bookmarks = getBookmarks();
-            const bookmark = bookmarks.find(b => b.key === bookmarkKey);
-            if (bookmark) {
-                bookmark.pipelineId = pipelines[index].id;
-                saveBookmarks(bookmarks);
-                renderBookmarksSidebar();
+            // N for new pipeline
+            if (e.key.toLowerCase() === 'n') {
+                createNewPipelineFromRadial();
+                e.preventDefault();
+                return;
             }
+
+            // Escape to close
+            if (e.key === 'Escape') {
+                closeRadialMenu();
+                e.preventDefault();
+                return;
+            }
+
+            // Arrow keys for navigation
+            const items = document.querySelectorAll('.radial-item');
+            if (items.length === 0) return;
+
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                radialMenuSelectedIndex = (radialMenuSelectedIndex + 1) % items.length;
+                updateRadialSelection(items);
+                e.preventDefault();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                radialMenuSelectedIndex = radialMenuSelectedIndex <= 0 ? items.length - 1 : radialMenuSelectedIndex - 1;
+                updateRadialSelection(items);
+                e.preventDefault();
+            } else if (e.key === 'Enter' && radialMenuSelectedIndex >= 0) {
+                items[radialMenuSelectedIndex].click();
+                e.preventDefault();
+            }
+        }
+
+        function updateRadialSelection(items) {
+            items.forEach((item, i) => {
+                if (i === radialMenuSelectedIndex) {
+                    item.style.transform = 'translate(-50%, -50%) scale(1.1)';
+                    item.style.borderColor = 'var(--accent-blue)';
+                    item.style.boxShadow = '0 0 20px rgba(59, 130, 246, 0.4), 0 8px 30px rgba(0, 0, 0, 0.4)';
+                } else {
+                    item.style.transform = '';
+                    item.style.borderColor = '';
+                    item.style.boxShadow = '';
+                }
+            });
         }
 
         function removeFromPipeline(bookmarkKey, pipelineId) {
