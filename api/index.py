@@ -54,23 +54,34 @@ claude_client = anthropic.Anthropic(
 
 # GenuVerity "Midnight Tech" Style - professional investigative journalism aesthetic
 INFOGRAPHIC_STYLE = """
-VISUAL STYLE: "MIDNIGHT TECH"
-- Background: Deep gradient from #050505 (near black) to #0a0a1a (dark blue-black)
+=== MANDATORY VISUAL STYLE: "MIDNIGHT TECH" ===
+
+BACKGROUND (NON-NEGOTIABLE):
+- Deep gradient from #050505 (near black) to #0a0a1a (dark blue-black)
+- NEVER use white, light gray, or any light-colored backgrounds
+- This is a DARK THEME - the background must be nearly BLACK
+
+COLOR PALETTE (EXACT):
 - Primary accent: Electric blue (#3b82f6) for key data elements
 - Secondary accents: Cyan (#06b6d4), Purple (#8b5cf6)
 - Grid/lines: Very subtle dark blue (#1a1a3e) with slight glow
 - Text: Crisp white (#ffffff) for values, light gray (#a0a0b0) for labels
 - Effects: Subtle blue glow on key elements, sleek futuristic feel
+
+DESIGN STYLE:
 - Chart style: Clean geometric shapes, glowing edges, tech-forward
 - Overall mood: High-tech data dashboard, investigative journalism
+- Professional, modern, data-driven aesthetic
 
-BRANDING REQUIREMENT (MANDATORY):
-In the bottom-left corner of the image, include the text logo "GenuVerity" where:
-- "Genu" is in WHITE color (#FFFFFF)
-- "Verity" is in BLUE color (#3b82f6)
-- Font should be clean, modern sans-serif
-- Size: Medium-small, professional watermark style
-- Position: Bottom-left corner with small padding from edges
+=== GENUVERITY BRANDING (ABSOLUTELY REQUIRED) ===
+YOU MUST include the text logo "GenuVerity" in the BOTTOM-LEFT CORNER:
+- The word "Genu" in WHITE color (#FFFFFF)
+- The word "Verity" in ELECTRIC BLUE color (#3b82f6)
+- Written as one word: "GenuVerity" (no space)
+- Font: Clean, modern sans-serif (like Arial, Helvetica, or similar)
+- Size: Medium-small watermark style (clearly readable but not dominant)
+- Position: Bottom-left corner with 15-20px padding from edges
+- DO NOT OMIT THIS BRANDING - IT IS MANDATORY
 """
 
 def generate_gemini_infographic(chart_config: dict, title: str, chart_id: str) -> Optional[str]:
@@ -116,18 +127,21 @@ CHART SPECIFICATIONS:
 - Data Points:
 {data_description}
 
-MANDATORY REQUIREMENTS:
-1. BACKGROUND MUST BE: Deep gradient from #050505 (near black) to #0a0a1a (dark blue-black) - NO WHITE OR LIGHT BACKGROUNDS
-2. Use electric blue (#3b82f6) as primary accent color
-3. Include the "GenuVerity" watermark in bottom-left corner (Genu=white, Verity=blue)
-4. Create a visually striking {chart_type} chart with glowing edges and tech-forward aesthetic
-5. Use crisp white (#ffffff) for data values, light gray (#a0a0b0) for labels
-6. Add subtle blue glow effects on key elements
-7. Size: 800x500 pixels
+MANDATORY REQUIREMENTS (ALL MUST BE MET):
+1. BACKGROUND: Deep gradient from #050505 to #0a0a1a (DARK/BLACK - absolutely NO white or light backgrounds)
+2. ACCENT COLOR: Electric blue (#3b82f6) as primary accent
+3. GENUVERITY BRANDING: Bottom-left corner watermark with "Genu" in WHITE and "Verity" in BLUE (#3b82f6)
+4. CHART STYLE: Visually striking {chart_type} chart with glowing edges and tech-forward aesthetic
+5. TEXT: Crisp white (#ffffff) for data values, light gray (#a0a0b0) for labels
+6. EFFECTS: Subtle blue glow on key elements
+7. SIZE: 800x500 pixels
 
-THIS IS A DARK THEME INFOGRAPHIC. The background MUST be nearly black (#050505 to #0a0a1a). Do NOT use white, light gray, or any light-colored backgrounds.
+CRITICAL REMINDERS:
+- This is a DARK THEME infographic - background MUST be nearly BLACK (#050505 to #0a0a1a)
+- The "GenuVerity" logo in bottom-left is MANDATORY - do not omit it
+- "Genu" = white (#FFFFFF), "Verity" = blue (#3b82f6)
 
-Generate the Midnight Tech style infographic now."""
+Generate the Midnight Tech style infographic now with the GenuVerity branding in the bottom-left corner."""
 
     # Try each API key with retry logic
     import time
@@ -150,7 +164,7 @@ Generate the Midnight Tech style infographic now."""
                     }],
                     "generationConfig": {
                         "responseModalities": ["TEXT", "IMAGE"],
-                        "temperature": 0.2  # Lower temperature for consistent Midnight Tech style
+                        "temperature": 0.1  # Very low temperature for maximum style consistency
                     }
                 },
                 timeout=180  # 3 minutes for infographic generation
