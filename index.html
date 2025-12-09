@@ -3654,6 +3654,151 @@
             color: var(--text-main);
         }
 
+        /* Debug Panel */
+        #debug-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        #debug-panel.visible {
+            display: flex;
+        }
+
+        .debug-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .debug-header h2 {
+            color: var(--accent-warm);
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .debug-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .debug-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .debug-btn:hover {
+            background: var(--bg-elevated);
+        }
+
+        .debug-btn.primary {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+
+        .debug-content {
+            flex: 1;
+            overflow: auto;
+            background: #0a0a0a;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            color: #8b949e;
+        }
+
+        .debug-content pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .debug-log-entry {
+            padding: 8px;
+            border-bottom: 1px solid #1f1f1f;
+            margin-bottom: 8px;
+        }
+
+        .debug-log-entry.error {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 3px solid #ef4444;
+        }
+
+        .debug-log-entry.success {
+            background: rgba(48, 164, 108, 0.1);
+            border-left: 3px solid var(--accent-green);
+        }
+
+        .debug-log-header {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            margin-bottom: 4px;
+        }
+
+        .debug-log-topic {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .debug-log-status {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+        }
+
+        .debug-log-status.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .debug-log-status.success {
+            background: rgba(48, 164, 108, 0.2);
+            color: var(--accent-green);
+        }
+
+        .debug-copied-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            z-index: 10001;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .debug-copied-toast.visible {
+            opacity: 1;
+        }
+
         /* Minimized badge with generations */
         #deep-dive-badge.minimized .badge-generations {
             display: none;
@@ -8174,6 +8319,9 @@
             if (!registration) return;
             const { id: genId, abortController } = registration;
 
+            // Start debug session
+            GenerationDebugger.startSession(topic, 'report');
+
             // Reset enhance count for new article
             resetEnhanceCount();
 
@@ -8213,8 +8361,11 @@
                     signal: abortController.signal
                 });
 
+                GenerationDebugger.logResponse(response);
+
                 if (!response.ok) {
                     const errorText = await response.text();
+                    GenerationDebugger.log('response_error', { status: response.status, body: errorText?.substring(0, 500) });
                     throw new Error(errorText || "Generation failed");
                 }
 
@@ -8232,12 +8383,14 @@
                     const { done, value } = await reader.read();
                     if (done) {
                         debugLog.push(`[SSE] Stream ended. articleContent type: ${typeof articleContent}`);
+                        GenerationDebugger.log('stream_ended', { hasContent: articleContent !== null });
                         break;
                     }
 
                     const chunk = decoder.decode(value, { stream: true });
                     buffer += chunk;
                     debugLog.push(`[SSE] Received chunk: ${chunk.length} bytes, buffer now: ${buffer.length} bytes`);
+                    GenerationDebugger.logChunk(chunk.length);
 
                     const lines = buffer.split('\n');
                     buffer = lines.pop() || '';
@@ -8258,11 +8411,14 @@
                                 if (currentEvent === 'progress') {
                                     // Update the generation card instead of full-screen loader
                                     updateGenerationProgress(genId, data.percent, data.message);
+                                    GenerationDebugger.logSSE('progress', `${data.percent}% - ${data.message}`);
                                 } else if (currentEvent === 'content') {
                                     articleContent = data;
                                     debugLog.push(`[SSE] Content received! Keys: ${Object.keys(data).join(', ')}`);
+                                    GenerationDebugger.logSSE('content', `Keys: ${Object.keys(data).join(', ')}`);
                                 } else if (currentEvent === 'error') {
                                     debugLog.push(`[SSE] Error event: ${data}`);
+                                    GenerationDebugger.logSSE('error', String(data));
                                     throw new Error(data);
                                 }
                             } catch (parseErr) {
@@ -8302,14 +8458,18 @@
 
                 // Mark generation as complete - user can click "View" to see it
                 completeGeneration(genId, key, data);
+                GenerationDebugger.endSuccess(key);
 
             } catch (e) {
                 // If cancelled, the generation was already removed
                 if (e.name === 'AbortError') {
                     console.log('[Generate] Cancelled by user');
+                    GenerationDebugger.log('cancelled', { reason: 'user' });
+                    GenerationDebugger.saveSession();
                     return;
                 }
                 console.error('[Generate] Error:', e);
+                GenerationDebugger.endError(e);
                 // Show failed state with retry option
                 const errorMsg = e.message?.includes('fetch') || e.message?.includes('network')
                     ? 'Connection lost - tap to retry'
@@ -8838,6 +8998,9 @@
             if (!registration) return;
             const { id: genId, abortController } = registration;
 
+            // Start debug session
+            GenerationDebugger.startSession(topic, 'deepdive');
+
             // Reset enhance count for new article
             resetEnhanceCount();
 
@@ -8857,14 +9020,18 @@
                     signal: abortController.signal
                 });
 
+                GenerationDebugger.logResponse(response);
+
                 // Check for HTTP errors (rate limiting, etc.)
                 if (response.status === 429) {
                     const error = await response.json();
+                    GenerationDebugger.log('rate_limited', { status: 429 });
                     throw new Error(error.detail?.message || 'Daily limit exceeded');
                 }
 
                 if (!response.ok && !response.headers.get('content-type')?.includes('text/event-stream')) {
                     const error = await response.json().catch(() => ({ detail: 'Generation failed' }));
+                    GenerationDebugger.log('response_error', { status: response.status });
                     throw new Error(error.detail || 'Generation failed');
                 }
 
@@ -8965,6 +9132,7 @@
 
                 // Mark generation as complete - user can click "View" to see it
                 completeGeneration(genId, key, reports[key]);
+                GenerationDebugger.endSuccess(key);
 
                 // Update badge
                 setTimeout(() => {
@@ -8975,15 +9143,19 @@
                 if (e.name === 'AbortError') {
                     // Cancelled by user - generation already removed by cancelGeneration()
                     console.log('Deep dive cancelled by user');
+                    GenerationDebugger.log('cancelled', { reason: 'user' });
+                    GenerationDebugger.saveSession();
                     return;
                 } else if (e.message?.includes('429') || e.message?.includes('daily_limit') || e.message?.includes('Daily limit')) {
                     console.error('Daily limit exceeded');
+                    GenerationDebugger.endError(e);
                     updateGenerationProgress(genId, 0, 'Daily limit exceeded');
                     userRemainingDives = 0;
                     updateBadgeRemaining();
                     setTimeout(() => removeGeneration(genId), 5000);
                 } else {
                     console.error('Deep dive error:', e);
+                    GenerationDebugger.endError(e);
                     // Show failed state with retry option
                     const errorMsg = e.message?.includes('fetch') || e.message?.includes('network')
                         ? 'Connection lost - tap to retry'
@@ -9074,6 +9246,238 @@
                 return data.cached ? data.article : null;
             } catch (e) {
                 return null;
+            }
+        }
+
+        // === GENERATION DEBUG SYSTEM ===
+        const GenerationDebugger = {
+            logs: [],
+            maxLogs: 50,
+            currentSession: null,
+
+            // Start tracking a new generation attempt
+            startSession(topic, type) {
+                const session = {
+                    id: `dbg_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+                    topic: topic,
+                    type: type, // 'report', 'deepdive', 'enhance'
+                    startTime: Date.now(),
+                    startTimeISO: new Date().toISOString(),
+                    events: [],
+                    status: 'started',
+                    error: null,
+                    responseHeaders: null,
+                    bytesReceived: 0,
+                    lastEventTime: Date.now(),
+                    userAgent: navigator.userAgent,
+                    online: navigator.onLine,
+                    visibilityState: document.visibilityState
+                };
+                this.currentSession = session;
+                this.log('session_start', { topic, type });
+                return session.id;
+            },
+
+            // Log an event in the current session
+            log(event, data = {}) {
+                if (!this.currentSession) return;
+                const entry = {
+                    time: Date.now(),
+                    elapsed: Date.now() - this.currentSession.startTime,
+                    event: event,
+                    data: data
+                };
+                this.currentSession.events.push(entry);
+                this.currentSession.lastEventTime = Date.now();
+                console.log(`[GenDebug] ${event}:`, data);
+            },
+
+            // Log fetch response details
+            logResponse(response) {
+                if (!this.currentSession) return;
+                this.currentSession.responseHeaders = {
+                    status: response.status,
+                    statusText: response.statusText,
+                    contentType: response.headers.get('content-type'),
+                    server: response.headers.get('server'),
+                    cfRay: response.headers.get('cf-ray'),
+                    xVercelId: response.headers.get('x-vercel-id')
+                };
+                this.log('response_received', this.currentSession.responseHeaders);
+            },
+
+            // Log streaming progress
+            logChunk(bytes) {
+                if (!this.currentSession) return;
+                this.currentSession.bytesReceived += bytes;
+                // Only log every 5KB to avoid spam
+                if (this.currentSession.bytesReceived % 5000 < bytes) {
+                    this.log('stream_progress', { totalBytes: this.currentSession.bytesReceived });
+                }
+            },
+
+            // Log SSE event
+            logSSE(eventType, dataPreview) {
+                this.log('sse_event', { type: eventType, preview: dataPreview?.substring?.(0, 100) || dataPreview });
+            },
+
+            // End session with success
+            endSuccess(articleKey) {
+                if (!this.currentSession) return;
+                this.currentSession.status = 'success';
+                this.currentSession.endTime = Date.now();
+                this.currentSession.duration = this.currentSession.endTime - this.currentSession.startTime;
+                this.currentSession.articleKey = articleKey;
+                this.log('session_success', { duration: this.currentSession.duration, key: articleKey });
+                this.saveSession();
+            },
+
+            // End session with error
+            endError(error) {
+                if (!this.currentSession) return;
+                this.currentSession.status = 'error';
+                this.currentSession.endTime = Date.now();
+                this.currentSession.duration = this.currentSession.endTime - this.currentSession.startTime;
+                this.currentSession.error = {
+                    name: error?.name || 'Unknown',
+                    message: error?.message || String(error),
+                    stack: error?.stack?.split('\n').slice(0, 3).join('\n')
+                };
+                this.log('session_error', this.currentSession.error);
+                this.saveSession();
+            },
+
+            // Save completed session to persistent storage
+            saveSession() {
+                if (!this.currentSession) return;
+                this.logs.unshift(this.currentSession);
+                if (this.logs.length > this.maxLogs) {
+                    this.logs = this.logs.slice(0, this.maxLogs);
+                }
+                try {
+                    localStorage.setItem('genuverity_gen_debug', JSON.stringify(this.logs));
+                } catch (e) {
+                    console.error('[GenDebug] Failed to save to localStorage:', e);
+                }
+                this.currentSession = null;
+            },
+
+            // Load logs from storage
+            loadLogs() {
+                try {
+                    const stored = localStorage.getItem('genuverity_gen_debug');
+                    if (stored) {
+                        this.logs = JSON.parse(stored);
+                    }
+                } catch (e) {
+                    this.logs = [];
+                }
+            },
+
+            // Get formatted debug report
+            getReport() {
+                const report = {
+                    generated: new Date().toISOString(),
+                    userAgent: navigator.userAgent,
+                    online: navigator.onLine,
+                    url: window.location.href,
+                    recentLogs: this.logs.slice(0, 20).map(log => ({
+                        id: log.id,
+                        topic: log.topic?.substring(0, 50),
+                        type: log.type,
+                        status: log.status,
+                        duration: log.duration,
+                        startTime: log.startTimeISO,
+                        error: log.error,
+                        bytesReceived: log.bytesReceived,
+                        eventCount: log.events?.length,
+                        lastEvents: log.events?.slice(-5).map(e => `${e.elapsed}ms: ${e.event}`)
+                    }))
+                };
+                return JSON.stringify(report, null, 2);
+            },
+
+            // Clear all logs
+            clearLogs() {
+                this.logs = [];
+                localStorage.removeItem('genuverity_gen_debug');
+            }
+        };
+
+        // Load existing debug logs on startup
+        GenerationDebugger.loadLogs();
+
+        // Debug panel functions
+        function toggleDebugPanel() {
+            const panel = document.getElementById('debug-panel');
+            if (panel.classList.contains('visible')) {
+                panel.classList.remove('visible');
+            } else {
+                renderDebugPanel();
+                panel.classList.add('visible');
+                lucide.createIcons();
+            }
+        }
+
+        function renderDebugPanel() {
+            const content = document.getElementById('debug-content');
+            if (!content) return;
+
+            const logs = GenerationDebugger.logs;
+
+            if (logs.length === 0) {
+                content.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                        <p>No generation logs yet.</p>
+                        <p style="font-size: 0.7rem; margin-top: 8px;">Logs will appear here after you generate articles or deep dives.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            content.innerHTML = logs.map(log => {
+                const statusClass = log.status === 'error' ? 'error' : log.status === 'success' ? 'success' : '';
+                const duration = log.duration ? `${(log.duration / 1000).toFixed(1)}s` : 'In progress...';
+                const errorInfo = log.error ? `<div style="color: #ef4444; margin-top: 4px;">Error: ${log.error.message}</div>` : '';
+                const lastEvents = (log.events || []).slice(-3).map(e =>
+                    `<span style="color: #6e7681;">${e.elapsed}ms:</span> ${e.event}`
+                ).join('<br>');
+
+                return `
+                    <div class="debug-log-entry ${statusClass}">
+                        <div class="debug-log-header">
+                            <span>${log.startTimeISO?.split('T')[0] || 'Unknown'} ${log.startTimeISO?.split('T')[1]?.split('.')[0] || ''}</span>
+                            <span class="debug-log-status ${statusClass}">${log.status?.toUpperCase() || 'UNKNOWN'}</span>
+                        </div>
+                        <div class="debug-log-topic">${log.type?.toUpperCase()}: ${log.topic?.substring(0, 60) || 'Unknown topic'}${log.topic?.length > 60 ? '...' : ''}</div>
+                        <div style="margin-top: 4px; font-size: 0.7rem;">
+                            <span style="color: var(--accent-blue);">Duration:</span> ${duration}
+                            <span style="margin-left: 12px; color: var(--accent-green);">Bytes:</span> ${log.bytesReceived || 0}
+                        </div>
+                        ${errorInfo}
+                        ${lastEvents ? `<div style="margin-top: 6px; font-size: 0.65rem; color: #8b949e;">${lastEvents}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function copyDebugReport() {
+            const report = GenerationDebugger.getReport();
+            navigator.clipboard.writeText(report).then(() => {
+                const toast = document.getElementById('debug-toast');
+                toast.classList.add('visible');
+                setTimeout(() => toast.classList.remove('visible'), 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy. Check console for debug report.');
+                console.log(report);
+            });
+        }
+
+        function clearDebugLogs() {
+            if (confirm('Clear all debug logs?')) {
+                GenerationDebugger.clearLogs();
+                renderDebugPanel();
             }
         }
 
@@ -10836,6 +11240,11 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
 
             // Close modal on Escape
             if (e.key === 'Escape') {
+                const debugPanel = document.getElementById('debug-panel');
+                if (debugPanel && debugPanel.classList.contains('visible')) {
+                    debugPanel.classList.remove('visible');
+                    return;
+                }
                 const modal = document.getElementById('shortcuts-modal');
                 if (modal && modal.classList.contains('visible')) {
                     modal.classList.remove('visible');
@@ -10908,6 +11317,10 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
                 case 'l':
                     e.preventDefault();
                     toggleBookmarksSidebar();
+                    break;
+                case 'd':
+                    e.preventDefault();
+                    toggleDebugPanel();
                     break;
                 case '?':
                     e.preventDefault();
@@ -11026,9 +11439,38 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
                     <span style="color: var(--text-muted);">Load article 1-4</span>
                     <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd>
                 </div>
+                <div class="shortcut-row">
+                    <span style="color: var(--text-muted);">Debug panel</span>
+                    <kbd>D</kbd>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- DEBUG PANEL -->
+    <div id="debug-panel">
+        <div class="debug-header">
+            <h2>
+                <i data-lucide="bug" class="w-4 h-4"></i>
+                Generation Debug Logs
+            </h2>
+            <div class="debug-actions">
+                <button class="debug-btn" onclick="clearDebugLogs()">
+                    <i data-lucide="trash-2" class="w-3 h-3"></i> Clear
+                </button>
+                <button class="debug-btn primary" onclick="copyDebugReport()">
+                    <i data-lucide="copy" class="w-3 h-3"></i> Copy Report
+                </button>
+                <button class="debug-btn" onclick="toggleDebugPanel()">
+                    <i data-lucide="x" class="w-3 h-3"></i> Close
+                </button>
+            </div>
+        </div>
+        <div class="debug-content" id="debug-content">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+    <div class="debug-copied-toast" id="debug-toast">Debug report copied to clipboard</div>
 </body>
 
 </html>
