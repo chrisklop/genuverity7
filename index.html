@@ -2975,6 +2975,174 @@
             color: #c45c3e;
         }
 
+        /* === GENERATION CARDS IN BADGE === */
+        .badge-generations {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .badge-generations:empty {
+            display: none;
+        }
+
+        .badge-generations-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent-warm);
+        }
+
+        .badge-generations-header .gen-count {
+            background: var(--accent-warm);
+            color: #000;
+            font-size: 0.6rem;
+            padding: 1px 5px;
+            border-radius: 8px;
+        }
+
+        .gen-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .gen-card.complete {
+            border-color: var(--accent-green);
+            background: rgba(48, 164, 108, 0.08);
+        }
+
+        .gen-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .gen-card-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-main);
+            max-width: 160px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .gen-card-percent {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent-warm);
+        }
+
+        .gen-card.complete .gen-card-percent {
+            color: var(--accent-green);
+        }
+
+        .gen-card-progress {
+            height: 3px;
+            background: var(--bg-deep);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+
+        .gen-card-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-warm), #f59e0b);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .gen-card.complete .gen-card-progress-bar {
+            background: var(--accent-green);
+        }
+
+        .gen-card-status {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        .gen-card-actions {
+            display: none;
+            margin-top: 8px;
+        }
+
+        .gen-card.complete .gen-card-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .gen-card-btn {
+            flex: 1;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .gen-card-btn.primary {
+            background: var(--accent-green);
+            color: #000;
+        }
+
+        .gen-card-btn.primary:hover {
+            filter: brightness(1.1);
+        }
+
+        .gen-card-btn.secondary {
+            background: var(--bg-deep);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        .gen-card-btn.secondary:hover {
+            color: var(--text-main);
+        }
+
+        /* Minimized badge with generations */
+        #deep-dive-badge.minimized .badge-generations {
+            display: none;
+        }
+
+        .badge-mini-gen {
+            display: none;
+            align-items: center;
+            gap: 4px;
+            color: var(--accent-warm);
+        }
+
+        #deep-dive-badge.minimized.has-generations .badge-mini-gen {
+            display: flex;
+        }
+
+        .badge-mini-gen .spin {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Badge visible when has generations, even outside report view */
+        #deep-dive-badge.has-generations {
+            display: flex !important;
+        }
+
         /* === PDF PRINT STYLES === */
         @media print {
             body {
@@ -3108,10 +3276,14 @@
         </div>
     </div>
 
-    <!-- FLOATING DEEP DIVE BADGE -->
+    <!-- FLOATING RESEARCH STATUS BADGE -->
     <div id="deep-dive-badge">
         <!-- Minimized view -->
         <div class="badge-minimized" onclick="toggleBadgeSize()">
+            <span class="badge-mini-gen" id="badge-mini-gen">
+                <i data-lucide="loader-2" class="w-3 h-3 spin"></i>
+                <span id="badge-mini-gen-count">0</span>
+            </span>
             <i data-lucide="layers" class="w-4 h-4" style="color: var(--accent-blue);"></i>
             <span class="badge-free" id="badge-mini-free">0</span>/<span class="badge-paid" id="badge-mini-paid">0</span>
             <button class="badge-toggle" onclick="event.stopPropagation(); toggleBadgeSize();">
@@ -3121,12 +3293,17 @@
         <!-- Expanded view -->
         <div class="badge-expanded">
             <div class="badge-header">
-                <i data-lucide="layers" class="w-4 h-4"></i>
-                Deep Dives Available
+                <i data-lucide="activity" class="w-4 h-4"></i>
+                Research Status
                 <button class="badge-toggle" style="margin-left: auto;" onclick="toggleBadgeSize()">
                     <i data-lucide="minimize-2" class="w-3 h-3"></i>
                 </button>
             </div>
+            <!-- Active Generations Section -->
+            <div class="badge-generations" id="badge-generations">
+                <!-- Generation cards inserted here dynamically -->
+            </div>
+            <!-- Deep Dives Section -->
             <div class="badge-stats">
                 <div class="badge-stat">
                     <span class="badge-stat-value badge-free" id="badge-free-count">0</span>
@@ -7361,10 +7538,14 @@
             }
             if (!topic) return;
 
+            // Register this generation (returns null if at max capacity)
+            const genId = registerGeneration(topic, 'report');
+            if (!genId) return;
+
             // Reset enhance count for new article
             resetEnhanceCount();
 
-            // Visual feedback on search box button
+            // Visual feedback on search box button (brief)
             const searchBtn = document.querySelector('#generate-search-box button');
             const searchInput = document.getElementById('generate-input');
             const originalBtnContent = searchBtn ? searchBtn.innerHTML : '';
@@ -7374,20 +7555,24 @@
                 lucide.createIcons();
             }
             if (searchInput) {
-                searchInput.disabled = true;
-                searchInput.placeholder = 'Generating investigation...';
+                searchInput.value = '';
+                searchInput.placeholder = 'Generation started in background...';
             }
 
-            // Show the loader
-            const loader = document.getElementById('deep-dive-loader');
-            if (loader) {
-                loader.style.display = 'flex';
-                // Truncate long topics for display
-                const displayTopic = topic.length > 60 ? topic.substring(0, 57) + '...' : topic;
-                document.getElementById('loader-title').textContent = displayTopic;
-                resetProgressUI();
-            }
+            // Restore search box quickly so user can queue more
+            setTimeout(() => {
+                if (searchBtn) {
+                    searchBtn.innerHTML = originalBtnContent;
+                    searchBtn.disabled = false;
+                }
+                if (searchInput) {
+                    searchInput.disabled = false;
+                    searchInput.placeholder = 'What do you want to investigate?';
+                }
+                lucide.createIcons();
+            }, 1500);
 
+            // Run generation in background (non-blocking)
             try {
                 const response = await fetch('/api/generate', {
                     method: 'POST',
@@ -7404,9 +7589,9 @@
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder();
                 let buffer = '';
-                let articleContent = null;  // null = not received yet
-                let currentEvent = null;    // MUST be outside while loop for multi-chunk SSE
-                let debugLog = [];          // Collect debug info
+                let articleContent = null;
+                let currentEvent = null;
+                let debugLog = [];
 
                 debugLog.push(`[SSE] Starting stream for topic: ${topic}`);
 
@@ -7421,9 +7606,8 @@
                     buffer += chunk;
                     debugLog.push(`[SSE] Received chunk: ${chunk.length} bytes, buffer now: ${buffer.length} bytes`);
 
-                    // Process complete SSE events
                     const lines = buffer.split('\n');
-                    buffer = lines.pop() || ''; // Keep incomplete line in buffer
+                    buffer = lines.pop() || '';
 
                     for (const line of lines) {
                         if (line.startsWith('event: ')) {
@@ -7439,7 +7623,8 @@
                                 debugLog.push(`[SSE] Parsed ${currentEvent} data: ${typeof data}`);
 
                                 if (currentEvent === 'progress') {
-                                    updateProgress(data.stage, data.percent, data.message);
+                                    // Update the generation card instead of full-screen loader
+                                    updateGenerationProgress(genId, data.percent, data.message);
                                 } else if (currentEvent === 'content') {
                                     articleContent = data;
                                     debugLog.push(`[SSE] Content received! Keys: ${Object.keys(data).join(', ')}`);
@@ -7456,57 +7641,41 @@
                     }
                 }
 
-                // Log debug info to console for Vercel/browser debugging
                 console.log('[Generate Debug Log]', debugLog.join('\n'));
 
-                // Store in localStorage for retrieval
                 try {
                     const existingLogs = JSON.parse(localStorage.getItem('genuverity_debug') || '[]');
                     existingLogs.push({ timestamp: new Date().toISOString(), topic, log: debugLog });
-                    // Keep only last 10 logs
                     while (existingLogs.length > 10) existingLogs.shift();
                     localStorage.setItem('genuverity_debug', JSON.stringify(existingLogs));
                 } catch (e) {}
 
-                // Validate we received content
                 if (articleContent === null) {
                     console.error('[Generate] No content received! Debug log:', debugLog);
                     throw new Error('No content received from server. Check console for debug log.');
                 }
 
-                // Content should always be an object now (backend guarantees this)
                 let data;
                 if (typeof articleContent === 'object' && articleContent !== null) {
                     data = articleContent;
                     console.log('[Generate] Received article object with keys:', Object.keys(data));
                 } else {
-                    // This shouldn't happen with new backend, but handle it
                     console.error('[Generate] Unexpected content type:', typeof articleContent, articleContent);
                     throw new Error(`Unexpected content type: ${typeof articleContent}. Check console.`);
                 }
 
-                // API returns the report directly with key, title, content, etc.
                 const key = data.key || topic.toLowerCase().replace(/\s+/g, '_').slice(0, 20);
                 reports[key] = data;
 
-                // Hide loader and open report
-                if (loader) loader.style.display = 'none';
-                loadReport(key);
+                // Mark generation as complete - user can click "View" to see it
+                completeGeneration(genId, key, data);
 
             } catch (e) {
-                if (loader) loader.style.display = 'none';
-                alert("Generation Error: " + e.message);
-            } finally {
-                // Restore search box state
-                if (searchBtn) {
-                    searchBtn.innerHTML = originalBtnContent;
-                    searchBtn.disabled = false;
-                }
-                if (searchInput) {
-                    searchInput.disabled = false;
-                    searchInput.placeholder = 'What do you want to investigate?';
-                }
-                lucide.createIcons();
+                console.error('[Generate] Error:', e);
+                // Update card to show error state
+                updateGenerationProgress(genId, 0, `Error: ${e.message}`);
+                // Remove after a delay so user sees the error
+                setTimeout(() => removeGeneration(genId), 5000);
             }
         }
 
@@ -8025,33 +8194,12 @@
                 deepDiveTooltipEl.classList.remove('visible');
             }
 
+            // Register this generation (returns null if at max capacity)
+            const genId = registerGeneration(topic, 'deepdive');
+            if (!genId) return;
+
             // Reset enhance count for new article
             resetEnhanceCount();
-
-            const loader = document.getElementById('deep-dive-loader');
-            const loaderTitle = document.getElementById('loader-title');
-            const progressBar = document.getElementById('loader-progress-bar');
-            const loaderSubtitle = document.getElementById('loader-subtitle');
-            const contextPreview = document.getElementById('loader-context-preview');
-            const contextText = document.getElementById('loader-context-text');
-
-            // Show loading screen - truncate long topics
-            const displayTopic = topic.length > 60 ? topic.substring(0, 57) + '...' : topic;
-            loaderTitle.textContent = displayTopic;
-
-            // Show context preview if context is provided
-            if (context && context.trim()) {
-                const displayContext = context.length > 500 ? context.substring(0, 500) + '...' : context;
-                contextText.textContent = displayContext;
-                contextPreview.style.display = 'block';
-            } else {
-                contextPreview.style.display = 'none';
-            }
-
-            loader.classList.add('visible');
-
-            // Start status animation
-            startStatusAnimation();
 
             deepDiveAbortController = new AbortController();
 
@@ -8085,7 +8233,7 @@
                 let buffer = '';
                 let articleData = null;
                 let lastPartialContent = '';
-                let currentEvent = null;  // MUST be outside while loop!
+                let currentEvent = null;
 
                 while (true) {
                     const { done, value } = await reader.read();
@@ -8104,17 +8252,15 @@
 
                                 console.log('[SSE] Event:', currentEvent, 'Data type:', typeof data);
                                 if (currentEvent === 'progress') {
-                                    // Use the unified updateProgress function
-                                    updateProgress(data.stage, data.percent, data.message);
+                                    // Update the generation card instead of full-screen loader
+                                    updateGenerationProgress(genId, data.percent, data.message);
                                 } else if (currentEvent === 'content') {
                                     console.log('[SSE] Received content, keys:', Object.keys(data));
                                     articleData = data;
                                 } else if (currentEvent === 'partial') {
-                                    // Store partial content in case of timeout
                                     console.log('[SSE] Received partial content, length:', typeof data === 'string' ? data.length : 'object');
                                     lastPartialContent = data;
                                 } else if (currentEvent === 'rawcontent') {
-                                    // Try client-side JSON repair
                                     console.log('[SSE] Received raw content, attempting repair');
                                     articleData = repairTruncatedJSON(data);
                                 } else if (currentEvent === 'error') {
@@ -8176,13 +8322,10 @@
                 cachedArticles[topic.toLowerCase()] = true;
                 saveGeneratedArticleLocally(key, reports[key]);
 
-                // Hide loader and load the report
-                // Note: loadReport -> renderReportData handles chart rendering automatically
-                stopStatusAnimation();
-                loader.classList.remove('visible');
-                loadReport(key);
+                // Mark generation as complete - user can click "View" to see it
+                completeGeneration(genId, key, reports[key]);
 
-                // Update badge (charts are rendered by renderReportData)
+                // Update badge
                 setTimeout(() => {
                     updateDeepDiveBadge();
                 }, 200);
@@ -8190,17 +8333,18 @@
             } catch (e) {
                 if (e.name === 'AbortError') {
                     console.log('Deep dive cancelled');
+                    removeGeneration(genId);
                 } else if (e.message?.includes('429') || e.message?.includes('daily_limit') || e.message?.includes('Daily limit')) {
                     console.error('Daily limit exceeded');
-                    alert('You\'ve used all free deep dives for today. Come back tomorrow!');
+                    updateGenerationProgress(genId, 0, 'Daily limit exceeded');
                     userRemainingDives = 0;
                     updateBadgeRemaining();
+                    setTimeout(() => removeGeneration(genId), 5000);
                 } else {
                     console.error('Deep dive error:', e);
-                    alert('Error generating deep dive: ' + e.message);
+                    updateGenerationProgress(genId, 0, `Error: ${e.message}`);
+                    setTimeout(() => removeGeneration(genId), 5000);
                 }
-                stopStatusAnimation();
-                loader.classList.remove('visible');
             }
 
             deepDiveAbortController = null;
@@ -8211,8 +8355,11 @@
                 deepDiveAbortController.abort();
             }
             stopStatusAnimation();
-            document.getElementById('deep-dive-loader').classList.remove('visible');
-            document.getElementById('loader-context-preview').style.display = 'none';
+            // Legacy loader cleanup (in case still used elsewhere)
+            const loader = document.getElementById('deep-dive-loader');
+            if (loader) loader.classList.remove('visible');
+            const contextPreview = document.getElementById('loader-context-preview');
+            if (contextPreview) contextPreview.style.display = 'none';
         }
 
         // NOTE: renderDynamicCharts is defined earlier in the file (around line 3906)
@@ -8285,14 +8432,166 @@
             }
         }
 
+        // === GENERATION STATE MANAGEMENT ===
+        const MAX_CONCURRENT_GENERATIONS = 3;
+        const activeGenerations = new Map(); // id -> { topic, percent, status, key, data }
+        let generationIdCounter = 0;
+
+        function registerGeneration(topic, type = 'report') {
+            if (activeGenerations.size >= MAX_CONCURRENT_GENERATIONS) {
+                alert(`Maximum ${MAX_CONCURRENT_GENERATIONS} concurrent generations allowed. Please wait for one to complete.`);
+                return null;
+            }
+
+            const id = `gen_${++generationIdCounter}`;
+            activeGenerations.set(id, {
+                topic: topic.length > 40 ? topic.substring(0, 37) + '...' : topic,
+                fullTopic: topic,
+                percent: 0,
+                status: 'Initializing...',
+                type: type,
+                key: null,
+                data: null,
+                startTime: Date.now()
+            });
+
+            renderGenerationCards();
+            updateBadgeGenerationState();
+            return id;
+        }
+
+        function updateGenerationProgress(genId, percent, status) {
+            const gen = activeGenerations.get(genId);
+            if (!gen) return;
+
+            gen.percent = Math.min(percent, 99); // Keep at 99% until actually complete
+            gen.status = status || gen.status;
+
+            // Update the specific card
+            const card = document.getElementById(`gen-card-${genId}`);
+            if (card) {
+                const progressBar = card.querySelector('.gen-card-progress-bar');
+                const percentEl = card.querySelector('.gen-card-percent');
+                const statusEl = card.querySelector('.gen-card-status');
+
+                if (progressBar) progressBar.style.width = `${gen.percent}%`;
+                if (percentEl) percentEl.textContent = `${gen.percent}%`;
+                if (statusEl) statusEl.textContent = gen.status;
+            }
+        }
+
+        function completeGeneration(genId, articleKey, articleData) {
+            const gen = activeGenerations.get(genId);
+            if (!gen) return;
+
+            gen.percent = 100;
+            gen.status = 'Ready to view';
+            gen.key = articleKey;
+            gen.data = articleData;
+
+            const card = document.getElementById(`gen-card-${genId}`);
+            if (card) {
+                card.classList.add('complete');
+                const progressBar = card.querySelector('.gen-card-progress-bar');
+                const percentEl = card.querySelector('.gen-card-percent');
+                const statusEl = card.querySelector('.gen-card-status');
+
+                if (progressBar) progressBar.style.width = '100%';
+                if (percentEl) percentEl.textContent = '100%';
+                if (statusEl) statusEl.textContent = 'Ready to view';
+            }
+
+            updateBadgeGenerationState();
+        }
+
+        function removeGeneration(genId) {
+            activeGenerations.delete(genId);
+            renderGenerationCards();
+            updateBadgeGenerationState();
+        }
+
+        function viewCompletedGeneration(genId) {
+            const gen = activeGenerations.get(genId);
+            if (!gen || !gen.key) return;
+
+            // Load the report
+            loadReport(gen.key);
+
+            // Remove from active generations
+            removeGeneration(genId);
+        }
+
+        function renderGenerationCards() {
+            const container = document.getElementById('badge-generations');
+            if (!container) return;
+
+            if (activeGenerations.size === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = `
+                <div class="badge-generations-header">
+                    <i data-lucide="loader-2" class="w-3 h-3 spin"></i>
+                    Generating
+                    <span class="gen-count">${activeGenerations.size}</span>
+                </div>
+            `;
+
+            activeGenerations.forEach((gen, id) => {
+                const isComplete = gen.percent === 100;
+                html += `
+                    <div class="gen-card ${isComplete ? 'complete' : ''}" id="gen-card-${id}">
+                        <div class="gen-card-header">
+                            <span class="gen-card-title" title="${gen.fullTopic}">${gen.topic}</span>
+                            <span class="gen-card-percent">${gen.percent}%</span>
+                        </div>
+                        <div class="gen-card-progress">
+                            <div class="gen-card-progress-bar" style="width: ${gen.percent}%"></div>
+                        </div>
+                        <div class="gen-card-status">${gen.status}</div>
+                        <div class="gen-card-actions">
+                            <button class="gen-card-btn primary" onclick="viewCompletedGeneration('${id}')">View</button>
+                            <button class="gen-card-btn secondary" onclick="removeGeneration('${id}')">Dismiss</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function updateBadgeGenerationState() {
+            const badge = document.getElementById('deep-dive-badge');
+            const miniGenCount = document.getElementById('badge-mini-gen-count');
+
+            const activeCount = Array.from(activeGenerations.values()).filter(g => g.percent < 100).length;
+
+            if (activeCount > 0) {
+                badge.classList.add('has-generations');
+                if (miniGenCount) miniGenCount.textContent = activeCount;
+            } else {
+                badge.classList.remove('has-generations');
+            }
+
+            // Ensure badge is visible if we have active generations
+            if (activeGenerations.size > 0 && !badge.classList.contains('visible')) {
+                badge.classList.add('visible');
+            }
+        }
+
         // Update the floating badge
         function updateDeepDiveBadge() {
             const badge = document.getElementById('deep-dive-badge');
             const reportView = document.getElementById('view-report');
             const isReportView = reportView && reportView.classList.contains('active');
 
+            // Keep badge visible if there are active generations, even outside report view
             if (!isReportView) {
-                badge.classList.remove('visible');
+                if (activeGenerations.size === 0) {
+                    badge.classList.remove('visible');
+                }
                 return;
             }
 
