@@ -107,6 +107,7 @@ def generate_gemini_infographic(chart_config: dict, title: str, chart_id: str) -
     # Craft the infographic generation prompt with Midnight Tech style
     prompt = f"""Generate a professional data visualization infographic.
 
+CRITICAL STYLE REQUIREMENTS - YOU MUST FOLLOW THESE EXACTLY:
 {INFOGRAPHIC_STYLE}
 
 CHART SPECIFICATIONS:
@@ -115,15 +116,18 @@ CHART SPECIFICATIONS:
 - Data Points:
 {data_description}
 
-REQUIREMENTS:
-1. Create a visually striking {chart_type} chart/graph
-2. Use the exact colors specified for each data point
-3. Include clear labels and values
-4. Add the title prominently at the top
-5. Follow the Midnight Tech style guide exactly
-6. Size: 800x500 pixels
+MANDATORY REQUIREMENTS:
+1. BACKGROUND MUST BE: Deep gradient from #050505 (near black) to #0a0a1a (dark blue-black) - NO WHITE OR LIGHT BACKGROUNDS
+2. Use electric blue (#3b82f6) as primary accent color
+3. Include the "GenuVerity" watermark in bottom-left corner (Genu=white, Verity=blue)
+4. Create a visually striking {chart_type} chart with glowing edges and tech-forward aesthetic
+5. Use crisp white (#ffffff) for data values, light gray (#a0a0b0) for labels
+6. Add subtle blue glow effects on key elements
+7. Size: 800x500 pixels
 
-Generate the infographic image now."""
+THIS IS A DARK THEME INFOGRAPHIC. The background MUST be nearly black (#050505 to #0a0a1a). Do NOT use white, light gray, or any light-colored backgrounds.
+
+Generate the Midnight Tech style infographic now."""
 
     # Try each API key with retry logic
     import time
@@ -146,7 +150,7 @@ Generate the infographic image now."""
                     }],
                     "generationConfig": {
                         "responseModalities": ["TEXT", "IMAGE"],
-                        "temperature": 0.4
+                        "temperature": 0.2  # Lower temperature for consistent Midnight Tech style
                     }
                 },
                 timeout=180  # 3 minutes for infographic generation
