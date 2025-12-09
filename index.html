@@ -3515,6 +3515,28 @@
             background: rgba(48, 164, 108, 0.08);
         }
 
+        .gen-card.failed {
+            border-color: var(--accent-warm);
+            background: rgba(247, 107, 21, 0.08);
+        }
+
+        .gen-card.failed .gen-card-percent {
+            color: var(--accent-warm);
+        }
+
+        .gen-card.failed .gen-card-progress-bar {
+            background: var(--accent-warm);
+        }
+
+        .gen-card.failed .gen-card-cancel {
+            display: none;
+        }
+
+        .gen-card.failed .gen-card-actions {
+            display: flex;
+            gap: 6px;
+        }
+
         .gen-card-header {
             display: flex;
             justify-content: space-between;
@@ -8288,10 +8310,11 @@
                     return;
                 }
                 console.error('[Generate] Error:', e);
-                // Update card to show error state
-                updateGenerationProgress(genId, 0, `Error: ${e.message}`);
-                // Remove after a delay so user sees the error
-                setTimeout(() => removeGeneration(genId), 5000);
+                // Show failed state with retry option
+                const errorMsg = e.message?.includes('fetch') || e.message?.includes('network')
+                    ? 'Connection lost - tap to retry'
+                    : `Error: ${e.message?.substring(0, 40) || 'Unknown error'}`;
+                failGeneration(genId, errorMsg);
             }
         }
 
@@ -8961,8 +8984,11 @@
                     setTimeout(() => removeGeneration(genId), 5000);
                 } else {
                     console.error('Deep dive error:', e);
-                    updateGenerationProgress(genId, 0, `Error: ${e.message}`);
-                    setTimeout(() => removeGeneration(genId), 5000);
+                    // Show failed state with retry option
+                    const errorMsg = e.message?.includes('fetch') || e.message?.includes('network')
+                        ? 'Connection lost - tap to retry'
+                        : `Error: ${e.message?.substring(0, 40) || 'Unknown error'}`;
+                    failGeneration(genId, errorMsg);
                 }
             }
 
@@ -9260,6 +9286,83 @@
             badge.classList.add('visible');
             updateBadgeRemaining();
             lucide.createIcons();
+        }
+
+        // === VISIBILITY CHANGE HANDLING (Mobile tab suspension) ===
+        let wasHiddenDuringGeneration = false;
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // Page is being hidden - mark if we have active generations
+                const hasActiveGen = Array.from(activeGenerations.values()).some(g => g.percent < 100 && !g.failed);
+                if (hasActiveGen) {
+                    wasHiddenDuringGeneration = true;
+                    console.log('[Visibility] Page hidden with active generations');
+                }
+            } else {
+                // Page is visible again
+                if (wasHiddenDuringGeneration) {
+                    console.log('[Visibility] Page restored - checking generation status');
+                    wasHiddenDuringGeneration = false;
+
+                    // Check each active generation - if it's stalled (no progress in 5s), mark as interrupted
+                    activeGenerations.forEach((gen, id) => {
+                        if (gen.percent < 100 && !gen.failed) {
+                            const timeSinceStart = Date.now() - gen.startTime;
+                            // If generation was in progress but hasn't completed, it likely got interrupted
+                            if (gen.percent > 0 && gen.percent < 95) {
+                                failGeneration(id, 'Connection interrupted - tap to retry');
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        function failGeneration(genId, reason = 'Generation failed') {
+            const gen = activeGenerations.get(genId);
+            if (!gen) return;
+
+            gen.failed = true;
+            gen.status = reason;
+
+            const card = document.getElementById(`gen-card-${genId}`);
+            if (card) {
+                card.classList.add('failed');
+                const statusEl = card.querySelector('.gen-card-status');
+                const actionsEl = card.querySelector('.gen-card-actions');
+
+                if (statusEl) statusEl.textContent = reason;
+                if (actionsEl) {
+                    actionsEl.innerHTML = `
+                        <button class="gen-card-btn primary" onclick="retryGeneration('${genId}')">
+                            <i data-lucide="refresh-cw" class="w-3 h-3"></i> Retry
+                        </button>
+                        <button class="gen-card-btn secondary" onclick="removeGeneration('${genId}')">Dismiss</button>
+                    `;
+                    lucide.createIcons();
+                }
+            }
+
+            updateBadgeGenerationState();
+        }
+
+        function retryGeneration(genId) {
+            const gen = activeGenerations.get(genId);
+            if (!gen) return;
+
+            const topic = gen.fullTopic;
+            const type = gen.type;
+
+            // Remove the failed generation
+            removeGeneration(genId);
+
+            // Restart based on type
+            if (type === 'deepdive') {
+                generateDeepDive(topic);
+            } else {
+                generateReport(topic);
+            }
         }
 
         function updateBadgeRemaining() {
