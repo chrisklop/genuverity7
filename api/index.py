@@ -76,13 +76,14 @@ In the bottom-left corner of the image, include the text logo "GenuVerity" where
 - Position: Bottom-left corner with small padding from edges
 """
 
-def generate_gemini_infographic(chart_config: dict, title: str, chart_id: str) -> Optional[str]:
+def generate_gemini_infographic(chart_config: dict, title: str, chart_id: str, article_context: str = "") -> Optional[str]:
     """Generate an infographic image using Gemini 3 Pro Image.
 
     Args:
         chart_config: Dict with type, data (labels, values, colors), title
-        title: Overall title for the infographic
+        title: Overall title for the infographic (article title)
         chart_id: Unique identifier for caching
+        article_context: Additional context about what this data represents (for shareability)
 
     Returns:
         Base64-encoded PNG image or None if generation fails
@@ -107,11 +108,25 @@ def generate_gemini_infographic(chart_config: dict, title: str, chart_id: str) -
         data_points.append(f"- {label}: {value} (color: {color})")
     data_description = "\n".join(data_points)
 
+    # Build context section for shareability
+    context_section = ""
+    if article_context:
+        context_section = f"""
+ARTICLE CONTEXT (for shareable infographic):
+This infographic is part of an investigation titled: "{title}"
+{article_context}
+
+IMPORTANT: Include enough context in the infographic that someone seeing ONLY this image understands:
+- What topic/entity this data is about (e.g., "Congressional Leaders", "AI Companies", etc.)
+- What time period or scope the data covers
+- Why this data matters"""
+
     # Craft the infographic generation prompt with Midnight Tech style
-    prompt = f"""Generate a professional data visualization infographic.
+    prompt = f"""Generate a professional data visualization infographic that is SHAREABLE and SELF-EXPLANATORY.
 
 CRITICAL STYLE REQUIREMENTS - YOU MUST FOLLOW THESE EXACTLY:
 {INFOGRAPHIC_STYLE}
+{context_section}
 
 CHART SPECIFICATIONS:
 - Chart Type: {chart_type.upper()} CHART
@@ -127,8 +142,11 @@ MANDATORY REQUIREMENTS:
 5. Use crisp white (#ffffff) for data values, light gray (#a0a0b0) for labels
 6. Add subtle blue glow effects on key elements
 7. Size: 800x500 pixels
+8. CONTEXT REQUIREMENT: Add a subtitle or context line below the title that explains WHAT this data represents (e.g., "Leadership PAC Spending by U.S. Congressional Leaders, 2020-2024")
 
 THIS IS A DARK THEME INFOGRAPHIC. The background MUST be nearly black (#050505 to #0a0a1a). Do NOT use white, light gray, or any light-colored backgrounds.
+
+The infographic should be SHAREABLE - someone seeing only this image should understand the full context without needing to read the article.
 
 Generate the Midnight Tech style infographic now."""
 
@@ -192,21 +210,26 @@ Generate the Midnight Tech style infographic now."""
     return None
 
 
-def generate_infographics_for_article(chart_configs: dict, article_title: str) -> dict:
+def generate_infographics_for_article(chart_configs: dict, article_title: str, article_description: str = "") -> dict:
     """Generate Gemini infographics for all charts in an article.
 
     Args:
         chart_configs: Dict of chart_id -> chart_config
         article_title: Title of the article for context
+        article_description: Brief description of the article topic for shareable context
 
     Returns:
         Dict of chart_id -> base64 image data URL (or None if failed)
     """
     infographics = {}
 
+    # Build context string for shareability
+    article_context = article_description if article_description else ""
+
     for chart_id, config in chart_configs.items():
         print(f"Generating infographic: {chart_id}")
-        image_data = generate_gemini_infographic(config, article_title, chart_id)
+        # Pass article context so infographics are self-explanatory when shared
+        image_data = generate_gemini_infographic(config, article_title, chart_id, article_context)
         if image_data:
             infographics[chart_id] = image_data
         else:
@@ -1289,6 +1312,7 @@ class InfographicRequest(BaseModel):
 class BatchInfographicRequest(BaseModel):
     chart_configs: dict  # Dict of chart_id -> chart_config
     article_title: str = "Article"
+    article_description: str = ""  # Brief context for shareable infographics
 
 
 @app.post("/api/infographic")
@@ -1317,7 +1341,8 @@ async def generate_batch_infographics(request: BatchInfographicRequest):
 
     results = generate_infographics_for_article(
         request.chart_configs,
-        request.article_title
+        request.article_title,
+        request.article_description  # Pass context for shareable infographics
     )
 
     # Count successes

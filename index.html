@@ -1689,6 +1689,66 @@
             transform: scale(1.02);
         }
 
+        /* Infographic Loading Placeholder */
+        .infographic-placeholder {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, #0a0a1a 0%, #050505 50%, #0a0a1a 100%);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .infographic-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            animation: placeholderShimmer 2s infinite;
+        }
+
+        @keyframes placeholderShimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .placeholder-icon {
+            width: 48px;
+            height: 48px;
+            border: 2px solid rgba(59, 130, 246, 0.5);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: placeholderSpin 1.2s linear infinite;
+        }
+
+        @keyframes placeholderSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        .placeholder-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .placeholder-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.4);
+            max-width: 80%;
+            text-align: center;
+        }
+
         @media (min-width: 1024px) {
             .float-figure {
                 clear: none;
@@ -6536,8 +6596,132 @@
         // Store dynamically generated Gemini infographics (base64 data URLs)
         window.dynamicGeminiInfographics = window.dynamicGeminiInfographics || {};
 
+        // Show placeholder while infographic generates
+        function showInfographicPlaceholder(chartId, chartTitle) {
+            const canvas = document.getElementById(chartId);
+            if (!canvas) {
+                // Try finding in report body
+                const reportBody = document.getElementById('report-body');
+                if (!reportBody) return null;
+                const canvases = reportBody.querySelectorAll('canvas');
+                for (const c of canvases) {
+                    if (c.id === chartId && !c.dataset.placeholderShown) {
+                        c.dataset.placeholderShown = 'true';
+                        return createPlaceholderElement(c, chartTitle);
+                    }
+                }
+                return null;
+            }
+            return createPlaceholderElement(canvas, chartTitle);
+        }
+
+        function createPlaceholderElement(canvas, chartTitle) {
+            const parent = canvas.parentElement;
+            const placeholder = document.createElement('div');
+            placeholder.className = 'infographic-placeholder';
+            placeholder.dataset.chartId = canvas.id;
+            placeholder.innerHTML = `
+                <div class="placeholder-icon"></div>
+                <div class="placeholder-text">Generating Infographic</div>
+                <div class="placeholder-title">${chartTitle || 'Data Visualization'}</div>
+            `;
+            canvas.style.display = 'none';
+            parent.insertBefore(placeholder, canvas);
+            return placeholder;
+        }
+
+        // Replace placeholder with actual infographic
+        function replacePlaceholderWithImage(chartId, imageDataUrl) {
+            const placeholder = document.querySelector(`.infographic-placeholder[data-chart-id="${chartId}"]`);
+            if (placeholder) {
+                const parent = placeholder.parentElement;
+                const img = document.createElement('img');
+                img.src = imageDataUrl;
+                img.alt = chartId;
+                img.className = 'gemini-infographic';
+                img.style.cssText = 'width: 100%; height: auto; border-radius: 8px; opacity: 0; transition: opacity 0.3s ease;';
+                img.onload = () => { img.style.opacity = '1'; };
+                parent.replaceChild(img, placeholder);
+                // Remove hidden canvas
+                const canvas = parent.querySelector('canvas');
+                if (canvas) canvas.remove();
+                console.log('[Infographics] Replaced placeholder with image for:', chartId);
+                return true;
+            }
+            return false;
+        }
+
+        // Fallback to Chart.js if Gemini generation fails
+        function renderChartJsFallback(chartConfigs, chartIds) {
+            console.log('[Charts] Rendering Chart.js fallback for:', chartIds);
+            const chartTextColor = getChartTextColor();
+            const themeColors = getThemeChartColors();
+            const defaultColors = themeColors.palette.concat([themeColors.accent, themeColors.muted]);
+
+            for (const chartId of chartIds) {
+                const config = chartConfigs[chartId];
+                if (!config) continue;
+
+                // Remove placeholder and restore canvas
+                const placeholder = document.querySelector(`.infographic-placeholder[data-chart-id="${chartId}"]`);
+                if (placeholder) {
+                    const parent = placeholder.parentElement;
+                    let canvas = parent.querySelector('canvas');
+                    if (canvas) {
+                        canvas.style.display = '';
+                    } else {
+                        canvas = document.createElement('canvas');
+                        canvas.id = chartId;
+                    }
+                    placeholder.remove();
+                    if (!parent.contains(canvas)) {
+                        parent.appendChild(canvas);
+                    }
+
+                    // Render Chart.js
+                    const ctx = canvas.getContext('2d');
+                    const chartType = config.type || 'bar';
+                    const data = config.data || {};
+                    const colors = data.colors || defaultColors.slice(0, data.values?.length || 5);
+
+                    try {
+                        new Chart(ctx, {
+                            type: chartType === 'pie' ? 'pie' : (chartType === 'line' ? 'line' : 'bar'),
+                            data: {
+                                labels: data.labels || [],
+                                datasets: [{
+                                    data: data.values || [],
+                                    backgroundColor: colors,
+                                    borderColor: chartType === 'line' ? colors[0] : colors.map(c => c + '80'),
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: { labels: { color: chartTextColor } },
+                                    title: {
+                                        display: !!config.title,
+                                        text: config.title,
+                                        color: chartTextColor
+                                    }
+                                },
+                                scales: chartType !== 'pie' ? {
+                                    x: { ticks: { color: chartTextColor } },
+                                    y: { ticks: { color: chartTextColor } }
+                                } : undefined
+                            }
+                        });
+                        console.log('[Charts] Rendered Chart.js fallback for:', chartId);
+                    } catch (e) {
+                        console.error('[Charts] Failed to render fallback chart:', chartId, e);
+                    }
+                }
+            }
+        }
+
         // Generate Gemini 3 Pro infographics for dynamic charts
-        async function generateGeminiInfographicsForCharts(chartConfigs, articleTitle) {
+        async function generateGeminiInfographicsForCharts(chartConfigs, articleTitle, articleDescription = '') {
             if (!chartConfigs || Object.keys(chartConfigs).length === 0) {
                 console.log('[Gemini] No chartConfigs to generate infographics for');
                 return {};
@@ -6546,13 +6730,20 @@
             const chartIds = Object.keys(chartConfigs);
             console.log('[Gemini] Requesting Gemini 3 Pro Midnight Tech infographics for:', chartIds);
 
+            // Get article description for context if not provided
+            if (!articleDescription) {
+                const currentReport = reports[currentArticleKey];
+                articleDescription = currentReport?.cardDescription || '';
+            }
+
             try {
                 const response = await fetch('/api/infographics/batch', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         chart_configs: chartConfigs,
-                        article_title: articleTitle || 'Deep Dive Investigation'
+                        article_title: articleTitle || 'Deep Dive Investigation',
+                        article_description: articleDescription  // For shareable infographics
                     })
                 });
 
@@ -6667,18 +6858,14 @@
                 }
             }
 
-            // If no cached infographics and not skipping, generate them via Gemini 3 Pro
-            if (!hasGeminiInfographics && !skipGeminiGeneration) {
-                console.log('[Charts] No cached Gemini infographics, generating via API...');
-                await generateGeminiInfographicsForCharts(chartConfigs, articleTitle);
-            }
-
-            // Now render: prefer Gemini infographics, fall back to Chart.js
+            // Now render: prefer cached Gemini infographics, show placeholders for pending
             let chartsRendered = 0;
             const chartKeys = Object.keys(chartConfigs);
+            const chartsNeedingGeneration = [];
 
             for (const chartId of chartKeys) {
-                // Check if we have a Gemini infographic for this chart
+                const config = chartConfigs[chartId];
+                // Check if we have a cached Gemini infographic for this chart
                 if (window.dynamicGeminiInfographics[chartId]) {
                     if (renderGeminiInfographicFromData(chartId, window.dynamicGeminiInfographics[chartId])) {
                         chartsRendered++;
@@ -6686,14 +6873,38 @@
                     }
                 }
 
-                // Fall back to Chart.js if no Gemini infographic
-                console.log('[Charts] No Gemini infographic for:', chartId, '- using Chart.js fallback');
+                // No cached infographic - show placeholder if we'll be generating
+                if (!skipGeminiGeneration) {
+                    const chartTitle = config?.title || chartId.replace(/_/g, ' ');
+                    showInfographicPlaceholder(chartId, chartTitle);
+                    chartsNeedingGeneration.push(chartId);
+                }
             }
 
-            // If all charts were rendered as Gemini infographics, we're done
+            // If all charts were rendered from cache, we're done
             if (chartsRendered === chartKeys.length) {
-                console.log(`[Charts] All ${chartsRendered} charts rendered as Gemini infographics`);
+                console.log(`[Charts] All ${chartsRendered} charts rendered from cached Gemini infographics`);
                 return true;
+            }
+
+            // Generate missing infographics in background (non-blocking)
+            if (chartsNeedingGeneration.length > 0 && !skipGeminiGeneration) {
+                console.log('[Charts] Generating', chartsNeedingGeneration.length, 'infographics in background...');
+                generateGeminiInfographicsForCharts(chartConfigs, articleTitle).then(infographics => {
+                    // When ready, swap placeholders with actual images
+                    for (const [chartId, base64Data] of Object.entries(infographics || {})) {
+                        if (base64Data) {
+                            const dataUrl = base64Data.startsWith('data:') ? base64Data : `data:image/png;base64,${base64Data}`;
+                            window.dynamicGeminiInfographics[chartId] = dataUrl;
+                            replacePlaceholderWithImage(chartId, dataUrl);
+                        }
+                    }
+                }).catch(err => {
+                    console.error('[Charts] Background infographic generation failed:', err);
+                    // On failure, fall back to Chart.js for charts that are still placeholders
+                    renderChartJsFallback(chartConfigs, chartsNeedingGeneration);
+                });
+                return true; // Return immediately, generation is async
             }
 
             // Otherwise, render remaining charts with Chart.js
