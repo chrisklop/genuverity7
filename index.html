@@ -9047,41 +9047,74 @@
                 if (existingContext && existingContext.classList.contains('fractal-context')) {
                     existingContext.classList.toggle('open');
                 } else {
-                    const isFree = userRemainingDives > 0;
+                    const escapedTopic = topicForDeepDive.replace(/'/g, "\\'").replace(/"/g, '&quot;');
                     const contextDiv = document.createElement('div');
                     contextDiv.className = 'fractal-context open';
                     contextDiv.innerHTML = `
                         <p>${contextData[key].expanded}</p>
-                        <button onclick="promptDeepDive('${topicForDeepDive.replace(/'/g, "\\'")}')" class="rabbit-hole-btn">
-                            <i data-lucide="${isFree ? 'sparkles' : 'coins'}" class="w-4 h-4"></i>
-                            ${isFree ? 'Generate Deep Dive (Free)' : 'Generate Deep Dive (Uses Token)'}
+                        <button class="queue-deepdive-btn" onclick="queueDeepDiveFromContext(this, '${escapedTopic}')">
+                            <span class="queue-btn-icon">+</span>
+                            <span class="queue-btn-text">
+                                <span class="queue-btn-label">Queue Deep Dive</span>
+                                <span class="queue-btn-topic">${topicForDeepDive}</span>
+                            </span>
                         </button>
                     `;
                     element.parentNode.insertBefore(contextDiv, element.nextSibling);
-                    lucide.createIcons();
                 }
             } else {
-                // No pre-generated context - show confirmation with cost info
-                promptDeepDive(topicForDeepDive);
+                // No pre-generated context - queue directly with instant feedback
+                queueDeepDiveInstant(topicForDeepDive);
             }
         }
 
-        // Prompt user before generating (shows if free or costs token)
-        function promptDeepDive(topic) {
+        // Queue deep dive instantly (no confirmation, just add to queue)
+        function queueDeepDiveInstant(topic) {
             // Hide any floating tooltips
             const fractalTooltip = document.querySelector('.fractal-tooltip');
             if (fractalTooltip) {
                 fractalTooltip.classList.remove('visible');
             }
 
-            const isFree = userRemainingDives > 0;
-            const message = isFree
-                ? `Generate a deep-dive article on "${topic}"?\n\nYou have ${userRemainingDives} remaining free today.`
-                : `Generate a deep-dive article on "${topic}"?\n\n⚠️ No free generations remaining today. This will cost tokens.`;
-
-            if (confirm(message)) {
-                generateDeepDive(topic);
+            // Check if at max capacity
+            if (activeGenerations.size >= MAX_CONCURRENT_GENERATIONS) {
+                showNotification(`Queue full (${MAX_CONCURRENT_GENERATIONS} max). Wait for one to complete.`, 'warning');
+                return;
             }
+
+            // Get parent article context
+            const articleTitle = document.getElementById('report-title')?.innerText || '';
+            const currentReport = reports[currentArticleKey];
+            const articleDescription = currentReport?.cardDescription || '';
+
+            let context = `Parent Article: "${articleTitle}"\n`;
+            if (articleDescription) {
+                context += `Article Focus: ${articleDescription}\n`;
+            }
+
+            // Show toast notification
+            const shortTopic = topic.length > 35 ? topic.substring(0, 32) + '...' : topic;
+            showNotification(`Queued: "${shortTopic}"`, 'success');
+
+            // Start generation in background
+            generateDeepDive(topic, context, currentArticleKey, articleTitle);
+
+            // Show badge
+            const badge = document.getElementById('deep-dive-badge');
+            if (badge) {
+                badge.classList.add('visible');
+                badge.classList.remove('minimized');
+                setTimeout(() => {
+                    if (!badge.matches(':hover')) {
+                        badge.classList.add('minimized');
+                    }
+                }, 3000);
+            }
+        }
+
+        // Legacy function - redirects to instant queue
+        function promptDeepDive(topic) {
+            queueDeepDiveInstant(topic);
         }
 
         // === INFOGRAPHIC LIGHTBOX ===
