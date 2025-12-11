@@ -695,6 +695,11 @@ ARTICLE_TEMPLATE = """
 Investigative exposé on: "{topic}"
 {context_section}
 
+INFOGRAPHIC DECISION - Set "generateInfographics" to true ONLY if the article would benefit from data visualization:
+- TRUE if: Financial data, statistics, trends over time, comparisons, percentages, poll results, scientific measurements
+- FALSE if: Biography, breaking news, event coverage, opinion analysis, policy explanations, historical narratives without data
+If generateInfographics is false, set chartConfigs to empty object {{}}.
+
 RETURN ONLY VALID JSON. CRITICAL: Generate chartConfigs FIRST (before content) to ensure charts are captured.
 
 {{
@@ -704,6 +709,7 @@ RETURN ONLY VALID JSON. CRITICAL: Generate chartConfigs FIRST (before content) t
   "cardTag": "CATEGORY // SUBCATEGORY",
   "cardTagColor": "text-red-400",
   "cardDescription": "One-line teaser",
+  "generateInfographics": true,
   "chartConfigs": {{
     "chart_main": {{"type": "bar", "data": {{"labels": ["A", "B", "C", "D"], "values": [num1, num2, num3, num4], "colors": ["#3b82f6", "#10b981", "#f59e0b", "#ef4444"]}}, "title": "Main Chart"}},
     "chart_secondary": {{"type": "line", "data": {{"labels": ["2020", "2021", "2022", "2023", "2024"], "values": [v1, v2, v3, v4, v5], "colors": ["#8b5cf6"]}}, "title": "Trend"}},
@@ -719,8 +725,8 @@ HTML structure for content field:
 - <p class="prose-text"><strong class="text-white">Executive Summary:</strong> Key finding with <span class="highlight-glow">stat</span> and <span class="living-number" data-target="NUM" data-suffix="SUFFIX">$0</span> <span class="citation-spade" data-id="src1">♠</span></p>
 - <h2 class="prose-h2">1. Section</h2> with <div class="float-figure right"><div style="height:250px"><canvas id="chart_main"></canvas></div><div class="fig-caption">Caption <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div></div>
 - <strong class="fractal-trigger" onclick="expandContext(this,'key')">technical terms</strong> for deep-dives
-- 5 sections, 3 charts (bar, line, pie), 8+ living numbers, 15+ fractal triggers (2-4 per section), 10+ citations
-- Alternate float-figure right/left
+- If generateInfographics is true: 5 sections, 3 charts (bar, line, pie), 8+ living numbers, 15+ fractal triggers (2-4 per section), 10+ citations - Alternate float-figure right/left
+- If generateInfographics is false: 5 sections, 8+ living numbers, 15+ fractal triggers, 10+ citations - NO float-figure elements, focus on rich prose
 
 FRACTAL TRIGGERS ARE CRITICAL - wrap these with <strong class="fractal-trigger" onclick="expandContext(this,'key_name')">term</strong>:
 - Scientific/medical terms (DNA methylation, epigenetic markers, oxidative stress)
