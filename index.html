@@ -1739,26 +1739,51 @@
         }
 
         .fig-deep-dive {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             margin-left: 10px;
-            padding: 3px 10px;
-            font-size: 0.6rem;
-            font-weight: 700;
+            width: 24px;
+            height: 24px;
+            font-size: 0; /* Hide text content */
             color: #fff;
-            background: var(--accent-blue);
+            background: linear-gradient(135deg, var(--accent-blue), #5b8def);
             border: none;
-            border-radius: 4px;
+            border-radius: 50%;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             vertical-align: middle;
             position: relative;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+            overflow: hidden; /* Hide any text overflow */
+        }
+
+        .fig-deep-dive::before {
+            content: '+';
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1;
         }
 
         .fig-deep-dive:hover {
-            background: #5b8def;
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, #5b8def, #7c9eff);
+            transform: scale(1.15) rotate(90deg);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.5);
+        }
+
+        .fig-deep-dive.queued {
+            background: linear-gradient(135deg, var(--accent-green), #45c97a);
+            pointer-events: none;
+            transform: scale(1);
+        }
+
+        .fig-deep-dive.queued::before {
+            content: '✓';
+            font-size: 0.9rem;
+        }
+
+        .fig-deep-dive.queued:hover {
+            transform: scale(1);
         }
 
         /* Light mode adjustments for overlay */
@@ -8433,7 +8458,7 @@
         }
 
         // === GENERATION STATE MANAGEMENT ===
-        const MAX_CONCURRENT_GENERATIONS = 3;
+        const MAX_CONCURRENT_GENERATIONS = 5;
         const activeGenerations = new Map(); // id -> { topic, percent, status, key, data }
         let generationIdCounter = 0;
 
@@ -8882,15 +8907,15 @@
                 deepDiveTooltipEl.classList.remove('visible');
             }
 
-            let topic, context;
+            let topic, context, clickedElement;
 
             // If passed a string, use it as the topic (legacy support)
             if (typeof topicOrElement === 'string') {
                 topic = topicOrElement;
             } else {
                 // Extract context from the clicked element
-                const element = topicOrElement;
-                topic = extractDeepDiveTopic(element);
+                clickedElement = topicOrElement;
+                topic = extractDeepDiveTopic(clickedElement);
             }
 
             // Get parent article context
@@ -8904,15 +8929,36 @@
                 context += `Article Focus: ${articleDescription}\n`;
             }
 
-            // Trigger the deep dive with context
-            const isFree = userRemainingDives > 0;
-            const message = isFree
-                ? `Generate a deep-dive on "${topic}"?\n\nContext: From article "${articleTitle}"\n\nYou have ${userRemainingDives} remaining free today.`
-                : `Generate a deep-dive on "${topic}"?\n\nContext: From article "${articleTitle}"\n\n⚠️ No free generations remaining today.`;
+            // Check if at max capacity
+            if (activeGenerations.size >= MAX_CONCURRENT_GENERATIONS) {
+                showNotification(`Queue full (${MAX_CONCURRENT_GENERATIONS} max). Wait for one to complete.`, 'warning');
+                return;
+            }
 
-            if (confirm(message)) {
-                // Pass parent article key and title for relationship tracking
-                generateDeepDive(topic, context, currentArticleKey, articleTitle);
+            // Mark the clicked button as queued (visual feedback)
+            if (clickedElement) {
+                clickedElement.classList.add('queued');
+            }
+
+            // Show toast notification
+            const shortTopic = topic.length > 40 ? topic.substring(0, 37) + '...' : topic;
+            showNotification(`Queued: "${shortTopic}"`, 'success');
+
+            // Immediately start generation in background
+            generateDeepDive(topic, context, currentArticleKey, articleTitle);
+
+            // Make sure badge is visible and expanded to show progress
+            const badge = document.getElementById('deep-dive-badge');
+            if (badge) {
+                badge.classList.add('visible');
+                // Briefly expand to show new item, then user can minimize
+                badge.classList.remove('minimized');
+                setTimeout(() => {
+                    // Auto-minimize after 3 seconds if user hasn't interacted
+                    if (!badge.matches(':hover')) {
+                        badge.classList.add('minimized');
+                    }
+                }, 3000);
             }
         }
 
@@ -9539,22 +9585,65 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
             }
         }
 
-        // Simple notification helper
+        // Stacking notification helper
+        let notificationStack = [];
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
-            notification.className = `fixed bottom-20 right-4 px-4 py-3 rounded-lg shadow-lg animate-fade-in`;
-            notification.style.background = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6';
-            notification.style.color = 'white';
-            notification.style.zIndex = '9999';
-            notification.style.maxWidth = '400px';
+            notification.className = `notification-toast`;
+
+            const colors = {
+                success: 'linear-gradient(135deg, #10b981, #34d399)',
+                error: 'linear-gradient(135deg, #ef4444, #f87171)',
+                warning: 'linear-gradient(135deg, #f59e0b, #fbbf24)',
+                info: 'linear-gradient(135deg, #3b82f6, #60a5fa)'
+            };
+
+            notification.style.cssText = `
+                position: fixed;
+                right: 24px;
+                padding: 12px 18px;
+                border-radius: 12px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                color: white;
+                font-size: 0.9rem;
+                font-weight: 500;
+                z-index: 10000;
+                max-width: 350px;
+                background: ${colors[type] || colors.info};
+                opacity: 0;
+                transform: translateX(100px);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            `;
             notification.innerHTML = message;
             document.body.appendChild(notification);
 
+            // Add to stack and position
+            notificationStack.push(notification);
+            repositionNotifications();
+
+            // Animate in
+            requestAnimationFrame(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateX(0)';
+            });
+
+            // Auto-remove after delay
             setTimeout(() => {
                 notification.style.opacity = '0';
-                notification.style.transition = 'opacity 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
+                notification.style.transform = 'translateX(100px)';
+                setTimeout(() => {
+                    notification.remove();
+                    notificationStack = notificationStack.filter(n => n !== notification);
+                    repositionNotifications();
+                }, 300);
             }, 4000);
+        }
+
+        function repositionNotifications() {
+            let bottomOffset = 100; // Start above the badge
+            notificationStack.forEach((notification, index) => {
+                notification.style.bottom = `${bottomOffset + (index * 60)}px`;
+            });
         }
 
         function toggleBookmark() {
