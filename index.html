@@ -2418,27 +2418,140 @@
             50% { border-color: var(--text-muted); }
         }
 
-        /* Rabbit Hole Button */
-        .rabbit-hole-btn {
-            display: inline-flex;
+        /* Queue Deep Dive Button (replaces old rabbit-hole-btn) */
+        .rabbit-hole-btn,
+        .queue-deepdive-btn {
+            display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             margin-top: 12px;
-            padding: 8px 16px;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.4);
-            border-radius: 6px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(99, 102, 241, 0.15));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
             color: #93c5fd;
             font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
+            font-size: 0.85rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        .rabbit-hole-btn:hover {
-            background: rgba(59, 130, 246, 0.3);
-            transform: translateX(4px);
+        .queue-deepdive-btn .queue-btn-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--accent-blue), #5b8def);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .queue-deepdive-btn .queue-btn-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+        }
+
+        .queue-deepdive-btn .queue-btn-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .queue-deepdive-btn .queue-btn-topic {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .rabbit-hole-btn:hover,
+        .queue-deepdive-btn:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(99, 102, 241, 0.25));
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+        }
+
+        .queue-deepdive-btn:hover .queue-btn-icon {
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .queue-deepdive-btn.queued {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(52, 211, 153, 0.15));
+            border-color: rgba(16, 185, 129, 0.4);
+            pointer-events: none;
+        }
+
+        .queue-deepdive-btn.queued .queue-btn-icon {
+            background: linear-gradient(135deg, var(--accent-green), #45c97a);
+        }
+
+        .queue-deepdive-btn.queued .queue-btn-label {
+            color: var(--accent-green);
+        }
+
+        /* Hover Queue Pill (Phase 2) */
+        .hover-queue-pill {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px 4px 6px;
+            background: linear-gradient(135deg, var(--accent-blue), #5b8def);
+            border-radius: 14px;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+            white-space: nowrap;
+        }
+
+        .hover-queue-pill.visible {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        .hover-queue-pill:hover {
+            background: linear-gradient(135deg, #5b8def, #7c9eff);
+            transform: scale(1.05);
+        }
+
+        .hover-queue-pill .pill-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            font-size: 0.8rem;
+        }
+
+        .hover-queue-pill.queued {
+            background: linear-gradient(135deg, var(--accent-green), #45c97a);
+            pointer-events: none;
+        }
+
+        /* Make fractal-trigger position relative for pill positioning */
+        .fractal-trigger {
+            position: relative;
         }
 
         /* === DEEP DIVE LOADING SCREEN === */
@@ -5563,6 +5676,7 @@
                         initLivingNumbers(); // Re-run observer for new elements
                         initLightboxHandlers(); // Initialize lightbox for infographics
                         initDeepDiveTooltips(); // Add hover tooltips to deep dive buttons
+                        initHoverQueuePills(); // Add hover queue pills to fractal triggers
                     }, 150);
                 });
             });
@@ -6697,33 +6811,229 @@
             }
 
             const contextData = {
-                'goldman_analysis': `<strong>CONTEXT:</strong> While Goldman's economists predict a possible 9% GDP boost, their Head of Equity Research warns that "bubbles take a long time to burst," citing that AI lacks a "killer app" to justify the $1T spend. <br><br> <button class="rabbit-hole-btn" onclick="loadReport('regulatory_capture')">🐇 Rabbit Hole: Market Bubbles</button>`,
+                'goldman_analysis': `<strong>CONTEXT:</strong> While Goldman's economists predict a possible 9% GDP boost, their Head of Equity Research warns that "bubbles take a long time to burst," citing that AI lacks a "killer app" to justify the $1T spend.`,
                 'sequoia_math': `<strong>CONTEXT:</strong> The "revenue hole" grew from $125B in 2023 to $600B in 2024. This suggests infrastructure is being built for future demand that has not yet materialized in software sales.`,
-                'eight_trillion': `<strong>CONTEXT:</strong> The $8T figure extrapolates the cost of 100GW of planned capacity at ~$80B per gigawatt. <br><br> <button class="rabbit-hole-btn" onclick="loadReport('energy_crisis')">🐇 Rabbit Hole: The Energy Crisis</button>`,
-                'obsolescence': `<strong>CONTEXT:</strong> While traditional servers last 7 years, AI GPUs burn out or become economically obsolete in 3-5 years. This "Depreciation Bomb" destroys profit margins. <br><br> <button class="rabbit-hole-btn" onclick="loadReport('semiconductor_wars')">🐇 Rabbit Hole: The Silicon Siege</button>`,
+                'eight_trillion': `<strong>CONTEXT:</strong> The $8T figure extrapolates the cost of 100GW of planned capacity at ~$80B per gigawatt.`,
+                'obsolescence': `<strong>CONTEXT:</strong> While traditional servers last 7 years, AI GPUs burn out or become economically obsolete in 3-5 years. This "Depreciation Bomb" destroys profit margins.`,
                 'solow_paradox': `<strong>CONTEXT:</strong> The Solow Paradox states that we see the computer age everywhere but in the productivity statistics. AI has yet to break this trend.`,
                 'pac_slush': `<strong>CONTEXT:</strong> Leadership PACs were created in 1978 for travel expenses. Today, the FEC is "deadlocked" on whether personal use bans apply to them, effectively legalizing their use for luxury perks.`,
                 'three_mile_island': `<strong>CONTEXT:</strong> Microsoft is paying >$100/MWh (double the market rate) to restart the TMI nuclear reactor. This "behind-the-meter" deal bypasses the public grid entirely.`,
                 'mad_disorder': `<strong>CONTEXT:</strong> MAD occurs when models train on synthetic data. They lose "variance" (creativity) and converge on the "median," erasing low-probability knowledge forever.`,
                 'cost_of_business': `<strong>CONTEXT:</strong> A $2.7B fine for a company earning $307B is just 0.8% of revenue. In comparison, a speeding ticket is often a higher % of an average person's income.`,
-                'gelsinger_exit': `<strong>CONTEXT:</strong> Pat Gelsinger was forced out December 1, 2024 after Intel's stock cratered 62% under his watch. His ambitious "IDM 2.0" strategy to compete with TSMC as a foundry failed spectacularly, with the foundry division losing $7B+ annually. CFO David Zinsner and Intel Products CEO MJ Holthaus now serve as interim co-CEOs. <br><br> <button class="rabbit-hole-btn" onclick="loadReport('ai_bubble')">🐇 Rabbit Hole: The AI Infrastructure Bubble</button>`,
-                'chips_act': `<strong>CONTEXT:</strong> The CHIPS and Science Act allocated $52.7B for semiconductor manufacturing: $39B for fab incentives, $13.2B for R&D, plus a 25% investment tax credit. Despite this, Arizona construction has stalled—five suppliers to Intel and TSMC have postponed projects citing labor shortages. Commerce Secretary Raimondo has floated "CHIPS Act 2.0" for packaging. <br><br> <button class="rabbit-hole-btn" onclick="loadReport('regulatory_capture')">🐇 Rabbit Hole: When Government Money Meets Industry</button>`
+                'gelsinger_exit': `<strong>CONTEXT:</strong> Pat Gelsinger was forced out December 1, 2024 after Intel's stock cratered 62% under his watch. His ambitious "IDM 2.0" strategy to compete with TSMC as a foundry failed spectacularly, with the foundry division losing $7B+ annually. CFO David Zinsner and Intel Products CEO MJ Holthaus now serve as interim co-CEOs.`,
+                'chips_act': `<strong>CONTEXT:</strong> The CHIPS and Science Act allocated $52.7B for semiconductor manufacturing: $39B for fab incentives, $13.2B for R&D, plus a 25% investment tax credit. Despite this, Arizona construction has stalled—five suppliers to Intel and TSMC have postponed projects citing labor shortages.`
             };
 
             const div = document.createElement('div');
             div.className = 'fractal-context';
+            const triggerText = element.innerText;
             let content = contextData[id] || "Retrieving verified context...";
 
-            // Auto-inject Rabbit Hole Generator if not present
-            if (!content.includes('rabbit-hole-btn')) {
-                const triggerText = element.innerText; // e.g., "Leadership PACs"
-                content += `<br><br> <button class="rabbit-hole-btn" onclick="generateReport('${triggerText.replace(/'/g, "\\'")}')">🐇 Rabbit Hole: Deep Dive on ${triggerText}</button>`;
-            }
+            // Always add the new styled queue button
+            const escapedTopic = triggerText.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            content += `
+                <button class="queue-deepdive-btn" onclick="queueDeepDiveFromContext(this, '${escapedTopic}')">
+                    <span class="queue-btn-icon">+</span>
+                    <span class="queue-btn-text">
+                        <span class="queue-btn-label">Queue Deep Dive</span>
+                        <span class="queue-btn-topic">${triggerText}</span>
+                    </span>
+                </button>
+            `;
 
             div.innerHTML = content;
             element.parentNode.insertBefore(div, element.nextSibling);
             setTimeout(() => div.classList.add('open'), 10);
         }
+
+        // Queue deep dive from fractal context expansion
+        function queueDeepDiveFromContext(btn, topic) {
+            // Check if at max capacity
+            if (activeGenerations.size >= MAX_CONCURRENT_GENERATIONS) {
+                showNotification(`Queue full (${MAX_CONCURRENT_GENERATIONS} max). Wait for one to complete.`, 'warning');
+                return;
+            }
+
+            // Mark button as queued
+            btn.classList.add('queued');
+            btn.querySelector('.queue-btn-icon').textContent = '✓';
+            btn.querySelector('.queue-btn-label').textContent = 'Queued';
+
+            // Get parent article context
+            const articleTitle = document.getElementById('report-title')?.innerText || '';
+            const currentReport = reports[currentArticleKey];
+            const articleDescription = currentReport?.cardDescription || '';
+
+            // Build rich context
+            let context = `Parent Article: "${articleTitle}"\n`;
+            if (articleDescription) {
+                context += `Article Focus: ${articleDescription}\n`;
+            }
+
+            // Show toast notification
+            const shortTopic = topic.length > 35 ? topic.substring(0, 32) + '...' : topic;
+            showNotification(`Queued: "${shortTopic}"`, 'success');
+
+            // Start generation in background
+            generateDeepDive(topic, context, currentArticleKey, articleTitle);
+
+            // Show badge
+            const badge = document.getElementById('deep-dive-badge');
+            if (badge) {
+                badge.classList.add('visible');
+                badge.classList.remove('minimized');
+                setTimeout(() => {
+                    if (!badge.matches(':hover')) {
+                        badge.classList.add('minimized');
+                    }
+                }, 3000);
+            }
+        }
+
+        // --- 4b. HOVER QUEUE PILL FOR FRACTAL TRIGGERS ---
+        let hoverQueuePill = null;
+        let hoverQueueTimeout = null;
+        let currentHoveredTrigger = null;
+
+        function initHoverQueuePills() {
+            // Create global hover pill if it doesn't exist
+            if (!hoverQueuePill) {
+                hoverQueuePill = document.createElement('div');
+                hoverQueuePill.className = 'hover-queue-pill';
+                hoverQueuePill.innerHTML = `
+                    <span class="pill-icon">+</span>
+                    <span class="pill-text">Queue</span>
+                `;
+                document.body.appendChild(hoverQueuePill);
+
+                // Handle pill click
+                hoverQueuePill.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (currentHoveredTrigger && !hoverQueuePill.classList.contains('queued')) {
+                        queueFromHoverPill(currentHoveredTrigger);
+                    }
+                });
+
+                // Hide pill when mouse leaves it (unless moving to trigger)
+                hoverQueuePill.addEventListener('mouseleave', (e) => {
+                    // Small delay to allow moving to the trigger
+                    hoverQueueTimeout = setTimeout(() => {
+                        if (!currentHoveredTrigger?.matches(':hover')) {
+                            hideHoverPill();
+                        }
+                    }, 100);
+                });
+            }
+
+            // Add hover listeners to all fractal triggers
+            document.querySelectorAll('.fractal-trigger').forEach(trigger => {
+                if (trigger.dataset.hoverPillInit) return;
+                trigger.dataset.hoverPillInit = 'true';
+
+                trigger.addEventListener('mouseenter', (e) => {
+                    clearTimeout(hoverQueueTimeout);
+                    currentHoveredTrigger = trigger;
+                    showHoverPill(trigger);
+                });
+
+                trigger.addEventListener('mouseleave', (e) => {
+                    // Delay hide to allow moving to pill
+                    hoverQueueTimeout = setTimeout(() => {
+                        if (!hoverQueuePill?.matches(':hover')) {
+                            hideHoverPill();
+                        }
+                    }, 200);
+                });
+            });
+        }
+
+        function showHoverPill(trigger) {
+            if (!hoverQueuePill) return;
+
+            // Reset state if it was previously queued for different topic
+            if (hoverQueuePill.dataset.queuedTopic !== trigger.innerText) {
+                hoverQueuePill.classList.remove('queued');
+                hoverQueuePill.querySelector('.pill-icon').textContent = '+';
+                hoverQueuePill.querySelector('.pill-text').textContent = 'Queue';
+            }
+
+            // Position pill to the right of the trigger
+            const rect = trigger.getBoundingClientRect();
+            const pillWidth = 70; // approximate
+
+            let x = rect.right + 8;
+            let y = rect.top + (rect.height / 2) - 12; // center vertically
+
+            // Boundary check - if pill would go off screen, position it below
+            if (x + pillWidth > window.innerWidth - 10) {
+                x = rect.left;
+                y = rect.bottom + 4;
+            }
+
+            hoverQueuePill.style.left = x + 'px';
+            hoverQueuePill.style.top = y + 'px';
+            hoverQueuePill.classList.add('visible');
+        }
+
+        function hideHoverPill() {
+            if (hoverQueuePill) {
+                hoverQueuePill.classList.remove('visible');
+            }
+            currentHoveredTrigger = null;
+        }
+
+        function queueFromHoverPill(trigger) {
+            const topic = trigger.innerText;
+
+            // Check if at max capacity
+            if (activeGenerations.size >= MAX_CONCURRENT_GENERATIONS) {
+                showNotification(`Queue full (${MAX_CONCURRENT_GENERATIONS} max). Wait for one to complete.`, 'warning');
+                return;
+            }
+
+            // Mark pill as queued
+            hoverQueuePill.classList.add('queued');
+            hoverQueuePill.querySelector('.pill-icon').textContent = '✓';
+            hoverQueuePill.querySelector('.pill-text').textContent = 'Queued';
+            hoverQueuePill.dataset.queuedTopic = topic;
+
+            // Get parent article context
+            const articleTitle = document.getElementById('report-title')?.innerText || '';
+            const currentReport = reports[currentArticleKey];
+            const articleDescription = currentReport?.cardDescription || '';
+
+            let context = `Parent Article: "${articleTitle}"\n`;
+            if (articleDescription) {
+                context += `Article Focus: ${articleDescription}\n`;
+            }
+
+            // Show toast
+            const shortTopic = topic.length > 35 ? topic.substring(0, 32) + '...' : topic;
+            showNotification(`Queued: "${shortTopic}"`, 'success');
+
+            // Start generation
+            generateDeepDive(topic, context, currentArticleKey, articleTitle);
+
+            // Show badge
+            const badge = document.getElementById('deep-dive-badge');
+            if (badge) {
+                badge.classList.add('visible');
+                badge.classList.remove('minimized');
+                setTimeout(() => {
+                    if (!badge.matches(':hover')) {
+                        badge.classList.add('minimized');
+                    }
+                }, 3000);
+            }
+
+            // Hide pill after short delay
+            setTimeout(() => {
+                hideHoverPill();
+            }, 800);
+        }
+
+        // Initialize hover pills when DOM ready and after article loads
+        document.addEventListener('DOMContentLoaded', initHoverQueuePills);
 
         // --- 5. INTELLIGENCE CARD SYSTEM ---
 
