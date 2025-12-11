@@ -41,6 +41,9 @@ CACHE_DIR = "/tmp/article_cache"
 USER_USAGE_FILE = "/tmp/user_usage.json"
 FREE_DAILY_LIMIT = 5
 
+# Article index for fast listing (stored in Blob storage)
+ARTICLE_INDEX_PATH = "articles/_index.json"
+
 # Ensure cache directory exists (fallback)
 os.makedirs(CACHE_DIR, exist_ok=True)
 
@@ -396,6 +399,8 @@ def cache_article(topic: str, article_data: dict, parent_key: str = "", parent_t
 
     if blob_url:
         print(f"Article cached to Blob: {blob_url}")
+        # Update the article index for fast listing
+        update_article_index(key, article_data)
     else:
         # Fallback to filesystem
         cache_file = f"{CACHE_DIR}/{key}.json"
@@ -403,35 +408,101 @@ def cache_article(topic: str, article_data: dict, parent_key: str = "", parent_t
             json.dump(article_data, f)
         print(f"Article cached to filesystem: {cache_file}")
 
+def get_article_index() -> dict:
+    """Get the article index from Blob storage. Returns dict of key -> metadata."""
+    try:
+        # Try to find the index blob
+        blobs = blob_list("articles/")
+        for blob in blobs:
+            if blob.get("pathname") == ARTICLE_INDEX_PATH:
+                response = requests.get(blob.get("url"))
+                if response.status_code == 200:
+                    return response.json()
+        return {}
+    except Exception as e:
+        print(f"Error loading article index: {e}")
+        return {}
+
+def update_article_index(article_key: str, metadata: dict):
+    """Add or update an article in the index."""
+    try:
+        # Load existing index
+        index = get_article_index()
+
+        # Add/update the article metadata
+        index[article_key] = {
+            "key": article_key,
+            "title": metadata.get("title", "Unknown"),
+            "cardTitle": metadata.get("cardTitle", ""),
+            "cardTag": metadata.get("cardTag", ""),
+            "cardDescription": metadata.get("cardDescription", ""),
+            "topic": metadata.get("_topic", ""),
+            "cached_at": metadata.get("_cached_at", datetime.now().isoformat()),
+            "parent_key": metadata.get("_parent_key", ""),
+            "parent_title": metadata.get("_parent_title", ""),
+            "is_child": bool(metadata.get("isChildEssay", False))
+        }
+
+        # Save updated index
+        blob_put(ARTICLE_INDEX_PATH, json.dumps(index))
+        print(f"Article index updated: {article_key}")
+    except Exception as e:
+        print(f"Error updating article index: {e}")
+
 def get_all_cached_articles() -> list:
-    """Get list of all cached article topics. Combines Blob storage and filesystem."""
+    """Get list of all cached article topics. Uses fast index lookup."""
     articles = []
     seen_keys = set()
 
-    # 1. Get articles from Blob storage (primary source)
+    # 1. First try the fast index (single HTTP request)
+    index = get_article_index()
+    if index:
+        for key, metadata in index.items():
+            if key not in seen_keys:
+                seen_keys.add(key)
+                articles.append(metadata)
+        # If we got results from index, return immediately (fast path)
+        if articles:
+            return articles
+
+    # 2. Fallback: Build index from blobs (slow, but only runs once or on empty index)
+    print("Rebuilding article index from blob storage...")
     blobs = blob_list("articles/")
+    new_index = {}
+
     for blob in blobs:
         try:
+            pathname = blob.get("pathname", "")
+            # Skip the index file itself
+            if pathname == ARTICLE_INDEX_PATH:
+                continue
+
             blob_url = blob.get("url")
             if blob_url:
                 response = requests.get(blob_url)
                 if response.status_code == 200:
                     data = response.json()
-                    article_key = data.get("key", blob.get("pathname", "").split("/")[-1].replace(".json", ""))
+                    article_key = data.get("key", pathname.split("/")[-1].replace(".json", ""))
                     if article_key not in seen_keys:
                         seen_keys.add(article_key)
-                        articles.append({
+                        metadata = {
                             "key": article_key,
                             "title": data.get("title", "Unknown"),
+                            "cardTitle": data.get("cardTitle", ""),
+                            "cardTag": data.get("cardTag", ""),
+                            "cardDescription": data.get("cardDescription", ""),
                             "topic": data.get("_topic", ""),
                             "cached_at": data.get("_cached_at", ""),
                             "parent_key": data.get("_parent_key", ""),
-                            "parent_title": data.get("_parent_title", "")
-                        })
+                            "parent_title": data.get("_parent_title", ""),
+                            "is_child": bool(data.get("isChildEssay", False))
+                        }
+                        articles.append(metadata)
+                        new_index[article_key] = metadata
         except:
             continue
 
-    # 2. Also check filesystem (for local dev and transition period)
+    # 3. Also check filesystem (for local dev)
     if os.path.exists(CACHE_DIR):
         for filename in os.listdir(CACHE_DIR):
             if filename.endswith(".json"):
@@ -441,16 +512,27 @@ def get_all_cached_articles() -> list:
                         article_key = data.get("key", filename[:-5])
                         if article_key not in seen_keys:
                             seen_keys.add(article_key)
-                            articles.append({
+                            metadata = {
                                 "key": article_key,
                                 "title": data.get("title", "Unknown"),
+                                "cardTitle": data.get("cardTitle", ""),
+                                "cardTag": data.get("cardTag", ""),
+                                "cardDescription": data.get("cardDescription", ""),
                                 "topic": data.get("_topic", ""),
                                 "cached_at": data.get("_cached_at", ""),
                                 "parent_key": data.get("_parent_key", ""),
-                                "parent_title": data.get("_parent_title", "")
-                            })
+                                "parent_title": data.get("_parent_title", ""),
+                                "is_child": bool(data.get("isChildEssay", False))
+                            }
+                            articles.append(metadata)
+                            new_index[article_key] = metadata
                 except:
                     continue
+
+    # 4. Save the rebuilt index for next time (if we built one)
+    if new_index:
+        blob_put(ARTICLE_INDEX_PATH, json.dumps(new_index))
+        print(f"Article index rebuilt with {len(new_index)} articles")
 
     return articles
 
@@ -970,6 +1052,54 @@ async def check_cache(request: CacheCheckRequest):
 async def list_cached():
     """Get list of all cached articles."""
     return {"articles": get_all_cached_articles()}
+
+
+@app.post("/api/admin/rebuild-index")
+async def rebuild_index():
+    """Force rebuild the article index from blob storage. One-time migration endpoint."""
+    print("Force rebuilding article index...")
+    articles = []
+    new_index = {}
+    seen_keys = set()
+
+    blobs = blob_list("articles/")
+    for blob in blobs:
+        try:
+            pathname = blob.get("pathname", "")
+            if pathname == ARTICLE_INDEX_PATH:
+                continue
+
+            blob_url = blob.get("url")
+            if blob_url:
+                response = requests.get(blob_url)
+                if response.status_code == 200:
+                    data = response.json()
+                    article_key = data.get("key", pathname.split("/")[-1].replace(".json", ""))
+                    if article_key not in seen_keys:
+                        seen_keys.add(article_key)
+                        metadata = {
+                            "key": article_key,
+                            "title": data.get("title", "Unknown"),
+                            "cardTitle": data.get("cardTitle", ""),
+                            "cardTag": data.get("cardTag", ""),
+                            "cardDescription": data.get("cardDescription", ""),
+                            "topic": data.get("_topic", ""),
+                            "cached_at": data.get("_cached_at", ""),
+                            "parent_key": data.get("_parent_key", ""),
+                            "parent_title": data.get("_parent_title", ""),
+                            "is_child": bool(data.get("isChildEssay", False))
+                        }
+                        articles.append(metadata)
+                        new_index[article_key] = metadata
+        except Exception as e:
+            print(f"Error processing blob: {e}")
+            continue
+
+    if new_index:
+        blob_put(ARTICLE_INDEX_PATH, json.dumps(new_index))
+        print(f"Article index rebuilt with {len(new_index)} articles")
+
+    return {"success": True, "articles_indexed": len(new_index), "articles": list(new_index.keys())}
 
 
 @app.get("/api/usage")

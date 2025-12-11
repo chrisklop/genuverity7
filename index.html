@@ -9010,7 +9010,7 @@
             const clickedText = element.textContent.trim();
             const topicForDeepDive = clickedText;  // Use actual element text, not the key
 
-            // First check if we already have this article loaded (by various key formats)
+            // First check if we already have this article loaded LOCALLY (instant)
             const possibleKeys = [
                 clickedText.toLowerCase().replace(/[^a-z0-9]+/g, '_'),
                 key,
@@ -9024,24 +9024,7 @@
                 }
             }
 
-            // Check server cache for the clicked topic
-            const cached = await checkIfCached(topicForDeepDive);
-            if (cached) {
-                // It's cached - load it for FREE
-                const cacheKey = cached.key || possibleKeys[0];
-                reports[cacheKey] = cached;
-                cachedArticles[topicForDeepDive.toLowerCase()] = true;
-
-                window.dynamicChartConfigs = cached.chartConfigs || {};
-                window.dynamicContextData = cached.contextData || {};
-                window.dynamicCitationDatabase = cached.citationDatabase || {};
-
-                loadReport(cacheKey);
-                setTimeout(() => renderDynamicCharts(cached.chartConfigs || {}), 200);
-                return;
-            }
-
-            // If we have pre-generated inline context, show it with option to generate full deep dive
+            // If we have pre-generated inline context, show it immediately
             if (contextData[key]) {
                 let existingContext = element.nextElementSibling;
                 if (existingContext && existingContext.classList.contains('fractal-context')) {
@@ -9062,10 +9045,35 @@
                     `;
                     element.parentNode.insertBefore(contextDiv, element.nextSibling);
                 }
-            } else {
-                // No pre-generated context - queue directly with instant feedback
-                queueDeepDiveInstant(topicForDeepDive);
+                return;
             }
+
+            // No local data - show IMMEDIATE feedback, then check cache in background
+            showNotification(`Checking "${topicForDeepDive.substring(0, 25)}..."`, 'info');
+
+            // Background cache check - non-blocking
+            checkIfCached(topicForDeepDive).then(cached => {
+                if (cached) {
+                    // It's cached - load it for FREE (pleasant surprise!)
+                    const cacheKey = cached.key || possibleKeys[0];
+                    reports[cacheKey] = cached;
+                    cachedArticles[topicForDeepDive.toLowerCase()] = true;
+
+                    window.dynamicChartConfigs = cached.chartConfigs || {};
+                    window.dynamicContextData = cached.contextData || {};
+                    window.dynamicCitationDatabase = cached.citationDatabase || {};
+
+                    showNotification(`Found cached article!`, 'success');
+                    loadReport(cacheKey);
+                    setTimeout(() => renderDynamicCharts(cached.chartConfigs || {}), 200);
+                } else {
+                    // Not cached - queue generation with instant feedback
+                    queueDeepDiveInstant(topicForDeepDive);
+                }
+            }).catch(() => {
+                // On error, just queue it
+                queueDeepDiveInstant(topicForDeepDive);
+            });
         }
 
         // Queue deep dive instantly (no confirmation, just add to queue)
