@@ -3311,6 +3311,33 @@
             color: var(--text-main);
         }
 
+        /* Enhance-specific styling */
+        .gen-card.enhance {
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .gen-card.enhance.complete {
+            border-color: rgba(139, 92, 246, 0.6);
+            background: rgba(139, 92, 246, 0.08);
+        }
+
+        .gen-card-progress-bar.enhance {
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+        }
+
+        .gen-card.enhance.complete .gen-card-progress-bar {
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+        }
+
+        .gen-card.enhance .gen-card-percent {
+            color: #a78bfa;
+        }
+
+        .gen-card-btn.primary.enhance {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: #fff;
+        }
+
         /* Minimized badge with generations */
         #deep-dive-badge.minimized .badge-generations {
             display: none;
@@ -9086,19 +9113,43 @@
 
             activeGenerations.forEach((gen, id) => {
                 const isComplete = gen.percent === 100;
+                const isEnhance = gen.type === 'enhance';
+                const typeIcon = isEnhance ? 'sparkles' : 'file-text';
+                const typeColor = isEnhance ? '#8b5cf6' : 'var(--accent-blue)';
+                const typeLabel = isEnhance ? '✦ Enhance' : 'Deep Dive';
+
+                // Different actions for enhance vs deep dive
+                let actionsHtml = '';
+                if (isEnhance) {
+                    actionsHtml = isComplete ? `
+                        <button class="gen-card-btn primary enhance" onclick="applyEnhancement()">Apply</button>
+                        <button class="gen-card-btn secondary" onclick="dismissEnhancement(); removeGeneration('${id}')">Dismiss</button>
+                    ` : `
+                        <button class="gen-card-btn secondary" onclick="dismissEnhancement(); removeGeneration('${id}')">Cancel</button>
+                    `;
+                } else {
+                    actionsHtml = `
+                        <button class="gen-card-btn primary" onclick="viewCompletedGeneration('${id}')">View</button>
+                        <button class="gen-card-btn secondary" onclick="removeGeneration('${id}')">Dismiss</button>
+                    `;
+                }
+
                 html += `
-                    <div class="gen-card ${isComplete ? 'complete' : ''}" id="gen-card-${id}">
+                    <div class="gen-card ${isComplete ? 'complete' : ''} ${isEnhance ? 'enhance' : ''}" id="gen-card-${id}">
                         <div class="gen-card-header">
-                            <span class="gen-card-title" title="${gen.fullTopic}">${gen.topic}</span>
+                            <span class="gen-card-type" style="color: ${typeColor}; font-size: 0.65rem;">
+                                <i data-lucide="${typeIcon}" class="w-3 h-3 inline"></i>
+                                ${typeLabel}
+                            </span>
                             <span class="gen-card-percent">${gen.percent}%</span>
                         </div>
+                        <div class="gen-card-title" title="${gen.fullTopic}">${gen.topic}</div>
                         <div class="gen-card-progress">
-                            <div class="gen-card-progress-bar" style="width: ${gen.percent}%"></div>
+                            <div class="gen-card-progress-bar ${isEnhance ? 'enhance' : ''}" style="width: ${gen.percent}%"></div>
                         </div>
                         <div class="gen-card-status">${gen.status}</div>
                         <div class="gen-card-actions">
-                            <button class="gen-card-btn primary" onclick="viewCompletedGeneration('${id}')">View</button>
-                            <button class="gen-card-btn secondary" onclick="removeGeneration('${id}')">Dismiss</button>
+                            ${actionsHtml}
                         </div>
                     </div>
                 `;
@@ -9817,10 +9868,15 @@
             updateVersionToggle(true);
             isShowingOriginal = false;
 
-            // Clear pending and hide widget
+            // Clear pending and remove from Research Status panel
             pendingEnhancedReport = null;
             isEnhancing = false;
-            hideEnhanceWidget();
+
+            // Remove enhance card from Research Status
+            if (currentEnhanceGenId) {
+                removeGeneration(currentEnhanceGenId);
+                currentEnhanceGenId = null;
+            }
 
             // Reset button state
             const btn = document.getElementById('enhance-btn');
@@ -9885,7 +9941,12 @@
         function dismissEnhancement() {
             pendingEnhancedReport = null;
             isEnhancing = false;
-            hideEnhanceWidget();
+
+            // Remove from Research Status panel
+            if (currentEnhanceGenId) {
+                removeGeneration(currentEnhanceGenId);
+                currentEnhanceGenId = null;
+            }
 
             // Reset button state
             const btn = document.getElementById('enhance-btn');
@@ -9898,18 +9959,12 @@
             showNotification('Enhancement dismissed.', 'info');
         }
 
+        // Track current enhance generation ID
+        let currentEnhanceGenId = null;
+
         // --- ENHANCE ARTICLE ---
         async function enhanceArticle() {
             console.log('[Enhance] ========== enhanceArticle CALLED ==========');
-            console.log('[Enhance] Time:', new Date().toISOString());
-
-            // DEBUG: Make absolutely sure we're in the right function
-            const debugBanner = document.createElement('div');
-            debugBanner.id = 'enhance-debug-banner';
-            debugBanner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:purple;color:white;padding:10px;text-align:center;z-index:99999;font-size:16px;font-weight:bold;';
-            debugBanner.textContent = 'ENHANCE STARTED - Using inline widget (not deep-dive loader)';
-            document.body.appendChild(debugBanner);
-            setTimeout(() => debugBanner.remove(), 5000);
 
             // Prevent multiple enhancements at once
             if (isEnhancing) {
@@ -9934,8 +9989,18 @@
             isEnhancing = true;
             pendingEnhancedReport = null;
 
-            // Show the inline enhancement widget
-            showEnhanceWidget();
+            // Register in Research Status panel (unified with deep dives)
+            const shortTitle = title.length > 30 ? title.substring(0, 27) + '...' : title;
+            currentEnhanceGenId = registerGeneration(shortTitle, 'enhance');
+
+            // Show the Research Status panel
+            const badge = document.getElementById('deep-dive-badge');
+            if (badge) {
+                badge.classList.add('visible');
+                badge.classList.remove('minimized');
+            }
+
+            showNotification(`Enhancing: "${shortTitle}"`, 'info');
 
             try {
                 // Extract key content from the article (strip HTML, limit length)
@@ -10010,9 +10075,10 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
                                 const rawData = line.slice(6);
                                 const data = JSON.parse(rawData);
                                 if (currentEvent === 'progress') {
-                                    // Update the inline widget instead of the full-screen loader
-                                    // Pass fullResponse.length for live char count display
-                                    updateEnhanceWidget(data.percent, data.message, fullResponse.length);
+                                    // Update the Research Status panel
+                                    if (currentEnhanceGenId) {
+                                        updateGenerationProgress(currentEnhanceGenId, data.percent, data.message);
+                                    }
                                 } else if (currentEvent === 'content') {
                                     console.log('[Enhance] Received content event, keys:', data ? Object.keys(data) : 'null');
                                     articleContent = data;
@@ -10111,18 +10177,30 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
                         chartType: 'dynamic'
                     };
 
-                    // Show completion state with confetti
-                    updateEnhanceWidget(100, 'Enhancement complete!');
-                    showEnhanceWidgetComplete();
+                    // Mark as complete in Research Status panel
+                    if (currentEnhanceGenId) {
+                        updateGenerationProgress(currentEnhanceGenId, 100, 'Ready to apply');
+                        // Mark generation complete (this updates the card UI)
+                        const gen = activeGenerations.get(currentEnhanceGenId);
+                        if (gen) {
+                            gen.percent = 100;
+                            gen.status = 'Enhancement ready - click Apply';
+                        }
+                        renderGenerationCards();
+                    }
+                    showNotification('Enhancement ready! Click Apply in Research Status.', 'success');
                 } else {
                     console.error('[Enhance] No valid article content received');
                     console.log('[Enhance] Parsed keys:', parsed ? Object.keys(parsed) : 'null');
-                    console.log('[Enhance] Raw response first 1000 chars:', fullResponse.substring(0, 1000));
-                    console.log('[Enhance] Raw response last 500 chars:', fullResponse.substring(fullResponse.length - 500));
-                    hideEnhanceWidget();
                     isEnhancing = false;
                     const errorDetails = parsed ? `Got keys: ${Object.keys(parsed).join(', ')}` : 'Parse failed completely';
                     showNotification(`Enhancement failed - ${errorDetails}`, 'error');
+
+                    // Remove from Research Status panel
+                    if (currentEnhanceGenId) {
+                        removeGeneration(currentEnhanceGenId);
+                        currentEnhanceGenId = null;
+                    }
 
                     // Reset button state
                     if (btn) {
@@ -10134,9 +10212,14 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
 
             } catch (error) {
                 console.error('Enhancement failed:', error);
-                hideEnhanceWidget();
                 isEnhancing = false;
                 showNotification('Enhancement failed. Please try again.', 'error');
+
+                // Remove from Research Status panel
+                if (currentEnhanceGenId) {
+                    removeGeneration(currentEnhanceGenId);
+                    currentEnhanceGenId = null;
+                }
 
                 // Reset button state
                 if (btn) {
