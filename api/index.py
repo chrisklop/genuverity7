@@ -820,7 +820,7 @@ RETURN ONLY VALID JSON. CRITICAL: Generate chartConfigs FIRST (before content) t
     "chart_secondary": {{"type": "line", "data": {{"labels": ["2020", "2021", "2022", "2023", "2024"], "values": [v1, v2, v3, v4, v5], "colors": ["#8b5cf6"]}}, "title": "Trend"}},
     "chart_tertiary": {{"type": "pie", "data": {{"labels": ["X", "Y", "Z"], "values": [40, 35, 25], "colors": ["#3b82f6", "#10b981", "#f59e0b"]}}, "title": "Distribution"}}
   }},
-  "contextData": {{"term1": {{"expanded": "2-3 sentence detailed explanation of this concept"}}, "term2": {{"expanded": "..."}}}},
+  "contextData": {{"person_1": {{"expanded": "..."}}, "org_1": {{"expanded": "..."}}, "stat_1": {{"expanded": "..."}}, "...50+ ENTRIES TOTAL, ONE FOR EACH FRACTAL-TRIGGER...": {{"expanded": "..."}}}},
   "citationDatabase": {{"src1": {{"domain": "reuters.com", "trustScore": 95, "title": "Title", "snippet": "Quote", "url": "https://..."}}}},
   "sources": [{{"name": "Source", "score": 95, "url": "https://..."}}],
   "content": "HTML CONTENT HERE"
@@ -830,17 +830,36 @@ HTML structure for content field:
 - <p class="prose-text"><strong class="text-white">Executive Summary:</strong> Key finding with <span class="highlight-glow">stat</span> and <span class="living-number" data-target="NUM" data-suffix="SUFFIX">$0</span> <span class="citation-spade" data-id="src1">♠</span></p>
 - <h2 class="prose-h2">1. Section</h2> with <div class="float-figure right"><div style="height:250px"><canvas id="chart_main"></canvas></div><div class="fig-caption">Caption <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div></div>
 - <strong class="fractal-trigger" onclick="expandContext(this,'key')">technical terms</strong> for deep-dives
-- If generateInfographics is true: 5 sections, 3 charts (bar, line, pie), 8+ living numbers, 15+ fractal triggers (2-4 per section), 10+ citations - Alternate float-figure right/left
-- If generateInfographics is false: 5 sections, 8+ living numbers, 15+ fractal triggers, 10+ citations - NO float-figure elements, focus on rich prose
+- If generateInfographics is true: 5 sections, 3 charts (bar, line, pie), 8+ living numbers, 50+ fractal triggers (8-15 per section), 15+ citations - Alternate float-figure right/left
+- If generateInfographics is false: 5 sections, 8+ living numbers, 50+ fractal triggers, 15+ citations - NO float-figure elements, focus on rich prose
 
-FRACTAL TRIGGERS ARE CRITICAL - wrap these with <strong class="fractal-trigger" onclick="expandContext(this,'key_name')">term</strong>:
-- Scientific/medical terms (DNA methylation, epigenetic markers, oxidative stress)
-- Industry jargon and acronyms (explained in contextData)
-- Organizations, agencies, regulatory bodies
-- Technical processes or mechanisms
-- Historical events or landmark studies
-- Economic concepts or financial instruments
-Each trigger MUST have a corresponding entry in contextData with a substantive 2-3 sentence explanation.
+FRACTAL TRIGGERS ARE CRITICAL - YOU MUST WRAP 50+ TERMS with <strong class="fractal-trigger" onclick="expandContext(this,'key_name')">term</strong>:
+
+MANDATORY CATEGORIES TO WRAP (wrap EVERY instance):
+1. PEOPLE: Every person mentioned - CEOs, politicians, researchers, experts, witnesses, founders, executives, whistleblowers
+2. ORGANIZATIONS: Every company, agency, NGO, institution, university, think tank, regulatory body, trade group
+3. STATISTICS: Every significant number, percentage, dollar amount - explain what it means in context
+4. LOCATIONS: Countries, cities, facilities, headquarters, research sites - explain their significance
+5. DATES/PERIODS: Specific years, decades, eras, deadlines - explain what happened or will happen
+6. LAWS/REGULATIONS: Any legal references, acts, bills, court cases, rulings, treaties
+7. TECHNICAL TERMS: Industry jargon, scientific concepts, acronyms, methodologies, processes
+8. PRODUCTS/PROJECTS: Specific products, initiatives, programs, technologies, platforms
+9. EVENTS: Conferences, trials, incidents, elections, announcements, launches, scandals
+10. CONCEPTS: Economic theories, business models, strategic frameworks, scientific principles
+
+DENSITY REQUIREMENTS (STRICT):
+- Minimum 10-15 fractal triggers PER SECTION (50-75 total across 5 sections)
+- Every paragraph MUST have 3-5 triggers minimum
+- EVERY person name MUST be wrapped - no exceptions
+- EVERY organization/company name MUST be wrapped - no exceptions
+- EVERY specific dollar amount or percentage MUST be wrapped
+- EVERY law, act, or regulation MUST be wrapped
+- EVERY date or year reference MUST be wrapped
+- EVERY technical term or acronym MUST be wrapped
+
+CRITICAL: MAXIMIZE fractal-trigger usage in content. Wrap EVERY wrappable term. The goal is 50-75 wrapped terms in the content. For each term you wrap with fractal-trigger, add a matching key to contextData.
+
+Each trigger MUST have a corresponding entry in contextData with a substantive 2-3 sentence explanation that provides investigative context - who is this person? why does this org matter? what does this stat mean?
 
 Return ONLY JSON. No markdown, no code fences.
 """
@@ -1123,6 +1142,29 @@ async def rebuild_index():
         print(f"Article index rebuilt with {len(new_index)} articles")
 
     return {"success": True, "articles_indexed": len(new_index), "articles": list(new_index.keys())}
+
+
+@app.get("/api/article/{slug}")
+async def get_article_by_slug(slug: str):
+    """Get an article by its slug (key) for shareable URLs.
+
+    This endpoint provides fast article retrieval:
+    1. First tries get_cached_article() which checks by topic hash and key
+    2. Returns full article data for rendering
+
+    URL pattern: /article/{slug} e.g. /article/pelosi_family_invest
+    """
+    # Decode URL-encoded slug
+    decoded_slug = slug
+
+    # Try to get the article by its key
+    article = get_cached_article(decoded_slug)
+
+    if article:
+        return article
+
+    # Not found
+    raise HTTPException(status_code=404, detail=f"Article not found: {slug}")
 
 
 @app.get("/api/usage")
