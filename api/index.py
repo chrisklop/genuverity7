@@ -360,6 +360,127 @@ def format_sources_for_prompt(sources: list) -> str:
     return "\n".join(lines)
 
 
+def search_google_fact_checks(claim: str, max_results: int = 5) -> list:
+    """Search Google Fact Check Tools API for existing fact checks from publishers like Snopes, PolitiFact, etc.
+
+    This API is FREE and doesn't require an API key for basic searches.
+    Returns: list of prior fact checks with publisher, rating, and URL
+    """
+    try:
+        # Google Fact Check Tools API - ClaimSearch endpoint (free, no API key needed)
+        encoded_query = requests.utils.quote(claim)
+        url = f"https://factchecktools.googleapis.com/v1alpha1/claims:search?query={encoded_query}&pageSize={max_results}"
+
+        response = requests.get(url, timeout=10)
+
+        if response.status_code != 200:
+            print(f"Google Fact Check API returned {response.status_code}")
+            return []
+
+        data = response.json()
+
+        if "claims" not in data:
+            print("No existing fact checks found")
+            return []
+
+        fact_checks = []
+        for claim_obj in data.get("claims", [])[:max_results]:
+            # Each claim may have multiple reviews from different publishers
+            for review in claim_obj.get("claimReview", []):
+                publisher_name = review.get("publisher", {}).get("name", "Unknown Publisher")
+                publisher_site = review.get("publisher", {}).get("site", "")
+
+                # Map common ratings to standardized format
+                rating = review.get("textualRating", "Unrated")
+                rating_normalized = normalize_fact_check_rating(rating)
+
+                fact_checks.append({
+                    "publisher": publisher_name,
+                    "publisher_site": publisher_site,
+                    "claim_text": claim_obj.get("text", ""),
+                    "claimant": claim_obj.get("claimant", "Unknown"),
+                    "rating": rating,
+                    "rating_normalized": rating_normalized,
+                    "url": review.get("url", ""),
+                    "title": review.get("title", ""),
+                    "review_date": review.get("reviewDate", "")
+                })
+
+        print(f"Found {len(fact_checks)} existing fact checks from publishers")
+        return fact_checks
+
+    except Exception as e:
+        print(f"Google Fact Check API error: {e}")
+        return []
+
+
+def normalize_fact_check_rating(rating: str) -> str:
+    """Normalize various fact-check ratings to standard verdicts."""
+    rating_lower = rating.lower()
+
+    # True ratings
+    if any(x in rating_lower for x in ["true", "correct", "accurate", "confirmed"]):
+        if any(x in rating_lower for x in ["mostly", "partly", "half"]):
+            return "MOSTLY_TRUE"
+        return "TRUE"
+
+    # False ratings
+    if any(x in rating_lower for x in ["false", "wrong", "incorrect", "lie", "pants on fire", "fake"]):
+        if any(x in rating_lower for x in ["mostly", "partly"]):
+            return "MOSTLY_FALSE"
+        return "FALSE"
+
+    # Mixed/partial ratings
+    if any(x in rating_lower for x in ["mixed", "half", "misleading", "distort", "cherry pick", "lack context"]):
+        return "MIXED"
+
+    # Unverifiable
+    if any(x in rating_lower for x in ["unverifiable", "unproven", "unknown", "outdated"]):
+        return "UNVERIFIABLE"
+
+    return "MIXED"  # Default to mixed if can't categorize
+
+
+def format_prior_fact_checks_html(fact_checks: list) -> str:
+    """Format prior fact checks as HTML for display in the article."""
+    if not fact_checks:
+        return ""
+
+    # Group by normalized rating for summary
+    ratings_count = {}
+    for fc in fact_checks:
+        r = fc["rating_normalized"]
+        ratings_count[r] = ratings_count.get(r, 0) + 1
+
+    # Build summary
+    summary_parts = []
+    for rating, count in sorted(ratings_count.items(), key=lambda x: -x[1]):
+        summary_parts.append(f"{count} rated <strong>{rating.replace('_', ' ')}</strong>")
+    summary = ", ".join(summary_parts)
+
+    cards_html = ""
+    for fc in fact_checks[:5]:  # Max 5 cards
+        rating_class = fc["rating_normalized"].lower()
+        cards_html += f"""
+        <div class="prior-fact-check-card {rating_class}" onclick="window.open('{fc['url']}', '_blank')">
+            <div class="pfc-publisher">{fc['publisher']}</div>
+            <div class="pfc-rating">{fc['rating']}</div>
+            <div class="pfc-title">{fc['title'][:100]}{'...' if len(fc.get('title', '')) > 100 else ''}</div>
+        </div>
+        """
+
+    return f"""
+    <div class="prior-fact-checks-section">
+        <h3 class="prose-h2">Professional Fact Checks</h3>
+        <p class="prose-text">This claim has been previously fact-checked by professional organizations: {summary}.</p>
+        <div class="prior-fact-checks-grid">
+            {cards_html}
+        </div>
+        <p class="pfc-disclaimer">Click any card to view the full fact-check from the original publisher.</p>
+    </div>
+    """
+
+
 # === VERCEL BLOB STORAGE UTILITIES ===
 
 def blob_put(path: str, content: str) -> Optional[str]:
@@ -1111,6 +1232,7 @@ async def generate_fact_check(request: FactCheckRequest, req: Request):
     async def stream_response():
         full_text = ""
         real_sources = []
+        prior_fact_checks = []
 
         stages = {
             "title": False,
@@ -1121,6 +1243,10 @@ async def generate_fact_check(request: FactCheckRequest, req: Request):
 
         try:
             yield send_sse("progress", {"stage": "init", "percent": 5, "message": "Preparing fact check..."})
+
+            # Search for existing professional fact checks via Google Fact Check Tools API
+            yield send_sse("progress", {"stage": "prior_checks", "percent": 6, "message": "Checking professional fact-checkers..."})
+            prior_fact_checks = search_google_fact_checks(request.claim, max_results=5)
 
             # Search for real sources via Tavily
             yield send_sse("progress", {"stage": "sources", "percent": 8, "message": "Searching verified sources..."})
@@ -1191,6 +1317,24 @@ async def generate_fact_check(request: FactCheckRequest, req: Request):
                         })
                     parsed_data["citationDatabase"] = real_citation_db
                     parsed_data["sources"] = real_sources_list
+
+                # Inject Professional Fact Checks section if we found any
+                if prior_fact_checks:
+                    prior_fc_html = format_prior_fact_checks_html(prior_fact_checks)
+                    # Insert after the verdict banner but before main content
+                    content = parsed_data.get("content", "")
+                    # Find end of verdict banner div
+                    verdict_end = content.find('</div>', content.find('verdict-banner'))
+                    if verdict_end > 0:
+                        # Insert after verdict banner
+                        insert_pos = verdict_end + 6  # After </div>
+                        parsed_data["content"] = content[:insert_pos] + prior_fc_html + content[insert_pos:]
+                    else:
+                        # Fallback: prepend to content
+                        parsed_data["content"] = prior_fc_html + content
+
+                    # Also store raw fact check data for frontend flexibility
+                    parsed_data["priorFactChecks"] = prior_fact_checks
 
                 cache_article(request.claim, parsed_data)
                 yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Fact check complete!"})
