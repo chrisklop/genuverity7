@@ -1778,6 +1778,14 @@ async def rebuild_index():
                         elif data.get("_parent_key") or data.get("isChildEssay"):
                             article_type = "deep_dive"
 
+                        # Extract top 4 sources (sorted by score) for card display
+                        sources = data.get("sources", [])
+                        if sources and isinstance(sources, list):
+                            sorted_sources = sorted(sources, key=lambda s: s.get("score", 0), reverse=True)[:4]
+                            top_sources = [{"name": s.get("name", "Source"), "score": s.get("score", 80)} for s in sorted_sources]
+                        else:
+                            top_sources = []
+
                         metadata = {
                             "key": article_key,
                             "title": data.get("title", "Unknown"),
@@ -1790,7 +1798,8 @@ async def rebuild_index():
                             "parent_title": data.get("_parent_title", ""),
                             "is_child": bool(data.get("isChildEssay", False)),
                             "article_type": article_type,
-                            "verdict": data.get("verdict", "")
+                            "verdict": data.get("verdict", ""),
+                            "top_sources": top_sources
                         }
                         articles.append(metadata)
                         new_index[article_key] = metadata
