@@ -8646,17 +8646,9 @@
 
         // Generate fact check article
         async function generateFactCheck(claim) {
-            const genId = Date.now().toString();
-            const shortClaim = claim.length > 40 ? claim.substring(0, 37) + '...' : claim;
-
-            // Add to generation queue with fact-check styling
-            addGeneration({
-                id: genId,
-                topic: shortClaim,
-                status: 'generating',
-                progress: 0,
-                type: 'fact_check'
-            });
+            // Register this generation (returns null if at max capacity)
+            const genId = registerGeneration(claim, 'fact_check');
+            if (!genId) return;
 
             try {
                 const response = await fetch('/api/fact-check', {
@@ -8700,15 +8692,16 @@
                                     // Store in reports cache
                                     reports[data.key] = data;
 
-                                    // Update generation card to complete
-                                    updateGenerationComplete(genId, data.key, data.cardTitle || data.title);
+                                    // Mark generation as complete
+                                    completeGeneration(genId, data.key, data);
 
                                     // Auto-load the fact check
                                     renderReportData(data, true);
                                     currentArticleKey = data.key;
 
                                     // Show notification
-                                    showNotification(`Fact check complete: ${shortClaim}`, 'success');
+                                    const shortTitle = (data.cardTitle || data.title || claim).substring(0, 40);
+                                    showNotification(`Fact check complete: ${shortTitle}`, 'success');
                                 }
                             } catch (e) {
                                 // Not JSON, skip
@@ -9598,9 +9591,28 @@
             activeGenerations.forEach((gen, id) => {
                 const isComplete = gen.percent === 100;
                 const isEnhance = gen.type === 'enhance';
-                const typeIcon = isEnhance ? 'sparkles' : 'file-text';
-                const typeColor = isEnhance ? '#8b5cf6' : 'var(--accent-blue)';
-                const typeLabel = isEnhance ? '✦ Enhance' : 'Deep Dive';
+                const isFactCheck = gen.type === 'fact_check';
+                const isInvestigation = gen.type === 'report' || gen.type === 'investigation';
+
+                // Determine type-specific display
+                let typeIcon, typeColor, typeLabel;
+                if (isEnhance) {
+                    typeIcon = 'sparkles';
+                    typeColor = '#8b5cf6';
+                    typeLabel = '✦ Enhance';
+                } else if (isFactCheck) {
+                    typeIcon = 'scale';
+                    typeColor = '#a78bfa';
+                    typeLabel = '⚖ Fact Check';
+                } else if (isInvestigation) {
+                    typeIcon = 'search';
+                    typeColor = 'var(--accent-blue)';
+                    typeLabel = '🔍 Investigation';
+                } else {
+                    typeIcon = 'layers';
+                    typeColor = 'var(--accent-green)';
+                    typeLabel = '📚 Deep Dive';
+                }
 
                 // Different actions for enhance vs deep dive
                 let actionsHtml = '';
