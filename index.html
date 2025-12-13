@@ -1975,6 +1975,46 @@
             color: var(--text-muted);
         }
 
+        /* Evidence list styling */
+        .evidence-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .evidence-list li {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            background: var(--bg-elevated);
+            border-left: 3px solid;
+        }
+
+        .evidence-list.contradicting li {
+            border-color: #ef4444;
+            color: var(--text-prose);
+        }
+
+        .evidence-list.supporting li {
+            border-color: #10b981;
+            color: var(--text-prose);
+        }
+
+        .context-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .context-list li {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            background: var(--bg-elevated);
+            border-left: 3px solid var(--accent-blue);
+            color: var(--text-prose);
+        }
+
         /* Verdict colors */
         .verdict-true {
             border-color: #10b981;
@@ -6272,17 +6312,29 @@
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = data.content;
 
-            // Extract verdict banner (keep at top, outside tabs)
+            // Remove ALL prior-fact-checks-section elements first (may be nested inside verdict-banner)
+            tempDiv.querySelectorAll('.prior-fact-checks-section').forEach(el => el.remove());
+
+            // Extract verdict banner (keep at top, but clean - small color-coded pane only)
             const verdictBanner = tempDiv.querySelector('.verdict-banner');
-            const verdictBannerHTML = verdictBanner ? verdictBanner.outerHTML : '';
+            let verdictBannerHTML = '';
+            if (verdictBanner) {
+                // Create a clean, compact verdict banner without the professional fact checks
+                const icon = verdictBanner.querySelector('.verdict-icon');
+                const label = verdictBanner.querySelector('.verdict-label');
+                const nuance = verdictBanner.querySelector('.verdict-nuance');
+                const verdictClass = verdictBanner.className;
+
+                verdictBannerHTML = `<div class="${verdictClass}">
+                    ${icon ? icon.outerHTML : ''}
+                    ${label ? label.outerHTML : ''}
+                    ${nuance ? nuance.outerHTML : ''}
+                </div>`;
+            }
 
             // Extract verdict summary (keep at top, outside tabs)
             const verdictSummary = tempDiv.querySelector('.verdict-summary');
             const verdictSummaryHTML = verdictSummary ? verdictSummary.outerHTML : '';
-
-            // Remove prior fact checks section from content (we'll show in tab instead)
-            const priorFCSection = tempDiv.querySelector('.prior-fact-checks-section');
-            if (priorFCSection) priorFCSection.remove();
 
             // Remove any existing tabs structure from Claude
             const existingTabs = tempDiv.querySelector('.fact-check-tabs');
@@ -6329,16 +6381,52 @@
                 sections[currentSection] += currentContent.join('');
             }
 
-            // Build content for each tab
-            const claimContent = sections.claim || sections.intro || '<p class="prose-text">No claim information available.</p>';
-            const evidenceContent = sections.evidence || '<p class="prose-text">No evidence analysis available.</p>';
+            // Build content for each tab - prefer JSON data over HTML parsing
 
-            // Build context from evidenceSummary.context if available, or from sections
-            let contextContent = sections.context || '';
-            if (!contextContent && data.evidenceSummary && data.evidenceSummary.context && data.evidenceSummary.context.length > 0) {
+            // CLAIM TAB: Build from data.claims array if available
+            let claimContent = '';
+            if (data.claims && data.claims.length > 0) {
+                claimContent = data.claims.map(claim => `
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-verdict claim-${(claim.verdict || 'unknown').toLowerCase()}">${claim.verdict || 'Under Review'}</span>
+                        </div>
+                        <p class="prose-text claim-text">"${claim.text}"</p>
+                        ${claim.evidence ? `<p class="prose-text claim-evidence"><strong>Finding:</strong> ${claim.evidence}</p>` : ''}
+                    </div>
+                `).join('');
+            } else {
+                // Fallback to parsed HTML sections
+                claimContent = sections.claim || sections.intro || '<p class="prose-text">No claim information available.</p>';
+            }
+
+            // EVIDENCE TAB: Build from data.evidenceSummary if available
+            let evidenceContent = '';
+            if (data.evidenceSummary && (data.evidenceSummary.supporting?.length || data.evidenceSummary.contradicting?.length)) {
+                if (data.evidenceSummary.contradicting && data.evidenceSummary.contradicting.length > 0) {
+                    evidenceContent += '<h3 class="prose-h3">Contradicting Evidence</h3><ul class="evidence-list contradicting">' +
+                        data.evidenceSummary.contradicting.map(e => `<li class="prose-text">✗ ${e}</li>`).join('') +
+                        '</ul>';
+                }
+                if (data.evidenceSummary.supporting && data.evidenceSummary.supporting.length > 0) {
+                    evidenceContent += '<h3 class="prose-h3">Supporting Evidence</h3><ul class="evidence-list supporting">' +
+                        data.evidenceSummary.supporting.map(e => `<li class="prose-text">✓ ${e}</li>`).join('') +
+                        '</ul>';
+                }
+            }
+            if (!evidenceContent) {
+                // Fallback to parsed HTML sections
+                evidenceContent = sections.evidence || '<p class="prose-text">No evidence analysis available.</p>';
+            }
+
+            // CONTEXT TAB: Build from evidenceSummary.context if available, or from sections
+            let contextContent = '';
+            if (data.evidenceSummary && data.evidenceSummary.context && data.evidenceSummary.context.length > 0) {
                 contextContent = '<h3 class="prose-h3">Important Context</h3><ul class="context-list">' +
-                    data.evidenceSummary.context.map(c => `<li class="prose-text">${c}</li>`).join('') +
+                    data.evidenceSummary.context.map(c => `<li class="prose-text">• ${c}</li>`).join('') +
                     '</ul>';
+            } else {
+                contextContent = sections.context || '';
             }
             if (!contextContent) {
                 contextContent = '<p class="prose-text">No additional context available for this claim.</p>';
