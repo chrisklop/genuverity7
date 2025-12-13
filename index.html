@@ -2291,56 +2291,92 @@
             box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
         }
 
-        /* Categorized browse sections */
-        .browse-category {
-            margin-top: 2rem;
+        /* Browse by Type - Tabbed Interface */
+        .browse-type-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0;
         }
 
-        .browse-category-header {
+        .browse-type-tab {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 1rem;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .browse-category-header h3 {
+            gap: 6px;
+            padding: 10px 16px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: var(--text-muted);
             font-size: 0.8rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: -1px;
         }
 
-        .browse-category-header .category-icon {
-            width: 16px;
-            height: 16px;
-        }
-
-        .browse-category-header.investigations { color: var(--accent-blue); }
-        .browse-category-header.investigations h3 { color: var(--accent-blue); }
-        .browse-category-header.fact-checks { color: #2dd4bf; }
-        .browse-category-header.fact-checks h3 { color: #2dd4bf; }
-        .browse-category-header.deep-dives { color: var(--accent-green); }
-        .browse-category-header.deep-dives h3 { color: var(--accent-green); }
-
-        .browse-category-count {
-            font-size: 0.7rem;
-            padding: 2px 8px;
+        .browse-type-tab:hover {
+            color: var(--text-main);
             background: var(--bg-elevated);
-            border-radius: 10px;
-            color: var(--text-muted);
         }
 
-        .browse-category-items {
+        .browse-type-tab.active {
+            border-bottom-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .browse-type-tab.active.investigations {
+            border-bottom-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .browse-type-tab.active.fact-checks {
+            border-bottom-color: #2dd4bf;
+            color: #2dd4bf;
+        }
+
+        .browse-type-tab.active.deep-dives {
+            border-bottom-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .browse-type-tab i {
+            width: 14px;
+            height: 14px;
+        }
+
+        .browse-type-tab .tab-count {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .browse-type-tab.active .tab-count {
+            background: currentColor;
+            color: var(--bg-deep);
+        }
+
+        .browse-type-content {
+            display: none;
+        }
+
+        .browse-type-content.active {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
         }
 
-        .browse-category:first-of-type {
-            margin-top: 1rem;
+        .browse-type-empty {
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-style: italic;
         }
 
         /* === PROFESSIONAL FACT CHECKS SECTION === */
@@ -7108,7 +7144,7 @@
                 </div>`;
             }).join('');
 
-            // Render browse list (5th card and beyond) - categorized by type
+            // Render browse list (5th card and beyond) - tabbed by type
             if (browseList.length > 0) {
                 // Categorize articles
                 const investigations = browseList.filter(a => !a.articleType || a.articleType === 'investigation');
@@ -7117,7 +7153,7 @@
 
                 // Helper to render a single article card
                 const renderBrowseCard = (article, i) => `
-                    <div onclick="loadReport('${article.key}')" class="trending-card-list anim-fade-up" style="animation-delay: ${0.9 + i * 0.05}s;">
+                    <div onclick="loadReport('${article.key}')" class="trending-card-list anim-fade-up" style="animation-delay: ${0.05 + i * 0.03}s;">
                         <div class="card-tag font-mono ${article.tagColor}">${article.tag}</div>
                         <h4 style="color: var(--text-main);">${article.title}</h4>
                         ${article.parentKey ? `
@@ -7129,28 +7165,51 @@
                     </div>
                 `;
 
-                // Helper to render a category section
-                const renderCategory = (title, items, colorClass, icon) => {
-                    if (items.length === 0) return '';
-                    return `
-                        <div class="browse-category">
-                            <div class="browse-category-header ${colorClass}">
-                                <i data-lucide="${icon}" class="w-4 h-4"></i>
-                                <h3>${title}</h3>
-                                <span class="browse-category-count">${items.length}</span>
-                            </div>
-                            <div class="browse-category-items">
-                                ${items.map((a, i) => renderBrowseCard(a, i)).join('')}
-                            </div>
-                        </div>
-                    `;
-                };
+                // Determine which tab should be active (first one with content)
+                const defaultTab = investigations.length > 0 ? 'investigations' :
+                                   factChecks.length > 0 ? 'fact-checks' : 'deep-dives';
 
                 moreContainer.innerHTML = `
                     <div class="browse-more-header anim-fade-up anim-delay-8">Browse by Type</div>
-                    ${renderCategory('Investigations', investigations, 'investigations', 'search')}
-                    ${renderCategory('Fact Checks', factChecks, 'fact-checks', 'scale')}
-                    ${renderCategory('Deep Dives', deepDives, 'deep-dives', 'layers')}
+
+                    <!-- Tab buttons -->
+                    <div class="browse-type-tabs anim-fade-up anim-delay-8">
+                        <button class="browse-type-tab investigations ${defaultTab === 'investigations' ? 'active' : ''}"
+                                onclick="switchBrowseTab(event, 'investigations')">
+                            <i data-lucide="search"></i>
+                            Investigations
+                            <span class="tab-count">${investigations.length}</span>
+                        </button>
+                        <button class="browse-type-tab fact-checks ${defaultTab === 'fact-checks' ? 'active' : ''}"
+                                onclick="switchBrowseTab(event, 'fact-checks')">
+                            <i data-lucide="scale"></i>
+                            Fact Checks
+                            <span class="tab-count">${factChecks.length}</span>
+                        </button>
+                        <button class="browse-type-tab deep-dives ${defaultTab === 'deep-dives' ? 'active' : ''}"
+                                onclick="switchBrowseTab(event, 'deep-dives')">
+                            <i data-lucide="layers"></i>
+                            Deep Dives
+                            <span class="tab-count">${deepDives.length}</span>
+                        </button>
+                    </div>
+
+                    <!-- Tab content -->
+                    <div id="browse-investigations" class="browse-type-content ${defaultTab === 'investigations' ? 'active' : ''}">
+                        ${investigations.length > 0
+                            ? investigations.map((a, i) => renderBrowseCard(a, i)).join('')
+                            : '<div class="browse-type-empty">No investigations yet</div>'}
+                    </div>
+                    <div id="browse-fact-checks" class="browse-type-content ${defaultTab === 'fact-checks' ? 'active' : ''}">
+                        ${factChecks.length > 0
+                            ? factChecks.map((a, i) => renderBrowseCard(a, i)).join('')
+                            : '<div class="browse-type-empty">No fact checks yet</div>'}
+                    </div>
+                    <div id="browse-deep-dives" class="browse-type-content ${defaultTab === 'deep-dives' ? 'active' : ''}">
+                        ${deepDives.length > 0
+                            ? deepDives.map((a, i) => renderBrowseCard(a, i)).join('')
+                            : '<div class="browse-type-empty">No deep dives yet</div>'}
+                    </div>
                 `;
                 moreContainer.style.display = 'flex';
                 moreContainer.style.flexDirection = 'column';
@@ -7161,6 +7220,18 @@
             } else {
                 moreContainer.style.display = 'none';
             }
+        }
+
+        // Switch between Browse by Type tabs (Investigations, Fact Checks, Deep Dives)
+        function switchBrowseTab(event, tabId) {
+            // Remove active from all tabs
+            document.querySelectorAll('.browse-type-tab').forEach(tab => tab.classList.remove('active'));
+            // Remove active from all content
+            document.querySelectorAll('.browse-type-content').forEach(content => content.classList.remove('active'));
+            // Add active to clicked tab
+            event.currentTarget.classList.add('active');
+            // Show corresponding content
+            document.getElementById('browse-' + tabId).classList.add('active');
         }
 
         function initReceipts() {
