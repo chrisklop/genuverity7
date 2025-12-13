@@ -8602,19 +8602,57 @@
         function detectInputType(text) {
             if (!text || text.length < 3) return 'investigate';
 
-            const factCheckPatterns = [
+            // Explicit fact-check patterns
+            const explicitFactCheckPatterns = [
                 /^["'].*["']$/,                         // Quoted text: "Trump said X"
                 /is it true|did .+ really/i,           // Question format
-                /fact.?check|verify|claim/i,           // Explicit keywords
+                /fact.?check|verify this|check this/i, // Explicit keywords
                 /said that|claimed|stated|announced/i, // Attribution language
                 /true or false|real or fake/i,         // Binary question
-                /debunk|myth|hoax|rumor/i,             // Debunking language
+                /debunk|myth|hoax|rumor|conspiracy/i,  // Debunking language
                 /^did\s+/i,                            // Starts with "Did"
                 /\btrue\??$/i,                         // Ends with "true?"
+                /^is\s+(the|it|this|that)\s+/i,       // "Is the earth flat"
+                /^are\s+(there|they|these)\s+/i,      // "Are there aliens"
             ];
 
-            for (const pattern of factCheckPatterns) {
+            for (const pattern of explicitFactCheckPatterns) {
                 if (pattern.test(text)) return 'fact_check';
+            }
+
+            // Claim-like statements (declarative assertions that could be true/false)
+            // These are short statements that make a factual claim
+            const claimPatterns = [
+                /\bcause[sd]?\s+(cancer|autism|death|disease)/i,  // "X causes cancer/autism"
+                /\bare\s+eating\b/i,                               // "X are eating Y"
+                /\b(is|are)\s+(flat|round|fake|real|a\s+hoax)/i,  // "earth is flat"
+                /\b(doesn't|does not|don't|do not)\s+exist/i,     // "X doesn't exist"
+                /\b(never|didn't|did not)\s+(happen|land|go)/i,   // "moon landing never happened"
+                /\bstole\s+(the\s+)?election/i,                   // "X stole the election"
+                /\bis\s+(a\s+)?(fraud|scam|fake|hoax|lie)/i,      // "X is a fraud"
+                /\b(illegals?|immigrants?)\s+(are|is)\s+/i,       // Immigration claims
+                /\bcontrol(s|led)?\s+(the\s+)?(media|banks|government|world)/i, // Conspiracy patterns
+                /\b(chemtrails?|5g|microchip|tracking)/i,         // Common conspiracy topics
+                /\bvaccine[sd]?\s+(are|is|cause|don't|kill)/i,   // Vaccine claims
+                /\bgovernment\s+(is\s+)?(hiding|lying|covering)/i, // Government conspiracy
+                /\bproven\s+(false|true|wrong|right)/i,           // "proven false"
+                /\b(exposed|exposed as|caught)\b/i,               // "exposed as a liar"
+            ];
+
+            for (const pattern of claimPatterns) {
+                if (pattern.test(text)) return 'fact_check';
+            }
+
+            // Short declarative statements (under 100 chars, no question mark, looks like a claim)
+            // These often come from memes/social media posts
+            if (text.length < 100 && !text.includes('?')) {
+                // Check if it's structured like a claim (subject + verb + predicate)
+                const looksLikeClaim = /^[A-Z]?[a-z]+\s+(is|are|was|were|has|have|had|will|can|could|would|should|did|does|do)\s+/i.test(text);
+                const hasActionVerb = /\b(eating|killing|stealing|hiding|lying|controlling|destroying|poisoning|spreading|causing)\b/i.test(text);
+
+                if (looksLikeClaim && hasActionVerb) {
+                    return 'fact_check';
+                }
             }
 
             return 'investigate';
