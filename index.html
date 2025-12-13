@@ -5036,7 +5036,7 @@
                     return `
                         <div class="child-essay-dot" onclick="loadReport('${childKey}')" title="${childData.cardTitle || childData.title}">
                             <div class="dot-indicator"></div>
-                            <div class="dot-label">${childData.cardTitle || 'Deep Dive ' + (idx + 1)}</div>
+                            <div class="dot-label">${childData.cardTitle || 'Fractal ' + (idx + 1)}</div>
                         </div>
                     `;
                 }).join('');
@@ -5044,7 +5044,7 @@
                 childEssaysRail.innerHTML = `
                     <div class="rail-header">
                         <i data-lucide="git-branch" class="w-4 h-4"></i>
-                        <span>Deep Dives</span>
+                        <span>Fractal Analysis</span>
                     </div>
                     <div class="rail-dots">
                         ${childEssaysHTML}
@@ -5140,7 +5140,7 @@
 
                     // Get context from parent figure caption
                     const figCaption = element.closest('.fig-caption');
-                    const figureTitle = figCaption ? figCaption.textContent.replace('DEEP DIVE', '').trim().replace(/^Fig\s*\d+\.\s*/i, '') : 'this topic';
+                    const figureTitle = figCaption ? figCaption.textContent.replace('FRACTAL', '').replace('DEEP DIVE', '').trim().replace(/^Fig\s*\d+\.\s*/i, '') : 'this topic';
 
                     // Update tooltip content
                     const contextEl = deepDiveTooltipEl.querySelector('.tooltip-context');
@@ -6089,7 +6089,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         chart_configs: chartConfigs,
-                        article_title: articleTitle || 'Deep Dive Investigation',
+                        article_title: articleTitle || 'Fractal Analysis',
                         article_description: articleDescription  // For shareable infographics
                     })
                 });
@@ -6602,7 +6602,7 @@
                 <button class="queue-deepdive-btn" onclick="queueDeepDiveFromContext(this, '${escapedTopic}')">
                     <span class="queue-btn-icon">+</span>
                     <span class="queue-btn-text">
-                        <span class="queue-btn-label">Queue Deep Dive</span>
+                        <span class="queue-btn-label">Queue Fractal Analysis</span>
                         <span class="queue-btn-topic">${triggerText}</span>
                     </span>
                 </button>
@@ -7075,7 +7075,7 @@
                                 tag = article.verdict ? `FACT CHECK: ${article.verdict}` : 'FACT CHECK';
                                 tagColor = 'text-teal-400';
                             } else if (articleType === 'deep_dive' || article.parent_key) {
-                                tag = 'DEEP DIVE';
+                                tag = 'FRACTAL';
                                 tagColor = 'text-green-400';
                             }
 
@@ -7254,7 +7254,7 @@
                         <button class="browse-type-tab deep-dives ${defaultTab === 'deep-dives' ? 'active' : ''}"
                                 onclick="switchBrowseTab(event, 'deep-dives')">
                             <i data-lucide="layers"></i>
-                            Deep Dives
+                            Fractal Analysis
                             <span class="tab-count">${deepDives.length}</span>
                         </button>
                     </div>
@@ -7273,7 +7273,7 @@
                     <div id="browse-deep-dives" class="browse-type-content ${defaultTab === 'deep-dives' ? 'active' : ''}">
                         ${deepDives.length > 0
                             ? deepDives.map((a, i) => renderBrowseCard(a, i)).join('')
-                            : '<div class="browse-type-empty">No deep dives yet</div>'}
+                            : '<div class="browse-type-empty">No fractal analyses yet</div>'}
                     </div>
                 `;
                 moreContainer.style.display = 'flex';
@@ -7433,7 +7433,7 @@
                         fractalContentEl.textContent = contextData.expanded.substring(0, 200) + (contextData.expanded.length > 200 ? '...' : '');
                         fractalActionEl.textContent = 'Click to explore';
                     } else {
-                        fractalContentEl.textContent = 'Click to generate a deep dive on this topic';
+                        fractalContentEl.textContent = 'Click to generate a fractal analysis on this topic';
                         fractalActionEl.textContent = 'Generate';
                     }
 
@@ -8998,7 +8998,7 @@
                 } else {
                     typeIcon = 'layers';
                     typeColor = 'var(--accent-green)';
-                    typeLabel = '📚 Deep Dive';
+                    typeLabel = '📚 Fractal';
                 }
 
                 // Different actions for enhance vs deep dive
@@ -9183,7 +9183,7 @@
                         <button class="queue-deepdive-btn" onclick="queueDeepDiveFromContext(this, '${escapedTopic}')">
                             <span class="queue-btn-icon">+</span>
                             <span class="queue-btn-text">
-                                <span class="queue-btn-label">Queue Deep Dive</span>
+                                <span class="queue-btn-label">Queue Fractal Analysis</span>
                                 <span class="queue-btn-topic">${topicForDeepDive}</span>
                             </span>
                         </button>
@@ -9468,17 +9468,17 @@
             // Get the figure caption (parent element)
             const figCaption = element.closest('.fig-caption');
             if (figCaption) {
-                // Extract text before the DEEP DIVE button
-                let captionText = figCaption.textContent.replace('DEEP DIVE', '').trim();
+                // Extract text before the FRACTAL button
+                let captionText = figCaption.textContent.replace('FRACTAL', '').replace('DEEP DIVE', '').trim();
                 // Remove "Fig X. " prefix
                 captionText = captionText.replace(/^Fig\s*\d+\.\s*/i, '');
                 return captionText;
             }
 
-            // Check for section heading deep dive
+            // Check for section heading fractal analysis
             const h2Parent = element.closest('.prose-h2');
             if (h2Parent) {
-                return h2Parent.textContent.replace('DEEP DIVE', '').replace(/^\d+\.\s*/, '').trim();
+                return h2Parent.textContent.replace('FRACTAL', '').replace('DEEP DIVE', '').replace(/^\d+\.\s*/, '').trim();
             }
 
             // Fallback: look for nearby heading
