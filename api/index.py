@@ -17,6 +17,7 @@ import anthropic
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 BLOB_READ_WRITE_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+GOOGLE_FACT_CHECK_API_KEY = os.getenv("GOOGLE_FACT_CHECK_API_KEY")
 # Gemini API keys with rotation for rate limits
 GEMINI_API_KEYS = [
     os.getenv("GEMINI_API_KEY", "AIzaSyAEros8DbhXYeADSnoUs6a3p5qWNTZWgsY"),  # Primary key
@@ -363,13 +364,16 @@ def format_sources_for_prompt(sources: list) -> str:
 def search_google_fact_checks(claim: str, max_results: int = 5) -> list:
     """Search Google Fact Check Tools API for existing fact checks from publishers like Snopes, PolitiFact, etc.
 
-    This API is FREE and doesn't require an API key for basic searches.
     Returns: list of prior fact checks with publisher, rating, and URL
     """
+    if not GOOGLE_FACT_CHECK_API_KEY:
+        print("GOOGLE_FACT_CHECK_API_KEY not set, skipping professional fact check search")
+        return []
+
     try:
-        # Google Fact Check Tools API - ClaimSearch endpoint (free, no API key needed)
+        # Google Fact Check Tools API - ClaimSearch endpoint
         encoded_query = requests.utils.quote(claim)
-        url = f"https://factchecktools.googleapis.com/v1alpha1/claims:search?query={encoded_query}&pageSize={max_results}"
+        url = f"https://factchecktools.googleapis.com/v1alpha1/claims:search?query={encoded_query}&pageSize={max_results}&key={GOOGLE_FACT_CHECK_API_KEY}"
 
         response = requests.get(url, timeout=10)
 
