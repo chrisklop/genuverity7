@@ -3227,6 +3227,25 @@
         .card-sources .source-dot.medium { background: #f59e0b; }
         .card-sources .source-dot.low { background: #ef4444; }
 
+        /* Mini source badge for browse cards */
+        .browse-source {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            opacity: 0.8;
+        }
+        .browse-source .source-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .browse-source .source-dot.high { background: #10b981; }
+        .browse-source .source-dot.medium { background: #f59e0b; }
+        .browse-source .source-dot.low { background: #ef4444; }
+
         @media (max-width: 640px) {
             .card-sources { display: none; }
         }
@@ -7071,7 +7090,8 @@
                                 parentTitle: article.parent_title || '',
                                 articleType,
                                 cachedAt: article.cached_at || '',
-                                verdict: article.verdict || ''
+                                verdict: article.verdict || '',
+                                topSources: article.top_sources || []
                             });
                         });
                     }
@@ -7092,14 +7112,37 @@
         }
 
         function renderArticleCards(articles, featuredContainer, moreContainer) {
-            // Helper to get sources for an article
-            function getArticleSources(key) {
-                const report = reports[key];
-                if (!report || !report.sources) return [];
-                return report.sources.slice(0, 3);
+            // Helper to format date (e.g., "Dec 13" or "Dec 13, 2024" if not current year)
+            function formatCardDate(dateStr) {
+                if (!dateStr) return '';
+                try {
+                    const date = new Date(dateStr);
+                    const now = new Date();
+                    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                    const month = months[date.getMonth()];
+                    const day = date.getDate();
+                    if (date.getFullYear() === now.getFullYear()) {
+                        return `${month} ${day}`;
+                    }
+                    return `${month} ${day}, ${date.getFullYear()}`;
+                } catch (e) {
+                    return '';
+                }
             }
 
-            // Helper to render sources column
+            // Helper to get sources for an article (use topSources for cached, fall back to reports)
+            function getArticleSources(article, maxSources = 4) {
+                // First check topSources from cache index
+                if (article.topSources && article.topSources.length > 0) {
+                    return article.topSources.slice(0, maxSources);
+                }
+                // Fall back to static reports object
+                const report = reports[article.key];
+                if (!report || !report.sources) return [];
+                return report.sources.slice(0, maxSources);
+            }
+
+            // Helper to render sources column (for main cards - shows 4 sources)
             function renderSources(sources) {
                 if (!sources || sources.length === 0) {
                     return `<div class="card-sources">
@@ -7117,13 +7160,24 @@
                 </div>`;
             }
 
+            // Helper to render mini source badge (for browse cards - shows 1 source)
+            function renderMiniSource(sources) {
+                if (!sources || sources.length === 0) return '';
+                const s = sources[0];
+                const score = s.score || 80;
+                const level = score >= 85 ? 'high' : score >= 70 ? 'medium' : 'low';
+                const name = s.name || s.domain || 'Source';
+                return `<span class="browse-source"><span class="source-dot ${level}"></span>${name.substring(0, 20)}</span>`;
+            }
+
             // Split: top 4 get graduated sizes, 5th+ goes to browse list
             const mainCards = articles.slice(0, 4);
             const browseList = articles.slice(4);
 
             // Render main cards with 2-column layout (content left, sources right)
             featuredContainer.innerHTML = mainCards.map((article, i) => {
-                const sources = getArticleSources(article.key);
+                const sources = getArticleSources(article, 4);
+                const dateStr = formatCardDate(article.cachedAt);
                 const parentLink = article.parentKey ? `
                     <div class="parent-link" onclick="event.stopPropagation(); loadReport('${article.parentKey}')" style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem; cursor: pointer;">
                         <span style="color: var(--accent-teal); opacity: 0.7;">&#8627;</span>
@@ -7134,7 +7188,10 @@
                 <div onclick="loadReport('${article.key}')" class="trending-card trending-card-${i + 1} anim-fade-up anim-delay-${4 + i}">
                     <div class="card-inner">
                         <div class="card-content">
-                            <div class="text-xs font-mono ${article.tagColor} mb-2">${article.tag}</div>
+                            <div class="card-meta" style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                                <span class="text-xs font-mono ${article.tagColor}">${article.tag}</span>
+                                ${dateStr ? `<span class="card-date" style="font-size: 0.7rem; color: var(--text-muted); opacity: 0.7;">${dateStr}</span>` : ''}
+                            </div>
                             <h3 class="font-bold mb-1" style="color: var(--text-main);">${article.title}</h3>
                             <p style="color: var(--text-muted);">${article.description}</p>
                             ${parentLink}
@@ -7152,9 +7209,17 @@
                 const deepDives = browseList.filter(a => a.articleType === 'deep_dive');
 
                 // Helper to render a single article card
-                const renderBrowseCard = (article, i) => `
+                const renderBrowseCard = (article, i) => {
+                    const dateStr = formatCardDate(article.cachedAt);
+                    const sources = getArticleSources(article, 1);
+                    const sourceHtml = renderMiniSource(sources);
+                    return `
                     <div onclick="loadReport('${article.key}')" class="trending-card-list anim-fade-up" style="animation-delay: ${0.05 + i * 0.03}s;">
-                        <div class="card-tag font-mono ${article.tagColor}">${article.tag}</div>
+                        <div class="browse-card-meta" style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap;">
+                            <span class="card-tag font-mono ${article.tagColor}">${article.tag}</span>
+                            ${dateStr ? `<span style="font-size: 0.7rem; color: var(--text-muted); opacity: 0.7;">${dateStr}</span>` : ''}
+                            ${sourceHtml}
+                        </div>
                         <h4 style="color: var(--text-main);">${article.title}</h4>
                         ${article.parentKey ? `
                             <div class="parent-link" onclick="event.stopPropagation(); loadReport('${article.parentKey}')" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; cursor: pointer;">
@@ -7163,7 +7228,7 @@
                             </div>
                         ` : ''}
                     </div>
-                `;
+                `;};
 
                 // Determine which tab should be active (first one with content)
                 const defaultTab = investigations.length > 0 ? 'investigations' :

@@ -744,6 +744,15 @@ def update_article_index(article_key: str, metadata: dict):
         elif metadata.get("_parent_key") or metadata.get("isChildEssay"):
             article_type = "deep_dive"
 
+        # Extract top 4 sources (sorted by score) for card display
+        sources = metadata.get("sources", [])
+        if sources and isinstance(sources, list):
+            # Sort by score descending and take top 4
+            sorted_sources = sorted(sources, key=lambda s: s.get("score", 0), reverse=True)[:4]
+            top_sources = [{"name": s.get("name", "Source"), "score": s.get("score", 80)} for s in sorted_sources]
+        else:
+            top_sources = []
+
         # Add/update the article metadata
         index[article_key] = {
             "key": article_key,
@@ -757,7 +766,8 @@ def update_article_index(article_key: str, metadata: dict):
             "parent_title": metadata.get("_parent_title", ""),
             "is_child": bool(metadata.get("isChildEssay", False)),
             "article_type": article_type,
-            "verdict": metadata.get("verdict", "")
+            "verdict": metadata.get("verdict", ""),
+            "top_sources": top_sources
         }
 
         # Save updated index
