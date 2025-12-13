@@ -18,13 +18,15 @@ ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 BLOB_READ_WRITE_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 GOOGLE_FACT_CHECK_API_KEY = os.getenv("GOOGLE_FACT_CHECK_API_KEY")
-# Gemini API keys with rotation for rate limits
+# Gemini API keys with rotation for rate limits (loaded from environment)
 GEMINI_API_KEYS = [
-    os.getenv("GEMINI_API_KEY", "AIzaSyAEros8DbhXYeADSnoUs6a3p5qWNTZWgsY"),  # Primary key
-    "AIzaSyAPlwFlIZZ3UBZn-OoH8RABbzOZrYbNZRg",  # Backup key 1
-    "AIzaSyDRIHmMIQow7BlfROmeaJlfOI6FKYcA1l0",  # Backup key 2
+    k for k in [
+        os.getenv("GEMINI_API_KEY"),
+        os.getenv("GEMINI_API_KEY_2"),
+        os.getenv("GEMINI_API_KEY_3"),
+    ] if k
 ]
-GEMINI_API_KEY = GEMINI_API_KEYS[0]  # Default to primary
+GEMINI_API_KEY = GEMINI_API_KEYS[0] if GEMINI_API_KEYS else None
 # Use Claude Sonnet 4 for quality investigative articles
 CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
 # Gemini 3 Pro Image for infographic generation (superior quality)
@@ -62,7 +64,7 @@ INFOGRAPHIC_STYLE = """
 VISUAL STYLE: "MIDNIGHT TECH"
 - Background: Deep gradient from #050505 (near black) to #0a0a1a (dark blue-black)
 - Primary accent: Electric blue (#3b82f6) for key data elements
-- Secondary accents: Cyan (#06b6d4), Purple (#8b5cf6)
+- Secondary accents: Cyan (#06b6d4), Teal (#14b8a6)
 - Grid/lines: Very subtle dark blue (#1a1a3e) with slight glow
 - Text: Crisp white (#ffffff) for values, light gray (#a0a0b0) for labels
 - Effects: Subtle blue glow on key elements, sleek futuristic feel
@@ -566,6 +568,24 @@ def blob_list(prefix: str = "articles/") -> list:
         print(f"Blob LIST error: {e}")
         return []
 
+def blob_delete(url: str) -> bool:
+    """Delete a blob by its URL. Returns True on success."""
+    if not BLOB_READ_WRITE_TOKEN:
+        return False
+
+    try:
+        response = requests.delete(
+            url,
+            headers={
+                "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
+                "x-api-version": "7"
+            }
+        )
+        return response.status_code in (200, 204)
+    except Exception as e:
+        print(f"Blob DELETE error: {e}")
+        return False
+
 app = FastAPI()
 
 # Allow CORS
@@ -678,16 +698,35 @@ def cache_article(topic: str, article_data: dict, parent_key: str = "", parent_t
         print(f"Article cached to filesystem: {cache_file}")
 
 def get_article_index() -> dict:
-    """Get the article index from Blob storage. Returns dict of key -> metadata."""
+    """Get the article index from Blob storage. Returns dict of key -> metadata.
+
+    Handles multiple index files by finding the one with the most entries.
+    Ignores malformed indices (e.g., those with 'articles' wrapper key).
+    """
     try:
-        # Try to find the index blob
         blobs = blob_list("articles/")
+        best_index = {}
+        best_count = 0
+
+        # Find all index files and pick the best one
         for blob in blobs:
             if blob.get("pathname") == ARTICLE_INDEX_PATH:
-                response = requests.get(blob.get("url"))
-                if response.status_code == 200:
-                    return response.json()
-        return {}
+                try:
+                    response = requests.get(blob.get("url"))
+                    if response.status_code == 200:
+                        data = response.json()
+                        # Skip malformed indices (those with 'articles' wrapper)
+                        if "articles" in data and "updated_at" in data:
+                            continue
+                        # Count valid article entries
+                        count = len([k for k in data.keys() if not k.startswith("_")])
+                        if count > best_count:
+                            best_count = count
+                            best_index = data
+                except:
+                    continue
+
+        return best_index
     except Exception as e:
         print(f"Error loading article index: {e}")
         return {}
@@ -697,6 +736,13 @@ def update_article_index(article_key: str, metadata: dict):
     try:
         # Load existing index
         index = get_article_index()
+
+        # Determine article type
+        article_type = metadata.get("_article_type", "investigation")
+        if metadata.get("articleType") == "fact_check" or metadata.get("verdict"):
+            article_type = "fact_check"
+        elif metadata.get("_parent_key") or metadata.get("isChildEssay"):
+            article_type = "deep_dive"
 
         # Add/update the article metadata
         index[article_key] = {
@@ -709,12 +755,14 @@ def update_article_index(article_key: str, metadata: dict):
             "cached_at": metadata.get("_cached_at", datetime.now().isoformat()),
             "parent_key": metadata.get("_parent_key", ""),
             "parent_title": metadata.get("_parent_title", ""),
-            "is_child": bool(metadata.get("isChildEssay", False))
+            "is_child": bool(metadata.get("isChildEssay", False)),
+            "article_type": article_type,
+            "verdict": metadata.get("verdict", "")
         }
 
         # Save updated index
         blob_put(ARTICLE_INDEX_PATH, json.dumps(index))
-        print(f"Article index updated: {article_key}")
+        print(f"Article index updated: {article_key} (type: {article_type})")
     except Exception as e:
         print(f"Error updating article index: {e}")
 
@@ -1063,7 +1111,7 @@ RETURN ONLY VALID JSON. CRITICAL: Generate chartConfigs FIRST (before content) t
   "generateInfographics": true,
   "chartConfigs": {{
     "chart_main": {{"type": "bar", "data": {{"labels": ["A", "B", "C", "D"], "values": [num1, num2, num3, num4], "colors": ["#3b82f6", "#10b981", "#f59e0b", "#ef4444"]}}, "title": "Main Chart"}},
-    "chart_secondary": {{"type": "line", "data": {{"labels": ["2020", "2021", "2022", "2023", "2024"], "values": [v1, v2, v3, v4, v5], "colors": ["#8b5cf6"]}}, "title": "Trend"}},
+    "chart_secondary": {{"type": "line", "data": {{"labels": ["2020", "2021", "2022", "2023", "2024"], "values": [v1, v2, v3, v4, v5], "colors": ["#06b6d4"]}}, "title": "Trend"}},
     "chart_tertiary": {{"type": "pie", "data": {{"labels": ["X", "Y", "Z"], "values": [40, 35, 25], "colors": ["#3b82f6", "#10b981", "#f59e0b"]}}, "title": "Distribution"}}
   }},
   "contextData": {{"person_1": {{"expanded": "..."}}, "org_1": {{"expanded": "..."}}, "stat_1": {{"expanded": "..."}}, "...50+ ENTRIES TOTAL, ONE FOR EACH FRACTAL-TRIGGER...": {{"expanded": "..."}}}},
@@ -1128,7 +1176,7 @@ RETURN ONLY VALID JSON with this structure:
   "cardTagColor": "text-yellow-400",
   "cardDescription": "One-line verdict summary",
   "verdict": "TRUE | FALSE | MOSTLY_TRUE | MOSTLY_FALSE | MIXED | UNVERIFIABLE",
-  "verdictConfidence": 85,
+  "nuancePotential": 15,
   "verdictSummary": "2-3 sentence explanation of the verdict",
   "claims": [
     {{
@@ -1151,42 +1199,91 @@ RETURN ONLY VALID JSON with this structure:
   "content": "HTML CONTENT HERE"
 }}
 
-HTML structure for content field (WIKI-STYLE, NOT ESSAY):
+HTML structure for content field (WIKI-STYLE WITH TABS):
 
 <div class="verdict-banner verdict-[verdict_lowercase]">
   <div class="verdict-icon">[✓ for TRUE, ✗ for FALSE, ⚠ for MIXED/MOSTLY]</div>
   <div class="verdict-label">[VERDICT]</div>
-  <div class="verdict-confidence">[confidence]% confidence based on [X] sources</div>
+  <div class="verdict-nuance">[nuancePotential]% nuance potential · <span class="nuance-hint">room for interpretation</span></div>
 </div>
 
 <p class="prose-text verdict-summary"><strong>Summary:</strong> [verdictSummary with fractal triggers]</p>
 
-<h2 class="prose-h2">The Claim</h2>
-<blockquote class="claim-quote">"[Original claim being fact-checked]"</blockquote>
-<p class="prose-text">Context about where/when this claim originated, who made it...</p>
-
-<h2 class="prose-h2">Evidence Analysis</h2>
-<div class="evidence-section supporting">
-  <h3>Supporting Evidence</h3>
-  <ul>
-    <li><strong class="fractal-trigger" onclick="expandContext(this,'evidence_1')">Evidence point</strong> <span class="citation-spade" data-id="src1">♠</span></li>
-  </ul>
-</div>
-<div class="evidence-section contradicting">
-  <h3>Contradicting Evidence</h3>
-  <ul>
-    <li><strong class="fractal-trigger" onclick="expandContext(this,'evidence_2')">Evidence point</strong> <span class="citation-spade" data-id="src2">♠</span></li>
-  </ul>
+<!-- TABBED INTERFACE -->
+<div class="fact-check-tabs">
+  <button class="fact-check-tab active" onclick="switchFactCheckTab(event, 'tab-claim')"><i data-lucide="quote"></i> Claim</button>
+  <button class="fact-check-tab" onclick="switchFactCheckTab(event, 'tab-evidence')"><i data-lucide="scale"></i> Evidence</button>
+  <button class="fact-check-tab" onclick="switchFactCheckTab(event, 'tab-context')"><i data-lucide="info"></i> Context</button>
+  <button class="fact-check-tab" onclick="switchFactCheckTab(event, 'tab-sources')"><i data-lucide="link"></i> Sources</button>
 </div>
 
-<h2 class="prose-h2">Key Context</h2>
-<p class="prose-text">Important background that affects how this claim should be interpreted...</p>
+<!-- TAB: CLAIM -->
+<div id="tab-claim" class="fact-check-tab-content active">
+  <h3 class="prose-h3">The Claim</h3>
+  <blockquote class="claim-quote">"[Original claim being fact-checked]"</blockquote>
+  <p class="prose-text">Context about where/when this claim originated, who made it, and why it's being fact-checked...</p>
 
-<h2 class="prose-h2">Source Verification</h2>
-<p class="prose-text">Analysis of source reliability and methodology...</p>
+  <h3 class="prose-h3">Sub-Claims Analysis</h3>
+  <div class="claims-breakdown">
+    [For each sub-claim, generate a claim-card div:]
+    <div class="claim-card">
+      <span class="claim-verdict [verdict_lowercase]">[TRUE/FALSE/MIXED]</span>
+      <p class="claim-text">[Specific sub-claim text with fractal triggers]</p>
+      <p class="claim-evidence">[Evidence summary] <span class="citation-spade" data-id="src1">♠</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- TAB: EVIDENCE -->
+<div id="tab-evidence" class="fact-check-tab-content">
+  <h3 class="prose-h3">Evidence Analysis</h3>
+  <div class="evidence-grid">
+    <div class="evidence-column supporting">
+      <h4><i data-lucide="check-circle"></i> Supporting Evidence</h4>
+      <ul>
+        <li><strong class="fractal-trigger" onclick="expandContext(this,'evidence_1')">Evidence point</strong> <span class="citation-spade" data-id="src1">♠</span></li>
+        [More supporting evidence points...]
+      </ul>
+    </div>
+    <div class="evidence-column contradicting">
+      <h4><i data-lucide="x-circle"></i> Contradicting Evidence</h4>
+      <ul>
+        <li><strong class="fractal-trigger" onclick="expandContext(this,'evidence_2')">Evidence point</strong> <span class="citation-spade" data-id="src2">♠</span></li>
+        [More contradicting evidence points...]
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="prose-h3">Evidence Quality Assessment</h3>
+  <p class="prose-text">Analysis of source reliability, methodology used, and confidence in the evidence...</p>
+</div>
+
+<!-- TAB: CONTEXT -->
+<div id="tab-context" class="fact-check-tab-content">
+  <h3 class="prose-h3">Historical Context</h3>
+  <p class="prose-text">Background information that affects how this claim should be interpreted. Include timeline, prior events, and relevant history...</p>
+
+  <h3 class="prose-h3">Why This Matters</h3>
+  <p class="prose-text">The significance of this claim and its potential impact on public discourse, policy, or understanding...</p>
+
+  <h3 class="prose-h3">Related Claims</h3>
+  <p class="prose-text">Similar claims, common variations, and how this fits into broader narratives...</p>
+</div>
+
+<!-- TAB: SOURCES -->
+<div id="tab-sources" class="fact-check-tab-content">
+  <h3 class="prose-h3">Primary Sources</h3>
+  <p class="prose-text">Original documents, official statements, and direct evidence used in this fact check...</p>
+
+  <h3 class="prose-h3">Expert Analysis</h3>
+  <p class="prose-text">Quotes and analysis from subject matter experts consulted for this fact check...</p>
+
+  <h3 class="prose-h3">Methodology</h3>
+  <p class="prose-text">How we verified this claim: steps taken, sources consulted, and verification process...</p>
+</div>
 
 <h2 class="prose-h2">Conclusion</h2>
-<p class="prose-text">Final assessment with nuance...</p>
+<p class="prose-text">Final assessment with nuance, acknowledging complexity and areas of uncertainty...</p>
 
 FRACTAL TRIGGERS ARE CRITICAL - YOU MUST WRAP 50+ TERMS with <strong class="fractal-trigger" onclick="expandContext(this,'key_name')">term</strong>:
 
@@ -1631,12 +1728,23 @@ async def list_cached():
 
 @app.post("/api/admin/rebuild-index")
 async def rebuild_index():
-    """Force rebuild the article index from blob storage. One-time migration endpoint."""
+    """Force rebuild the article index from blob storage. Cleans up old indices first."""
     print("Force rebuilding article index...")
     articles = []
     new_index = {}
     seen_keys = set()
+    deleted_indices = 0
 
+    blobs = blob_list("articles/")
+
+    # First pass: delete all old index files
+    for blob in blobs:
+        if blob.get("pathname") == ARTICLE_INDEX_PATH:
+            if blob_delete(blob.get("url")):
+                deleted_indices += 1
+                print(f"Deleted old index: {blob.get('url')}")
+
+    # Re-fetch blobs after deletion
     blobs = blob_list("articles/")
     for blob in blobs:
         try:
@@ -1652,6 +1760,14 @@ async def rebuild_index():
                     article_key = data.get("key", pathname.split("/")[-1].replace(".json", ""))
                     if article_key not in seen_keys:
                         seen_keys.add(article_key)
+
+                        # Determine article type
+                        article_type = "investigation"
+                        if data.get("articleType") == "fact_check" or data.get("verdict"):
+                            article_type = "fact_check"
+                        elif data.get("_parent_key") or data.get("isChildEssay"):
+                            article_type = "deep_dive"
+
                         metadata = {
                             "key": article_key,
                             "title": data.get("title", "Unknown"),
@@ -1662,7 +1778,9 @@ async def rebuild_index():
                             "cached_at": data.get("_cached_at", ""),
                             "parent_key": data.get("_parent_key", ""),
                             "parent_title": data.get("_parent_title", ""),
-                            "is_child": bool(data.get("isChildEssay", False))
+                            "is_child": bool(data.get("isChildEssay", False)),
+                            "article_type": article_type,
+                            "verdict": data.get("verdict", "")
                         }
                         articles.append(metadata)
                         new_index[article_key] = metadata
@@ -1674,7 +1792,12 @@ async def rebuild_index():
         blob_put(ARTICLE_INDEX_PATH, json.dumps(new_index))
         print(f"Article index rebuilt with {len(new_index)} articles")
 
-    return {"success": True, "articles_indexed": len(new_index), "articles": list(new_index.keys())}
+    return {
+        "success": True,
+        "articles_indexed": len(new_index),
+        "old_indices_deleted": deleted_indices,
+        "articles": list(new_index.keys())
+    }
 
 
 @app.get("/api/article/{slug}")
