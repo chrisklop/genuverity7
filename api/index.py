@@ -985,6 +985,236 @@ Each trigger MUST have a corresponding entry in contextData with a substantive 2
 Return ONLY JSON. No markdown, no code fences.
 """
 
+# Fact Check Template - Wiki-style verdict-focused format with SAME deep dive density
+FACT_CHECK_TEMPLATE = """
+Fact-check this claim: "{topic}"
+{context_section}
+
+You are a fact-checking journalist for GenuVerity. Verify this claim using the VERIFIED SOURCES provided above.
+
+RETURN ONLY VALID JSON with this structure:
+
+{{
+  "key": "{topic_slug}",
+  "articleType": "fact_check",
+  "title": "Fact Check: [Claim summary]",
+  "cardTitle": "VERDICT: [TRUE/FALSE/MIXED]",
+  "cardTag": "FACT CHECK // VERIFICATION",
+  "cardTagColor": "text-yellow-400",
+  "cardDescription": "One-line verdict summary",
+  "verdict": "TRUE | FALSE | MOSTLY_TRUE | MOSTLY_FALSE | MIXED | UNVERIFIABLE",
+  "verdictConfidence": 85,
+  "verdictSummary": "2-3 sentence explanation of the verdict",
+  "claims": [
+    {{
+      "id": "claim_1",
+      "text": "The specific sub-claim being verified",
+      "verdict": "TRUE",
+      "evidence": "What the evidence shows",
+      "sourceIds": ["src1", "src2"]
+    }}
+  ],
+  "evidenceSummary": {{
+    "supporting": ["Evidence point supporting the claim"],
+    "contradicting": ["Evidence point contradicting the claim"],
+    "context": ["Important context that affects interpretation"]
+  }},
+  "chartConfigs": {{}},
+  "contextData": {{"person_1": {{"expanded": "..."}}, "org_1": {{"expanded": "..."}}, "...50+ ENTRIES...": {{"expanded": "..."}}}},
+  "citationDatabase": {{"src1": {{"domain": "reuters.com", "trustScore": 95, "title": "Title", "snippet": "Quote", "url": "https://..."}}}},
+  "sources": [{{"name": "Source", "score": 95, "url": "https://..."}}],
+  "content": "HTML CONTENT HERE"
+}}
+
+HTML structure for content field (WIKI-STYLE, NOT ESSAY):
+
+<div class="verdict-banner verdict-[verdict_lowercase]">
+  <div class="verdict-icon">[✓ for TRUE, ✗ for FALSE, ⚠ for MIXED/MOSTLY]</div>
+  <div class="verdict-label">[VERDICT]</div>
+  <div class="verdict-confidence">[confidence]% confidence based on [X] sources</div>
+</div>
+
+<p class="prose-text verdict-summary"><strong>Summary:</strong> [verdictSummary with fractal triggers]</p>
+
+<h2 class="prose-h2">The Claim</h2>
+<blockquote class="claim-quote">"[Original claim being fact-checked]"</blockquote>
+<p class="prose-text">Context about where/when this claim originated, who made it...</p>
+
+<h2 class="prose-h2">Evidence Analysis</h2>
+<div class="evidence-section supporting">
+  <h3>Supporting Evidence</h3>
+  <ul>
+    <li><strong class="fractal-trigger" onclick="expandContext(this,'evidence_1')">Evidence point</strong> <span class="citation-spade" data-id="src1">♠</span></li>
+  </ul>
+</div>
+<div class="evidence-section contradicting">
+  <h3>Contradicting Evidence</h3>
+  <ul>
+    <li><strong class="fractal-trigger" onclick="expandContext(this,'evidence_2')">Evidence point</strong> <span class="citation-spade" data-id="src2">♠</span></li>
+  </ul>
+</div>
+
+<h2 class="prose-h2">Key Context</h2>
+<p class="prose-text">Important background that affects how this claim should be interpreted...</p>
+
+<h2 class="prose-h2">Source Verification</h2>
+<p class="prose-text">Analysis of source reliability and methodology...</p>
+
+<h2 class="prose-h2">Conclusion</h2>
+<p class="prose-text">Final assessment with nuance...</p>
+
+FRACTAL TRIGGERS ARE CRITICAL - YOU MUST WRAP 50+ TERMS with <strong class="fractal-trigger" onclick="expandContext(this,'key_name')">term</strong>:
+
+MANDATORY CATEGORIES TO WRAP (wrap EVERY instance):
+1. PEOPLE: Every person mentioned - politicians, experts, witnesses, sources
+2. ORGANIZATIONS: Every company, agency, NGO, institution, fact-checking org
+3. STATISTICS: Every number, percentage, dollar amount - explain what it means
+4. LOCATIONS: Countries, cities, relevant places
+5. DATES/PERIODS: When claims were made, when events occurred
+6. LAWS/REGULATIONS: Any legal references relevant to the claim
+7. TECHNICAL TERMS: Jargon, acronyms, methodologies
+8. SOURCES: News outlets, studies, reports being cited
+9. EVENTS: Incidents, announcements, speeches relevant to the claim
+10. CONCEPTS: Logical fallacies, verification methods, journalistic standards
+
+DENSITY REQUIREMENTS (STRICT):
+- Minimum 50+ fractal triggers across all sections
+- Every paragraph MUST have 3-5 triggers minimum
+- EVERY person name MUST be wrapped
+- EVERY organization MUST be wrapped
+- EVERY statistic MUST be wrapped
+- EVERY source citation MUST be wrapped
+
+Each trigger MUST have a corresponding entry in contextData with a substantive 2-3 sentence explanation.
+
+Return ONLY JSON. No markdown, no code fences.
+"""
+
+
+class FactCheckRequest(BaseModel):
+    claim: str
+
+
+@app.post("/api/fact-check")
+async def generate_fact_check(request: FactCheckRequest, req: Request):
+    """Fact-check a claim with verdict-focused wiki-style output."""
+    if not ANTHROPIC_API_KEY or not claude_client:
+        raise HTTPException(status_code=500, detail="Server missing ANTHROPIC_API_KEY environment variable.")
+
+    print(f"Fact-checking claim: {request.claim}")
+
+    topic_slug = request.claim.lower().replace(" ", "_").replace("-", "_")[:20]
+
+    def send_sse(event: str, data) -> str:
+        return f"event: {event}\ndata: {json.dumps(data)}\n\n"
+
+    async def stream_response():
+        full_text = ""
+        real_sources = []
+
+        stages = {
+            "title": False,
+            "verdict": False,
+            "evidence": False,
+            "sources": False
+        }
+
+        try:
+            yield send_sse("progress", {"stage": "init", "percent": 5, "message": "Preparing fact check..."})
+
+            # Search for real sources via Tavily
+            yield send_sse("progress", {"stage": "sources", "percent": 8, "message": "Searching verified sources..."})
+            real_sources = search_sources(request.claim, max_results=10)
+
+            sources_section = format_sources_for_prompt(real_sources) if real_sources else ""
+
+            prompt = FACT_CHECK_TEMPLATE.format(
+                topic=request.claim,
+                context_section=sources_section,
+                topic_slug=topic_slug
+            )
+
+            yield send_sse("progress", {"stage": "connect", "percent": 12, "message": "Analyzing claim..."})
+
+            with claude_client.messages.stream(
+                model=CLAUDE_MODEL,
+                max_tokens=6000,
+                messages=[{"role": "user", "content": prompt}]
+            ) as stream:
+                yield send_sse("progress", {"stage": "research", "percent": 15, "message": "Verifying against sources..."})
+
+                for text in stream.text_stream:
+                    full_text += text
+
+                    if '"verdict"' in full_text and not stages["verdict"]:
+                        stages["verdict"] = True
+                        yield send_sse("progress", {"stage": "verdict", "percent": 40, "message": "Determining verdict..."})
+
+                    if '"evidenceSummary"' in full_text and not stages["evidence"]:
+                        stages["evidence"] = True
+                        yield send_sse("progress", {"stage": "evidence", "percent": 60, "message": "Analyzing evidence..."})
+
+                    if '"sources"' in full_text and not stages["sources"]:
+                        stages["sources"] = True
+                        yield send_sse("progress", {"stage": "sources", "percent": 85, "message": "Verifying sources..."})
+
+            yield send_sse("progress", {"stage": "parsing", "percent": 95, "message": "Finalizing fact check..."})
+
+            parsed_data = repair_truncated_json(full_text)
+
+            if parsed_data:
+                if "key" not in parsed_data:
+                    parsed_data["key"] = topic_slug
+                parsed_data["chartType"] = "dynamic"
+                parsed_data["articleType"] = "fact_check"
+                parsed_data.setdefault("chartConfigs", {})
+                parsed_data.setdefault("contextData", {})
+                parsed_data.setdefault("citationDatabase", {})
+                parsed_data.setdefault("sources", [])
+
+                # Inject real sources
+                if real_sources:
+                    real_citation_db = {}
+                    real_sources_list = []
+                    for s in real_sources:
+                        real_citation_db[s["id"]] = {
+                            "domain": s["domain"].upper(),
+                            "trustScore": s["score"],
+                            "title": s["title"],
+                            "snippet": s["snippet"],
+                            "url": s["url"]
+                        }
+                        real_sources_list.append({
+                            "name": s["name"],
+                            "score": s["score"],
+                            "url": s["url"]
+                        })
+                    parsed_data["citationDatabase"] = real_citation_db
+                    parsed_data["sources"] = real_sources_list
+
+                cache_article(request.claim, parsed_data)
+                yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Fact check complete!"})
+                yield f"event: content\ndata: {json.dumps(parsed_data)}\n\n"
+            else:
+                yield send_sse("error", "Failed to parse fact check response")
+
+            yield send_sse("done", "ok")
+
+        except Exception as e:
+            print(f"Fact check error: {e}")
+            yield send_sse("error", str(e))
+
+    return StreamingResponse(
+        stream_response(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no"
+        }
+    )
+
+
 @app.post("/api/generate")
 async def generate_report(request: GenerateRequest, req: Request):
     """Claude-powered report generation with SSE progress updates."""

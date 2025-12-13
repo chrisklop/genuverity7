@@ -1652,6 +1652,248 @@
             }
         }
 
+        /* === FACT CHECK VERDICT BANNER === */
+        .verdict-banner {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 5px solid;
+            background: linear-gradient(90deg, rgba(0,0,0,0.3), transparent);
+        }
+
+        .verdict-banner .verdict-icon {
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+
+        .verdict-banner .verdict-label {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .verdict-banner .verdict-confidence {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-left: auto;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Verdict colors */
+        .verdict-true {
+            border-color: #10b981;
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.2), transparent);
+        }
+        .verdict-true .verdict-icon { color: #10b981; }
+        .verdict-true .verdict-label { color: #10b981; }
+
+        .verdict-false {
+            border-color: #ef4444;
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.2), transparent);
+        }
+        .verdict-false .verdict-icon { color: #ef4444; }
+        .verdict-false .verdict-label { color: #ef4444; }
+
+        .verdict-mostly_true {
+            border-color: #22c55e;
+            background: linear-gradient(90deg, rgba(34, 197, 94, 0.2), transparent);
+        }
+        .verdict-mostly_true .verdict-icon { color: #22c55e; }
+        .verdict-mostly_true .verdict-label { color: #22c55e; }
+
+        .verdict-mostly_false {
+            border-color: #f97316;
+            background: linear-gradient(90deg, rgba(249, 115, 22, 0.2), transparent);
+        }
+        .verdict-mostly_false .verdict-icon { color: #f97316; }
+        .verdict-mostly_false .verdict-label { color: #f97316; }
+
+        .verdict-mixed {
+            border-color: #f59e0b;
+            background: linear-gradient(90deg, rgba(245, 158, 11, 0.2), transparent);
+        }
+        .verdict-mixed .verdict-icon { color: #f59e0b; }
+        .verdict-mixed .verdict-label { color: #f59e0b; }
+
+        .verdict-unverifiable {
+            border-color: #6b7280;
+            background: linear-gradient(90deg, rgba(107, 114, 128, 0.2), transparent);
+        }
+        .verdict-unverifiable .verdict-icon { color: #6b7280; }
+        .verdict-unverifiable .verdict-label { color: #6b7280; }
+
+        /* Claims breakdown section */
+        .claims-section {
+            margin: 2rem 0;
+        }
+
+        .claim-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .claim-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .claim-card.claim-true::before { background: #10b981; }
+        .claim-card.claim-false::before { background: #ef4444; }
+        .claim-card.claim-mixed::before { background: #f59e0b; }
+
+        .claim-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .claim-verdict-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .claim-verdict-badge.true { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .claim-verdict-badge.false { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .claim-verdict-badge.mixed { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+
+        .claim-evidence {
+            font-size: 0.9rem;
+            color: var(--text-prose);
+            line-height: 1.6;
+        }
+
+        /* Evidence summary grid */
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .evidence-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .evidence-column {
+            padding: 16px;
+            border-radius: 10px;
+        }
+
+        .evidence-column.supporting {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .evidence-column.contradicting {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .evidence-column h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .evidence-column.supporting h4 { color: #10b981; }
+        .evidence-column.contradicting h4 { color: #ef4444; }
+
+        .evidence-column p {
+            font-size: 0.9rem;
+            color: var(--text-prose);
+            margin-bottom: 8px;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .evidence-column.supporting p::before {
+            content: '+';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .evidence-column.contradicting p::before {
+            content: '-';
+            position: absolute;
+            left: 0;
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        /* Fact check badge for search/trending */
+        .fact-check-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+            margin-left: 8px;
+        }
+
+        /* Generate button mode indicator */
+        #generate-search-box .mode-indicator {
+            position: absolute;
+            right: 52px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 3px 8px;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.2s ease, background 0.2s ease;
+        }
+
+        #generate-search-box .mode-indicator.visible {
+            opacity: 1;
+        }
+
+        #generate-search-box .mode-indicator.investigate {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+        }
+
+        #generate-search-box .mode-indicator.fact-check {
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+        }
+
         /* FLOATS (The Wrapping) */
         /* === STYLE E: HOVER REVEAL INFOGRAPHICS === */
         .float-figure {
@@ -3641,9 +3883,11 @@
                         <div id="generate-search-box" class="relative">
                             <input type="text" id="generate-input"
                                 placeholder="What do you want to investigate?"
-                                class="w-full px-4 py-3 pr-12 rounded-xl border text-sm"
+                                class="w-full px-4 py-3 pr-24 rounded-xl border text-sm"
                                 style="background: var(--bg-card); border-color: var(--border-color); color: var(--text-main);"
+                                oninput="updateGenerateMode(this.value)"
                                 onkeypress="if(event.key === 'Enter') triggerGenerate()">
+                            <span id="generate-mode-indicator" class="mode-indicator"></span>
                             <button onclick="triggerGenerate()"
                                 class="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg transition hover:scale-105"
                                 style="background: var(--accent-blue); color: white;">
@@ -5442,6 +5686,10 @@
             // Refresh trending section when returning to portal (to show newly generated articles)
             if (id === 'view-portal') {
                 renderTrendingSection();
+                // Update URL to root when returning to portal
+                if (typeof updateUrlForPortal === 'function') {
+                    updateUrlForPortal();
+                }
             }
         }
 
@@ -5507,6 +5755,9 @@
             // Reset enhance count when loading a new article
             resetEnhanceCount();
 
+            // Update URL for shareable link
+            updateUrlForArticle(key);
+
             // If report not in local database, try fetching from cache
             if (!data) {
                 loadCachedReport(key);
@@ -5532,24 +5783,20 @@
             renderReportData(data);
         }
 
-        // Load a cached report from the server
+        // Load a cached report from the server (uses fast slug endpoint)
         async function loadCachedReport(key) {
             try {
                 // Show loading state
                 switchView('view-report');
                 document.getElementById('report-title').innerText = 'Loading...';
-                document.getElementById('report-body').innerHTML = '<p class="prose-text">Retrieving cached article...</p>';
+                document.getElementById('report-body').innerHTML = '<p class="prose-text">Retrieving article...</p>';
 
-                const response = await fetch('/api/cache/check', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ topic: key })
-                });
+                // Use the fast slug endpoint
+                const response = await fetch(`/api/article/${encodeURIComponent(key)}`);
 
-                const result = await response.json();
-
-                if (result.cached && result.article) {
-                    renderReportData(result.article, true);
+                if (response.ok) {
+                    const article = await response.json();
+                    renderReportData(article, true);
                 } else {
                     document.getElementById('report-title').innerText = 'Article Not Found';
                     document.getElementById('report-body').innerHTML = '<p class="prose-text">This article could not be found in the archive.</p>';
@@ -8252,12 +8499,150 @@
             }
         }
 
-        // Trigger generate from search box
+        // Detect if input looks like a fact-check request
+        function detectInputType(text) {
+            if (!text || text.length < 3) return 'investigate';
+
+            const factCheckPatterns = [
+                /^["'].*["']$/,                         // Quoted text: "Trump said X"
+                /is it true|did .+ really/i,           // Question format
+                /fact.?check|verify|claim/i,           // Explicit keywords
+                /said that|claimed|stated|announced/i, // Attribution language
+                /true or false|real or fake/i,         // Binary question
+                /debunk|myth|hoax|rumor/i,             // Debunking language
+                /^did\s+/i,                            // Starts with "Did"
+                /\btrue\??$/i,                         // Ends with "true?"
+            ];
+
+            for (const pattern of factCheckPatterns) {
+                if (pattern.test(text)) return 'fact_check';
+            }
+
+            return 'investigate';
+        }
+
+        // Update mode indicator as user types
+        function updateGenerateMode(value) {
+            const indicator = document.getElementById('generate-mode-indicator');
+            if (!indicator) return;
+
+            const mode = detectInputType(value);
+
+            if (value.length < 3) {
+                indicator.classList.remove('visible', 'investigate', 'fact-check');
+                return;
+            }
+
+            indicator.classList.add('visible');
+            indicator.classList.remove('investigate', 'fact-check');
+
+            if (mode === 'fact_check') {
+                indicator.classList.add('fact-check');
+                indicator.textContent = 'Fact Check';
+            } else {
+                indicator.classList.add('investigate');
+                indicator.textContent = 'Investigate';
+            }
+        }
+
+        // Generate fact check article
+        async function generateFactCheck(claim) {
+            const genId = Date.now().toString();
+            const shortClaim = claim.length > 40 ? claim.substring(0, 37) + '...' : claim;
+
+            // Add to generation queue with fact-check styling
+            addGeneration({
+                id: genId,
+                topic: shortClaim,
+                status: 'generating',
+                progress: 0,
+                type: 'fact_check'
+            });
+
+            try {
+                const response = await fetch('/api/fact-check', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ claim })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop() || '';
+
+                    for (const line of lines) {
+                        if (line.startsWith('event: ')) {
+                            const eventType = line.slice(7).trim();
+                            continue;
+                        }
+                        if (line.startsWith('data: ')) {
+                            try {
+                                const data = JSON.parse(line.slice(6));
+
+                                if (data.stage && data.percent !== undefined) {
+                                    // Progress update
+                                    updateGenerationProgress(genId, data.percent, data.message);
+                                } else if (data.key) {
+                                    // Content received - fact check complete
+                                    console.log('[FactCheck] Generated:', data.key);
+
+                                    // Store in reports cache
+                                    reports[data.key] = data;
+
+                                    // Update generation card to complete
+                                    updateGenerationComplete(genId, data.key, data.cardTitle || data.title);
+
+                                    // Auto-load the fact check
+                                    renderReportData(data, true);
+                                    currentArticleKey = data.key;
+
+                                    // Show notification
+                                    showNotification(`Fact check complete: ${shortClaim}`, 'success');
+                                }
+                            } catch (e) {
+                                // Not JSON, skip
+                            }
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error('[FactCheck] Error:', e);
+                updateGenerationProgress(genId, 0, `Error: ${e.message}`);
+                setTimeout(() => removeGeneration(genId), 5000);
+            }
+        }
+
+        // Trigger generate from search box - routes to fact check or investigation
         function triggerGenerate() {
             const input = document.getElementById('generate-input');
             const topic = input?.value?.trim();
             if (topic) {
-                generateReport(topic);
+                const mode = detectInputType(topic);
+
+                // Clear mode indicator
+                const indicator = document.getElementById('generate-mode-indicator');
+                if (indicator) {
+                    indicator.classList.remove('visible');
+                }
+
+                if (mode === 'fact_check') {
+                    generateFactCheck(topic);
+                    showNotification(`Fact-checking: "${topic.substring(0, 30)}..."`, 'info');
+                } else {
+                    generateReport(topic);
+                }
                 input.value = '';
             }
         }
@@ -10743,6 +11128,91 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
 
         // Re-init Lucide icons after dynamic content
         setTimeout(() => lucide.createIcons(), 500);
+
+        // ===== URL ROUTING FOR SHAREABLE LINKS =====
+        const ARTICLE_PATH_PREFIX = '/article/';
+
+        // Get article slug from URL path
+        function getSlugFromUrl() {
+            const path = window.location.pathname;
+            if (path.startsWith(ARTICLE_PATH_PREFIX)) {
+                return decodeURIComponent(path.slice(ARTICLE_PATH_PREFIX.length));
+            }
+            return null;
+        }
+
+        // Update URL when viewing an article
+        function updateUrlForArticle(slug) {
+            const newUrl = `${ARTICLE_PATH_PREFIX}${encodeURIComponent(slug)}`;
+            if (window.location.pathname !== newUrl) {
+                window.history.pushState({ slug, view: 'article' }, '', newUrl);
+            }
+        }
+
+        // Update URL when returning to portal
+        function updateUrlForPortal() {
+            if (window.location.pathname !== '/') {
+                window.history.pushState({ view: 'portal' }, '', '/');
+            }
+        }
+
+        // Handle browser back/forward
+        window.addEventListener('popstate', (event) => {
+            if (event.state && event.state.slug) {
+                // Load article without pushing new history
+                loadReportWithoutPush(event.state.slug);
+            } else {
+                // Return to portal
+                switchView('view-portal');
+            }
+        });
+
+        // Load report without adding to history (for back/forward)
+        function loadReportWithoutPush(key) {
+            const data = reports[key];
+            if (!data) {
+                loadCachedReportWithoutPush(key);
+                return;
+            }
+            if (data._isDynamic && !data.content) {
+                loadCachedReportWithoutPush(key);
+                return;
+            }
+            renderReportData(data);
+        }
+
+        // Load cached report without pushing to history
+        async function loadCachedReportWithoutPush(key) {
+            try {
+                switchView('view-report');
+                document.getElementById('report-title').innerText = 'Loading...';
+                document.getElementById('report-body').innerHTML = '<p class="prose-text">Retrieving article...</p>';
+
+                // Use the fast slug endpoint
+                const response = await fetch(`/api/article/${encodeURIComponent(key)}`);
+                if (response.ok) {
+                    const article = await response.json();
+                    renderReportData(article, true);
+                } else {
+                    document.getElementById('report-title').innerText = 'Article Not Found';
+                    document.getElementById('report-body').innerHTML = '<p class="prose-text">This article could not be found in the archive.</p>';
+                }
+            } catch (e) {
+                console.error('Failed to load cached report:', e);
+                document.getElementById('report-title').innerText = 'Error Loading Article';
+                document.getElementById('report-body').innerHTML = '<p class="prose-text">Failed to retrieve the article. Please try again.</p>';
+            }
+        }
+
+        // Initialize from URL on page load
+        (function initFromUrl() {
+            const slug = getSlugFromUrl();
+            if (slug) {
+                // Replace current history entry so back goes to portal
+                window.history.replaceState({ slug, view: 'article' }, '', window.location.pathname);
+                loadReportWithoutPush(slug);
+            }
+        })();
     </script>
 
     <!-- KEYBOARD SHORTCUTS MODAL -->
