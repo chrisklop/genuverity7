@@ -352,6 +352,22 @@
             margin: 0.5rem 0;
         }
 
+        /* Generated Diagrams */
+        .diagram-container {
+            margin: 2rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+        }
+
+        .method-diagram {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+        }
+
         /* Trust Score Scale */
         .trust-scale {
             display: flex;
@@ -639,29 +655,8 @@
             <div class="section-content">
                 <p>Enter any topic and GenuVerity generates a comprehensive investigative report. Our system combines real-time web search with advanced AI analysis to produce data-driven, source-backed journalism.</p>
 
-                <div class="flow-diagram">
-                    <div class="flow-title">Investigation Pipeline</div>
-                    <div class="flow-row">
-                        <div class="flow-box">User Query</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box accent">Live Search</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box">Source Verification</div>
-                    </div>
-                    <div class="flow-arrow-down">↓</div>
-                    <div class="flow-row">
-                        <div class="flow-box">Trust Scoring</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box accent">AI Analysis</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box">Article Generation</div>
-                    </div>
-                    <div class="flow-arrow-down">↓</div>
-                    <div class="flow-row">
-                        <div class="flow-box green">AI Infographics</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box">Final Report</div>
-                    </div>
+                <div class="diagram-container">
+                    <img src="infographics/methods/investigation_pipeline.png" alt="Investigation Pipeline - showing flow from User Query through Web Search, Source Verification, Trust Scoring, AI Analysis, Data Visualization to Final Report" class="method-diagram" loading="lazy">
                 </div>
 
                 <h3 style="font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--text-main);">What You Get</h3>
@@ -698,23 +693,8 @@
                     <span class="verdict-badge false">False</span>
                 </div>
 
-                <div class="flow-diagram">
-                    <div class="flow-title">Fact Check Pipeline</div>
-                    <div class="flow-row">
-                        <div class="flow-box">Claim Input</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box teal">Google Fact Check API</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box">Prior Checks</div>
-                    </div>
-                    <div class="flow-arrow-down">↓</div>
-                    <div class="flow-row">
-                        <div class="flow-box">Live Search</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box teal">AI Analysis</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box">Verdict + Evidence</div>
-                    </div>
+                <div class="diagram-container">
+                    <img src="infographics/methods/fact_check_pipeline.png" alt="Fact Check Pipeline - showing flow from Claim Input through Prior Fact Checks, Professional Reviews, Web Search, AI Analysis, Evidence Compilation to Verdict" class="method-diagram" loading="lazy">
                 </div>
 
                 <div class="card-grid">
@@ -748,23 +728,8 @@
             <div class="section-content">
                 <p>Every article contains <strong>fractal triggers</strong> — underlined terms that expand to reveal context. Click the <code>+</code> button to queue a full Fractal Analysis on any related topic. Research continues in the background while you keep reading.</p>
 
-                <div class="flow-diagram">
-                    <div class="flow-title">Fractal Research Flow</div>
-                    <div class="flow-row">
-                        <div class="flow-box">Read Article</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box green">Hover Fractal Term</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box">See Context</div>
-                    </div>
-                    <div class="flow-arrow-down">↓</div>
-                    <div class="flow-row">
-                        <div class="flow-box">Click + Queue</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box green">Background Generation</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-box">Child Essay Created</div>
-                    </div>
+                <div class="diagram-container">
+                    <img src="infographics/methods/fractal_research_flow.png" alt="Fractal Trigger Flow - showing parent article with fractal triggers leading to child articles in a branching pattern" class="method-diagram" loading="lazy">
                 </div>
 
                 <ul class="styled-list">
@@ -789,6 +754,10 @@
             </div>
             <div class="section-content">
                 <p>Every source in GenuVerity receives a trust score based on domain reputation, historical accuracy, editorial standards, and transparency practices. Scores are displayed throughout the interface with color-coded indicators.</p>
+
+                <div class="diagram-container">
+                    <img src="infographics/methods/trust_scoring_tiers.png" alt="Trust Scoring Tiers - Tier 1 (85-100) High Trust in green, Tier 2 (70-84) Medium Trust in amber, Tier 3 (below 70) Lower Trust in red" class="method-diagram" loading="lazy">
+                </div>
 
                 <div class="trust-scale">
                     <div class="trust-tier high">
@@ -824,6 +793,10 @@
                 </div>
             </div>
             <div class="section-content">
+                <div class="diagram-container">
+                    <img src="infographics/methods/technology_stack.png" alt="Technology Stack - Text AI for article generation, Image AI for infographics, Search API for source verification" class="method-diagram" loading="lazy">
+                </div>
+
                 <div class="tech-stack">
                     <div class="tech-item">
                         <div class="tech-icon" style="background: linear-gradient(135deg, #d97706, #f59e0b);">

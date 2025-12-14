@@ -62,16 +62,16 @@ DIAGRAMS = [
 
 The flow should show these steps connected by glowing arrows:
 1. "User Query" (starting box)
-2. "Tavily Web Search" (blue accent box) - searches for real sources
+2. "Web Search" (blue accent box) - searches for real sources
 3. "Source Verification" (regular box) - verifies URLs exist
 4. "Trust Scoring" (regular box) - assigns credibility scores
-5. "Claude AI Analysis" (blue accent box) - generates article
-6. "Gemini Infographics" (green accent box) - creates data visualizations
+5. "AI Analysis" (blue accent box) - generates article
+6. "Data Visualization" (green accent box) - creates infographics
 7. "Final Report" (ending box with glow)
 
 Layout: Two rows of boxes with vertical arrow between rows.
-Row 1: User Query → Tavily Search → Source Verification
-Row 2: Trust Scoring → Claude Analysis → Gemini Infographics → Final Report
+Row 1: User Query → Web Search → Source Verification
+Row 2: Trust Scoring → AI Analysis → Data Visualization → Final Report
 
 Use glowing connectors between boxes. Each box should have subtle tech styling with rounded corners and faint glow."""
     },
@@ -82,10 +82,10 @@ Use glowing connectors between boxes. Each box should have subtle tech styling w
 
 The flow should show these steps:
 1. "Claim Input" (starting box)
-2. "Google Fact Check API" (teal accent box) - finds prior fact checks
-3. "Professional Reviews" (regular box) - Snopes, PolitiFact results
-4. "Tavily Search" (regular box) - fresh source search
-5. "Claude Analysis" (teal accent box) - verdict determination
+2. "Prior Fact Checks" (teal accent box) - finds existing fact checks
+3. "Professional Reviews" (regular box) - results from fact-checking organizations
+4. "Web Search" (regular box) - fresh source search
+5. "AI Analysis" (teal accent box) - verdict determination
 6. "Evidence Compilation" (regular box)
 7. "Verdict + Evidence" (ending box with glow)
 
@@ -95,8 +95,8 @@ Show the verdict options (TRUE, MOSTLY TRUE, MIXED, MOSTLY FALSE, FALSE) as smal
     },
     {
         "id": "fractal_research_flow",
-        "title": "Fractal Research Flow",
-        "prompt": """Create a conceptual flow diagram showing GenuVerity's Fractal Research system.
+        "title": "Fractal Trigger Flow",
+        "prompt": """Create a conceptual flow diagram showing GenuVerity's Fractal Trigger research system.
 
 Show a main article box at top with multiple "fractal trigger" terms highlighted within it.
 Draw lines from these triggers down to smaller research boxes below.
@@ -106,7 +106,7 @@ Key elements:
 1. Main "Parent Article" box at top (large, prominent)
 2. 3-4 "Fractal Trigger" terms highlighted in yellow/gold
 3. Arrows pointing down to "Child Articles" (medium boxes)
-4. Some child articles have their own triggers pointing to "Deep Dive" boxes (small)
+4. Some child articles have their own triggers pointing to more "Fractal Articles" boxes (small)
 
 Use GREEN (#30a46c) as the accent color for this diagram.
 Show the parent-child relationship clearly with connecting lines that glow.
