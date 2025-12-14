@@ -13521,7 +13521,7 @@
         }
 
         // Queue full investigation from fact check "Go Deeper" button
-        function queueDeepDiveFromFactCheck() {
+        async function queueDeepDiveFromFactCheck() {
             // Get the fact check title
             const titleEl = document.getElementById('report-title');
             if (!titleEl) {
@@ -13533,18 +13533,64 @@
             let topic = titleEl.innerText;
             topic = topic.replace(/^Fact Check:\s*/i, '').trim();
 
+            const btn = document.querySelector('.fact-check-deeper .deeper-btn');
+            const shortTopic = topic.length > 35 ? topic.substring(0, 32) + '...' : topic;
+
+            // Show checking state
+            if (btn) {
+                btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Checking...';
+                btn.disabled = true;
+                lucide.createIcons();
+            }
+
+            // Check cache FIRST - maybe someone already generated this investigation
+            try {
+                const cached = await checkIfCached(topic);
+                if (cached) {
+                    // FOUND! Load it instantly for FREE
+                    const cacheKey = cached.key || topic.toLowerCase().replace(/\s+/g, '_').substring(0, 20);
+                    reports[cacheKey] = cached;
+
+                    window.dynamicChartConfigs = cached.chartConfigs || {};
+                    window.dynamicContextData = cached.contextData || {};
+                    window.dynamicCitationDatabase = cached.citationDatabase || {};
+
+                    showNotification(`Investigation already exists! Loading...`, 'success');
+
+                    if (btn) {
+                        btn.innerHTML = '<i data-lucide="external-link"></i> View Investigation';
+                        btn.style.background = 'linear-gradient(135deg, #3e63dd 0%, #5b7ee5 100%)';
+                        btn.disabled = false;
+                        btn.onclick = () => loadReport(cacheKey);
+                        lucide.createIcons();
+                    }
+
+                    // Load the cached article
+                    loadReport(cacheKey);
+                    setTimeout(() => renderDynamicCharts(cached.chartConfigs || {}), 200);
+                    return;
+                }
+            } catch (e) {
+                console.log('Cache check failed, proceeding with generation:', e);
+            }
+
+            // Not cached - proceed with generation
             // Check if at max capacity
             if (activeGenerations.size >= MAX_CONCURRENT_GENERATIONS) {
                 showNotification(`Queue full (${MAX_CONCURRENT_GENERATIONS} max). Wait for one to complete.`, 'warning');
+                if (btn) {
+                    btn.innerHTML = '<i data-lucide="arrow-right"></i> Generate Full Investigation';
+                    btn.disabled = false;
+                    btn.style.background = '';
+                    lucide.createIcons();
+                }
                 return;
             }
 
             // Show toast notification
-            const shortTopic = topic.length > 35 ? topic.substring(0, 32) + '...' : topic;
             showNotification(`Queued Investigation: "${shortTopic}"`, 'success');
 
             // Update button to show queued state
-            const btn = document.querySelector('.fact-check-deeper .deeper-btn');
             if (btn) {
                 btn.innerHTML = '<i data-lucide="check"></i> Investigation Queued';
                 btn.disabled = true;
