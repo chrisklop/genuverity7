@@ -1463,7 +1463,446 @@
             text-align: right;
         }
 
-        /* Portal Layout with Independent Scroll */
+        /* === THREE-PANEL COMMAND CENTER LAYOUT === */
+        .three-panel-layout {
+            display: flex;
+            height: calc(100vh - 64px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Side Panel Base Styles */
+        .side-panel {
+            width: 240px;
+            min-width: 240px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-color: var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .side-panel.collapsed {
+            width: 44px;
+            min-width: 44px;
+        }
+
+        .side-panel-left {
+            border-right: 1px solid var(--border-color);
+        }
+
+        .side-panel-right {
+            border-left: 1px solid var(--border-color);
+        }
+
+        /* Panel Header */
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .panel-title i {
+            width: 16px;
+            height: 16px;
+        }
+
+        .side-panel-left .panel-title {
+            color: var(--accent-teal);
+        }
+
+        .side-panel-right .panel-title {
+            color: var(--accent-blue);
+        }
+
+        .panel-close-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .panel-close-btn:hover {
+            background: var(--bg-elevated);
+            color: var(--text-main);
+        }
+
+        .side-panel.collapsed .panel-header {
+            display: none;
+        }
+
+        /* Collapsed Strip */
+        .panel-collapsed-strip {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            cursor: pointer;
+            padding: 1rem 0;
+            transition: all 0.2s;
+        }
+
+        .side-panel.collapsed .panel-collapsed-strip {
+            display: flex;
+        }
+
+        .collapsed-strip-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .side-panel-left .collapsed-strip-text {
+            color: var(--accent-teal);
+        }
+
+        .side-panel-right .collapsed-strip-text {
+            color: var(--accent-blue);
+        }
+
+        .collapsed-strip-icon {
+            color: var(--text-muted);
+            transition: transform 0.2s;
+        }
+
+        .side-panel-left .collapsed-strip-icon {
+            transform: rotate(0deg);
+        }
+
+        .side-panel-right .collapsed-strip-icon {
+            transform: rotate(180deg);
+        }
+
+        .panel-collapsed-strip:hover {
+            background: var(--bg-elevated);
+        }
+
+        .panel-collapsed-strip:hover .collapsed-strip-icon {
+            color: var(--text-main);
+        }
+
+        .collapsed-count-badge {
+            background: var(--accent-blue);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-top: 0.5rem;
+        }
+
+        .side-panel-left .collapsed-count-badge {
+            background: var(--accent-teal);
+        }
+
+        /* Panel Content */
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.75rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) transparent;
+        }
+
+        .side-panel.collapsed .panel-content {
+            display: none;
+        }
+
+        .panel-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .panel-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .panel-content::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+
+        /* Panel Cards */
+        .panel-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.875rem;
+            margin-bottom: 0.625rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .panel-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .panel-card.fact-check:hover {
+            border-color: var(--accent-teal);
+        }
+
+        .panel-card.active {
+            border-color: var(--accent-blue);
+            background: rgba(62, 99, 221, 0.08);
+        }
+
+        .panel-card.fact-check.active {
+            border-color: var(--accent-teal);
+            background: rgba(45, 212, 191, 0.08);
+        }
+
+        /* Verdict Badge */
+        .verdict-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .verdict-badge.true {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
+        }
+
+        .verdict-badge.false {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.2);
+        }
+
+        .verdict-badge.mixed {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.2);
+        }
+
+        .verdict-badge.mostly-true {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.2);
+        }
+
+        .verdict-badge.mostly-false {
+            background: rgba(249, 115, 22, 0.15);
+            color: #f97316;
+            box-shadow: 0 0 8px rgba(249, 115, 22, 0.2);
+        }
+
+        .verdict-badge.investigation {
+            background: rgba(62, 99, 221, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .verdict-badge.fractal {
+            background: rgba(48, 164, 108, 0.15);
+            color: var(--accent-green);
+        }
+
+        /* Card Content */
+        .panel-card-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.3;
+            margin-bottom: 0.375rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .panel-card-meta {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .panel-card-date {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        .panel-card-verdict {
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+        }
+
+        .panel-empty {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .panel-empty i {
+            display: block;
+            margin: 0 auto 0.5rem;
+            opacity: 0.3;
+        }
+
+        /* Center Panel */
+        .center-panel {
+            flex: 1;
+            height: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .center-panel-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Landing State */
+        .center-landing {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            flex: 1;
+        }
+
+        .center-landing-logo {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .center-landing-logo span {
+            color: var(--accent-blue);
+        }
+
+        .center-landing-tagline {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .center-search-container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* Article View in Center */
+        .center-article {
+            width: 100%;
+            display: none;
+        }
+
+        .center-article.active {
+            display: block;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .three-panel-layout {
+                flex-direction: column;
+            }
+
+            .side-panel {
+                display: none;
+            }
+
+            .center-panel {
+                height: auto;
+            }
+
+            /* Show mobile tabs instead */
+            .mobile-tabs {
+                display: flex !important;
+            }
+        }
+
+        /* Mobile Tabs (hidden on desktop) */
+        .mobile-tabs {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-color);
+            z-index: 50;
+            padding: 0.5rem;
+        }
+
+        .mobile-tab {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            cursor: pointer;
+        }
+
+        .mobile-tab.active {
+            color: var(--accent-blue);
+        }
+
+        .mobile-tab.fact-checks.active {
+            color: var(--accent-teal);
+        }
+
+        /* Legacy Portal Layout (keeping for fallback) */
         .portal-layout {
             display: flex;
             flex-direction: column;
@@ -4466,23 +4905,52 @@
         </div>
     </nav>
 
-    <!-- VIEW 1: PORTAL -->
+    <!-- VIEW 1: PORTAL (Three-Panel Command Center) -->
     <section id="view-portal" class="view-section active">
-        <!-- Two-column layout: Logo left (static), Essays right (scrollable) -->
-        <div class="portal-layout">
+        <div class="three-panel-layout">
 
-            <!-- LEFT SIDE: Logo and branding (static on desktop) -->
-            <div class="portal-left">
-                <div class="text-center lg:text-left">
-                    <h1 id="portal-logo" class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tighter text-white anim-drop-in anim-delay-1">
-                        Genu<span class="logo-verity">Verity</span>
+            <!-- LEFT PANEL: Fact Checks -->
+            <aside id="panel-fact-checks" class="side-panel side-panel-left">
+                <!-- Header (shown when expanded) -->
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i data-lucide="scale"></i>
+                        <span>Fact Checks</span>
+                    </div>
+                    <button class="panel-close-btn" onclick="togglePanel('fact-checks')" title="Collapse panel">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Content (shown when expanded) -->
+                <div class="panel-content" id="fact-checks-list">
+                    <!-- Dynamically populated with fact check cards -->
+                    <div class="panel-empty" style="text-align: center; padding: 2rem 1rem; color: var(--text-muted); font-size: 0.8rem;">
+                        <i data-lucide="scale" class="w-8 h-8 mx-auto mb-2" style="opacity: 0.3;"></i>
+                        <p>No fact checks yet</p>
+                        <p style="font-size: 0.7rem; margin-top: 0.5rem;">Enter a claim in the search box to fact check it</p>
+                    </div>
+                </div>
+
+                <!-- Collapsed Strip (shown when collapsed) -->
+                <div class="panel-collapsed-strip" onclick="togglePanel('fact-checks')">
+                    <span class="collapsed-strip-text">Fact Checks</span>
+                    <i data-lucide="chevron-right" class="collapsed-strip-icon w-4 h-4"></i>
+                    <span class="collapsed-count-badge" id="fc-count-badge">0</span>
+                </div>
+            </aside>
+
+            <!-- CENTER PANEL: Main Content -->
+            <main class="center-panel">
+                <!-- Landing State -->
+                <div id="center-landing" class="center-landing">
+                    <h1 class="center-landing-logo">
+                        Genu<span>Verity</span>
                     </h1>
-                    <p id="tagline" class="text-lg lg:text-xl text-gray-400 mb-8 max-w-md anim-drop-in anim-delay-2">
-                        <span class="typewriter">Where curiosity meets evidence.</span>
-                    </p>
+                    <p class="center-landing-tagline">Where curiosity meets evidence.</p>
 
-                    <!-- Generate Search Box -->
-                    <div class="anim-drop-in anim-delay-3 max-w-md">
+                    <!-- Search Box -->
+                    <div class="center-search-container">
                         <div id="generate-search-box">
                             <textarea id="generate-input"
                                 placeholder="What do you want to investigate? Paste a claim, meme text, or question..."
@@ -4511,28 +4979,59 @@
                         <p class="text-xs mt-2" style="color: var(--text-muted);">Shift+Enter for new line • Enter to submit</p>
                     </div>
                 </div>
-            </div>
 
-            <!-- RIGHT SIDE: Essays (independently scrollable on desktop) -->
-            <div class="portal-right">
-                <div id="trending-container" class="w-full">
-                    <!-- Section Header -->
-                    <div class="mb-6 lg:mb-8 anim-fade-up anim-delay-3">
-                        <h2 class="text-sm font-mono uppercase tracking-wider mb-2" style="color: var(--text-muted);">Trending Investigations</h2>
-                        <div class="w-16 h-0.5" style="background: var(--accent-blue);"></div>
+                <!-- Article View (hidden initially, shown when article selected) -->
+                <div id="center-article" class="center-article">
+                    <!-- Article content will be injected here -->
+                </div>
+            </main>
+
+            <!-- RIGHT PANEL: Investigations -->
+            <aside id="panel-investigations" class="side-panel side-panel-right">
+                <!-- Header (shown when expanded) -->
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i data-lucide="search"></i>
+                        <span>Investigations</span>
                     </div>
+                    <button class="panel-close-btn" onclick="togglePanel('investigations')" title="Collapse panel">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
 
-                    <!-- All Articles Stacked Vertically -->
-                    <div id="trending-featured" class="flex flex-col gap-4">
-                        <!-- Dynamically populated -->
-                    </div>
-
-                    <!-- Additional Articles -->
-                    <div id="trending-more" class="flex flex-col gap-3 mt-4">
-                        <!-- Dynamically populated when more than 3 articles -->
+                <!-- Content (shown when expanded) -->
+                <div class="panel-content" id="investigations-list">
+                    <!-- Dynamically populated with investigation cards -->
+                    <div class="panel-empty" style="text-align: center; padding: 2rem 1rem; color: var(--text-muted); font-size: 0.8rem;">
+                        <i data-lucide="search" class="w-8 h-8 mx-auto mb-2" style="opacity: 0.3;"></i>
+                        <p>No investigations yet</p>
+                        <p style="font-size: 0.7rem; margin-top: 0.5rem;">Enter a topic to start investigating</p>
                     </div>
                 </div>
-            </div>
+
+                <!-- Collapsed Strip (shown when collapsed) -->
+                <div class="panel-collapsed-strip" onclick="togglePanel('investigations')">
+                    <span class="collapsed-strip-text">Investigations</span>
+                    <i data-lucide="chevron-left" class="collapsed-strip-icon w-4 h-4"></i>
+                    <span class="collapsed-count-badge" id="inv-count-badge">0</span>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Mobile Tabs (hidden on desktop) -->
+        <div class="mobile-tabs">
+            <button class="mobile-tab fact-checks" onclick="showMobilePanel('fact-checks')">
+                <i data-lucide="scale" class="w-5 h-5"></i>
+                <span>Fact Checks</span>
+            </button>
+            <button class="mobile-tab active" onclick="showMobilePanel('home')">
+                <i data-lucide="home" class="w-5 h-5"></i>
+                <span>Home</span>
+            </button>
+            <button class="mobile-tab" onclick="showMobilePanel('investigations')">
+                <i data-lucide="search" class="w-5 h-5"></i>
+                <span>Investigations</span>
+            </button>
         </div>
     </section>
 
@@ -6802,6 +7301,12 @@
         // Initialize hover pills when DOM ready and after article loads
         document.addEventListener('DOMContentLoaded', initHoverQueuePills);
 
+        // Initialize three-panel layout
+        document.addEventListener('DOMContentLoaded', function() {
+            restorePanelStates();
+            populateSidePanels();
+        });
+
         // --- 5. INTELLIGENCE CARD SYSTEM ---
 
         // Granular Source Database
@@ -7297,6 +7802,217 @@
             event.currentTarget.classList.add('active');
             // Show corresponding content
             document.getElementById('browse-' + tabId).classList.add('active');
+        }
+
+        // === THREE-PANEL LAYOUT FUNCTIONS ===
+
+        // Toggle panel collapse/expand
+        function togglePanel(panelId) {
+            const panelMap = {
+                'fact-checks': 'panel-fact-checks',
+                'investigations': 'panel-investigations'
+            };
+            const panel = document.getElementById(panelMap[panelId]);
+            if (!panel) return;
+
+            panel.classList.toggle('collapsed');
+
+            // Save state to localStorage
+            const collapsedPanels = JSON.parse(localStorage.getItem('genuverity-collapsed-panels') || '{}');
+            collapsedPanels[panelId] = panel.classList.contains('collapsed');
+            localStorage.setItem('genuverity-collapsed-panels', JSON.stringify(collapsedPanels));
+
+            // Re-init icons in case they changed
+            if (window.lucide) lucide.createIcons();
+        }
+
+        // Restore panel states from localStorage
+        function restorePanelStates() {
+            const collapsedPanels = JSON.parse(localStorage.getItem('genuverity-collapsed-panels') || '{}');
+            if (collapsedPanels['fact-checks']) {
+                document.getElementById('panel-fact-checks')?.classList.add('collapsed');
+            }
+            if (collapsedPanels['investigations']) {
+                document.getElementById('panel-investigations')?.classList.add('collapsed');
+            }
+        }
+
+        // Mobile tab switching
+        function showMobilePanel(panelId) {
+            // Update mobile tabs
+            document.querySelectorAll('.mobile-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector(`.mobile-tab.${panelId === 'home' ? 'active' : panelId}`)?.classList.add('active');
+            event.currentTarget.classList.add('active');
+
+            // Show/hide panels based on selection
+            const fcPanel = document.getElementById('panel-fact-checks');
+            const invPanel = document.getElementById('panel-investigations');
+            const centerPanel = document.querySelector('.center-panel');
+
+            // Reset all
+            fcPanel?.classList.remove('mobile-visible');
+            invPanel?.classList.remove('mobile-visible');
+            centerPanel?.classList.remove('mobile-hidden');
+
+            if (panelId === 'fact-checks') {
+                fcPanel?.classList.add('mobile-visible');
+                centerPanel?.classList.add('mobile-hidden');
+            } else if (panelId === 'investigations') {
+                invPanel?.classList.add('mobile-visible');
+                centerPanel?.classList.add('mobile-hidden');
+            }
+            // 'home' shows center panel (default)
+        }
+
+        // Render panel card (compact version for side panels)
+        function renderPanelCard(article) {
+            const verdictColors = {
+                'TRUE': '#10b981',
+                'MOSTLY TRUE': '#34d399',
+                'MIXED': '#f59e0b',
+                'MOSTLY FALSE': '#f97316',
+                'FALSE': '#ef4444'
+            };
+
+            const isFactCheck = article.articleType === 'fact_check';
+            const verdictColor = isFactCheck && article.verdict ? verdictColors[article.verdict] || '#6b7280' : null;
+
+            // Format date
+            let dateStr = '';
+            if (article.cachedAt) {
+                const date = new Date(article.cachedAt);
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                dateStr = `${months[date.getMonth()]} ${date.getDate()}`;
+            }
+
+            return `
+                <div class="panel-card" onclick="loadReportInCenter('${article.key}')">
+                    ${isFactCheck && article.verdict ? `
+                        <div class="panel-card-verdict" style="background: ${verdictColor}20; border-left: 3px solid ${verdictColor};">
+                            <span class="verdict-badge" style="color: ${verdictColor};">${article.verdict}</span>
+                        </div>
+                    ` : ''}
+                    <div class="panel-card-title">${article.title}</div>
+                    ${dateStr ? `<div class="panel-card-date">${dateStr}</div>` : ''}
+                </div>
+            `;
+        }
+
+        // Populate side panels with articles
+        function populateSidePanels() {
+            const fcList = document.getElementById('fact-checks-list');
+            const invList = document.getElementById('investigations-list');
+            const fcBadge = document.getElementById('fc-count-badge');
+            const invBadge = document.getElementById('inv-count-badge');
+
+            if (!fcList || !invList) return;
+
+            // Get articles from cache
+            fetch('/api/cache/list')
+                .then(res => res.json())
+                .then(data => {
+                    const factChecks = [];
+                    const investigations = [];
+
+                    // Also add local reports
+                    for (const [key, report] of Object.entries(reports)) {
+                        if (report.isChildEssay) continue;
+                        if (!report.cardTitle) continue;
+
+                        const articleType = report.articleType || 'investigation';
+                        const article = {
+                            key,
+                            title: report.cardTitle || report.title,
+                            articleType,
+                            verdict: report.verdict || '',
+                            cachedAt: report._cached_at || ''
+                        };
+
+                        if (articleType === 'fact_check') {
+                            factChecks.push(article);
+                        } else {
+                            investigations.push(article);
+                        }
+                    }
+
+                    // Add cached articles
+                    if (data.articles) {
+                        data.articles.forEach(article => {
+                            // Skip duplicates
+                            if (reports[article.key]) return;
+
+                            const articleType = article.article_type || 'investigation';
+                            const item = {
+                                key: article.key,
+                                title: article.title || article.topic || 'Untitled',
+                                articleType,
+                                verdict: article.verdict || '',
+                                cachedAt: article.cached_at || ''
+                            };
+
+                            if (articleType === 'fact_check') {
+                                factChecks.push(item);
+                            } else {
+                                investigations.push(item);
+                            }
+                        });
+                    }
+
+                    // Sort by recency
+                    const sortByDate = (a, b) => {
+                        const dateA = a.cachedAt ? new Date(a.cachedAt) : new Date(0);
+                        const dateB = b.cachedAt ? new Date(b.cachedAt) : new Date(0);
+                        return dateB - dateA;
+                    };
+                    factChecks.sort(sortByDate);
+                    investigations.sort(sortByDate);
+
+                    // Update badges
+                    if (fcBadge) fcBadge.textContent = factChecks.length;
+                    if (invBadge) invBadge.textContent = investigations.length;
+
+                    // Render fact checks
+                    if (factChecks.length > 0) {
+                        fcList.innerHTML = factChecks.map(renderPanelCard).join('');
+                    } else {
+                        fcList.innerHTML = `
+                            <div class="panel-empty">
+                                <i data-lucide="scale" class="w-8 h-8 mx-auto mb-2" style="opacity: 0.3;"></i>
+                                <p>No fact checks yet</p>
+                                <p style="font-size: 0.7rem; margin-top: 0.5rem;">Enter a claim to fact check it</p>
+                            </div>
+                        `;
+                    }
+
+                    // Render investigations
+                    if (investigations.length > 0) {
+                        invList.innerHTML = investigations.map(renderPanelCard).join('');
+                    } else {
+                        invList.innerHTML = `
+                            <div class="panel-empty">
+                                <i data-lucide="search" class="w-8 h-8 mx-auto mb-2" style="opacity: 0.3;"></i>
+                                <p>No investigations yet</p>
+                                <p style="font-size: 0.7rem; margin-top: 0.5rem;">Enter a topic to investigate</p>
+                            </div>
+                        `;
+                    }
+
+                    // Re-init icons
+                    if (window.lucide) lucide.createIcons();
+                })
+                .catch(err => {
+                    console.error('[Panels] Error loading articles:', err);
+                });
+        }
+
+        // Load article in center panel (instead of full view switch)
+        function loadReportInCenter(key) {
+            const centerLanding = document.getElementById('center-landing');
+            const centerArticle = document.getElementById('center-article');
+
+            // For now, use the existing loadReport which switches to view-report
+            // In the future, we could render inline in center panel
+            loadReport(key);
         }
 
         function initReceipts() {
