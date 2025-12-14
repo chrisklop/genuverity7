@@ -562,30 +562,60 @@ def blob_put(path: str, content: str) -> Optional[str]:
         print(f"Blob PUT error: {e}")
         return None
 
+def blob_get_by_url(url: str) -> Optional[dict]:
+    """Fetch content directly from a Vercel Blob URL. Fast O(1) retrieval."""
+    if not url:
+        return None
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+        print(f"blob_get_by_url failed ({response.status_code}): {url[:60]}...")
+        return None
+    except Exception as e:
+        print(f"blob_get_by_url error: {e}")
+        return None
+
+
 def blob_get(path: str) -> Optional[dict]:
-    """Fetch content from Vercel Blob Storage. Returns parsed JSON or None."""
+    """Fetch content from Vercel Blob Storage. Returns parsed JSON or None.
+
+    Uses exact pathname match, not prefix match, to ensure correct blob is retrieved.
+    Note: This function uses prefix search which is slow with many blobs.
+    Prefer blob_get_by_url() with stored URLs for fast retrieval.
+    """
     if not BLOB_READ_WRITE_TOKEN:
         return None
 
     try:
-        # List blobs to find the URL for this path
+        # List blobs with prefix and find exact pathname match
         response = requests.get(
             f"{BLOB_API_BASE}",
             headers={
                 "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
                 "x-api-version": "7"
             },
-            params={"prefix": path, "limit": 1}
+            params={"prefix": path, "limit": 100}  # Get more results for exact match search
         )
         if response.status_code == 200:
             result = response.json()
             blobs = result.get("blobs", [])
+            print(f"blob_get({path}): Found {len(blobs)} blobs with prefix")
+            # Find exact pathname match
+            for blob in blobs:
+                if blob.get("pathname") == path:
+                    blob_url = blob.get("url")
+                    print(f"blob_get: Exact match found, fetching from {blob_url[:50]}...")
+                    if blob_url:
+                        # Fetch the actual content
+                        content_response = requests.get(blob_url)
+                        if content_response.status_code == 200:
+                            return content_response.json()
+                    break
+            # Debug: show what paths we found if no exact match
             if blobs:
-                blob_url = blobs[0].get("url")
-                # Fetch the actual content
-                content_response = requests.get(blob_url)
-                if content_response.status_code == 200:
-                    return content_response.json()
+                found_paths = [b.get("pathname") for b in blobs[:5]]
+                print(f"blob_get: No exact match for '{path}', found: {found_paths}")
         return None
     except Exception as e:
         print(f"Blob GET error: {e}")
@@ -613,7 +643,7 @@ def blob_list(prefix: str = "articles/") -> list:
         print(f"Blob LIST error: {e}")
         return []
 
-def blob_delete(url: str) -> bool:
+def blob_delete_by_url(url: str) -> bool:
     """Delete a blob by its URL. Returns True on success."""
     if not BLOB_READ_WRITE_TOKEN:
         return False
@@ -629,6 +659,24 @@ def blob_delete(url: str) -> bool:
         return response.status_code in (200, 204)
     except Exception as e:
         print(f"Blob DELETE error: {e}")
+        return False
+
+def blob_delete(path: str) -> bool:
+    """Delete a blob by its pathname. Searches for matching blob and deletes it."""
+    if not BLOB_READ_WRITE_TOKEN:
+        return False
+
+    try:
+        # Find blob with matching pathname
+        blobs = blob_list(path)
+        for blob in blobs:
+            if blob.get("pathname") == path:
+                blob_url = blob.get("url")
+                if blob_url:
+                    return blob_delete_by_url(blob_url)
+        return False
+    except Exception as e:
+        print(f"Blob DELETE by path error: {e}")
         return False
 
 app = FastAPI()
@@ -808,39 +856,64 @@ def get_topic_key(topic: str) -> str:
     return hashlib.md5(normalized.encode()).hexdigest()[:16]
 
 def get_cached_article(topic: str) -> Optional[dict]:
-    """Check if an article exists in the cache by topic hash OR by internal article key.
-    Tries Blob storage first, then falls back to filesystem.
+    """Check if an article exists in the cache by article key, topic, or topic hash.
+    Uses fast index lookup with blob_url for O(1) retrieval.
     """
+    # Load index first for fast key lookup
+    index = get_article_index()
+    print(f"get_cached_article: Looking for '{topic}', index has {len(index)} entries")
+
+    # Helper to try blob_url first (fast), then blob_path (slow fallback)
+    def try_fetch_from_meta(meta: dict, context: str) -> Optional[dict]:
+        # Try blob_url first (direct fetch, O(1))
+        blob_url = meta.get("blob_url", "")
+        if blob_url:
+            print(f"Trying blob_url from {context}: {blob_url[:60]}...")
+            data = blob_get_by_url(blob_url)
+            if data:
+                print(f"Found article by {context} blob_url")
+                return data
+        # Fall back to blob_path (prefix search, slow)
+        blob_path = meta.get("blob_path", "")
+        if blob_path:
+            print(f"Trying blob_path from {context}: {blob_path}")
+            data = blob_get(blob_path)
+            if data:
+                print(f"Found article by {context} blob_path")
+                return data
+        return None
+
+    # 1. FAST: Direct key lookup in index (most common case for /api/article/{slug})
+    if topic in index:
+        data = try_fetch_from_meta(index[topic], "direct index key")
+        if data:
+            return data
+
+    # 2. FAST: Search index by key field (handles dict index where keys are hashes)
+    for idx_key, meta in index.items():
+        if meta.get("key") == topic:
+            data = try_fetch_from_meta(meta, "index key field match")
+            if data:
+                return data
+            break  # Found key match, stop searching
+
+    # 3. Try by topic hash (for when topic string is passed)
     key = get_topic_key(topic)
     blob_path = f"articles/{key}.json"
-
-    # 1. Try Blob storage by topic hash
     data = blob_get(blob_path)
     if data:
-        print(f"Found article in Blob storage: {blob_path}")
+        print(f"Found article by topic hash: {blob_path}")
         return data
 
-    # 2. Search Blob storage by internal key (scan all articles)
-    blobs = blob_list("articles/")
-    for blob in blobs:
-        try:
-            blob_url = blob.get("url")
-            if blob_url:
-                response = requests.get(blob_url)
-                if response.status_code == 200:
-                    article = response.json()
-                    # Check if internal key matches
-                    if article.get("key") == topic:
-                        print(f"Found article by internal key in Blob: {topic}")
-                        return article
-                    # Also check topic field
-                    if article.get("_topic", "").lower() == topic.lower():
-                        print(f"Found article by _topic in Blob: {topic}")
-                        return article
-        except:
-            continue
+    # 4. FAST: Search index by topic field
+    for idx_key, meta in index.items():
+        if meta.get("topic", "").lower() == topic.lower():
+            data = try_fetch_from_meta(meta, "index topic match")
+            if data:
+                return data
+            break  # Found topic match, stop searching
 
-    # 3. Fallback: Try filesystem by topic hash (local dev)
+    # 5. Fallback: Try filesystem by topic hash (local dev only)
     cache_file = f"{CACHE_DIR}/{key}.json"
     if os.path.exists(cache_file):
         try:
@@ -849,7 +922,7 @@ def get_cached_article(topic: str) -> Optional[dict]:
         except:
             pass
 
-    # 4. Fallback: Search filesystem by internal key
+    # 6. Fallback: Search filesystem by internal key (local dev only)
     if os.path.exists(CACHE_DIR):
         for filename in os.listdir(CACHE_DIR):
             if filename.endswith(".json"):
@@ -880,8 +953,8 @@ def cache_article(topic: str, article_data: dict, parent_key: str = "", parent_t
 
     if blob_url:
         print(f"Article cached to Blob: {blob_url}")
-        # Update the article index for fast listing
-        update_article_index(key, article_data)
+        # Update the article index for fast listing, passing blob_url for O(1) retrieval
+        update_article_index(key, article_data, blob_url=blob_url)
     else:
         # Fallback to filesystem
         cache_file = f"{CACHE_DIR}/{key}.json"
@@ -892,8 +965,10 @@ def cache_article(topic: str, article_data: dict, parent_key: str = "", parent_t
 def get_article_index() -> dict:
     """Get the article index from Blob storage. Returns dict of key -> metadata.
 
-    Handles multiple index files by finding the one with the most entries.
-    Ignores malformed indices (e.g., those with 'articles' wrapper key).
+    Handles multiple formats:
+    - List format: {"articles": [{key: ..., ...}, ...]} - converts to dict by key
+    - Dict format: {"articles": {key: {...}}} - unwraps directly
+    - Flat dict format: {key: metadata, ...}
     """
     try:
         blobs = blob_list("articles/")
@@ -907,17 +982,30 @@ def get_article_index() -> dict:
                     response = requests.get(blob.get("url"))
                     if response.status_code == 200:
                         data = response.json()
-                        # Skip malformed indices (those with 'articles' wrapper)
-                        if "articles" in data and "updated_at" in data:
-                            continue
-                        # Count valid article entries
-                        count = len([k for k in data.keys() if not k.startswith("_")])
+
+                        # Handle wrapped format: {"articles": [...]} or {"articles": {...}}
+                        if "articles" in data:
+                            articles_data = data["articles"]
+                            if isinstance(articles_data, list):
+                                # Convert list to dict keyed by article key
+                                articles = {item["key"]: item for item in articles_data if "key" in item}
+                            elif isinstance(articles_data, dict):
+                                articles = articles_data
+                            else:
+                                continue
+                        else:
+                            # Flat format: {key: metadata, ...}
+                            articles = data
+
+                        # Count valid article entries (exclude meta keys starting with _)
+                        count = len([k for k in articles.keys() if not k.startswith("_")])
                         if count > best_count:
                             best_count = count
-                            best_index = data
+                            best_index = articles
                 except:
                     continue
 
+        print(f"Loaded article index with {len(best_index)} entries")
         return best_index
     except Exception as e:
         print(f"Error loading article index: {e}")
@@ -1015,8 +1103,14 @@ def find_similar_articles(query: str, limit: int = 5) -> list:
     matches.sort(key=lambda x: -x["similarity"])
     return matches[:limit]
 
-def update_article_index(article_key: str, metadata: dict):
-    """Add or update an article in the index."""
+def update_article_index(article_key: str, metadata: dict, blob_url: str = ""):
+    """Add or update an article in the index.
+
+    Args:
+        article_key: The hash key for the article
+        metadata: The full article data
+        blob_url: The direct Vercel Blob URL for O(1) retrieval
+    """
     try:
         # Load existing index
         index = get_article_index()
@@ -1041,6 +1135,10 @@ def update_article_index(article_key: str, metadata: dict):
         else:
             top_sources = []
 
+        # Calculate blob path for fallback retrieval
+        topic = metadata.get("_topic", "")
+        blob_path = f"articles/{get_topic_key(topic)}.json" if topic else ""
+
         # Add/update the article metadata using internal key
         index[internal_key] = {
             "key": internal_key,
@@ -1049,6 +1147,8 @@ def update_article_index(article_key: str, metadata: dict):
             "cardTag": metadata.get("cardTag", ""),
             "cardDescription": metadata.get("cardDescription", ""),
             "topic": metadata.get("_topic", ""),
+            "blob_path": blob_path,  # Store blob path for fallback
+            "blob_url": blob_url,    # Store direct URL for O(1) retrieval
             "cached_at": metadata.get("_cached_at", datetime.now().isoformat()),
             "parent_key": metadata.get("_parent_key", ""),
             "parent_title": metadata.get("_parent_title", ""),
@@ -1100,6 +1200,21 @@ def get_all_cached_articles() -> list:
                     article_key = data.get("key", pathname.split("/")[-1].replace(".json", ""))
                     if article_key not in seen_keys:
                         seen_keys.add(article_key)
+                        # Determine article type
+                        article_type = "investigation"
+                        if data.get("articleType") == "fact_check" or data.get("verdict"):
+                            article_type = "fact_check"
+                        elif data.get("_parent_key") or data.get("isChildEssay"):
+                            article_type = "deep_dive"
+
+                        # Extract top 4 sources (sorted by score) for card display
+                        sources = data.get("sources", [])
+                        if sources and isinstance(sources, list):
+                            sorted_sources = sorted(sources, key=lambda s: s.get("score", 0), reverse=True)[:4]
+                            top_sources = [{"name": s.get("name", "Source"), "score": s.get("score", 80)} for s in sorted_sources]
+                        else:
+                            top_sources = []
+
                         metadata = {
                             "key": article_key,
                             "title": data.get("title", "Unknown"),
@@ -1107,10 +1222,15 @@ def get_all_cached_articles() -> list:
                             "cardTag": data.get("cardTag", ""),
                             "cardDescription": data.get("cardDescription", ""),
                             "topic": data.get("_topic", ""),
+                            "blob_path": pathname,  # Store actual blob path for fallback
+                            "blob_url": blob_url,   # Store direct URL for fast O(1) retrieval
                             "cached_at": data.get("_cached_at", ""),
                             "parent_key": data.get("_parent_key", ""),
                             "parent_title": data.get("_parent_title", ""),
-                            "is_child": bool(data.get("isChildEssay", False))
+                            "is_child": bool(data.get("isChildEssay", False)),
+                            "article_type": article_type,
+                            "verdict": data.get("verdict", ""),
+                            "top_sources": top_sources
                         }
                         articles.append(metadata)
                         new_index[article_key] = metadata
@@ -1127,6 +1247,22 @@ def get_all_cached_articles() -> list:
                         article_key = data.get("key", filename[:-5])
                         if article_key not in seen_keys:
                             seen_keys.add(article_key)
+
+                            # Determine article type
+                            article_type = "investigation"
+                            if data.get("articleType") == "fact_check" or data.get("verdict"):
+                                article_type = "fact_check"
+                            elif data.get("_parent_key") or data.get("isChildEssay"):
+                                article_type = "deep_dive"
+
+                            # Extract top 4 sources (sorted by score) for card display
+                            sources = data.get("sources", [])
+                            if sources and isinstance(sources, list):
+                                sorted_sources = sorted(sources, key=lambda s: s.get("score", 0), reverse=True)[:4]
+                                top_sources = [{"name": s.get("name", "Source"), "score": s.get("score", 80)} for s in sorted_sources]
+                            else:
+                                top_sources = []
+
                             metadata = {
                                 "key": article_key,
                                 "title": data.get("title", "Unknown"),
@@ -1134,10 +1270,15 @@ def get_all_cached_articles() -> list:
                                 "cardTag": data.get("cardTag", ""),
                                 "cardDescription": data.get("cardDescription", ""),
                                 "topic": data.get("_topic", ""),
+                                "blob_path": f"articles/{get_topic_key(data.get('_topic', ''))}.json",  # Fallback path
+                                "blob_url": "",  # No blob URL for local files
                                 "cached_at": data.get("_cached_at", ""),
                                 "parent_key": data.get("_parent_key", ""),
                                 "parent_title": data.get("_parent_title", ""),
-                                "is_child": bool(data.get("isChildEssay", False))
+                                "is_child": bool(data.get("isChildEssay", False)),
+                                "article_type": article_type,
+                                "verdict": data.get("verdict", ""),
+                                "top_sources": top_sources
                             }
                             articles.append(metadata)
                             new_index[article_key] = metadata
@@ -2120,7 +2261,7 @@ async def rebuild_index():
     # First pass: delete all old index files
     for blob in blobs:
         if blob.get("pathname") == ARTICLE_INDEX_PATH:
-            if blob_delete(blob.get("url")):
+            if blob_delete_by_url(blob.get("url")):
                 deleted_indices += 1
                 print(f"Deleted old index: {blob.get('url')}")
 
@@ -2163,6 +2304,8 @@ async def rebuild_index():
                             "cardTag": data.get("cardTag", ""),
                             "cardDescription": data.get("cardDescription", ""),
                             "topic": data.get("_topic", ""),
+                            "blob_path": pathname,  # Store actual blob path for fallback
+                            "blob_url": blob_url,   # Store direct URL for fast O(1) retrieval
                             "cached_at": data.get("_cached_at", ""),
                             "parent_key": data.get("_parent_key", ""),
                             "parent_title": data.get("_parent_title", ""),
@@ -2210,6 +2353,16 @@ async def get_article_by_slug(slug: str):
 
     # Not found
     raise HTTPException(status_code=404, detail=f"Article not found: {slug}")
+
+
+@app.get("/api/debug/blobs")
+async def debug_blobs():
+    """Debug: List raw blobs in storage."""
+    blobs = blob_list("articles/")
+    return {
+        "count": len(blobs),
+        "blobs": [{"pathname": b.get("pathname"), "size": b.get("size")} for b in blobs[:20]]
+    }
 
 
 @app.get("/api/usage")
