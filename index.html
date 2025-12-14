@@ -2410,7 +2410,7 @@
             position: relative;
         }
 
-        /* Dashboard Side Panels */
+        /* Dashboard Side Panels - Horizontal slide like sources drawer */
         .dashboard-panel {
             width: 260px;
             min-width: 260px;
@@ -2420,22 +2420,30 @@
             border-color: var(--border-color);
             display: flex;
             flex-direction: column;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
             position: relative;
             z-index: 10;
         }
 
         .dashboard-panel-left {
             border-right: 1px solid var(--border-color);
+            transform-origin: left center;
         }
 
         .dashboard-panel-right {
             border-left: 1px solid var(--border-color);
+            transform-origin: right center;
         }
 
+        /* Collapsed state - slide off-screen */
         .dashboard-panel.collapsed {
-            width: 48px;
-            min-width: 48px;
+            transform: translateX(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .dashboard-panel-right.collapsed {
+            transform: translateX(100%);
         }
 
         .dashboard-panel.collapsed .dashboard-panel-header,
@@ -2924,12 +2932,64 @@
             max-width: 760px;
         }
 
-        /* Focus Mode */
-        .research-dashboard.focus-mode .dashboard-panel {
-            width: 0;
-            min-width: 0;
+        /* Focus Mode - slide panels off-screen */
+        .research-dashboard.focus-mode .dashboard-panel-left {
+            transform: translateX(-100%);
             opacity: 0;
-            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .research-dashboard.focus-mode .dashboard-panel-right {
+            transform: translateX(100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Disable sources button animation in focus mode */
+        .research-dashboard.focus-mode ~ nav .nav-sources-btn:not(.expanded)::before,
+        .research-dashboard.focus-mode ~ nav .nav-sources-btn:not(.expanded)::after,
+        body.focus-mode-active .nav-sources-btn:not(.expanded)::before,
+        body.focus-mode-active .nav-sources-btn:not(.expanded)::after {
+            animation: none !important;
+            opacity: 0 !important;
+        }
+
+        /* Focus mode toggle button in navbar */
+        .nav-focus-toggle {
+            display: none; /* Only visible on essay view */
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-focus-toggle:hover {
+            background: var(--bg-elevated);
+            color: var(--text-main);
+            border-color: var(--accent-blue);
+        }
+
+        /* Show on essay view */
+        .nav-focus-toggle.visible {
+            display: flex;
+        }
+
+        /* Active (dimmed) state when focus mode is on */
+        .nav-focus-toggle.active {
+            opacity: 0.3;
+            color: var(--accent-blue);
+            border-color: var(--accent-blue);
+            background: rgba(62, 99, 221, 0.1);
+        }
+
+        .nav-focus-toggle.active:hover {
+            opacity: 1;
         }
 
         .focus-footer {
@@ -6769,6 +6829,10 @@
                     <a href="/methods.html" class="nav-link">Methods</a>
                 </div>
                 <div class="flex items-center gap-2">
+                    <!-- Focus Mode Toggle (only visible on essay view) -->
+                    <button id="nav-focus-toggle" class="nav-focus-toggle" onclick="toggleFocusMode()" title="Toggle Focus Mode (F)">
+                        <i data-lucide="focus" class="w-4 h-4"></i>
+                    </button>
                     <!-- Generation Progress Indicator -->
                     <div id="nav-gen-indicator" class="nav-gen-indicator" onclick="handleNavGenClick()" title="Research in progress">
                         <i data-lucide="loader-2" class="spinner"></i>
@@ -7487,12 +7551,25 @@
                 deepDiveTooltipEl.classList.remove('visible');
             }
 
-            // Hide navbar sources button and article title when leaving report view
+            // Hide navbar sources button, focus toggle, and article title when leaving report view
             if (id !== 'view-report') {
                 updateNavSourcesButton(false);
+                updateFocusToggleVisibility(false);
                 // Hide navbar article title
                 const navArticleTitle = document.getElementById('nav-article-title');
                 if (navArticleTitle) navArticleTitle.classList.add('hidden');
+                // Exit focus mode when leaving essay view
+                if (dashboardState.focusModeActive) {
+                    dashboardState.focusModeActive = false;
+                    document.body.classList.remove('focus-mode-active');
+                    const dashboard = document.getElementById('research-dashboard');
+                    if (dashboard) dashboard.classList.remove('focus-mode');
+                    const focusToggle = document.getElementById('nav-focus-toggle');
+                    if (focusToggle) focusToggle.classList.remove('active');
+                }
+            } else {
+                // Show focus toggle on essay view
+                updateFocusToggleVisibility(true);
             }
 
             // Refresh trending section when returning to portal (to show newly generated articles)
@@ -7853,9 +7930,26 @@
             dashboardState.focusModeActive = !dashboardState.focusModeActive;
             dashboard.classList.toggle('focus-mode', dashboardState.focusModeActive);
 
+            // Update body class for CSS selectors that can't reach dashboard
+            document.body.classList.toggle('focus-mode-active', dashboardState.focusModeActive);
+
+            // Update navbar focus toggle button state
+            const focusToggle = document.getElementById('nav-focus-toggle');
+            if (focusToggle) {
+                focusToggle.classList.toggle('active', dashboardState.focusModeActive);
+            }
+
             // Show toast notification
             if (dashboardState.focusModeActive) {
                 showToast('Focus mode enabled', 'Press Esc or F to exit', 'info');
+            }
+        }
+
+        // Update focus toggle visibility based on current view
+        function updateFocusToggleVisibility(isEssayView) {
+            const focusToggle = document.getElementById('nav-focus-toggle');
+            if (focusToggle) {
+                focusToggle.classList.toggle('visible', isEssayView);
             }
         }
 

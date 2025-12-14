@@ -1507,16 +1507,16 @@ HTML structure for content field (WIKI-STYLE WITH TABS):
 
 <p class="prose-text verdict-summary"><strong>Summary:</strong> [verdictSummary with fractal triggers]</p>
 
-<!-- THE STORY - REQUIRED NARRATIVE INTRO (3-4 paragraphs of investigative journalism) -->
+<!-- THE STORY - REQUIRED NARRATIVE INTRO (3-4 paragraphs of investigative journalism) - MUST HAVE 15-20 FRACTAL TRIGGERS TOTAL -->
 <section class="fact-check-story">
   <h2 class="prose-h2">The Story Behind This Claim</h2>
-  <p class="prose-text">[PARAGRAPH 1 - THE HOOK: Start with the most compelling detail. When did this claim explode? What made it go viral? Set the scene with specific dates, platforms, and numbers. "On [date], a [post/video/statement] began circulating claiming..." Include fractal triggers for people, platforms, dates.]</p>
+  <p class="prose-text">[PARAGRAPH 1 - THE HOOK (4-5 fractal triggers REQUIRED): Start with the most compelling detail. EXAMPLE FORMAT: "On <strong class="fractal-trigger" onclick="expandContext(this,'date_dec_2024')">December 10, 2024</strong>, a post on <strong class="fractal-trigger" onclick="expandContext(this,'platform_x')">X (formerly Twitter)</strong> began circulating, claiming that <strong class="fractal-trigger" onclick="expandContext(this,'person_name')">Person Name</strong>..." Every date, platform, person, number MUST be wrapped.]</p>
 
-  <p class="prose-text">[PARAGRAPH 2 - THE ORIGIN: Trace the claim to its source. Who first made this claim? In what context? Was it a deliberate statement, taken out of context, or a misinterpretation? Include the actual quote or evidence if available. "The claim appears to originate from..." Include fractal triggers.]</p>
+  <p class="prose-text">[PARAGRAPH 2 - THE ORIGIN (4-5 fractal triggers REQUIRED): Trace the claim to its source. EXAMPLE FORMAT: "The claim appears to originate from <strong class="fractal-trigger" onclick="expandContext(this,'source_origin')">Original Source</strong> who stated on <strong class="fractal-trigger" onclick="expandContext(this,'date_origin')">Date</strong>..." Wrap the originator, date, platform, and any quoted statistics.]</p>
 
-  <p class="prose-text">[PARAGRAPH 3 - THE SPREAD: How did it spread? Which accounts, media outlets, or figures amplified it? What variations emerged? "Within [timeframe], the claim was amplified by..." Include fractal triggers for every person and organization mentioned.]</p>
+  <p class="prose-text">[PARAGRAPH 3 - THE SPREAD (4-5 fractal triggers REQUIRED): How did it spread? EXAMPLE FORMAT: "Within <strong class="fractal-trigger" onclick="expandContext(this,'timeframe_spread')">48 hours</strong>, the claim was amplified by <strong class="fractal-trigger" onclick="expandContext(this,'amplifier_1')">Account/Outlet 1</strong> and <strong class="fractal-trigger" onclick="expandContext(this,'amplifier_2')">Account/Outlet 2</strong>..." EVERY person and organization mentioned MUST be a fractal trigger.]</p>
 
-  <p class="prose-text">[PARAGRAPH 4 - THE STAKES: Why does this matter? What are the real-world consequences if people believe or disbelieve this? What decisions might be affected? "The implications of this claim are significant because..." Include fractal triggers.]</p>
+  <p class="prose-text">[PARAGRAPH 4 - THE STAKES (4-5 fractal triggers REQUIRED): Why does this matter? EXAMPLE FORMAT: "The implications are significant for <strong class="fractal-trigger" onclick="expandContext(this,'affected_group')">Affected Group</strong>, as decisions about <strong class="fractal-trigger" onclick="expandContext(this,'policy_issue')">Policy Issue</strong> could be influenced..." Wrap affected groups, policies, consequences.]</p>
 </section>
 
 <!-- TABBED INTERFACE -->
@@ -1568,32 +1568,32 @@ HTML structure for content field (WIKI-STYLE WITH TABS):
   <p class="prose-text">Analysis of source reliability, methodology used, and confidence in the evidence...</p>
 </div>
 
-<!-- TAB: CONTEXT -->
+<!-- TAB: CONTEXT - MUST HAVE 10-15 FRACTAL TRIGGERS -->
 <div id="tab-context" class="fact-check-tab-content">
   <h3 class="prose-h3">Historical Context</h3>
-  <p class="prose-text">[REQUIRED: 2-3 paragraphs. What's the backstory? Has this claim or similar claims appeared before? What was happening in the news cycle when this emerged? Connect to broader events. "This claim emerged during a period when..." Include specific dates, events, and fractal triggers.]</p>
+  <p class="prose-text">[REQUIRED (4-5 fractal triggers): 2-3 paragraphs with HEAVY fractal trigger usage. EXAMPLE: "This claim emerged during <strong class="fractal-trigger" onclick="expandContext(this,'period_2024_election')">the 2024 election cycle</strong>, when <strong class="fractal-trigger" onclick="expandContext(this,'org_mentioned')">Organization</strong> was under scrutiny..." Wrap EVERY date, organization, event, political term.]</p>
 
   <h3 class="prose-h3">The Bigger Picture</h3>
-  <p class="prose-text">[REQUIRED: Explain the pattern. Is this part of a coordinated campaign? A recurring narrative? Who benefits from this misinformation spreading? "This claim fits into a broader pattern of..." Include fractal triggers for key actors and concepts.]</p>
+  <p class="prose-text">[REQUIRED (3-4 fractal triggers): EXAMPLE: "This fits into a broader pattern of <strong class="fractal-trigger" onclick="expandContext(this,'disinfo_type')">disinformation type</strong> promoted by <strong class="fractal-trigger" onclick="expandContext(this,'actor_network')">Actor/Network</strong>..." Every concept, actor, beneficiary MUST be wrapped.]</p>
 
   <h3 class="prose-h3">Related Misinformation</h3>
-  <p class="prose-text">[REQUIRED: List 2-3 related false claims that circulate together. Show how they connect. "Other claims in this same narrative include..." Make each a fractal trigger so users can explore further.]</p>
+  <p class="prose-text">[REQUIRED (3-4 fractal triggers): EXAMPLE: "Other claims in this narrative include <strong class="fractal-trigger" onclick="expandContext(this,'related_claim_1')">Related Claim 1</strong> and <strong class="fractal-trigger" onclick="expandContext(this,'related_claim_2')">Related Claim 2</strong>..." EVERY related claim MUST be a fractal trigger.]</p>
 </div>
 
-<!-- TAB: SOURCES -->
+<!-- TAB: SOURCES - MUST HAVE 8-10 FRACTAL TRIGGERS -->
 <div id="tab-sources" class="fact-check-tab-content">
   <h3 class="prose-h3">Key Documents & Statements</h3>
-  <p class="prose-text">[REQUIRED: Cite the actual primary sources. Quote directly from official documents, transcripts, or statements. "According to [document/statement] from [date]..." Each source should have a citation spade linking to the citationDatabase.]</p>
+  <p class="prose-text">[REQUIRED (3-4 fractal triggers): EXAMPLE: "According to <strong class="fractal-trigger" onclick="expandContext(this,'document_name')">Document Name</strong> from <strong class="fractal-trigger" onclick="expandContext(this,'source_org')">Organization</strong>..." <span class="citation-spade" data-id="src1">♠</span> Every document, org, date MUST be wrapped AND have citation spade.]</p>
 
   <h3 class="prose-h3">What Experts Say</h3>
-  <p class="prose-text">[REQUIRED: Include 2-3 expert perspectives. Quote actual experts by name if available from sources. "Dr. [Name], [Title] at [Institution], stated..." Make each expert name a fractal trigger.]</p>
+  <p class="prose-text">[REQUIRED (3-4 fractal triggers): EXAMPLE: "<strong class="fractal-trigger" onclick="expandContext(this,'expert_1')">Dr. Expert Name</strong>, <strong class="fractal-trigger" onclick="expandContext(this,'institution_1')">Professor at Institution</strong>, stated..." EVERY expert name and institution MUST be a fractal trigger.]</p>
 
   <h3 class="prose-h3">How We Verified</h3>
-  <p class="prose-text">[REQUIRED: Be transparent about methodology. What searches did we run? Which databases did we check? What did we look for? "To verify this claim, we examined [X], consulted [Y], and cross-referenced [Z]..."]</p>
+  <p class="prose-text">[REQUIRED (2-3 fractal triggers): Describe methodology. Wrap the specific databases, tools, and techniques used like <strong class="fractal-trigger" onclick="expandContext(this,'verification_method')">reverse image search</strong> or <strong class="fractal-trigger" onclick="expandContext(this,'fact_check_db')">fact-check database</strong>.]</p>
 </div>
 
 <h2 class="prose-h2">The Bottom Line</h2>
-<p class="prose-text">[REQUIRED: 2 paragraphs. First paragraph: State the verdict clearly and explain the key evidence that led to it. Second paragraph: Acknowledge any legitimate nuance, areas of ongoing debate, or what would change the verdict. Be intellectually honest about uncertainty.]</p>
+<p class="prose-text">[REQUIRED (5-8 fractal triggers across 2 paragraphs): First paragraph: State the verdict clearly. EXAMPLE: "Based on evidence from <strong class="fractal-trigger" onclick="expandContext(this,'key_source')">Key Source</strong> and <strong class="fractal-trigger" onclick="expandContext(this,'key_evidence')">Key Evidence</strong>, this claim is [VERDICT]." Second paragraph: Acknowledge nuance. EVERY key source, organization, concept MUST be wrapped.]</p>
 
 <!-- GO DEEPER CTA -->
 <div class="fact-check-deeper">
@@ -1605,29 +1605,42 @@ HTML structure for content field (WIKI-STYLE WITH TABS):
   <p class="deeper-note">Get a comprehensive investigative report with infographics, timeline, and deeper analysis.</p>
 </div>
 
-FRACTAL TRIGGERS ARE CRITICAL - YOU MUST WRAP 50+ TERMS with <strong class="fractal-trigger" onclick="expandContext(this,'key_name')">term</strong>:
+FRACTAL TRIGGERS ARE CRITICAL - THIS IS THE MOST IMPORTANT REQUIREMENT. YOU MUST WRAP 50-75 TERMS with <strong class="fractal-trigger" onclick="expandContext(this,'key_name')">term</strong>:
 
-MANDATORY CATEGORIES TO WRAP (wrap EVERY instance):
-1. PEOPLE: Every person mentioned - politicians, experts, witnesses, sources
-2. ORGANIZATIONS: Every company, agency, NGO, institution, fact-checking org
-3. STATISTICS: Every number, percentage, dollar amount - explain what it means
-4. LOCATIONS: Countries, cities, relevant places
-5. DATES/PERIODS: When claims were made, when events occurred
-6. LAWS/REGULATIONS: Any legal references relevant to the claim
-7. TECHNICAL TERMS: Jargon, acronyms, methodologies
-8. SOURCES: News outlets, studies, reports being cited
-9. EVENTS: Incidents, announcements, speeches relevant to the claim
-10. CONCEPTS: Logical fallacies, verification methods, journalistic standards
+MANDATORY CATEGORIES TO WRAP (wrap EVERY SINGLE INSTANCE - NO EXCEPTIONS):
+1. PEOPLE: Every person mentioned - politicians, experts, witnesses, sources, reporters, officials, executives
+2. ORGANIZATIONS: Every company, agency, NGO, institution, fact-checking org, news outlet, government body
+3. STATISTICS: Every number, percentage, dollar amount, date, year - explain what it means
+4. LOCATIONS: Countries, cities, states, relevant places, buildings, addresses
+5. DATES/PERIODS: When claims were made, when events occurred, specific years, time periods
+6. LAWS/REGULATIONS: Any legal references relevant to the claim, acts, bills, court cases
+7. TECHNICAL TERMS: Jargon, acronyms, methodologies, verification techniques
+8. SOURCES: News outlets, studies, reports being cited - make clickable for deep dives
+9. EVENTS: Incidents, announcements, speeches, press conferences relevant to the claim
+10. CONCEPTS: Logical fallacies, verification methods, journalistic standards, propaganda techniques
 
-DENSITY REQUIREMENTS (STRICT):
-- Minimum 50+ fractal triggers across all sections
-- Every paragraph MUST have 3-5 triggers minimum
-- EVERY person name MUST be wrapped
-- EVERY organization MUST be wrapped
-- EVERY statistic MUST be wrapped
-- EVERY source citation MUST be wrapped
+SECTION-BY-SECTION DENSITY REQUIREMENTS (STRICT - THESE ARE MINIMUMS):
+- The Story Behind This Claim (4 paragraphs): 15-20 fractal triggers total (4-5 per paragraph)
+- Verdict Summary: 3-5 fractal triggers
+- Tab: Claim (sub-claims analysis): 10-15 fractal triggers
+- Tab: Evidence: 10-15 fractal triggers
+- Tab: Context: 10-15 fractal triggers
+- Tab: Sources: 8-10 fractal triggers
+- The Bottom Line: 5-8 fractal triggers
+TOTAL MINIMUM: 60+ fractal triggers
 
-Each trigger MUST have a corresponding entry in contextData with a substantive 2-3 sentence explanation.
+PER-PARAGRAPH RULE (STRICTLY ENFORCED):
+- EVERY single paragraph MUST have at least 3-5 fractal triggers
+- If a paragraph has fewer than 3 triggers, ADD MORE
+- Wrap every person name (first mention AND subsequent mentions)
+- Wrap every organization name (first mention AND subsequent mentions)
+- Wrap every specific number, statistic, percentage, or dollar amount
+- Wrap every date, year, or time reference
+- Wrap every source or publication name mentioned
+
+CRITICAL: MAXIMIZE fractal-trigger usage in content. Wrap EVERY wrappable term. The goal is 60-75 wrapped terms MINIMUM. For each term you wrap with fractal-trigger, add a matching key to contextData. THIS IS THE SAME DENSITY AS INVESTIGATIONS - fact checks must be equally rich in deep-dive opportunities.
+
+Each trigger MUST have a corresponding entry in contextData with a substantive 2-3 sentence explanation that provides investigative context - who is this person? why does this org matter? what does this stat mean? what's the significance of this date?
 
 Return ONLY JSON. No markdown, no code fences.
 """
