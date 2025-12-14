@@ -1902,6 +1902,479 @@
             color: var(--accent-teal);
         }
 
+        /* ============================================
+           RESEARCH DASHBOARD - Article View Three-Panel
+           ============================================ */
+
+        .research-dashboard {
+            display: flex;
+            height: calc(100vh - 64px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Dashboard Side Panels */
+        .dashboard-panel {
+            width: 260px;
+            min-width: 260px;
+            height: 100%;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-color: var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .dashboard-panel-left {
+            border-right: 1px solid var(--border-color);
+        }
+
+        .dashboard-panel-right {
+            border-left: 1px solid var(--border-color);
+        }
+
+        .dashboard-panel.collapsed {
+            width: 48px;
+            min-width: 48px;
+        }
+
+        .dashboard-panel.collapsed .dashboard-panel-header,
+        .dashboard-panel.collapsed .dashboard-panel-content {
+            display: none;
+        }
+
+        .dashboard-panel.collapsed .dashboard-collapsed-strip {
+            display: flex;
+        }
+
+        /* Dashboard Panel Header */
+        .dashboard-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+
+        .dashboard-panel-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-main);
+        }
+
+        .dashboard-panel-title i {
+            width: 16px;
+            height: 16px;
+            color: var(--accent-blue);
+        }
+
+        .dashboard-panel-left .dashboard-panel-title i {
+            color: var(--accent-teal);
+        }
+
+        .dashboard-panel-close {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+        }
+
+        .dashboard-panel-close:hover {
+            background: var(--bg-elevated);
+            color: var(--text-main);
+        }
+
+        /* Dashboard Panel Content */
+        .dashboard-panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.75rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) transparent;
+        }
+
+        .dashboard-panel-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .dashboard-panel-content::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+
+        /* Dashboard Section */
+        .dashboard-section {
+            margin-bottom: 1.25rem;
+        }
+
+        .dashboard-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.625rem;
+            padding: 0 0.25rem;
+        }
+
+        .dashboard-section-title {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .dashboard-section-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 2px;
+            font-size: 0.65rem;
+        }
+
+        .dashboard-section-toggle:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Dashboard Cards */
+        .dashboard-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dashboard-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-1px);
+        }
+
+        .dashboard-card-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 0.25rem;
+        }
+
+        .dashboard-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        .dashboard-card-badge {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(62, 99, 221, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .dashboard-card-badge.fact-check {
+            background: rgba(45, 212, 191, 0.15);
+            color: var(--accent-teal);
+        }
+
+        .dashboard-card-badge.fractal {
+            background: rgba(48, 164, 108, 0.15);
+            color: var(--accent-green);
+        }
+
+        .dashboard-card-remove {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 2px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .dashboard-card:hover .dashboard-card-remove {
+            opacity: 1;
+        }
+
+        .dashboard-card-remove:hover {
+            color: #ef4444;
+        }
+
+        /* Stash Card Styling */
+        .stash-card {
+            border-left: 3px solid var(--accent-teal);
+        }
+
+        .stash-card:hover {
+            border-color: var(--accent-teal);
+            border-left-color: var(--accent-teal);
+        }
+
+        /* Related Card with Stash Button */
+        .related-card {
+            position: relative;
+        }
+
+        .related-card-stash {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.2s;
+        }
+
+        .related-card:hover .related-card-stash {
+            opacity: 1;
+        }
+
+        .related-card-stash:hover {
+            border-color: var(--accent-teal);
+            color: var(--accent-teal);
+        }
+
+        /* Dashboard Collapsed Strip */
+        .dashboard-collapsed-strip {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            gap: 1rem;
+            cursor: pointer;
+            padding: 1rem 0;
+        }
+
+        .dashboard-collapsed-strip:hover {
+            background: var(--bg-elevated);
+        }
+
+        .dashboard-collapsed-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+
+        .dashboard-panel-left .dashboard-collapsed-text {
+            transform: rotate(180deg);
+        }
+
+        .dashboard-collapsed-count {
+            background: var(--accent-blue);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        .dashboard-panel-left .dashboard-collapsed-count {
+            background: var(--accent-teal);
+        }
+
+        /* Dashboard Center Panel */
+        .dashboard-center {
+            flex: 1;
+            height: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-center .report-layout {
+            max-width: 680px;
+            transition: max-width 0.3s ease;
+        }
+
+        .research-dashboard.left-collapsed .dashboard-center .report-layout,
+        .research-dashboard.right-collapsed .dashboard-center .report-layout {
+            max-width: 720px;
+        }
+
+        .research-dashboard.both-collapsed .dashboard-center .report-layout,
+        .research-dashboard.focus-mode .dashboard-center .report-layout {
+            max-width: 760px;
+        }
+
+        /* Focus Mode */
+        .research-dashboard.focus-mode .dashboard-panel {
+            width: 0;
+            min-width: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        .focus-footer {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            z-index: 40;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .research-dashboard.focus-mode .focus-footer {
+            display: flex;
+        }
+
+        .focus-footer-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .focus-footer-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-main);
+        }
+
+        .focus-footer-hint {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* Generation Progress Card */
+        .gen-progress-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .gen-progress-title {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .gen-progress-bar {
+            height: 4px;
+            background: var(--bg-elevated);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 0.25rem;
+        }
+
+        .gen-progress-fill {
+            height: 100%;
+            background: var(--accent-blue);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .gen-progress-fill.complete {
+            background: var(--accent-green);
+        }
+
+        .gen-progress-status {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        /* Discovery Mode Toggle */
+        .discovery-mode-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: var(--bg-elevated);
+            border-radius: 20px;
+            padding: 2px;
+        }
+
+        .discovery-mode-btn {
+            background: transparent;
+            border: none;
+            font-size: 0.6rem;
+            padding: 3px 8px;
+            border-radius: 16px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .discovery-mode-btn.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* Responsive: Hide panels below 1280px */
+        @media (max-width: 1279px) {
+            .dashboard-panel {
+                position: fixed;
+                top: 64px;
+                bottom: 0;
+                z-index: 45;
+            }
+
+            .dashboard-panel-left {
+                left: 0;
+                transform: translateX(-100%);
+            }
+
+            .dashboard-panel-right {
+                right: 0;
+                transform: translateX(100%);
+            }
+
+            .dashboard-panel.mobile-visible {
+                transform: translateX(0);
+            }
+
+            .dashboard-center {
+                width: 100%;
+            }
+        }
+
         /* Legacy Portal Layout (keeping for fallback) */
         .portal-layout {
             display: flex;
@@ -5035,62 +5508,204 @@
         </div>
     </section>
 
-    <!-- VIEW 2: REPORT -->
+    <!-- VIEW 2: REPORT (Research Dashboard Three-Panel Layout) -->
     <section id="view-report" class="view-section">
-        <div class="report-layout">
-            <!-- Main Article Content -->
-            <div class="report-main">
-                <!-- SOURCES FIRST BANNER - Dynamically populated -->
-                <!-- Sources drawer overlay (click to close) -->
-                <div id="sources-drawer-overlay" class="sources-drawer-overlay" onclick="toggleSourcesBanner()"></div>
-                <div id="sources-first-container"></div>
+        <div id="research-dashboard" class="research-dashboard">
 
-                <div class="mb-12 border-b pb-8" style="border-color: var(--border-color);">
-                    <div class="flex items-center justify-between mb-6">
-                        <button onclick="switchView('view-portal')"
-                            class="text-xs font-bold hover:text-blue-700 flex items-center gap-2" style="color: var(--text-muted);">← RETURN TO
-                            ARCHIVE</button>
-                        <div class="flex items-center gap-2">
-                            <!-- Generation timestamp and refresh -->
-                            <div id="article-timestamp" class="article-timestamp hidden">
-                                <span class="timestamp-text"></span>
-                                <button onclick="regenerateArticle()" class="regenerate-btn" title="Regenerate article with fresh data">
-                                    <i data-lucide="refresh-cw" class="w-3 h-3"></i>
-                                </button>
-                            </div>
-                            <button onclick="enhanceArticle()" id="enhance-btn" class="action-btn enhance-btn" title="Enhance Article (E)">
-                                <span id="enhance-count-badge" class="enhance-count-badge">0</span>
-                                <i data-lucide="sparkles" class="w-4 h-4"></i>
-                                <span class="hidden sm:inline">Enhance</span>
-                            </button>
-                            <button onclick="toggleArticleVersion()" id="version-toggle-btn" class="action-btn version-toggle-btn hidden" title="View original version">
-                                <i data-lucide="history" class="w-4 h-4"></i>
-                                <span class="hidden sm:inline">Original</span>
-                            </button>
-                            <button onclick="toggleBookmark()" id="bookmark-btn" class="action-btn" title="Bookmark (B)">
-                                <i data-lucide="bookmark" class="w-4 h-4"></i>
-                                <span class="hidden sm:inline">Save</span>
-                            </button>
-                            <button onclick="exportToMarkdown()" class="action-btn" title="Export Markdown (M)">
-                                <i data-lucide="file-text" class="w-4 h-4"></i>
-                                <span class="hidden sm:inline">MD</span>
-                            </button>
-                            <button onclick="exportToPDF()" class="action-btn" title="Export PDF (P)">
-                                <i data-lucide="download" class="w-4 h-4"></i>
-                                <span class="hidden sm:inline">PDF</span>
+            <!-- LEFT PANEL: Research Workspace -->
+            <aside id="dashboard-panel-left" class="dashboard-panel dashboard-panel-left">
+                <div class="dashboard-panel-header">
+                    <div class="dashboard-panel-title">
+                        <i data-lucide="folder-kanban"></i>
+                        <span>Research</span>
+                    </div>
+                    <button class="dashboard-panel-close" onclick="toggleDashboardPanel('left')" title="Collapse panel">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <div class="dashboard-panel-content">
+                    <!-- Stash Section -->
+                    <div class="dashboard-section" id="stash-section">
+                        <div class="dashboard-section-header">
+                            <span class="dashboard-section-title">Stash (<span id="stash-count">0</span>)</span>
+                            <button class="dashboard-section-toggle" onclick="toggleStashPersist()" id="stash-persist-btn" title="Keep stash after closing">
+                                <i data-lucide="refresh-cw" class="w-3 h-3"></i>
                             </button>
                         </div>
+                        <div id="stash-list">
+                            <div class="dashboard-empty" style="text-align: center; padding: 1rem; color: var(--text-muted); font-size: 0.7rem;">
+                                Press S to stash current article
+                            </div>
+                        </div>
                     </div>
-                    <h1 id="report-title" class="text-5xl md:text-6xl font-bold leading-tight" style="color: var(--text-main);">Loading...</h1>
+
+                    <!-- Pipelines Section -->
+                    <div class="dashboard-section" id="pipelines-section">
+                        <div class="dashboard-section-header">
+                            <span class="dashboard-section-title">Pipelines</span>
+                        </div>
+                        <div id="pipelines-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Generating Section -->
+                    <div class="dashboard-section" id="generating-section">
+                        <div class="dashboard-section-header">
+                            <span class="dashboard-section-title">Generating (<span id="gen-count">0</span>/5)</span>
+                        </div>
+                        <div id="gen-list">
+                            <!-- Populated dynamically from activeGenerations -->
+                        </div>
+                    </div>
                 </div>
-                <div id="report-body"></div>
-            </div>
 
-            <!-- Hidden container for JS compatibility (sources now in tabbed banner above) -->
-            <div id="report-sources" style="display: none;"></div>
+                <!-- Collapsed Strip -->
+                <div class="dashboard-collapsed-strip" onclick="toggleDashboardPanel('left')">
+                    <span class="dashboard-collapsed-text">Research</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4" style="color: var(--text-muted);"></i>
+                    <span class="dashboard-collapsed-count" id="left-collapsed-count">0</span>
+                </div>
+            </aside>
 
-            <!-- Child Essays Rail (shown when article has child essays) -->
-            <div id="child-essays-rail" class="child-essays-rail hidden"></div>
+            <!-- CENTER PANEL: Article Content -->
+            <main class="dashboard-center">
+                <div class="report-layout">
+                    <!-- Main Article Content -->
+                    <div class="report-main">
+                        <!-- SOURCES FIRST BANNER - Dynamically populated -->
+                        <!-- Sources drawer overlay (click to close) -->
+                        <div id="sources-drawer-overlay" class="sources-drawer-overlay" onclick="toggleSourcesBanner()"></div>
+                        <div id="sources-first-container"></div>
+
+                        <div class="mb-12 border-b pb-8" style="border-color: var(--border-color);">
+                            <div class="flex items-center justify-between mb-6">
+                                <button onclick="switchView('view-portal')"
+                                    class="text-xs font-bold hover:text-blue-700 flex items-center gap-2" style="color: var(--text-muted);">← RETURN TO
+                                    ARCHIVE</button>
+                                <div class="flex items-center gap-2">
+                                    <!-- Generation timestamp and refresh -->
+                                    <div id="article-timestamp" class="article-timestamp hidden">
+                                        <span class="timestamp-text"></span>
+                                        <button onclick="regenerateArticle()" class="regenerate-btn" title="Regenerate article with fresh data">
+                                            <i data-lucide="refresh-cw" class="w-3 h-3"></i>
+                                        </button>
+                                    </div>
+                                    <button onclick="stashCurrentArticle()" class="action-btn" title="Stash Article (S)">
+                                        <i data-lucide="archive" class="w-4 h-4"></i>
+                                        <span class="hidden sm:inline">Stash</span>
+                                    </button>
+                                    <button onclick="toggleFocusMode()" class="action-btn" title="Focus Mode (F)">
+                                        <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                                    </button>
+                                    <button onclick="enhanceArticle()" id="enhance-btn" class="action-btn enhance-btn" title="Enhance Article (E)">
+                                        <span id="enhance-count-badge" class="enhance-count-badge">0</span>
+                                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                                        <span class="hidden sm:inline">Enhance</span>
+                                    </button>
+                                    <button onclick="toggleArticleVersion()" id="version-toggle-btn" class="action-btn version-toggle-btn hidden" title="View original version">
+                                        <i data-lucide="history" class="w-4 h-4"></i>
+                                        <span class="hidden sm:inline">Original</span>
+                                    </button>
+                                    <button onclick="toggleBookmark()" id="bookmark-btn" class="action-btn" title="Bookmark (B)">
+                                        <i data-lucide="bookmark" class="w-4 h-4"></i>
+                                        <span class="hidden sm:inline">Save</span>
+                                    </button>
+                                    <button onclick="exportToMarkdown()" class="action-btn" title="Export Markdown (M)">
+                                        <i data-lucide="file-text" class="w-4 h-4"></i>
+                                        <span class="hidden sm:inline">MD</span>
+                                    </button>
+                                    <button onclick="exportToPDF()" class="action-btn" title="Export PDF (P)">
+                                        <i data-lucide="download" class="w-4 h-4"></i>
+                                        <span class="hidden sm:inline">PDF</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <h1 id="report-title" class="text-5xl md:text-6xl font-bold leading-tight" style="color: var(--text-main);">Loading...</h1>
+                        </div>
+                        <div id="report-body" ondblclick="toggleFocusMode()"></div>
+                    </div>
+
+                    <!-- Hidden container for JS compatibility (sources now in tabbed banner above) -->
+                    <div id="report-sources" style="display: none;"></div>
+
+                    <!-- Child Essays Rail (shown when article has child essays) -->
+                    <div id="child-essays-rail" class="child-essays-rail hidden"></div>
+                </div>
+
+                <!-- Focus Mode Footer -->
+                <div class="focus-footer">
+                    <button class="focus-footer-btn" onclick="toggleDashboardPanel('left')">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                        Stash (<span id="focus-stash-count">0</span>)
+                    </button>
+                    <span class="focus-footer-hint">Press F or Esc to exit focus mode</span>
+                    <button class="focus-footer-btn" onclick="toggleDashboardPanel('right')">
+                        Related (<span id="focus-related-count">0</span>)
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </main>
+
+            <!-- RIGHT PANEL: Discovery -->
+            <aside id="dashboard-panel-right" class="dashboard-panel dashboard-panel-right">
+                <div class="dashboard-panel-header">
+                    <div class="dashboard-panel-title">
+                        <i data-lucide="compass"></i>
+                        <span>Discovery</span>
+                    </div>
+                    <button class="dashboard-panel-close" onclick="toggleDashboardPanel('right')" title="Collapse panel">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <div class="dashboard-panel-content">
+                    <!-- Related Content Section -->
+                    <div class="dashboard-section" id="related-section">
+                        <div class="dashboard-section-header">
+                            <span class="dashboard-section-title">Related</span>
+                            <div class="discovery-mode-toggle">
+                                <button class="discovery-mode-btn active" onclick="setDiscoveryMode('focus')" title="Same category">Focus</button>
+                                <button class="discovery-mode-btn" onclick="setDiscoveryMode('explore')" title="Diverse">Explore</button>
+                            </div>
+                        </div>
+                        <div id="related-list">
+                            <div class="dashboard-empty" style="text-align: center; padding: 1rem; color: var(--text-muted); font-size: 0.7rem;">
+                                Loading related content...
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recently Viewed Section -->
+                    <div class="dashboard-section" id="recent-section">
+                        <div class="dashboard-section-header">
+                            <span class="dashboard-section-title">Recently Viewed</span>
+                        </div>
+                        <div id="recent-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Queued Deep Dives Section -->
+                    <div class="dashboard-section" id="queued-section">
+                        <div class="dashboard-section-header">
+                            <span class="dashboard-section-title">Queued Deep Dives</span>
+                        </div>
+                        <div id="queued-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Collapsed Strip -->
+                <div class="dashboard-collapsed-strip" onclick="toggleDashboardPanel('right')">
+                    <span class="dashboard-collapsed-text">Discovery</span>
+                    <i data-lucide="chevron-left" class="w-4 h-4" style="color: var(--text-muted);"></i>
+                    <span class="dashboard-collapsed-count" id="right-collapsed-count">0</span>
+                </div>
+            </aside>
+
         </div>
     </section>
 
@@ -5282,13 +5897,496 @@
             }
         }
 
-        // Close drawer with Escape key
+        // ========== RESEARCH DASHBOARD FUNCTIONS ==========
+
+        // Dashboard state management
+        const dashboardState = {
+            currentArticleKey: null,
+            leftPanelCollapsed: false,
+            rightPanelCollapsed: false,
+            focusModeActive: false,
+            stashPersist: false,
+            discoveryMode: 'explore' // 'explore' or 'focus'
+        };
+
+        // Initialize dashboard from localStorage
+        function initDashboardState() {
+            const savedPrefs = localStorage.getItem('genuverity-dashboard-prefs');
+            if (savedPrefs) {
+                try {
+                    const prefs = JSON.parse(savedPrefs);
+                    dashboardState.leftPanelCollapsed = prefs.leftCollapsed || false;
+                    dashboardState.rightPanelCollapsed = prefs.rightCollapsed || false;
+                    dashboardState.stashPersist = prefs.stashPersist || false;
+                    dashboardState.discoveryMode = prefs.discoveryMode || 'explore';
+                } catch (e) {
+                    console.warn('Could not load dashboard prefs', e);
+                }
+            }
+            applyDashboardState();
+        }
+
+        // Apply dashboard state to DOM
+        function applyDashboardState() {
+            const dashboard = document.getElementById('research-dashboard');
+            if (!dashboard) return;
+
+            // Apply panel collapse states
+            if (dashboardState.leftPanelCollapsed) {
+                dashboard.classList.add('left-collapsed');
+            } else {
+                dashboard.classList.remove('left-collapsed');
+            }
+
+            if (dashboardState.rightPanelCollapsed) {
+                dashboard.classList.add('right-collapsed');
+            } else {
+                dashboard.classList.remove('right-collapsed');
+            }
+
+            // Update stash persist toggle
+            const stashToggle = document.getElementById('stash-persist-btn');
+            if (stashToggle) {
+                stashToggle.classList.toggle('active', dashboardState.stashPersist);
+            }
+
+            // Update discovery mode toggle buttons
+            const focusBtn = document.querySelector('.discovery-mode-btn[onclick*="focus"]');
+            const exploreBtn = document.querySelector('.discovery-mode-btn[onclick*="explore"]');
+            if (focusBtn && exploreBtn) {
+                focusBtn.classList.toggle('active', dashboardState.discoveryMode === 'focus');
+                exploreBtn.classList.toggle('active', dashboardState.discoveryMode === 'explore');
+            }
+        }
+
+        // Save dashboard preferences
+        function saveDashboardPrefs() {
+            localStorage.setItem('genuverity-dashboard-prefs', JSON.stringify({
+                leftCollapsed: dashboardState.leftPanelCollapsed,
+                rightCollapsed: dashboardState.rightPanelCollapsed,
+                stashPersist: dashboardState.stashPersist,
+                discoveryMode: dashboardState.discoveryMode
+            }));
+        }
+
+        // Toggle dashboard panel (left/right)
+        function toggleDashboardPanel(side) {
+            const dashboard = document.getElementById('research-dashboard');
+            if (!dashboard) return;
+
+            if (side === 'left') {
+                dashboardState.leftPanelCollapsed = !dashboardState.leftPanelCollapsed;
+                dashboard.classList.toggle('left-collapsed', dashboardState.leftPanelCollapsed);
+            } else if (side === 'right') {
+                dashboardState.rightPanelCollapsed = !dashboardState.rightPanelCollapsed;
+                dashboard.classList.toggle('right-collapsed', dashboardState.rightPanelCollapsed);
+            }
+
+            // Update both-collapsed state
+            if (dashboardState.leftPanelCollapsed && dashboardState.rightPanelCollapsed) {
+                dashboard.classList.add('both-collapsed');
+            } else {
+                dashboard.classList.remove('both-collapsed');
+            }
+
+            saveDashboardPrefs();
+        }
+
+        // Toggle focus mode (hide both panels)
+        function toggleFocusMode() {
+            const dashboard = document.getElementById('research-dashboard');
+            if (!dashboard) return;
+
+            dashboardState.focusModeActive = !dashboardState.focusModeActive;
+            dashboard.classList.toggle('focus-mode', dashboardState.focusModeActive);
+
+            // Show toast notification
+            if (dashboardState.focusModeActive) {
+                showToast('Focus mode enabled', 'Press Esc or F to exit', 'info');
+            }
+        }
+
+        // Toggle stash persistence
+        function toggleStashPersist() {
+            dashboardState.stashPersist = !dashboardState.stashPersist;
+            const toggle = document.getElementById('stash-persist-btn');
+            if (toggle) {
+                toggle.classList.toggle('active', dashboardState.stashPersist);
+            }
+            saveDashboardPrefs();
+
+            // If turning on persistence, migrate session stash to localStorage
+            if (dashboardState.stashPersist) {
+                const sessionStash = getSessionStash();
+                if (sessionStash.length > 0) {
+                    localStorage.setItem('genuverity-stash', JSON.stringify(sessionStash));
+                }
+            }
+            showToast(dashboardState.stashPersist ? 'Stash will persist' : 'Stash resets on close', '', 'info');
+        }
+
+        // Get stash items from appropriate storage
+        function getSessionStash() {
+            const storage = dashboardState.stashPersist ? localStorage : sessionStorage;
+            const key = dashboardState.stashPersist ? 'genuverity-stash' : 'genuverity-session-stash';
+            try {
+                return JSON.parse(storage.getItem(key) || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // Save stash items to appropriate storage
+        function saveSessionStash(items) {
+            const storage = dashboardState.stashPersist ? localStorage : sessionStorage;
+            const key = dashboardState.stashPersist ? 'genuverity-stash' : 'genuverity-session-stash';
+            storage.setItem(key, JSON.stringify(items));
+        }
+
+        // Stash the current article
+        function stashCurrentArticle() {
+            if (!dashboardState.currentArticleKey) {
+                showToast('No article to stash', '', 'warning');
+                return;
+            }
+
+            const article = reports[dashboardState.currentArticleKey];
+            if (!article) return;
+
+            const stash = getSessionStash();
+
+            // Check if already stashed
+            if (stash.find(item => item.key === dashboardState.currentArticleKey)) {
+                showToast('Already in stash', '', 'info');
+                return;
+            }
+
+            // Add to stash (max 5 items, LIFO)
+            stash.unshift({
+                key: dashboardState.currentArticleKey,
+                title: article.cardTitle || article.title || dashboardState.currentArticleKey,
+                stashedAt: Date.now(),
+                stashedFrom: null
+            });
+
+            // Limit to 5 items
+            if (stash.length > 5) {
+                stash.pop();
+            }
+
+            saveSessionStash(stash);
+            renderStash();
+            showToast('Article stashed', 'Press [ to view', 'success');
+        }
+
+        // Remove item from stash
+        function removeFromStash(key) {
+            const stash = getSessionStash().filter(item => item.key !== key);
+            saveSessionStash(stash);
+            renderStash();
+        }
+
+        // Render stash panel
+        function renderStash() {
+            const container = document.getElementById('stash-list');
+            if (!container) return;
+
+            const stash = getSessionStash();
+
+            // Update count badge
+            const countEl = document.getElementById('stash-count');
+            if (countEl) {
+                countEl.textContent = stash.length;
+            }
+
+            // Update focus footer count
+            const focusStashCount = document.querySelector('.focus-footer-btn[onclick*="left"] span');
+            if (focusStashCount) {
+                focusStashCount.textContent = `Stash: ${stash.length}`;
+            }
+
+            if (stash.length === 0) {
+                container.innerHTML = '<div class="stash-empty">Press S to stash articles</div>';
+                return;
+            }
+
+            container.innerHTML = stash.map((item, idx) => `
+                <div class="stash-card" data-key="${item.key}">
+                    <span class="stash-number">${idx + 1}</span>
+                    <span class="stash-title" onclick="loadReport('${item.key}')">${item.title}</span>
+                    <button class="stash-remove" onclick="removeFromStash('${item.key}')" title="Remove">×</button>
+                </div>
+            `).join('');
+        }
+
+        // Jump to stash item by index
+        function jumpToStashItem(index) {
+            const stash = getSessionStash();
+            if (index >= 0 && index < stash.length) {
+                loadReport(stash[index].key);
+            }
+        }
+
+        // Set discovery mode (explore vs focus)
+        function setDiscoveryMode(mode) {
+            dashboardState.discoveryMode = mode;
+            // Update button active states
+            const focusBtn = document.querySelector('.discovery-mode-btn[onclick*="focus"]');
+            const exploreBtn = document.querySelector('.discovery-mode-btn[onclick*="explore"]');
+            if (focusBtn && exploreBtn) {
+                focusBtn.classList.toggle('active', mode === 'focus');
+                exploreBtn.classList.toggle('active', mode === 'explore');
+            }
+            saveDashboardPrefs();
+            renderRelatedContent();
+        }
+
+        // Toggle discovery mode
+        function toggleDiscoveryMode() {
+            const newMode = dashboardState.discoveryMode === 'explore' ? 'focus' : 'explore';
+            setDiscoveryMode(newMode);
+            showToast(newMode === 'focus' ? 'Deep Focus' : 'Explore mode', '', 'info');
+        }
+
+        // Render related content in discovery panel
+        function renderRelatedContent() {
+            const container = document.getElementById('related-list');
+            if (!container || !dashboardState.currentArticleKey) {
+                if (container) container.innerHTML = '<div class="stash-empty">View an article to see related content</div>';
+                return;
+            }
+
+            const currentArticle = reports[dashboardState.currentArticleKey];
+            if (!currentArticle) return;
+
+            // Get all articles and score them
+            const scored = [];
+            for (const [key, article] of Object.entries(reports)) {
+                if (key === dashboardState.currentArticleKey) continue;
+                if (article.isChildEssay) continue; // Skip child essays
+
+                let score = 0;
+
+                // Tag matching (40 points)
+                if (currentArticle.cardTag && article.cardTag) {
+                    const currentTags = currentArticle.cardTag.split('//').map(t => t.trim().toLowerCase());
+                    const articleTags = article.cardTag.split('//').map(t => t.trim().toLowerCase());
+
+                    // Main category match
+                    if (currentTags[0] && articleTags[0] && currentTags[0] === articleTags[0]) {
+                        score += 25;
+                    }
+                    // Subcategory match (only in focus mode)
+                    if (dashboardState.discoveryMode === 'focus' && currentTags[1] && articleTags[1] && currentTags[1] === articleTags[1]) {
+                        score += 15;
+                    }
+                }
+
+                // In explore mode, add diversity bonus for different categories
+                if (dashboardState.discoveryMode === 'explore') {
+                    const currentCategory = (currentArticle.cardTag || '').split('//')[0].trim().toLowerCase();
+                    const articleCategory = (article.cardTag || '').split('//')[0].trim().toLowerCase();
+                    if (currentCategory !== articleCategory) {
+                        score += 10; // Diversity bonus
+                    }
+                }
+
+                // Recency bonus (10 points if recent)
+                if (article._cached_at) {
+                    const cachedDate = new Date(article._cached_at);
+                    const daysSinceCached = (Date.now() - cachedDate.getTime()) / (1000 * 60 * 60 * 24);
+                    if (daysSinceCached < 7) {
+                        score += 10;
+                    }
+                }
+
+                // Add some randomness for variety
+                score += Math.random() * 5;
+
+                if (score > 0) {
+                    scored.push({ key, article, score });
+                }
+            }
+
+            // Sort by score and take top 5
+            scored.sort((a, b) => b.score - a.score);
+            const related = scored.slice(0, 5);
+
+            if (related.length === 0) {
+                container.innerHTML = '<div class="stash-empty">No related content found</div>';
+                return;
+            }
+
+            container.innerHTML = related.map(({ key, article }) => {
+                const typeClass = article.articleType === 'fact-check' ? 'fact-check' :
+                                  article.isChildEssay ? 'deep-dive' : 'investigation';
+                return `
+                    <div class="related-card ${typeClass}" onclick="loadReport('${key}')">
+                        <span class="related-type">${typeClass.replace('-', ' ')}</span>
+                        <span class="related-title">${article.cardTitle || article.title || key}</span>
+                        <button class="stash-btn" onclick="event.stopPropagation(); stashFromDiscovery('${key}')" title="Stash">◀</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Stash article from discovery panel
+        function stashFromDiscovery(key) {
+            const article = reports[key];
+            if (!article) return;
+
+            const stash = getSessionStash();
+
+            // Check if already stashed
+            if (stash.find(item => item.key === key)) {
+                showToast('Already in stash', '', 'info');
+                return;
+            }
+
+            stash.unshift({
+                key: key,
+                title: article.cardTitle || article.title || key,
+                stashedAt: Date.now(),
+                stashedFrom: dashboardState.currentArticleKey
+            });
+
+            if (stash.length > 5) {
+                stash.pop();
+            }
+
+            saveSessionStash(stash);
+            renderStash();
+            showToast('Added to stash', '', 'success');
+        }
+
+        // Render recently viewed
+        function renderRecentlyViewed() {
+            const container = document.getElementById('recent-list');
+            if (!container) return;
+
+            let history = [];
+            try {
+                history = JSON.parse(localStorage.getItem('genuverity-reading-history') || '[]');
+            } catch (e) {
+                history = [];
+            }
+
+            // Filter out current article and limit to 3
+            const recent = history
+                .filter(item => item.key !== dashboardState.currentArticleKey)
+                .slice(0, 3);
+
+            if (recent.length === 0) {
+                container.innerHTML = '<div class="stash-empty">No recent articles</div>';
+                return;
+            }
+
+            container.innerHTML = recent.map(item => {
+                const timeAgo = formatTimeAgo(item.viewedAt);
+                return `
+                    <div class="recent-card" onclick="loadReport('${item.key}')">
+                        <span class="recent-title">${item.title}</span>
+                        <span class="recent-time">${timeAgo}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Format time ago helper
+        function formatTimeAgo(timestamp) {
+            const seconds = Math.floor((Date.now() - timestamp) / 1000);
+            if (seconds < 60) return 'Just now';
+            if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+            if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+            return `${Math.floor(seconds / 86400)}d ago`;
+        }
+
+        // Track article view in history
+        function trackArticleView(key, article) {
+            let history = [];
+            try {
+                history = JSON.parse(localStorage.getItem('genuverity-reading-history') || '[]');
+            } catch (e) {
+                history = [];
+            }
+
+            // Remove existing entry for this article
+            history = history.filter(item => item.key !== key);
+
+            // Add to front
+            history.unshift({
+                key: key,
+                title: article.cardTitle || article.title || key,
+                viewedAt: Date.now(),
+                category: article.cardTag || ''
+            });
+
+            // Limit to 50 entries
+            if (history.length > 50) {
+                history = history.slice(0, 50);
+            }
+
+            localStorage.setItem('genuverity-reading-history', JSON.stringify(history));
+        }
+
+        // Initialize dashboard when viewing an article
+        function initDashboard(articleKey) {
+            dashboardState.currentArticleKey = articleKey;
+            initDashboardState();
+            renderStash();
+            renderRelatedContent();
+            renderRecentlyViewed();
+
+            // Track the view
+            const article = reports[articleKey];
+            if (article) {
+                trackArticleView(articleKey, article);
+            }
+        }
+
+        // ========== END RESEARCH DASHBOARD FUNCTIONS ==========
+
+        // Close drawer with Escape key and Dashboard shortcuts
         document.addEventListener('keydown', function(e) {
+            // Don't trigger shortcuts when typing in inputs
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) {
+                return;
+            }
+
             if (e.key === 'Escape') {
+                // Exit focus mode first
+                const dashboard = document.getElementById('research-dashboard');
+                if (dashboard && dashboard.classList.contains('focus-mode')) {
+                    toggleFocusMode();
+                    return;
+                }
+                // Close sources drawer
                 const banner = document.getElementById('sources-banner');
                 if (banner && banner.classList.contains('drawer-open')) {
                     toggleSourcesBanner();
                 }
+            }
+
+            // Dashboard shortcuts only when viewing an article
+            const viewReport = document.getElementById('view-report');
+            if (!viewReport || !viewReport.classList.contains('active')) return;
+
+            if (e.key === 'f' || e.key === 'F') {
+                e.preventDefault();
+                toggleFocusMode();
+            } else if (e.key === 's' || e.key === 'S') {
+                e.preventDefault();
+                stashCurrentArticle();
+            } else if (e.key === '[') {
+                e.preventDefault();
+                toggleDashboardPanel('left');
+            } else if (e.key === ']') {
+                e.preventDefault();
+                toggleDashboardPanel('right');
+            } else if (e.key >= '1' && e.key <= '5') {
+                // Quick jump to stash items
+                const stashIndex = parseInt(e.key) - 1;
+                jumpToStashItem(stashIndex);
             }
         });
 
@@ -11313,6 +12411,8 @@ ADD: 1-2 new sections, more living-numbers (<span class="living-number" data-tar
                 initReadingProgress();
                 updateBookmarkButton();
                 updateDeepDiveBadge();
+                // Initialize research dashboard panels
+                initDashboard(key);
                 // Update version toggle visibility and state
                 const hasOriginal = !!originalVersions[key];
                 updateVersionToggle(hasOriginal);
