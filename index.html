@@ -3043,6 +3043,97 @@
             color: white;
         }
 
+        /* Quick Query Section (in Discovery panel) */
+        .quick-query-section {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quick-query-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .quick-query-input {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.7rem;
+            color: var(--text-main);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            resize: none;
+            min-height: 2.5rem;
+            max-height: 5rem;
+        }
+
+        .quick-query-input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 2px rgba(62, 99, 221, 0.15);
+        }
+
+        .quick-query-input::placeholder {
+            color: var(--text-muted);
+            font-size: 0.65rem;
+        }
+
+        .quick-query-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .quick-query-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 0.4rem 0.5rem;
+            border-radius: 5px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .quick-query-btn.investigate {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .quick-query-btn.investigate:hover {
+            background: #4a71e5;
+        }
+
+        .quick-query-btn.fact-check {
+            background: var(--accent-teal);
+            color: white;
+        }
+
+        .quick-query-btn.fact-check:hover {
+            background: #0891b2;
+        }
+
+        .quick-query-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quick-query-hint {
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 0.25rem;
+        }
+
+        .quick-query-btn svg {
+            width: 12px;
+            height: 12px;
+        }
+
         /* Responsive: Hide panels below 1280px */
         @media (max-width: 1279px) {
             .dashboard-panel {
@@ -7043,6 +7134,30 @@
                 </div>
 
                 <div class="dashboard-panel-content">
+                    <!-- Quick Query Section -->
+                    <div class="quick-query-section">
+                        <div class="quick-query-form">
+                            <textarea
+                                id="quick-query-input"
+                                class="quick-query-input"
+                                placeholder="Research something while you read... e.g., 'Is 5G actually dangerous?'"
+                                rows="2"
+                                onkeydown="handleQuickQueryKeydown(event)"
+                            ></textarea>
+                            <div class="quick-query-actions">
+                                <button class="quick-query-btn investigate" onclick="submitQuickQuery('investigate')" title="Queue investigation">
+                                    <i data-lucide="search"></i>
+                                    Investigate
+                                </button>
+                                <button class="quick-query-btn fact-check" onclick="submitQuickQuery('fact-check')" title="Queue fact check">
+                                    <i data-lucide="scale"></i>
+                                    Fact Check
+                                </button>
+                            </div>
+                            <div class="quick-query-hint">Press Enter to investigate, Shift+Enter for fact check</div>
+                        </div>
+                    </div>
+
                     <!-- Related Content Section -->
                     <div class="dashboard-section" id="related-section">
                         <div class="dashboard-section-header">
@@ -7992,6 +8107,62 @@
             const newMode = dashboardState.discoveryMode === 'explore' ? 'focus' : 'explore';
             setDiscoveryMode(newMode);
             showToast(newMode === 'focus' ? 'Deep Focus' : 'Explore mode', '', 'info');
+        }
+
+        // === QUICK QUERY FUNCTIONS ===
+        // Handle keyboard shortcuts in quick query input
+        function handleQuickQueryKeydown(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                submitQuickQuery('investigate');
+            } else if (event.key === 'Enter' && event.shiftKey) {
+                event.preventDefault();
+                submitQuickQuery('fact-check');
+            }
+        }
+
+        // Submit quick query to queue
+        function submitQuickQuery(type) {
+            const input = document.getElementById('quick-query-input');
+            if (!input) return;
+
+            const query = input.value.trim();
+            if (!query) {
+                showToast('Enter a topic or claim', '', 'warning');
+                input.focus();
+                return;
+            }
+
+            // Check concurrent generation limits
+            // NOTE: Payment packages will affect concurrent query limits
+            // Free tier: 1 concurrent, Basic: 3 concurrent, Pro: 5 concurrent, Enterprise: unlimited
+            const activeCount = generations.filter(g => g.status === 'generating').length;
+            const MAX_CONCURRENT = 5; // Will be dynamic based on user tier when payment is implemented
+
+            if (activeCount >= MAX_CONCURRENT) {
+                showToast(`Maximum ${MAX_CONCURRENT} concurrent queries`, 'Please wait for current generations to complete', 'warning');
+                return;
+            }
+
+            // Queue the generation based on type
+            if (type === 'fact-check') {
+                // Use fact check generation
+                const genId = registerGeneration(query, 'fact-check');
+                showToast('Queued for fact check', query.substring(0, 40) + '...', 'success');
+                generateFactCheck(query, genId);
+            } else {
+                // Use investigation generation
+                const genId = registerGeneration(query, 'investigation');
+                showToast('Queued for investigation', query.substring(0, 40) + '...', 'success');
+                startGeneration(query, genId);
+            }
+
+            // Clear input and show feedback
+            input.value = '';
+            input.blur();
+
+            // Update the Research Status badge
+            updateResearchStatusBadge();
         }
 
         // Render related content in discovery panel

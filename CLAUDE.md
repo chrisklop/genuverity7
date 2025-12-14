@@ -1,63 +1,53 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code when working with this repository. **Read this entirely before starting any work.**
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Session Continuity
 
-**IMPORTANT FOR NEW SESSIONS**: This project has active development context. Before making changes:
-1. Check `docs/ROADMAP.md` for current priorities and future plans
-2. Review recent git commits: `git log --oneline -10`
+**Before starting any work:**
+1. Check `docs/ROADMAP.md` for current priorities
+2. Review recent commits: `git log --oneline -10`
 3. Ask user about current priorities
 
 ## Project Overview
 
-**GenuVerity** is an AI-powered investigative journalism platform. It generates data-driven exposé articles with:
-- **Sources First** philosophy: Primary sources displayed ABOVE content
-- Tabbed source navigation (Primary/Secondary/Tertiary)
-- Interactive charts and visualizations
-- Collapsible source panel with floating restore button
+**GenuVerity** is an AI-powered investigative journalism platform that generates data-driven exposé articles with:
+- **Sources First** philosophy: Primary sources displayed ABOVE content in tabbed navigation
+- Interactive charts (Chart.js) and AI-generated infographics (Gemini)
+- Fractal triggers for expandable context on key claims
+- Deep dive generation for section expansion
 
 **Live URL**: https://genuverity7.vercel.app
 
-## Quick Reference
+## Commands
 
 | Command | Purpose |
 |---------|---------|
-| `vercel --prod` | Deploy to production |
 | `python server.py` | Local dev server (port 8000) |
+| `vercel --prod` | Deploy to production |
 | `vercel logs genuverity7.vercel.app` | View production logs |
 
 ## Architecture
 
 ### Backend (`api/index.py`)
 - **Framework**: FastAPI + Uvicorn
-- **Storage**: Vercel Blob Storage for article cache
-- **Key constant**: `ARTICLE_TEMPLATE` (line ~470) - controls AI generation schema
+- **Storage**: Vercel Blob Storage for article cache + article index (`articles/_index.json`)
+- **Key constant**: `ARTICLE_TEMPLATE` (~line 470) - controls AI generation schema
 
-## AI Model Requirements (MANDATORY)
+### API Endpoints
 
-**⚠️ CRITICAL: DO NOT CHANGE THESE MODELS ⚠️**
-
-| Purpose | Model | Model ID |
-|---------|-------|----------|
-| **Article Text Generation** | Claude Sonnet 4/4.5 | `claude-sonnet-4-20250514` or `claude-sonnet-4-5-20250929` |
-| **Infographic Generation** | Gemini 3 Pro Image Preview | `gemini-3-pro-image-preview` |
-
-**NEVER use other models for these tasks:**
-- ❌ Do NOT use `gemini-2.0-flash-exp` for infographics
-- ❌ Do NOT use any other Gemini model for images
-- ❌ Do NOT use Claude for infographics
-- ❌ Do NOT use Gemini for article text
-
-The Midnight Tech visual style ONLY works correctly with `gemini-3-pro-image-preview`. Using other models produces incorrect styling that does not match the established aesthetic.
-
-**Endpoints**:
 | Endpoint | Method | Purpose |
 |----------|--------|---------|
 | `/api/generate` | POST | Generate new article (SSE streaming) |
-| `/api/deep-dive` | POST | Generate deep-dive with rate limiting |
+| `/api/deep-dive` | POST | Generate deep-dive section expansion |
 | `/api/cache/check` | POST | Check if article exists in cache |
-| `/api/cache/list` | GET | List all cached articles |
+| `/api/cache/list` | GET | List cached articles (reads index) |
+| `/api/admin/rebuild-index` | POST | Rebuild article index from all blobs |
+| `/api/article/{slug}` | GET | Fetch single article by slug |
+| `/api/infographic` | POST | Generate single infographic |
+| `/api/infographics/batch` | POST | Generate multiple infographics |
+| `/api/usage` | GET | API usage statistics |
+| `/api/health` | GET | Health check |
 
 ### Frontend (`index.html`)
 Single-page app with three views:
@@ -66,87 +56,37 @@ Single-page app with three views:
 - **Static** (`view-static`): Auxiliary content pages
 
 **Key Functions**:
-| Function | Location | Purpose |
-|----------|----------|---------|
-| `renderReportData()` | ~line 3750 | Renders article + Sources First tabs |
-| `toggleSourcesBanner()` | ~line 3692 | Collapse/expand Sources First |
-| `switchView()` | ~line 3681 | Navigate between views |
-| `renderDynamicCharts()` | ~line 3500 | Initialize Chart.js visualizations |
+| Function | Purpose |
+|----------|---------|
+| `renderReportData()` | Renders article + Sources First tabs |
+| `toggleSourcesBanner()` | Collapse/expand Sources First panel |
+| `switchView()` | Navigate between views |
+| `renderDynamicCharts()` | Initialize Chart.js visualizations |
 
-### Layout System (Current State)
-- **Single-column layout**: 720px max-width, centered
-- **NO sidebar** - removed Dec 2024
-- **Sources First banner**: Tabbed, collapsible, above article title
-- **Floating button**: Appears when Sources First is collapsed
+### Research Status Panel
+Non-blocking UI panel (bottom-right) that tracks:
+- Deep dive generation progress
+- Enhance operations
+- Queue feedback for fractal triggers
 
-## Sources First Feature (v2)
+## AI Model Requirements (MANDATORY)
 
-All sources displayed in tabbed banner ABOVE article title:
+**DO NOT CHANGE THESE MODELS**
 
-```
-+------------------------------------------+
-|  [Shield] SOURCES FIRST      [Minimize]  |
-|  "We encourage you to verify..."         |
-|  [Primary|4] [Secondary|4] [Tertiary|2]  |
-|  +--------+ +--------+                   |
-|  | Source | | Source |  (4 per tab)     |
-|  +--------+ +--------+                   |
-|  "These are the most credible sources"   |
-+------------------------------------------+
-|                                          |
-|  ARTICLE TITLE                           |
-|  Article content...                      |
-+------------------------------------------+
-```
+| Purpose | Model ID |
+|---------|----------|
+| **Article Text** | `claude-sonnet-4-20250514` or `claude-sonnet-4-5-20250929` |
+| **Infographics** | `gemini-3-pro-image-preview` |
 
-**Tab Names**: Primary, Secondary, Tertiary, Quaternary (4 sources each)
+**Restrictions:**
+- Never use `gemini-2.0-flash-exp` or other Gemini models for images
+- Never use Claude for infographics
+- Never use Gemini for article text
 
-**Collapse Behavior**:
-- Click "Minimize" to collapse banner
-- Floating "Sources (N)" button appears at top
-- Click floating button to expand
-
-## Color/Theme System
-
-### Current State (Implemented Dec 2024)
-**Dark/Light only** with Radix Colors-inspired WCAG-compliant palette.
-
-**CSS Variables** (Dark mode - default):
-```css
---bg-deep: #111113      /* Radix slate-1: app background */
---bg-card: #18191b      /* slate-2: subtle background */
---bg-elevated: #212225  /* slate-3: UI element background */
---text-main: #edeef0    /* slate-12: high contrast text */
---text-muted: #9ba1a6   /* slate-11: low contrast text */
---text-prose: #b0b4ba   /* body text */
---accent-blue: #3e63dd  /* Radix blue-9 */
---accent-green: #30a46c /* Radix green-9 */
---accent-warm: #f76b15  /* Radix orange-9 */
-```
-
-**Light mode** (activated by toggle or system preference):
-```css
---bg-deep: #fbfcfd
---bg-card: #ffffff
---text-main: #1c2024
---text-muted: #60646c
-/* Same accent colors */
-```
-
-### Theme Toggle
-- **Location**: Nav bar button with sun/moon icons
-- **Behavior**: Click to toggle, press T keyboard shortcut
-- **Persistence**: Saves to `localStorage.genuverity-theme`
-- **System preference**: Auto-detects via `prefers-color-scheme` media query
-
-### WCAG Compliance
-- Normal text: 4.5:1 contrast ratio (meets AA)
-- Large text: 3:1 contrast ratio (meets AA)
-- All colors verified against Radix Colors accessibility guidelines
+The Midnight Tech visual style only works correctly with `gemini-3-pro-image-preview`.
 
 ## Article JSON Schema
 
-Generated articles must include:
 ```json
 {
   "key": "article_slug",
@@ -154,20 +94,20 @@ Generated articles must include:
   "cardTitle": "Short title for cards",
   "cardTag": "CATEGORY // SUBCATEGORY",
   "cardDescription": "One-line teaser",
-  "chartConfigs": {
-    "chart_main": { "type": "bar", "data": {...}, "title": "..." },
-    "chart_secondary": { "type": "line", "data": {...}, "title": "..." }
-  },
-  "sources": [
-    { "name": "Source Name", "score": 95, "url": "https://..." }
-  ],
+  "chartConfigs": { "chart_main": { "type": "bar", "data": {}, "title": "..." } },
+  "sources": [{ "name": "Source Name", "score": 95, "url": "https://..." }],
   "contextData": { "term": { "expanded": "Explanation" } },
-  "citationDatabase": { "src1": { "domain": "...", "trustScore": 95, ... } },
+  "citationDatabase": { "src1": { "domain": "...", "trustScore": 95 } },
   "content": "<p class='prose-text'>HTML content...</p>"
 }
 ```
 
-**CRITICAL**: Sources MUST include `score` field (0-100) for sorting in tabs.
+**Critical**: Sources MUST include `score` field (0-100) for sorting into Primary/Secondary/Tertiary tabs.
+
+### Parent/Child Essays
+- Parent articles: `childEssays: ['child_key']` array
+- Child articles: `isChildEssay: true`, `parentEssay: 'parent_key'`
+- Child essays are excluded from Trending section
 
 ## Content HTML Classes
 
@@ -176,134 +116,40 @@ Generated articles must include:
 | `.prose-text` | Body paragraphs |
 | `.prose-h2` | Section headings |
 | `.float-figure.right/left` | Magazine-style wrapped charts |
-| `.living-number` | Animated counters (data-target, data-suffix) |
-| `.fractal-trigger` | Expandable context terms |
+| `.living-number` | Animated counters (`data-target`, `data-suffix`) |
+| `.fractal-trigger` | Expandable context terms (triggers deep dives) |
 | `.citation-spade` | Source hover cards |
 | `.highlight-glow` | Emphasized text |
-
-## Known Issues / Technical Debt
-
-1. **Vercel 60s timeout**: Long articles may truncate. `chartConfigs` placed first in schema to preserve charts.
-2. **12 themes unused**: Users primarily want dark/light. Consider simplifying.
-3. **WCAG contrast**: Some color combinations may not meet AA standards.
 
 ## Environment Variables
 
 Required in `.env.local` or Vercel dashboard:
 - `ANTHROPIC_API_KEY` - Claude API key
 - `BLOB_READ_WRITE_TOKEN` - Vercel Blob storage token
+- `GOOGLE_AI_API_KEY` - Gemini API key (for infographics)
 
-## Deployment
+## Known Issues
 
-```bash
-# Deploy to production
-vercel --prod
+1. **Vercel 60s timeout**: Long articles may truncate. `chartConfigs` placed first in schema to preserve charts.
+2. **Article index**: If trending loads slowly, run `/api/admin/rebuild-index` to regenerate the index.
 
-# Check deployment status
-vercel ls
+## Payment Tiers (Future Implementation)
 
-# View logs
-vercel logs genuverity7.vercel.app --limit 50
-```
+When payment is implemented, concurrent generation limits will vary by tier:
 
-## File Structure
+| Tier | Concurrent Queries | Notes |
+|------|-------------------|-------|
+| **Free** | 1 | Basic access |
+| **Basic** | 3 | Light users |
+| **Pro** | 5 | Current default |
+| **Enterprise** | Unlimited | Premium tier |
 
-```
-GenuVerity7/
-├── api/
-│   └── index.py          # FastAPI backend (main logic)
-├── templates/
-│   └── essay_config.json # Template configuration
-├── article_cache/        # Local cache (dev only)
-├── infographics/         # Pre-generated Gemini infographics (PNG)
-├── docs/
-│   └── ROADMAP.md        # Feature roadmap & future plans
-├── index.html            # Full frontend SPA
-├── comparison.html       # Infographic style comparison tool
-├── CLAUDE.md             # This file
-├── requirements.txt      # Python dependencies
-└── vercel.json           # Vercel config
-```
+**Implementation Note**: The `MAX_CONCURRENT` constant in `submitQuickQuery()` (index.html ~line 8140) should be made dynamic based on user tier.
 
 ## User Preferences
 
-The user prefers:
 - Dark mode by default
 - Sources prioritized over AI analysis
 - Professional, clean layouts
 - Mobile-responsive design
 - Minimal unnecessary features
-
----
-
-## CURRENT SESSION CONTEXT (Dec 8, 2024)
-
-### Recently Completed (This Session)
-
-1. **Fixed Trending Links Bug** (commit b23cfe9)
-   - **Root cause**: JavaScript object keys starting with numbers (`14nm_stall`, `18a_tech`) caused syntax errors
-   - **Fix**: Renamed to `nm14_stall` and `tech_18a` in both object keys and `data-id` attributes
-   - Trending Investigations section now displays correctly
-
-2. **Sources Button Rework** (commit dd4e84f)
-   - Moved Sources button from floating position into navbar center
-   - Removed non-functional `nav-title-container` (text box + plus button)
-   - Cleaned up ~146 lines of obsolete CSS (collapsed glow, marquee title, add-to-queue)
-   - Button now shows: shield icon + "Sources" label + count badge + chevron
-   - Subtle pulse animation when closed, solid green when expanded
-   - Chevron rotates 180° when drawer opens
-
-3. **Parent/Child Essay Navigation** (earlier commits)
-   - Parent articles can have `childEssays: ['child_key']` array
-   - Child articles have `isChildEssay: true`, `parentEssay: 'parent_key'`
-   - Child essays excluded from Trending section via `if (report.isChildEssay) continue;`
-
-### Navbar Layout (Current)
-
-```
-+----------------------------------------------------------+
-| [G] GenuVerity  |  [Sources ▼ 12]  |  Research Lab  T L ? |
-+----------------------------------------------------------+
-```
-- Left: Logo (clickable → portal)
-- Center: Sources button (only visible on essay pages)
-- Right: Research Lab link, theme toggle, library, keyboard help
-
-### Pending Tasks
-
-- [ ] Add selection toolbar that works (Define/Ask/Deep Dive on text selection)
-- [ ] Add infographic generator tool to Research Lab
-- [ ] Increase to 15+ sources requirement for all articles
-- [ ] Plan bias analysis popup feature
-
-### Git Status
-
-```bash
-# Latest commits:
-dd4e84f refactor: Move Sources button into navbar center and cleanup
-b23cfe9 fix: Fix JavaScript syntax errors breaking trending section
-
-# Branch: main
-# Remote: origin/main (up to date)
-```
-
-### Quick Commands
-
-```bash
-# Start local dev server
-python3 server.py   # runs on port 8000
-
-# Deploy to Vercel
-vercel --prod
-
-# View logs
-vercel logs genuverity7.vercel.app --limit 50
-
-# Check recent commits
-git log --oneline -5
-```
-
-### Related Projects
-
-- **Research Lab Demo**: /Users/klop/Desktop/projects/gen-ui-essay-demo (Next.js on port 3001)
-- **Live URL**: https://gen-ui-essay-demo.vercel.app
