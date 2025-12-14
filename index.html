@@ -2627,6 +2627,206 @@
             border-left-color: var(--accent-teal);
         }
 
+        /* Generation Card in Left Panel */
+        .panel-gen-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .panel-gen-card.complete {
+            border-color: var(--accent-green);
+            background: rgba(48, 164, 108, 0.08);
+        }
+
+        .panel-gen-card.enhance {
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .panel-gen-card.enhance.complete {
+            border-color: rgba(6, 182, 212, 0.6);
+            background: rgba(6, 182, 212, 0.08);
+        }
+
+        .panel-gen-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.375rem;
+        }
+
+        .panel-gen-type {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .panel-gen-type.investigation { color: var(--accent-blue); }
+        .panel-gen-type.fact-check { color: #2dd4bf; }
+        .panel-gen-type.fractal { color: var(--accent-green); }
+        .panel-gen-type.enhance { color: #06b6d4; }
+
+        .panel-gen-percent {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--accent-warm);
+        }
+
+        .panel-gen-card.complete .panel-gen-percent {
+            color: var(--accent-green);
+        }
+
+        .panel-gen-card.enhance .panel-gen-percent {
+            color: #2dd4bf;
+        }
+
+        .panel-gen-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 0.375rem;
+        }
+
+        .panel-gen-progress {
+            height: 3px;
+            background: var(--bg-deep);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 0.25rem;
+        }
+
+        .panel-gen-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-warm), #f59e0b);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .panel-gen-card.complete .panel-gen-progress-bar {
+            background: var(--accent-green);
+        }
+
+        .panel-gen-card.enhance .panel-gen-progress-bar {
+            background: linear-gradient(90deg, #06b6d4, #2dd4bf);
+        }
+
+        .panel-gen-status {
+            font-size: 0.625rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .panel-gen-actions {
+            display: none;
+            gap: 0.375rem;
+        }
+
+        .panel-gen-card.complete .panel-gen-actions {
+            display: flex;
+        }
+
+        .panel-gen-btn {
+            flex: 1;
+            padding: 5px 8px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .panel-gen-btn.primary {
+            background: var(--accent-green);
+            color: #000;
+        }
+
+        .panel-gen-btn.primary:hover {
+            filter: brightness(1.1);
+        }
+
+        .panel-gen-btn.primary.enhance {
+            background: linear-gradient(135deg, #06b6d4, #0d9488);
+            color: #fff;
+        }
+
+        .panel-gen-btn.secondary {
+            background: var(--bg-deep);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        .panel-gen-btn.secondary:hover {
+            color: var(--text-main);
+        }
+
+        .panel-gen-empty {
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+        }
+
+        /* Navbar Generation Indicator */
+        .nav-gen-indicator {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(247, 107, 21, 0.15);
+            border: 1px solid rgba(247, 107, 21, 0.3);
+            border-radius: 20px;
+            color: var(--accent-warm);
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-gen-indicator.visible {
+            display: flex;
+        }
+
+        .nav-gen-indicator:hover {
+            background: rgba(247, 107, 21, 0.25);
+            border-color: rgba(247, 107, 21, 0.5);
+        }
+
+        .nav-gen-indicator .spinner {
+            width: 12px;
+            height: 12px;
+            animation: spin 1s linear infinite;
+        }
+
+        .nav-gen-indicator.complete {
+            background: rgba(48, 164, 108, 0.15);
+            border-color: rgba(48, 164, 108, 0.3);
+            color: var(--accent-green);
+        }
+
+        .nav-gen-indicator.complete:hover {
+            background: rgba(48, 164, 108, 0.25);
+            border-color: rgba(48, 164, 108, 0.5);
+        }
+
+        /* Hide floating badge when in report view on desktop (panels handle it) */
+        @media (min-width: 1024px) {
+            #view-report.active ~ #deep-dive-badge {
+                display: none !important;
+            }
+        }
+
         /* Related Card with Stash Button */
         .related-card {
             position: relative;
@@ -5856,6 +6056,11 @@
                     <a href="/methods.html" class="nav-link">Methods</a>
                 </div>
                 <div class="flex items-center gap-2">
+                    <!-- Generation Progress Indicator -->
+                    <div id="nav-gen-indicator" class="nav-gen-indicator" onclick="handleNavGenClick()" title="Research in progress">
+                        <i data-lucide="loader-2" class="spinner"></i>
+                        <span id="nav-gen-text">Generating...</span>
+                    </div>
                     <!-- Bookmarks/Library -->
                     <button onclick="toggleBookmarksSidebar()" class="theme-toggle" title="Research Library (L)">
                         <i data-lucide="library" class="w-4 h-4"></i>
@@ -6641,23 +6846,66 @@
                 }
             }
 
-            // Active Generations
+            // Active Generations - use same styled cards as left panel
             const genCount = document.getElementById('dash-gen-count');
             const genList = document.getElementById('dash-gen-list');
-            const activeGens = Object.values(activeGenerations || {});
 
-            if (genCount) genCount.textContent = activeGens.length;
+            if (genCount) genCount.textContent = activeGenerations.size;
 
             if (genList) {
-                if (activeGens.length === 0) {
-                    genList.innerHTML = '<div class="dashboard-empty">No active generations</div>';
+                if (activeGenerations.size === 0) {
+                    genList.innerHTML = '<div class="dashboard-empty">No active research</div>';
                 } else {
-                    genList.innerHTML = activeGens.map(gen => `
-                        <div class="dashboard-item">
-                            <span class="dashboard-item-title">${gen.topic}</span>
-                            <span class="dashboard-item-meta">${gen.status || 'generating'}</span>
-                        </div>
-                    `).join('');
+                    let genHtml = '';
+                    activeGenerations.forEach((gen, id) => {
+                        const isComplete = gen.percent === 100;
+                        const isEnhance = gen.type === 'enhance';
+                        const isFactCheck = gen.type === 'fact_check';
+                        const isInvestigation = gen.type === 'report' || gen.type === 'investigation';
+
+                        let typeInfo;
+                        if (isEnhance) {
+                            typeInfo = { icon: 'sparkles', label: 'Enhance', cssClass: 'enhance' };
+                        } else if (isFactCheck) {
+                            typeInfo = { icon: 'scale', label: 'Fact Check', cssClass: 'fact-check' };
+                        } else if (isInvestigation) {
+                            typeInfo = { icon: 'search', label: 'Investigation', cssClass: 'investigation' };
+                        } else {
+                            typeInfo = { icon: 'layers', label: 'Fractal', cssClass: 'fractal' };
+                        }
+
+                        let actionsHtml = '';
+                        if (isEnhance) {
+                            actionsHtml = isComplete ? `
+                                <button class="panel-gen-btn primary enhance" onclick="applyEnhancement()">Apply</button>
+                                <button class="panel-gen-btn secondary" onclick="dismissEnhancement(); removeGeneration('${id}')">Dismiss</button>
+                            ` : '';
+                        } else if (isComplete) {
+                            actionsHtml = `
+                                <button class="panel-gen-btn primary" onclick="viewCompletedGeneration('${id}')">View</button>
+                                <button class="panel-gen-btn secondary" onclick="removeGeneration('${id}')">Dismiss</button>
+                            `;
+                        }
+
+                        genHtml += `
+                            <div class="panel-gen-card ${isComplete ? 'complete' : ''} ${isEnhance ? 'enhance' : ''}" id="dash-gen-${id}">
+                                <div class="panel-gen-header">
+                                    <span class="panel-gen-type ${typeInfo.cssClass}">
+                                        <i data-lucide="${typeInfo.icon}" class="w-3 h-3"></i>
+                                        ${typeInfo.label}
+                                    </span>
+                                    <span class="panel-gen-percent">${gen.percent}%</span>
+                                </div>
+                                <div class="panel-gen-title" title="${gen.fullTopic}">${gen.topic}</div>
+                                <div class="panel-gen-progress">
+                                    <div class="panel-gen-progress-bar" style="width: ${gen.percent}%"></div>
+                                </div>
+                                <div class="panel-gen-status">${gen.status}</div>
+                                <div class="panel-gen-actions">${actionsHtml}</div>
+                            </div>
+                        `;
+                    });
+                    genList.innerHTML = genHtml;
                 }
             }
 
@@ -6867,21 +7115,33 @@
                 return;
             }
 
-            const article = reports[dashboardState.currentArticleKey];
-            if (!article) return;
+            const key = dashboardState.currentArticleKey;
+            const article = reports[key];
+
+            // Get title from DOM if article not in reports (dynamically loaded articles)
+            let title = key;
+            if (article) {
+                title = article.cardTitle || article.title || key;
+            } else {
+                // Try to get title from the DOM
+                const titleEl = document.getElementById('report-title');
+                if (titleEl && titleEl.textContent) {
+                    title = titleEl.textContent;
+                }
+            }
 
             const stash = getSessionStash();
 
             // Check if already stashed
-            if (stash.find(item => item.key === dashboardState.currentArticleKey)) {
+            if (stash.find(item => item.key === key)) {
                 showToast('Already in stash', '', 'info');
                 return;
             }
 
             // Add to stash (max 5 items, LIFO)
             stash.unshift({
-                key: dashboardState.currentArticleKey,
-                title: article.cardTitle || article.title || dashboardState.currentArticleKey,
+                key: key,
+                title: title,
                 stashedAt: Date.now(),
                 stashedFrom: null
             });
@@ -6893,7 +7153,26 @@
 
             saveSessionStash(stash);
             renderStash();
+            updateStashCounts();
             showToast('Article stashed', 'Press [ to view', 'success');
+        }
+
+        // Update all stash count displays
+        function updateStashCounts() {
+            const stash = getSessionStash();
+            const count = stash.length;
+
+            // Left panel stash count
+            const stashCount = document.getElementById('stash-count');
+            if (stashCount) stashCount.textContent = count;
+
+            // Focus footer stash count
+            const focusStashCount = document.getElementById('focus-stash-count');
+            if (focusStashCount) focusStashCount.textContent = count;
+
+            // Left collapsed count
+            const leftCollapsedCount = document.getElementById('left-collapsed-count');
+            if (leftCollapsedCount) leftCollapsedCount.textContent = count;
         }
 
         // Remove item from stash
@@ -6901,6 +7180,7 @@
             const stash = getSessionStash().filter(item => item.key !== key);
             saveSessionStash(stash);
             renderStash();
+            updateStashCounts();
         }
 
         // Render stash panel
@@ -11542,16 +11822,29 @@
             gen.percent = Math.min(percent, 99); // Keep at 99% until actually complete
             gen.status = status || gen.status;
 
-            // Update the specific card
-            const card = document.getElementById(`gen-card-${genId}`);
-            if (card) {
-                const progressBar = card.querySelector('.gen-card-progress-bar');
-                const percentEl = card.querySelector('.gen-card-percent');
-                const statusEl = card.querySelector('.gen-card-status');
+            // Update both the floating badge card and panel card
+            const cards = [
+                document.getElementById(`gen-card-${genId}`),
+                document.getElementById(`panel-gen-${genId}`)
+            ];
 
-                if (progressBar) progressBar.style.width = `${gen.percent}%`;
-                if (percentEl) percentEl.textContent = `${gen.percent}%`;
-                if (statusEl) statusEl.textContent = gen.status;
+            cards.forEach(card => {
+                if (card) {
+                    const progressBar = card.querySelector('[class*="progress-bar"]');
+                    const percentEl = card.querySelector('[class*="percent"]');
+                    const statusEl = card.querySelector('[class*="status"]');
+
+                    if (progressBar) progressBar.style.width = `${gen.percent}%`;
+                    if (percentEl) percentEl.textContent = `${gen.percent}%`;
+                    if (statusEl) statusEl.textContent = gen.status;
+                }
+            });
+
+            // Update navbar indicator text
+            const activeCount = Array.from(activeGenerations.values()).filter(g => g.percent < 100).length;
+            const navText = document.getElementById('nav-gen-text');
+            if (navText && activeCount > 0) {
+                navText.textContent = `${activeCount} generating...`;
             }
         }
 
@@ -11564,18 +11857,27 @@
             gen.key = articleKey;
             gen.data = articleData;
 
-            const card = document.getElementById(`gen-card-${genId}`);
-            if (card) {
-                card.classList.add('complete');
-                const progressBar = card.querySelector('.gen-card-progress-bar');
-                const percentEl = card.querySelector('.gen-card-percent');
-                const statusEl = card.querySelector('.gen-card-status');
+            // Update both the floating badge card and panel card
+            const cards = [
+                document.getElementById(`gen-card-${genId}`),
+                document.getElementById(`panel-gen-${genId}`)
+            ];
 
-                if (progressBar) progressBar.style.width = '100%';
-                if (percentEl) percentEl.textContent = '100%';
-                if (statusEl) statusEl.textContent = 'Ready to view';
-            }
+            cards.forEach(card => {
+                if (card) {
+                    card.classList.add('complete');
+                    const progressBar = card.querySelector('[class*="progress-bar"]');
+                    const percentEl = card.querySelector('[class*="percent"]');
+                    const statusEl = card.querySelector('[class*="status"]');
 
+                    if (progressBar) progressBar.style.width = '100%';
+                    if (percentEl) percentEl.textContent = '100%';
+                    if (statusEl) statusEl.textContent = 'Ready to view';
+                }
+            });
+
+            // Full re-render to show action buttons
+            renderGenerationCards();
             updateBadgeGenerationState();
         }
 
@@ -11597,87 +11899,184 @@
         }
 
         function renderGenerationCards() {
-            const container = document.getElementById('badge-generations');
-            if (!container) return;
-
-            if (activeGenerations.size === 0) {
-                container.innerHTML = '';
-                return;
-            }
-
-            let html = `
-                <div class="badge-generations-header">
-                    <i data-lucide="loader-2" class="w-3 h-3 spin"></i>
-                    Generating
-                    <span class="gen-count">${activeGenerations.size}</span>
-                </div>
-            `;
-
-            activeGenerations.forEach((gen, id) => {
-                const isComplete = gen.percent === 100;
+            // Get generation type info helper
+            function getGenTypeInfo(gen) {
                 const isEnhance = gen.type === 'enhance';
                 const isFactCheck = gen.type === 'fact_check';
                 const isInvestigation = gen.type === 'report' || gen.type === 'investigation';
 
-                // Determine type-specific display
-                let typeIcon, typeColor, typeLabel;
                 if (isEnhance) {
-                    typeIcon = 'sparkles';
-                    typeColor = '#06b6d4';
-                    typeLabel = '✦ Enhance';
+                    return { icon: 'sparkles', color: '#06b6d4', label: 'Enhance', cssClass: 'enhance' };
                 } else if (isFactCheck) {
-                    typeIcon = 'scale';
-                    typeColor = '#2dd4bf';
-                    typeLabel = '⚖ Fact Check';
+                    return { icon: 'scale', color: '#2dd4bf', label: 'Fact Check', cssClass: 'fact-check' };
                 } else if (isInvestigation) {
-                    typeIcon = 'search';
-                    typeColor = 'var(--accent-blue)';
-                    typeLabel = '🔍 Investigation';
+                    return { icon: 'search', color: 'var(--accent-blue)', label: 'Investigation', cssClass: 'investigation' };
                 } else {
-                    typeIcon = 'layers';
-                    typeColor = 'var(--accent-green)';
-                    typeLabel = '📚 Fractal';
+                    return { icon: 'layers', color: 'var(--accent-green)', label: 'Fractal', cssClass: 'fractal' };
                 }
+            }
 
-                // Different actions for enhance vs deep dive
-                let actionsHtml = '';
-                if (isEnhance) {
-                    actionsHtml = isComplete ? `
-                        <button class="gen-card-btn primary enhance" onclick="applyEnhancement()">Apply</button>
-                        <button class="gen-card-btn secondary" onclick="dismissEnhancement(); removeGeneration('${id}')">Dismiss</button>
-                    ` : `
-                        <button class="gen-card-btn secondary" onclick="dismissEnhancement(); removeGeneration('${id}')">Cancel</button>
-                    `;
+            // Count active (in-progress) and complete generations
+            const activeCount = Array.from(activeGenerations.values()).filter(g => g.percent < 100).length;
+            const completeCount = activeGenerations.size - activeCount;
+
+            // === 1. Update Navbar Indicator ===
+            const navIndicator = document.getElementById('nav-gen-indicator');
+            const navText = document.getElementById('nav-gen-text');
+            if (navIndicator && navText) {
+                if (activeGenerations.size === 0) {
+                    navIndicator.classList.remove('visible', 'complete');
+                } else if (activeCount > 0) {
+                    navIndicator.classList.add('visible');
+                    navIndicator.classList.remove('complete');
+                    navText.textContent = `${activeCount} generating...`;
+                    navIndicator.title = 'Research in progress - click to view';
+                } else if (completeCount > 0) {
+                    navIndicator.classList.add('visible', 'complete');
+                    navText.textContent = `${completeCount} ready`;
+                    navIndicator.title = 'Research complete - click to view';
+                }
+            }
+
+            // === 2. Update Left Panel Generation List ===
+            const panelGenList = document.getElementById('gen-list');
+            const panelGenCount = document.getElementById('gen-count');
+
+            if (panelGenCount) {
+                panelGenCount.textContent = activeGenerations.size;
+            }
+
+            if (panelGenList) {
+                if (activeGenerations.size === 0) {
+                    panelGenList.innerHTML = '<div class="panel-gen-empty">No active research</div>';
                 } else {
-                    actionsHtml = `
-                        <button class="gen-card-btn primary" onclick="viewCompletedGeneration('${id}')">View</button>
-                        <button class="gen-card-btn secondary" onclick="removeGeneration('${id}')">Dismiss</button>
-                    `;
+                    let panelHtml = '';
+                    activeGenerations.forEach((gen, id) => {
+                        const typeInfo = getGenTypeInfo(gen);
+                        const isComplete = gen.percent === 100;
+                        const isEnhance = gen.type === 'enhance';
+
+                        // Build action buttons
+                        let actionsHtml = '';
+                        if (isEnhance) {
+                            actionsHtml = isComplete ? `
+                                <button class="panel-gen-btn primary enhance" onclick="applyEnhancement()">Apply</button>
+                                <button class="panel-gen-btn secondary" onclick="dismissEnhancement(); removeGeneration('${id}')">Dismiss</button>
+                            ` : `
+                                <button class="panel-gen-btn secondary" onclick="dismissEnhancement(); removeGeneration('${id}')">Cancel</button>
+                            `;
+                        } else {
+                            actionsHtml = isComplete ? `
+                                <button class="panel-gen-btn primary" onclick="viewCompletedGeneration('${id}')">View</button>
+                                <button class="panel-gen-btn secondary" onclick="removeGeneration('${id}')">Dismiss</button>
+                            ` : '';
+                        }
+
+                        panelHtml += `
+                            <div class="panel-gen-card ${isComplete ? 'complete' : ''} ${isEnhance ? 'enhance' : ''}" id="panel-gen-${id}">
+                                <div class="panel-gen-header">
+                                    <span class="panel-gen-type ${typeInfo.cssClass}">
+                                        <i data-lucide="${typeInfo.icon}" class="w-3 h-3"></i>
+                                        ${typeInfo.label}
+                                    </span>
+                                    <span class="panel-gen-percent">${gen.percent}%</span>
+                                </div>
+                                <div class="panel-gen-title" title="${gen.fullTopic}">${gen.topic}</div>
+                                <div class="panel-gen-progress">
+                                    <div class="panel-gen-progress-bar" style="width: ${gen.percent}%"></div>
+                                </div>
+                                <div class="panel-gen-status">${gen.status}</div>
+                                <div class="panel-gen-actions">${actionsHtml}</div>
+                            </div>
+                        `;
+                    });
+                    panelGenList.innerHTML = panelHtml;
                 }
+            }
 
-                html += `
-                    <div class="gen-card ${isComplete ? 'complete' : ''} ${isEnhance ? 'enhance' : ''}" id="gen-card-${id}">
-                        <div class="gen-card-header">
-                            <span class="gen-card-type" style="color: ${typeColor}; font-size: 0.65rem;">
-                                <i data-lucide="${typeIcon}" class="w-3 h-3 inline"></i>
-                                ${typeLabel}
-                            </span>
-                            <span class="gen-card-percent">${gen.percent}%</span>
+            // === 3. Update Floating Badge (for mobile/non-article views) ===
+            const badgeContainer = document.getElementById('badge-generations');
+            if (badgeContainer) {
+                if (activeGenerations.size === 0) {
+                    badgeContainer.innerHTML = '';
+                } else {
+                    let badgeHtml = `
+                        <div class="badge-generations-header">
+                            <i data-lucide="loader-2" class="w-3 h-3 spin"></i>
+                            Generating
+                            <span class="gen-count">${activeGenerations.size}</span>
                         </div>
-                        <div class="gen-card-title" title="${gen.fullTopic}">${gen.topic}</div>
-                        <div class="gen-card-progress">
-                            <div class="gen-card-progress-bar ${isEnhance ? 'enhance' : ''}" style="width: ${gen.percent}%"></div>
-                        </div>
-                        <div class="gen-card-status">${gen.status}</div>
-                        <div class="gen-card-actions">
-                            ${actionsHtml}
-                        </div>
-                    </div>
-                `;
-            });
+                    `;
 
-            container.innerHTML = html;
+                    activeGenerations.forEach((gen, id) => {
+                        const typeInfo = getGenTypeInfo(gen);
+                        const isComplete = gen.percent === 100;
+                        const isEnhance = gen.type === 'enhance';
+
+                        let actionsHtml = '';
+                        if (isEnhance) {
+                            actionsHtml = isComplete ? `
+                                <button class="gen-card-btn primary enhance" onclick="applyEnhancement()">Apply</button>
+                                <button class="gen-card-btn secondary" onclick="dismissEnhancement(); removeGeneration('${id}')">Dismiss</button>
+                            ` : `
+                                <button class="gen-card-btn secondary" onclick="dismissEnhancement(); removeGeneration('${id}')">Cancel</button>
+                            `;
+                        } else {
+                            actionsHtml = `
+                                <button class="gen-card-btn primary" onclick="viewCompletedGeneration('${id}')">View</button>
+                                <button class="gen-card-btn secondary" onclick="removeGeneration('${id}')">Dismiss</button>
+                            `;
+                        }
+
+                        badgeHtml += `
+                            <div class="gen-card ${isComplete ? 'complete' : ''} ${isEnhance ? 'enhance' : ''}" id="gen-card-${id}">
+                                <div class="gen-card-header">
+                                    <span class="gen-card-type" style="color: ${typeInfo.color}; font-size: 0.65rem;">
+                                        <i data-lucide="${typeInfo.icon}" class="w-3 h-3 inline"></i>
+                                        ${typeInfo.label}
+                                    </span>
+                                    <span class="gen-card-percent">${gen.percent}%</span>
+                                </div>
+                                <div class="gen-card-title" title="${gen.fullTopic}">${gen.topic}</div>
+                                <div class="gen-card-progress">
+                                    <div class="gen-card-progress-bar ${isEnhance ? 'enhance' : ''}" style="width: ${gen.percent}%"></div>
+                                </div>
+                                <div class="gen-card-status">${gen.status}</div>
+                                <div class="gen-card-actions">
+                                    ${actionsHtml}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    badgeContainer.innerHTML = badgeHtml;
+                }
+            }
+
+            // Re-initialize lucide icons
             if (window.lucide) lucide.createIcons();
+        }
+
+        // Handle click on navbar generation indicator
+        function handleNavGenClick() {
+            const viewReport = document.getElementById('view-report');
+            const isReportView = viewReport && viewReport.classList.contains('active');
+
+            if (isReportView) {
+                // If viewing an article, ensure left panel is open and scroll to generating section
+                const leftPanel = document.getElementById('dashboard-panel-left');
+                if (leftPanel && leftPanel.classList.contains('collapsed')) {
+                    toggleDashboardPanel('left');
+                }
+                // Scroll to generating section
+                const genSection = document.getElementById('generating-section');
+                if (genSection) {
+                    genSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            } else {
+                // If on portal/other view, go to dashboard
+                switchView('view-dashboard');
+            }
         }
 
         function updateBadgeGenerationState() {
