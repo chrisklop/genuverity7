@@ -4432,6 +4432,36 @@
             box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
         }
 
+        /* Loading state for generate button */
+        #generate-search-box .generate-btn:disabled,
+        #generate-search-box .generate-btn.loading {
+            opacity: 0.7;
+            cursor: wait;
+            pointer-events: none;
+            transform: none;
+        }
+
+        #generate-search-box .generate-btn.loading {
+            animation: pulse-loading 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse-loading {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        /* Quick query button loading states */
+        .quick-query-btn:disabled,
+        .quick-query-btn.loading {
+            opacity: 0.7;
+            cursor: wait;
+            pointer-events: none;
+        }
+
+        .quick-query-btn.loading {
+            animation: pulse-loading 1s ease-in-out infinite;
+        }
+
         /* Browse by Type - Tabbed Interface */
         .browse-type-tabs {
             display: flex;
@@ -4811,6 +4841,23 @@
 
         .fig-deep-dive.queued:hover {
             transform: scale(1);
+        }
+
+        /* Loading state for fig-deep-dive - shows immediately on click */
+        .fig-deep-dive.loading {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            pointer-events: none;
+            animation: spin-loader 1s linear infinite;
+        }
+
+        .fig-deep-dive.loading::before {
+            content: '⟳';
+            font-size: 0.9rem;
+        }
+
+        @keyframes spin-loader {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         /* Light mode adjustments for overlay */
@@ -6258,7 +6305,7 @@
         /* === FLOATING DEEP DIVE BADGE === */
         #deep-dive-badge {
             position: fixed;
-            bottom: 24px;
+            bottom: 120px;
             right: 24px;
             z-index: 90;
             background: var(--bg-card);
@@ -6838,10 +6885,6 @@
             <!-- Right: Other buttons -->
             <div class="flex items-center gap-4 flex-1 justify-end">
                 <div class="hidden md:flex gap-6 text-sm font-medium">
-                    <a href="https://gen-ui-essay-demo.vercel.app" target="_blank" class="nav-link" style="color: var(--accent-blue);">
-                        <i data-lucide="flask-conical" class="w-3.5 h-3.5 inline mr-1"></i>Research Lab
-                    </a>
-                    <a class="nav-link">Manifesto</a>
                     <a href="/methods.html" class="nav-link">Methods</a>
                 </div>
                 <div class="flex items-center gap-2">
@@ -6863,8 +6906,8 @@
                         <i data-lucide="sun" class="icon-sun w-4 h-4"></i>
                         <i data-lucide="moon" class="icon-moon w-4 h-4"></i>
                     </button>
-                    <!-- Keyboard Shortcuts Help -->
-                    <button onclick="toggleShortcutsModal()" class="theme-toggle" title="Keyboard shortcuts (?)">
+                    <!-- Keyboard Shortcuts Help (desktop only) -->
+                    <button onclick="toggleShortcutsModal()" class="theme-toggle hidden md:flex" title="Keyboard shortcuts (?)">
                         <i data-lucide="keyboard" class="w-4 h-4"></i>
                     </button>
                     <!-- User Menu / Dashboard Access -->
@@ -7007,8 +7050,8 @@
                             <span style="color: #1d9bf0;">X/Twitter</span> •
                             <span style="color: #ff0000;">YouTube</span> •
                             <span style="color: #10b981;">Screenshots</span>
-                            <span style="opacity: 0.5; margin-left: 8px;">|</span>
-                            <span style="opacity: 0.7; margin-left: 8px;">Shift+Enter new line • Enter submit</span>
+                            <span class="hidden md:inline" style="opacity: 0.5; margin-left: 8px;">|</span>
+                            <span class="hidden md:inline" style="opacity: 0.7; margin-left: 8px;">Shift+Enter new line • Enter submit</span>
                         </p>
                     </div>
                 </div>
@@ -7244,7 +7287,7 @@
                                     Fact Check
                                 </button>
                             </div>
-                            <div class="quick-query-hint">Press Enter to investigate, Shift+Enter for fact check</div>
+                            <div class="quick-query-hint hidden md:block">Press Enter to investigate, Shift+Enter for fact check</div>
                         </div>
                     </div>
 
@@ -13864,6 +13907,42 @@
 
         // Initialize on page load and after article loads
         document.addEventListener('DOMContentLoaded', initLightboxHandlers);
+
+        // === INSTANT CLICK FEEDBACK FOR AI BUTTONS ===
+        // Capture phase handler to add loading state BEFORE the onclick handler runs
+        document.addEventListener('click', function(e) {
+            // Fig deep dive buttons (+ buttons on charts)
+            if (e.target.classList.contains('fig-deep-dive') && !e.target.classList.contains('queued')) {
+                e.target.classList.add('loading');
+                // Remove loading class once queued (handled by handleDeepDive adding .queued)
+                setTimeout(() => e.target.classList.remove('loading'), 500);
+            }
+
+            // Generate button (main search)
+            if (e.target.closest('#generate-btn') || e.target.closest('.generate-btn')) {
+                const btn = e.target.closest('#generate-btn') || e.target.closest('.generate-btn');
+                if (!btn.disabled) {
+                    btn.classList.add('loading');
+                }
+            }
+
+            // Quick query buttons
+            if (e.target.closest('.quick-query-btn')) {
+                const btn = e.target.closest('.quick-query-btn');
+                if (!btn.disabled) {
+                    btn.classList.add('loading');
+                    // Remove after short delay since these trigger immediately
+                    setTimeout(() => btn.classList.remove('loading'), 800);
+                }
+            }
+
+            // Queue deep dive buttons
+            if (e.target.closest('.queue-deepdive-btn') && !e.target.closest('.queue-deepdive-btn').classList.contains('queued')) {
+                const btn = e.target.closest('.queue-deepdive-btn');
+                btn.classList.add('loading');
+                setTimeout(() => btn.classList.remove('loading'), 500);
+            }
+        }, true); // Capture phase - fires BEFORE the bubbling phase handlers
 
         // Handle deep dive from infographic - extracts context automatically
         function handleDeepDive(topicOrElement) {
