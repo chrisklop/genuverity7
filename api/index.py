@@ -646,21 +646,22 @@ def blob_list(prefix: str = "articles/") -> list:
 def blob_delete_by_url(url: str) -> bool:
     """Delete a blob by its URL. Returns True on success.
 
-    Uses Vercel Blob API delete endpoint with url parameter.
+    Uses Vercel Blob API POST /delete endpoint with JSON body.
     """
     if not BLOB_READ_WRITE_TOKEN:
         return False
 
     try:
-        response = requests.delete(
-            BLOB_API_BASE,
+        response = requests.post(
+            f"{BLOB_API_BASE}/delete",
             headers={
                 "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
+                "Content-Type": "application/json",
                 "x-api-version": "7"
             },
-            params={"url": url}
+            json={"urls": [url]}
         )
-        success = response.status_code in (200, 204)
+        success = response.status_code == 200
         if not success:
             print(f"Blob DELETE failed ({response.status_code}): {url[:50]}...")
             print(f"Response: {response.text[:200]}")
