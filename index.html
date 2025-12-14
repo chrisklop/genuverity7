@@ -3503,6 +3503,74 @@
             font-style: italic;
         }
 
+        /* === FACT CHECK STORY SECTION === */
+        .fact-check-story {
+            margin: 24px 0 32px 0;
+            padding: 24px;
+            background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-card) 100%);
+            border-left: 4px solid var(--accent-blue);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .fact-check-story .prose-h2 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1.4rem;
+            color: var(--text-main);
+        }
+
+        .fact-check-story .prose-text {
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .fact-check-story .prose-text:last-child {
+            margin-bottom: 0;
+        }
+
+        /* === FACT CHECK GO DEEPER CTA === */
+        .fact-check-deeper {
+            margin: 32px 0;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .fact-check-deeper .deeper-prompt {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin: 0 0 12px 0;
+            font-weight: 600;
+        }
+
+        .fact-check-deeper .deeper-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .fact-check-deeper .deeper-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .fact-check-deeper .deeper-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 12px 0 0 0;
+        }
+
         /* === FACT CHECK WIKIPEDIA-STYLE TABS === */
         .fact-check-tabs {
             display: flex;
@@ -4003,6 +4071,107 @@
             line-height: 1.5;
         }
 
+        /* Pasted content preview */
+        .pasted-content-preview {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .pasted-content-preview.extracting {
+            border-color: #3b82f6;
+            animation: pulse-border 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { border-color: #3b82f6; }
+            50% { border-color: #8b5cf6; }
+        }
+
+        .pasted-image-thumb {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .pasted-content-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .pasted-content-type {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #3b82f6;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .pasted-content-type.twitter { color: #1d9bf0; }
+        .pasted-content-type.youtube { color: #ff0000; }
+        .pasted-content-type.image { color: #10b981; }
+
+        .pasted-content-text {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            line-height: 1.4;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .pasted-content-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .pasted-content-close {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .pasted-content-close:hover {
+            background: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .extracting-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border-color);
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         #generate-search-box .generate-controls {
             display: flex;
             align-items: center;
@@ -4049,7 +4218,7 @@
         }
 
         .mode-toggle-btn.active.fact-check {
-            background: #2dd4bf;
+            background: #06b6d4;
         }
 
         .mode-toggle-btn i {
@@ -4573,6 +4742,231 @@
         .lightbox-caption .fig-deep-dive {
             font-size: 0.75rem;
             padding: 4px 12px;
+        }
+
+        /* === SIMILAR ARTICLES MODAL === */
+        #similar-articles-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        #similar-articles-modal.visible {
+            background: rgba(0, 0, 0, 0.6);
+            pointer-events: auto;
+            opacity: 1;
+            backdrop-filter: blur(4px);
+        }
+
+        .similar-modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 540px;
+            max-height: 80vh;
+            overflow: hidden;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        #similar-articles-modal.visible .similar-modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .similar-modal-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .similar-modal-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .similar-modal-header h3 i {
+            color: #10b981;
+        }
+
+        .similar-modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .similar-modal-close:hover {
+            background: var(--bg-elevated);
+            color: var(--text-main);
+        }
+
+        .similar-modal-query {
+            padding: 1rem 1.5rem;
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .similar-modal-query .query-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .similar-modal-query .query-text {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .similar-modal-body {
+            padding: 1rem 1.5rem;
+            max-height: 340px;
+            overflow-y: auto;
+        }
+
+        .similar-intro {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .similar-article-card {
+            padding: 0.875rem 1rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .similar-article-card:hover {
+            border-color: #10b981;
+            transform: translateX(4px);
+        }
+
+        .similar-article-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .similar-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .similar-match-badge {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .similar-type-badge {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: var(--bg-card);
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .similar-type-badge.fact-check {
+            background: rgba(45, 212, 191, 0.15);
+            color: #2dd4bf;
+        }
+
+        .similar-article-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .similar-article-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+            line-height: 1.4;
+        }
+
+        .similar-modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .similar-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .similar-btn-generate {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+        }
+
+        .similar-btn-generate:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+
+        .similar-btn-cancel {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .similar-btn-cancel:hover {
+            background: var(--bg-elevated);
+            color: var(--text-main);
+        }
+
+        .free-badge {
+            font-size: 0.65rem;
+            padding: 2px 5px;
+            background: #10b981;
+            color: white;
+            border-radius: 3px;
+            margin-left: 0.25rem;
         }
 
         /* Make float-figure clickable */
@@ -6200,6 +6594,37 @@
         </div>
     </div>
 
+    <!-- Similar Articles Modal -->
+    <div id="similar-articles-modal" onclick="closeSimilarModal(event)">
+        <div class="similar-modal-content" onclick="event.stopPropagation()">
+            <div class="similar-modal-header">
+                <h3><i data-lucide="search-check" class="w-5 h-5"></i> Related Content Found</h3>
+                <button class="similar-modal-close" onclick="closeSimilarModal()">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="similar-modal-query">
+                <div class="query-label">Your search</div>
+                <div class="query-text" id="similar-query-text"></div>
+            </div>
+            <div class="similar-modal-body">
+                <p class="similar-intro">We found existing articles that might answer your question. Click one to read it for free, or generate a fresh analysis.</p>
+                <div id="similar-articles-list">
+                    <!-- Similar articles will be rendered here -->
+                </div>
+            </div>
+            <div class="similar-modal-footer">
+                <button class="similar-btn similar-btn-cancel" onclick="closeSimilarModal()">
+                    Cancel
+                </button>
+                <button class="similar-btn similar-btn-generate" id="similar-generate-btn">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    Generate New
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Receipt Hover Element -->
     <div id="receipt-tooltip"
         class="receipt-card fixed hidden z-[100] w-[320px] bg-[#141419] border border-[#3f3f46] rounded-lg p-4 shadow-2xl pointer-events-none transition-opacity duration-200 opacity-0">
@@ -6357,8 +6782,23 @@
                     <!-- Search Box -->
                     <div class="center-search-container">
                         <div id="generate-search-box">
+                            <!-- Pasted content preview (hidden by default) -->
+                            <div id="pasted-content-preview" class="pasted-content-preview" style="display: none;">
+                                <img id="pasted-image-thumb" class="pasted-image-thumb" style="display: none;" alt="Pasted image">
+                                <div class="pasted-content-info">
+                                    <div id="pasted-content-type" class="pasted-content-type">
+                                        <span class="extracting-spinner"></span>
+                                        <span id="pasted-type-label">Extracting claim...</span>
+                                    </div>
+                                    <div id="pasted-content-text" class="pasted-content-text"></div>
+                                    <div id="pasted-content-meta" class="pasted-content-meta"></div>
+                                </div>
+                                <button class="pasted-content-close" onclick="clearPastedContent()" title="Clear">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                </button>
+                            </div>
                             <textarea id="generate-input"
-                                placeholder="What do you want to investigate? Paste a claim, meme text, or question..."
+                                placeholder="Type a claim, question, or paste a tweet/YouTube link/meme screenshot..."
                                 class="w-full px-4 py-3 rounded-xl border text-sm"
                                 style="background: var(--bg-card); border-color: var(--border-color); color: var(--text-main);"
                                 oninput="updateGenerateMode(this.value)"
@@ -6381,7 +6821,14 @@
                                 </button>
                             </div>
                         </div>
-                        <p class="text-xs mt-2" style="color: var(--text-muted);">Shift+Enter for new line • Enter to submit</p>
+                        <p class="text-xs mt-2" style="color: var(--text-muted);">
+                            <span style="opacity: 0.7;">Paste:</span>
+                            <span style="color: #1d9bf0;">X/Twitter</span> •
+                            <span style="color: #ff0000;">YouTube</span> •
+                            <span style="color: #10b981;">Screenshots</span>
+                            <span style="opacity: 0.5; margin-left: 8px;">|</span>
+                            <span style="opacity: 0.7; margin-left: 8px;">Shift+Enter new line • Enter submit</span>
+                        </p>
                     </div>
                 </div>
 
@@ -6930,6 +7377,11 @@
                 if (typeof updateUrlForPortal === 'function') {
                     updateUrlForPortal();
                 }
+                // Reset center panel to landing state (hide article, show search)
+                const centerLanding = document.getElementById('center-landing');
+                const centerArticle = document.getElementById('center-article');
+                if (centerLanding) centerLanding.style.display = 'flex';
+                if (centerArticle) centerArticle.classList.remove('active');
             }
 
             // Render dashboard when switching to dashboard view
@@ -11319,13 +11771,56 @@
             }
         }
 
-        // Trigger generate from search box - routes to fact check or investigation
-        function triggerGenerate() {
+        // Trigger generate from search box - checks for similar articles first
+        async function triggerGenerate() {
             const input = document.getElementById('generate-input');
             const topic = input?.value?.trim();
-            if (topic) {
-                // Use user's manual selection if set, otherwise use fact_check as default
-                const mode = userSelectedMode !== null ? userSelectedMode : 'fact_check';
+            if (!topic) return;
+
+            // Use user's manual selection if set, otherwise use fact_check as default
+            const mode = userSelectedMode !== null ? userSelectedMode : 'fact_check';
+
+            // Show brief checking indicator
+            const searchBtn = document.querySelector('#generate-search-box button');
+            const originalBtnContent = searchBtn ? searchBtn.innerHTML : '';
+            if (searchBtn) {
+                searchBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>';
+                searchBtn.disabled = true;
+                lucide.createIcons();
+            }
+
+            try {
+                // Check cache for exact match or similar articles
+                const cacheResult = await checkIfCached(topic);
+
+                // Restore button
+                if (searchBtn) {
+                    searchBtn.innerHTML = originalBtnContent;
+                    searchBtn.disabled = false;
+                    lucide.createIcons();
+                }
+
+                // If exact match, load it directly (free)
+                if (cacheResult.cached && cacheResult.article) {
+                    input.value = '';
+                    userSelectedMode = null;
+                    updateModeToggleUI('fact_check');
+                    loadReport(cacheResult.article.key);
+                    showNotification('Found existing article - loaded for free!', 'success');
+                    return;
+                }
+
+                // If similar articles found, show modal to let user choose
+                if (cacheResult.similar && cacheResult.similar.length > 0) {
+                    showSimilarArticlesModal(topic, cacheResult.similar, mode);
+                    // Don't clear input yet - user might cancel
+                    return;
+                }
+
+                // No matches - proceed with generation
+                input.value = '';
+                userSelectedMode = null;
+                updateModeToggleUI('fact_check');
 
                 if (mode === 'fact_check') {
                     generateFactCheck(topic);
@@ -11333,15 +11828,188 @@
                 } else {
                     generateReport(topic);
                 }
-
-                // Clear input and reset mode selection to default (fact_check)
+            } catch (e) {
+                console.error('Cache check failed:', e);
+                // Restore button and proceed with generation anyway
+                if (searchBtn) {
+                    searchBtn.innerHTML = originalBtnContent;
+                    searchBtn.disabled = false;
+                    lucide.createIcons();
+                }
                 input.value = '';
                 userSelectedMode = null;
                 updateModeToggleUI('fact_check');
+
+                if (mode === 'fact_check') {
+                    generateFactCheck(topic);
+                } else {
+                    generateReport(topic);
+                }
             }
         }
 
         // Initialize - start on portal view (no default report load)
+
+        // ============================================
+        // PASTE HANDLER: Images, Twitter/X links, YouTube links
+        // ============================================
+
+        let extractedClaimData = null; // Store extracted claim from paste
+
+        function clearPastedContent() {
+            extractedClaimData = null;
+            const preview = document.getElementById('pasted-content-preview');
+            if (preview) preview.style.display = 'none';
+            document.getElementById('pasted-image-thumb').style.display = 'none';
+            document.getElementById('generate-input').placeholder = 'Type a claim, question, or paste a tweet/YouTube link/meme screenshot...';
+        }
+
+        function showPastedPreview(type, isExtracting = true) {
+            const preview = document.getElementById('pasted-content-preview');
+            const typeEl = document.getElementById('pasted-content-type');
+            const textEl = document.getElementById('pasted-content-text');
+            const metaEl = document.getElementById('pasted-content-meta');
+            const labelEl = document.getElementById('pasted-type-label');
+
+            preview.style.display = 'flex';
+            preview.classList.toggle('extracting', isExtracting);
+
+            if (isExtracting) {
+                typeEl.innerHTML = '<span class="extracting-spinner"></span><span id="pasted-type-label">Extracting claim...</span>';
+                textEl.textContent = '';
+                metaEl.textContent = '';
+            }
+
+            // Set type-specific styling
+            typeEl.className = 'pasted-content-type ' + type;
+            lucide.createIcons();
+        }
+
+        function updatePastedPreview(result, type) {
+            const preview = document.getElementById('pasted-content-preview');
+            const typeEl = document.getElementById('pasted-content-type');
+            const textEl = document.getElementById('pasted-content-text');
+            const metaEl = document.getElementById('pasted-content-meta');
+
+            preview.classList.remove('extracting');
+
+            const icons = {
+                'image': 'image',
+                'twitter': 'twitter',
+                'youtube': 'youtube'
+            };
+
+            const labels = {
+                'image': 'Meme/Image',
+                'twitter': 'X/Twitter Post',
+                'youtube': 'YouTube Video'
+            };
+
+            typeEl.innerHTML = `<i data-lucide="${icons[type] || 'file'}" class="w-4 h-4"></i><span>${labels[type] || 'Content'}</span>`;
+            textEl.textContent = result.claim || result.extracted_text || 'No claim extracted';
+            metaEl.textContent = result.context || '';
+
+            // Store for submission
+            extractedClaimData = result;
+
+            // Update textarea with extracted claim
+            const input = document.getElementById('generate-input');
+            if (input && result.claim) {
+                input.value = result.claim;
+                updateGenerateMode(result.claim);
+            }
+
+            lucide.createIcons();
+        }
+
+        async function extractClaimFromContent(inputType, content) {
+            try {
+                const response = await fetch('/api/extract-claim', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ input_type: inputType, content: content })
+                });
+                return await response.json();
+            } catch (e) {
+                console.error('Extract claim error:', e);
+                return { success: false, error: e.message };
+            }
+        }
+
+        function detectSocialMediaLink(text) {
+            // Twitter/X
+            if (/(?:twitter\.com|x\.com)\/\w+\/status\/\d+/.test(text)) {
+                return { type: 'twitter', url: text.match(/(https?:\/\/(?:twitter\.com|x\.com)\/\w+\/status\/\d+)/)?.[1] };
+            }
+            // YouTube
+            if (/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)/.test(text)) {
+                return { type: 'youtube', url: text.match(/(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)[a-zA-Z0-9_-]+)/)?.[1] };
+            }
+            return null;
+        }
+
+        // Initialize paste handler on textarea
+        document.addEventListener('DOMContentLoaded', () => {
+            const textarea = document.getElementById('generate-input');
+            if (!textarea) return;
+
+            // Handle paste event
+            textarea.addEventListener('paste', async (e) => {
+                const items = e.clipboardData?.items;
+                if (!items) return;
+
+                // Check for image paste
+                for (const item of items) {
+                    if (item.type.startsWith('image/')) {
+                        e.preventDefault();
+                        const file = item.getAsFile();
+                        if (!file) return;
+
+                        // Show preview with image thumbnail
+                        showPastedPreview('image', true);
+                        const thumb = document.getElementById('pasted-image-thumb');
+
+                        // Convert to base64
+                        const reader = new FileReader();
+                        reader.onload = async (event) => {
+                            const base64 = event.target.result;
+                            thumb.src = base64;
+                            thumb.style.display = 'block';
+
+                            // Extract claim from image
+                            const result = await extractClaimFromContent('image', base64);
+                            if (result.success) {
+                                updatePastedPreview(result, 'image');
+                                showNotification('Claim extracted from image!', 'success');
+                            } else {
+                                updatePastedPreview({ claim: 'Failed to extract claim', context: result.error }, 'image');
+                                showNotification('Failed to extract claim from image', 'error');
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                        return;
+                    }
+                }
+
+                // Check for social media link paste (allow default paste behavior but also process)
+                setTimeout(async () => {
+                    const pastedText = textarea.value;
+                    const socialLink = detectSocialMediaLink(pastedText);
+
+                    if (socialLink) {
+                        showPastedPreview(socialLink.type, true);
+
+                        const result = await extractClaimFromContent(socialLink.type, socialLink.url);
+                        if (result.success) {
+                            updatePastedPreview(result, socialLink.type);
+                            showNotification(`Content extracted from ${socialLink.type === 'twitter' ? 'X/Twitter' : 'YouTube'}!`, 'success');
+                        } else {
+                            updatePastedPreview({ claim: 'Failed to fetch content', context: result.error }, socialLink.type);
+                        }
+                    }
+                }, 100);
+            });
+        });
 
         // ============================================
         // PHASE 1: QUICK WINS FEATURES
@@ -12069,7 +12737,7 @@
             }
         }
 
-        // Check if a topic is cached (free)
+        // Check if a topic is cached (free) - returns { cached, article, similar }
         async function checkIfCached(topic) {
             try {
                 const response = await fetch('/api/cache/check', {
@@ -12078,11 +12746,90 @@
                     body: JSON.stringify({ topic })
                 });
                 const data = await response.json();
-                return data.cached ? data.article : null;
+                return {
+                    cached: data.cached || false,
+                    article: data.cached ? data.article : null,
+                    similar: data.similar || []
+                };
             } catch (e) {
-                return null;
+                return { cached: false, article: null, similar: [] };
             }
         }
+
+        // Similar articles modal state
+        let pendingSimilarSearch = null; // { topic, mode }
+
+        function showSimilarArticlesModal(topic, similarArticles, mode) {
+            const modal = document.getElementById('similar-articles-modal');
+            const queryText = document.getElementById('similar-query-text');
+            const listContainer = document.getElementById('similar-articles-list');
+            const generateBtn = document.getElementById('similar-generate-btn');
+
+            // Store pending search for generate button
+            pendingSimilarSearch = { topic, mode };
+
+            // Set query text
+            queryText.textContent = topic;
+
+            // Render similar articles
+            listContainer.innerHTML = similarArticles.map(article => {
+                const isFactCheck = article.article_type === 'fact_check';
+                const typeBadgeClass = isFactCheck ? 'similar-type-badge fact-check' : 'similar-type-badge';
+                const typeLabel = isFactCheck ? 'Fact Check' : (article.article_type === 'deep_dive' ? 'Deep Dive' : 'Investigation');
+
+                return `
+                    <div class="similar-article-card" onclick="loadSimilarArticle('${article.key}')">
+                        <div class="similar-card-header">
+                            <span class="similar-match-badge">${article.similarity}% match</span>
+                            <span class="${typeBadgeClass}">${typeLabel}</span>
+                            <span class="free-badge">FREE</span>
+                        </div>
+                        <div class="similar-article-title">${article.cardTitle || article.title}</div>
+                        ${article.cardDescription ? `<div class="similar-article-desc">${article.cardDescription}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            // Update generate button text based on mode
+            generateBtn.innerHTML = mode === 'fact_check'
+                ? '<i data-lucide="scale" class="w-4 h-4"></i> New Fact Check'
+                : '<i data-lucide="sparkles" class="w-4 h-4"></i> New Investigation';
+
+            // Show modal
+            modal.classList.add('visible');
+            lucide.createIcons();
+        }
+
+        function closeSimilarModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            const modal = document.getElementById('similar-articles-modal');
+            modal.classList.remove('visible');
+            pendingSimilarSearch = null;
+        }
+
+        function loadSimilarArticle(key) {
+            closeSimilarModal();
+            loadReport(key);
+        }
+
+        function proceedWithGeneration() {
+            if (!pendingSimilarSearch) return;
+            const { topic, mode } = pendingSimilarSearch;
+            closeSimilarModal();
+
+            if (mode === 'fact_check') {
+                generateFactCheck(topic);
+                showNotification(`Fact-checking: "${topic.substring(0, 30)}..."`, 'info');
+            } else {
+                generateReport(topic);
+            }
+        }
+
+        // Attach to generate button
+        document.addEventListener('DOMContentLoaded', () => {
+            const genBtn = document.getElementById('similar-generate-btn');
+            if (genBtn) genBtn.onclick = proceedWithGeneration;
+        });
 
         // === GENERATION STATE MANAGEMENT ===
         const MAX_CONCURRENT_GENERATIONS = 5;
@@ -12588,6 +13335,54 @@
 
             // Start generation in background
             generateDeepDive(topic, context, currentArticleKey, articleTitle);
+
+            // Show badge
+            const badge = document.getElementById('deep-dive-badge');
+            if (badge) {
+                badge.classList.add('visible');
+                badge.classList.remove('minimized');
+                setTimeout(() => {
+                    if (!badge.matches(':hover')) {
+                        badge.classList.add('minimized');
+                    }
+                }, 3000);
+            }
+        }
+
+        // Queue full investigation from fact check "Go Deeper" button
+        function queueDeepDiveFromFactCheck() {
+            // Get the fact check title
+            const titleEl = document.getElementById('report-title');
+            if (!titleEl) {
+                showNotification('Could not find fact check topic', 'error');
+                return;
+            }
+
+            // Extract topic from title (remove "Fact Check: " prefix if present)
+            let topic = titleEl.innerText;
+            topic = topic.replace(/^Fact Check:\s*/i, '').trim();
+
+            // Check if at max capacity
+            if (activeGenerations.size >= MAX_CONCURRENT_GENERATIONS) {
+                showNotification(`Queue full (${MAX_CONCURRENT_GENERATIONS} max). Wait for one to complete.`, 'warning');
+                return;
+            }
+
+            // Show toast notification
+            const shortTopic = topic.length > 35 ? topic.substring(0, 32) + '...' : topic;
+            showNotification(`Queued Investigation: "${shortTopic}"`, 'success');
+
+            // Update button to show queued state
+            const btn = document.querySelector('.fact-check-deeper .deeper-btn');
+            if (btn) {
+                btn.innerHTML = '<i data-lucide="check"></i> Investigation Queued';
+                btn.disabled = true;
+                btn.style.background = 'linear-gradient(135deg, #30a46c 0%, #10b981 100%)';
+                lucide.createIcons();
+            }
+
+            // Start generation using regular generate endpoint
+            generateReport(topic);
 
             // Show badge
             const badge = document.getElementById('deep-dive-badge');

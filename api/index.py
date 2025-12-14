@@ -608,6 +608,153 @@ class DeepDiveRequest(BaseModel):
 class CacheCheckRequest(BaseModel):
     topic: str
 
+class ExtractClaimRequest(BaseModel):
+    """Extract a fact-checkable claim from various input types."""
+    input_type: str  # 'image', 'twitter', 'youtube', 'tiktok', 'url'
+    content: str  # base64 image data OR URL
+
+# === CONTENT EXTRACTION UTILITIES ===
+
+def extract_claim_from_image(image_base64: str) -> dict:
+    """Use Gemini Vision to extract text/claims from an image (meme, screenshot)."""
+    if not GEMINI_API_KEYS:
+        return {"error": "Gemini API not configured", "claim": None}
+
+    # Use Gemini 2.0 Flash for vision (fast and accurate for text extraction)
+    api_key = GEMINI_API_KEYS[0]
+    url = f"{GEMINI_API_URL}/gemini-2.0-flash:generateContent?key={api_key}"
+
+    # Determine mime type from base64 header if present
+    mime_type = "image/jpeg"
+    if image_base64.startswith("data:"):
+        # Extract mime type from data URL
+        mime_part = image_base64.split(";")[0]
+        mime_type = mime_part.replace("data:", "")
+        image_base64 = image_base64.split(",")[1]
+
+    payload = {
+        "contents": [{
+            "parts": [
+                {
+                    "text": """Analyze this image and extract any fact-checkable claims or statements.
+
+Your task:
+1. Read ALL text visible in the image
+2. Identify the main claim or assertion being made
+3. If it's a meme, social media post, or screenshot, extract the key claim
+4. Ignore usernames, timestamps, and UI elements - focus on the actual claim
+
+Return a JSON object with:
+{
+    "extracted_text": "The full text you can see in the image",
+    "main_claim": "The primary fact-checkable claim/statement",
+    "claim_type": "meme" | "social_post" | "headline" | "quote" | "statistic" | "other",
+    "confidence": 0.0-1.0,
+    "context": "Any additional context that might help fact-check this"
+}
+
+If there's no clear fact-checkable claim, set main_claim to the most prominent text and note that in context."""
+                },
+                {
+                    "inline_data": {
+                        "mime_type": mime_type,
+                        "data": image_base64
+                    }
+                }
+            ]
+        }],
+        "generationConfig": {
+            "temperature": 0.1,
+            "maxOutputTokens": 1024,
+            "responseMimeType": "application/json"
+        }
+    }
+
+    try:
+        response = requests.post(url, json=payload, timeout=30)
+        if response.status_code == 200:
+            result = response.json()
+            text = result.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "{}")
+            return json.loads(text)
+        else:
+            print(f"Gemini Vision error: {response.status_code} - {response.text}")
+            return {"error": f"Gemini API error: {response.status_code}", "claim": None}
+    except Exception as e:
+        print(f"Gemini Vision exception: {e}")
+        return {"error": str(e), "claim": None}
+
+def extract_tweet_from_url(tweet_url: str) -> dict:
+    """Extract tweet content using Twitter's syndication API (no API key needed)."""
+    import re
+
+    # Extract tweet ID from URL
+    # Handles: twitter.com/user/status/123, x.com/user/status/123
+    match = re.search(r'(?:twitter\.com|x\.com)/\w+/status/(\d+)', tweet_url)
+    if not match:
+        return {"error": "Invalid Twitter/X URL", "claim": None}
+
+    tweet_id = match.group(1)
+
+    # Use syndication API (no authentication required)
+    syndication_url = f"https://cdn.syndication.twimg.com/tweet-result?id={tweet_id}&token=x"
+
+    try:
+        response = requests.get(syndication_url, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            return {
+                "extracted_text": data.get("text", ""),
+                "main_claim": data.get("text", ""),
+                "claim_type": "social_post",
+                "confidence": 0.95,
+                "context": f"Tweet by @{data.get('user', {}).get('screen_name', 'unknown')} on {data.get('created_at', 'unknown date')}",
+                "author": data.get("user", {}).get("name", "Unknown"),
+                "author_handle": data.get("user", {}).get("screen_name", "unknown"),
+                "source_url": tweet_url
+            }
+        else:
+            return {"error": f"Failed to fetch tweet: {response.status_code}", "claim": None}
+    except Exception as e:
+        print(f"Twitter syndication error: {e}")
+        return {"error": str(e), "claim": None}
+
+def extract_youtube_info(youtube_url: str) -> dict:
+    """Extract video title and description from YouTube oEmbed."""
+    import re
+
+    # Extract video ID
+    match = re.search(r'(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/shorts/)([a-zA-Z0-9_-]+)', youtube_url)
+    if not match:
+        return {"error": "Invalid YouTube URL", "claim": None}
+
+    video_id = match.group(1)
+
+    # Use oEmbed API (no authentication required)
+    oembed_url = f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={video_id}&format=json"
+
+    try:
+        response = requests.get(oembed_url, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            title = data.get("title", "")
+            author = data.get("author_name", "Unknown")
+
+            return {
+                "extracted_text": title,
+                "main_claim": title,
+                "claim_type": "headline",  # Video titles are often claim-like
+                "confidence": 0.7,  # Lower confidence since it's just a title
+                "context": f"YouTube video by {author}. Note: This is the video title only. For full context, the video content should be reviewed.",
+                "author": author,
+                "source_url": youtube_url,
+                "video_id": video_id
+            }
+        else:
+            return {"error": f"Failed to fetch YouTube info: {response.status_code}", "claim": None}
+    except Exception as e:
+        print(f"YouTube oEmbed error: {e}")
+        return {"error": str(e), "claim": None}
+
 # === CACHING UTILITIES ===
 
 def get_topic_key(topic: str) -> str:
@@ -731,11 +878,107 @@ def get_article_index() -> dict:
         print(f"Error loading article index: {e}")
         return {}
 
+# Common stopwords to ignore in semantic matching
+STOPWORDS = {
+    'a', 'an', 'the', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
+    'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could',
+    'should', 'may', 'might', 'must', 'shall', 'can', 'need', 'dare',
+    'ought', 'used', 'to', 'of', 'in', 'for', 'on', 'with', 'at', 'by',
+    'from', 'as', 'into', 'through', 'during', 'before', 'after', 'above',
+    'below', 'between', 'under', 'again', 'further', 'then', 'once', 'here',
+    'there', 'when', 'where', 'why', 'how', 'all', 'each', 'few', 'more',
+    'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own',
+    'same', 'so', 'than', 'too', 'very', 'just', 'and', 'but', 'if', 'or',
+    'because', 'until', 'while', 'about', 'against', 'what', 'which', 'who',
+    'whom', 'this', 'that', 'these', 'those', 'am', 'it', 'its', 'he', 'she',
+    'they', 'them', 'his', 'her', 'their', 'my', 'your', 'our', 'i', 'you',
+    'we', 'me', 'him', 'us', 'fact', 'check', 'true', 'false', 'claim',
+    'did', 'really', 'actually', 'say', 'said'
+}
+
+def tokenize_query(text: str) -> set:
+    """Tokenize and normalize a query, removing stopwords."""
+    if not text:
+        return set()
+    # Lowercase and split on non-alphanumeric
+    import re
+    words = re.findall(r'[a-z0-9]+', text.lower())
+    # Remove stopwords and short words
+    return {w for w in words if w not in STOPWORDS and len(w) > 2}
+
+def find_similar_articles(query: str, limit: int = 5) -> list:
+    """Find articles semantically similar to the query using keyword overlap.
+
+    Returns list of (article_key, metadata, similarity_score) tuples, sorted by score.
+    Uses Jaccard-like similarity on tokenized words from title, topic, and description.
+    """
+    query_tokens = tokenize_query(query)
+    if not query_tokens:
+        return []
+
+    index = get_article_index()
+    matches = []
+
+    for key, meta in index.items():
+        if key.startswith("_"):
+            continue
+
+        # Combine searchable fields
+        title = meta.get("title", "")
+        topic = meta.get("topic", "")
+        card_title = meta.get("cardTitle", "")
+        description = meta.get("cardDescription", "")
+        combined = f"{title} {topic} {card_title} {description}"
+
+        article_tokens = tokenize_query(combined)
+        if not article_tokens:
+            continue
+
+        # Calculate Jaccard similarity
+        intersection = len(query_tokens & article_tokens)
+        if intersection == 0:
+            continue
+
+        # Use a modified Jaccard that favors query coverage
+        # (what % of query words are found in article)
+        query_coverage = intersection / len(query_tokens)
+
+        # Also consider what % of article words are in query (precision)
+        article_coverage = intersection / len(article_tokens)
+
+        # Weighted score: favor query coverage but also reward precision
+        score = (query_coverage * 0.7) + (article_coverage * 0.3)
+
+        # Boost exact phrase matches
+        if query.lower() in combined.lower():
+            score = min(1.0, score + 0.3)
+
+        # Only include if score is meaningful (at least 30% match)
+        if score >= 0.3:
+            matches.append({
+                "key": key,
+                "title": meta.get("title", ""),
+                "cardTitle": meta.get("cardTitle", ""),
+                "cardDescription": meta.get("cardDescription", ""),
+                "cardTag": meta.get("cardTag", ""),
+                "article_type": meta.get("article_type", "investigation"),
+                "verdict": meta.get("verdict", ""),
+                "similarity": round(score * 100)  # Convert to percentage
+            })
+
+    # Sort by similarity descending
+    matches.sort(key=lambda x: -x["similarity"])
+    return matches[:limit]
+
 def update_article_index(article_key: str, metadata: dict):
     """Add or update an article in the index."""
     try:
         # Load existing index
         index = get_article_index()
+
+        # Use the article's internal key if available, otherwise fall back to hash key
+        # This ensures the index key matches what /api/article/{slug} expects
+        internal_key = metadata.get("key", article_key)
 
         # Determine article type
         article_type = metadata.get("_article_type", "investigation")
@@ -753,9 +996,9 @@ def update_article_index(article_key: str, metadata: dict):
         else:
             top_sources = []
 
-        # Add/update the article metadata
-        index[article_key] = {
-            "key": article_key,
+        # Add/update the article metadata using internal key
+        index[internal_key] = {
+            "key": internal_key,
             "title": metadata.get("title", "Unknown"),
             "cardTitle": metadata.get("cardTitle", ""),
             "cardTag": metadata.get("cardTag", ""),
@@ -772,7 +1015,7 @@ def update_article_index(article_key: str, metadata: dict):
 
         # Save updated index
         blob_put(ARTICLE_INDEX_PATH, json.dumps(index))
-        print(f"Article index updated: {article_key} (type: {article_type})")
+        print(f"Article index updated: {internal_key} (type: {article_type})")
     except Exception as e:
         print(f"Error updating article index: {e}")
 
@@ -1219,6 +1462,18 @@ HTML structure for content field (WIKI-STYLE WITH TABS):
 
 <p class="prose-text verdict-summary"><strong>Summary:</strong> [verdictSummary with fractal triggers]</p>
 
+<!-- THE STORY - REQUIRED NARRATIVE INTRO (3-4 paragraphs of investigative journalism) -->
+<section class="fact-check-story">
+  <h2 class="prose-h2">The Story Behind This Claim</h2>
+  <p class="prose-text">[PARAGRAPH 1 - THE HOOK: Start with the most compelling detail. When did this claim explode? What made it go viral? Set the scene with specific dates, platforms, and numbers. "On [date], a [post/video/statement] began circulating claiming..." Include fractal triggers for people, platforms, dates.]</p>
+
+  <p class="prose-text">[PARAGRAPH 2 - THE ORIGIN: Trace the claim to its source. Who first made this claim? In what context? Was it a deliberate statement, taken out of context, or a misinterpretation? Include the actual quote or evidence if available. "The claim appears to originate from..." Include fractal triggers.]</p>
+
+  <p class="prose-text">[PARAGRAPH 3 - THE SPREAD: How did it spread? Which accounts, media outlets, or figures amplified it? What variations emerged? "Within [timeframe], the claim was amplified by..." Include fractal triggers for every person and organization mentioned.]</p>
+
+  <p class="prose-text">[PARAGRAPH 4 - THE STAKES: Why does this matter? What are the real-world consequences if people believe or disbelieve this? What decisions might be affected? "The implications of this claim are significant because..." Include fractal triggers.]</p>
+</section>
+
 <!-- TABBED INTERFACE -->
 <div class="fact-check-tabs">
   <button class="fact-check-tab active" onclick="switchFactCheckTab(event, 'tab-claim')"><i data-lucide="quote"></i> Claim</button>
@@ -1271,29 +1526,39 @@ HTML structure for content field (WIKI-STYLE WITH TABS):
 <!-- TAB: CONTEXT -->
 <div id="tab-context" class="fact-check-tab-content">
   <h3 class="prose-h3">Historical Context</h3>
-  <p class="prose-text">Background information that affects how this claim should be interpreted. Include timeline, prior events, and relevant history...</p>
+  <p class="prose-text">[REQUIRED: 2-3 paragraphs. What's the backstory? Has this claim or similar claims appeared before? What was happening in the news cycle when this emerged? Connect to broader events. "This claim emerged during a period when..." Include specific dates, events, and fractal triggers.]</p>
 
-  <h3 class="prose-h3">Why This Matters</h3>
-  <p class="prose-text">The significance of this claim and its potential impact on public discourse, policy, or understanding...</p>
+  <h3 class="prose-h3">The Bigger Picture</h3>
+  <p class="prose-text">[REQUIRED: Explain the pattern. Is this part of a coordinated campaign? A recurring narrative? Who benefits from this misinformation spreading? "This claim fits into a broader pattern of..." Include fractal triggers for key actors and concepts.]</p>
 
-  <h3 class="prose-h3">Related Claims</h3>
-  <p class="prose-text">Similar claims, common variations, and how this fits into broader narratives...</p>
+  <h3 class="prose-h3">Related Misinformation</h3>
+  <p class="prose-text">[REQUIRED: List 2-3 related false claims that circulate together. Show how they connect. "Other claims in this same narrative include..." Make each a fractal trigger so users can explore further.]</p>
 </div>
 
 <!-- TAB: SOURCES -->
 <div id="tab-sources" class="fact-check-tab-content">
-  <h3 class="prose-h3">Primary Sources</h3>
-  <p class="prose-text">Original documents, official statements, and direct evidence used in this fact check...</p>
+  <h3 class="prose-h3">Key Documents & Statements</h3>
+  <p class="prose-text">[REQUIRED: Cite the actual primary sources. Quote directly from official documents, transcripts, or statements. "According to [document/statement] from [date]..." Each source should have a citation spade linking to the citationDatabase.]</p>
 
-  <h3 class="prose-h3">Expert Analysis</h3>
-  <p class="prose-text">Quotes and analysis from subject matter experts consulted for this fact check...</p>
+  <h3 class="prose-h3">What Experts Say</h3>
+  <p class="prose-text">[REQUIRED: Include 2-3 expert perspectives. Quote actual experts by name if available from sources. "Dr. [Name], [Title] at [Institution], stated..." Make each expert name a fractal trigger.]</p>
 
-  <h3 class="prose-h3">Methodology</h3>
-  <p class="prose-text">How we verified this claim: steps taken, sources consulted, and verification process...</p>
+  <h3 class="prose-h3">How We Verified</h3>
+  <p class="prose-text">[REQUIRED: Be transparent about methodology. What searches did we run? Which databases did we check? What did we look for? "To verify this claim, we examined [X], consulted [Y], and cross-referenced [Z]..."]</p>
 </div>
 
-<h2 class="prose-h2">Conclusion</h2>
-<p class="prose-text">Final assessment with nuance, acknowledging complexity and areas of uncertainty...</p>
+<h2 class="prose-h2">The Bottom Line</h2>
+<p class="prose-text">[REQUIRED: 2 paragraphs. First paragraph: State the verdict clearly and explain the key evidence that led to it. Second paragraph: Acknowledge any legitimate nuance, areas of ongoing debate, or what would change the verdict. Be intellectually honest about uncertainty.]</p>
+
+<!-- GO DEEPER CTA -->
+<div class="fact-check-deeper">
+  <p class="deeper-prompt">Want the full story?</p>
+  <button class="deeper-btn" onclick="queueDeepDiveFromFactCheck()">
+    <i data-lucide="layers"></i>
+    Generate Full Investigation
+  </button>
+  <p class="deeper-note">Get a comprehensive investigative report with infographics, timeline, and deeper analysis.</p>
+</div>
 
 FRACTAL TRIGGERS ARE CRITICAL - YOU MUST WRAP 50+ TERMS with <strong class="fractal-trigger" onclick="expandContext(this,'key_name')">term</strong>:
 
@@ -1719,7 +1984,13 @@ async def generate_report(request: GenerateRequest, req: Request):
 
 @app.post("/api/cache/check")
 async def check_cache(request: CacheCheckRequest):
-    """Check if an article is already cached."""
+    """Check if an article is already cached. If not, return similar articles.
+
+    Response format:
+    - If exact match: {"cached": True, "article": {...}}
+    - If no exact match but similar found: {"cached": False, "similar": [...]}
+    - If nothing found: {"cached": False, "similar": []}
+    """
     cached = get_cached_article(request.topic)
     if cached:
         # Ensure cached articles have chartType='dynamic' for frontend detection
@@ -1727,7 +1998,48 @@ async def check_cache(request: CacheCheckRequest):
         if cached.get("chartConfigs"):
             cached["chartType"] = "dynamic"
         return {"cached": True, "article": cached}
-    return {"cached": False}
+
+    # No exact match - search for similar articles
+    similar = find_similar_articles(request.topic, limit=5)
+    return {"cached": False, "similar": similar}
+
+
+@app.post("/api/extract-claim")
+async def extract_claim(request: ExtractClaimRequest):
+    """Extract a fact-checkable claim from an image, tweet, or YouTube URL.
+
+    Input types:
+    - 'image': base64-encoded image data (meme, screenshot)
+    - 'twitter': Twitter/X post URL
+    - 'youtube': YouTube video URL
+
+    Returns extracted claim text that can be used for fact-checking.
+    """
+    input_type = request.input_type.lower()
+    content = request.content
+
+    if input_type == "image":
+        result = extract_claim_from_image(content)
+    elif input_type in ("twitter", "x", "tweet"):
+        result = extract_tweet_from_url(content)
+    elif input_type == "youtube":
+        result = extract_youtube_info(content)
+    else:
+        return {"error": f"Unsupported input type: {input_type}", "claim": None}
+
+    if result.get("error"):
+        return {"success": False, "error": result["error"]}
+
+    return {
+        "success": True,
+        "claim": result.get("main_claim", ""),
+        "extracted_text": result.get("extracted_text", ""),
+        "claim_type": result.get("claim_type", "unknown"),
+        "confidence": result.get("confidence", 0.5),
+        "context": result.get("context", ""),
+        "source_url": result.get("source_url", ""),
+        "author": result.get("author", "")
+    }
 
 
 @app.get("/api/cache/list")
