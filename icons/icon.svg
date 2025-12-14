@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#111113"/>
+      <stop offset="100%" style="stop-color:#0a0a1a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <!-- Inner glow ring -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="url(#accent)" stroke-width="3" opacity="0.3"/>
+  <!-- G letter stylized -->
+  <path d="M140 180 C140 140, 180 100, 240 100 L280 100 C320 100, 340 120, 340 140 L340 160 L300 160 L300 150 C300 140, 290 130, 270 130 L240 130 C200 130, 175 155, 175 200 L175 312 C175 357, 200 382, 240 382 L270 382 C290 382, 300 372, 300 362 L300 290 L250 290 L250 260 L340 260 L340 380 C340 400, 320 412, 280 412 L240 412 C180 412, 140 372, 140 312 Z" fill="#ffffff"/>
+  <!-- V letter -->
+  <path d="M350 100 L400 100 L320 412 L270 412 L350 100 Z M430 100 L480 100 L380 412 L330 412 L430 100 Z" fill="url(#accent)"/>
+  <!-- Accent dots -->
+  <circle cx="420" cy="140" r="8" fill="#06b6d4"/>
+</svg>
