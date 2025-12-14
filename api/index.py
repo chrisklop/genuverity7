@@ -676,9 +676,16 @@ def blob_delete(path: str) -> bool:
         return False
 
     try:
+        # Vercel Blob prefix search uses URL pattern, not pathname
+        # For "articles/_index.json", search with "articles/_index" prefix
+        # to find all variants like "_index-abc123"
+        search_prefix = path.rsplit(".", 1)[0] if "." in path else path
+
         # Find ALL blobs with matching pathname and delete them
-        blobs = blob_list(path)
+        blobs = blob_list(search_prefix)
         deleted_count = 0
+        print(f"blob_delete: Searching for blobs with prefix '{search_prefix}', found {len(blobs)}")
+
         for blob in blobs:
             if blob.get("pathname") == path:
                 blob_url = blob.get("url")
@@ -689,6 +696,8 @@ def blob_delete(path: str) -> bool:
         if deleted_count > 0:
             print(f"Total blobs deleted for path '{path}': {deleted_count}")
             return True
+        else:
+            print(f"No blobs found with pathname '{path}'")
         return False
     except Exception as e:
         print(f"Blob DELETE by path error: {e}")
