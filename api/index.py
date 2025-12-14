@@ -1640,7 +1640,7 @@ async def generate_fact_check(request: FactCheckRequest, req: Request):
 
             with claude_client.messages.stream(
                 model=CLAUDE_MODEL,
-                max_tokens=6000,
+                max_tokens=12000,
                 messages=[{"role": "user", "content": prompt}]
             ) as stream:
                 yield send_sse("progress", {"stage": "research", "percent": 15, "message": "Verifying against sources..."})
