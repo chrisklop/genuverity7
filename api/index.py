@@ -662,18 +662,24 @@ def blob_delete_by_url(url: str) -> bool:
         return False
 
 def blob_delete(path: str) -> bool:
-    """Delete a blob by its pathname. Searches for matching blob and deletes it."""
+    """Delete ALL blobs with matching pathname. Returns True if at least one was deleted."""
     if not BLOB_READ_WRITE_TOKEN:
         return False
 
     try:
-        # Find blob with matching pathname
+        # Find ALL blobs with matching pathname and delete them
         blobs = blob_list(path)
+        deleted_count = 0
         for blob in blobs:
             if blob.get("pathname") == path:
                 blob_url = blob.get("url")
                 if blob_url:
-                    return blob_delete_by_url(blob_url)
+                    if blob_delete_by_url(blob_url):
+                        deleted_count += 1
+                        print(f"Deleted blob: {path} ({blob_url[:50]}...)")
+        if deleted_count > 0:
+            print(f"Total blobs deleted for path '{path}': {deleted_count}")
+            return True
         return False
     except Exception as e:
         print(f"Blob DELETE by path error: {e}")
@@ -2256,16 +2262,17 @@ async def rebuild_index():
     seen_keys = set()
     deleted_indices = 0
 
-    blobs = blob_list("articles/")
+    # First pass: delete ALL old index files (handles duplicates)
+    print(f"Deleting all old index blobs at path: {ARTICLE_INDEX_PATH}")
+    if blob_delete(ARTICLE_INDEX_PATH):
+        # Count how many were deleted by fetching the list before/after
+        # (blob_delete now handles multiple duplicates)
+        deleted_indices = 1  # At least one was deleted
+        print(f"Successfully deleted old index blobs")
+    else:
+        print("No old index blobs found to delete")
 
-    # First pass: delete all old index files
-    for blob in blobs:
-        if blob.get("pathname") == ARTICLE_INDEX_PATH:
-            if blob_delete_by_url(blob.get("url")):
-                deleted_indices += 1
-                print(f"Deleted old index: {blob.get('url')}")
-
-    # Re-fetch blobs after deletion
+    # Fetch blobs after deletion
     blobs = blob_list("articles/")
     for blob in blobs:
         try:
