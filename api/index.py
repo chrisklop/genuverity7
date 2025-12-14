@@ -489,13 +489,58 @@ def format_prior_fact_checks_html(fact_checks: list) -> str:
 
 # === VERCEL BLOB STORAGE UTILITIES ===
 
+def blob_delete(path: str) -> bool:
+    """Delete existing blob(s) with a given path prefix before overwriting."""
+    if not BLOB_READ_WRITE_TOKEN:
+        return False
+
+    try:
+        # Find existing blobs with this path prefix
+        response = requests.get(
+            f"{BLOB_API_BASE}",
+            headers={
+                "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
+                "x-api-version": "7"
+            },
+            params={"prefix": path, "limit": 10}
+        )
+        if response.status_code == 200:
+            result = response.json()
+            blobs = result.get("blobs", [])
+            for blob in blobs:
+                blob_url = blob.get("url")
+                if blob_url:
+                    # Delete the blob
+                    del_response = requests.delete(
+                        f"{BLOB_API_BASE}",
+                        headers={
+                            "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
+                            "x-api-version": "7"
+                        },
+                        json={"urls": [blob_url]}
+                    )
+                    if del_response.status_code == 200:
+                        print(f"Blob deleted: {blob_url}")
+            return True
+        return False
+    except Exception as e:
+        print(f"Blob DELETE error: {e}")
+        return False
+
+
 def blob_put(path: str, content: str) -> Optional[str]:
-    """Upload content to Vercel Blob Storage. Returns blob URL on success."""
+    """Upload content to Vercel Blob Storage. Returns blob URL on success.
+
+    Note: Deletes existing blob with same path first to ensure true overwrite.
+    """
     if not BLOB_READ_WRITE_TOKEN:
         print("BLOB_READ_WRITE_TOKEN not set, skipping blob storage")
         return None
 
     try:
+        # Delete any existing blobs with this path first (Vercel Blob doesn't truly overwrite)
+        blob_delete(path)
+
         response = requests.put(
             f"{BLOB_API_BASE}/{path}",
             headers={
