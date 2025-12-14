@@ -415,6 +415,502 @@
             border-color: var(--accent-blue);
         }
 
+        /* === USER MENU & DROPDOWN === */
+        .user-menu-container {
+            position: relative;
+        }
+
+        .user-avatar-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #8b5cf6 100%);
+            border: 2px solid transparent;
+            color: white;
+            position: relative;
+        }
+
+        .user-avatar-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 3px rgba(62, 99, 221, 0.3);
+        }
+
+        .user-avatar-btn.has-user {
+            background: none;
+            border: 2px solid var(--accent-blue);
+        }
+
+        .user-avatar-btn.has-user img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-activity-dot {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-green);
+            border: 2px solid var(--bg-deep);
+            border-radius: 50%;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 260px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.95);
+            transition: all 0.2s ease;
+            z-index: 200;
+            overflow: hidden;
+        }
+
+        .user-dropdown.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .user-dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(62, 99, 221, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-dropdown-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #8b5cf6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .user-dropdown-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .user-dropdown-name {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        .user-dropdown-status {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .user-dropdown-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 4px 0;
+        }
+
+        .user-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: left;
+        }
+
+        .user-dropdown-item:hover {
+            background: var(--bg-elevated);
+        }
+
+        .user-dropdown-item i {
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .user-dropdown-item span:first-of-type {
+            flex: 1;
+        }
+
+        .user-dropdown-badge {
+            background: var(--accent-blue);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .user-dropdown-hint {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .user-dropdown-signin {
+            color: var(--accent-blue);
+        }
+
+        .user-dropdown-signin i {
+            color: var(--accent-blue);
+        }
+
+        /* === STANDALONE DASHBOARD VIEW === */
+        .dashboard-standalone {
+            min-height: calc(100vh - 64px);
+            padding: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dashboard-back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .dashboard-back-btn:hover {
+            background: var(--bg-elevated);
+            color: var(--text-main);
+            border-color: var(--accent-blue);
+        }
+
+        .dashboard-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .dashboard-title i {
+            color: var(--accent-blue);
+        }
+
+        .dashboard-user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dashboard-session-type {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding: 4px 10px;
+            background: var(--bg-elevated);
+            border-radius: 12px;
+        }
+
+        .dashboard-sync-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #8b5cf6 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dashboard-sync-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(62, 99, 221, 0.4);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .dashboard-section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .dashboard-section-card.dashboard-section-wide {
+            grid-column: span 2;
+        }
+
+        .dashboard-section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dashboard-section-header i {
+            color: var(--accent-blue);
+        }
+
+        .dashboard-section-header h2 {
+            flex: 1;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .dashboard-section-count {
+            background: var(--accent-blue);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .dashboard-add-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .dashboard-add-btn:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+
+        .stash-persist-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .stash-persist-toggle:hover,
+        .stash-persist-toggle.active {
+            color: var(--accent-green);
+        }
+
+        .dashboard-section-content {
+            padding: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .dashboard-pipelines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .dashboard-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .dashboard-item:hover {
+            background: rgba(62, 99, 221, 0.1);
+            transform: translateX(4px);
+        }
+
+        .dashboard-item-title {
+            flex: 1;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .dashboard-item-meta {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .dashboard-item-remove {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: var(--text-muted);
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.15s;
+        }
+
+        .dashboard-item:hover .dashboard-item-remove {
+            opacity: 1;
+        }
+
+        .dashboard-item-remove:hover {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 12px;
+        }
+
+        .dashboard-stat {
+            text-align: center;
+            padding: 16px 12px;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+        }
+
+        .dashboard-stat-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 4px;
+        }
+
+        .dashboard-stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .dashboard-empty {
+            text-align: center;
+            padding: 24px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .dashboard-pipeline-card {
+            display: flex;
+            flex-direction: column;
+            padding: 14px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .dashboard-pipeline-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .dashboard-pipeline-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .dashboard-pipeline-count {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .dashboard-section-card.dashboard-section-wide {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-standalone {
+                padding: 16px;
+            }
+            .dashboard-header {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-section-card.dashboard-section-wide {
+                grid-column: span 1;
+            }
+            .dashboard-stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         /* === SOURCES BUTTON (In navbar center) === */
         .nav-sources-btn {
             display: none; /* Hidden by default, shown on essay pages */
@@ -5373,6 +5869,50 @@
                     <button onclick="toggleShortcutsModal()" class="theme-toggle" title="Keyboard shortcuts (?)">
                         <i data-lucide="keyboard" class="w-4 h-4"></i>
                     </button>
+                    <!-- User Menu / Dashboard Access -->
+                    <div class="user-menu-container">
+                        <button onclick="toggleUserMenu()" class="user-avatar-btn" title="My Research (U)">
+                            <i data-lucide="user" class="w-4 h-4 user-icon-anon"></i>
+                            <span class="user-activity-dot"></span>
+                        </button>
+                        <div id="user-dropdown" class="user-dropdown">
+                            <div class="user-dropdown-header">
+                                <div class="user-dropdown-avatar">
+                                    <i data-lucide="user" class="w-6 h-6"></i>
+                                </div>
+                                <div class="user-dropdown-info">
+                                    <span class="user-dropdown-name">Researcher</span>
+                                    <span class="user-dropdown-status">Local Session</span>
+                                </div>
+                            </div>
+                            <div class="user-dropdown-divider"></div>
+                            <button class="user-dropdown-item" onclick="switchView('view-dashboard'); toggleUserMenu();">
+                                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                                <span>My Dashboard</span>
+                            </button>
+                            <button class="user-dropdown-item" onclick="switchView('view-dashboard'); toggleUserMenu();">
+                                <i data-lucide="history" class="w-4 h-4"></i>
+                                <span>Reading History</span>
+                                <span class="user-dropdown-badge" id="history-count-badge">0</span>
+                            </button>
+                            <button class="user-dropdown-item" onclick="switchView('view-dashboard'); toggleUserMenu();">
+                                <i data-lucide="bookmark" class="w-4 h-4"></i>
+                                <span>Stashed Articles</span>
+                                <span class="user-dropdown-badge" id="stash-count-badge">0</span>
+                            </button>
+                            <button class="user-dropdown-item" onclick="toggleBookmarksSidebar(); toggleUserMenu();">
+                                <i data-lucide="folder" class="w-4 h-4"></i>
+                                <span>Pipelines</span>
+                                <span class="user-dropdown-badge" id="pipelines-count-badge">0</span>
+                            </button>
+                            <div class="user-dropdown-divider"></div>
+                            <button class="user-dropdown-item user-dropdown-signin" onclick="showSignInPrompt(); toggleUserMenu();">
+                                <i data-lucide="log-in" class="w-4 h-4"></i>
+                                <span>Sign In</span>
+                                <span class="user-dropdown-hint">Sync across devices</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -5719,6 +6259,109 @@
         </div>
     </section>
 
+    <!-- VIEW 4: DASHBOARD (My Research) -->
+    <section id="view-dashboard" class="view-section">
+        <div class="dashboard-standalone">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <button onclick="switchView('view-portal')" class="dashboard-back-btn">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>Back to Portal</span>
+                </button>
+                <h1 class="dashboard-title">
+                    <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
+                    My Research Dashboard
+                </h1>
+                <div class="dashboard-user-info">
+                    <span class="dashboard-session-type">Local Session</span>
+                    <button onclick="showSignInPrompt()" class="dashboard-sync-btn">
+                        <i data-lucide="cloud" class="w-4 h-4"></i>
+                        <span>Sync</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Reading History Section -->
+                <div class="dashboard-section-card">
+                    <div class="dashboard-section-header">
+                        <i data-lucide="history" class="w-5 h-5"></i>
+                        <h2>Reading History</h2>
+                        <span class="dashboard-section-count" id="dash-history-count">0</span>
+                    </div>
+                    <div class="dashboard-section-content" id="dash-history-list">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Stashed Articles Section -->
+                <div class="dashboard-section-card">
+                    <div class="dashboard-section-header">
+                        <i data-lucide="bookmark" class="w-5 h-5"></i>
+                        <h2>Stashed Articles</h2>
+                        <span class="dashboard-section-count" id="dash-stash-count">0</span>
+                        <button onclick="toggleStashPersist()" class="stash-persist-toggle" id="dash-stash-persist" title="Keep stash after closing">
+                            <i data-lucide="refresh-cw" class="w-3 h-3"></i>
+                        </button>
+                    </div>
+                    <div class="dashboard-section-content" id="dash-stash-list">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Active Generations Section -->
+                <div class="dashboard-section-card">
+                    <div class="dashboard-section-header">
+                        <i data-lucide="loader" class="w-5 h-5"></i>
+                        <h2>In Progress</h2>
+                        <span class="dashboard-section-count" id="dash-gen-count">0</span>
+                    </div>
+                    <div class="dashboard-section-content" id="dash-gen-list">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Pipelines Section -->
+                <div class="dashboard-section-card dashboard-section-wide">
+                    <div class="dashboard-section-header">
+                        <i data-lucide="folder" class="w-5 h-5"></i>
+                        <h2>Research Pipelines</h2>
+                        <span class="dashboard-section-count" id="dash-pipeline-count">0</span>
+                        <button onclick="createNewPipeline()" class="dashboard-add-btn">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="dashboard-section-content dashboard-pipelines-grid" id="dash-pipelines-list">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Stats Section -->
+                <div class="dashboard-section-card">
+                    <div class="dashboard-section-header">
+                        <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+                        <h2>Research Stats</h2>
+                    </div>
+                    <div class="dashboard-stats">
+                        <div class="dashboard-stat">
+                            <span class="dashboard-stat-value" id="dash-stat-articles">0</span>
+                            <span class="dashboard-stat-label">Articles Read</span>
+                        </div>
+                        <div class="dashboard-stat">
+                            <span class="dashboard-stat-value" id="dash-stat-deepdives">0</span>
+                            <span class="dashboard-stat-label">Deep Dives</span>
+                        </div>
+                        <div class="dashboard-stat">
+                            <span class="dashboard-stat-value" id="dash-stat-factchecks">0</span>
+                            <span class="dashboard-stat-label">Fact Checks</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- JAVASCRIPT LOGIC -->
     <script>
         // --- 1. THE CONTENT DATABASE ---
@@ -5872,6 +6515,11 @@
                     updateUrlForPortal();
                 }
             }
+
+            // Render dashboard when switching to dashboard view
+            if (id === 'view-dashboard') {
+                renderStandaloneDashboard();
+            }
         }
 
         // Toggle Sources drawer slide-down
@@ -5894,6 +6542,175 @@
                 banner.classList.add('drawer-open');
                 if (overlay) overlay.classList.add('active');
                 if (navBtn) navBtn.classList.add('expanded');
+            }
+        }
+
+        // ========== USER MENU & STANDALONE DASHBOARD ==========
+
+        // Toggle user dropdown menu
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('user-dropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('open');
+                if (dropdown.classList.contains('open')) {
+                    updateUserMenuBadges();
+                }
+            }
+        }
+
+        // Close user menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const container = document.querySelector('.user-menu-container');
+            const dropdown = document.getElementById('user-dropdown');
+            if (container && dropdown && !container.contains(e.target)) {
+                dropdown.classList.remove('open');
+            }
+        });
+
+        // Update badge counts in user menu
+        function updateUserMenuBadges() {
+            // History count
+            try {
+                const history = JSON.parse(localStorage.getItem('genuverity-reading-history') || '[]');
+                const historyBadge = document.getElementById('history-count-badge');
+                if (historyBadge) historyBadge.textContent = history.length;
+            } catch (e) {}
+
+            // Stash count
+            const stash = getSessionStash();
+            const stashBadge = document.getElementById('stash-count-badge');
+            if (stashBadge) stashBadge.textContent = stash.length;
+
+            // Pipelines count
+            try {
+                const pipelines = JSON.parse(localStorage.getItem('genuverity-pipelines') || '{}');
+                const pipelinesBadge = document.getElementById('pipelines-count-badge');
+                if (pipelinesBadge) pipelinesBadge.textContent = Object.keys(pipelines).length;
+            } catch (e) {}
+        }
+
+        // Show sign-in prompt (placeholder for OAuth)
+        function showSignInPrompt() {
+            showToast('Sign In Coming Soon', 'OAuth integration with Google/GitHub planned', 'info');
+        }
+
+        // Render standalone dashboard view
+        function renderStandaloneDashboard() {
+            // Reading History
+            try {
+                const history = JSON.parse(localStorage.getItem('genuverity-reading-history') || '[]');
+                const historyList = document.getElementById('dash-history-list');
+                const historyCount = document.getElementById('dash-history-count');
+
+                if (historyCount) historyCount.textContent = history.length;
+
+                if (historyList) {
+                    if (history.length === 0) {
+                        historyList.innerHTML = '<div class="dashboard-empty">No reading history yet</div>';
+                    } else {
+                        historyList.innerHTML = history.slice(0, 10).map(item => {
+                            const timeAgo = formatTimeAgo(item.viewedAt);
+                            return `
+                                <div class="dashboard-item" onclick="loadReport('${item.key}')">
+                                    <span class="dashboard-item-title">${item.title}</span>
+                                    <span class="dashboard-item-meta">${timeAgo}</span>
+                                </div>
+                            `;
+                        }).join('');
+                    }
+                }
+            } catch (e) {}
+
+            // Stashed Articles
+            const stash = getSessionStash();
+            const stashList = document.getElementById('dash-stash-list');
+            const stashCount = document.getElementById('dash-stash-count');
+
+            if (stashCount) stashCount.textContent = stash.length;
+
+            if (stashList) {
+                if (stash.length === 0) {
+                    stashList.innerHTML = '<div class="dashboard-empty">Press S while reading to stash articles</div>';
+                } else {
+                    stashList.innerHTML = stash.map(item => `
+                        <div class="dashboard-item" onclick="loadReport('${item.key}')">
+                            <span class="dashboard-item-title">${item.title}</span>
+                            <button class="dashboard-item-remove" onclick="event.stopPropagation(); removeFromStash('${item.key}'); renderStandaloneDashboard();">×</button>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            // Active Generations
+            const genCount = document.getElementById('dash-gen-count');
+            const genList = document.getElementById('dash-gen-list');
+            const activeGens = Object.values(activeGenerations || {});
+
+            if (genCount) genCount.textContent = activeGens.length;
+
+            if (genList) {
+                if (activeGens.length === 0) {
+                    genList.innerHTML = '<div class="dashboard-empty">No active generations</div>';
+                } else {
+                    genList.innerHTML = activeGens.map(gen => `
+                        <div class="dashboard-item">
+                            <span class="dashboard-item-title">${gen.topic}</span>
+                            <span class="dashboard-item-meta">${gen.status || 'generating'}</span>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            // Pipelines
+            try {
+                const pipelines = JSON.parse(localStorage.getItem('genuverity-pipelines') || '{}');
+                const pipelinesList = document.getElementById('dash-pipelines-list');
+                const pipelinesCount = document.getElementById('dash-pipeline-count');
+                const pipelineKeys = Object.keys(pipelines);
+
+                if (pipelinesCount) pipelinesCount.textContent = pipelineKeys.length;
+
+                if (pipelinesList) {
+                    if (pipelineKeys.length === 0) {
+                        pipelinesList.innerHTML = '<div class="dashboard-empty">Create pipelines to organize your research</div>';
+                    } else {
+                        pipelinesList.innerHTML = pipelineKeys.map(name => {
+                            const articles = pipelines[name] || [];
+                            return `
+                                <div class="dashboard-pipeline-card" onclick="toggleBookmarksSidebar()">
+                                    <span class="dashboard-pipeline-name">${name}</span>
+                                    <span class="dashboard-pipeline-count">${articles.length} article${articles.length !== 1 ? 's' : ''}</span>
+                                </div>
+                            `;
+                        }).join('');
+                    }
+                }
+            } catch (e) {}
+
+            // Stats
+            try {
+                const history = JSON.parse(localStorage.getItem('genuverity-reading-history') || '[]');
+                const statArticles = document.getElementById('dash-stat-articles');
+                const statDeepDives = document.getElementById('dash-stat-deepdives');
+                const statFactChecks = document.getElementById('dash-stat-factchecks');
+
+                if (statArticles) statArticles.textContent = history.length;
+
+                // Count deep dives and fact checks from history
+                let deepDives = 0;
+                let factChecks = 0;
+                history.forEach(item => {
+                    if (item.category && item.category.toLowerCase().includes('deep dive')) deepDives++;
+                    if (item.category && item.category.toLowerCase().includes('fact check')) factChecks++;
+                });
+
+                if (statDeepDives) statDeepDives.textContent = deepDives;
+                if (statFactChecks) statFactChecks.textContent = factChecks;
+            } catch (e) {}
+
+            // Re-init icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
             }
         }
 
@@ -6365,6 +7182,13 @@
                 if (banner && banner.classList.contains('drawer-open')) {
                     toggleSourcesBanner();
                 }
+            }
+
+            // Global shortcut: U for user dashboard (works on any view)
+            if (e.key === 'u' || e.key === 'U') {
+                e.preventDefault();
+                switchView('view-dashboard');
+                return;
             }
 
             // Dashboard shortcuts only when viewing an article
