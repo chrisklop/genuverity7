@@ -3071,6 +3071,193 @@
             }
         }
 
+        /* Mobile Bottom Tab Navigation (< 768px) */
+        .mobile-bottom-tabs {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            z-index: 50;
+            padding: 0 8px;
+            padding-bottom: env(safe-area-inset-bottom, 8px);
+        }
+
+        .mobile-bottom-tabs-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            height: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .mobile-tab-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            padding: 6px 16px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.6rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .mobile-tab-btn:hover {
+            background: var(--bg-elevated);
+            color: var(--text-main);
+        }
+
+        .mobile-tab-btn.active {
+            color: var(--accent-blue);
+        }
+
+        .mobile-tab-btn.research.active {
+            color: var(--accent-teal);
+        }
+
+        .mobile-tab-btn .tab-badge {
+            position: absolute;
+            top: 2px;
+            right: 8px;
+            min-width: 16px;
+            height: 16px;
+            background: var(--accent-warm);
+            color: #000;
+            font-size: 0.55rem;
+            font-weight: 700;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+        }
+
+        .mobile-tab-btn .tab-badge:empty {
+            display: none;
+        }
+
+        /* Mobile Panel Overlays */
+        .mobile-panel-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 44;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-panel-overlay.active {
+            opacity: 1;
+        }
+
+        /* Mobile: Show bottom tabs and adjust layout */
+        @media (max-width: 767px) {
+            .mobile-bottom-tabs {
+                display: block;
+            }
+
+            .mobile-panel-overlay {
+                display: block;
+                pointer-events: none;
+            }
+
+            .mobile-panel-overlay.active {
+                pointer-events: auto;
+            }
+
+            /* Add bottom padding for content to not be hidden by tabs */
+            .dashboard-center {
+                padding-bottom: calc(56px + env(safe-area-inset-bottom, 8px) + 16px) !important;
+            }
+
+            /* Hide focus footer on mobile (use bottom tabs instead) */
+            .focus-footer {
+                display: none !important;
+            }
+
+            /* Mobile panel styling */
+            .dashboard-panel {
+                width: 100% !important;
+                max-width: 100% !important;
+                border-radius: 16px 16px 0 0;
+                top: auto !important;
+                bottom: calc(56px + env(safe-area-inset-bottom, 8px));
+                max-height: 70vh;
+                transform: translateY(100%);
+                transition: transform 0.3s ease;
+                z-index: 45;
+            }
+
+            .dashboard-panel.mobile-visible {
+                transform: translateY(0);
+            }
+
+            .dashboard-panel-left,
+            .dashboard-panel-right {
+                left: 0;
+                right: 0;
+            }
+
+            /* Hide panel close button on mobile (use overlay or tabs to close) */
+            .dashboard-panel-close {
+                display: none;
+            }
+
+            /* Add grab handle for mobile panels */
+            .dashboard-panel::before {
+                content: '';
+                position: absolute;
+                top: 8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 40px;
+                height: 4px;
+                background: var(--border-color);
+                border-radius: 2px;
+            }
+
+            .dashboard-panel-content {
+                max-height: calc(70vh - 56px);
+                overflow-y: auto;
+            }
+
+            /* Mobile collapsed strip not needed */
+            .dashboard-collapsed-strip {
+                display: none !important;
+            }
+
+            /* Adjust navbar for mobile */
+            .nav-gen-indicator {
+                font-size: 0.6rem;
+                padding: 4px 8px;
+            }
+        }
+
+        /* Tablet: Panels as side drawers with overlay */
+        @media (min-width: 768px) and (max-width: 1279px) {
+            .mobile-panel-overlay {
+                display: block;
+                pointer-events: none;
+            }
+
+            .mobile-panel-overlay.active {
+                pointer-events: auto;
+            }
+        }
+
         /* Legacy Portal Layout (keeping for fallback) */
         .portal-layout {
             display: flex;
@@ -6257,6 +6444,9 @@
     <section id="view-report" class="view-section">
         <div id="research-dashboard" class="research-dashboard">
 
+            <!-- Mobile Panel Overlay -->
+            <div id="mobile-panel-overlay" class="mobile-panel-overlay" onclick="closeMobilePanels()"></div>
+
             <!-- LEFT PANEL: Research Workspace -->
             <aside id="dashboard-panel-left" class="dashboard-panel dashboard-panel-left">
                 <div class="dashboard-panel-header">
@@ -6452,6 +6642,27 @@
             </aside>
 
         </div>
+
+            <!-- Mobile Bottom Tabs (visible < 768px) -->
+            <nav class="mobile-bottom-tabs" id="mobile-bottom-tabs">
+                <div class="mobile-bottom-tabs-inner">
+                    <button class="mobile-tab-btn research" onclick="toggleMobilePanel('left')" id="mobile-tab-research">
+                        <i data-lucide="folder-kanban" class="w-5 h-5"></i>
+                        <span>Research</span>
+                        <span class="tab-badge" id="mobile-research-badge"></span>
+                    </button>
+                    <button class="mobile-tab-btn active" onclick="closeMobilePanels()" id="mobile-tab-article">
+                        <i data-lucide="file-text" class="w-5 h-5"></i>
+                        <span>Article</span>
+                    </button>
+                    <button class="mobile-tab-btn" onclick="toggleMobilePanel('right')" id="mobile-tab-discovery">
+                        <i data-lucide="compass" class="w-5 h-5"></i>
+                        <span>Discovery</span>
+                        <span class="tab-badge" id="mobile-discovery-badge"></span>
+                    </button>
+                </div>
+            </nav>
+
     </section>
 
     <!-- VIEW 3: STATIC -->
@@ -7071,6 +7282,89 @@
             }
         }
 
+        // Mobile panel state
+        let activeMobilePanel = null;
+
+        // Toggle mobile panel (for bottom tab navigation on mobile)
+        function toggleMobilePanel(side) {
+            const leftPanel = document.getElementById('dashboard-panel-left');
+            const rightPanel = document.getElementById('dashboard-panel-right');
+            const overlay = document.getElementById('mobile-panel-overlay');
+
+            // Update tab button states
+            const tabResearch = document.getElementById('mobile-tab-research');
+            const tabArticle = document.getElementById('mobile-tab-article');
+            const tabDiscovery = document.getElementById('mobile-tab-discovery');
+
+            // If tapping the same panel that's open, close it
+            if (activeMobilePanel === side) {
+                closeMobilePanels();
+                return;
+            }
+
+            // Close any open panel first
+            leftPanel?.classList.remove('mobile-visible');
+            rightPanel?.classList.remove('mobile-visible');
+
+            // Open the requested panel
+            if (side === 'left') {
+                leftPanel?.classList.add('mobile-visible');
+                activeMobilePanel = 'left';
+                tabResearch?.classList.add('active');
+                tabArticle?.classList.remove('active');
+                tabDiscovery?.classList.remove('active');
+            } else if (side === 'right') {
+                rightPanel?.classList.add('mobile-visible');
+                activeMobilePanel = 'right';
+                tabResearch?.classList.remove('active');
+                tabArticle?.classList.remove('active');
+                tabDiscovery?.classList.add('active');
+            }
+
+            // Show overlay
+            overlay?.classList.add('active');
+        }
+
+        // Close all mobile panels
+        function closeMobilePanels() {
+            const leftPanel = document.getElementById('dashboard-panel-left');
+            const rightPanel = document.getElementById('dashboard-panel-right');
+            const overlay = document.getElementById('mobile-panel-overlay');
+
+            leftPanel?.classList.remove('mobile-visible');
+            rightPanel?.classList.remove('mobile-visible');
+            overlay?.classList.remove('active');
+            activeMobilePanel = null;
+
+            // Reset tab button states (Article is default active)
+            const tabResearch = document.getElementById('mobile-tab-research');
+            const tabArticle = document.getElementById('mobile-tab-article');
+            const tabDiscovery = document.getElementById('mobile-tab-discovery');
+            tabResearch?.classList.remove('active');
+            tabArticle?.classList.add('active');
+            tabDiscovery?.classList.remove('active');
+        }
+
+        // Update mobile tab badges
+        function updateMobileTabBadges() {
+            const stash = getSessionStash();
+            const genCount = activeGenerations.size;
+            const related = dashboardState.relatedArticles?.length || 0;
+
+            // Research tab badge (stash + active generations)
+            const researchBadge = document.getElementById('mobile-research-badge');
+            const researchCount = stash.length + genCount;
+            if (researchBadge) {
+                researchBadge.textContent = researchCount > 0 ? researchCount : '';
+            }
+
+            // Discovery tab badge (related articles)
+            const discoveryBadge = document.getElementById('mobile-discovery-badge');
+            if (discoveryBadge) {
+                discoveryBadge.textContent = related > 0 ? related : '';
+            }
+        }
+
         // Toggle stash persistence
         function toggleStashPersist() {
             dashboardState.stashPersist = !dashboardState.stashPersist;
@@ -7173,6 +7467,9 @@
             // Left collapsed count
             const leftCollapsedCount = document.getElementById('left-collapsed-count');
             if (leftCollapsedCount) leftCollapsedCount.textContent = count;
+
+            // Update mobile tab badges
+            updateMobileTabBadges();
         }
 
         // Remove item from stash
@@ -12055,6 +12352,9 @@
 
             // Re-initialize lucide icons
             if (window.lucide) lucide.createIcons();
+
+            // Update mobile tab badges
+            updateMobileTabBadges();
         }
 
         // Handle click on navbar generation indicator
