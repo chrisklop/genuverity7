@@ -31,9 +31,10 @@
             --bg-elevated: #212225;  /* slate-3: UI element background */
 
             /* Text hierarchy (Radix slate-dark 11-12) */
-            --text-main: #edeef0;    /* slate-12: high contrast text */
+            --text-main: #ffffff;    /* pure white for main text */
             --text-muted: #9ba1a6;   /* slate-11: low contrast text */
-            --text-prose: #b0b4ba;   /* between 11-12 for body text */
+            --text-prose: #ffffff;   /* white for body text - accessibility */
+            --text-bold: #ffffff;    /* pure white for bold emphasis */
 
             /* Borders and dividers */
             --border-color: rgba(255, 255, 255, 0.08);
@@ -3421,6 +3422,15 @@
             color: var(--text-prose);
             text-align: justify;
             margin-bottom: 2rem;
+        }
+
+        /* Bold text styling for accessibility */
+        .prose-text strong,
+        .prose-text b,
+        .prose-content strong,
+        .prose-content b {
+            color: var(--text-bold);
+            font-weight: 700;
         }
 
         .prose-h2 {
