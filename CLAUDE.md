@@ -50,17 +50,29 @@ When uncertain, ASK the user which role you should follow.
 ### Reports Instance - Git Boundaries (HARDCODED)
 **ONLY commit/push these paths:**
 - `localreports/*` (all report HTML files)
-- `reports.html` (carousel page)
-- `js/reports-data.js` (carousel data - shared source of truth)
+- `js/reports-data.js` (report metadata - shared source of truth)
 
 **NEVER commit/push:**
 - `api/*`
 - `index.html`
-- `js/*`
+- `reports.html` (Architecture Instance owns this - it renders dynamically)
+- `js/*` (except reports-data.js)
 - `lib/*`
 - `server.py`
 - `CLAUDE.md` (except for this setup section if needed)
 - Any other files
+
+### Reports Instance - Workflow
+**To add a new report:**
+1. Create report HTML file in `localreports/your-report-slug.html`
+2. Add metadata entry to `js/reports-data.js` array
+3. `git add localreports/your-report.html js/reports-data.js`
+4. `git commit` and `git push`
+5. Done - tiles render automatically from REPORTS_DATA
+
+**DO NOT:**
+- Edit `reports.html` - tiles are generated dynamically via JavaScript
+- Run `vercel --prod` - let GitHub auto-deploy or ask Architecture Instance
 
 ### Architecture Instance - Git Boundaries (HARDCODED)
 **ONLY commit/push these paths:**
@@ -80,6 +92,20 @@ When uncertain, ASK the user which role you should follow.
 - Sequential git pushes are additive (not destructive) if boundaries are respected
 - GitHub triggers Vercel auto-deploy
 - Stay in your lane = no conflicts
+
+### ⚠️ DEPLOYMENT RULES (CRITICAL)
+**Reports Instance:**
+- NEVER run `vercel --prod` or `vercel deploy`
+- After pushing to git, GitHub auto-deploys OR ask Architecture Instance to deploy
+- Your git push only includes your allowed files; `vercel --prod` deploys EVERYTHING
+
+**Architecture Instance:**
+- Responsible for all production deployments
+- Before deploying: `git pull` to get Reports Instance changes
+- Verify `index.html` is the correct version (should be ~2200 lines, not ~15000)
+
+**Why this matters:**
+Running `vercel --prod` deploys your entire working directory. If you have stale files (like an old index.html from git), you'll overwrite production with broken code.
 
 ---
 
@@ -177,11 +203,6 @@ Single-page app with three views:
 | `switchView()` | Navigate between views |
 | `renderDynamicCharts()` | Initialize Chart.js visualizations |
 
-### Research Status Panel
-Non-blocking UI panel (bottom-right) that tracks:
-- Deep dive generation progress
-- Enhance operations
-- Queue feedback for fractal triggers
 
 ## AI Model Requirements (MANDATORY)
 
@@ -212,16 +233,59 @@ Non-blocking UI panel (bottom-right) that tracks:
 - Never use Claude for infographics
 - Never use Gemini for article text
 
+## Visual Elements Decision Tree
+
+**FIRST: Decide which tool to use for any visual:**
+
+| Visual Type | Tool | Why |
+|-------------|------|-----|
+| **Bar/Line/Pie charts** | Chart.js | Interactive, fast, auto-watermark |
+| **Data comparisons** | Chart.js | In-page, responsive |
+| **Flowcharts/Diagrams** | Gemini 3 Pro Image Preview | Complex visual layout |
+| **Process diagrams** | Gemini 3 Pro Image Preview | Boxes, arrows, flow |
+| **Infographics** | Gemini 3 Pro Image Preview | Standalone shareable image |
+| **Network graphs** | D3.js or Gemini | Depends on interactivity needs |
+
+### Chart.js (In-Page Charts)
+```html
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/chart-watermark.js"></script>  <!-- Auto-adds GenuVerity branding -->
+```
+- Watermark plugin auto-registers and brands all charts
+- Use for data that benefits from hover/interaction
+- Midnight Tech colors: Blue #3b82f6, Cyan #06b6d4, Green #10b981, Amber #f59e0b, Red #ef4444
+
+### Gemini Diagrams (Standalone Images)
+**Model:** `gemini-3-pro-image-preview` ONLY (never other Gemini models)
+
+**Midnight Tech Style Prompt:**
+```
+Theme: "Midnight Tech" HUD style
+Background: Dark navy gradient (#050A14 to #0a0a12) with faint circuit grid
+Colors: Blue #3b82f6, Cyan #06b6d4, Green #10b981, Amber #f59e0b, Red #FF2A2A
+NO PURPLE (#8b5cf6) anywhere
+Branding: "GenuVerity" wordmark bottom-right (Genu=white, Verity=blue)
+Format: 16:9 aspect ratio
+```
+
+## Shared Architecture Scripts
+
+Reports should include these shared scripts (auto-inject features):
+
+| Script | Purpose | Include After |
+|--------|---------|---------------|
+| `js/reading-progress.js` | Scroll progress bar in navbar | Any time |
+| `js/chart-watermark.js` | GenuVerity branding on Chart.js | Chart.js CDN |
+| `js/reports-data.js` | Report metadata (landing page only) | - |
+
 ## Templates Reference
 
 **See `docs/templates.md` for complete templates including:**
-- Infographic generation prompts (Midnight Tech style)
 - Content report HTML structure
 - Source citation standards
 - Data freshness requirements
 - Chart.js configuration
 - Pre-generation checklists
-- Cost optimization tips
 
 **Quick Reference - Color Palette:**
 
@@ -278,11 +342,19 @@ The system generates semantic fingerprints for claims to detect mutations:
 |-------|---------|
 | `.prose-text` | Body paragraphs |
 | `.prose-h2` | Section headings |
-| `.float-figure.right/left` | Magazine-style wrapped charts |
-| `.living-number` | Animated counters (`data-target`, `data-suffix`) |
-| `.fractal-trigger` | Expandable context terms (triggers deep dives) |
-| `.citation-spade` | Source hover cards |
-| `.highlight-glow` | Emphasized text |
+| `.nav-header` | Sticky navigation bar |
+| `.reading-progress` | Scroll progress bar (auto-injected by js/reading-progress.js) |
+| `.sources-banner` | Collapsible sources section at top |
+| `.content-section` | Main content sections |
+| `.verdict-badge` | Colored verdict indicator |
+| `.chart-container` | Wrapper for Chart.js charts |
+
+**Text Formatting (used in reports):**
+| Element | Use For |
+|---------|---------|
+| `<strong>` | Verdicts, key findings, important names, critical numbers |
+| `<em>` | Claims being analyzed, quotes, technical terms |
+| `<a href="URL">` | Inline citations (every factual claim needs one) |
 
 ## Environment Variables
 
@@ -393,6 +465,17 @@ Sources are scored 0-100 based on domain reputation (`calculate_trust_score()`):
 - **Financial Analysis**: Mermaid diagrams, data cards, timelines
 - **Investigative Reports**: Timeline + comprehensive source grid
 
+### Source Verification (MANDATORY - NO EXCEPTIONS)
+
+**NEVER include a source URL in any report unless it has been verified accessible.**
+
+Verification process:
+1. WebFetch every URL before including it
+2. If WebFetch returns 403/error, try Playwright as fallback
+3. If both fail with 404 or unreachable → DO NOT USE THAT SOURCE
+4. Find an alternative source that IS reachable
+5. No dead links. Ever. This is non-negotiable.
+
 ### Before Publishing Any Report
 
 1. Run WebFetch on EVERY external link to verify it resolves
@@ -409,3 +492,254 @@ Sources are scored 0-100 based on domain reputation (`calculate_trust_score()`):
 - Professional, clean layouts
 - Mobile-responsive design
 - Minimal unnecessary features
+
+---
+
+## 📋 REPORT GENERATION PIPELINE (MANDATORY)
+
+**This is the EXACT process for generating ANY report. No shortcuts. No exceptions.**
+
+### When User Says "Generate N Reports"
+
+Execute this pipeline FOR EACH report sequentially:
+
+---
+
+### PHASE 1: PRE-GENERATION (Per Report)
+
+```
+□ 1. Read docs/templates.md AND docs/template.md
+□ 2. Read a reference report (e.g., localreports/fednow-freeze.html)
+□ 3. Research the topic with WebSearch
+□ 4. Gather 8-12 sources with WebFetch verification
+□ 5. Create source list with trust scores
+```
+
+**STOP if:**
+- Fewer than 8 verified sources
+- No primary (.gov, official) sources available
+- Topic already exists in js/reports-data.js
+
+---
+
+### PHASE 2: CONTENT REQUIREMENTS (Per Report)
+
+**Every report MUST contain:**
+
+| Element | Requirement | Example |
+|---------|-------------|---------|
+| **Collapsible Sources Banner** | At top, expandable grid | `<section class="sources-banner">` |
+| **Trust Scores** | 0-100 per source | `<span class="source-score high">95</span>` |
+| **Inline Citations** | Linked text throughout body | `<a href="URL" target="_blank">cited fact</a>` |
+| **Bold Emphasis** | Key terms, names, verdicts | `<strong>FALSE</strong>` |
+| **Italic Emphasis** | Quotes, claims being analyzed | `<em>"quoted claim text"</em>` |
+| **Chart.js + Watermark Plugin** | Every chart needs the plugin | See template.md |
+| **Reading Progress Bar** | In nav header | `<div class="reading-progress"></div>` |
+| **Verdict Section** | Color-coded by result | Green=TRUE, Red=FALSE, Amber=MIXED |
+| **Executive Summary** | Claim vs Reality grid | See template.md |
+
+---
+
+### PHASE 3: WRITING STANDARDS (Per Report)
+
+**Text Formatting Rules:**
+
+1. **Bold (`<strong>`)** - Use for:
+   - Verdict labels: **FALSE**, **TRUE**, **MIXED**
+   - Key findings: **no evidence exists**
+   - Important names on first mention: **Colonel Ruby Bradley**
+   - Critical numbers: **$2.7 trillion**
+
+2. **Italic (`<em>`)** - Use for:
+   - Claims being fact-checked: *"The government is spraying chemicals"*
+   - Titles of reports/studies: *Environmental Science & Technology*
+   - Foreign phrases or technical terms on first use
+
+3. **Inline Citations** - Every factual claim needs a link:
+   ```html
+   According to <a href="https://www.bls.gov/..." target="_blank" rel="noopener">BLS data</a>,
+   inflation rose <strong>2.7%</strong> in November.
+   ```
+
+4. **Never** write a factual claim without linking to the source in the same sentence.
+
+---
+
+### PHASE 4: REQUIRED HTML STRUCTURE
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta, title, Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* MUST include these CSS variables */
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-card: #12121a;
+            --text-primary: #e4e4e7;
+            --text-secondary: #a1a1aa;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --border-subtle: rgba(255,255,255,0.08);
+        }
+        /* Reading progress bar CSS */
+        .reading-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            width: 0%;
+            transition: width 0.1s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-header">
+        <!-- Brand + Links -->
+        <div class="reading-progress"></div>
+    </nav>
+
+    <header class="hero">
+        <div class="verdict-badge">[VERDICT]</div>
+        <h1>[TITLE]</h1>
+    </header>
+
+    <main class="container">
+        <!-- 1. Sources Banner (collapsible) -->
+        <div class="sources-banner">...</div>
+
+        <!-- 2. Executive Summary -->
+        <section class="content-section">
+            <h2>Executive Summary</h2>
+            <p>Summary with <strong>bold</strong> and <em>italic</em> and
+               <a href="URL">inline citations</a>.</p>
+        </section>
+
+        <!-- 3. Claim Analysis (multiple cards) -->
+        <section class="content-section">
+            <div class="claim-card">
+                <span class="claim-text"><em>"Claim being analyzed"</em></span>
+                <span class="claim-verdict verdict-false">FALSE</span>
+                <p class="claim-evidence">Evidence with <a href="URL">source link</a>.</p>
+            </div>
+        </section>
+
+        <!-- 4. Charts with data -->
+        <div class="chart-container">
+            <canvas id="chartId"></canvas>
+        </div>
+
+        <!-- 5. Conclusion/Verdict -->
+        <section class="content-section">
+            <h2>Conclusion</h2>
+            <p><strong>Verdict:</strong> [VERDICT]. [Explanation].</p>
+        </section>
+    </main>
+
+    <script>
+        // Reading Progress Bar (REQUIRED)
+        const progressBar = document.querySelector('.reading-progress');
+        window.addEventListener('scroll', () => {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.scrollY;
+            progressBar.style.width = Math.min((scrolled / docHeight) * 100, 100) + '%';
+        });
+
+        // Chart.js Watermark Plugin (REQUIRED)
+        const genuVerityWatermark = {
+            id: 'genuVerityWatermark',
+            afterDraw: (chart) => {
+                const ctx = chart.ctx;
+                const { width } = chart;
+                ctx.save();
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'top';
+                ctx.font = 'bold 10px Inter, sans-serif';
+                const verityWidth = ctx.measureText('Verity').width;
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText('Genu', width - 8 - verityWidth, 8);
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillText('Verity', width - 8, 8);
+                ctx.restore();
+            }
+        };
+        Chart.register(genuVerityWatermark);
+
+        // Initialize charts...
+    </script>
+</body>
+</html>
+```
+
+---
+
+### PHASE 5: POST-GENERATION CHECKLIST (Per Report)
+
+Before saving the file, verify:
+
+```
+□ 1. Sources Banner present and functional (toggle works)
+□ 2. At least 8 sources with trust scores
+□ 3. Reading progress bar in nav + JS
+□ 4. Chart.js watermark plugin registered
+□ 5. Every factual claim has inline citation link
+□ 6. Bold used for verdicts, key findings, important names
+□ 7. Italic used for claims being analyzed, quotes
+□ 8. No purple colors (#8b5cf6)
+□ 9. All URLs verified accessible
+□ 10. Verdict badge matches conclusion
+```
+
+---
+
+### PHASE 6: INTEGRATION (After All Reports Complete)
+
+```
+□ 1. Add ALL new reports to js/reports-data.js
+□ 2. Increment IDs sequentially (newest = lowest ID)
+□ 3. git add localreports/*.html js/reports-data.js
+□ 4. git commit with descriptive message
+□ 5. git push origin main
+□ 6. STOP - Do NOT run vercel --prod
+```
+
+---
+
+### FAILURE MODES TO PREVENT
+
+| Mistake | How to Prevent |
+|---------|----------------|
+| Missing inline citations | Write citation link IN SAME SENTENCE as fact |
+| No bold/italic | Add formatting while writing, not after |
+| Missing watermark plugin | Copy from template.md, don't skip |
+| Missing reading progress | Include CSS + JS from template |
+| Rushing for volume | Quality > quantity. Stop and fix issues. |
+| Not reading templates | FIRST action is always Read docs/templates.md |
+
+---
+
+### BATCH GENERATION EXAMPLE
+
+When user says: "Generate 5 reports on topics X, Y, Z, A, B"
+
+```
+FOR EACH topic:
+  1. WebSearch topic → gather context
+  2. WebFetch 10+ sources → verify accessible
+  3. Read docs/templates.md (yes, every time)
+  4. Write report following PHASE 4 structure
+  5. Run PHASE 5 checklist
+  6. Save to localreports/
+
+AFTER ALL reports:
+  7. Update js/reports-data.js with all entries
+  8. git add, commit, push
+```
+
+**Time estimate:** 10-15 minutes per high-quality report. Do NOT rush.

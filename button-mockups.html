@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Mockups | GenuVerity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            min-height: 100vh;
+            padding: 40px;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            color: #888;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .card-label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Base button styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* 1. Current Blue Glow */
+        .btn-1 {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+        }
+        .btn-1:hover {
+            box-shadow: 0 0 50px rgba(59, 130, 246, 0.7);
+        }
+
+        /* 2. Cyan Neon */
+        .btn-2 {
+            background: transparent;
+            border: 2px solid #06b6d4;
+            color: #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4), inset 0 0 20px rgba(6, 182, 212, 0.1);
+        }
+        .btn-2:hover {
+            background: rgba(6, 182, 212, 0.1);
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.6), inset 0 0 30px rgba(6, 182, 212, 0.2);
+        }
+
+        /* 3. Gradient Blue-Cyan */
+        .btn-3 {
+            background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            color: white;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        }
+        .btn-3:hover {
+            box-shadow: 0 6px 30px rgba(6, 182, 212, 0.5);
+        }
+
+        /* 4. Emerald Success */
+        .btn-4 {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
+        }
+        .btn-4:hover {
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.6);
+        }
+
+        /* 5. Hot Pink Party */
+        .btn-5 {
+            background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+            color: white;
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.5);
+        }
+        .btn-5:hover {
+            box-shadow: 0 0 50px rgba(244, 63, 94, 0.7);
+        }
+
+        /* 6. Gold Premium */
+        .btn-6 {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #000;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
+        }
+        .btn-6:hover {
+            box-shadow: 0 0 40px rgba(245, 158, 11, 0.6);
+        }
+
+        /* 7. Ghost White */
+        .btn-7 {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+        .btn-7:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* 8. Rainbow Gradient */
+        .btn-8 {
+            background: linear-gradient(90deg, #f43f5e, #f59e0b, #10b981, #3b82f6, #8b5cf6);
+            background-size: 200% 100%;
+            color: white;
+            animation: rainbow 3s linear infinite;
+        }
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* 9. Glassy Frost */
+        .btn-9 {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .btn-9:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* 10. Pulse Ring */
+        .btn-10 {
+            background: #3b82f6;
+            color: white;
+            position: relative;
+        }
+        .btn-10::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 16px;
+            border: 2px solid #3b82f6;
+            animation: pulse-ring 2s ease-out infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.15); opacity: 0; }
+        }
+
+        /* 11. Matrix Green */
+        .btn-11 {
+            background: #000;
+            border: 2px solid #22c55e;
+            color: #22c55e;
+            font-family: monospace;
+            text-shadow: 0 0 10px #22c55e;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+        }
+        .btn-11:hover {
+            background: rgba(34, 197, 94, 0.1);
+            box-shadow: 0 0 40px rgba(34, 197, 94, 0.5);
+        }
+
+        /* 12. Sunset Vibes */
+        .btn-12 {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%);
+            color: white;
+            box-shadow: 0 0 30px rgba(249, 115, 22, 0.5);
+        }
+        .btn-12:hover {
+            box-shadow: 0 0 50px rgba(220, 38, 38, 0.6);
+        }
+
+        /* 13. Ice Cold */
+        .btn-13 {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
+            color: #0c4a6e;
+            box-shadow: 0 0 25px rgba(125, 211, 252, 0.4);
+        }
+        .btn-13:hover {
+            box-shadow: 0 0 40px rgba(125, 211, 252, 0.6);
+        }
+
+        /* 14. Dark Elegant */
+        .btn-14 {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            border: 1px solid #374151;
+            color: #f3f4f6;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .btn-14:hover {
+            border-color: #4b5563;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        /* 15. Electric Violet */
+        .btn-15 {
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+            color: white;
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.5);
+        }
+        .btn-15:hover {
+            box-shadow: 0 0 50px rgba(124, 58, 237, 0.7);
+        }
+
+        /* 16. Coral Reef */
+        .btn-16 {
+            background: linear-gradient(135deg, #fb7185 0%, #f472b6 100%);
+            color: white;
+            box-shadow: 0 0 25px rgba(251, 113, 133, 0.5);
+        }
+        .btn-16:hover {
+            box-shadow: 0 0 40px rgba(244, 114, 182, 0.6);
+        }
+
+        /* 17. Cyberpunk */
+        .btn-17 {
+            background: #000;
+            border: 2px solid #f0f;
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), inset 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+        .btn-17:hover {
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.6), inset 0 0 30px rgba(0, 255, 255, 0.2);
+        }
+
+        /* 18. Minimal Outline */
+        .btn-18 {
+            background: transparent;
+            border: 2px solid #3b82f6;
+            color: #3b82f6;
+        }
+        .btn-18:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        /* 19. Shimmer Effect */
+        .btn-19 {
+            background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-19::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.3) 50%,
+                transparent 70%
+            );
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        /* 20. Bouncy */
+        .btn-20 {
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            color: white;
+            animation: bounce-subtle 2s ease-in-out infinite;
+        }
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .btn-20:hover {
+            animation: none;
+            transform: translateY(-2px);
+        }
+
+        .count {
+            font-weight: 800;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Button Style Mockups</h1>
+
+    <div class="grid">
+        <div class="card">
+            <span class="card-label">1. Current Blue Glow</span>
+            <a href="#" class="btn btn-1">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">2. Cyan Neon Outline</span>
+            <a href="#" class="btn btn-2">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">3. Blue-Cyan Gradient</span>
+            <a href="#" class="btn btn-3">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">4. Emerald Success</span>
+            <a href="#" class="btn btn-4">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">5. Hot Pink Party</span>
+            <a href="#" class="btn btn-5">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">6. Gold Premium</span>
+            <a href="#" class="btn btn-6">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">7. Ghost White</span>
+            <a href="#" class="btn btn-7">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">8. Rainbow Gradient</span>
+            <a href="#" class="btn btn-8">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">9. Glassy Frost</span>
+            <a href="#" class="btn btn-9">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">10. Pulse Ring</span>
+            <a href="#" class="btn btn-10">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">11. Matrix Green</span>
+            <a href="#" class="btn btn-11">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">12. Sunset Vibes</span>
+            <a href="#" class="btn btn-12">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">13. Ice Cold</span>
+            <a href="#" class="btn btn-13">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">14. Dark Elegant</span>
+            <a href="#" class="btn btn-14">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">15. Electric Violet</span>
+            <a href="#" class="btn btn-15">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">16. Coral Reef</span>
+            <a href="#" class="btn btn-16">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">17. Cyberpunk</span>
+            <a href="#" class="btn btn-17">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">18. Minimal Outline</span>
+            <a href="#" class="btn btn-18">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">19. Shimmer Effect</span>
+            <a href="#" class="btn btn-19">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+
+        <div class="card">
+            <span class="card-label">20. Bouncy</span>
+            <a href="#" class="btn btn-20">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

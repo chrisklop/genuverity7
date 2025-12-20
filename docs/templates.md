@@ -165,16 +165,17 @@ Visual style:
 
 <!-- Main Content Sections -->
 <section class="content-section">
-    <h2 class="prose-h2">[Section Title]</h2>
-    <p class="prose-text">[Content with inline citations using <span class="citation-spade" data-source="src1">text</span>]</p>
+    <h2 class="section-title">[Section Title]</h2>
+    <p class="prose-text">
+        According to <a href="https://source-url" target="_blank" rel="noopener">source name</a>,
+        <strong>key finding here</strong>. The claim that <em>"quoted claim"</em> is
+        <strong>FALSE</strong> based on <a href="https://evidence-url" target="_blank" rel="noopener">evidence</a>.
+    </p>
 
-    <!-- Float figures for charts -->
-    <figure class="float-figure right">
-        <div class="chart-container">
-            <canvas id="chart_[unique_id]"></canvas>
-        </div>
-        <figcaption>[Chart description]</figcaption>
-    </figure>
+    <!-- Charts -->
+    <div class="chart-container">
+        <canvas id="chart_[unique_id]"></canvas>
+    </div>
 </section>
 
 <!-- Verdict/Conclusion -->
@@ -191,18 +192,24 @@ Visual style:
 
 | Class | Purpose | Usage |
 |-------|---------|-------|
+| `.nav-header` | Sticky navigation | Top nav bar |
+| `.reading-progress` | Scroll progress bar | Auto-injected by reading-progress.js |
+| `.sources-banner` | Collapsible sources | Top of report |
+| `.content-section` | Main sections | Wrap each section |
 | `.prose-text` | Body paragraphs | All regular text content |
-| `.prose-h2` | Section headings | Main section titles |
-| `.prose-h3` | Subsection headings | Nested sections |
-| `.float-figure.right` | Right-floated chart | Magazine-style wrap |
-| `.float-figure.left` | Left-floated chart | Magazine-style wrap |
-| `.living-number` | Animated counters | Key statistics |
-| `.fractal-trigger` | Expandable terms | Deep-dive triggers |
-| `.citation-spade` | Source hover cards | Inline citations |
-| `.highlight-glow` | Emphasized text | Key phrases |
-| `.insight-card` | Boxed insights | Key takeaways |
-| `.mechanism-reveal` | Collapsible section | Complex diagrams |
-| `.reading-progress` | Scroll progress bar | Bottom of nav-header |
+| `.section-title` | Section headings | Main section titles |
+| `.verdict-badge` | Verdict indicator | Hero section |
+| `.chart-container` | Chart wrapper | Wrap Canvas elements |
+| `.source-card` | Source item | In sources grid |
+| `.trust-score` | Trust indicator | Source cards |
+
+### Text Formatting (REQUIRED)
+
+| Element | Use For | Example |
+|---------|---------|---------|
+| `<strong>` | Verdicts, key findings, names, numbers | `<strong>FALSE</strong>` |
+| `<em>` | Claims, quotes, technical terms | `<em>"quoted claim"</em>` |
+| `<a href="URL">` | Every factual claim | `<a href="https://...">BLS data</a>` |
 
 ### Reading Progress Bar (REQUIRED)
 
@@ -221,28 +228,6 @@ That's it! The script automatically:
 **Requirements:**
 - Page must have a `.nav-header` element
 - Script path assumes report is in `localreports/` directory
-
-### Living Number Syntax
-```html
-<span class="living-number" data-target="2700000000" data-suffix=" USD">$0</span>
-```
-
-### Citation Syntax
-```html
-<span class="citation-spade" data-source="src1">cited text</span>
-```
-
-Requires matching entry in `citationDatabase`:
-```json
-{
-  "src1": {
-    "domain": "bls.gov",
-    "title": "Consumer Price Index Summary",
-    "url": "https://www.bls.gov/news.release/cpi.nr0.htm",
-    "trustScore": 95
-  }
-}
-```
 
 ---
 

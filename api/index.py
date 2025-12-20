@@ -1,255 +1,63 @@
+"""
+GenuVerity API - Fact-Check Only Version
+Pure fact-checking with disinformation tracking capabilities.
+
+Removed features:
+- Investigation article generation (/api/generate)
+- Deep dive generation (/api/deep-dive)
+- Infographic generation (Gemini image API)
+- Extract claim endpoint (/api/extract-claim)
+"""
+
 import os
 import json
 import hashlib
 import re
+import time
 import requests
-import base64
 from typing import Optional
-from datetime import datetime, date
+from datetime import datetime
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import StreamingResponse, Response
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import anthropic
 
-# Load from environment variables (Vercel sets these automatically)
+# Load from environment variables
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 BLOB_READ_WRITE_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 GOOGLE_FACT_CHECK_API_KEY = os.getenv("GOOGLE_FACT_CHECK_API_KEY")
-# Gemini API keys with rotation for rate limits (loaded from environment)
-GEMINI_API_KEYS = [
-    k for k in [
-        os.getenv("GEMINI_API_KEY"),
-        os.getenv("GEMINI_API_KEY_2"),
-        os.getenv("GEMINI_API_KEY_3"),
-    ] if k
-]
-GEMINI_API_KEY = GEMINI_API_KEYS[0] if GEMINI_API_KEYS else None
-# Use Claude Sonnet 4 for quality investigative articles
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
-# Gemini 3 Pro Image for infographic generation (superior quality)
-GEMINI_IMAGE_MODEL = "gemini-3-pro-image-preview"
-GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models"
+ADMIN_SECRET = os.getenv("ADMIN_SECRET")
+RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "hello@genuverity.com")
+FRED_API_KEY = os.getenv("FRED_API_KEY")
 
-# Track which key to use (rotates on rate limit)
-_current_key_index = 0
+# Claude model for fact-checking
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
 
 # Vercel Blob Storage configuration
 BLOB_STORE_ID = "store_R5FvidKLuXLBeOEd"
 BLOB_API_BASE = "https://blob.vercel-storage.com"
 
-# Fallback to /tmp for local development (ephemeral on Vercel)
+# Fallback cache directory
 CACHE_DIR = "/tmp/article_cache"
-USER_USAGE_FILE = "/tmp/user_usage.json"
-FREE_DAILY_LIMIT = 5
-
-# Article index for fast listing (stored in Blob storage)
-ARTICLE_INDEX_PATH = "articles/_index.json"
-
-# Ensure cache directory exists (fallback)
 os.makedirs(CACHE_DIR, exist_ok=True)
 
-# Configure Anthropic with 5-minute timeout (matches Vercel Pro maxDuration)
+# Article/Fact-check index for fast listing
+ARTICLE_INDEX_PATH = "articles/_index.json"
+
+# Configure Anthropic client
 claude_client = anthropic.Anthropic(
     api_key=ANTHROPIC_API_KEY,
-    timeout=300.0  # 5 minutes - prevents premature timeout on long generations
+    timeout=300.0
 ) if ANTHROPIC_API_KEY else None
-
-# === GEMINI INFOGRAPHIC GENERATION ===
-
-# GenuVerity "Midnight Tech" Style - professional investigative journalism aesthetic
-INFOGRAPHIC_STYLE = """
-VISUAL STYLE: "MIDNIGHT TECH"
-- Background: Deep gradient from #050505 (near black) to #0a0a1a (dark blue-black)
-- Primary accent: Electric blue (#3b82f6) for key data elements
-- Secondary accents: Cyan (#06b6d4), Teal (#14b8a6)
-- Grid/lines: Very subtle dark blue (#1a1a3e) with slight glow
-- Text: Crisp white (#ffffff) for values, light gray (#a0a0b0) for labels
-- Effects: Subtle blue glow on key elements, sleek futuristic feel
-- Chart style: Clean geometric shapes, glowing edges, tech-forward
-- Overall mood: High-tech data dashboard, investigative journalism
-
-BRANDING REQUIREMENT (MANDATORY):
-In the bottom-left corner of the image, include the text logo "GenuVerity" where:
-- "Genu" is in WHITE color (#FFFFFF)
-- "Verity" is in BLUE color (#3b82f6)
-- Font should be clean, modern sans-serif
-- Size: Medium-small, professional watermark style
-- Position: Bottom-left corner with small padding from edges
-"""
-
-def generate_gemini_infographic(chart_config: dict, title: str, chart_id: str, article_context: str = "") -> Optional[str]:
-    """Generate an infographic image using Gemini 3 Pro Image.
-
-    Args:
-        chart_config: Dict with type, data (labels, values, colors), title
-        title: Overall title for the infographic (article title)
-        chart_id: Unique identifier for caching
-        article_context: Additional context about what this data represents (for shareability)
-
-    Returns:
-        Base64-encoded PNG image or None if generation fails
-    """
-    global _current_key_index
-
-    if not GEMINI_API_KEYS:
-        print("No GEMINI_API_KEYS configured, skipping infographic generation")
-        return None
-
-    chart_type = chart_config.get("type", "bar")
-    data = chart_config.get("data", {})
-    chart_title = chart_config.get("title", title)
-    labels = data.get("labels", [])
-    values = data.get("values", [])
-    colors = data.get("colors", ["#3b82f6"])
-
-    # Build data description for the prompt
-    data_points = []
-    for i, (label, value) in enumerate(zip(labels, values)):
-        color = colors[i % len(colors)] if colors else "#3b82f6"
-        data_points.append(f"- {label}: {value} (color: {color})")
-    data_description = "\n".join(data_points)
-
-    # Build context section for shareability
-    context_section = ""
-    if article_context:
-        context_section = f"""
-ARTICLE CONTEXT (for shareable infographic):
-This infographic is part of an investigation titled: "{title}"
-{article_context}
-
-IMPORTANT: Include enough context in the infographic that someone seeing ONLY this image understands:
-- What topic/entity this data is about (e.g., "Congressional Leaders", "AI Companies", etc.)
-- What time period or scope the data covers
-- Why this data matters"""
-
-    # Craft the infographic generation prompt with Midnight Tech style
-    prompt = f"""Generate a professional data visualization infographic that is SHAREABLE and SELF-EXPLANATORY.
-
-CRITICAL STYLE REQUIREMENTS - YOU MUST FOLLOW THESE EXACTLY:
-{INFOGRAPHIC_STYLE}
-{context_section}
-
-CHART SPECIFICATIONS:
-- Chart Type: {chart_type.upper()} CHART
-- Title: "{chart_title}"
-- Data Points:
-{data_description}
-
-MANDATORY REQUIREMENTS:
-1. BACKGROUND MUST BE: Deep gradient from #050505 (near black) to #0a0a1a (dark blue-black) - NO WHITE OR LIGHT BACKGROUNDS
-2. Use electric blue (#3b82f6) as primary accent color
-3. Include the "GenuVerity" watermark in bottom-left corner (Genu=white, Verity=blue)
-4. Create a visually striking {chart_type} chart with glowing edges and tech-forward aesthetic
-5. Use crisp white (#ffffff) for data values, light gray (#a0a0b0) for labels
-6. Add subtle blue glow effects on key elements
-7. Size: 800x500 pixels
-8. CONTEXT REQUIREMENT: Add a subtitle or context line below the title that explains WHAT this data represents (e.g., "Leadership PAC Spending by U.S. Congressional Leaders, 2020-2024")
-
-THIS IS A DARK THEME INFOGRAPHIC. The background MUST be nearly black (#050505 to #0a0a1a). Do NOT use white, light gray, or any light-colored backgrounds.
-
-The infographic should be SHAREABLE - someone seeing only this image should understand the full context without needing to read the article.
-
-Generate the Midnight Tech style infographic now."""
-
-    # Try each API key with retry logic
-    import time
-    max_retries = len(GEMINI_API_KEYS) * 2
-    retry_delay = 5
-
-    for attempt in range(max_retries):
-        current_key = GEMINI_API_KEYS[_current_key_index % len(GEMINI_API_KEYS)]
-
-        try:
-            print(f"Infographic attempt {attempt + 1}/{max_retries} with key index {_current_key_index % len(GEMINI_API_KEYS)}")
-
-            response = requests.post(
-                f"{GEMINI_API_URL}/{GEMINI_IMAGE_MODEL}:generateContent?key={current_key}",
-                headers={"Content-Type": "application/json"},
-                json={
-                    "contents": [{
-                        "role": "user",
-                        "parts": [{"text": prompt}]
-                    }],
-                    "generationConfig": {
-                        "responseModalities": ["TEXT", "IMAGE"],
-                        "temperature": 0.2  # Lower temperature for consistent Midnight Tech style
-                    }
-                },
-                timeout=180  # 3 minutes for infographic generation
-            )
-
-            if response.status_code == 200:
-                result = response.json()
-                # Extract image from response
-                candidates = result.get("candidates", [])
-                if candidates:
-                    parts = candidates[0].get("content", {}).get("parts", [])
-                    for part in parts:
-                        if "inlineData" in part:
-                            image_data = part["inlineData"].get("data")
-                            mime_type = part["inlineData"].get("mimeType", "image/png")
-                            if image_data:
-                                print(f"Generated infographic for {chart_id}: {len(image_data)} bytes")
-                                return f"data:{mime_type};base64,{image_data}"
-                print(f"No image in Gemini response")
-            elif response.status_code == 429:
-                # Rate limited - rotate to next key
-                print(f"Rate limited on key {_current_key_index % len(GEMINI_API_KEYS)}, rotating...")
-                _current_key_index += 1
-                time.sleep(retry_delay)
-                continue
-            else:
-                print(f"Gemini API error ({response.status_code}): {response.text[:200]}")
-                _current_key_index += 1
-
-        except Exception as e:
-            print(f"Gemini infographic generation error: {e}")
-            _current_key_index += 1
-
-        time.sleep(2)  # Brief pause between attempts
-
-    return None
-
-
-def generate_infographics_for_article(chart_configs: dict, article_title: str, article_description: str = "") -> dict:
-    """Generate Gemini infographics for all charts in an article.
-
-    Args:
-        chart_configs: Dict of chart_id -> chart_config
-        article_title: Title of the article for context
-        article_description: Brief description of the article topic for shareable context
-
-    Returns:
-        Dict of chart_id -> base64 image data URL (or None if failed)
-    """
-    infographics = {}
-
-    # Build context string for shareability
-    article_context = article_description if article_description else ""
-
-    for chart_id, config in chart_configs.items():
-        print(f"Generating infographic: {chart_id}")
-        # Pass article context so infographics are self-explanatory when shared
-        image_data = generate_gemini_infographic(config, article_title, chart_id, article_context)
-        if image_data:
-            infographics[chart_id] = image_data
-        else:
-            # Keep None to signal fallback to Chart.js
-            infographics[chart_id] = None
-
-    return infographics
 
 
 # === TAVILY WEB SEARCH FOR REAL SOURCES ===
 
 def search_sources(topic: str, max_results: int = 10) -> list:
-    """Search for real sources using Tavily API.
-
-    Returns list of sources with real URLs, titles, and snippets.
-    """
+    """Search for real sources using Tavily API."""
     if not TAVILY_API_KEY:
         print("TAVILY_API_KEY not set, skipping source search")
         return []
@@ -274,10 +82,8 @@ def search_sources(topic: str, max_results: int = 10) -> list:
             data = response.json()
             results = data.get("results", [])
 
-            # Transform to our source format
             sources = []
             for i, r in enumerate(results):
-                # Calculate trust score based on domain reputation
                 domain = r.get("url", "").split("/")[2] if r.get("url") else "unknown"
                 trust_score = calculate_trust_score(domain)
 
@@ -305,23 +111,18 @@ def search_sources(topic: str, max_results: int = 10) -> list:
 
 def calculate_trust_score(domain: str) -> int:
     """Calculate trust score based on domain reputation."""
-    # Tier 1: Major news organizations, government, academic
     tier1 = [
         "reuters.com", "apnews.com", "bbc.com", "bbc.co.uk", "npr.org",
         "nytimes.com", "washingtonpost.com", "wsj.com", "economist.com",
         "theguardian.com", "ft.com", "bloomberg.com", "politico.com",
         ".gov", ".edu", "nature.com", "science.org", "pubmed.ncbi.nlm.nih.gov"
     ]
-
-    # Tier 2: Respected national/regional outlets
     tier2 = [
         "cnn.com", "nbcnews.com", "cbsnews.com", "abcnews.go.com", "usatoday.com",
         "latimes.com", "chicagotribune.com", "seattletimes.com", "bostonglobe.com",
         "theatlantic.com", "newyorker.com", "vox.com", "axios.com", "thehill.com",
         "propublica.org", "businessinsider.com", "forbes.com", "fortune.com"
     ]
-
-    # Tier 3: Trade publications, specialized sources
     tier3 = [
         "techcrunch.com", "wired.com", "arstechnica.com", "theverge.com",
         "cnbc.com", "marketwatch.com", "investopedia.com", "sec.gov",
@@ -332,18 +133,17 @@ def calculate_trust_score(domain: str) -> int:
 
     for d in tier1:
         if d in domain_lower:
-            return 95 + (hash(domain) % 5)  # 95-99
+            return 95 + (hash(domain) % 5)
 
     for d in tier2:
         if d in domain_lower:
-            return 85 + (hash(domain) % 10)  # 85-94
+            return 85 + (hash(domain) % 10)
 
     for d in tier3:
         if d in domain_lower:
-            return 75 + (hash(domain) % 10)  # 75-84
+            return 75 + (hash(domain) % 10)
 
-    # Default for unknown sources
-    return 60 + (hash(domain) % 15)  # 60-74
+    return 60 + (hash(domain) % 15)
 
 
 def format_sources_for_prompt(sources: list) -> str:
@@ -363,17 +163,15 @@ def format_sources_for_prompt(sources: list) -> str:
     return "\n".join(lines)
 
 
-def search_google_fact_checks(claim: str, max_results: int = 5) -> list:
-    """Search Google Fact Check Tools API for existing fact checks from publishers like Snopes, PolitiFact, etc.
+# === GOOGLE FACT CHECK API ===
 
-    Returns: list of prior fact checks with publisher, rating, and URL
-    """
+def search_google_fact_checks(claim: str, max_results: int = 5) -> list:
+    """Search Google Fact Check Tools API for existing fact checks."""
     if not GOOGLE_FACT_CHECK_API_KEY:
-        print("GOOGLE_FACT_CHECK_API_KEY not set, skipping professional fact check search")
+        print("GOOGLE_FACT_CHECK_API_KEY not set")
         return []
 
     try:
-        # Google Fact Check Tools API - ClaimSearch endpoint
         encoded_query = requests.utils.quote(claim)
         url = f"https://factchecktools.googleapis.com/v1alpha1/claims:search?query={encoded_query}&pageSize={max_results}&key={GOOGLE_FACT_CHECK_API_KEY}"
 
@@ -391,28 +189,25 @@ def search_google_fact_checks(claim: str, max_results: int = 5) -> list:
 
         fact_checks = []
         for claim_obj in data.get("claims", [])[:max_results]:
-            # Each claim may have multiple reviews from different publishers
             for review in claim_obj.get("claimReview", []):
                 publisher_name = review.get("publisher", {}).get("name", "Unknown Publisher")
                 publisher_site = review.get("publisher", {}).get("site", "")
-
-                # Map common ratings to standardized format
-                rating = review.get("textualRating", "Unrated")
-                rating_normalized = normalize_fact_check_rating(rating)
+                rating = review.get("textualRating", "Unknown")
+                review_url = review.get("url", "")
+                title = review.get("title", "")
 
                 fact_checks.append({
                     "publisher": publisher_name,
-                    "publisher_site": publisher_site,
-                    "claim_text": claim_obj.get("text", ""),
-                    "claimant": claim_obj.get("claimant", "Unknown"),
+                    "publisherSite": publisher_site,
                     "rating": rating,
-                    "rating_normalized": rating_normalized,
-                    "url": review.get("url", ""),
-                    "title": review.get("title", ""),
-                    "review_date": review.get("reviewDate", "")
+                    "normalizedRating": normalize_fact_check_rating(rating),
+                    "url": review_url,
+                    "title": title,
+                    "claimText": claim_obj.get("text", ""),
+                    "claimant": claim_obj.get("claimant", "Unknown")
                 })
 
-        print(f"Found {len(fact_checks)} existing fact checks from publishers")
+        print(f"Found {len(fact_checks)} prior fact checks for: {claim[:50]}...")
         return fact_checks
 
     except Exception as e:
@@ -421,205 +216,156 @@ def search_google_fact_checks(claim: str, max_results: int = 5) -> list:
 
 
 def normalize_fact_check_rating(rating: str) -> str:
-    """Normalize various fact-check ratings to standard verdicts."""
+    """Normalize fact check ratings to standard verdicts."""
     rating_lower = rating.lower()
 
-    # True ratings
     if any(x in rating_lower for x in ["true", "correct", "accurate", "confirmed"]):
-        if any(x in rating_lower for x in ["mostly", "partly", "half"]):
+        if any(x in rating_lower for x in ["mostly", "partly", "partially"]):
             return "MOSTLY_TRUE"
         return "TRUE"
 
-    # False ratings
-    if any(x in rating_lower for x in ["false", "wrong", "incorrect", "lie", "pants on fire", "fake"]):
-        if any(x in rating_lower for x in ["mostly", "partly"]):
+    if any(x in rating_lower for x in ["false", "incorrect", "wrong", "fake", "lie", "pants on fire"]):
+        if any(x in rating_lower for x in ["mostly", "partly", "partially"]):
             return "MOSTLY_FALSE"
         return "FALSE"
 
-    # Mixed/partial ratings
-    if any(x in rating_lower for x in ["mixed", "half", "misleading", "distort", "cherry pick", "lack context"]):
+    if any(x in rating_lower for x in ["mixed", "half", "partly", "misleading", "out of context"]):
         return "MIXED"
 
-    # Unverifiable
-    if any(x in rating_lower for x in ["unverifiable", "unproven", "unknown", "outdated"]):
+    if any(x in rating_lower for x in ["unverifiable", "unproven", "unknown", "disputed"]):
         return "UNVERIFIABLE"
 
-    return "MIXED"  # Default to mixed if can't categorize
+    return "MIXED"
 
 
 def format_prior_fact_checks_html(fact_checks: list) -> str:
-    """Format prior fact checks as HTML for display in the article."""
+    """Format prior fact checks as HTML for display."""
     if not fact_checks:
         return ""
 
-    # Group by normalized rating for summary
-    ratings_count = {}
-    for fc in fact_checks:
-        r = fc["rating_normalized"]
-        ratings_count[r] = ratings_count.get(r, 0) + 1
+    html_parts = ['<div class="prior-fact-checks">']
+    html_parts.append('<h4>Prior Fact Checks</h4>')
+    html_parts.append('<ul class="fact-check-list">')
 
-    # Build summary
-    summary_parts = []
-    for rating, count in sorted(ratings_count.items(), key=lambda x: -x[1]):
-        summary_parts.append(f"{count} rated <strong>{rating.replace('_', ' ')}</strong>")
-    summary = ", ".join(summary_parts)
+    for fc in fact_checks[:5]:
+        verdict_class = fc.get("normalizedRating", "mixed").lower().replace("_", "-")
+        html_parts.append(f'''<li class="prior-check">
+            <span class="check-verdict {verdict_class}">{fc.get("rating", "Unknown")}</span>
+            <span class="check-publisher">{fc.get("publisher", "Unknown")}</span>
+            <a href="{fc.get("url", "#")}" target="_blank" class="check-link">View</a>
+        </li>''')
 
-    cards_html = ""
-    for fc in fact_checks[:5]:  # Max 5 cards
-        rating_class = fc["rating_normalized"].lower()
-        cards_html += f"""
-        <div class="prior-fact-check-card {rating_class}" onclick="window.open('{fc['url']}', '_blank')">
-            <div class="pfc-publisher">{fc['publisher']}</div>
-            <div class="pfc-rating">{fc['rating']}</div>
-            <div class="pfc-title">{fc['title'][:100]}{'...' if len(fc.get('title', '')) > 100 else ''}</div>
-        </div>
-        """
+    html_parts.append('</ul>')
+    html_parts.append('</div>')
 
-    return f"""
-    <div class="prior-fact-checks-section">
-        <h3 class="prose-h2">Professional Fact Checks</h3>
-        <p class="prose-text">This claim has been previously fact-checked by professional organizations: {summary}.</p>
-        <div class="prior-fact-checks-grid">
-            {cards_html}
-        </div>
-        <p class="pfc-disclaimer">Click any card to view the full fact-check from the original publisher.</p>
-    </div>
-    """
+    return '\n'.join(html_parts)
 
 
-# === VERCEL BLOB STORAGE UTILITIES ===
+# === BLOB STORAGE FUNCTIONS ===
 
 def blob_delete(path: str) -> bool:
-    """Delete existing blob(s) with a given path prefix before overwriting."""
+    """Delete a blob by path (used before putting to ensure true overwrites)."""
     if not BLOB_READ_WRITE_TOKEN:
         return False
 
     try:
-        # Find existing blobs with this path prefix
-        response = requests.get(
-            f"{BLOB_API_BASE}",
-            headers={
-                "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
-                "x-api-version": "7"
-            },
-            params={"prefix": path, "limit": 10}
-        )
-        if response.status_code == 200:
-            result = response.json()
-            blobs = result.get("blobs", [])
+        list_url = f"{BLOB_API_BASE}?prefix={path}&limit=10"
+        headers = {"Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}"}
+
+        list_resp = requests.get(list_url, headers=headers, timeout=10)
+        if list_resp.status_code == 200:
+            blobs = list_resp.json().get("blobs", [])
             for blob in blobs:
                 blob_url = blob.get("url")
                 if blob_url:
-                    # Delete the blob
-                    del_response = requests.delete(
-                        f"{BLOB_API_BASE}",
-                        headers={
-                            "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
-                            "x-api-version": "7"
-                        },
-                        json={"urls": [blob_url]}
+                    delete_resp = requests.delete(
+                        f"{BLOB_API_BASE}/delete?urls={blob_url}",
+                        headers=headers,
+                        timeout=10
                     )
-                    if del_response.status_code == 200:
-                        print(f"Blob deleted: {blob_url}")
-            return True
-        return False
+                    if delete_resp.status_code in (200, 204):
+                        print(f"Deleted existing blob: {blob_url[:50]}...")
+        return True
     except Exception as e:
-        print(f"Blob DELETE error: {e}")
+        print(f"Blob delete error: {e}")
         return False
 
 
 def blob_put(path: str, content: str) -> Optional[str]:
-    """Upload content to Vercel Blob Storage. Returns blob URL on success.
-
-    Note: Deletes existing blob with same path first to ensure true overwrite.
-    """
+    """Upload content to Vercel Blob Storage."""
     if not BLOB_READ_WRITE_TOKEN:
-        print("BLOB_READ_WRITE_TOKEN not set, skipping blob storage")
+        print("No BLOB_READ_WRITE_TOKEN, falling back to local cache")
         return None
 
     try:
-        # Delete any existing blobs with this path first (Vercel Blob doesn't truly overwrite)
         blob_delete(path)
 
-        response = requests.put(
-            f"{BLOB_API_BASE}/{path}",
-            headers={
-                "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
-                "Content-Type": "application/json",
-                "x-api-version": "7"
-            },
-            data=content,
-            params={"access": "public"}
-        )
-        if response.status_code == 200:
+        url = f"{BLOB_API_BASE}/{path}"
+        headers = {
+            "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
+            "Content-Type": "application/json",
+            "x-api-version": "7"
+        }
+
+        response = requests.put(url, headers=headers, data=content.encode('utf-8'), timeout=30)
+
+        if response.status_code in (200, 201):
             result = response.json()
-            print(f"Blob stored: {path} -> {result.get('url', 'unknown')}")
-            return result.get("url")
+            blob_url = result.get("url")
+            print(f"Blob uploaded: {path} -> {blob_url[:50] if blob_url else 'NO URL'}...")
+            return blob_url
         else:
-            print(f"Blob PUT failed ({response.status_code}): {response.text}")
+            print(f"Blob upload failed ({response.status_code}): {response.text[:200]}")
             return None
+
     except Exception as e:
-        print(f"Blob PUT error: {e}")
+        print(f"Blob upload error: {e}")
         return None
 
+
 def blob_get_by_url(url: str) -> Optional[dict]:
-    """Fetch content directly from a Vercel Blob URL. Fast O(1) retrieval."""
-    if not url:
-        return None
+    """Fetch blob content by URL."""
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=30)
         if response.status_code == 200:
             return response.json()
-        print(f"blob_get_by_url failed ({response.status_code}): {url[:60]}...")
         return None
     except Exception as e:
-        print(f"blob_get_by_url error: {e}")
+        print(f"Blob fetch error: {e}")
         return None
 
 
 def blob_get(path: str) -> Optional[dict]:
-    """Fetch content from Vercel Blob Storage. Returns parsed JSON or None.
-
-    Uses exact pathname match, not prefix match, to ensure correct blob is retrieved.
-    Note: This function uses prefix search which is slow with many blobs.
-    Prefer blob_get_by_url() with stored URLs for fast retrieval.
-    """
+    """Get a blob by path prefix."""
     if not BLOB_READ_WRITE_TOKEN:
         return None
 
     try:
-        # List blobs with prefix and find exact pathname match
-        response = requests.get(
-            f"{BLOB_API_BASE}",
-            headers={
-                "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
-                "x-api-version": "7"
-            },
-            params={"prefix": path, "limit": 100}  # Get more results for exact match search
-        )
-        if response.status_code == 200:
-            result = response.json()
-            blobs = result.get("blobs", [])
-            print(f"blob_get({path}): Found {len(blobs)} blobs with prefix")
-            # Find exact pathname match
-            for blob in blobs:
-                if blob.get("pathname") == path:
-                    blob_url = blob.get("url")
-                    print(f"blob_get: Exact match found, fetching from {blob_url[:50]}...")
-                    if blob_url:
-                        # Fetch the actual content
-                        content_response = requests.get(blob_url)
-                        if content_response.status_code == 200:
-                            return content_response.json()
-                    break
-            # Debug: show what paths we found if no exact match
-            if blobs:
-                found_paths = [b.get("pathname") for b in blobs[:5]]
-                print(f"blob_get: No exact match for '{path}', found: {found_paths}")
+        list_url = f"{BLOB_API_BASE}?prefix={path}&limit=1"
+        headers = {"Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}"}
+
+        list_resp = requests.get(list_url, headers=headers, timeout=10)
+        if list_resp.status_code != 200:
+            return None
+
+        blobs = list_resp.json().get("blobs", [])
+        if not blobs:
+            return None
+
+        blob_url = blobs[0].get("url")
+        if not blob_url:
+            return None
+
+        content_resp = requests.get(blob_url, timeout=30)
+        if content_resp.status_code == 200:
+            return content_resp.json()
+
         return None
+
     except Exception as e:
-        print(f"Blob GET error: {e}")
+        print(f"Blob get error: {e}")
         return None
+
 
 def blob_list(prefix: str = "articles/") -> list:
     """List all blobs with a given prefix."""
@@ -627,1006 +373,705 @@ def blob_list(prefix: str = "articles/") -> list:
         return []
 
     try:
-        response = requests.get(
-            f"{BLOB_API_BASE}",
-            headers={
-                "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
-                "x-api-version": "7"
-            },
-            params={"prefix": prefix, "limit": 1000}
-        )
-        if response.status_code == 200:
-            result = response.json()
-            return result.get("blobs", [])
-        return []
+        all_blobs = []
+        cursor = None
+
+        while True:
+            list_url = f"{BLOB_API_BASE}?prefix={prefix}&limit=100"
+            if cursor:
+                list_url += f"&cursor={cursor}"
+
+            headers = {"Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}"}
+            resp = requests.get(list_url, headers=headers, timeout=30)
+
+            if resp.status_code != 200:
+                break
+
+            data = resp.json()
+            blobs = data.get("blobs", [])
+            all_blobs.extend(blobs)
+
+            if not data.get("hasMore"):
+                break
+            cursor = data.get("cursor")
+
+        return all_blobs
+
     except Exception as e:
-        print(f"Blob LIST error: {e}")
+        print(f"Blob list error: {e}")
         return []
 
-def blob_delete_by_url(url: str) -> bool:
-    """Delete a blob by its URL. Returns True on success.
 
-    Uses Vercel Blob API POST /delete endpoint with JSON body.
+# === REDDIT API INTEGRATION ===
+# Reddit's public JSON API (no auth required for read-only)
+# Rate limited: 100 requests per minute
+
+REDDIT_USER_AGENT = "GenuVerity/1.0 (Fact-checking research tool)"
+
+
+def search_reddit(query: str, subreddit: str = None, limit: int = 25, sort: str = "relevance") -> list:
+    """Search Reddit for posts mentioning a claim.
+
+    Args:
+        query: Search query
+        subreddit: Specific subreddit to search (optional)
+        limit: Max results (default 25)
+        sort: Sort order - relevance, hot, new, top
     """
-    if not BLOB_READ_WRITE_TOKEN:
-        return False
+    results = []
 
     try:
-        response = requests.post(
-            f"{BLOB_API_BASE}/delete",
-            headers={
-                "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
-                "Content-Type": "application/json",
-                "x-api-version": "7"
-            },
-            json={"urls": [url]}
-        )
-        success = response.status_code == 200
-        if not success:
-            print(f"Blob DELETE failed ({response.status_code}): {url[:50]}...")
-            print(f"Response: {response.text[:200]}")
-        return success
-    except Exception as e:
-        print(f"Blob DELETE error: {e}")
-        return False
-
-def blob_delete(path: str) -> bool:
-    """Delete ALL blobs with matching pathname. Returns True if at least one was deleted."""
-    if not BLOB_READ_WRITE_TOKEN:
-        return False
-
-    try:
-        # Vercel Blob prefix search uses URL pattern, not pathname
-        # For "articles/_index.json", search with "articles/_index" prefix
-        # to find all variants like "_index-abc123"
-        search_prefix = path.rsplit(".", 1)[0] if "." in path else path
-
-        # Find ALL blobs with matching pathname and delete them
-        blobs = blob_list(search_prefix)
-        deleted_count = 0
-        print(f"blob_delete: Searching for blobs with prefix '{search_prefix}', found {len(blobs)}")
-
-        for blob in blobs:
-            if blob.get("pathname") == path:
-                blob_url = blob.get("url")
-                if blob_url:
-                    if blob_delete_by_url(blob_url):
-                        deleted_count += 1
-                        print(f"Deleted blob: {path} ({blob_url[:50]}...)")
-        if deleted_count > 0:
-            print(f"Total blobs deleted for path '{path}': {deleted_count}")
-            return True
+        # Build search URL
+        if subreddit:
+            url = f"https://www.reddit.com/r/{subreddit}/search.json"
         else:
-            print(f"No blobs found with pathname '{path}'")
-        return False
-    except Exception as e:
-        print(f"Blob DELETE by path error: {e}")
-        return False
+            url = "https://www.reddit.com/search.json"
 
-app = FastAPI()
-
-# Allow CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-class GenerateRequest(BaseModel):
-    topic: str
-
-class DeepDiveRequest(BaseModel):
-    topic: str
-    context: str = ""
-    parent_key: str = ""  # Key of the parent article this deep dive originated from
-    parent_title: str = ""  # Title of the parent article
-
-class CacheCheckRequest(BaseModel):
-    topic: str
-
-class ExtractClaimRequest(BaseModel):
-    """Extract a fact-checkable claim from various input types."""
-    input_type: str  # 'image', 'twitter', 'youtube', 'tiktok', 'url'
-    content: str  # base64 image data OR URL
-
-# === CONTENT EXTRACTION UTILITIES ===
-
-def extract_claim_from_image(image_base64: str) -> dict:
-    """Use Gemini Vision to extract text/claims from an image (meme, screenshot)."""
-    if not GEMINI_API_KEYS:
-        return {"error": "Gemini API not configured", "claim": None}
-
-    # Use Gemini 2.0 Flash for vision (fast and accurate for text extraction)
-    api_key = GEMINI_API_KEYS[0]
-    url = f"{GEMINI_API_URL}/gemini-2.0-flash:generateContent?key={api_key}"
-
-    # Determine mime type from base64 header if present
-    mime_type = "image/jpeg"
-    if image_base64.startswith("data:"):
-        # Extract mime type from data URL
-        mime_part = image_base64.split(";")[0]
-        mime_type = mime_part.replace("data:", "")
-        image_base64 = image_base64.split(",")[1]
-
-    payload = {
-        "contents": [{
-            "parts": [
-                {
-                    "text": """Analyze this image and extract any fact-checkable claims or statements.
-
-Your task:
-1. Read ALL text visible in the image
-2. Identify the main claim or assertion being made
-3. If it's a meme, social media post, or screenshot, extract the key claim
-4. Ignore usernames, timestamps, and UI elements - focus on the actual claim
-
-Return a JSON object with:
-{
-    "extracted_text": "The full text you can see in the image",
-    "main_claim": "The primary fact-checkable claim/statement",
-    "claim_type": "meme" | "social_post" | "headline" | "quote" | "statistic" | "other",
-    "confidence": 0.0-1.0,
-    "context": "Any additional context that might help fact-check this"
-}
-
-If there's no clear fact-checkable claim, set main_claim to the most prominent text and note that in context."""
-                },
-                {
-                    "inline_data": {
-                        "mime_type": mime_type,
-                        "data": image_base64
-                    }
-                }
-            ]
-        }],
-        "generationConfig": {
-            "temperature": 0.1,
-            "maxOutputTokens": 1024,
-            "responseMimeType": "application/json"
+        params = {
+            "q": query,
+            "limit": min(limit, 100),  # Reddit max is 100
+            "sort": sort,
+            "type": "link",  # Posts only, not comments
+            "restrict_sr": "true" if subreddit else "false"
         }
+
+        headers = {"User-Agent": REDDIT_USER_AGENT}
+
+        response = requests.get(url, params=params, headers=headers, timeout=15)
+
+        if response.status_code == 200:
+            data = response.json()
+            posts = data.get("data", {}).get("children", [])
+
+            for post in posts:
+                post_data = post.get("data", {})
+                results.append({
+                    "id": post_data.get("id"),
+                    "title": post_data.get("title"),
+                    "subreddit": post_data.get("subreddit"),
+                    "author": post_data.get("author"),
+                    "score": post_data.get("score", 0),
+                    "upvote_ratio": post_data.get("upvote_ratio", 0),
+                    "num_comments": post_data.get("num_comments", 0),
+                    "created_utc": post_data.get("created_utc"),
+                    "url": f"https://reddit.com{post_data.get('permalink', '')}",
+                    "selftext": post_data.get("selftext", "")[:500],  # First 500 chars
+                    "link_url": post_data.get("url", ""),
+                    "is_self": post_data.get("is_self", True)
+                })
+
+            print(f"Reddit found {len(results)} posts for: {query[:50]}...")
+        else:
+            print(f"Reddit search failed: {response.status_code}")
+
+        return results
+
+    except Exception as e:
+        print(f"Reddit search error: {e}")
+        return []
+
+
+def search_reddit_comments(query: str, subreddit: str = None, limit: int = 25) -> list:
+    """Search Reddit comments mentioning a claim.
+
+    Note: Reddit's search API has limited comment search capability.
+    This uses the Pushshift alternative when needed.
+    """
+    results = []
+
+    try:
+        # Reddit's comment search
+        url = "https://www.reddit.com/search.json"
+        params = {
+            "q": query,
+            "limit": min(limit, 100),
+            "sort": "relevance",
+            "type": "comment"
+        }
+
+        headers = {"User-Agent": REDDIT_USER_AGENT}
+
+        response = requests.get(url, params=params, headers=headers, timeout=15)
+
+        if response.status_code == 200:
+            data = response.json()
+            comments = data.get("data", {}).get("children", [])
+
+            for comment in comments:
+                comment_data = comment.get("data", {})
+                results.append({
+                    "id": comment_data.get("id"),
+                    "body": comment_data.get("body", "")[:500],
+                    "subreddit": comment_data.get("subreddit"),
+                    "author": comment_data.get("author"),
+                    "score": comment_data.get("score", 0),
+                    "created_utc": comment_data.get("created_utc"),
+                    "link_id": comment_data.get("link_id"),
+                    "permalink": f"https://reddit.com{comment_data.get('permalink', '')}"
+                })
+
+        return results
+
+    except Exception as e:
+        print(f"Reddit comment search error: {e}")
+        return []
+
+
+def get_reddit_post_timeline(query: str, subreddit: str = None, limit: int = 50) -> dict:
+    """Get timeline of Reddit discussions about a claim.
+
+    Returns posts sorted by date to track when discussions emerged.
+    """
+    results = search_reddit(query, subreddit=subreddit, limit=limit, sort="new")
+
+    if not results:
+        return {"timeline": [], "earliest": None, "peak_engagement": None}
+
+    # Sort by created_utc
+    results.sort(key=lambda x: x.get("created_utc", 0))
+
+    # Find earliest post
+    earliest = results[0] if results else None
+
+    # Find peak engagement (highest score)
+    peak = max(results, key=lambda x: x.get("score", 0)) if results else None
+
+    # Convert timestamps to dates
+    from datetime import datetime
+    for r in results:
+        if r.get("created_utc"):
+            r["date"] = datetime.utcfromtimestamp(r["created_utc"]).strftime("%Y-%m-%d")
+
+    return {
+        "timeline": results,
+        "earliest": earliest,
+        "peak_engagement": peak,
+        "total_posts": len(results),
+        "total_engagement": sum(r.get("score", 0) for r in results)
     }
 
-    try:
-        response = requests.post(url, json=payload, timeout=30)
-        if response.status_code == 200:
-            result = response.json()
-            text = result.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "{}")
-            return json.loads(text)
-        else:
-            print(f"Gemini Vision error: {response.status_code} - {response.text}")
-            return {"error": f"Gemini API error: {response.status_code}", "claim": None}
-    except Exception as e:
-        print(f"Gemini Vision exception: {e}")
-        return {"error": str(e), "claim": None}
 
-def extract_tweet_from_url(tweet_url: str) -> dict:
-    """Extract tweet content using Twitter's syndication API (no API key needed)."""
-    import re
+# === ARCHIVE.ORG WAYBACK MACHINE INTEGRATION ===
 
-    # Extract tweet ID from URL
-    # Handles: twitter.com/user/status/123, x.com/user/status/123
-    match = re.search(r'(?:twitter\.com|x\.com)/\w+/status/(\d+)', tweet_url)
-    if not match:
-        return {"error": "Invalid Twitter/X URL", "claim": None}
+def search_wayback_machine(query: str, limit: int = 10) -> list:
+    """Search Archive.org Wayback Machine for historical snapshots of pages mentioning a claim.
 
-    tweet_id = match.group(1)
-
-    # Use syndication API (no authentication required)
-    syndication_url = f"https://cdn.syndication.twimg.com/tweet-result?id={tweet_id}&token=x"
-
-    try:
-        response = requests.get(syndication_url, timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            return {
-                "extracted_text": data.get("text", ""),
-                "main_claim": data.get("text", ""),
-                "claim_type": "social_post",
-                "confidence": 0.95,
-                "context": f"Tweet by @{data.get('user', {}).get('screen_name', 'unknown')} on {data.get('created_at', 'unknown date')}",
-                "author": data.get("user", {}).get("name", "Unknown"),
-                "author_handle": data.get("user", {}).get("screen_name", "unknown"),
-                "source_url": tweet_url
-            }
-        else:
-            return {"error": f"Failed to fetch tweet: {response.status_code}", "claim": None}
-    except Exception as e:
-        print(f"Twitter syndication error: {e}")
-        return {"error": str(e), "claim": None}
-
-def extract_youtube_info(youtube_url: str) -> dict:
-    """Extract video title and description from YouTube oEmbed."""
-    import re
-
-    # Extract video ID
-    match = re.search(r'(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/shorts/)([a-zA-Z0-9_-]+)', youtube_url)
-    if not match:
-        return {"error": "Invalid YouTube URL", "claim": None}
-
-    video_id = match.group(1)
-
-    # Use oEmbed API (no authentication required)
-    oembed_url = f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={video_id}&format=json"
-
-    try:
-        response = requests.get(oembed_url, timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            title = data.get("title", "")
-            author = data.get("author_name", "Unknown")
-
-            return {
-                "extracted_text": title,
-                "main_claim": title,
-                "claim_type": "headline",  # Video titles are often claim-like
-                "confidence": 0.7,  # Lower confidence since it's just a title
-                "context": f"YouTube video by {author}. Note: This is the video title only. For full context, the video content should be reviewed.",
-                "author": author,
-                "source_url": youtube_url,
-                "video_id": video_id
-            }
-        else:
-            return {"error": f"Failed to fetch YouTube info: {response.status_code}", "claim": None}
-    except Exception as e:
-        print(f"YouTube oEmbed error: {e}")
-        return {"error": str(e), "claim": None}
-
-# === CACHING UTILITIES ===
-
-def get_topic_key(topic: str) -> str:
-    """Generate a consistent cache key for a topic."""
-    normalized = topic.lower().strip()
-    return hashlib.md5(normalized.encode()).hexdigest()[:16]
-
-def get_cached_article(topic: str) -> Optional[dict]:
-    """Check if an article exists in the cache by article key, topic, or topic hash.
-    Uses fast index lookup with blob_url for O(1) retrieval.
+    Uses the CDX API to find historical snapshots.
     """
-    # Load index first for fast key lookup
-    index = get_article_index()
-    print(f"get_cached_article: Looking for '{topic}', index has {len(index)} entries")
+    results = []
 
-    # Helper to try blob_url first (fast), then blob_path (slow fallback)
-    def try_fetch_from_meta(meta: dict, context: str) -> Optional[dict]:
-        # Try blob_url first (direct fetch, O(1))
-        blob_url = meta.get("blob_url", "")
-        if blob_url:
-            print(f"Trying blob_url from {context}: {blob_url[:60]}...")
-            data = blob_get_by_url(blob_url)
-            if data:
-                print(f"Found article by {context} blob_url")
-                return data
-        # Fall back to blob_path (prefix search, slow)
-        blob_path = meta.get("blob_path", "")
-        if blob_path:
-            print(f"Trying blob_path from {context}: {blob_path}")
-            data = blob_get(blob_path)
-            if data:
-                print(f"Found article by {context} blob_path")
-                return data
+    # Search for snapshots of pages that might contain the claim
+    # We search common fact-check and news sites
+    search_domains = [
+        "snopes.com", "politifact.com", "factcheck.org", "reuters.com/fact-check",
+        "apnews.com", "bbc.com", "twitter.com", "facebook.com"
+    ]
+
+    try:
+        # Use the Wayback CDX API to search for snapshots
+        # This searches for URL patterns - we'll look for general news about the topic
+        keywords = query.lower().split()[:5]  # Take first 5 keywords
+        search_term = "+".join(keywords)
+
+        # Try searching the full-text search API (limited availability)
+        # Fall back to CDX API for specific domains
+        for domain in search_domains[:3]:  # Limit to avoid rate limits
+            try:
+                cdx_url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*{search_term}*&output=json&limit={limit}&fl=timestamp,original,mimetype,statuscode"
+
+                response = requests.get(cdx_url, timeout=10)
+                if response.status_code == 200:
+                    data = response.json()
+                    if len(data) > 1:  # First row is headers
+                        for row in data[1:]:
+                            if len(row) >= 4 and row[3] == "200":  # Only successful responses
+                                timestamp = row[0]
+                                original_url = row[1]
+
+                                # Convert timestamp to date
+                                try:
+                                    date_str = f"{timestamp[:4]}-{timestamp[4:6]}-{timestamp[6:8]}"
+                                except:
+                                    date_str = timestamp
+
+                                results.append({
+                                    "timestamp": timestamp,
+                                    "date": date_str,
+                                    "original_url": original_url,
+                                    "archive_url": f"https://web.archive.org/web/{timestamp}/{original_url}",
+                                    "domain": domain
+                                })
+            except Exception as e:
+                print(f"Wayback search error for {domain}: {e}")
+                continue
+
+            # Small delay between requests to avoid rate limiting
+            time.sleep(0.5)
+
+        # Sort by timestamp (oldest first) to find origin
+        results.sort(key=lambda x: x.get("timestamp", ""))
+
+        print(f"Wayback found {len(results)} historical snapshots for query: {query[:50]}...")
+        return results[:limit]
+
+    except Exception as e:
+        print(f"Wayback Machine search error: {e}")
+        return []
+
+
+def get_earliest_wayback_snapshot(url: str) -> Optional[dict]:
+    """Get the earliest snapshot of a specific URL from Wayback Machine."""
+    try:
+        cdx_url = f"https://web.archive.org/cdx/search/cdx?url={url}&output=json&limit=1&fl=timestamp,original,statuscode"
+
+        response = requests.get(cdx_url, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if len(data) > 1:
+                row = data[1]
+                timestamp = row[0]
+                return {
+                    "timestamp": timestamp,
+                    "date": f"{timestamp[:4]}-{timestamp[4:6]}-{timestamp[6:8]}",
+                    "original_url": row[1],
+                    "archive_url": f"https://web.archive.org/web/{timestamp}/{row[1]}"
+                }
+        return None
+    except Exception as e:
+        print(f"Wayback earliest snapshot error: {e}")
         return None
 
-    # 1. FAST: Direct key lookup in index (most common case for /api/article/{slug})
-    if topic in index:
-        data = try_fetch_from_meta(index[topic], "direct index key")
-        if data:
-            return data
 
-    # 2. FAST: Search index by key field (handles dict index where keys are hashes)
-    for idx_key, meta in index.items():
-        if meta.get("key") == topic:
-            data = try_fetch_from_meta(meta, "index key field match")
-            if data:
-                return data
-            break  # Found key match, stop searching
+def wayback_availability(url: str) -> Optional[dict]:
+    """Check if a URL is archived in Wayback Machine and get first/last snapshots."""
+    try:
+        api_url = f"https://archive.org/wayback/available?url={url}"
+        response = requests.get(api_url, timeout=10)
 
-    # 3. Try by topic hash (for when topic string is passed)
-    key = get_topic_key(topic)
-    blob_path = f"articles/{key}.json"
-    data = blob_get(blob_path)
-    if data:
-        print(f"Found article by topic hash: {blob_path}")
-        return data
+        if response.status_code == 200:
+            data = response.json()
+            snapshots = data.get("archived_snapshots", {})
+            closest = snapshots.get("closest", {})
 
-    # 4. FAST: Search index by topic field
-    for idx_key, meta in index.items():
-        if meta.get("topic", "").lower() == topic.lower():
-            data = try_fetch_from_meta(meta, "index topic match")
-            if data:
-                return data
-            break  # Found topic match, stop searching
+            if closest.get("available"):
+                return {
+                    "available": True,
+                    "url": closest.get("url"),
+                    "timestamp": closest.get("timestamp"),
+                    "status": closest.get("status")
+                }
 
-    # 5. Fallback: Try filesystem by topic hash (local dev only)
-    cache_file = f"{CACHE_DIR}/{key}.json"
-    if os.path.exists(cache_file):
+        return {"available": False}
+
+    except Exception as e:
+        print(f"Wayback availability check error: {e}")
+        return {"available": False, "error": str(e)}
+
+
+# === CLAIM DATABASE WITH SEMANTIC FINGERPRINTS ===
+
+CLAIMS_INDEX_PATH = "claims/_index.json"
+
+# Common words to remove for semantic matching
+STOP_WORDS = {
+    'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of',
+    'with', 'by', 'from', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
+    'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should',
+    'may', 'might', 'must', 'can', 'that', 'this', 'these', 'those', 'it', 'its',
+    'they', 'their', 'them', 'he', 'she', 'him', 'her', 'his', 'we', 'our', 'us',
+    'you', 'your', 'i', 'my', 'me', 'who', 'what', 'when', 'where', 'why', 'how',
+    'which', 'whom', 'whose', 'if', 'then', 'else', 'than', 'so', 'as', 'just',
+    'also', 'only', 'even', 'more', 'most', 'some', 'any', 'all', 'no', 'not',
+    'very', 'too', 'about', 'after', 'before', 'over', 'under', 'between', 'into'
+}
+
+
+def generate_claim_fingerprint(claim: str) -> dict:
+    """Generate a semantic fingerprint for a claim.
+
+    Returns a dict with:
+    - tokens: normalized key terms
+    - bigrams: two-word phrases
+    - hash: deterministic hash for exact matching
+    - length: original claim length
+    """
+    # Normalize text
+    text = claim.lower()
+    text = re.sub(r'[^\w\s]', ' ', text)  # Remove punctuation
+    text = re.sub(r'\s+', ' ', text).strip()
+
+    # Extract tokens (remove stop words)
+    words = text.split()
+    tokens = [w for w in words if w not in STOP_WORDS and len(w) > 2]
+
+    # Generate bigrams (two-word phrases)
+    bigrams = []
+    for i in range(len(tokens) - 1):
+        bigrams.append(f"{tokens[i]}_{tokens[i+1]}")
+
+    # Generate deterministic hash
+    claim_hash = hashlib.sha256(claim.lower().strip().encode()).hexdigest()[:16]
+
+    return {
+        "tokens": tokens,
+        "bigrams": bigrams,
+        "hash": claim_hash,
+        "length": len(claim),
+        "original_normalized": text
+    }
+
+
+def calculate_claim_similarity(fp1: dict, fp2: dict) -> float:
+    """Calculate similarity between two claim fingerprints using Jaccard similarity."""
+    if not fp1 or not fp2:
+        return 0.0
+
+    # Token similarity (weighted 0.6)
+    tokens1 = set(fp1.get("tokens", []))
+    tokens2 = set(fp2.get("tokens", []))
+    if tokens1 and tokens2:
+        token_sim = len(tokens1 & tokens2) / len(tokens1 | tokens2)
+    else:
+        token_sim = 0.0
+
+    # Bigram similarity (weighted 0.4)
+    bigrams1 = set(fp1.get("bigrams", []))
+    bigrams2 = set(fp2.get("bigrams", []))
+    if bigrams1 and bigrams2:
+        bigram_sim = len(bigrams1 & bigrams2) / len(bigrams1 | bigrams2)
+    else:
+        bigram_sim = 0.0
+
+    return (token_sim * 0.6) + (bigram_sim * 0.4)
+
+
+def get_claims_index() -> dict:
+    """Get the claims index from blob storage."""
+    index_data = blob_get(CLAIMS_INDEX_PATH)
+    if index_data and isinstance(index_data, dict):
+        return index_data
+    return {"claims": {}, "genealogy": {}}
+
+
+def update_claims_index(index: dict):
+    """Update the claims index in blob storage."""
+    blob_put(CLAIMS_INDEX_PATH, json.dumps(index))
+
+
+def register_claim(claim: str, article_key: str, verdict: str = None, metadata: dict = None):
+    """Register a claim in the database with its fingerprint."""
+    index = get_claims_index()
+    fingerprint = generate_claim_fingerprint(claim)
+    claim_hash = fingerprint["hash"]
+
+    claim_entry = {
+        "claim": claim,
+        "fingerprint": fingerprint,
+        "article_key": article_key,
+        "verdict": verdict,
+        "first_seen": datetime.now().isoformat(),
+        "metadata": metadata or {}
+    }
+
+    # Check for existing similar claims
+    similar = find_similar_claims_internal(claim, index, threshold=0.7)
+    if similar:
+        # This might be a mutation - link to most similar
+        most_similar = similar[0]
+        claim_entry["similar_to"] = most_similar["hash"]
+        claim_entry["similarity_score"] = most_similar["similarity"]
+
+        # Update genealogy
+        if "genealogy" not in index:
+            index["genealogy"] = {}
+        parent_hash = most_similar["hash"]
+        if parent_hash not in index["genealogy"]:
+            index["genealogy"][parent_hash] = {"children": [], "parent": None}
+        index["genealogy"][parent_hash]["children"].append(claim_hash)
+        index["genealogy"][claim_hash] = {"parent": parent_hash, "children": []}
+
+    index["claims"][claim_hash] = claim_entry
+    update_claims_index(index)
+
+    return claim_entry
+
+
+def find_similar_claims_internal(claim: str, index: dict, threshold: float = 0.5, limit: int = 10) -> list:
+    """Internal function to find similar claims in given index."""
+    fingerprint = generate_claim_fingerprint(claim)
+    results = []
+
+    for hash_id, entry in index.get("claims", {}).items():
+        stored_fp = entry.get("fingerprint", {})
+        similarity = calculate_claim_similarity(fingerprint, stored_fp)
+
+        if similarity >= threshold:
+            results.append({
+                "hash": hash_id,
+                "claim": entry.get("claim"),
+                "similarity": round(similarity, 3),
+                "verdict": entry.get("verdict"),
+                "article_key": entry.get("article_key"),
+                "first_seen": entry.get("first_seen")
+            })
+
+    results.sort(key=lambda x: x["similarity"], reverse=True)
+    return results[:limit]
+
+
+def find_similar_claims(claim: str, threshold: float = 0.5, limit: int = 10) -> list:
+    """Find claims similar to the given claim."""
+    index = get_claims_index()
+    return find_similar_claims_internal(claim, index, threshold, limit)
+
+
+def get_claim_genealogy(claim_hash: str) -> dict:
+    """Get the genealogy (parent/children) of a claim."""
+    index = get_claims_index()
+
+    if claim_hash not in index.get("claims", {}):
+        return None
+
+    claim_entry = index["claims"][claim_hash]
+    genealogy = index.get("genealogy", {}).get(claim_hash, {"parent": None, "children": []})
+
+    result = {
+        "claim": claim_entry.get("claim"),
+        "hash": claim_hash,
+        "verdict": claim_entry.get("verdict"),
+        "first_seen": claim_entry.get("first_seen"),
+        "parent": None,
+        "children": []
+    }
+
+    # Get parent details
+    if genealogy.get("parent"):
+        parent_hash = genealogy["parent"]
+        if parent_hash in index["claims"]:
+            parent = index["claims"][parent_hash]
+            result["parent"] = {
+                "hash": parent_hash,
+                "claim": parent.get("claim"),
+                "verdict": parent.get("verdict"),
+                "first_seen": parent.get("first_seen")
+            }
+
+    # Get children details
+    for child_hash in genealogy.get("children", []):
+        if child_hash in index["claims"]:
+            child = index["claims"][child_hash]
+            result["children"].append({
+                "hash": child_hash,
+                "claim": child.get("claim"),
+                "verdict": child.get("verdict"),
+                "first_seen": child.get("first_seen")
+            })
+
+    return result
+
+
+# === CACHING FUNCTIONS ===
+
+def get_topic_key(topic: str) -> str:
+    """Generate a cache key from a topic string."""
+    return topic.lower().replace(" ", "_").replace("-", "_")[:50]
+
+
+def get_cached_article(topic: str) -> Optional[dict]:
+    """Check if an article/fact-check is cached."""
+    topic_key = get_topic_key(topic)
+
+    index = get_article_index()
+    if topic_key in index:
+        article_meta = index[topic_key]
+        blob_url = article_meta.get("blob_url")
+        if blob_url:
+            article = blob_get_by_url(blob_url)
+            if article:
+                return article
+
+        blob_path = article_meta.get("blob_path", f"articles/{topic_key}.json")
+        article = blob_get(blob_path)
+        if article:
+            return article
+
+    blob_path = f"articles/{topic_key}.json"
+    article = blob_get(blob_path)
+    if article:
+        return article
+
+    local_path = os.path.join(CACHE_DIR, f"{topic_key}.json")
+    if os.path.exists(local_path):
         try:
-            with open(cache_file, "r") as f:
+            with open(local_path, 'r') as f:
                 return json.load(f)
         except:
             pass
 
-    # 6. Fallback: Search filesystem by internal key (local dev only)
-    if os.path.exists(CACHE_DIR):
-        for filename in os.listdir(CACHE_DIR):
-            if filename.endswith(".json"):
-                try:
-                    with open(f"{CACHE_DIR}/{filename}", "r") as f:
-                        data = json.load(f)
-                        if data.get("key") == topic:
-                            return data
-                        if data.get("_topic", "").lower() == topic.lower():
-                            return data
-                except:
-                    continue
     return None
 
-def cache_article(topic: str, article_data: dict, parent_key: str = "", parent_title: str = ""):
-    """Save an article to the cache. Uses Blob storage if available, with filesystem fallback."""
-    key = get_topic_key(topic)
-    article_data["_cached_at"] = datetime.now().isoformat()
-    article_data["_topic"] = topic
-    if parent_key:
-        article_data["_parent_key"] = parent_key
-    if parent_title:
-        article_data["_parent_title"] = parent_title
 
-    # Try Blob storage first
-    blob_path = f"articles/{key}.json"
+def cache_article(topic: str, article_data: dict):
+    """Cache an article/fact-check to blob storage."""
+    topic_key = get_topic_key(topic)
+
+    article_data["_topic"] = topic
+    article_data["_cached_at"] = datetime.now().isoformat()
+
+    blob_path = f"articles/{topic_key}.json"
     blob_url = blob_put(blob_path, json.dumps(article_data))
 
-    if blob_url:
-        print(f"Article cached to Blob: {blob_url}")
-        # Update the article index for fast listing, passing blob_url for O(1) retrieval
-        update_article_index(key, article_data, blob_url=blob_url)
-    else:
-        # Fallback to filesystem
-        cache_file = f"{CACHE_DIR}/{key}.json"
-        with open(cache_file, "w") as f:
+    metadata = {
+        "title": article_data.get("title", topic),
+        "article_type": article_data.get("articleType", "fact_check"),
+        "verdict": article_data.get("verdict"),
+        "cached_at": article_data["_cached_at"]
+    }
+
+    update_article_index(topic_key, metadata, blob_url=blob_url)
+
+    local_path = os.path.join(CACHE_DIR, f"{topic_key}.json")
+    try:
+        with open(local_path, 'w') as f:
             json.dump(article_data, f)
-        print(f"Article cached to filesystem: {cache_file}")
+    except Exception as e:
+        print(f"Local cache write error: {e}")
+
 
 def get_article_index() -> dict:
-    """Get the article index from Blob storage. Returns dict of key -> metadata.
+    """Get the article index from blob storage."""
+    index_data = blob_get(ARTICLE_INDEX_PATH)
+    if index_data and isinstance(index_data, dict):
+        return index_data
 
-    Handles multiple formats:
-    - List format: {"articles": [{key: ..., ...}, ...]} - converts to dict by key
-    - Dict format: {"articles": {key: {...}}} - unwraps directly
-    - Flat dict format: {key: metadata, ...}
-    """
-    try:
-        blobs = blob_list("articles/")
-        best_index = {}
-        best_count = 0
+    return {}
 
-        # Find all index files and pick the best one
-        for blob in blobs:
-            if blob.get("pathname") == ARTICLE_INDEX_PATH:
-                try:
-                    response = requests.get(blob.get("url"))
-                    if response.status_code == 200:
-                        data = response.json()
 
-                        # Handle wrapped format: {"articles": [...]} or {"articles": {...}}
-                        if "articles" in data:
-                            articles_data = data["articles"]
-                            if isinstance(articles_data, list):
-                                # Convert list to dict keyed by article key
-                                articles = {item["key"]: item for item in articles_data if "key" in item}
-                            elif isinstance(articles_data, dict):
-                                articles = articles_data
-                            else:
-                                continue
-                        else:
-                            # Flat format: {key: metadata, ...}
-                            articles = data
+def update_article_index(article_key: str, metadata: dict, blob_url: str = ""):
+    """Update the article index with new metadata."""
+    index = get_article_index()
 
-                        # Count valid article entries (exclude meta keys starting with _)
-                        count = len([k for k in articles.keys() if not k.startswith("_")])
-                        if count > best_count:
-                            best_count = count
-                            best_index = articles
-                except:
-                    continue
+    index[article_key] = {
+        **metadata,
+        "key": article_key,
+        "blob_url": blob_url,
+        "blob_path": f"articles/{article_key}.json",
+        "updated_at": datetime.now().isoformat()
+    }
 
-        print(f"Loaded article index with {len(best_index)} entries")
-        return best_index
-    except Exception as e:
-        print(f"Error loading article index: {e}")
-        return {}
+    blob_put(ARTICLE_INDEX_PATH, json.dumps(index))
 
-# Common stopwords to ignore in semantic matching
-STOPWORDS = {
-    'a', 'an', 'the', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
-    'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could',
-    'should', 'may', 'might', 'must', 'shall', 'can', 'need', 'dare',
-    'ought', 'used', 'to', 'of', 'in', 'for', 'on', 'with', 'at', 'by',
-    'from', 'as', 'into', 'through', 'during', 'before', 'after', 'above',
-    'below', 'between', 'under', 'again', 'further', 'then', 'once', 'here',
-    'there', 'when', 'where', 'why', 'how', 'all', 'each', 'few', 'more',
-    'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own',
-    'same', 'so', 'than', 'too', 'very', 'just', 'and', 'but', 'if', 'or',
-    'because', 'until', 'while', 'about', 'against', 'what', 'which', 'who',
-    'whom', 'this', 'that', 'these', 'those', 'am', 'it', 'its', 'he', 'she',
-    'they', 'them', 'his', 'her', 'their', 'my', 'your', 'our', 'i', 'you',
-    'we', 'me', 'him', 'us', 'fact', 'check', 'true', 'false', 'claim',
-    'did', 'really', 'actually', 'say', 'said'
-}
 
-def tokenize_query(text: str) -> set:
-    """Tokenize and normalize a query, removing stopwords."""
-    if not text:
-        return set()
-    # Lowercase and split on non-alphanumeric
-    import re
-    words = re.findall(r'[a-z0-9]+', text.lower())
-    # Remove stopwords and short words
-    return {w for w in words if w not in STOPWORDS and len(w) > 2}
+def get_all_cached_articles() -> list:
+    """Get all cached articles from the index."""
+    index = get_article_index()
+
+    articles = []
+    for key, meta in index.items():
+        if key.startswith("_"):
+            continue
+        articles.append({
+            "key": key,
+            "title": meta.get("title", key),
+            "article_type": meta.get("article_type", "fact_check"),
+            "verdict": meta.get("verdict"),
+            "cached_at": meta.get("cached_at", meta.get("updated_at"))
+        })
+
+    articles.sort(key=lambda x: x.get("cached_at", ""), reverse=True)
+    return articles
+
 
 def find_similar_articles(query: str, limit: int = 5) -> list:
-    """Find articles semantically similar to the query using keyword overlap.
-
-    Returns list of (article_key, metadata, similarity_score) tuples, sorted by score.
-    Uses Jaccard-like similarity on tokenized words from title, topic, and description.
-    """
-    query_tokens = tokenize_query(query)
-    if not query_tokens:
-        return []
-
+    """Find similar articles using simple keyword matching."""
     index = get_article_index()
-    matches = []
+    query_tokens = set(query.lower().split())
 
+    scored = []
     for key, meta in index.items():
         if key.startswith("_"):
             continue
 
-        # Combine searchable fields
-        title = meta.get("title", "")
-        topic = meta.get("topic", "")
-        card_title = meta.get("cardTitle", "")
-        description = meta.get("cardDescription", "")
-        combined = f"{title} {topic} {card_title} {description}"
+        title = meta.get("title", "").lower()
+        key_lower = key.lower()
 
-        article_tokens = tokenize_query(combined)
-        if not article_tokens:
-            continue
+        title_tokens = set(title.split())
+        key_tokens = set(key_lower.replace("_", " ").split())
+        all_tokens = title_tokens | key_tokens
 
-        # Calculate Jaccard similarity
-        intersection = len(query_tokens & article_tokens)
-        if intersection == 0:
-            continue
-
-        # Use a modified Jaccard that favors query coverage
-        # (what % of query words are found in article)
-        query_coverage = intersection / len(query_tokens)
-
-        # Also consider what % of article words are in query (precision)
-        article_coverage = intersection / len(article_tokens)
-
-        # Weighted score: favor query coverage but also reward precision
-        score = (query_coverage * 0.7) + (article_coverage * 0.3)
-
-        # Boost exact phrase matches
-        if query.lower() in combined.lower():
-            score = min(1.0, score + 0.3)
-
-        # Only include if score is meaningful (at least 30% match)
-        if score >= 0.3:
-            matches.append({
+        overlap = len(query_tokens & all_tokens)
+        if overlap > 0:
+            scored.append({
                 "key": key,
-                "title": meta.get("title", ""),
-                "cardTitle": meta.get("cardTitle", ""),
-                "cardDescription": meta.get("cardDescription", ""),
-                "cardTag": meta.get("cardTag", ""),
-                "article_type": meta.get("article_type", "investigation"),
-                "verdict": meta.get("verdict", ""),
-                "similarity": round(score * 100)  # Convert to percentage
+                "title": meta.get("title", key),
+                "article_type": meta.get("article_type"),
+                "verdict": meta.get("verdict"),
+                "score": overlap
             })
 
-    # Sort by similarity descending
-    matches.sort(key=lambda x: -x["similarity"])
-    return matches[:limit]
-
-def update_article_index(article_key: str, metadata: dict, blob_url: str = ""):
-    """Add or update an article in the index.
-
-    Args:
-        article_key: The hash key for the article
-        metadata: The full article data
-        blob_url: The direct Vercel Blob URL for O(1) retrieval
-    """
-    try:
-        # Load existing index
-        index = get_article_index()
-
-        # Use the article's internal key if available, otherwise fall back to hash key
-        # This ensures the index key matches what /api/article/{slug} expects
-        internal_key = metadata.get("key", article_key)
-
-        # Determine article type
-        article_type = metadata.get("_article_type", "investigation")
-        if metadata.get("articleType") == "fact_check" or metadata.get("verdict"):
-            article_type = "fact_check"
-        elif metadata.get("_parent_key") or metadata.get("isChildEssay"):
-            article_type = "deep_dive"
-
-        # Extract top 4 sources (sorted by score) for card display
-        sources = metadata.get("sources", [])
-        if sources and isinstance(sources, list):
-            # Sort by score descending and take top 4
-            sorted_sources = sorted(sources, key=lambda s: s.get("score", 0), reverse=True)[:4]
-            top_sources = [{"name": s.get("name", "Source"), "score": s.get("score", 80)} for s in sorted_sources]
-        else:
-            top_sources = []
-
-        # Calculate blob path for fallback retrieval
-        topic = metadata.get("_topic", "")
-        blob_path = f"articles/{get_topic_key(topic)}.json" if topic else ""
-
-        # Add/update the article metadata using internal key
-        index[internal_key] = {
-            "key": internal_key,
-            "title": metadata.get("title", "Unknown"),
-            "cardTitle": metadata.get("cardTitle", ""),
-            "cardTag": metadata.get("cardTag", ""),
-            "cardDescription": metadata.get("cardDescription", ""),
-            "topic": metadata.get("_topic", ""),
-            "blob_path": blob_path,  # Store blob path for fallback
-            "blob_url": blob_url,    # Store direct URL for O(1) retrieval
-            "cached_at": metadata.get("_cached_at", datetime.now().isoformat()),
-            "parent_key": metadata.get("_parent_key", ""),
-            "parent_title": metadata.get("_parent_title", ""),
-            "is_child": bool(metadata.get("isChildEssay", False)),
-            "article_type": article_type,
-            "verdict": metadata.get("verdict", ""),
-            "top_sources": top_sources
-        }
-
-        # Save updated index
-        blob_put(ARTICLE_INDEX_PATH, json.dumps(index))
-        print(f"Article index updated: {internal_key} (type: {article_type})")
-    except Exception as e:
-        print(f"Error updating article index: {e}")
-
-def get_all_cached_articles() -> list:
-    """Get list of all cached article topics. Uses fast index lookup."""
-    articles = []
-    seen_keys = set()
-
-    # 1. First try the fast index (single HTTP request)
-    index = get_article_index()
-    if index:
-        for key, metadata in index.items():
-            if key not in seen_keys:
-                seen_keys.add(key)
-                articles.append(metadata)
-        # If we got results from index, return immediately (fast path)
-        if articles:
-            return articles
-
-    # 2. Fallback: Build index from blobs (slow, but only runs once or on empty index)
-    print("Rebuilding article index from blob storage...")
-    blobs = blob_list("articles/")
-    new_index = {}
-
-    for blob in blobs:
-        try:
-            pathname = blob.get("pathname", "")
-            # Skip the index file itself
-            if pathname == ARTICLE_INDEX_PATH:
-                continue
-
-            blob_url = blob.get("url")
-            if blob_url:
-                response = requests.get(blob_url)
-                if response.status_code == 200:
-                    data = response.json()
-                    article_key = data.get("key", pathname.split("/")[-1].replace(".json", ""))
-                    if article_key not in seen_keys:
-                        seen_keys.add(article_key)
-                        # Determine article type
-                        article_type = "investigation"
-                        if data.get("articleType") == "fact_check" or data.get("verdict"):
-                            article_type = "fact_check"
-                        elif data.get("_parent_key") or data.get("isChildEssay"):
-                            article_type = "deep_dive"
-
-                        # Extract top 4 sources (sorted by score) for card display
-                        sources = data.get("sources", [])
-                        if sources and isinstance(sources, list):
-                            sorted_sources = sorted(sources, key=lambda s: s.get("score", 0), reverse=True)[:4]
-                            top_sources = [{"name": s.get("name", "Source"), "score": s.get("score", 80)} for s in sorted_sources]
-                        else:
-                            top_sources = []
-
-                        metadata = {
-                            "key": article_key,
-                            "title": data.get("title", "Unknown"),
-                            "cardTitle": data.get("cardTitle", ""),
-                            "cardTag": data.get("cardTag", ""),
-                            "cardDescription": data.get("cardDescription", ""),
-                            "topic": data.get("_topic", ""),
-                            "blob_path": pathname,  # Store actual blob path for fallback
-                            "blob_url": blob_url,   # Store direct URL for fast O(1) retrieval
-                            "cached_at": data.get("_cached_at", ""),
-                            "parent_key": data.get("_parent_key", ""),
-                            "parent_title": data.get("_parent_title", ""),
-                            "is_child": bool(data.get("isChildEssay", False)),
-                            "article_type": article_type,
-                            "verdict": data.get("verdict", ""),
-                            "top_sources": top_sources
-                        }
-                        articles.append(metadata)
-                        new_index[article_key] = metadata
-        except:
-            continue
-
-    # 3. Also check filesystem (for local dev)
-    if os.path.exists(CACHE_DIR):
-        for filename in os.listdir(CACHE_DIR):
-            if filename.endswith(".json"):
-                try:
-                    with open(f"{CACHE_DIR}/{filename}", "r") as f:
-                        data = json.load(f)
-                        article_key = data.get("key", filename[:-5])
-                        if article_key not in seen_keys:
-                            seen_keys.add(article_key)
-
-                            # Determine article type
-                            article_type = "investigation"
-                            if data.get("articleType") == "fact_check" or data.get("verdict"):
-                                article_type = "fact_check"
-                            elif data.get("_parent_key") or data.get("isChildEssay"):
-                                article_type = "deep_dive"
-
-                            # Extract top 4 sources (sorted by score) for card display
-                            sources = data.get("sources", [])
-                            if sources and isinstance(sources, list):
-                                sorted_sources = sorted(sources, key=lambda s: s.get("score", 0), reverse=True)[:4]
-                                top_sources = [{"name": s.get("name", "Source"), "score": s.get("score", 80)} for s in sorted_sources]
-                            else:
-                                top_sources = []
-
-                            metadata = {
-                                "key": article_key,
-                                "title": data.get("title", "Unknown"),
-                                "cardTitle": data.get("cardTitle", ""),
-                                "cardTag": data.get("cardTag", ""),
-                                "cardDescription": data.get("cardDescription", ""),
-                                "topic": data.get("_topic", ""),
-                                "blob_path": f"articles/{get_topic_key(data.get('_topic', ''))}.json",  # Fallback path
-                                "blob_url": "",  # No blob URL for local files
-                                "cached_at": data.get("_cached_at", ""),
-                                "parent_key": data.get("_parent_key", ""),
-                                "parent_title": data.get("_parent_title", ""),
-                                "is_child": bool(data.get("isChildEssay", False)),
-                                "article_type": article_type,
-                                "verdict": data.get("verdict", ""),
-                                "top_sources": top_sources
-                            }
-                            articles.append(metadata)
-                            new_index[article_key] = metadata
-                except:
-                    continue
-
-    # 4. Save the rebuilt index for next time (if we built one)
-    if new_index:
-        blob_put(ARTICLE_INDEX_PATH, json.dumps(new_index))
-        print(f"Article index rebuilt with {len(new_index)} articles")
-
-    return articles
-
-# === USER USAGE TRACKING ===
-
-def get_user_id(request: Request) -> str:
-    """Get a simple user identifier (IP-based)."""
-    forwarded = request.headers.get("X-Forwarded-For")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    return request.client.host if request.client else "unknown"
-
-def load_usage_data() -> dict:
-    """Load user usage data."""
-    if os.path.exists(USER_USAGE_FILE):
-        try:
-            with open(USER_USAGE_FILE, "r") as f:
-                return json.load(f)
-        except:
-            return {}
-    return {}
-
-def save_usage_data(data: dict):
-    """Save user usage data."""
-    with open(USER_USAGE_FILE, "w") as f:
-        json.dump(data, f)
-
-def get_user_usage_today(user_id: str) -> int:
-    """Get how many deep dives a user has generated today."""
-    data = load_usage_data()
-    today = date.today().isoformat()
-    if user_id not in data:
-        return 0
-    user_data = data[user_id]
-    if user_data.get("date") != today:
-        return 0
-    return user_data.get("count", 0)
-
-def increment_user_usage(user_id: str):
-    """Increment user's daily usage count."""
-    data = load_usage_data()
-    today = date.today().isoformat()
-    if user_id not in data or data[user_id].get("date") != today:
-        data[user_id] = {"date": today, "count": 1}
-    else:
-        data[user_id]["count"] = data[user_id].get("count", 0) + 1
-    save_usage_data(data)
-
-def get_remaining_free_dives(user_id: str) -> int:
-    """Get remaining free deep dives for today."""
-    used = get_user_usage_today(user_id)
-    return max(0, FREE_DAILY_LIMIT - used)
+    scored.sort(key=lambda x: x["score"], reverse=True)
+    return scored[:limit]
 
 
-def extract_chartconfigs(text: str) -> dict:
-    """Extract chartConfigs from partial JSON using regex - critical for timeout recovery."""
-    charts = {}
-
-    # Look for chartConfigs section
-    chart_section = re.search(r'"chartConfigs"\s*:\s*\{([^}]*(?:\{[^}]*\}[^}]*)*)\}', text, re.DOTALL)
-    if not chart_section:
-        return charts
-
-    section = chart_section.group(1)
-
-    # Extract individual chart definitions
-    chart_patterns = [
-        r'"(chart_\w+)"\s*:\s*(\{[^}]*"type"\s*:\s*"[^"]+"\s*,[^}]*"data"\s*:\s*\{[^}]*\}[^}]*\})',
-    ]
-
-    for pattern in chart_patterns:
-        for match in re.finditer(pattern, section, re.DOTALL):
-            chart_id = match.group(1)
-            chart_json = match.group(2)
-            try:
-                # Clean up and parse
-                chart_json = chart_json.replace("'", '"')
-                charts[chart_id] = json.loads(chart_json)
-                print(f"Extracted chart: {chart_id}")
-            except:
-                # Try manual extraction
-                type_match = re.search(r'"type"\s*:\s*"([^"]+)"', chart_json)
-                title_match = re.search(r'"title"\s*:\s*"([^"]+)"', chart_json)
-                labels_match = re.search(r'"labels"\s*:\s*\[([^\]]+)\]', chart_json)
-                values_match = re.search(r'"values"\s*:\s*\[([^\]]+)\]', chart_json)
-                colors_match = re.search(r'"colors"\s*:\s*\[([^\]]+)\]', chart_json)
-
-                if type_match and labels_match and values_match:
-                    try:
-                        labels = json.loads(f"[{labels_match.group(1)}]")
-                        values = json.loads(f"[{values_match.group(1)}]")
-                        colors = json.loads(f"[{colors_match.group(1)}]") if colors_match else ["#3b82f6"]
-                        charts[chart_id] = {
-                            "type": type_match.group(1),
-                            "data": {"labels": labels, "values": values, "colors": colors},
-                            "title": title_match.group(1) if title_match else "Chart"
-                        }
-                        print(f"Manually extracted chart: {chart_id}")
-                    except:
-                        pass
-
-    return charts
-
+# === JSON PARSING UTILITIES ===
 
 def sanitize_json_string(text: str) -> str:
-    """Fix common LLM JSON issues before parsing."""
-    # Replace smart quotes with straight quotes
-    text = text.replace('"', '"').replace('"', '"')
-    text = text.replace(''', "'").replace(''', "'")
-
-    # Remove any BOM or zero-width characters
-    text = text.replace('\ufeff', '').replace('\u200b', '')
-
-    # Fix unescaped control characters inside strings (common LLM issue)
-    # This is tricky - we need to escape actual newlines/tabs that aren't already escaped
-    result = []
-    in_string = False
-    i = 0
-    while i < len(text):
-        c = text[i]
-        if c == '"' and (i == 0 or text[i-1] != '\\'):
-            in_string = not in_string
-            result.append(c)
-        elif in_string:
-            # Inside a string, escape control characters
-            if c == '\n':
-                result.append('\\n')
-            elif c == '\r':
-                result.append('\\r')
-            elif c == '\t':
-                result.append('\\t')
-            else:
-                result.append(c)
-        else:
-            result.append(c)
-        i += 1
-
-    text = ''.join(result)
-
-    # Remove trailing commas before } or ] (common LLM error)
-    text = re.sub(r',(\s*[}\]])', r'\1', text)
-
-    return text
-
-
-def repair_truncated_json(text: str) -> Optional[dict]:
-    """Attempt to repair truncated JSON from timeout responses."""
-    if not text or not text.strip():
-        return None
-
+    """Clean up JSON string for parsing."""
     text = text.strip()
-
-    # Remove markdown fences
     if text.startswith("```json"):
         text = text[7:]
-    if text.startswith("```"):
+    elif text.startswith("```"):
         text = text[3:]
     if text.endswith("```"):
         text = text[:-3]
-    text = text.strip()
+    return text.strip()
 
-    # Sanitize common LLM JSON issues
+
+def repair_truncated_json(text: str) -> Optional[dict]:
+    """Attempt to repair and parse potentially truncated JSON."""
     text = sanitize_json_string(text)
 
-    # Try parsing as-is first
     try:
         return json.loads(text)
-    except json.JSONDecodeError as e:
-        print(f"Initial JSON parse failed at position {e.pos}: {e.msg}")
+    except json.JSONDecodeError:
+        pass
 
-    # Count unclosed braces/brackets and try to close them
-    open_braces = text.count('{') - text.count('}')
-    open_brackets = text.count('[') - text.count(']')
-
-    # Find if we're inside a string (look for unmatched quotes)
-    in_string = False
-    i = 0
-    while i < len(text):
-        if text[i] == '"' and (i == 0 or text[i-1] != '\\'):
-            in_string = not in_string
-        i += 1
-
-    # If we're inside a string, try to close it
+    # Try to close unclosed structures
     repaired = text
-    if in_string:
-        repaired = text + '"'
+    open_braces = repaired.count('{') - repaired.count('}')
+    open_brackets = repaired.count('[') - repaired.count(']')
 
-    # Close brackets then braces
-    repaired += ']' * max(0, open_brackets)
-    repaired += '}' * max(0, open_braces)
+    if open_braces > 0 or open_brackets > 0:
+        if not repaired.rstrip().endswith((',', ':', '"', '[', '{')):
+            if repaired.rstrip().endswith('"'):
+                pass
+            else:
+                repaired = repaired.rstrip().rstrip(',')
 
-    # Try to parse repaired JSON
-    try:
-        data = json.loads(repaired)
-        print(f"JSON repair successful: closed {open_braces} braces, {open_brackets} brackets")
-        return data
-    except Exception as e:
-        print(f"JSON repair failed: {e}")
+        repaired += ']' * open_brackets
+        repaired += '}' * open_braces
 
-    # Last resort: extract fields with regex - PRESERVE CHARTS!
-    try:
-        key_match = re.search(r'"key"\s*:\s*"([^"]+)"', text)
-        title_match = re.search(r'"title"\s*:\s*"([^"]+)"', text)
-        card_title_match = re.search(r'"cardTitle"\s*:\s*"([^"]+)"', text)
-        card_tag_match = re.search(r'"cardTag"\s*:\s*"([^"]+)"', text)
-        card_desc_match = re.search(r'"cardDescription"\s*:\s*"([^"]+)"', text)
-
-        if key_match and title_match:
-            # CRITICAL: Extract chartConfigs even from truncated JSON
-            chart_configs = extract_chartconfigs(text)
-            print(f"Extracted {len(chart_configs)} charts from truncated JSON")
-
-            # Extract content - it comes AFTER chartConfigs now
-            content_match = re.search(r'"content"\s*:\s*"(.*?)(?:"\s*[,}]|$)', text, re.DOTALL)
-            content = content_match.group(1) if content_match else "<p class='prose-text'>Article content was truncated. The charts and data are preserved.</p>"
-
-            # Unescape the content
-            content = content.replace('\\"', '"').replace('\\n', '\n')
-
-            return {
-                "key": key_match.group(1),
-                "title": title_match.group(1),
-                "cardTitle": card_title_match.group(1) if card_title_match else title_match.group(1)[:50],
-                "cardTag": card_tag_match.group(1) if card_tag_match else "INVESTIGATION",
-                "cardDescription": card_desc_match.group(1) if card_desc_match else "",
-                "content": content,
-                "chartConfigs": chart_configs,  # PRESERVE CHARTS!
-                "contextData": {},
-                "citationDatabase": {},
-                "sources": [],
-                "_partial": True
-            }
-    except Exception as e:
-        print(f"Regex extraction failed: {e}")
+        try:
+            return json.loads(repaired)
+        except:
+            pass
 
     return None
 
 
-# Comprehensive investigative journalism template - OPTIMIZED FOR 60s TIMEOUT
-# Key optimization: chartConfigs comes FIRST so it's captured even if content is truncated
-ARTICLE_TEMPLATE = """
-Investigative exposé on: "{topic}"
-{context_section}
+# === FACT CHECK TEMPLATE ===
 
-INFOGRAPHIC DECISION - Set "generateInfographics" to true ONLY if the article would benefit from data visualization:
-- TRUE if: Financial data, statistics, trends over time, comparisons, percentages, poll results, scientific measurements
-- FALSE if: Biography, breaking news, event coverage, opinion analysis, policy explanations, historical narratives without data
-If generateInfographics is false, set chartConfigs to empty object {{}}.
-
-RETURN ONLY VALID JSON. CRITICAL: Generate chartConfigs FIRST (before content) to ensure charts are captured.
-
-{{
-  "key": "{topic_slug}",
-  "title": "Compelling headline with specific hook",
-  "cardTitle": "3-5 word card title",
-  "cardTag": "CATEGORY // SUBCATEGORY",
-  "cardTagColor": "text-red-400",
-  "cardDescription": "One-line teaser",
-  "generateInfographics": true,
-  "chartConfigs": {{
-    "chart_main": {{"type": "bar", "data": {{"labels": ["A", "B", "C", "D"], "values": [num1, num2, num3, num4], "colors": ["#3b82f6", "#10b981", "#f59e0b", "#ef4444"]}}, "title": "Main Chart"}},
-    "chart_secondary": {{"type": "line", "data": {{"labels": ["2020", "2021", "2022", "2023", "2024"], "values": [v1, v2, v3, v4, v5], "colors": ["#06b6d4"]}}, "title": "Trend"}},
-    "chart_tertiary": {{"type": "pie", "data": {{"labels": ["X", "Y", "Z"], "values": [40, 35, 25], "colors": ["#3b82f6", "#10b981", "#f59e0b"]}}, "title": "Distribution"}}
-  }},
-  "contextData": {{"person_1": {{"expanded": "..."}}, "org_1": {{"expanded": "..."}}, "stat_1": {{"expanded": "..."}}, "...50+ ENTRIES TOTAL, ONE FOR EACH FRACTAL-TRIGGER...": {{"expanded": "..."}}}},
-  "citationDatabase": {{"src1": {{"domain": "reuters.com", "trustScore": 95, "title": "Title", "snippet": "Quote", "url": "https://..."}}}},
-  "sources": [{{"name": "Source", "score": 95, "url": "https://..."}}],
-  "content": "HTML CONTENT HERE"
-}}
-
-HTML structure for content field:
-- <p class="prose-text"><strong class="text-white">Executive Summary:</strong> Key finding with <span class="highlight-glow">stat</span> and <span class="living-number" data-target="NUM" data-suffix="SUFFIX">$0</span> <span class="citation-spade" data-id="src1">♠</span></p>
-- <h2 class="prose-h2">1. Section</h2> with <div class="float-figure right"><div style="height:250px"><canvas id="chart_main"></canvas></div><div class="fig-caption">Caption <span class="fig-deep-dive" onclick="handleDeepDive(this)">DEEP DIVE</span></div></div>
-- <strong class="fractal-trigger" onclick="expandContext(this,'key')">technical terms</strong> for deep-dives
-- If generateInfographics is true: 5 sections, 3 charts (bar, line, pie), 8+ living numbers, 50+ fractal triggers (8-15 per section), 15+ citations - Alternate float-figure right/left
-- If generateInfographics is false: 5 sections, 8+ living numbers, 50+ fractal triggers, 15+ citations - NO float-figure elements, focus on rich prose
-
-FRACTAL TRIGGERS ARE CRITICAL - YOU MUST WRAP 50+ TERMS with <strong class="fractal-trigger" onclick="expandContext(this,'key_name')">term</strong>:
-
-MANDATORY CATEGORIES TO WRAP (wrap EVERY instance):
-1. PEOPLE: Every person mentioned - CEOs, politicians, researchers, experts, witnesses, founders, executives, whistleblowers
-2. ORGANIZATIONS: Every company, agency, NGO, institution, university, think tank, regulatory body, trade group
-3. STATISTICS: Every significant number, percentage, dollar amount - explain what it means in context
-4. LOCATIONS: Countries, cities, facilities, headquarters, research sites - explain their significance
-5. DATES/PERIODS: Specific years, decades, eras, deadlines - explain what happened or will happen
-6. LAWS/REGULATIONS: Any legal references, acts, bills, court cases, rulings, treaties
-7. TECHNICAL TERMS: Industry jargon, scientific concepts, acronyms, methodologies, processes
-8. PRODUCTS/PROJECTS: Specific products, initiatives, programs, technologies, platforms
-9. EVENTS: Conferences, trials, incidents, elections, announcements, launches, scandals
-10. CONCEPTS: Economic theories, business models, strategic frameworks, scientific principles
-
-DENSITY REQUIREMENTS (STRICT):
-- Minimum 10-15 fractal triggers PER SECTION (50-75 total across 5 sections)
-- Every paragraph MUST have 3-5 triggers minimum
-- EVERY person name MUST be wrapped - no exceptions
-- EVERY organization/company name MUST be wrapped - no exceptions
-- EVERY specific dollar amount or percentage MUST be wrapped
-- EVERY law, act, or regulation MUST be wrapped
-- EVERY date or year reference MUST be wrapped
-- EVERY technical term or acronym MUST be wrapped
-
-CRITICAL: MAXIMIZE fractal-trigger usage in content. Wrap EVERY wrappable term. The goal is 50-75 wrapped terms in the content. For each term you wrap with fractal-trigger, add a matching key to contextData.
-
-Each trigger MUST have a corresponding entry in contextData with a substantive 2-3 sentence explanation that provides investigative context - who is this person? why does this org matter? what does this stat mean?
-
-Return ONLY JSON. No markdown, no code fences.
-"""
-
-# Fact Check Template - Wiki-style verdict-focused format with SAME deep dive density
 FACT_CHECK_TEMPLATE = """
 Fact-check this claim: "{topic}"
 {context_section}
 
-You are a fact-checking journalist for GenuVerity. Verify this claim using the VERIFIED SOURCES provided above.
+You are a fact-checking journalist for GenuVerity. Verify this claim AND track its disinformation origins using the VERIFIED SOURCES provided above.
+
+CRITICAL URL RULES:
+1. ONLY use URLs that appear in the VERIFIED SOURCES section above - NEVER construct or guess URLs
+2. Every factual claim in your HTML must have an inline hyperlink to its source
+3. Link format: <a href="[EXACT_URL_FROM_SOURCES]" target="_blank" rel="noopener">linked text</a>
+4. If you cannot find a source URL in the provided sources, do NOT include that claim
 
 RETURN ONLY VALID JSON with this structure:
 
@@ -1634,13 +1079,9 @@ RETURN ONLY VALID JSON with this structure:
   "key": "{topic_slug}",
   "articleType": "fact_check",
   "title": "Fact Check: [Claim summary]",
-  "cardTitle": "VERDICT: [TRUE/FALSE/MIXED]",
-  "cardTag": "FACT CHECK // VERIFICATION",
-  "cardTagColor": "text-yellow-400",
-  "cardDescription": "One-line verdict summary",
   "verdict": "TRUE | FALSE | MOSTLY_TRUE | MOSTLY_FALSE | MIXED | UNVERIFIABLE",
-  "nuancePotential": 15,
   "verdictSummary": "2-3 sentence explanation of the verdict",
+  "confidence": 0.85,
   "claims": [
     {{
       "id": "claim_1",
@@ -1655,175 +1096,221 @@ RETURN ONLY VALID JSON with this structure:
     "contradicting": ["Evidence point contradicting the claim"],
     "context": ["Important context that affects interpretation"]
   }},
-  "chartConfigs": {{}},
-  "contextData": {{"person_1": {{"expanded": "..."}}, "org_1": {{"expanded": "..."}}, "...50+ ENTRIES...": {{"expanded": "..."}}}},
+  "disinfoAnalysis": {{
+    "originEstimate": {{
+      "firstSeen": "2024-01-15",
+      "firstSource": "URL or account name where claim first appeared",
+      "confidence": 0.75,
+      "originType": "social_media | blog | news | unknown",
+      "earlierVariants": ["Earlier forms of this claim if any"]
+    }},
+    "amplificationPattern": {{
+      "spreadVelocity": "rapid | moderate | slow | viral",
+      "peakDate": "2024-01-20",
+      "botInvolvement": "high | moderate | low | none | unknown",
+      "coordinatedBehavior": false,
+      "topAmplifiers": [
+        {{"name": "Account or outlet name", "type": "influencer | media | politician | bot_network | unknown", "reach": 125000, "platform": "twitter | facebook | youtube | reddit | other"}}
+      ],
+      "spreadPath": "Platform A -> Platform B -> Mainstream"
+    }},
+    "narrativeMutations": [
+      {{
+        "variant": "Different version of the claim",
+        "firstSeen": "2024-01-18",
+        "source": "Where this variant appeared",
+        "changeType": "exaggeration | context_removal | detail_added | translation | misattribution"
+      }}
+    ],
+    "disinfoCampaignIndicators": {{
+      "isLikelyCampaign": false,
+      "campaignName": "Name if known campaign",
+      "knownActors": ["Known bad actors if identified"],
+      "relatedClaims": ["Other false claims that appear related"]
+    }}
+  }},
+  "contextData": {{"term_1": {{"expanded": "Explanation..."}}}},
   "citationDatabase": {{"src1": {{"domain": "reuters.com", "trustScore": 95, "title": "Title", "snippet": "Quote", "url": "https://..."}}}},
   "sources": [{{"name": "Source", "score": 95, "url": "https://..."}}],
   "content": "HTML CONTENT HERE"
 }}
 
-HTML structure for content field (WIKI-STYLE WITH TABS):
+DISINFORMATION ANALYSIS GUIDELINES:
+- Use sources to trace when this claim first appeared online
+- Identify the original source (social media account, blog, news outlet)
+- Track how the claim mutated as it spread (exaggerations, context removal)
+- Note any coordinated amplification patterns (multiple accounts posting simultaneously)
+- Identify top amplifiers by platform and reach
+- Flag if this appears part of a known disinformation campaign
+- Estimate confidence in origin tracking (high if clear trail, low if murky)
+
+HTML structure for content field:
 
 <div class="verdict-banner verdict-[verdict_lowercase]">
-  <div class="verdict-icon">[✓ for TRUE, ✗ for FALSE, ⚠ for MIXED/MOSTLY]</div>
+  <div class="verdict-icon">[checkmark for TRUE, X for FALSE, warning for MIXED]</div>
   <div class="verdict-label">[VERDICT]</div>
-  <div class="verdict-nuance">[nuancePotential]% nuance potential · <span class="nuance-hint">room for interpretation</span></div>
 </div>
 
-<p class="prose-text verdict-summary"><strong>Summary:</strong> [verdictSummary with fractal triggers]</p>
+<p class="prose-text verdict-summary"><strong>Summary:</strong> [verdictSummary]</p>
 
-<!-- THE STORY - REQUIRED NARRATIVE INTRO (3-4 paragraphs of investigative journalism) - MUST HAVE 15-20 FRACTAL TRIGGERS TOTAL -->
 <section class="fact-check-story">
   <h2 class="prose-h2">The Story Behind This Claim</h2>
-  <p class="prose-text">[PARAGRAPH 1 - THE HOOK (4-5 fractal triggers REQUIRED): Start with the most compelling detail. EXAMPLE FORMAT: "On <strong class="fractal-trigger" onclick="expandContext(this,'date_dec_2024')">December 10, 2024</strong>, a post on <strong class="fractal-trigger" onclick="expandContext(this,'platform_x')">X (formerly Twitter)</strong> began circulating, claiming that <strong class="fractal-trigger" onclick="expandContext(this,'person_name')">Person Name</strong>..." Every date, platform, person, number MUST be wrapped.]</p>
-
-  <p class="prose-text">[PARAGRAPH 2 - THE ORIGIN (4-5 fractal triggers REQUIRED): Trace the claim to its source. EXAMPLE FORMAT: "The claim appears to originate from <strong class="fractal-trigger" onclick="expandContext(this,'source_origin')">Original Source</strong> who stated on <strong class="fractal-trigger" onclick="expandContext(this,'date_origin')">Date</strong>..." Wrap the originator, date, platform, and any quoted statistics.]</p>
-
-  <p class="prose-text">[PARAGRAPH 3 - THE SPREAD (4-5 fractal triggers REQUIRED): How did it spread? EXAMPLE FORMAT: "Within <strong class="fractal-trigger" onclick="expandContext(this,'timeframe_spread')">48 hours</strong>, the claim was amplified by <strong class="fractal-trigger" onclick="expandContext(this,'amplifier_1')">Account/Outlet 1</strong> and <strong class="fractal-trigger" onclick="expandContext(this,'amplifier_2')">Account/Outlet 2</strong>..." EVERY person and organization mentioned MUST be a fractal trigger.]</p>
-
-  <p class="prose-text">[PARAGRAPH 4 - THE STAKES (4-5 fractal triggers REQUIRED): Why does this matter? EXAMPLE FORMAT: "The implications are significant for <strong class="fractal-trigger" onclick="expandContext(this,'affected_group')">Affected Group</strong>, as decisions about <strong class="fractal-trigger" onclick="expandContext(this,'policy_issue')">Policy Issue</strong> could be influenced..." Wrap affected groups, policies, consequences.]</p>
+  <p class="prose-text">[EVERY factual claim must be hyperlinked to its source. Example: On <a href="[SOURCE_URL]" target="_blank" rel="noopener">DATE</a>, <a href="[OFFICIAL_BIO_URL]" target="_blank" rel="noopener">PERSON NAME</a> claimed that... according to <a href="[NEWS_SOURCE]" target="_blank" rel="noopener">SOURCE NAME</a>.]</p>
+  <p class="prose-text">[Continue with inline links for EVERY fact, statistic, quote, or claim. No unsourced statements allowed.]</p>
+  <p class="prose-text">[IMPORTANT: ONLY use URLs from the VERIFIED SOURCES provided above. Do NOT construct or guess URLs.]</p>
 </section>
 
-<!-- TABBED INTERFACE -->
 <div class="fact-check-tabs">
-  <button class="fact-check-tab active" onclick="switchFactCheckTab(event, 'tab-claim')"><i data-lucide="quote"></i> Claim</button>
-  <button class="fact-check-tab" onclick="switchFactCheckTab(event, 'tab-evidence')"><i data-lucide="scale"></i> Evidence</button>
-  <button class="fact-check-tab" onclick="switchFactCheckTab(event, 'tab-context')"><i data-lucide="info"></i> Context</button>
-  <button class="fact-check-tab" onclick="switchFactCheckTab(event, 'tab-sources')"><i data-lucide="link"></i> Sources</button>
+  <button class="fact-check-tab active" onclick="switchFactCheckTab(event, 'tab-claim')">Claim</button>
+  <button class="fact-check-tab" onclick="switchFactCheckTab(event, 'tab-evidence')">Evidence</button>
+  <button class="fact-check-tab" onclick="switchFactCheckTab(event, 'tab-disinfo')">Disinfo</button>
+  <button class="fact-check-tab" onclick="switchFactCheckTab(event, 'tab-context')">Context</button>
+  <button class="fact-check-tab" onclick="switchFactCheckTab(event, 'tab-sources')">Sources</button>
 </div>
 
-<!-- TAB: CLAIM -->
 <div id="tab-claim" class="fact-check-tab-content active">
   <h3 class="prose-h3">The Claim</h3>
-  <blockquote class="claim-quote">"[Original claim being fact-checked]"</blockquote>
-  <p class="prose-text">Context about where/when this claim originated, who made it, and why it's being fact-checked...</p>
-
+  <blockquote class="claim-quote">"[Original claim]"</blockquote>
   <h3 class="prose-h3">Sub-Claims Analysis</h3>
   <div class="claims-breakdown">
-    [For each sub-claim, generate a claim-card div:]
     <div class="claim-card">
-      <span class="claim-verdict [verdict_lowercase]">[TRUE/FALSE/MIXED]</span>
-      <p class="claim-text">[Specific sub-claim text with fractal triggers]</p>
-      <p class="claim-evidence">[Evidence summary] <span class="citation-spade" data-id="src1">♠</span></p>
+      <span class="claim-verdict [verdict]">[TRUE/FALSE/MIXED]</span>
+      <p class="claim-text">[Sub-claim text]</p>
+      <p class="claim-evidence">[Evidence] <span class="citation-spade" data-id="src1">spade</span></p>
     </div>
   </div>
 </div>
 
-<!-- TAB: EVIDENCE -->
 <div id="tab-evidence" class="fact-check-tab-content">
   <h3 class="prose-h3">Evidence Analysis</h3>
   <div class="evidence-grid">
     <div class="evidence-column supporting">
-      <h4><i data-lucide="check-circle"></i> Supporting Evidence</h4>
-      <ul>
-        <li><strong class="fractal-trigger" onclick="expandContext(this,'evidence_1')">Evidence point</strong> <span class="citation-spade" data-id="src1">♠</span></li>
-        [More supporting evidence points...]
-      </ul>
+      <h4>Supporting Evidence</h4>
+      <ul><li>Evidence point <span class="citation-spade" data-id="src1">spade</span></li></ul>
     </div>
     <div class="evidence-column contradicting">
-      <h4><i data-lucide="x-circle"></i> Contradicting Evidence</h4>
-      <ul>
-        <li><strong class="fractal-trigger" onclick="expandContext(this,'evidence_2')">Evidence point</strong> <span class="citation-spade" data-id="src2">♠</span></li>
-        [More contradicting evidence points...]
-      </ul>
+      <h4>Contradicting Evidence</h4>
+      <ul><li>Evidence point <span class="citation-spade" data-id="src2">spade</span></li></ul>
+    </div>
+  </div>
+</div>
+
+<div id="tab-disinfo" class="fact-check-tab-content">
+  <!-- Network Graph Container - Populated by JavaScript -->
+  <div class="network-graph-container">
+    <div class="network-graph-header">
+      <div class="network-graph-title">
+        <i data-lucide="git-branch"></i>
+        Claim Spread Network
+      </div>
+      <div class="network-graph-legend">
+        <div class="legend-item"><div class="legend-dot claim"></div> Claim</div>
+        <div class="legend-item"><div class="legend-dot source"></div> Source</div>
+        <div class="legend-item"><div class="legend-dot amplifier"></div> Amplifier</div>
+        <div class="legend-item"><div class="legend-dot mutation"></div> Mutation</div>
+      </div>
+    </div>
+    <div id="network-graph"></div>
+  </div>
+
+  <!-- Timeline Container - Populated by JavaScript -->
+  <div class="spread-timeline">
+    <div class="timeline-header">
+      <i data-lucide="calendar"></i>
+      Spread Timeline
+    </div>
+    <div class="timeline-track" id="spread-timeline-track"></div>
+  </div>
+
+  <h3 class="prose-h3">Origin Tracking</h3>
+  <div class="disinfo-origin">
+    <p class="prose-text"><strong>First Appearance:</strong> [Date and source where claim first appeared]</p>
+    <p class="prose-text"><strong>Original Form:</strong> "[The original version of the claim]"</p>
+    <p class="prose-text"><strong>Origin Confidence:</strong> [High/Medium/Low] - [Explanation of confidence level]</p>
+  </div>
+
+  <h3 class="prose-h3">Spread Pattern</h3>
+  <div class="disinfo-spread">
+    <p class="prose-text"><strong>Velocity:</strong> [How fast it spread - rapid/moderate/slow]</p>
+    <p class="prose-text"><strong>Path:</strong> [Platform A] → [Platform B] → [Mainstream media]</p>
+    <p class="prose-text"><strong>Peak:</strong> [When the claim reached maximum spread]</p>
+  </div>
+
+  <h3 class="prose-h3">Top Amplifiers</h3>
+  <div class="amplifier-list">
+    <div class="amplifier-card">
+      <span class="amplifier-type">[influencer/media/politician]</span>
+      <span class="amplifier-name">[Name]</span>
+      <span class="amplifier-reach">[X followers/readers]</span>
     </div>
   </div>
 
-  <h3 class="prose-h3">Evidence Quality Assessment</h3>
-  <p class="prose-text">Analysis of source reliability, methodology used, and confidence in the evidence...</p>
+  <h3 class="prose-h3">Claim Mutations</h3>
+  <div class="mutation-timeline">
+    <div class="mutation-item">
+      <span class="mutation-date">[Date]</span>
+      <p class="mutation-text">"[Mutated version of claim]"</p>
+      <span class="mutation-type">[exaggeration/context_removal/etc]</span>
+    </div>
+  </div>
+
+  <h3 class="prose-h3">Campaign Analysis</h3>
+  <p class="prose-text">[Whether this appears to be part of organized disinformation, any known actors, related false claims]</p>
 </div>
 
-<!-- TAB: CONTEXT - MUST HAVE 10-15 FRACTAL TRIGGERS -->
 <div id="tab-context" class="fact-check-tab-content">
   <h3 class="prose-h3">Historical Context</h3>
-  <p class="prose-text">[REQUIRED (4-5 fractal triggers): 2-3 paragraphs with HEAVY fractal trigger usage. EXAMPLE: "This claim emerged during <strong class="fractal-trigger" onclick="expandContext(this,'period_2024_election')">the 2024 election cycle</strong>, when <strong class="fractal-trigger" onclick="expandContext(this,'org_mentioned')">Organization</strong> was under scrutiny..." Wrap EVERY date, organization, event, political term.]</p>
-
+  <p class="prose-text">[Background and historical context]</p>
   <h3 class="prose-h3">The Bigger Picture</h3>
-  <p class="prose-text">[REQUIRED (3-4 fractal triggers): EXAMPLE: "This fits into a broader pattern of <strong class="fractal-trigger" onclick="expandContext(this,'disinfo_type')">disinformation type</strong> promoted by <strong class="fractal-trigger" onclick="expandContext(this,'actor_network')">Actor/Network</strong>..." Every concept, actor, beneficiary MUST be wrapped.]</p>
-
-  <h3 class="prose-h3">Related Misinformation</h3>
-  <p class="prose-text">[REQUIRED (3-4 fractal triggers): EXAMPLE: "Other claims in this narrative include <strong class="fractal-trigger" onclick="expandContext(this,'related_claim_1')">Related Claim 1</strong> and <strong class="fractal-trigger" onclick="expandContext(this,'related_claim_2')">Related Claim 2</strong>..." EVERY related claim MUST be a fractal trigger.]</p>
+  <p class="prose-text">[Broader implications and patterns]</p>
 </div>
 
-<!-- TAB: SOURCES - MUST HAVE 8-10 FRACTAL TRIGGERS -->
 <div id="tab-sources" class="fact-check-tab-content">
-  <h3 class="prose-h3">Key Documents & Statements</h3>
-  <p class="prose-text">[REQUIRED (3-4 fractal triggers): EXAMPLE: "According to <strong class="fractal-trigger" onclick="expandContext(this,'document_name')">Document Name</strong> from <strong class="fractal-trigger" onclick="expandContext(this,'source_org')">Organization</strong>..." <span class="citation-spade" data-id="src1">♠</span> Every document, org, date MUST be wrapped AND have citation spade.]</p>
-
-  <h3 class="prose-h3">What Experts Say</h3>
-  <p class="prose-text">[REQUIRED (3-4 fractal triggers): EXAMPLE: "<strong class="fractal-trigger" onclick="expandContext(this,'expert_1')">Dr. Expert Name</strong>, <strong class="fractal-trigger" onclick="expandContext(this,'institution_1')">Professor at Institution</strong>, stated..." EVERY expert name and institution MUST be a fractal trigger.]</p>
-
-  <h3 class="prose-h3">How We Verified</h3>
-  <p class="prose-text">[REQUIRED (2-3 fractal triggers): Describe methodology. Wrap the specific databases, tools, and techniques used like <strong class="fractal-trigger" onclick="expandContext(this,'verification_method')">reverse image search</strong> or <strong class="fractal-trigger" onclick="expandContext(this,'fact_check_db')">fact-check database</strong>.]</p>
+  <h3 class="prose-h3">Key Documents</h3>
+  <p class="prose-text">[Primary source documents] <span class="citation-spade" data-id="src1">spade</span></p>
+  <h3 class="prose-h3">Expert Analysis</h3>
+  <p class="prose-text">[What experts say]</p>
+  <h3 class="prose-h3">Verification Method</h3>
+  <p class="prose-text">[How we verified this claim]</p>
 </div>
 
 <h2 class="prose-h2">The Bottom Line</h2>
-<p class="prose-text">[REQUIRED (5-8 fractal triggers across 2 paragraphs): First paragraph: State the verdict clearly. EXAMPLE: "Based on evidence from <strong class="fractal-trigger" onclick="expandContext(this,'key_source')">Key Source</strong> and <strong class="fractal-trigger" onclick="expandContext(this,'key_evidence')">Key Evidence</strong>, this claim is [VERDICT]." Second paragraph: Acknowledge nuance. EVERY key source, organization, concept MUST be wrapped.]</p>
-
-<!-- GO DEEPER CTA -->
-<div class="fact-check-deeper">
-  <p class="deeper-prompt">Want the full story?</p>
-  <button class="deeper-btn" onclick="queueDeepDiveFromFactCheck()">
-    <i data-lucide="layers"></i>
-    Generate Full Investigation
-  </button>
-  <p class="deeper-note">Get a comprehensive investigative report with infographics, timeline, and deeper analysis.</p>
-</div>
-
-FRACTAL TRIGGERS ARE CRITICAL - THIS IS THE MOST IMPORTANT REQUIREMENT. YOU MUST WRAP 50-75 TERMS with <strong class="fractal-trigger" onclick="expandContext(this,'key_name')">term</strong>:
-
-MANDATORY CATEGORIES TO WRAP (wrap EVERY SINGLE INSTANCE - NO EXCEPTIONS):
-1. PEOPLE: Every person mentioned - politicians, experts, witnesses, sources, reporters, officials, executives
-2. ORGANIZATIONS: Every company, agency, NGO, institution, fact-checking org, news outlet, government body
-3. STATISTICS: Every number, percentage, dollar amount, date, year - explain what it means
-4. LOCATIONS: Countries, cities, states, relevant places, buildings, addresses
-5. DATES/PERIODS: When claims were made, when events occurred, specific years, time periods
-6. LAWS/REGULATIONS: Any legal references relevant to the claim, acts, bills, court cases
-7. TECHNICAL TERMS: Jargon, acronyms, methodologies, verification techniques
-8. SOURCES: News outlets, studies, reports being cited - make clickable for deep dives
-9. EVENTS: Incidents, announcements, speeches, press conferences relevant to the claim
-10. CONCEPTS: Logical fallacies, verification methods, journalistic standards, propaganda techniques
-
-SECTION-BY-SECTION DENSITY REQUIREMENTS (STRICT - THESE ARE MINIMUMS):
-- The Story Behind This Claim (4 paragraphs): 15-20 fractal triggers total (4-5 per paragraph)
-- Verdict Summary: 3-5 fractal triggers
-- Tab: Claim (sub-claims analysis): 10-15 fractal triggers
-- Tab: Evidence: 10-15 fractal triggers
-- Tab: Context: 10-15 fractal triggers
-- Tab: Sources: 8-10 fractal triggers
-- The Bottom Line: 5-8 fractal triggers
-TOTAL MINIMUM: 60+ fractal triggers
-
-PER-PARAGRAPH RULE (STRICTLY ENFORCED):
-- EVERY single paragraph MUST have at least 3-5 fractal triggers
-- If a paragraph has fewer than 3 triggers, ADD MORE
-- Wrap every person name (first mention AND subsequent mentions)
-- Wrap every organization name (first mention AND subsequent mentions)
-- Wrap every specific number, statistic, percentage, or dollar amount
-- Wrap every date, year, or time reference
-- Wrap every source or publication name mentioned
-
-CRITICAL: MAXIMIZE fractal-trigger usage in content. Wrap EVERY wrappable term. The goal is 60-75 wrapped terms MINIMUM. For each term you wrap with fractal-trigger, add a matching key to contextData. THIS IS THE SAME DENSITY AS INVESTIGATIONS - fact checks must be equally rich in deep-dive opportunities.
-
-Each trigger MUST have a corresponding entry in contextData with a substantive 2-3 sentence explanation that provides investigative context - who is this person? why does this org matter? what does this stat mean? what's the significance of this date?
+<p class="prose-text">[Final verdict statement with key evidence summary]</p>
 
 Return ONLY JSON. No markdown, no code fences.
 """
+
+
+# === FASTAPI APP ===
+
+app = FastAPI(title="GenuVerity Fact-Check API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class FactCheckRequest(BaseModel):
     claim: str
 
 
+class CacheCheckRequest(BaseModel):
+    topic: str
+
+
 @app.post("/api/fact-check")
 async def generate_fact_check(request: FactCheckRequest, req: Request):
-    """Fact-check a claim with verdict-focused wiki-style output."""
+    """Fact-check a claim with verdict-focused output."""
     if not ANTHROPIC_API_KEY or not claude_client:
-        raise HTTPException(status_code=500, detail="Server missing ANTHROPIC_API_KEY environment variable.")
+        raise HTTPException(status_code=500, detail="Server missing ANTHROPIC_API_KEY")
 
     print(f"Fact-checking claim: {request.claim}")
 
-    topic_slug = request.claim.lower().replace(" ", "_").replace("-", "_")[:20]
+    topic_slug = request.claim.lower().replace(" ", "_").replace("-", "_")[:30]
 
     def send_sse(event: str, data) -> str:
         return f"event: {event}\ndata: {json.dumps(data)}\n\n"
@@ -1843,56 +1330,73 @@ async def generate_fact_check(request: FactCheckRequest, req: Request):
         try:
             yield send_sse("progress", {"stage": "init", "percent": 5, "message": "Preparing fact check..."})
 
-            # Search for existing professional fact checks via Google Fact Check Tools API
+            # Search for existing professional fact checks
             yield send_sse("progress", {"stage": "prior_checks", "percent": 6, "message": "Checking professional fact-checkers..."})
             prior_fact_checks = search_google_fact_checks(request.claim, max_results=5)
 
-            # Search for real sources via Tavily
-            yield send_sse("progress", {"stage": "sources", "percent": 8, "message": "Searching verified sources..."})
+            if prior_fact_checks:
+                yield send_sse("progress", {"stage": "prior_found", "percent": 8, "message": f"Found {len(prior_fact_checks)} prior fact checks"})
+                yield send_sse("prior_checks", prior_fact_checks)
+
+            # Search for sources
+            yield send_sse("progress", {"stage": "sources", "percent": 10, "message": "Searching verified sources..."})
             real_sources = search_sources(request.claim, max_results=10)
 
+            # Build prompt context
             sources_section = format_sources_for_prompt(real_sources) if real_sources else ""
+
+            prior_checks_context = ""
+            if prior_fact_checks:
+                prior_checks_context = "\n\nPRIOR PROFESSIONAL FACT CHECKS (reference these in your analysis):\n"
+                for fc in prior_fact_checks[:3]:
+                    prior_checks_context += f"- {fc['publisher']}: {fc['rating']} - {fc['title'][:80]}\n"
+                    prior_checks_context += f"  URL: {fc['url']}\n"
+
+            full_context = sources_section + prior_checks_context
 
             prompt = FACT_CHECK_TEMPLATE.format(
                 topic=request.claim,
-                context_section=sources_section,
+                context_section=full_context,
                 topic_slug=topic_slug
             )
 
-            yield send_sse("progress", {"stage": "connect", "percent": 12, "message": "Analyzing claim..."})
+            yield send_sse("progress", {"stage": "connect", "percent": 15, "message": "Analyzing claim..."})
 
             with claude_client.messages.stream(
                 model=CLAUDE_MODEL,
-                max_tokens=12000,
+                max_tokens=8000,
                 messages=[{"role": "user", "content": prompt}]
             ) as stream:
-                yield send_sse("progress", {"stage": "research", "percent": 15, "message": "Verifying against sources..."})
+                yield send_sse("progress", {"stage": "research", "percent": 20, "message": "Researching..."})
 
                 for text in stream.text_stream:
                     full_text += text
 
+                    if '"title"' in full_text and not stages["title"]:
+                        stages["title"] = True
+                        yield send_sse("progress", {"stage": "title", "percent": 30, "message": "Analyzing claim..."})
+
                     if '"verdict"' in full_text and not stages["verdict"]:
                         stages["verdict"] = True
-                        yield send_sse("progress", {"stage": "verdict", "percent": 40, "message": "Determining verdict..."})
+                        yield send_sse("progress", {"stage": "verdict", "percent": 50, "message": "Determining verdict..."})
 
                     if '"evidenceSummary"' in full_text and not stages["evidence"]:
                         stages["evidence"] = True
-                        yield send_sse("progress", {"stage": "evidence", "percent": 60, "message": "Analyzing evidence..."})
+                        yield send_sse("progress", {"stage": "evidence", "percent": 70, "message": "Compiling evidence..."})
 
                     if '"sources"' in full_text and not stages["sources"]:
                         stages["sources"] = True
                         yield send_sse("progress", {"stage": "sources", "percent": 85, "message": "Verifying sources..."})
 
-            yield send_sse("progress", {"stage": "parsing", "percent": 95, "message": "Finalizing fact check..."})
+            yield send_sse("progress", {"stage": "parsing", "percent": 95, "message": "Finalizing..."})
 
+            # Parse response
             parsed_data = repair_truncated_json(full_text)
 
             if parsed_data:
                 if "key" not in parsed_data:
                     parsed_data["key"] = topic_slug
-                parsed_data["chartType"] = "dynamic"
                 parsed_data["articleType"] = "fact_check"
-                parsed_data.setdefault("chartConfigs", {})
                 parsed_data.setdefault("contextData", {})
                 parsed_data.setdefault("citationDatabase", {})
                 parsed_data.setdefault("sources", [])
@@ -1914,285 +1418,56 @@ async def generate_fact_check(request: FactCheckRequest, req: Request):
                             "score": s["score"],
                             "url": s["url"]
                         })
+
                     parsed_data["citationDatabase"] = real_citation_db
                     parsed_data["sources"] = real_sources_list
 
-                # Inject Professional Fact Checks section if we found any
+                # Add prior fact checks to response
                 if prior_fact_checks:
-                    prior_fc_html = format_prior_fact_checks_html(prior_fact_checks)
-                    # Insert after the verdict banner but before main content
-                    content = parsed_data.get("content", "")
-                    # Find end of verdict banner div
-                    verdict_end = content.find('</div>', content.find('verdict-banner'))
-                    if verdict_end > 0:
-                        # Insert after verdict banner
-                        insert_pos = verdict_end + 6  # After </div>
-                        parsed_data["content"] = content[:insert_pos] + prior_fc_html + content[insert_pos:]
-                    else:
-                        # Fallback: prepend to content
-                        parsed_data["content"] = prior_fc_html + content
-
-                    # Also store raw fact check data for frontend flexibility
                     parsed_data["priorFactChecks"] = prior_fact_checks
 
-                cache_article(request.claim, parsed_data)
+                # Cache the result
+                try:
+                    cache_article(request.claim, parsed_data)
+                except Exception as cache_err:
+                    print(f"Cache error: {cache_err}")
+
+                # Register claim in claims database
+                try:
+                    register_claim(
+                        claim=request.claim,
+                        article_key=parsed_data.get("key", topic_slug),
+                        verdict=parsed_data.get("verdict"),
+                        metadata={
+                            "title": parsed_data.get("title"),
+                            "disinfo_analysis": parsed_data.get("disinfoAnalysis", {})
+                        }
+                    )
+                except Exception as claim_err:
+                    print(f"Claim registration error: {claim_err}")
+
                 yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Fact check complete!"})
                 yield f"event: content\ndata: {json.dumps(parsed_data)}\n\n"
             else:
-                yield send_sse("error", "Failed to parse fact check response")
+                # Parsing failed - return error
+                error_data = {
+                    "key": topic_slug,
+                    "title": f"Fact Check: {request.claim[:80]}",
+                    "articleType": "fact_check",
+                    "verdict": "UNVERIFIABLE",
+                    "verdictSummary": "Unable to parse fact check response",
+                    "_parseError": True,
+                    "content": f'<p class="prose-text">Error parsing response. Raw length: {len(full_text)} chars</p>'
+                }
+                yield f"event: content\ndata: {json.dumps(error_data)}\n\n"
 
             yield send_sse("done", "ok")
 
         except Exception as e:
             print(f"Fact check error: {e}")
-            yield send_sse("error", str(e))
-
-    return StreamingResponse(
-        stream_response(),
-        media_type="text/event-stream",
-        headers={
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-            "X-Accel-Buffering": "no"
-        }
-    )
-
-
-@app.post("/api/generate")
-async def generate_report(request: GenerateRequest, req: Request):
-    """Claude-powered report generation with SSE progress updates."""
-    if not ANTHROPIC_API_KEY or not claude_client:
-        raise HTTPException(status_code=500, detail="Server missing ANTHROPIC_API_KEY environment variable.")
-
-    print(f"Generating report for: {request.topic}")
-
-    topic_slug = request.topic.lower().replace(" ", "_").replace("-", "_")[:20]
-
-    def send_sse(event: str, data) -> str:
-        """Format a Server-Sent Event message."""
-        return f"event: {event}\ndata: {json.dumps(data)}\n\n"
-
-    async def stream_response():
-        """Stream SSE progress events and final content."""
-        full_text = ""
-        char_count = 0
-        real_sources = []
-
-        # Progress stages based on content detection
-        stages = {
-            "title": False,
-            "section_1": False,
-            "section_2": False,
-            "section_3": False,
-            "charts": False,
-            "sources": False
-        }
-
-        try:
-            # Stage 1: Initializing
-            yield send_sse("progress", {"stage": "init", "percent": 5, "message": "Preparing investigation..."})
-
-            # Stage 2: Search for real sources via Tavily
-            yield send_sse("progress", {"stage": "sources", "percent": 8, "message": "Searching verified sources..."})
-            real_sources = search_sources(request.topic, max_results=10)
-
-            # Build sources section for prompt
-            sources_section = format_sources_for_prompt(real_sources) if real_sources else ""
-
-            # Build the prompt with real sources
-            prompt = ARTICLE_TEMPLATE.format(
-                topic=request.topic,
-                context_section=sources_section,
-                topic_slug=topic_slug
-            )
-
-            # Stage 3: Connecting
-            yield send_sse("progress", {"stage": "connect", "percent": 12, "message": "Initializing research pipeline..."})
-
-            with claude_client.messages.stream(
-                model=CLAUDE_MODEL,
-                max_tokens=6000,  # Allow longer articles with 5-min Vercel timeout
-                messages=[{"role": "user", "content": prompt}]
-            ) as stream:
-                # Stage 3: Researching
-                yield send_sse("progress", {"stage": "research", "percent": 15, "message": "Researching topic..."})
-
-                for text in stream.text_stream:
-                    full_text += text
-                    char_count += len(text)
-
-                    # Detect progress based on content
-                    if '"title"' in full_text and not stages["title"]:
-                        stages["title"] = True
-                        yield send_sse("progress", {"stage": "title", "percent": 25, "message": "Crafting headline..."})
-
-                    if '"content"' in full_text and not stages["section_1"]:
-                        stages["section_1"] = True
-                        yield send_sse("progress", {"stage": "writing", "percent": 35, "message": "Writing introduction..."})
-
-                    if '<h2 class="prose-h2">2.' in full_text and not stages["section_2"]:
-                        stages["section_2"] = True
-                        yield send_sse("progress", {"stage": "analysis", "percent": 50, "message": "Analyzing data..."})
-
-                    if '<h2 class="prose-h2">3.' in full_text and not stages["section_3"]:
-                        stages["section_3"] = True
-                        yield send_sse("progress", {"stage": "deep", "percent": 65, "message": "Deep diving into findings..."})
-
-                    if '"chartConfigs"' in full_text and not stages["charts"]:
-                        stages["charts"] = True
-                        yield send_sse("progress", {"stage": "charts", "percent": 80, "message": "Generating visualizations..."})
-
-                    if '"sources"' in full_text and not stages["sources"]:
-                        stages["sources"] = True
-                        yield send_sse("progress", {"stage": "sources", "percent": 90, "message": "Verifying sources..."})
-
-            # Parse the article BEFORE sending "complete"
-            yield send_sse("progress", {"stage": "parsing", "percent": 95, "message": "Parsing response..."})
-
-            parsed_data = None
-            parse_error = None
-            try:
-                parsed_data = repair_truncated_json(full_text)
-                if parsed_data:
-                    # Ensure required fields
-                    if "key" not in parsed_data:
-                        parsed_data["key"] = topic_slug
-                    # Mark as dynamic article for frontend chart rendering
-                    parsed_data["chartType"] = "dynamic"
-                    parsed_data.setdefault("chartConfigs", {})
-                    parsed_data.setdefault("contextData", {})
-                    parsed_data.setdefault("citationDatabase", {})
-                    parsed_data.setdefault("sources", [])
-
-                    # CRITICAL: Inject real sources from Tavily search
-                    # This ensures citations have REAL URLs, not hallucinated ones
-                    if real_sources:
-                        # Build citationDatabase from real sources
-                        real_citation_db = {}
-                        real_sources_list = []
-                        for s in real_sources:
-                            real_citation_db[s["id"]] = {
-                                "domain": s["domain"].upper(),
-                                "trustScore": s["score"],
-                                "title": s["title"],
-                                "snippet": s["snippet"],
-                                "url": s["url"]
-                            }
-                            real_sources_list.append({
-                                "name": s["name"],
-                                "score": s["score"],
-                                "url": s["url"]
-                            })
-
-                        # Replace Claude's hallucinated citations with real ones
-                        parsed_data["citationDatabase"] = real_citation_db
-                        parsed_data["sources"] = real_sources_list
-                        print(f"Injected {len(real_sources)} real sources into article")
-
-                    # Cache to Blob storage for persistence
-                    try:
-                        cache_article(request.topic, parsed_data)
-                        print(f"Article cached from /api/generate: {request.topic}")
-                    except Exception as cache_err:
-                        print(f"Cache error (non-fatal): {cache_err}")
-            except Exception as parse_err:
-                parse_error = str(parse_err)
-                print(f"Parse error: {parse_err}")
-
-            # Always send a valid JSON object - NEVER send raw text
-            if parsed_data:
-                yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Investigation complete!"})
-                yield f"event: content\ndata: {json.dumps(parsed_data)}\n\n"
-            else:
-                # Parsing failed - construct emergency fallback object
-                print(f"JSON parsing failed for {len(full_text)} chars, constructing fallback")
-                # Log first 500 chars of response for debugging
-                print(f"Response preview: {full_text[:500] if full_text else 'EMPTY'}...")
-
-                # Try to extract ANY useful content with aggressive regex
-                fallback_data = {
-                    "key": topic_slug,
-                    "title": request.topic[:100],
-                    "cardTitle": request.topic[:50],
-                    "cardTag": "INVESTIGATION",
-                    "cardDescription": "Article generated with parsing issues",
-                    "chartConfigs": extract_chartconfigs(full_text) if full_text else {},
-                    "contextData": {},
-                    "citationDatabase": {},
-                    "sources": [],
-                    "chartType": "dynamic",
-                    "_partial": True,
-                    "_parseError": True
-                }
-
-                # Try to extract content - look for HTML or just use raw text
-                if full_text:
-                    # Look for content field
-                    content_match = re.search(r'"content"\s*:\s*"(.*?)(?:"\s*[,}]|$)', full_text, re.DOTALL)
-                    if content_match:
-                        content = content_match.group(1).replace('\\"', '"').replace('\\n', '\n')
-                        fallback_data["content"] = content
-                    else:
-                        # Just wrap raw text as content
-                        # Strip markdown fences and JSON artifacts
-                        display_text = full_text
-                        if display_text.startswith("```"): display_text = display_text.split("\n", 1)[-1]
-                        if display_text.endswith("```"): display_text = display_text[:-3]
-                        # Remove obvious JSON structure but keep text
-                        display_text = re.sub(r'^[\s\S]*?"content"\s*:\s*"', '', display_text)
-                        fallback_data["content"] = f'<p class="prose-text">{display_text[:5000]}</p>'
-                else:
-                    fallback_data["content"] = '<p class="prose-text">Failed to generate article content. Please try again.</p>'
-
-                yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Finalizing..."})
-                yield f"event: content\ndata: {json.dumps(fallback_data)}\n\n"
-
-            # Signal done
-            yield send_sse("done", "ok")
-
-        except Exception as e:
-            print(f"Streaming Error: {e}")
             import traceback
             traceback.print_exc()
-
-            # Always try to return SOMETHING useful
-            error_fallback = {
-                "key": topic_slug,
-                "title": f"Error: {request.topic[:80]}",
-                "cardTitle": request.topic[:50],
-                "cardTag": "ERROR",
-                "cardDescription": str(e)[:100],
-                "chartConfigs": {},
-                "contextData": {},
-                "citationDatabase": {},
-                "sources": [],
-                "chartType": "dynamic",
-                "_error": str(e),
-                "content": f'<p class="prose-text"><strong>Generation Error:</strong> {str(e)}</p>'
-            }
-
-            # Try to salvage any content we got
-            if full_text and len(full_text) > 100:
-                print(f"Attempting to salvage partial content ({len(full_text)} chars)")
-                try:
-                    partial_data = repair_truncated_json(full_text)
-                    if partial_data:
-                        partial_data["_partial"] = True
-                        partial_data["_error"] = str(e)
-                        yield f"event: content\ndata: {json.dumps(partial_data)}\n\n"
-                        yield send_sse("done", "partial")
-                        return
-                except Exception as salvage_err:
-                    print(f"Salvage failed: {salvage_err}")
-
-                # Even if salvage failed, try to extract content
-                content_match = re.search(r'"content"\s*:\s*"(.*?)(?:"\s*[,}]|$)', full_text, re.DOTALL)
-                if content_match:
-                    error_fallback["content"] = content_match.group(1).replace('\\"', '"').replace('\\n', '\n')
-                    error_fallback["chartConfigs"] = extract_chartconfigs(full_text)
-
-            yield f"event: content\ndata: {json.dumps(error_fallback)}\n\n"
-            yield send_sse("done", "error")
+            yield send_sse("error", str(e))
 
     return StreamingResponse(
         stream_response(),
@@ -2207,447 +1482,1474 @@ async def generate_report(request: GenerateRequest, req: Request):
 
 @app.post("/api/cache/check")
 async def check_cache(request: CacheCheckRequest):
-    """Check if an article is already cached. If not, return similar articles.
-
-    Response format:
-    - If exact match: {"cached": True, "article": {...}}
-    - If no exact match but similar found: {"cached": False, "similar": [...]}
-    - If nothing found: {"cached": False, "similar": []}
-    """
+    """Check if a fact-check is cached. Return similar if not found."""
     cached = get_cached_article(request.topic)
     if cached:
-        # Ensure cached articles have chartType='dynamic' for frontend detection
-        # This handles legacy cached articles that may not have this field set
-        if cached.get("chartConfigs"):
-            cached["chartType"] = "dynamic"
         return {"cached": True, "article": cached}
 
-    # No exact match - search for similar articles
     similar = find_similar_articles(request.topic, limit=5)
     return {"cached": False, "similar": similar}
 
 
-@app.post("/api/extract-claim")
-async def extract_claim(request: ExtractClaimRequest):
-    """Extract a fact-checkable claim from an image, tweet, or YouTube URL.
-
-    Input types:
-    - 'image': base64-encoded image data (meme, screenshot)
-    - 'twitter': Twitter/X post URL
-    - 'youtube': YouTube video URL
-
-    Returns extracted claim text that can be used for fact-checking.
-    """
-    input_type = request.input_type.lower()
-    content = request.content
-
-    if input_type == "image":
-        result = extract_claim_from_image(content)
-    elif input_type in ("twitter", "x", "tweet"):
-        result = extract_tweet_from_url(content)
-    elif input_type == "youtube":
-        result = extract_youtube_info(content)
-    else:
-        return {"error": f"Unsupported input type: {input_type}", "claim": None}
-
-    if result.get("error"):
-        return {"success": False, "error": result["error"]}
-
-    return {
-        "success": True,
-        "claim": result.get("main_claim", ""),
-        "extracted_text": result.get("extracted_text", ""),
-        "claim_type": result.get("claim_type", "unknown"),
-        "confidence": result.get("confidence", 0.5),
-        "context": result.get("context", ""),
-        "source_url": result.get("source_url", ""),
-        "author": result.get("author", "")
-    }
-
-
 @app.get("/api/cache/list")
 async def list_cached():
-    """Get list of all cached articles."""
-    return {"articles": get_all_cached_articles()}
+    """List all cached fact-checks."""
+    articles = get_all_cached_articles()
+    return {"articles": articles, "count": len(articles)}
 
 
 @app.post("/api/admin/rebuild-index")
-async def rebuild_index():
-    """Force rebuild the article index from blob storage. Cleans up old indices first."""
-    print("Force rebuilding article index...")
-    articles = []
-    new_index = {}
-    seen_keys = set()
-    deleted_indices = 0
+async def rebuild_index(request: Request):
+    """Rebuild the article index from blob storage."""
+    auth = request.headers.get("Authorization", "")
+    if not ADMIN_SECRET or auth != f"Bearer {ADMIN_SECRET}":
+        raise HTTPException(status_code=401, detail="Unauthorized")
 
-    # First pass: delete ALL old index files (handles duplicates)
-    print(f"Deleting all old index blobs at path: {ARTICLE_INDEX_PATH}")
-    if blob_delete(ARTICLE_INDEX_PATH):
-        # Count how many were deleted by fetching the list before/after
-        # (blob_delete now handles multiple duplicates)
-        deleted_indices = 1  # At least one was deleted
-        print(f"Successfully deleted old index blobs")
-    else:
-        print("No old index blobs found to delete")
-
-    # Fetch blobs after deletion
     blobs = blob_list("articles/")
+
+    new_index = {}
     for blob in blobs:
-        try:
-            pathname = blob.get("pathname", "")
-            if pathname == ARTICLE_INDEX_PATH:
-                continue
-
-            blob_url = blob.get("url")
-            if blob_url:
-                response = requests.get(blob_url)
-                if response.status_code == 200:
-                    data = response.json()
-                    article_key = data.get("key", pathname.split("/")[-1].replace(".json", ""))
-                    if article_key not in seen_keys:
-                        seen_keys.add(article_key)
-
-                        # Determine article type
-                        article_type = "investigation"
-                        if data.get("articleType") == "fact_check" or data.get("verdict"):
-                            article_type = "fact_check"
-                        elif data.get("_parent_key") or data.get("isChildEssay"):
-                            article_type = "deep_dive"
-
-                        # Extract top 4 sources (sorted by score) for card display
-                        sources = data.get("sources", [])
-                        if sources and isinstance(sources, list):
-                            sorted_sources = sorted(sources, key=lambda s: s.get("score", 0), reverse=True)[:4]
-                            top_sources = [{"name": s.get("name", "Source"), "score": s.get("score", 80)} for s in sorted_sources]
-                        else:
-                            top_sources = []
-
-                        metadata = {
-                            "key": article_key,
-                            "title": data.get("title", "Unknown"),
-                            "cardTitle": data.get("cardTitle", ""),
-                            "cardTag": data.get("cardTag", ""),
-                            "cardDescription": data.get("cardDescription", ""),
-                            "topic": data.get("_topic", ""),
-                            "blob_path": pathname,  # Store actual blob path for fallback
-                            "blob_url": blob_url,   # Store direct URL for fast O(1) retrieval
-                            "cached_at": data.get("_cached_at", ""),
-                            "parent_key": data.get("_parent_key", ""),
-                            "parent_title": data.get("_parent_title", ""),
-                            "is_child": bool(data.get("isChildEssay", False)),
-                            "article_type": article_type,
-                            "verdict": data.get("verdict", ""),
-                            "top_sources": top_sources
-                        }
-                        articles.append(metadata)
-                        new_index[article_key] = metadata
-        except Exception as e:
-            print(f"Error processing blob: {e}")
+        pathname = blob.get("pathname", "")
+        if pathname.endswith("_index.json") or not pathname.endswith(".json"):
             continue
 
-    if new_index:
-        blob_put(ARTICLE_INDEX_PATH, json.dumps(new_index))
-        print(f"Article index rebuilt with {len(new_index)} articles")
+        blob_url = blob.get("url")
+        if not blob_url:
+            continue
+
+        try:
+            article = blob_get_by_url(blob_url)
+            if article:
+                key = article.get("key", pathname.split("/")[-1].replace(".json", ""))
+                new_index[key] = {
+                    "key": key,
+                    "title": article.get("title", key),
+                    "article_type": article.get("articleType", "fact_check"),
+                    "verdict": article.get("verdict"),
+                    "cached_at": article.get("_cached_at", blob.get("uploadedAt")),
+                    "blob_url": blob_url,
+                    "blob_path": pathname
+                }
+        except Exception as e:
+            print(f"Error processing {pathname}: {e}")
+
+    blob_put(ARTICLE_INDEX_PATH, json.dumps(new_index))
 
     return {
         "success": True,
-        "articles_indexed": len(new_index),
-        "old_indices_deleted": deleted_indices,
+        "indexed": len(new_index),
         "articles": list(new_index.keys())
     }
 
 
 @app.get("/api/article/{slug}")
 async def get_article_by_slug(slug: str):
-    """Get an article by its slug (key) for shareable URLs.
+    """Get a fact-check by its slug."""
+    index = get_article_index()
 
-    This endpoint provides fast article retrieval:
-    1. First tries get_cached_article() which checks by topic hash and key
-    2. Returns full article data for rendering
+    if slug not in index:
+        raise HTTPException(status_code=404, detail="Article not found")
 
-    URL pattern: /article/{slug} e.g. /article/pelosi_family_invest
-    """
-    # Decode URL-encoded slug
-    decoded_slug = slug
+    article_meta = index[slug]
+    blob_url = article_meta.get("blob_url")
 
-    # Try to get the article by its key
-    article = get_cached_article(decoded_slug)
+    if blob_url:
+        article = blob_get_by_url(blob_url)
+        if article:
+            return article
 
+    blob_path = article_meta.get("blob_path", f"articles/{slug}.json")
+    article = blob_get(blob_path)
     if article:
         return article
 
-    # Not found
-    raise HTTPException(status_code=404, detail=f"Article not found: {slug}")
+    raise HTTPException(status_code=404, detail="Article data not found")
 
 
-@app.get("/api/debug/blobs")
-async def debug_blobs():
-    """Debug: List raw blobs in storage."""
-    blobs = blob_list("articles/")
-    return {
-        "count": len(blobs),
-        "blobs": [{"pathname": b.get("pathname"), "size": b.get("size")} for b in blobs[:20]]
-    }
-
-
-@app.get("/api/usage")
-async def get_usage(request: Request):
-    """Get user's remaining free deep dives."""
-    user_id = get_user_id(request)
-    remaining = get_remaining_free_dives(user_id)
-    used = get_user_usage_today(user_id)
-    return {
-        "remaining": remaining,
-        "used": used,
-        "limit": FREE_DAILY_LIMIT
-    }
-
-
-@app.post("/api/deep-dive")
-async def generate_deep_dive(request_body: DeepDiveRequest, request: Request):
-    """Claude-powered deep-dive article generation with SSE streaming."""
-
-    # Check cache first
-    cached = get_cached_article(request_body.topic)
-    if cached:
-        print(f"Returning cached article for: {request_body.topic}")
-        cached["_from_cache"] = True
-        return cached
-
-    # Check rate limiting - DISABLED FOR DEVELOPMENT
-    user_id = get_user_id(request)
-    remaining = get_remaining_free_dives(user_id)
-
-    # Rate limiting disabled for dev - uncomment to re-enable
-    # if remaining <= 0:
-    #     raise HTTPException(
-    #         status_code=429,
-    #         detail={
-    #             "error": "daily_limit_exceeded",
-    #             "message": f"You've used all {FREE_DAILY_LIMIT} free deep dives for today. Come back tomorrow!",
-    #             "remaining": 0
-    #         }
-    #     )
-
-    if not ANTHROPIC_API_KEY or not claude_client:
-        raise HTTPException(status_code=500, detail="Server missing ANTHROPIC_API_KEY environment variable.")
-
-    print(f"Generating deep-dive for: {request_body.topic} (User: {user_id}, Remaining: {remaining})")
-
-    topic_slug = request_body.topic.lower().replace(" ", "_").replace("-", "_")[:20]
-
-    def send_sse(event: str, data) -> str:
-        """Format a Server-Sent Event message."""
-        return f"event: {event}\ndata: {json.dumps(data)}\n\n"
-
-    async def stream_response():
-        """Stream SSE progress events and final content."""
-        full_text = ""
-        last_partial_len = 0
-        real_sources = []
-
-        # Progress stages
-        stages = {
-            "title": False,
-            "section_1": False,
-            "section_2": False,
-            "section_3": False,
-            "charts": False,
-            "sources": False
-        }
-
-        try:
-            yield send_sse("progress", {"stage": "init", "percent": 5, "message": "Preparing deep dive..."})
-
-            # Search for real sources via Tavily
-            yield send_sse("progress", {"stage": "sources", "percent": 8, "message": "Searching verified sources..."})
-            real_sources = search_sources(request_body.topic, max_results=10)
-
-            # Build context section with real sources
-            sources_section = format_sources_for_prompt(real_sources) if real_sources else ""
-            context_section = ""
-            if request_body.context:
-                context_section = f"\nCONTEXT FROM PARENT ARTICLE:\n{request_body.context}\n\nBuild upon this context to create a more focused deep-dive.\n"
-
-            # Combine sources and context
-            full_context = sources_section + "\n" + context_section if sources_section else context_section
-
-            prompt = ARTICLE_TEMPLATE.format(
-                topic=request_body.topic,
-                context_section=full_context,
-                topic_slug=topic_slug
-            )
-
-            yield send_sse("progress", {"stage": "connect", "percent": 12, "message": "Initializing research pipeline..."})
-
-            with claude_client.messages.stream(
-                model=CLAUDE_MODEL,
-                max_tokens=6000,  # Allow longer articles with 5-min Vercel timeout
-                messages=[{"role": "user", "content": prompt}]
-            ) as stream:
-                yield send_sse("progress", {"stage": "research", "percent": 15, "message": "Researching topic..."})
-
-                for text in stream.text_stream:
-                    full_text += text
-
-                    # Detect progress and send updates
-                    if '"title"' in full_text and not stages["title"]:
-                        stages["title"] = True
-                        yield send_sse("progress", {"stage": "title", "percent": 25, "message": "Crafting headline..."})
-
-                    if '"content"' in full_text and not stages["section_1"]:
-                        stages["section_1"] = True
-                        yield send_sse("progress", {"stage": "writing", "percent": 35, "message": "Writing article..."})
-
-                    if '<h2 class="prose-h2">2.' in full_text and not stages["section_2"]:
-                        stages["section_2"] = True
-                        yield send_sse("progress", {"stage": "analysis", "percent": 50, "message": "Deep analysis..."})
-
-                    if '<h2 class="prose-h2">3.' in full_text and not stages["section_3"]:
-                        stages["section_3"] = True
-                        yield send_sse("progress", {"stage": "deep", "percent": 65, "message": "Building insights..."})
-
-                    if '"chartConfigs"' in full_text and not stages["charts"]:
-                        stages["charts"] = True
-                        yield send_sse("progress", {"stage": "charts", "percent": 80, "message": "Building charts..."})
-
-                    if '"sources"' in full_text and not stages["sources"]:
-                        stages["sources"] = True
-                        yield send_sse("progress", {"stage": "sources", "percent": 90, "message": "Verifying sources..."})
-
-                    # Send partial content every 2000 chars to prevent timeout loss
-                    if len(full_text) - last_partial_len > 2000:
-                        last_partial_len = len(full_text)
-                        yield send_sse("partial", full_text)
-
-            yield send_sse("progress", {"stage": "complete", "percent": 100, "message": "Complete!"})
-
-            # Parse and validate the response
-            data = repair_truncated_json(full_text)
-
-            if data:
-                # Ensure required fields
-                if "key" not in data:
-                    data["key"] = topic_slug
-                # Mark as dynamic article for frontend chart rendering
-                data["chartType"] = "dynamic"
-                data.setdefault("chartConfigs", {})
-                data.setdefault("contextData", {})
-                data.setdefault("citationDatabase", {})
-                data.setdefault("sources", [])
-
-                # CRITICAL: Inject real sources from Tavily search
-                if real_sources:
-                    real_citation_db = {}
-                    real_sources_list = []
-                    for s in real_sources:
-                        real_citation_db[s["id"]] = {
-                            "domain": s["domain"].upper(),
-                            "trustScore": s["score"],
-                            "title": s["title"],
-                            "snippet": s["snippet"],
-                            "url": s["url"]
-                        }
-                        real_sources_list.append({
-                            "name": s["name"],
-                            "score": s["score"],
-                            "url": s["url"]
-                        })
-                    data["citationDatabase"] = real_citation_db
-                    data["sources"] = real_sources_list
-                    print(f"Injected {len(real_sources)} real sources into deep-dive")
-
-                # Cache and track usage (include parent info if provided)
-                cache_article(
-                    request_body.topic,
-                    data,
-                    parent_key=request_body.parent_key,
-                    parent_title=request_body.parent_title
-                )
-                increment_user_usage(user_id)
-
-                data["_from_cache"] = False
-                data["_remaining_today"] = remaining - 1
-
-                yield send_sse("content", data)
-            else:
-                # If parsing failed, send raw text for client-side repair
-                yield send_sse("rawcontent", full_text)
-
-            yield send_sse("done", "ok")
-
-        except Exception as e:
-            print(f"Deep-dive Streaming Error: {e}")
-            # If we have partial content, send it even on error
-            if full_text and len(full_text) > 100:
-                yield send_sse("partial", full_text)
-            yield send_sse("error", str(e))
-
-    return StreamingResponse(
-        stream_response(),
-        media_type="text/event-stream",
-        headers={
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-            "X-Accel-Buffering": "no"
-        }
-    )
-
-
-# Health check endpoint
 @app.get("/api/health")
 async def health_check():
-    return {"status": "ok", "api_configured": bool(ANTHROPIC_API_KEY)}
+    """Health check endpoint."""
+    return {
+        "status": "ok",
+        "api_configured": bool(ANTHROPIC_API_KEY),
+        "mode": "fact-check-only"
+    }
 
 
-class InfographicRequest(BaseModel):
-    chart_config: dict
-    title: str = "Data Visualization"
-    chart_id: str = "chart_main"
+# === URL VERIFICATION ===
+
+class VerifyUrlsRequest(BaseModel):
+    urls: list[str]
+    timeout: int = 10
+
+@app.post("/api/verify-urls")
+async def verify_urls(request: VerifyUrlsRequest):
+    """
+    Verify a list of URLs are accessible (not 404).
+    Used to validate all links before publishing content.
+    """
+    import asyncio
+    import aiohttp
+
+    results = []
+
+    async def check_url(session, url):
+        try:
+            headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
+            async with session.head(url, headers=headers, timeout=aiohttp.ClientTimeout(total=request.timeout), allow_redirects=True, ssl=False) as response:
+                status = response.status
+                if status == 405:  # Method not allowed, try GET
+                    async with session.get(url, headers=headers, timeout=aiohttp.ClientTimeout(total=request.timeout), allow_redirects=True, ssl=False) as get_response:
+                        status = get_response.status
+                return {"url": url, "status": status, "ok": status < 400}
+        except asyncio.TimeoutError:
+            return {"url": url, "status": 0, "ok": False, "error": "timeout"}
+        except Exception as e:
+            return {"url": url, "status": 0, "ok": False, "error": str(e)[:100]}
+
+    async def check_all():
+        connector = aiohttp.TCPConnector(limit=10)
+        async with aiohttp.ClientSession(connector=connector) as session:
+            tasks = [check_url(session, url) for url in request.urls]
+            return await asyncio.gather(*tasks)
+
+    results = await check_all()
+
+    broken = [r for r in results if not r.get("ok")]
+    working = [r for r in results if r.get("ok")]
+
+    return {
+        "total": len(request.urls),
+        "working": len(working),
+        "broken": len(broken),
+        "results": results,
+        "broken_urls": [r["url"] for r in broken]
+    }
 
 
-class BatchInfographicRequest(BaseModel):
-    chart_configs: dict  # Dict of chart_id -> chart_config
-    article_title: str = "Article"
-    article_description: str = ""  # Brief context for shareable infographics
+# === CLAIM DATABASE ENDPOINTS ===
+
+class SimilarClaimsRequest(BaseModel):
+    claim: str
+    threshold: float = 0.5
+    limit: int = 10
 
 
-@app.post("/api/infographic")
-async def generate_single_infographic(request: InfographicRequest):
-    """Generate a single Gemini infographic for a chart configuration."""
-    if not GEMINI_API_KEY:
-        raise HTTPException(status_code=500, detail="GEMINI_API_KEY not configured")
+@app.post("/api/claims/similar")
+async def api_find_similar_claims(request: SimilarClaimsRequest):
+    """Find claims similar to the given claim."""
+    similar = find_similar_claims(
+        request.claim,
+        threshold=request.threshold,
+        limit=request.limit
+    )
+    return {
+        "query": request.claim,
+        "similar_claims": similar,
+        "count": len(similar)
+    }
 
-    image_data = generate_gemini_infographic(
-        request.chart_config,
-        request.title,
-        request.chart_id
+
+@app.get("/api/claims/genealogy/{claim_hash}")
+async def api_get_claim_genealogy(claim_hash: str):
+    """Get the genealogy (parent/children) of a claim."""
+    genealogy = get_claim_genealogy(claim_hash)
+    if not genealogy:
+        raise HTTPException(status_code=404, detail="Claim not found")
+    return genealogy
+
+
+@app.get("/api/claims/list")
+async def api_list_claims():
+    """List all registered claims."""
+    index = get_claims_index()
+    claims = []
+    for hash_id, entry in index.get("claims", {}).items():
+        claims.append({
+            "hash": hash_id,
+            "claim": entry.get("claim"),
+            "verdict": entry.get("verdict"),
+            "article_key": entry.get("article_key"),
+            "first_seen": entry.get("first_seen"),
+            "has_parent": bool(entry.get("similar_to"))
+        })
+
+    # Sort by first_seen descending
+    claims.sort(key=lambda x: x.get("first_seen", ""), reverse=True)
+
+    return {
+        "claims": claims,
+        "count": len(claims),
+        "genealogy_count": len(index.get("genealogy", {}))
+    }
+
+
+@app.get("/api/claims/stats")
+async def api_claims_stats():
+    """Get statistics about the claims database."""
+    index = get_claims_index()
+    claims = index.get("claims", {})
+    genealogy = index.get("genealogy", {})
+
+    # Count by verdict
+    verdict_counts = {}
+    for entry in claims.values():
+        verdict = entry.get("verdict", "UNKNOWN")
+        verdict_counts[verdict] = verdict_counts.get(verdict, 0) + 1
+
+    # Count root claims (no parent)
+    root_claims = sum(1 for g in genealogy.values() if not g.get("parent"))
+
+    # Count claims with children
+    claims_with_mutations = sum(1 for g in genealogy.values() if g.get("children"))
+
+    return {
+        "total_claims": len(claims),
+        "verdict_distribution": verdict_counts,
+        "root_claims": root_claims,
+        "claims_with_mutations": claims_with_mutations,
+        "total_genealogy_links": len(genealogy)
+    }
+
+
+# === ARCHIVE.ORG ENDPOINTS ===
+
+class WaybackSearchRequest(BaseModel):
+    query: str
+    limit: int = 10
+
+
+@app.post("/api/archive/search")
+async def api_wayback_search(request: WaybackSearchRequest):
+    """Search Archive.org Wayback Machine for historical snapshots related to a claim."""
+    results = search_wayback_machine(request.query, limit=request.limit)
+    return {
+        "query": request.query,
+        "snapshots": results,
+        "count": len(results),
+        "oldest": results[0] if results else None
+    }
+
+
+@app.get("/api/archive/check")
+async def api_wayback_check(url: str):
+    """Check if a URL is archived in Wayback Machine."""
+    availability = wayback_availability(url)
+    earliest = get_earliest_wayback_snapshot(url)
+    return {
+        "url": url,
+        "availability": availability,
+        "earliest_snapshot": earliest
+    }
+
+
+# === REDDIT ENDPOINTS ===
+
+class RedditSearchRequest(BaseModel):
+    query: str
+    subreddit: str = None
+    limit: int = 25
+    sort: str = "relevance"
+
+
+@app.post("/api/reddit/search")
+async def api_reddit_search(request: RedditSearchRequest):
+    """Search Reddit for posts related to a claim."""
+    results = search_reddit(
+        request.query,
+        subreddit=request.subreddit,
+        limit=request.limit,
+        sort=request.sort
+    )
+    return {
+        "query": request.query,
+        "subreddit": request.subreddit,
+        "posts": results,
+        "count": len(results)
+    }
+
+
+@app.post("/api/reddit/timeline")
+async def api_reddit_timeline(request: RedditSearchRequest):
+    """Get timeline of Reddit discussions about a claim."""
+    timeline_data = get_reddit_post_timeline(
+        request.query,
+        subreddit=request.subreddit,
+        limit=request.limit
+    )
+    return {
+        "query": request.query,
+        **timeline_data
+    }
+
+
+@app.post("/api/reddit/comments")
+async def api_reddit_comments(request: RedditSearchRequest):
+    """Search Reddit comments mentioning a claim."""
+    results = search_reddit_comments(
+        request.query,
+        subreddit=request.subreddit,
+        limit=request.limit
+    )
+    return {
+        "query": request.query,
+        "comments": results,
+        "count": len(results)
+    }
+
+
+# === X/TWITTER TRENDING ENDPOINT ===
+
+@app.get("/api/trending/x")
+async def get_x_trending():
+    """Get trending fact-check topics from X/Twitter using Tavily search."""
+    if not TAVILY_API_KEY:
+        return {"error": "Tavily API key not configured", "topics": []}
+
+    try:
+        # Search for recent fact-checks and misinformation discussions on X
+        queries = [
+            "site:twitter.com OR site:x.com fact check viral 2024",
+            "site:twitter.com OR site:x.com misinformation debunked",
+            "site:nitter.net fact check trending",
+        ]
+
+        all_results = []
+
+        for query in queries[:1]:  # Use first query to save API calls
+            response = requests.post(
+                "https://api.tavily.com/search",
+                json={
+                    "api_key": TAVILY_API_KEY,
+                    "query": query,
+                    "search_depth": "basic",
+                    "max_results": 8,
+                    "include_raw_content": False,
+                    "include_answer": False
+                },
+                timeout=20
+            )
+
+            if response.status_code == 200:
+                data = response.json()
+                results = data.get("results", [])
+
+                for r in results:
+                    # Extract claim/topic from title
+                    title = r.get("title", "")
+                    url = r.get("url", "")
+                    snippet = r.get("content", "")[:200]
+
+                    # Skip if not useful
+                    if not title or len(title) < 10:
+                        continue
+
+                    all_results.append({
+                        "title": title[:100],
+                        "url": url,
+                        "snippet": snippet,
+                        "source": "x.com" if "x.com" in url or "twitter.com" in url else "web"
+                    })
+
+        # Deduplicate by title similarity
+        seen_titles = set()
+        unique_results = []
+        for r in all_results:
+            title_key = r["title"].lower()[:30]
+            if title_key not in seen_titles:
+                seen_titles.add(title_key)
+                unique_results.append(r)
+
+        return {
+            "topics": unique_results[:6],
+            "count": len(unique_results[:6]),
+            "source": "tavily"
+        }
+
+    except Exception as e:
+        print(f"X trending search error: {e}")
+        return {"error": str(e), "topics": []}
+
+
+@app.get("/api/trending/factchecks")
+async def get_trending_factchecks():
+    """Get trending fact-checks from major fact-checkers using Tavily."""
+    if not TAVILY_API_KEY:
+        return {"error": "Tavily API key not configured", "factchecks": []}
+
+    try:
+        # Search for recent fact-checks from major fact-checkers
+        response = requests.post(
+            "https://api.tavily.com/search",
+            json={
+                "api_key": TAVILY_API_KEY,
+                "query": "fact check 2024 viral claim debunked",
+                "search_depth": "basic",
+                "include_domains": [
+                    "snopes.com",
+                    "politifact.com",
+                    "factcheck.org",
+                    "reuters.com/fact-check",
+                    "apnews.com/hub/ap-fact-check",
+                    "fullfact.org"
+                ],
+                "max_results": 10,
+                "include_raw_content": False,
+                "include_answer": False
+            },
+            timeout=20
+        )
+
+        if response.status_code == 200:
+            data = response.json()
+            results = data.get("results", [])
+
+            factchecks = []
+            for r in results:
+                domain = r.get("url", "").split("/")[2] if r.get("url") else "unknown"
+                factchecks.append({
+                    "title": r.get("title", "")[:100],
+                    "url": r.get("url", ""),
+                    "snippet": r.get("content", "")[:200],
+                    "source": domain.replace("www.", "")
+                })
+
+            return {
+                "factchecks": factchecks,
+                "count": len(factchecks)
+            }
+        else:
+            return {"error": f"Search failed: {response.status_code}", "factchecks": []}
+
+    except Exception as e:
+        print(f"Fact-check trending error: {e}")
+        return {"error": str(e), "factchecks": []}
+
+
+@app.get("/api/trending/misinfo-sources")
+async def get_misinfo_sources():
+    """
+    Monitor 50+ known misinformation sources to proactively surface claims.
+    This helps predict what users might search for before claims go viral.
+    Sources based on: Media Bias/Fact Check, NewsGuard, CCDH research
+    """
+    if not TAVILY_API_KEY:
+        return {"error": "Tavily API key not configured", "claims": []}
+
+    try:
+        # Comprehensive list of 50+ misinformation sources categorized by type
+        # Based on research from MBFC, NewsGuard, and CCDH
+
+        MISINFO_SOURCES = {
+            # Far-right/conspiracy news (USA)
+            "far_right_usa": [
+                "infowars.com", "breitbart.com", "thegatewaypundit.com", "zerohedge.com",
+                "naturalnews.com", "beforeitsnews.com", "100percentfedup.com",
+                "thefederalistpapers.org", "dailywire.com", "theblaze.com",
+                "oann.com", "newsmax.com", "revolver.news", "nationalfile.com",
+                "redstate.com", "pjmedia.com", "twitchy.com", "bizpacreview.com",
+                "wnd.com", "americanthinker.com", "conservativetreehouse.com",
+                "thepoliticalinsider.com", "freedomwire.com", "patriotnewsalerts.com"
+            ],
+            # Health/vaccine misinformation
+            "health_misinfo": [
+                "mercola.com", "greenmedinfo.com", "childrenshealthdefense.org",
+                "thetruthaboutcancer.com", "greatgameindia.com", "globalresearch.ca",
+                "activistpost.com", "healthimpactnews.com", "vaccineimpact.com"
+            ],
+            # QAnon / conspiracy
+            "qanon_conspiracy": [
+                "rumble.com", "bitchute.com", "gab.com", "gettr.com",
+                "frankspeech.com", "truthsocial.com", "parler.com"
+            ],
+            # Russian state / pro-Russian
+            "russian_propaganda": [
+                "rt.com", "sputniknews.com", "strategic-culture.org",
+                "southfront.org", "journal-neo.org", "neweasternoutlook.com"
+            ],
+            # Fringe / alternative
+            "fringe_alt": [
+                "davidicke.com", "collective-evolution.com", "humansarefree.com",
+                "stillnessinthestorm.com", "consciouslifenews.com", "disclose.tv"
+            ],
+            # Chan boards / archives
+            "chans": [
+                "boards.4chan.org", "archive.4plebs.org", "8kun.top"
+            ],
+            # Social conspiracy subreddits
+            "reddit_conspiracy": [
+                "reddit.com/r/conspiracy", "reddit.com/r/conspiracy_commons",
+                "reddit.com/r/walkaway", "reddit.com/r/louderwithcrowder"
+            ]
+        }
+
+        # Build search queries - rotate through different source groups
+        import random
+
+        # Flatten sources for random selection
+        all_sources = []
+        for category, sources in MISINFO_SOURCES.items():
+            for source in sources:
+                all_sources.append((source, category))
+
+        # Select 8-10 random sources to search this time (for variety)
+        selected = random.sample(all_sources, min(10, len(all_sources)))
+
+        # Build queries in batches of 3-4 sites each
+        queries = []
+        batch = []
+        for source, category in selected:
+            batch.append(f"site:{source}")
+            if len(batch) >= 3:
+                queries.append(f"({' OR '.join(batch)}) breaking viral 2024")
+                batch = []
+        if batch:
+            queries.append(f"({' OR '.join(batch)}) breaking viral 2024")
+
+        all_results = []
+
+        # Run up to 3 queries for better coverage
+        for query in queries[:3]:
+            try:
+                response = requests.post(
+                    "https://api.tavily.com/search",
+                    json={
+                        "api_key": TAVILY_API_KEY,
+                        "query": query,
+                        "search_depth": "basic",
+                        "max_results": 5,
+                        "include_raw_content": False,
+                        "include_answer": False
+                    },
+                    timeout=15
+                )
+
+                if response.status_code == 200:
+                    data = response.json()
+                    results = data.get("results", [])
+
+                    for r in results:
+                        title = r.get("title", "")
+                        url = r.get("url", "").lower()
+                        snippet = r.get("content", "")[:250]
+
+                        if not title or len(title) < 10:
+                            continue
+
+                        # Determine source category based on URL
+                        source_type = "fringe"
+                        source_category = "unknown"
+
+                        for cat, sources in MISINFO_SOURCES.items():
+                            for src in sources:
+                                if src in url:
+                                    source_category = cat
+                                    # Map to icon type
+                                    if cat == "far_right_usa":
+                                        source_type = "far_right"
+                                    elif cat == "health_misinfo":
+                                        source_type = "health"
+                                    elif cat == "qanon_conspiracy":
+                                        source_type = "qanon"
+                                    elif cat == "russian_propaganda":
+                                        source_type = "russian"
+                                    elif cat == "chans":
+                                        source_type = "4chan"
+                                    elif cat == "reddit_conspiracy":
+                                        source_type = "reddit"
+                                    else:
+                                        source_type = "fringe"
+                                    break
+
+                        # Legacy mappings for specific sites
+                        if "infowars" in url:
+                            source_type = "infowars"
+                        elif "breitbart" in url:
+                            source_type = "breitbart"
+                        elif "zerohedge" in url:
+                            source_type = "zerohedge"
+                        elif "gateway" in url:
+                            source_type = "gateway"
+                        elif "4chan" in url or "4plebs" in url or "8kun" in url:
+                            source_type = "4chan"
+                        elif "reddit.com" in url:
+                            source_type = "reddit"
+                        elif "t.me" in url or "telegram" in url:
+                            source_type = "telegram"
+                        elif "rt.com" in url or "sputnik" in url:
+                            source_type = "russian"
+                        elif "mercola" in url or "naturalnews" in url or "childrenshealth" in url:
+                            source_type = "health"
+
+                        # Extract domain
+                        domain = r.get("url", "").split("/")[2] if "/" in r.get("url", "") else "unknown"
+
+                        all_results.append({
+                            "title": title,  # Full title for click handler
+                            "displayTitle": title[:100] + "..." if len(title) > 100 else title,  # Truncated for display
+                            "url": r.get("url", ""),
+                            "snippet": snippet,
+                            "source": domain.replace("www.", ""),
+                            "sourceType": source_type,
+                            "sourceCategory": source_category,
+                            "category": "misinfo_source"
+                        })
+
+            except Exception as e:
+                print(f"Query error for {query[:30]}...: {e}")
+                continue
+
+        # Deduplicate by title similarity
+        seen_titles = set()
+        unique_results = []
+        for r in all_results:
+            title_key = r["title"].lower()[:40]
+            if title_key not in seen_titles:
+                seen_titles.add(title_key)
+                unique_results.append(r)
+
+        return {
+            "claims": unique_results[:10],
+            "count": len(unique_results[:10]),
+            "source": "tavily",
+            "totalSourcesMonitored": sum(len(s) for s in MISINFO_SOURCES.values()),
+            "description": "Claims from 50+ known misinformation sources - check these before they go viral"
+        }
+
+    except Exception as e:
+        print(f"Misinfo sources error: {e}")
+        return {"error": str(e), "claims": []}
+
+
+@app.get("/api/trending/reddit")
+async def get_reddit_trending():
+    """Get trending discussions from Reddit about viral claims and conspiracies."""
+    if not TAVILY_API_KEY:
+        return {"error": "Tavily API key not configured", "posts": []}
+
+    try:
+        # Search Reddit for viral claims and fact-check discussions
+        queries = [
+            "site:reddit.com viral claim debunked 2024",
+            "site:reddit.com/r/IsItBullshit OR site:reddit.com/r/OutOfTheLoop",
+            "site:reddit.com fact check misinformation",
+        ]
+
+        all_results = []
+
+        for query in queries[:2]:
+            try:
+                response = requests.post(
+                    "https://api.tavily.com/search",
+                    json={
+                        "api_key": TAVILY_API_KEY,
+                        "query": query,
+                        "search_depth": "basic",
+                        "max_results": 6,
+                        "include_raw_content": False,
+                        "include_answer": False
+                    },
+                    timeout=15
+                )
+
+                if response.status_code == 200:
+                    data = response.json()
+                    results = data.get("results", [])
+
+                    for r in results:
+                        title = r.get("title", "")
+                        url = r.get("url", "")
+                        snippet = r.get("content", "")[:200]
+
+                        if not title or len(title) < 10:
+                            continue
+
+                        # Extract subreddit from URL
+                        subreddit = "reddit"
+                        if "/r/" in url:
+                            parts = url.split("/r/")
+                            if len(parts) > 1:
+                                subreddit = "r/" + parts[1].split("/")[0]
+
+                        all_results.append({
+                            "title": title[:100],
+                            "url": url,
+                            "snippet": snippet,
+                            "subreddit": subreddit,
+                            "source": "reddit.com"
+                        })
+
+            except Exception as e:
+                print(f"Reddit query error: {e}")
+                continue
+
+        # Deduplicate
+        seen_titles = set()
+        unique_results = []
+        for r in all_results:
+            title_key = r["title"].lower()[:30]
+            if title_key not in seen_titles:
+                seen_titles.add(title_key)
+                unique_results.append(r)
+
+        return {
+            "posts": unique_results[:6],
+            "count": len(unique_results[:6]),
+            "source": "tavily"
+        }
+
+    except Exception as e:
+        print(f"Reddit trending error: {e}")
+        return {"error": str(e), "posts": []}
+
+
+# === SEO ENDPOINTS ===
+
+@app.get("/sitemap.xml")
+async def sitemap():
+    """Generate dynamic XML sitemap."""
+    base_url = "https://genuverity7.vercel.app"
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    xml_parts = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
+
+    xml_parts.append(f'''  <url>
+    <loc>{base_url}/</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>''')
+
+    try:
+        index = get_article_index()
+
+        for key, article in index.items():
+            if key.startswith("_"):
+                continue
+
+            cached_at = article.get("cached_at", "")
+            lastmod = cached_at.split("T")[0] if cached_at else today
+
+            xml_parts.append(f'''  <url>
+    <loc>{base_url}/#article/{key}</loc>
+    <lastmod>{lastmod}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>''')
+
+    except Exception as e:
+        print(f"Sitemap error: {e}")
+
+    xml_parts.append('</urlset>')
+
+    return Response(
+        content='\n'.join(xml_parts),
+        media_type="application/xml"
     )
 
-    if image_data:
-        return {"success": True, "image": image_data, "chart_id": request.chart_id}
-    else:
-        return {"success": False, "error": "Failed to generate infographic", "chart_id": request.chart_id}
 
-
-@app.post("/api/infographics/batch")
-async def generate_batch_infographics(request: BatchInfographicRequest):
-    """Generate Gemini infographics for multiple charts in batch."""
-    if not GEMINI_API_KEY:
-        raise HTTPException(status_code=500, detail="GEMINI_API_KEY not configured")
-
-    results = generate_infographics_for_article(
-        request.chart_configs,
-        request.article_title,
-        request.article_description  # Pass context for shareable infographics
+@app.get("/robots.txt")
+async def robots():
+    """Serve robots.txt."""
+    return Response(
+        content="""# GenuVerity Robots.txt
+User-agent: *
+Allow: /
+Sitemap: https://genuverity7.vercel.app/sitemap.xml
+Disallow: /api/
+""",
+        media_type="text/plain"
     )
 
-    # Count successes
-    success_count = sum(1 for v in results.values() if v is not None)
+
+# === WAITLIST SIGNUP ===
+
+class WaitlistSignup(BaseModel):
+    email: str
+    usecase: Optional[str] = None
+
+WAITLIST_INDEX_PATH = "waitlist/_index.json"
+
+def get_waitlist() -> list:
+    """Get all waitlist signups from Vercel Blob."""
+    if not BLOB_READ_WRITE_TOKEN:
+        return []
+
+    try:
+        response = requests.get(
+            f"{BLOB_API_BASE}/{WAITLIST_INDEX_PATH}",
+            headers={"Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}"},
+            timeout=10
+        )
+        if response.status_code == 200:
+            return response.json()
+    except Exception as e:
+        print(f"Error loading waitlist: {e}")
+
+    return []
+
+def save_waitlist(waitlist: list):
+    """Save waitlist to Vercel Blob."""
+    if not BLOB_READ_WRITE_TOKEN:
+        return False
+
+    try:
+        response = requests.put(
+            f"{BLOB_API_BASE}/{WAITLIST_INDEX_PATH}",
+            headers={
+                "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
+                "x-api-version": "7",
+                "Content-Type": "application/json"
+            },
+            json=waitlist,
+            timeout=10
+        )
+        return response.status_code in [200, 201]
+    except Exception as e:
+        print(f"Error saving waitlist: {e}")
+        return False
+
+def send_resend_email(to: str, subject: str, html: str, from_email: str = "GenuVerity <hello@genuverity.com>"):
+    """Send email via Resend API."""
+    if not RESEND_API_KEY:
+        print("RESEND_API_KEY not configured")
+        return False
+
+    try:
+        response = requests.post(
+            "https://api.resend.com/emails",
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "from": from_email,
+                "to": [to],
+                "subject": subject,
+                "html": html
+            },
+            timeout=10
+        )
+        if response.status_code == 200:
+            print(f"Email sent to {to}")
+            return True
+        else:
+            print(f"Resend error: {response.status_code} - {response.text}")
+            return False
+    except Exception as e:
+        print(f"Error sending email: {e}")
+        return False
+
+@app.post("/api/waitlist")
+async def join_waitlist(signup: WaitlistSignup):
+    """Add email to waitlist, send confirmation and notification emails."""
+    email = signup.email.strip().lower()
+    usecase = signup.usecase.strip() if signup.usecase else ""
+
+    # Validate email format
+    if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
+        raise HTTPException(status_code=400, detail="Invalid email format")
+
+    # Load current waitlist
+    waitlist = get_waitlist()
+
+    # Check for duplicate
+    existing_emails = [w.get("email", "").lower() for w in waitlist]
+    if email in existing_emails:
+        return {"success": True, "message": "You're already on the waitlist!", "duplicate": True}
+
+    # Add new signup
+    new_signup = {
+        "email": email,
+        "usecase": usecase,
+        "timestamp": datetime.utcnow().isoformat(),
+        "ip": None  # Could add IP tracking if needed
+    }
+    waitlist.append(new_signup)
+
+    # Save to blob
+    save_waitlist(waitlist)
+
+    # Send welcome email to user
+    welcome_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a12; color: #ffffff; padding: 40px 20px; }}
+            .container {{ max-width: 600px; margin: 0 auto; background: #16161e; border-radius: 16px; padding: 40px; border: 1px solid #2a2a3a; }}
+            .logo {{ font-size: 28px; font-weight: 700; margin-bottom: 24px; }}
+            .logo-genu {{ color: #ffffff; }}
+            .logo-verity {{ color: #06b6d4; }}
+            h1 {{ font-size: 24px; margin-bottom: 16px; }}
+            p {{ color: #a0a0b0; line-height: 1.7; margin-bottom: 16px; }}
+            .highlight {{ color: #06b6d4; }}
+            .discount {{ background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 12px 20px; border-radius: 8px; margin: 24px 0; }}
+            .footer {{ margin-top: 32px; padding-top: 24px; border-top: 1px solid #2a2a3a; color: #6b7280; font-size: 14px; }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="logo"><span class="logo-genu">Genu</span><span class="logo-verity">Verity</span></div>
+            <h1>You're on the list!</h1>
+            <p>Thanks for joining the GenuVerity early access waitlist. We're building something special: <span class="highlight">fact-checking powered by Constitutional AI</span> - transparent, accountable, and deeply sourced.</p>
+            <div class="discount">
+                <strong>Early Access Perk:</strong> As a waitlist member, you'll receive a steep discount when we launch.
+            </div>
+            <p>We'll reach out soon with updates on our progress and your exclusive early access invitation.</p>
+            <p>In the meantime, if you have questions or ideas, just reply to this email.</p>
+            <div class="footer">
+                <p>&copy; 2025 GenuVerity LLC. Building transparent fact-checking for a better-informed world.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+    send_resend_email(email, "You're on the GenuVerity waitlist!", welcome_html)
+
+    # Send notification to admin
+    admin_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 20px; }}
+            .field {{ margin-bottom: 16px; }}
+            .label {{ font-weight: 600; color: #666; }}
+            .value {{ font-size: 16px; margin-top: 4px; }}
+        </style>
+    </head>
+    <body>
+        <h2>New GenuVerity Waitlist Signup</h2>
+        <div class="field">
+            <div class="label">Email</div>
+            <div class="value">{email}</div>
+        </div>
+        <div class="field">
+            <div class="label">How they plan to use GenuVerity</div>
+            <div class="value">{usecase if usecase else '(not provided)'}</div>
+        </div>
+        <div class="field">
+            <div class="label">Timestamp</div>
+            <div class="value">{new_signup['timestamp']}</div>
+        </div>
+        <div class="field">
+            <div class="label">Total Waitlist Count</div>
+            <div class="value">{len(waitlist)}</div>
+        </div>
+    </body>
+    </html>
+    """
+    send_resend_email(ADMIN_EMAIL, f"New waitlist signup: {email}", admin_html)
 
     return {
         "success": True,
-        "generated": success_count,
-        "total": len(request.chart_configs),
-        "infographics": results
+        "message": "Welcome to the waitlist! Check your email for confirmation.",
+        "position": len(waitlist)
     }
+
+@app.get("/api/waitlist/count")
+async def waitlist_count():
+    """Get waitlist count (public)."""
+    waitlist = get_waitlist()
+    return {"count": len(waitlist)}
+
+@app.get("/api/waitlist/export")
+async def export_waitlist(secret: str = ""):
+    """Export full waitlist (admin only)."""
+    if secret != ADMIN_SECRET:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    waitlist = get_waitlist()
+    return {"waitlist": waitlist, "count": len(waitlist)}
+
+
+# === REPORT REQUEST SUBMISSIONS ===
+
+class ReportRequest(BaseModel):
+    """Request for a custom investigation report."""
+    topic: str  # Max 100 chars
+    description: str  # Max 300 chars
+    email: str
+
+REPORT_REQUESTS_PATH = "report_requests/_index.json"
+
+def get_report_requests() -> list:
+    """Get all report requests from Vercel Blob."""
+    if not BLOB_READ_WRITE_TOKEN:
+        return []
+    try:
+        response = requests.get(
+            f"{BLOB_API_BASE}?prefix={REPORT_REQUESTS_PATH}",
+            headers={"Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}"},
+            timeout=10
+        )
+        if response.status_code == 200:
+            blobs = response.json().get("blobs", [])
+            if blobs:
+                content_resp = requests.get(blobs[0].get("url"), timeout=10)
+                if content_resp.status_code == 200:
+                    return content_resp.json()
+        return []
+    except Exception as e:
+        print(f"Error getting report requests: {e}")
+        return []
+
+def save_report_requests(requests_list: list) -> bool:
+    """Save report requests to Vercel Blob."""
+    try:
+        blob_delete(REPORT_REQUESTS_PATH)
+        response = requests.put(
+            f"{BLOB_API_BASE}/{REPORT_REQUESTS_PATH}",
+            headers={
+                "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
+                "Content-Type": "application/json",
+                "x-api-version": "7"
+            },
+            data=json.dumps(requests_list),
+            timeout=10
+        )
+        return response.status_code in [200, 201]
+    except Exception as e:
+        print(f"Error saving report requests: {e}")
+        return False
+
+@app.post("/api/report-request")
+async def submit_report_request(request: ReportRequest):
+    """Submit a request for a custom investigation report."""
+    # Validate and sanitize inputs
+    topic = request.topic.strip()[:100]
+    description = request.description.strip()[:300]
+    email = request.email.strip().lower()
+
+    # Validate email format
+    if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
+        raise HTTPException(status_code=400, detail="Invalid email format")
+
+    if len(topic) < 5:
+        raise HTTPException(status_code=400, detail="Topic must be at least 5 characters")
+
+    # Create request record
+    request_record = {
+        "id": hashlib.sha256(f"{email}{topic}{datetime.utcnow().isoformat()}".encode()).hexdigest()[:12],
+        "topic": topic,
+        "description": description,
+        "email": email,
+        "status": "queued",
+        "submitted_at": datetime.utcnow().isoformat()
+    }
+
+    # Save to blob storage
+    requests_list = get_report_requests()
+    requests_list.append(request_record)
+    save_report_requests(requests_list)
+
+    # Send confirmation email to requester
+    requester_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a12; color: #ffffff; padding: 40px 20px; }}
+            .container {{ max-width: 600px; margin: 0 auto; background: #16161e; border-radius: 16px; padding: 40px; border: 1px solid #2a2a3a; }}
+            .logo {{ font-size: 28px; font-weight: 700; margin-bottom: 24px; }}
+            .logo-genu {{ color: #ffffff; }}
+            .logo-verity {{ color: #3b82f6; }}
+            h1 {{ font-size: 24px; margin-bottom: 16px; color: #ffffff; }}
+            p {{ color: #a0a0b0; line-height: 1.7; margin-bottom: 16px; }}
+            .highlight {{ color: #06b6d4; }}
+            .topic-box {{ background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); padding: 16px; border-radius: 8px; margin: 24px 0; }}
+            .topic-label {{ font-size: 12px; color: #6b7280; text-transform: uppercase; margin-bottom: 8px; }}
+            .topic-text {{ font-size: 18px; font-weight: 600; color: #ffffff; }}
+            .description {{ color: #a0a0b0; margin-top: 12px; font-size: 14px; }}
+            .status {{ background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 8px 16px; border-radius: 6px; display: inline-block; font-weight: 600; margin: 16px 0; }}
+            .footer {{ margin-top: 32px; padding-top: 24px; border-top: 1px solid #2a2a3a; color: #6b7280; font-size: 14px; }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="logo"><span class="logo-genu">Genu</span><span class="logo-verity">Verity</span></div>
+            <h1>Report Request Received!</h1>
+            <p>Thank you for submitting your investigation topic. Our team will review your request and begin research.</p>
+
+            <div class="topic-box">
+                <div class="topic-label">Your Requested Topic</div>
+                <div class="topic-text">{topic}</div>
+                {f'<div class="description">{description}</div>' if description else ''}
+            </div>
+
+            <div class="status">Status: Queued for Investigation</div>
+
+            <p>We'll notify you at <span class="highlight">{email}</span> when your report is ready. Most reports are completed within 48-72 hours.</p>
+
+            <p>Request ID: <code style="background: #2a2a3a; padding: 2px 8px; border-radius: 4px;">{request_record['id']}</code></p>
+
+            <div class="footer">
+                <p>&copy; 2025 GenuVerity LLC. AI-powered fact verification with human oversight.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+    send_resend_email(email, f"Report Request Received: {topic[:50]}...", requester_html)
+
+    # Send notification to admin (chris@genuverity.com)
+    admin_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 20px; background: #f5f5f5; }}
+            .container {{ max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; padding: 32px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }}
+            h1 {{ color: #1a1a1a; font-size: 22px; margin-bottom: 24px; }}
+            .field {{ margin-bottom: 20px; }}
+            .label {{ font-weight: 600; color: #666; font-size: 12px; text-transform: uppercase; margin-bottom: 6px; }}
+            .value {{ font-size: 16px; color: #1a1a1a; padding: 12px; background: #f8f9fa; border-radius: 6px; }}
+            .description {{ white-space: pre-wrap; }}
+            .meta {{ color: #888; font-size: 14px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #eee; }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>New Report Request</h1>
+
+            <div class="field">
+                <div class="label">Topic</div>
+                <div class="value"><strong>{topic}</strong></div>
+            </div>
+
+            <div class="field">
+                <div class="label">Description</div>
+                <div class="value description">{description if description else '(No description provided)'}</div>
+            </div>
+
+            <div class="field">
+                <div class="label">Requester Email</div>
+                <div class="value">{email}</div>
+            </div>
+
+            <div class="meta">
+                <p><strong>Request ID:</strong> {request_record['id']}</p>
+                <p><strong>Submitted:</strong> {request_record['submitted_at']}</p>
+                <p><strong>Total Requests:</strong> {len(requests_list)}</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+    send_resend_email("chris@genuverity.com", f"[NEW REQUEST] {topic[:60]}", admin_html)
+
+    return {
+        "success": True,
+        "message": "Your report request has been submitted! Check your email for confirmation.",
+        "request_id": request_record['id']
+    }
+
+
+# === REPORT FEEDBACK ===
+
+class ReportFeedback(BaseModel):
+    """Feedback on a specific report."""
+    report_slug: str
+    rating: int  # 1-5
+    comment: Optional[str] = None
+    email: Optional[str] = None
+
+FEEDBACK_PATH = "feedback/_index.json"
+
+def get_feedback() -> list:
+    """Get all feedback from Vercel Blob."""
+    if not BLOB_READ_WRITE_TOKEN:
+        return []
+    try:
+        response = requests.get(
+            f"{BLOB_API_BASE}?prefix={FEEDBACK_PATH}",
+            headers={"Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}"},
+            timeout=10
+        )
+        if response.status_code == 200:
+            blobs = response.json().get("blobs", [])
+            if blobs:
+                content_resp = requests.get(blobs[0].get("url"), timeout=10)
+                if content_resp.status_code == 200:
+                    return content_resp.json()
+        return []
+    except Exception as e:
+        print(f"Error getting feedback: {e}")
+        return []
+
+def save_feedback(feedback_list: list) -> bool:
+    """Save feedback to Vercel Blob."""
+    try:
+        blob_delete(FEEDBACK_PATH)
+        response = requests.put(
+            f"{BLOB_API_BASE}/{FEEDBACK_PATH}",
+            headers={
+                "Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}",
+                "Content-Type": "application/json",
+                "x-api-version": "7"
+            },
+            data=json.dumps(feedback_list),
+            timeout=10
+        )
+        return response.status_code in [200, 201]
+    except Exception as e:
+        print(f"Error saving feedback: {e}")
+        return False
+
+@app.post("/api/feedback")
+async def submit_feedback(feedback: ReportFeedback):
+    """Submit feedback for a report."""
+    # Validate rating
+    if feedback.rating < 1 or feedback.rating > 5:
+        raise HTTPException(status_code=400, detail="Rating must be between 1 and 5")
+
+    # Sanitize comment
+    comment = feedback.comment.strip()[:500] if feedback.comment else None
+    email = feedback.email.strip().lower() if feedback.email else None
+
+    # Validate email if provided
+    if email and not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
+        raise HTTPException(status_code=400, detail="Invalid email format")
+
+    # Create feedback record
+    feedback_record = {
+        "id": hashlib.sha256(f"{feedback.report_slug}{datetime.utcnow().isoformat()}".encode()).hexdigest()[:12],
+        "report_slug": feedback.report_slug,
+        "rating": feedback.rating,
+        "comment": comment,
+        "email": email,
+        "submitted_at": datetime.utcnow().isoformat()
+    }
+
+    # Save to blob storage
+    feedback_list = get_feedback()
+    feedback_list.append(feedback_record)
+    save_feedback(feedback_list)
+
+    # Notify admin if rating is low (1-2) or has a comment
+    if feedback.rating <= 2 or comment:
+        stars = "" * feedback.rating + "" * (5 - feedback.rating)
+        admin_html = f"""
+        <!DOCTYPE html>
+        <html>
+        <body style="font-family: -apple-system, sans-serif; padding: 20px;">
+            <h2>Report Feedback Received</h2>
+            <p><strong>Report:</strong> {feedback.report_slug}</p>
+            <p><strong>Rating:</strong> {stars} ({feedback.rating}/5)</p>
+            <p><strong>Comment:</strong> {comment if comment else '(none)'}</p>
+            <p><strong>Email:</strong> {email if email else '(anonymous)'}</p>
+            <p style="color: #888; font-size: 12px;">Submitted: {feedback_record['submitted_at']}</p>
+        </body>
+        </html>
+        """
+        send_resend_email("chris@genuverity.com", f"[FEEDBACK] {feedback.report_slug} - {feedback.rating}/5 stars", admin_html)
+
+    return {
+        "success": True,
+        "message": "Thank you for your feedback!"
+    }
+
+
+# === TAGLINE SURVEY ===
+
+class TaglineSurvey(BaseModel):
+    email: str
+    taglines: list[str]
+
+@app.post("/api/tagline-survey")
+async def submit_tagline_survey(survey: TaglineSurvey):
+    """Submit tagline survey responses."""
+    if not survey.taglines:
+        raise HTTPException(status_code=400, detail="No taglines selected")
+
+    if not survey.email:
+        raise HTTPException(status_code=400, detail="Email required")
+
+    # Build admin notification email
+    admin_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a12; color: #ffffff; padding: 40px; }}
+            .container {{ max-width: 600px; margin: 0 auto; background: #111827; border-radius: 16px; padding: 32px; border: 1px solid rgba(59, 130, 246, 0.2); }}
+            h1 {{ color: #06b6d4; font-size: 1.5rem; margin-bottom: 24px; }}
+            .respondent {{ color: #3b82f6; font-weight: 600; font-size: 1.1rem; margin-bottom: 20px; }}
+            .count {{ color: #a0aec0; margin-bottom: 24px; }}
+            .tagline {{ background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; color: #ffffff; }}
+            .footer {{ margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(59, 130, 246, 0.2); color: #64748b; font-size: 0.85rem; }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Tagline Survey Response</h1>
+            <div class="respondent">From: {survey.email}</div>
+            <div class="count">Selected {len(survey.taglines)} tagline(s):</div>
+            {"".join([f'<div class="tagline">{t}</div>' for t in survey.taglines])}
+            <div class="footer">
+                Submitted via GenuVerity Tagline Survey
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+
+    # Send to admin
+    send_resend_email(
+        "chris@genuverity.com",
+        f"[TAGLINE SURVEY] {survey.email} selected {len(survey.taglines)} taglines",
+        admin_html
+    )
+
+    # Send thank you to respondent
+    thank_you_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a12; color: #ffffff; padding: 40px; margin: 0; }}
+            .container {{ max-width: 600px; margin: 0 auto; background: #111827; border-radius: 16px; padding: 40px; border: 1px solid rgba(59, 130, 246, 0.2); }}
+            .logo {{ font-size: 1.75rem; font-weight: 700; margin-bottom: 32px; }}
+            .logo-genu {{ color: #ffffff; }}
+            .logo-verity {{ color: #3b82f6; }}
+            h1 {{ color: #ffffff; font-size: 1.5rem; margin-bottom: 20px; }}
+            p {{ color: #a0aec0; font-size: 1rem; line-height: 1.7; margin-bottom: 16px; }}
+            .highlight {{ color: #06b6d4; font-weight: 600; }}
+            .taglines-box {{ background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; padding: 20px; margin: 24px 0; }}
+            .taglines-title {{ color: #06b6d4; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }}
+            .tagline-item {{ color: #ffffff; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }}
+            .tagline-item:last-child {{ border-bottom: none; }}
+            .cta {{ display: inline-block; margin-top: 24px; padding: 14px 28px; background: linear-gradient(135deg, #3b82f6, #06b6d4); border-radius: 10px; color: white; text-decoration: none; font-weight: 600; }}
+            .footer {{ margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(59, 130, 246, 0.2); color: #64748b; font-size: 0.85rem; }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="logo">
+                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
+            </div>
+            <h1>Thanks for your feedback!</h1>
+            <p>Your input is incredibly valuable as we finalize the GenuVerity brand. We're building something we think will genuinely help people cut through the noise and find the truth faster.</p>
+
+            <div class="taglines-box">
+                <div class="taglines-title">Your picks ({len(survey.taglines)} selected)</div>
+                {"".join([f'<div class="tagline-item">{t}</div>' for t in survey.taglines])}
+            </div>
+
+            <p>We'll be launching soon with <span class="highlight">real-time fact-checking</span> that tracks viral claims as they spread and delivers source-heavy investigative reports back to where the conversation is happening.</p>
+
+            <p>Want to be first to know when we go live?</p>
+
+            <a href="https://genuverity7.vercel.app/" class="cta">Sign Up for Early Access</a>
+
+            <div class="footer">
+                <p>Thanks again for helping shape GenuVerity.</p>
+                <p style="margin-top: 8px;">— Chris</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+
+    send_resend_email(
+        survey.email,
+        "Thanks for your tagline feedback!",
+        thank_you_html
+    )
+
+    return {
+        "success": True,
+        "message": "Survey submitted successfully"
+    }
+
+
+# === FRED API PROXY (Protects API Key) ===
+
+@app.get("/api/fred/{series_id}")
+async def get_fred_data(series_id: str, limit: int = 52):
+    """
+    Proxy endpoint for FRED API data.
+    Protects the API key while allowing frontend to fetch live economic data.
+
+    Supported series:
+    - WALCL: Fed Total Assets (weekly)
+    - M2SL: M2 Money Supply (monthly)
+    - CPIAUCSL: Consumer Price Index (monthly)
+    - UNRATE: Unemployment Rate (monthly)
+    - GDP: Gross Domestic Product (quarterly)
+    """
+    if not FRED_API_KEY:
+        print(f"FRED_API_KEY not found in environment")
+        raise HTTPException(status_code=503, detail="FRED API not configured")
+
+    # Get API key fresh from environment (in case module-level load failed)
+    # Strip any whitespace/quotes that might have been added accidentally
+    raw_key = os.getenv("FRED_API_KEY") or FRED_API_KEY or ""
+    fred_key = raw_key.strip().strip('"').strip("'")
+    print(f"FRED request for series: {series_id}, key length: {len(fred_key)}, first/last char: '{fred_key[:1]}...{fred_key[-1:]}'")
+
+    if not fred_key or len(fred_key) != 32:
+        print(f"Invalid FRED key: raw length={len(raw_key)}, stripped length={len(fred_key)}")
+        raise HTTPException(status_code=503, detail="FRED API key invalid or missing")
+
+    # Whitelist of allowed series to prevent abuse
+    allowed_series = {
+        "WALCL", "M2SL", "CPIAUCSL", "UNRATE", "GDP",
+        "FEDFUNDS", "DFF", "T10Y2Y", "MORTGAGE30US",
+        "DEXUSEU", "DTWEXBGS", "VIXCLS", "SP500",
+        "CURRCIR"  # Currency in Circulation - for debunking "cash ban" claims
+    }
+
+    if series_id.upper() not in allowed_series:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Series not allowed. Supported: {', '.join(sorted(allowed_series))}"
+        )
+
+    try:
+        response = requests.get(
+            "https://api.stlouisfed.org/fred/series/observations",
+            params={
+                "series_id": series_id.upper(),
+                "api_key": fred_key,
+                "file_type": "json",
+                "limit": min(limit, 100),  # Cap at 100 observations
+                "sort_order": "desc"
+            },
+            timeout=10
+        )
+
+        if response.status_code != 200:
+            print(f"FRED API returned {response.status_code}: {response.text[:500]}")
+            return {
+                "series_id": series_id.upper(),
+                "observations": [],
+                "error": f"FRED API returned {response.status_code}",
+                "fetched_at": datetime.utcnow().isoformat(),
+                "source": "Federal Reserve Economic Data (FRED)",
+                "source_url": f"https://fred.stlouisfed.org/series/{series_id.upper()}"
+            }
+
+        data = response.json()
+
+        # Return observations with series metadata
+        return {
+            "series_id": series_id.upper(),
+            "observations": data.get("observations", []),
+            "fetched_at": datetime.utcnow().isoformat(),
+            "source": "Federal Reserve Economic Data (FRED)",
+            "source_url": f"https://fred.stlouisfed.org/series/{series_id.upper()}"
+        }
+
+    except requests.Timeout:
+        raise HTTPException(status_code=504, detail="FRED API timeout")
+    except Exception as e:
+        import traceback
+        error_detail = f"{type(e).__name__}: {str(e)}"
+        print(f"FRED API error: {error_detail}")
+        print(traceback.format_exc())
+        raise HTTPException(status_code=500, detail=f"Failed to fetch FRED data: {error_detail}")

@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request a Report | GenuVerity</title>
+    <meta name="description" content="Submit a topic for investigation by GenuVerity's research team. We'll create a comprehensive, source-backed analysis.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a12;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a24;
+            --bg-card: #16161e;
+            --border-color: #2a2a3a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6b7280;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* === BACKGROUND === */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(6, 182, 212, 0.04) 40%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* === NAVBAR === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(10, 10, 18, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .navbar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-genu { color: #ffffff; }
+        .logo-verity { color: var(--accent-blue); }
+
+        .navbar-badge {
+            padding: 4px 10px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            letter-spacing: 0.5px;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .navbar-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .navbar-link:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .navbar-cta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .navbar-cta:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        /* === MAIN CONTENT === */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 100px 24px 60px;
+        }
+
+        /* === HERO === */
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--warning);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hero-gradient {
+            color: var(--accent-blue);
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 550px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* === INFO BOX === */
+        .info-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(6, 182, 212, 0.05));
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .info-box h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .info-box h3 i {
+            color: var(--accent-cyan);
+        }
+
+        .info-box p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .info-box ul {
+            margin-top: 16px;
+            padding-left: 20px;
+        }
+
+        .info-box li {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .info-box li::marker {
+            color: var(--accent-cyan);
+        }
+
+        /* === FORM === */
+        .form-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .form-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .char-count {
+            text-align: right;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        .char-count.warning {
+            color: var(--warning);
+        }
+
+        .char-count.limit {
+            color: var(--error);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px 24px;
+            background: var(--accent-blue);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .submit-btn.loading {
+            pointer-events: none;
+        }
+
+        .submit-btn .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* === SUCCESS STATE === */
+        .success-card {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--radius);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .success-card.visible {
+            display: block;
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .success-icon i {
+            color: var(--success);
+        }
+
+        .success-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .success-card p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .success-card .request-id {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            margin-bottom: 24px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        /* === FOOTER === */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .form-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <span class="navbar-logo">
+                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
+            </span>
+            <span class="navbar-badge">COMING SOON</span>
+        </a>
+        <div class="navbar-right">
+            <a href="reports.html" class="navbar-link">
+                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
+                Reports
+            </a>
+            <a href="/#notify" class="navbar-cta">
+                <i data-lucide="bell" style="width:14px;height:14px;"></i>
+                Early Access
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero -->
+        <header class="hero">
+            <div class="hero-badge">
+                <i data-lucide="construction" style="width:14px;height:14px;"></i>
+                Beta Program
+            </div>
+            <h1>Request a <span class="hero-gradient">Report</span></h1>
+            <p>Submit a topic for investigation. Our team will research it and create a comprehensive, source-backed analysis.</p>
+        </header>
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <h3>
+                <i data-lucide="info" style="width:18px;height:18px;"></i>
+                Platform Status
+            </h3>
+            <p>
+                GenuVerity's automated fact-checking platform is currently being used internally for testing while our tools complete development.
+                During this phase, we're producing manual investigative reports and actively seeking compelling topics to analyze.
+            </p>
+            <ul>
+                <li>Submit any claim, event, or topic you'd like us to investigate</li>
+                <li>Your request will be reviewed and queued for investigation</li>
+                <li>We'll email you upon completion (we cannot guarantee all requests will be fulfilled)</li>
+                <li>Published reports appear on our Custom Reports page</li>
+            </ul>
+        </div>
+
+        <!-- Form -->
+        <div class="form-card" id="request-form">
+            <form id="report-request-form" onsubmit="submitRequest(event)">
+                <div class="form-group">
+                    <label class="form-label" for="topic">Investigation Topic *</label>
+                    <input
+                        type="text"
+                        id="topic"
+                        name="topic"
+                        class="form-input"
+                        placeholder="e.g., Claims about [topic] from [source]"
+                        maxlength="100"
+                        required
+                        oninput="updateCharCount('topic', 100)"
+                    >
+                    <div class="char-count" id="topic-count">0 / 100</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="description">Additional Context</label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        class="form-textarea"
+                        placeholder="Any additional details, links, or context that would help our investigation..."
+                        maxlength="300"
+                        oninput="updateCharCount('description', 300)"
+                    ></textarea>
+                    <div class="char-count" id="description-count">0 / 300</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Your Email *</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-input"
+                        placeholder="you@example.com"
+                        required
+                    >
+                    <p class="form-hint">We'll notify you when your report is ready.</p>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submit-btn">
+                    <i data-lucide="send" style="width:18px;height:18px;"></i>
+                    Submit Request
+                </button>
+            </form>
+        </div>
+
+        <!-- Success State -->
+        <div class="success-card" id="success-card">
+            <div class="success-icon">
+                <i data-lucide="check-circle" style="width:32px;height:32px;"></i>
+            </div>
+            <h2>Request Submitted!</h2>
+            <p>We've received your topic and will begin research shortly. Check your email for confirmation.</p>
+            <div class="request-id" id="request-id">REQ-XXXXX</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Save this ID for reference. Most reports are completed within 48-72 hours.</p>
+            <a href="reports.html" class="back-btn">
+                <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+                View Published Reports
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p><strong>GenuVerity</strong> - AI-Powered Fact Verification</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+
+        // Character count updater
+        function updateCharCount(fieldId, max) {
+            const field = document.getElementById(fieldId);
+            const counter = document.getElementById(fieldId + '-count');
+            const length = field.value.length;
+
+            counter.textContent = `${length} / ${max}`;
+            counter.classList.remove('warning', 'limit');
+
+            if (length >= max) {
+                counter.classList.add('limit');
+            } else if (length >= max * 0.8) {
+                counter.classList.add('warning');
+            }
+        }
+
+        // Form submission
+        async function submitRequest(e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('submit-btn');
+            const form = document.getElementById('request-form');
+            const successCard = document.getElementById('success-card');
+
+            // Get form values
+            const topic = document.getElementById('topic').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            // Validate
+            if (topic.length < 5) {
+                alert('Please enter a topic with at least 5 characters.');
+                return;
+            }
+
+            // Show loading state
+            btn.classList.add('loading');
+            btn.innerHTML = '<div class="spinner"></div> Submitting...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('/api/report-request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        topic,
+                        description,
+                        email
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Show success state
+                    form.style.display = 'none';
+                    document.getElementById('request-id').textContent = data.request_id;
+                    successCard.classList.add('visible');
+                    lucide.createIcons();
+                } else {
+                    throw new Error(data.detail || 'Submission failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error submitting your request. Please try again.');
+
+                // Reset button
+                btn.classList.remove('loading');
+                btn.innerHTML = '<i data-lucide="send" style="width:18px;height:18px;"></i> Submit Request';
+                btn.disabled = false;
+                lucide.createIcons();
+            }
+        }
+    </script>
+</body>
+</html>

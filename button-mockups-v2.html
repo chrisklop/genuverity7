@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Mockups V2 | GenuVerity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            min-height: 100vh;
+            padding: 40px;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #888;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 40px 0 20px;
+            font-size: 1.2rem;
+            color: #3b82f6;
+            border-top: 1px solid #222;
+            padding-top: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .card-label {
+            font-size: 0.7rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-align: center;
+        }
+
+        /* Base button styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .count {
+            font-weight: 800;
+            font-size: 1.1em;
+        }
+
+        /* ==================== */
+        /* DARK ELEGANT VARIANTS (Based on #14) */
+        /* ==================== */
+
+        /* 14-A: Original */
+        .btn-14a {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            border: 1px solid #374151;
+            color: #f3f4f6;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .btn-14a:hover {
+            border-color: #4b5563;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        /* 14-B: Blue accent border */
+        .btn-14b {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            border: 1px solid #3b82f6;
+            color: #f3f4f6;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .btn-14b:hover {
+            border-color: #60a5fa;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        /* 14-C: Cyan accent border */
+        .btn-14c {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            border: 1px solid #06b6d4;
+            color: #f3f4f6;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .btn-14c:hover {
+            border-color: #22d3ee;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        }
+
+        /* 14-D: Gradient border effect */
+        .btn-14d {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            border: none;
+            color: #f3f4f6;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        .btn-14d::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            padding: 1px;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+        .btn-14d:hover {
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+        }
+
+        /* 14-E: With Pulse Ring */
+        .btn-14e {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            border: 1px solid #374151;
+            color: #f3f4f6;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .btn-14e::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 16px;
+            border: 2px solid #374151;
+            animation: pulse-ring 2s ease-out infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.12); opacity: 0; }
+        }
+        .btn-14e:hover { border-color: #4b5563; }
+
+        /* 14-F: Thicker border, more contrast */
+        .btn-14f {
+            background: #0d1117;
+            border: 2px solid #30363d;
+            color: #e6edf3;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+        }
+        .btn-14f:hover {
+            border-color: #8b949e;
+            background: #161b22;
+        }
+
+        /* 14-G: Subtle blue glow on hover */
+        .btn-14g {
+            background: linear-gradient(135deg, #1a1f2e 0%, #0f1319 100%);
+            border: 1px solid #2d3748;
+            color: #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .btn-14g:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.2), 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 14-H: Blue Pulse Ring */
+        .btn-14h {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            border: 1px solid #3b82f6;
+            color: #f3f4f6;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .btn-14h::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 16px;
+            border: 2px solid #3b82f6;
+            animation: pulse-ring-blue 2s ease-out infinite;
+        }
+        .btn-14h:hover {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        /* 14-I: Darker, more minimal */
+        .btn-14i {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            color: #a0a0a0;
+            box-shadow: none;
+        }
+        .btn-14i:hover {
+            border-color: #333;
+            color: #fff;
+        }
+
+        /* 14-J: Carbon fiber texture feel */
+        .btn-14j {
+            background: linear-gradient(135deg, #1c1c1c 0%, #0d0d0d 50%, #1c1c1c 100%);
+            border: 1px solid #2a2a2a;
+            color: #d4d4d4;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+        .btn-14j:hover {
+            border-color: #444;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+        }
+
+        /* ==================== */
+        /* MINIMAL OUTLINE VARIANTS (Based on #18) */
+        /* ==================== */
+
+        /* 18-A: Original blue */
+        .btn-18a {
+            background: transparent;
+            border: 2px solid #3b82f6;
+            color: #3b82f6;
+        }
+        .btn-18a:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        /* 18-B: Cyan */
+        .btn-18b {
+            background: transparent;
+            border: 2px solid #06b6d4;
+            color: #06b6d4;
+        }
+        .btn-18b:hover {
+            background: #06b6d4;
+            color: white;
+        }
+
+        /* 18-C: White/Gray */
+        .btn-18c {
+            background: transparent;
+            border: 2px solid #9ca3af;
+            color: #9ca3af;
+        }
+        .btn-18c:hover {
+            background: #9ca3af;
+            color: #111;
+        }
+
+        /* 18-D: Thinner border */
+        .btn-18d {
+            background: transparent;
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+        }
+        .btn-18d:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: #60a5fa;
+            color: #60a5fa;
+        }
+
+        /* 18-E: Gradient border */
+        .btn-18e {
+            background: transparent;
+            border: none;
+            color: #3b82f6;
+            position: relative;
+        }
+        .btn-18e::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            padding: 2px;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+        .btn-18e:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        /* 18-F: With Pulse Ring */
+        .btn-18f {
+            background: transparent;
+            border: 2px solid #3b82f6;
+            color: #3b82f6;
+        }
+        .btn-18f::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 16px;
+            border: 2px solid #3b82f6;
+            animation: pulse-ring-blue 2s ease-out infinite;
+        }
+        @keyframes pulse-ring-blue {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.12); opacity: 0; }
+        }
+        .btn-18f:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        /* 18-G: Dashed border */
+        .btn-18g {
+            background: transparent;
+            border: 2px dashed #3b82f6;
+            color: #3b82f6;
+        }
+        .btn-18g:hover {
+            border-style: solid;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        /* 18-H: Double border effect */
+        .btn-18h {
+            background: transparent;
+            border: 2px solid #3b82f6;
+            color: #3b82f6;
+            box-shadow: inset 0 0 0 3px transparent;
+        }
+        .btn-18h:hover {
+            box-shadow: inset 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+
+        /* 18-I: Cyan Outline + Pulse Ring */
+        .btn-18i {
+            background: transparent;
+            border: 2px solid #06b6d4;
+            color: #06b6d4;
+        }
+        .btn-18i::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 16px;
+            border: 2px solid #06b6d4;
+            animation: pulse-ring-cyan 2s ease-out infinite;
+        }
+        .btn-18i:hover {
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        /* 18-J: Animated border */
+        .btn-18j {
+            background: transparent;
+            border: 2px solid transparent;
+            color: #3b82f6;
+            background-image: linear-gradient(#000, #000), linear-gradient(90deg, #3b82f6, #06b6d4, #3b82f6);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            background-size: 100% 100%, 200% 100%;
+            animation: border-slide 3s linear infinite;
+        }
+        @keyframes border-slide {
+            0% { background-position: 0 0, 0% 0; }
+            100% { background-position: 0 0, 200% 0; }
+        }
+        .btn-18j:hover {
+            background-image: linear-gradient(rgba(59,130,246,0.1), rgba(59,130,246,0.1)), linear-gradient(90deg, #3b82f6, #06b6d4, #3b82f6);
+        }
+
+        /* ==================== */
+        /* GLASSY FROST VARIANTS (Based on #9) */
+        /* ==================== */
+
+        /* 9-A: Original */
+        .btn-9a {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .btn-9a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* 9-B: Blue tint */
+        .btn-9b {
+            background: rgba(59, 130, 246, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .btn-9b:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        /* 9-C: Cyan tint */
+        .btn-9c {
+            background: rgba(6, 182, 212, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .btn-9c:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: rgba(6, 182, 212, 0.5);
+        }
+
+        /* 9-D: More transparent, subtle */
+        .btn-9d {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+        .btn-9d:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* 9-E: With Pulse Ring */
+        .btn-9e {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .btn-9e::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: pulse-ring-white 2s ease-out infinite;
+        }
+        @keyframes pulse-ring-white {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.12); opacity: 0; }
+        }
+        .btn-9e:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* 9-F: Gradient border */
+        .btn-9f {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: none;
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .btn-9f::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+        .btn-9f:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* 9-G: Blue Tint + Cyan Pulse Ring */
+        .btn-9g {
+            background: rgba(59, 130, 246, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .btn-9g::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 16px;
+            border: 2px solid #06b6d4;
+            animation: pulse-ring-cyan 2s ease-out infinite;
+        }
+        @keyframes pulse-ring-cyan {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.12); opacity: 0; }
+        }
+        .btn-9g:hover {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(6, 182, 212, 0.5);
+        }
+
+        /* 9-H: Frosted with inner shadow */
+        .btn-9h {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 -2px 10px rgba(0,0,0,0.2);
+        }
+        .btn-9h:hover {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 9-I: Thicker glass */
+        .btn-9i {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(30px);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .btn-9i:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* 9-J: Dark glass */
+        .btn-9j {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        .btn-9j:hover {
+            background: rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Button Variants - Pick Your Favorite</h1>
+
+    <h2>Dark Elegant Variants (Based on #14)</h2>
+    <div class="grid">
+        <div class="card">
+            <span class="card-label">14-A: Original Dark Elegant</span>
+            <a href="#" class="btn btn-14a">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">14-B: Blue Accent Border</span>
+            <a href="#" class="btn btn-14b">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">14-C: Cyan Accent Border</span>
+            <a href="#" class="btn btn-14c">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">14-D: Gradient Border</span>
+            <a href="#" class="btn btn-14d">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">14-E: With Pulse Ring</span>
+            <a href="#" class="btn btn-14e">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">14-F: GitHub Style</span>
+            <a href="#" class="btn btn-14f">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">14-G: Blue Glow on Hover</span>
+            <a href="#" class="btn btn-14g">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">14-H: Blue Pulse Ring</span>
+            <a href="#" class="btn btn-14h">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">14-I: Ultra Minimal Dark</span>
+            <a href="#" class="btn btn-14i">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">14-J: Carbon Fiber</span>
+            <a href="#" class="btn btn-14j">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+    </div>
+
+    <h2>Minimal Outline Variants (Based on #18)</h2>
+    <div class="grid">
+        <div class="card">
+            <span class="card-label">18-A: Original Blue Outline</span>
+            <a href="#" class="btn btn-18a">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">18-B: Cyan Outline</span>
+            <a href="#" class="btn btn-18b">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">18-C: White/Gray Outline</span>
+            <a href="#" class="btn btn-18c">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">18-D: Thin Border, Subtle Fill</span>
+            <a href="#" class="btn btn-18d">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">18-E: Gradient Border</span>
+            <a href="#" class="btn btn-18e">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">18-F: With Pulse Ring</span>
+            <a href="#" class="btn btn-18f">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">18-G: Dashed Border</span>
+            <a href="#" class="btn btn-18g">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">18-H: Double Border Effect</span>
+            <a href="#" class="btn btn-18h">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">18-I: Cyan + Pulse Ring</span>
+            <a href="#" class="btn btn-18i">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">18-J: Animated Gradient Border</span>
+            <a href="#" class="btn btn-18j">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+    </div>
+
+    <h2>Glassy Frost Variants (Based on #9)</h2>
+    <div class="grid">
+        <div class="card">
+            <span class="card-label">9-A: Original Glassy</span>
+            <a href="#" class="btn btn-9a">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">9-B: Blue Tint Glass</span>
+            <a href="#" class="btn btn-9b">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">9-C: Cyan Tint Glass</span>
+            <a href="#" class="btn btn-9c">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">9-D: Ultra Subtle</span>
+            <a href="#" class="btn btn-9d">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">9-E: Glass + Pulse Ring</span>
+            <a href="#" class="btn btn-9e">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">9-F: White Gradient Border</span>
+            <a href="#" class="btn btn-9f">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">9-G: Blue Tint + Cyan Pulse</span>
+            <a href="#" class="btn btn-9g">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">9-H: Frosted + Inner Shadow</span>
+            <a href="#" class="btn btn-9h">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">9-I: Thick Glass</span>
+            <a href="#" class="btn btn-9i">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+        <div class="card">
+            <span class="card-label">9-J: Dark Glass</span>
+            <a href="#" class="btn btn-9j">
+                <i data-lucide="library" style="width:18px;height:18px;"></i>
+                View <span class="count">19</span> Reports
+                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
