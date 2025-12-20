@@ -1,0 +1,334 @@
+// Shared reports data - Single source of truth for all pages
+// When adding a new report, add it here and it will update everywhere
+
+const REPORTS_DATA = [
+    {
+        id: 0,
+        title: "New Jersey Drone Sightings: Conspiracy Theories Debunked",
+        slug: "localreports/nj-drone-conspiracy.html",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Dec 19, 2025",
+        sources: "8 Sources",
+        readTime: "7 min",
+        excerpt: "Debunking viral claims about mysterious drones over New Jersey including Project Blue Beam, Iranian involvement, and alien theories. Verdict: MOSTLY FALSE."
+    },
+    {
+        id: 1,
+        title: "MAGA Accounts: Foreign Location Reveal",
+        slug: "localreports/maga-accounts-foreign.html",
+        category: "Platform Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "map-pin",
+        date: "Dec 19, 2025",
+        sources: "9 Sources",
+        readTime: "6 min",
+        excerpt: "X's new location transparency feature reveals surprising foreign origins for accounts amplifying pro-Trump content."
+    },
+    {
+        id: 2,
+        title: "Immigration Crime Wave: Claims vs Data",
+        slug: "localreports/immigration-crime-claims.html",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "x-circle",
+        date: "Dec 19, 2025",
+        sources: "10 Sources",
+        readTime: "8 min",
+        excerpt: "Examining viral claims about immigrant crime rates. DOJ and academic research show immigrants commit crimes at lower rates than native-born citizens."
+    },
+    {
+        id: 3,
+        title: "Hamas 51% Youth Support Claim",
+        slug: "localreports/hamas-youth-support.html",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Dec 19, 2025",
+        sources: "8 Sources",
+        readTime: "6 min",
+        excerpt: "Viral claim that 51% of young Americans support Hamas is misleading. Original poll asked about sympathy, not support, and results are more nuanced."
+    },
+    {
+        id: 4,
+        title: "Trump's Grocery Prices Claim: Fact Check",
+        slug: "localreports/grocery-prices-claim.html",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "x-circle",
+        date: "Dec 19, 2025",
+        sources: "10 Sources",
+        readTime: "6 min",
+        excerpt: "Trump claimed grocery prices are 'falling rapidly.' BLS data shows more items increased than decreased. Verdict: FALSE."
+    },
+    {
+        id: 5,
+        title: "The 2025 AI Deepfake Crisis",
+        slug: "localreports/ai-deepfakes-2025.html",
+        category: "AI & Technology",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Dec 19, 2025",
+        sources: "10 Sources",
+        readTime: "7 min",
+        excerpt: "AI-generated deepfakes targeting public figures, 93% of social videos now synthetic, and the erosion of trust in digital content."
+    },
+    {
+        id: 6,
+        title: "Climate Skeptics Misuse Ice Age Research",
+        slug: "localreports/climate-ice-age-study.html",
+        category: "Climate Misinformation",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Dec 19, 2025",
+        sources: "8 Sources",
+        readTime: "7 min",
+        excerpt: "Viral Breitbart headline cherry-picks legitimate climate science to mislead readers about current global warming threat."
+    },
+    {
+        id: 7,
+        title: "Bondi Beach Attack: Viral Misinformation Wave",
+        slug: "localreports/bondi-beach-misinfo.html",
+        category: "Misinformation",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Dec 19, 2025",
+        sources: "9 Sources",
+        readTime: "7 min",
+        excerpt: "Multiple false claims spread within hours of Sydney shooting. Hero's identity fabricated, shooter's background distorted, non-existent second shooting claimed."
+    },
+    {
+        id: 8,
+        title: "Did Elon Musk's DOGE Save $2 Trillion?",
+        slug: "localreports/doge-savings-claims.html",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Dec 19, 2025",
+        sources: "15 Sources",
+        readTime: "7 min",
+        excerpt: "Examining DOGE's claim of $2 trillion in savings. NPR found only $102M verified—0.005% of claimed amount. Federal spending actually rose."
+    },
+    {
+        id: 9,
+        title: "Trump's '25 Million Migrants' Claim",
+        slug: "localreports/trump-25m-migrants.html",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "x-circle",
+        date: "Dec 19, 2025",
+        sources: "10 Sources",
+        readTime: "6 min",
+        excerpt: "Trump claims 25 million migrants entered under Biden. Official CBP data shows ~10M encounters, many expelled. Verdict: FALSE."
+    },
+    {
+        id: 10,
+        title: "The $1,776 'Warrior Dividend': What It Really Is",
+        slug: "warrior-dividend-analysis.html",
+        category: "Policy Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-financial",
+        icon: "shield",
+        date: "Dec 19, 2025",
+        sources: "11 Sources",
+        readTime: "6 min",
+        excerpt: "Trump's $1,776 military bonus is actually rebranded housing funds Congress already approved—not new presidential spending or tariff revenue."
+    },
+    {
+        id: 11,
+        title: "Fact Check: FDA Memo Claims COVID Vaccines Killed 10 Children",
+        slug: "fda-vaccine-memo-fact-check.html",
+        category: "Public Health",
+        tagClass: "tag-red",
+        catClass: "cat-health",
+        icon: "shield-alert",
+        date: "Dec 19, 2025",
+        sources: "9 Sources",
+        readTime: "10 min",
+        excerpt: "FDA CBER Director Vinay Prasad's leaked memo claims vaccines killed at least 10 children—but provides no evidence. Experts call it 'factually incorrect' and 'disingenuous.'"
+    },
+    {
+        id: 12,
+        title: "Gaza Boat Strikes: Pattern of Civilian Targeting?",
+        slug: "boat-strike-investigation.html",
+        category: "Military Investigation",
+        tagClass: "tag-red",
+        catClass: "cat-military",
+        icon: "shield-off",
+        date: "Dec 19, 2025",
+        sources: "10 Sources",
+        readTime: "8 min",
+        excerpt: "Investigating IDF 'double-tap' strikes on Palestinian fishing boats and the legal questions surrounding targeting fleeing civilians."
+    },
+    {
+        id: 13,
+        title: "Trump's Dec 17 Speech: Claims vs Reality",
+        slug: "trump-speech-factcheck.html",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "check-square",
+        date: "Dec 19, 2025",
+        sources: "5 Claims",
+        readTime: "6 min",
+        excerpt: "Fact-checking the President's prime-time address on immigration, economy, and policy accomplishments. Claim-by-claim analysis with primary sources."
+    },
+    {
+        id: 14,
+        title: "Luigi Mangione Trial: Evidence and Legal Strategy",
+        slug: "mangione-trial-analysis.html",
+        category: "Criminal Justice",
+        tagClass: "tag-red",
+        catClass: "cat-military",
+        icon: "scale",
+        date: "Dec 19, 2025",
+        sources: "12 Sources",
+        readTime: "10 min",
+        excerpt: "Analyzing the prosecution's case, defense arguments, and contested evidence in the UnitedHealthcare CEO murder trial."
+    },
+    {
+        id: 15,
+        title: "TikTok US Sale: What the Deal Actually Contains",
+        slug: "tiktok-sale-analysis.html",
+        category: "Tech Policy",
+        tagClass: "tag-blue",
+        catClass: "cat-tech",
+        icon: "scale",
+        date: "Dec 19, 2025",
+        sources: "10 Sources",
+        readTime: "9 min",
+        excerpt: "Breaking down the Oracle, Silver Lake, and UAE consortium deal structure, and why ByteDance still controls the algorithm."
+    },
+    {
+        id: 16,
+        title: "CDC Website Changes: Vaccine-Autism Claims Analyzed",
+        slug: "cdc-vaccine-autism.html",
+        category: "Public Health",
+        tagClass: "tag-amber",
+        catClass: "cat-health",
+        icon: "shield-alert",
+        date: "Dec 19, 2025",
+        sources: "8 Sources",
+        readTime: "7 min",
+        excerpt: "What the CDC actually changed on its website regarding vaccines and autism, and what the scientific consensus still shows."
+    },
+    {
+        id: 17,
+        title: "Marijuana Rescheduling: From Schedule I to Schedule III",
+        slug: "marijuana-rescheduling.html",
+        category: "Executive Action",
+        tagClass: "tag-green",
+        catClass: "cat-financial",
+        icon: "file-text",
+        date: "Dec 18, 2025",
+        sources: "12 Sources",
+        readTime: "8 min",
+        excerpt: "Trump signs historic executive order directing federal reclassification of cannabis. Analysis of $2B+ tax relief and why this falls short of legalization."
+    },
+    {
+        id: 18,
+        title: "Dollar Dominance: Treasury Bonds as Trade War Leverage",
+        slug: "treasury-leverage.html",
+        category: "Financial Analysis",
+        tagClass: "tag-green",
+        catClass: "cat-financial",
+        icon: "dollar-sign",
+        date: "Dec 18, 2025",
+        sources: "Interactive",
+        readTime: "12 min",
+        excerpt: "How China, Japan, and hedge funds could weaponize $8+ trillion in US Treasury holdings as tariffs escalate to 145%."
+    },
+    {
+        id: 19,
+        title: "US Inflation Data: Accurate Numbers, Compromised Collection",
+        slug: "inflation-methodology.html",
+        category: "Data Quality Alert",
+        tagClass: "tag-amber",
+        catClass: "cat-financial",
+        icon: "alert-triangle",
+        date: "Dec 18, 2025",
+        sources: "12 Sources",
+        readTime: "9 min",
+        excerpt: "BLS reported 2.7% inflation—but a 43-day shutdown left October data uncollected. Analysis of why CPI diverges from consumer experience."
+    },
+    {
+        id: 20,
+        title: "Mirror Maze: Doppelganger Network Analysis",
+        slug: "doppelganger-analysis.html",
+        category: "Media Impersonation",
+        tagClass: "tag-russia",
+        catClass: "cat-disinfo",
+        icon: "copy",
+        date: "Dec 18, 2025",
+        sources: "32 Domains",
+        readTime: "15 min",
+        excerpt: "Russia's sophisticated media impersonation: 60+ fake news websites mimicking Washington Post, Fox News, and major outlets."
+    },
+    {
+        id: 21,
+        title: "Spamouflage Network Analysis",
+        slug: "network-analysis.html",
+        category: "Active Threat",
+        tagClass: "tag-china",
+        catClass: "cat-disinfo",
+        icon: "alert-octagon",
+        date: "Dec 18, 2025",
+        sources: "185 Nodes",
+        readTime: "14 min",
+        excerpt: "China's largest influence operation: 8,700+ coordinated accounts across 50+ platforms targeting Western democracies."
+    },
+    {
+        id: 22,
+        title: "Is 'FedNow Phase 2' Freezing Accounts?",
+        slug: "fednow-freeze.html",
+        category: "Misinformation",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Dec 17, 2025",
+        sources: "Live Data",
+        readTime: "11 min",
+        excerpt: "Debunking viral claims about Project Hamilton 'Phase 2' freezing 15,000 accounts. Includes live FRED data showing Fed operations are normal."
+    },
+    {
+        id: 23,
+        title: "Fact Check: Biden White House Plaque Claims",
+        slug: "plaque-fact-check.html",
+        category: "72% False or Misleading",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Dec 17, 2025",
+        sources: "18 Claims",
+        readTime: "15 min",
+        excerpt: "Comprehensive analysis of 18 claims on partisan plaques installed beneath Biden's portrait in the White House."
+    }
+];
+
+// Helper function to get report count (includes blob storage articles)
+function getReportsCount() {
+    return REPORTS_DATA.length;
+}
+
+// Helper function to get total sources count
+function getTotalSourcesCount() {
+    let total = 0;
+    REPORTS_DATA.forEach(report => {
+        const match = report.sources.match(/(\d+)/);
+        if (match) {
+            total += parseInt(match[1], 10);
+        }
+    });
+    return total;
+}
