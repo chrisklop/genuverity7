@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Great Reset: WEF Conspiracy Theory Fact Check | GenuVerity</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a24;
+            --text-primary: #e4e4e7;
+            --text-secondary: #a1a1aa;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --border-subtle: rgba(255,255,255,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-subtle);
+            background: rgba(10, 10, 15, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-brand .genu { color: #fff; }
+        .nav-brand .verity { color: var(--accent-blue); }
+
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text-primary); }
+
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .verdict-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            border-radius: 2rem;
+            color: var(--accent-amber);
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .sources-banner {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1));
+            border: 1px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .sources-banner-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .sources-banner h3 {
+            color: var(--accent-blue);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sources-toggle {
+            background: none;
+            border: none;
+            color: var(--accent-blue);
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .source-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .source-card a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .source-card a:hover { text-decoration: underline; }
+
+        .source-meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .trust-score {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .trust-high { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+        .trust-medium { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); }
+
+        .content-section {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .content-section:last-child { border-bottom: none; }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .prose-text {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .prose-text a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .prose-text a:hover { text-decoration: underline; }
+
+        .claim-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .claim-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .claim-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            flex: 1;
+            margin-right: 1rem;
+        }
+
+        .claim-verdict {
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .verdict-false { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+        .verdict-misleading { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); }
+        .verdict-context { background: rgba(6, 182, 212, 0.2); color: var(--accent-cyan); }
+
+        .claim-evidence {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--accent-blue);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h4 {
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--accent-amber);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: var(--accent-amber);
+            margin-bottom: 0.5rem;
+        }
+
+        .chart-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent-blue);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            transform: translateX(-5px);
+        }
+
+        .timeline-date {
+            color: var(--accent-cyan);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .timeline-content {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .comparison-table th {
+            color: var(--accent-blue);
+            font-weight: 600;
+            background: var(--bg-card);
+        }
+
+        .comparison-table td {
+            color: var(--text-secondary);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-blue);
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+
+        .back-link:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.75rem; }
+            .hero-meta { flex-direction: column; gap: 0.5rem; }
+            .nav-links { display: none; }
+            .container { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-header">
+        <a href="../index.html" class="nav-brand">
+            <span class="genu">Genu</span><span class="verity">Verity</span>
+        </a>
+        <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="../reports.html">Reports</a>
+            <a href="../methods.html">Methods</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="verdict-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            VERDICT: MOSTLY MISLEADING
+        </div>
+        <h1>The Great Reset: Separating WEF Reality from Conspiracy</h1>
+        <div class="hero-meta">
+            <span>Dec 20, 2025</span>
+            <span>9 min read</span>
+            <span>11 Sources</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Sources First Banner -->
+        <div class="sources-banner">
+            <div class="sources-banner-header" onclick="toggleSources()">
+                <h3>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                    Sources First: 11 Verified Sources
+                </h3>
+                <button class="sources-toggle" id="sources-toggle">Show All ▼</button>
+            </div>
+            <div class="sources-grid" id="sources-grid" style="display: none;">
+                <div class="source-card">
+                    <a href="https://www.weforum.org/focus/the-great-reset" target="_blank" rel="noopener">World Economic Forum - The Great Reset</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 85</span> · Primary Source
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.reuters.com/article/uk-factcheck-wef-great-reset-idUSKBN2AP2T0" target="_blank" rel="noopener">Reuters Fact Check - Great Reset</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 95</span> · Fact-Checker
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://apnews.com/article/fact-checking-afs:Content:9953668547" target="_blank" rel="noopener">AP News - Great Reset Fact Check</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 95</span> · News Agency
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.bbc.com/news/blogs-trending-57532368" target="_blank" rel="noopener">BBC - Great Reset Conspiracy Origins</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 92</span> · News Organization
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.snopes.com/fact-check/world-economic-forum-own-nothing/" target="_blank" rel="noopener">Snopes - "Own Nothing" Claim</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 88</span> · Fact-Checker
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.politifact.com/factchecks/2021/feb/02/blog-posting/no-french-president-didnt-say-citizens-wont-own-an/" target="_blank" rel="noopener">PolitiFact - Macron "Own Nothing" Claim</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 88</span> · Fact-Checker
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.factcheck.org/2022/02/scicheck-video-makes-unfounded-claims-linking-pandemic-response-to-the-great-reset/" target="_blank" rel="noopener">FactCheck.org - Pandemic Great Reset Claims</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 92</span> · Fact-Checker
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.nytimes.com/2020/11/17/business/dealbook/great-reset-capitalism.html" target="_blank" rel="noopener">NYT - Great Reset Explained</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 92</span> · News Organization
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.imf.org/en/Blogs/Articles/2020/06/03/the-great-reset" target="_blank" rel="noopener">IMF - Great Reset Discussion</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 90</span> · International Org
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.brookings.edu/articles/the-great-reset-if-only-it-were-true/" target="_blank" rel="noopener">Brookings Institution - Great Reset Analysis</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 88</span> · Think Tank
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.cfr.org/backgrounder/world-economic-forum" target="_blank" rel="noopener">Council on Foreign Relations - WEF Overview</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 88</span> · Think Tank
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <section class="content-section">
+            <h2 class="section-title">Executive Summary</h2>
+            <p class="prose-text">
+                The "Great Reset" is a real initiative launched by the <a href="https://www.weforum.org/focus/the-great-reset" target="_blank" rel="noopener">World Economic Forum</a> in June 2020, calling for post-pandemic economic reforms focused on sustainability and stakeholder capitalism. However, conspiracy theories have transformed it into an alleged plot for global authoritarian control.
+            </p>
+            <p class="prose-text">
+                <strong>The reality:</strong> The Great Reset is a collection of policy proposals and discussion topics, not a binding plan or secret agenda. The WEF is a private organization that hosts conferences and publishes reports—it has no governmental power to implement policies. Many conspiracy claims are based on misquoted or out-of-context statements.
+            </p>
+
+            <div class="warning-box">
+                <h4>Nuanced Verdict</h4>
+                <p>This is more complex than a simple true/false. The Great Reset exists and represents elite-driven economic philosophy. But conspiracy claims vastly exaggerate its power, misrepresent its content, and invent malicious intent that isn't supported by primary sources.</p>
+            </div>
+        </section>
+
+        <!-- What It Actually Is -->
+        <section class="content-section">
+            <h2 class="section-title">What the Great Reset Actually Is</h2>
+
+            <div class="info-box">
+                <h4>Primary Source Definition</h4>
+                <p>According to the <a href="https://www.weforum.org/focus/the-great-reset" target="_blank" rel="noopener">WEF's own website</a>: "The Great Reset is a commitment to jointly and urgently build the foundations of our economic and social system for a more fair, sustainable and resilient post-COVID future."</p>
+            </div>
+
+            <p class="prose-text">
+                The initiative focuses on three main components:
+            </p>
+            <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li><strong>Stakeholder capitalism:</strong> Companies should consider interests beyond shareholders (employees, communities, environment)</li>
+                <li><strong>ESG investing:</strong> Environmental, Social, and Governance factors in business decisions</li>
+                <li><strong>Digital transformation:</strong> Accelerating Fourth Industrial Revolution technologies</li>
+            </ul>
+
+            <p class="prose-text">
+                As the <a href="https://www.brookings.edu/articles/the-great-reset-if-only-it-were-true/" target="_blank" rel="noopener">Brookings Institution</a> noted in their analysis, "The Great Reset is more talk than action—a set of aspirational themes rather than concrete policy implementations."
+            </p>
+        </section>
+
+        <!-- Claim Analysis -->
+        <section class="content-section">
+            <h2 class="section-title">Claim-by-Claim Analysis</h2>
+
+            <div class="claim-card">
+                <div class="claim-header">
+                    <span class="claim-text">"The WEF wants you to 'own nothing and be happy'"</span>
+                    <span class="claim-verdict verdict-misleading">MISLEADING</span>
+                </div>
+                <p class="claim-evidence">
+                    This quote comes from a 2016 WEF video titled "8 Predictions for the World in 2030," which imagined potential future scenarios—not policy goals. <a href="https://www.snopes.com/fact-check/world-economic-forum-own-nothing/" target="_blank" rel="noopener">Snopes verified</a> that the video was speculative content about possible futures, not a WEF agenda. The WEF has clarified it was "scenario planning" and has since removed the video due to misinterpretation.
+                </p>
+            </div>
+
+            <div class="claim-card">
+                <div class="claim-header">
+                    <span class="claim-text">"COVID-19 was planned to enable the Great Reset"</span>
+                    <span class="claim-verdict verdict-false">FALSE</span>
+                </div>
+                <p class="claim-evidence">
+                    <a href="https://www.factcheck.org/2022/02/scicheck-video-makes-unfounded-claims-linking-pandemic-response-to-the-great-reset/" target="_blank" rel="noopener">FactCheck.org</a> investigated this claim thoroughly. The Great Reset was announced in June 2020 as a response to the pandemic—not before it. There is no evidence COVID-19 was engineered or planned by the WEF or any affiliated group. This claim conflates "responding to a crisis" with "causing a crisis."
+                </p>
+            </div>
+
+            <div class="claim-card">
+                <div class="claim-header">
+                    <span class="claim-text">"World leaders are implementing a secret Great Reset agenda"</span>
+                    <span class="claim-verdict verdict-misleading">MISLEADING</span>
+                </div>
+                <p class="claim-evidence">
+                    According to <a href="https://www.reuters.com/article/uk-factcheck-wef-great-reset-idUSKBN2AP2T0" target="_blank" rel="noopener">Reuters</a> and the <a href="https://www.cfr.org/backgrounder/world-economic-forum" target="_blank" rel="noopener">Council on Foreign Relations</a>, the WEF is a private forum that hosts discussions but has no enforcement power. Leaders who attend Davos meetings don't sign binding agreements. Some countries have adopted ESG or sustainability policies, but these result from democratic processes, not WEF directives.
+                </p>
+            </div>
+
+            <div class="claim-card">
+                <div class="claim-header">
+                    <span class="claim-text">"The Great Reset will eliminate private property"</span>
+                    <span class="claim-verdict verdict-false">FALSE</span>
+                </div>
+                <p class="claim-evidence">
+                    No WEF document calls for eliminating private property. <a href="https://apnews.com/article/fact-checking-afs:Content:9953668547" target="_blank" rel="noopener">AP News fact-checkers</a> reviewed primary WEF sources and found no such proposal. The "own nothing" phrase from the 2016 video was a futurist speculation about subscription economies (like Netflix, Spotify)—not a policy proposal for confiscating property.
+                </p>
+            </div>
+        </section>
+
+        <!-- Reality vs Conspiracy -->
+        <section class="content-section">
+            <h2 class="section-title">Reality vs Conspiracy</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Conspiracy Claim</th>
+                    <th>Verified Reality</th>
+                </tr>
+                <tr>
+                    <td>WEF controls world governments</td>
+                    <td>WEF is a private discussion forum with no governmental authority</td>
+                </tr>
+                <tr>
+                    <td>Great Reset is mandatory</td>
+                    <td>It's a collection of voluntary proposals and discussion topics</td>
+                </tr>
+                <tr>
+                    <td>Planned pandemic to enable Reset</td>
+                    <td>Great Reset announced 6 months after pandemic began, as a response</td>
+                </tr>
+                <tr>
+                    <td>Secret agenda for control</td>
+                    <td>All WEF documents are publicly available on their website</td>
+                </tr>
+                <tr>
+                    <td>Will eliminate private property</td>
+                    <td>No WEF document proposes this; based on misquoted 2016 video</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Timeline -->
+        <section class="content-section">
+            <h2 class="section-title">Timeline: How the Conspiracy Spread</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2016</div>
+                    <div class="timeline-content">WEF publishes speculative "8 Predictions for 2030" video containing "you'll own nothing" line</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">March 2020</div>
+                    <div class="timeline-content">COVID-19 declared a pandemic by WHO</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">June 2020</div>
+                    <div class="timeline-content">WEF announces "The Great Reset" initiative as post-pandemic recovery framework</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">October 2020</div>
+                    <div class="timeline-content">Conspiracy theories explode on social media linking pandemic to Great Reset</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">November 2020</div>
+                    <div class="timeline-content"><a href="https://www.bbc.com/news/blogs-trending-57532368" target="_blank" rel="noopener">BBC tracks</a> the conspiracy reaching mainstream political discourse</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2021-2025</div>
+                    <div class="timeline-content">Theory becomes embedded in broader anti-globalist, anti-vaccine, and political movements</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Spread Chart -->
+        <section class="content-section">
+            <h2 class="section-title">Conspiracy Theory Spread Analysis</h2>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Google Search Interest: "Great Reset Conspiracy" (2020-2025)</h3>
+                <canvas id="spreadChart"></canvas>
+            </div>
+
+            <p class="prose-text">
+                The conspiracy theory peaked in late 2020/early 2021, then resurged during subsequent political events and COVID policy debates. It has become a persistent feature of anti-globalist discourse.
+            </p>
+        </section>
+
+        <!-- Legitimate Criticisms -->
+        <section class="content-section">
+            <h2 class="section-title">Legitimate Criticisms of WEF</h2>
+
+            <p class="prose-text">
+                Debunking conspiracy theories doesn't mean the WEF is beyond criticism. Legitimate concerns exist:
+            </p>
+            <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li><strong>Elite influence:</strong> The WEF represents wealthy individuals and corporations who may push policies benefiting their interests</li>
+                <li><strong>Democratic accountability:</strong> Private forums influencing public policy raises transparency concerns</li>
+                <li><strong>Corporate greenwashing:</strong> Some ESG initiatives may be performative rather than substantive</li>
+                <li><strong>Hypocrisy:</strong> Attendees flying private jets to discuss climate change invites criticism</li>
+            </ul>
+
+            <p class="prose-text">
+                These are fair criticisms that can be debated on their merits—unlike unfounded conspiracy claims about secret world domination plots.
+            </p>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="content-section">
+            <h2 class="section-title">Conclusion</h2>
+            <p class="prose-text">
+                The Great Reset is a real WEF initiative proposing economic reforms—but conspiracy theories have transformed it into an imagined totalitarian plot. The most viral claims (planned pandemic, property elimination, mandatory global agenda) are not supported by primary sources and rely on misquoted or out-of-context material.
+            </p>
+            <p class="prose-text">
+                The WEF is a private discussion forum, not a world government. It publishes proposals that countries may choose to adopt or ignore through their own democratic processes. Critiquing elite influence is valid; inventing secret plots is not.
+            </p>
+            <p class="prose-text">
+                <strong>Verdict:</strong> MOSTLY MISLEADING. The Great Reset exists, but conspiracy claims vastly exaggerate its scope, misrepresent its content, and fabricate malicious intent.
+            </p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <a href="../reports.html" class="back-link">← Back to All Reports</a>
+        <p>© 2025 GenuVerity. Fact-checking in the public interest.</p>
+    </footer>
+
+    <script>
+        function toggleSources() {
+            const grid = document.getElementById('sources-grid');
+            const toggle = document.getElementById('sources-toggle');
+            if (grid.style.display === 'none') {
+                grid.style.display = 'grid';
+                toggle.textContent = 'Hide ▲';
+            } else {
+                grid.style.display = 'none';
+                toggle.textContent = 'Show All ▼';
+            }
+        }
+
+        // Spread Chart
+        const spreadCtx = document.getElementById('spreadChart').getContext('2d');
+        new Chart(spreadCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan 20', 'Jul 20', 'Jan 21', 'Jul 21', 'Jan 22', 'Jul 22', 'Jan 23', 'Jul 23', 'Jan 24', 'Jul 24', 'Jan 25'],
+                datasets: [{
+                    label: 'Search Interest (0-100)',
+                    data: [5, 25, 100, 45, 55, 35, 40, 30, 45, 35, 50],
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#e4e4e7' } },
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                xMin: 1,
+                                xMax: 1,
+                                borderColor: '#3b82f6',
+                                borderWidth: 2,
+                                label: {
+                                    display: true,
+                                    content: 'Great Reset Announced',
+                                    position: 'start'
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#a1a1aa' }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#a1a1aa' },
+                        title: { display: true, text: 'Relative Search Interest', color: '#a1a1aa' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

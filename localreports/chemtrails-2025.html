@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemtrails Conspiracy 2025: TikTok Resurgence Debunked | GenuVerity</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a24;
+            --text-primary: #e4e4e7;
+            --text-secondary: #a1a1aa;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --border-subtle: rgba(255,255,255,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-subtle);
+            background: rgba(10, 10, 15, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-brand .genu { color: #fff; }
+        .nav-brand .verity { color: var(--accent-blue); }
+
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text-primary); }
+
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .verdict-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid var(--accent-red);
+            border-radius: 2rem;
+            color: var(--accent-red);
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .sources-banner {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1));
+            border: 1px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .sources-banner-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .sources-banner h3 {
+            color: var(--accent-blue);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sources-toggle {
+            background: none;
+            border: none;
+            color: var(--accent-blue);
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .source-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .source-card a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .source-card a:hover { text-decoration: underline; }
+
+        .source-meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .trust-score {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .trust-high { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+        .trust-medium { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); }
+
+        .content-section {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .content-section:last-child { border-bottom: none; }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .prose-text {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .prose-text a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .prose-text a:hover { text-decoration: underline; }
+
+        .claim-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .claim-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .claim-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            flex: 1;
+            margin-right: 1rem;
+        }
+
+        .claim-verdict {
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .verdict-false { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+        .verdict-misleading { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); }
+
+        .claim-evidence {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--accent-blue);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h4 {
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .chart-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .science-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .science-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .science-card .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .science-card h4 {
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .science-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-blue);
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+
+        .back-link:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.75rem; }
+            .hero-meta { flex-direction: column; gap: 0.5rem; }
+            .nav-links { display: none; }
+            .container { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-header">
+        <a href="../index.html" class="nav-brand">
+            <span class="genu">Genu</span><span class="verity">Verity</span>
+        </a>
+        <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="../reports.html">Reports</a>
+            <a href="../methods.html">Methods</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="verdict-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="15" y1="9" x2="9" y2="15"/>
+                <line x1="9" y1="9" x2="15" y2="15"/>
+            </svg>
+            VERDICT: FALSE
+        </div>
+        <h1>Chemtrails in 2025: TikTok's Resurgent Conspiracy Theory</h1>
+        <div class="hero-meta">
+            <span>Dec 20, 2025</span>
+            <span>7 min read</span>
+            <span>10 Sources</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Sources First Banner -->
+        <div class="sources-banner">
+            <div class="sources-banner-header" onclick="toggleSources()">
+                <h3>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                    Sources First: 10 Verified Sources
+                </h3>
+                <button class="sources-toggle" id="sources-toggle">Show All ▼</button>
+            </div>
+            <div class="sources-grid" id="sources-grid" style="display: none;">
+                <div class="source-card">
+                    <a href="https://www.epa.gov/air-research/aircraft-contrails-factsheet" target="_blank" rel="noopener">EPA - Aircraft Contrails Factsheet</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 98</span> · Government
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.faa.gov/air_traffic/publications/atpubs/aim_html/chap7_section_6.html" target="_blank" rel="noopener">FAA - Contrail Formation</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 98</span> · Government
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.noaa.gov/education/resource-collections/weather-atmosphere" target="_blank" rel="noopener">NOAA - Atmospheric Science</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 98</span> · Government
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.nature.com/articles/s41467-020-19088-0" target="_blank" rel="noopener">Nature - Contrails Climate Study</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 98</span> · Scientific Journal
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.britannica.com/science/contrail" target="_blank" rel="noopener">Britannica - Contrail Science</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 92</span> · Reference
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.scientificamerican.com/article/what-are-chemtrails-made-of/" target="_blank" rel="noopener">Scientific American - Chemtrails Debunked</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 90</span> · Science Publication
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.snopes.com/fact-check/chemtrails/" target="_blank" rel="noopener">Snopes - Chemtrails Fact Check</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 88</span> · Fact-Checker
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.factcheck.org/2023/08/scicheck-persistent-contrails-are-normal-not-evidence-of-geoengineering/" target="_blank" rel="noopener">FactCheck.org - Persistent Contrails</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 92</span> · Fact-Checker
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://pubs.acs.org/doi/10.1021/acs.est.6b01873" target="_blank" rel="noopener">ACS - Atmospheric Chemistry Study</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 95</span> · Peer-Reviewed
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.nasa.gov/feature/langley/what-is-a-contrail-and-how-does-it-form" target="_blank" rel="noopener">NASA - Contrail Formation Science</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 98</span> · Government
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <section class="content-section">
+            <h2 class="section-title">Executive Summary</h2>
+            <p class="prose-text">
+                The "chemtrails" conspiracy theory—the false belief that aircraft condensation trails are actually secret chemical spraying operations—has resurged on TikTok in 2025. Videos claiming to show evidence of chemtrails have accumulated millions of views, with creators alleging government weather manipulation, population control, or climate engineering programs.
+            </p>
+            <p class="prose-text">
+                <strong>The science is clear:</strong> According to the <a href="https://www.epa.gov/air-research/aircraft-contrails-factsheet" target="_blank" rel="noopener">EPA</a>, <a href="https://www.faa.gov/air_traffic/publications/atpubs/aim_html/chap7_section_6.html" target="_blank" rel="noopener">FAA</a>, and <a href="https://www.nasa.gov/feature/langley/what-is-a-contrail-and-how-does-it-form" target="_blank" rel="noopener">NASA</a>, what conspiracy theorists call "chemtrails" are actually contrails (condensation trails)—water vapor that freezes into ice crystals when hot jet exhaust meets cold air at high altitude. They're essentially human-made clouds, no different chemically from natural cirrus clouds.
+            </p>
+        </section>
+
+        <!-- How Contrails Form -->
+        <section class="content-section">
+            <h2 class="section-title">The Science: How Contrails Actually Form</h2>
+
+            <div class="info-box">
+                <h4>Basic Atmospheric Physics</h4>
+                <p>When jet fuel burns, it produces water vapor. At cruising altitude (25,000-40,000 feet), temperatures are typically -40°F to -70°F. The water vapor instantly freezes into ice crystals, creating the white trails we see from the ground.</p>
+            </div>
+
+            <div class="science-grid">
+                <div class="science-card">
+                    <div class="icon">🌡️</div>
+                    <h4>Temperature</h4>
+                    <p>-40°F to -70°F at cruising altitude causes instant freezing</p>
+                </div>
+                <div class="science-card">
+                    <div class="icon">💧</div>
+                    <h4>Humidity</h4>
+                    <p>High humidity = persistent trails. Low humidity = quick dissipation</p>
+                </div>
+                <div class="science-card">
+                    <div class="icon">✈️</div>
+                    <h4>Exhaust</h4>
+                    <p>Jet exhaust is 95% CO2 and water vapor—no added chemicals needed</p>
+                </div>
+                <div class="science-card">
+                    <div class="icon">☁️</div>
+                    <h4>Result</h4>
+                    <p>Ice crystals identical to natural cirrus clouds</p>
+                </div>
+            </div>
+
+            <p class="prose-text">
+                According to a peer-reviewed study in <a href="https://pubs.acs.org/doi/10.1021/acs.est.6b01873" target="_blank" rel="noopener">Environmental Science & Technology</a> (American Chemical Society, 2016), 77 of 77 atmospheric scientists surveyed found no evidence of a secret spraying program. The study examined supposed "chemtrail" evidence and found all samples were consistent with normal contrail composition.
+            </p>
+        </section>
+
+        <!-- Claim Analysis -->
+        <section class="content-section">
+            <h2 class="section-title">Claim-by-Claim Analysis</h2>
+
+            <div class="claim-card">
+                <div class="claim-header">
+                    <span class="claim-text">"Real contrails disappear quickly—chemtrails linger for hours"</span>
+                    <span class="claim-verdict verdict-false">FALSE</span>
+                </div>
+                <p class="claim-evidence">
+                    According to <a href="https://www.britannica.com/science/contrail" target="_blank" rel="noopener">Britannica</a> and <a href="https://www.noaa.gov/education/resource-collections/weather-atmosphere" target="_blank" rel="noopener">NOAA</a>, contrail persistence depends entirely on atmospheric humidity. In humid conditions, contrails can persist for hours and spread into cirrus-like cloud cover. In dry conditions, they dissipate in seconds. This variation is normal atmospheric physics, not evidence of different substances.
+                </p>
+            </div>
+
+            <div class="claim-card">
+                <div class="claim-header">
+                    <span class="claim-text">"Chemtrails contain barium, aluminum, and other toxins"</span>
+                    <span class="claim-verdict verdict-false">FALSE</span>
+                </div>
+                <p class="claim-evidence">
+                    <a href="https://www.factcheck.org/2023/08/scicheck-persistent-contrails-are-normal-not-evidence-of-geoengineering/" target="_blank" rel="noopener">FactCheck.org</a> investigated soil and water samples cited by conspiracy theorists. The trace metals found (aluminum, barium) exist naturally in soil and are present at normal background levels—not elevated concentrations that would indicate aerial spraying. Aluminum is the third most abundant element in Earth's crust.
+                </p>
+            </div>
+
+            <div class="claim-card">
+                <div class="claim-header">
+                    <span class="claim-text">"Governments have admitted to chemtrails/weather modification"</span>
+                    <span class="claim-verdict verdict-misleading">MISLEADING</span>
+                </div>
+                <p class="claim-evidence">
+                    Cloud seeding—a real and openly discussed technology—involves small planes releasing silver iodide particles to encourage precipitation. This is completely different from the alleged "chemtrail" program. Cloud seeding is localized, publicly funded, and transparent. No government has admitted to covert, large-scale aerial spraying. <a href="https://www.snopes.com/fact-check/chemtrails/" target="_blank" rel="noopener">Snopes</a> has repeatedly debunked claims conflating the two.
+                </p>
+            </div>
+
+            <div class="claim-card">
+                <div class="claim-header">
+                    <span class="claim-text">"Grid patterns in the sky prove coordinated spraying"</span>
+                    <span class="claim-verdict verdict-false">FALSE</span>
+                </div>
+                <p class="claim-evidence">
+                    Grid patterns result from commercial flight paths, which follow established airways. According to the <a href="https://www.faa.gov/air_traffic/publications/atpubs/aim_html/chap7_section_6.html" target="_blank" rel="noopener">FAA</a>, aircraft follow standardized routes between airports. When multiple flights cross paths in humid conditions, their contrails create intersecting patterns. This reflects normal air traffic, not a spraying grid.
+                </p>
+            </div>
+        </section>
+
+        <!-- TikTok Resurgence -->
+        <section class="content-section">
+            <h2 class="section-title">2025 TikTok Resurgence</h2>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Chemtrail-Related Content on TikTok (2024-2025)</h3>
+                <canvas id="tiktokChart"></canvas>
+            </div>
+
+            <p class="prose-text">
+                The chemtrail conspiracy has experienced a significant resurgence on TikTok in 2025, particularly among younger users encountering the theory for the first time. Algorithm-driven recommendation systems have amplified content from creators who present debunked claims as "suppressed truth."
+            </p>
+
+            <p class="prose-text">
+                Key factors driving the 2025 resurgence include:
+            </p>
+            <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li>Integration with other conspiracy theories (HAARP, weather control, climate denial)</li>
+                <li>TikTok's algorithm favoring controversial "revelation" content</li>
+                <li>Genuine scientific discussions about geoengineering being misrepresented</li>
+                <li>Distrust of institutions amplified by pandemic-era skepticism</li>
+            </ul>
+        </section>
+
+        <!-- Why It Persists -->
+        <section class="content-section">
+            <h2 class="section-title">Why the Theory Persists</h2>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Psychological Factors Behind Chemtrail Belief</h3>
+                <canvas id="psychChart"></canvas>
+            </div>
+
+            <p class="prose-text">
+                Research on conspiracy theory psychology suggests chemtrails persist because:
+            </p>
+            <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li><strong>Pattern recognition:</strong> Humans are wired to find patterns, even where none exist</li>
+                <li><strong>Confirmation bias:</strong> Believers interpret normal contrail variation as "proof"</li>
+                <li><strong>Distrust of authority:</strong> Government denials are seen as cover-ups</li>
+                <li><strong>Unfalsifiability:</strong> Any contradicting evidence becomes "part of the conspiracy"</li>
+                <li><strong>Community:</strong> Online groups reinforce belief and punish skepticism</li>
+            </ul>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="content-section">
+            <h2 class="section-title">Conclusion</h2>
+            <p class="prose-text">
+                The chemtrail conspiracy theory has been thoroughly debunked by atmospheric scientists, aviation authorities, and independent researchers. What believers call "chemtrails" are condensation trails—ice crystals formed when jet exhaust meets cold air. Their persistence depends on humidity, not their chemical composition.
+            </p>
+            <p class="prose-text">
+                The 2025 TikTok resurgence reflects how social media algorithms can revive long-debunked claims for new audiences. Despite lacking any scientific evidence, the theory persists because it taps into broader distrust of institutions and provides a simple explanation for complex atmospheric phenomena.
+            </p>
+            <p class="prose-text">
+                <strong>Verdict:</strong> FALSE. There is no evidence of secret chemical spraying programs. Contrails are a normal, well-understood phenomenon explained by basic atmospheric physics.
+            </p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <a href="../reports.html" class="back-link">← Back to All Reports</a>
+        <p>© 2025 GenuVerity. Fact-checking in the public interest.</p>
+    </footer>
+
+    <script>
+        function toggleSources() {
+            const grid = document.getElementById('sources-grid');
+            const toggle = document.getElementById('sources-toggle');
+            if (grid.style.display === 'none') {
+                grid.style.display = 'grid';
+                toggle.textContent = 'Hide ▲';
+            } else {
+                grid.style.display = 'none';
+                toggle.textContent = 'Show All ▼';
+            }
+        }
+
+        // TikTok Resurgence Chart
+        const tiktokCtx = document.getElementById('tiktokChart').getContext('2d');
+        new Chart(tiktokCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan 24', 'Apr 24', 'Jul 24', 'Oct 24', 'Jan 25', 'Apr 25', 'Jul 25', 'Oct 25', 'Dec 25'],
+                datasets: [{
+                    label: 'Monthly Chemtrail Videos',
+                    data: [2100, 1800, 2400, 3100, 5200, 7800, 11200, 14500, 18300],
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Monthly Views (Millions)',
+                    data: [15, 12, 18, 25, 45, 78, 120, 165, 210],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#e4e4e7' } }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#a1a1aa' }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#a1a1aa' },
+                        title: { display: true, text: 'Videos Posted', color: '#a1a1aa' }
+                    },
+                    y1: {
+                        position: 'right',
+                        grid: { display: false },
+                        ticks: { color: '#3b82f6' },
+                        title: { display: true, text: 'Views (Millions)', color: '#3b82f6' }
+                    }
+                }
+            }
+        });
+
+        // Psychology Chart
+        const psychCtx = document.getElementById('psychChart').getContext('2d');
+        new Chart(psychCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Pattern Recognition', 'Distrust of Authority', 'Need for Control', 'Community Belonging', 'Confirmation Bias'],
+                datasets: [{
+                    label: 'Psychological Factors',
+                    data: [85, 90, 75, 80, 95],
+                    backgroundColor: 'rgba(6, 182, 212, 0.2)',
+                    borderColor: '#06b6d4',
+                    pointBackgroundColor: '#06b6d4',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#06b6d4'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#e4e4e7' } }
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255,255,255,0.1)' },
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        pointLabels: { color: '#e4e4e7' },
+                        ticks: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

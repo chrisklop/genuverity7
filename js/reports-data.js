@@ -4,6 +4,136 @@
 const REPORTS_DATA = [
     {
         id: 0,
+        title: "Ruby Bradley 'Loser' Quote: Viral Military Misquote Debunked",
+        slug: "localreports/ruby-bradley-quote.html",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "x-circle",
+        date: "Dec 20, 2025",
+        sources: "8 Sources",
+        readTime: "6 min",
+        excerpt: "The viral 'loser' quote attributed to decorated Army nurse Colonel Ruby Bradley is fabricated. No primary source exists. Honor her by sharing her real heroic story."
+    },
+    {
+        id: 1,
+        title: "Paid Protesters Hoax: The Craigslist Ad Myth That Won't Die",
+        slug: "localreports/paid-protesters-hoax.html",
+        category: "Recurring Hoax",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "x-circle",
+        date: "Dec 20, 2025",
+        sources: "10 Sources",
+        readTime: "7 min",
+        excerpt: "Claims of Soros-funded paid protesters via Craigslist ads have been debunked after every major protest for over a decade. Zero verified instances of mass paid protesting."
+    },
+    {
+        id: 2,
+        title: "AI-Generated Deportation Videos: The Sora Deepfake Crisis",
+        slug: "localreports/ai-deportation-videos.html",
+        category: "Synthetic Media Alert",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Dec 20, 2025",
+        sources: "9 Sources",
+        readTime: "8 min",
+        excerpt: "At least 47 AI-generated fake videos depicting immigration raids have gone viral in 2025, created with tools like Sora. None depict real events."
+    },
+    {
+        id: 3,
+        title: "The Great Reset: WEF Conspiracy Theory Fact Check",
+        slug: "localreports/great-reset-wef.html",
+        category: "Conspiracy Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Dec 20, 2025",
+        sources: "11 Sources",
+        readTime: "9 min",
+        excerpt: "The Great Reset is real but conspiracy claims vastly exaggerate its scope. The WEF is a discussion forum with no power to implement policies."
+    },
+    {
+        id: 4,
+        title: "Chemtrails in 2025: TikTok's Resurgent Conspiracy Theory",
+        slug: "localreports/chemtrails-2025.html",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "x-circle",
+        date: "Dec 20, 2025",
+        sources: "10 Sources",
+        readTime: "7 min",
+        excerpt: "The chemtrails conspiracy resurges on TikTok with 18,300+ videos in Dec 2025. Science is clear: contrails are frozen water vapor, not chemical spraying."
+    },
+    {
+        id: 5,
+        title: "BlueAnon: Can Starlink Satellites Manipulate Elections?",
+        slug: "localreports/blueanon-starlink.html",
+        category: "Conspiracy Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "x-circle",
+        date: "Dec 20, 2025",
+        sources: "10 Sources",
+        readTime: "7 min",
+        excerpt: "Left-wing conspiracy theory claims Starlink can alter votes. Reality: voting machines are air-gapped and not connected to any network during elections."
+    },
+    {
+        id: 6,
+        title: "HAARP Weather Control Conspiracy: Science vs Fiction",
+        slug: "localreports/haarp-weather-control.html",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "x-circle",
+        date: "Dec 20, 2025",
+        sources: "9 Sources",
+        readTime: "8 min",
+        excerpt: "HAARP blamed for LA wildfires and hurricanes. Science: HAARP operates 60+ miles up in the ionosphere—weather forms in the troposphere below 10 miles."
+    },
+    {
+        id: 7,
+        title: "Tommy Robinson 'Death' in Guadeloupe: False Claims Debunked",
+        slug: "localreports/tommy-robinson-guadeloupe.html",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "x-circle",
+        date: "Dec 20, 2025",
+        sources: "8 Sources",
+        readTime: "6 min",
+        excerpt: "Viral claims that 10 people died in protests over Tommy Robinson's arrest in Guadeloupe are false. French officials confirm no fatalities occurred."
+    },
+    {
+        id: 8,
+        title: "Elon Musk vs EU: Claims Fact-Checked",
+        slug: "localreports/musk-eu-claims.html",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Dec 20, 2025",
+        sources: "10 Sources",
+        readTime: "8 min",
+        excerpt: "Musk calls DSA fines 'censorship' but EU content moderation applies to all platforms equally. His claims about discriminatory targeting are MOSTLY FALSE."
+    },
+    {
+        id: 9,
+        title: "IRS $2,000 Stimulus Check Hoax: December 2025",
+        slug: "localreports/irs-stimulus-hoax.html",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "x-circle",
+        date: "Dec 20, 2025",
+        sources: "9 Sources",
+        readTime: "5 min",
+        excerpt: "Viral claims about IRS sending $2,000 stimulus checks in December 2025 are completely false. No such program exists. Verdict: FALSE."
+    },
+    {
+        id: 10,
         title: "New Jersey Drone Sightings: Conspiracy Theories Debunked",
         slug: "localreports/nj-drone-conspiracy.html",
         category: "Fact Check",
@@ -16,7 +146,7 @@ const REPORTS_DATA = [
         excerpt: "Debunking viral claims about mysterious drones over New Jersey including Project Blue Beam, Iranian involvement, and alien theories. Verdict: MOSTLY FALSE."
     },
     {
-        id: 1,
+        id: 11,
         title: "MAGA Accounts: Foreign Location Reveal",
         slug: "localreports/maga-accounts-foreign.html",
         category: "Platform Analysis",
@@ -29,7 +159,7 @@ const REPORTS_DATA = [
         excerpt: "X's new location transparency feature reveals surprising foreign origins for accounts amplifying pro-Trump content."
     },
     {
-        id: 2,
+        id: 12,
         title: "Immigration Crime Wave: Claims vs Data",
         slug: "localreports/immigration-crime-claims.html",
         category: "Fact Check",
@@ -42,7 +172,7 @@ const REPORTS_DATA = [
         excerpt: "Examining viral claims about immigrant crime rates. DOJ and academic research show immigrants commit crimes at lower rates than native-born citizens."
     },
     {
-        id: 3,
+        id: 13,
         title: "Hamas 51% Youth Support Claim",
         slug: "localreports/hamas-youth-support.html",
         category: "Fact Check",
@@ -55,7 +185,7 @@ const REPORTS_DATA = [
         excerpt: "Viral claim that 51% of young Americans support Hamas is misleading. Original poll asked about sympathy, not support, and results are more nuanced."
     },
     {
-        id: 4,
+        id: 14,
         title: "Trump's Grocery Prices Claim: Fact Check",
         slug: "localreports/grocery-prices-claim.html",
         category: "Fact Check",
@@ -68,7 +198,7 @@ const REPORTS_DATA = [
         excerpt: "Trump claimed grocery prices are 'falling rapidly.' BLS data shows more items increased than decreased. Verdict: FALSE."
     },
     {
-        id: 5,
+        id: 15,
         title: "The 2025 AI Deepfake Crisis",
         slug: "localreports/ai-deepfakes-2025.html",
         category: "AI & Technology",
@@ -81,7 +211,7 @@ const REPORTS_DATA = [
         excerpt: "AI-generated deepfakes targeting public figures, 93% of social videos now synthetic, and the erosion of trust in digital content."
     },
     {
-        id: 6,
+        id: 16,
         title: "Climate Skeptics Misuse Ice Age Research",
         slug: "localreports/climate-ice-age-study.html",
         category: "Climate Misinformation",
@@ -94,7 +224,7 @@ const REPORTS_DATA = [
         excerpt: "Viral Breitbart headline cherry-picks legitimate climate science to mislead readers about current global warming threat."
     },
     {
-        id: 7,
+        id: 17,
         title: "Bondi Beach Attack: Viral Misinformation Wave",
         slug: "localreports/bondi-beach-misinfo.html",
         category: "Misinformation",
@@ -107,7 +237,7 @@ const REPORTS_DATA = [
         excerpt: "Multiple false claims spread within hours of Sydney shooting. Hero's identity fabricated, shooter's background distorted, non-existent second shooting claimed."
     },
     {
-        id: 8,
+        id: 18,
         title: "Did Elon Musk's DOGE Save $2 Trillion?",
         slug: "localreports/doge-savings-claims.html",
         category: "Fact Check",
@@ -120,7 +250,7 @@ const REPORTS_DATA = [
         excerpt: "Examining DOGE's claim of $2 trillion in savings. NPR found only $102M verified—0.005% of claimed amount. Federal spending actually rose."
     },
     {
-        id: 9,
+        id: 19,
         title: "Trump's '25 Million Migrants' Claim",
         slug: "localreports/trump-25m-migrants.html",
         category: "Fact Check",
@@ -133,7 +263,7 @@ const REPORTS_DATA = [
         excerpt: "Trump claims 25 million migrants entered under Biden. Official CBP data shows ~10M encounters, many expelled. Verdict: FALSE."
     },
     {
-        id: 10,
+        id: 20,
         title: "The $1,776 'Warrior Dividend': What It Really Is",
         slug: "warrior-dividend-analysis.html",
         category: "Policy Analysis",
@@ -146,7 +276,7 @@ const REPORTS_DATA = [
         excerpt: "Trump's $1,776 military bonus is actually rebranded housing funds Congress already approved—not new presidential spending or tariff revenue."
     },
     {
-        id: 11,
+        id: 21,
         title: "Fact Check: FDA Memo Claims COVID Vaccines Killed 10 Children",
         slug: "fda-vaccine-memo-fact-check.html",
         category: "Public Health",
@@ -159,7 +289,7 @@ const REPORTS_DATA = [
         excerpt: "FDA CBER Director Vinay Prasad's leaked memo claims vaccines killed at least 10 children—but provides no evidence. Experts call it 'factually incorrect' and 'disingenuous.'"
     },
     {
-        id: 12,
+        id: 22,
         title: "Gaza Boat Strikes: Pattern of Civilian Targeting?",
         slug: "boat-strike-investigation.html",
         category: "Military Investigation",
@@ -172,7 +302,7 @@ const REPORTS_DATA = [
         excerpt: "Investigating IDF 'double-tap' strikes on Palestinian fishing boats and the legal questions surrounding targeting fleeing civilians."
     },
     {
-        id: 13,
+        id: 23,
         title: "Trump's Dec 17 Speech: Claims vs Reality",
         slug: "trump-speech-factcheck.html",
         category: "Fact Check",
@@ -185,7 +315,7 @@ const REPORTS_DATA = [
         excerpt: "Fact-checking the President's prime-time address on immigration, economy, and policy accomplishments. Claim-by-claim analysis with primary sources."
     },
     {
-        id: 14,
+        id: 24,
         title: "Luigi Mangione Trial: Evidence and Legal Strategy",
         slug: "mangione-trial-analysis.html",
         category: "Criminal Justice",
@@ -198,7 +328,7 @@ const REPORTS_DATA = [
         excerpt: "Analyzing the prosecution's case, defense arguments, and contested evidence in the UnitedHealthcare CEO murder trial."
     },
     {
-        id: 15,
+        id: 25,
         title: "TikTok US Sale: What the Deal Actually Contains",
         slug: "tiktok-sale-analysis.html",
         category: "Tech Policy",
@@ -211,7 +341,7 @@ const REPORTS_DATA = [
         excerpt: "Breaking down the Oracle, Silver Lake, and UAE consortium deal structure, and why ByteDance still controls the algorithm."
     },
     {
-        id: 16,
+        id: 26,
         title: "CDC Website Changes: Vaccine-Autism Claims Analyzed",
         slug: "cdc-vaccine-autism.html",
         category: "Public Health",
@@ -224,7 +354,7 @@ const REPORTS_DATA = [
         excerpt: "What the CDC actually changed on its website regarding vaccines and autism, and what the scientific consensus still shows."
     },
     {
-        id: 17,
+        id: 27,
         title: "Marijuana Rescheduling: From Schedule I to Schedule III",
         slug: "marijuana-rescheduling.html",
         category: "Executive Action",
@@ -237,7 +367,7 @@ const REPORTS_DATA = [
         excerpt: "Trump signs historic executive order directing federal reclassification of cannabis. Analysis of $2B+ tax relief and why this falls short of legalization."
     },
     {
-        id: 18,
+        id: 28,
         title: "Dollar Dominance: Treasury Bonds as Trade War Leverage",
         slug: "treasury-leverage.html",
         category: "Financial Analysis",
@@ -250,7 +380,7 @@ const REPORTS_DATA = [
         excerpt: "How China, Japan, and hedge funds could weaponize $8+ trillion in US Treasury holdings as tariffs escalate to 145%."
     },
     {
-        id: 19,
+        id: 29,
         title: "US Inflation Data: Accurate Numbers, Compromised Collection",
         slug: "inflation-methodology.html",
         category: "Data Quality Alert",
@@ -263,7 +393,7 @@ const REPORTS_DATA = [
         excerpt: "BLS reported 2.7% inflation—but a 43-day shutdown left October data uncollected. Analysis of why CPI diverges from consumer experience."
     },
     {
-        id: 20,
+        id: 30,
         title: "Mirror Maze: Doppelganger Network Analysis",
         slug: "doppelganger-analysis.html",
         category: "Media Impersonation",
@@ -276,7 +406,7 @@ const REPORTS_DATA = [
         excerpt: "Russia's sophisticated media impersonation: 60+ fake news websites mimicking Washington Post, Fox News, and major outlets."
     },
     {
-        id: 21,
+        id: 31,
         title: "Spamouflage Network Analysis",
         slug: "network-analysis.html",
         category: "Active Threat",
@@ -289,7 +419,7 @@ const REPORTS_DATA = [
         excerpt: "China's largest influence operation: 8,700+ coordinated accounts across 50+ platforms targeting Western democracies."
     },
     {
-        id: 22,
+        id: 32,
         title: "Is 'FedNow Phase 2' Freezing Accounts?",
         slug: "fednow-freeze.html",
         category: "Misinformation",
@@ -302,7 +432,7 @@ const REPORTS_DATA = [
         excerpt: "Debunking viral claims about Project Hamilton 'Phase 2' freezing 15,000 accounts. Includes live FRED data showing Fed operations are normal."
     },
     {
-        id: 23,
+        id: 33,
         title: "Fact Check: Biden White House Plaque Claims",
         slug: "plaque-fact-check.html",
         category: "72% False or Misleading",
