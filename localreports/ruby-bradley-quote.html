@@ -6,6 +6,33 @@
     <title>Ruby Bradley "Loser" Quote: Viral Military Misquote Debunked | GenuVerity</title>
     <link rel="stylesheet" href="../styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- GenuVerity Chart.js Watermark Plugin -->
+    <script>
+        const genuVerityWatermark = {
+            id: 'genuVerityWatermark',
+            afterDraw: (chart) => {
+                const ctx = chart.ctx;
+                const { width } = chart;
+                ctx.save();
+                const x = width - 8;
+                const y = 16;
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'top';
+                ctx.font = 'bold 10px Inter, sans-serif';
+                ctx.fillStyle = '#ffffff';
+                const genuText = 'Genu';
+                const verityText = 'Verity';
+                const verityWidth = ctx.measureText(verityText).width;
+                ctx.fillText(genuText, x - verityWidth, y);
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillText(verityText, x, y);
+                ctx.restore();
+            }
+        };
+        Chart.register(genuVerityWatermark);
+    </script>
+
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -37,16 +64,26 @@
         }
 
         .nav-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
-            border-bottom: 1px solid var(--border-subtle);
             background: rgba(10, 10, 15, 0.95);
-            position: sticky;
-            top: 0;
-            z-index: 100;
             backdrop-filter: blur(20px);
+        }
+
+        /* Reading Progress Bar */
+        .reading-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            width: 0%;
+            transition: width 0.1s ease-out;
         }
 
         .nav-brand {
@@ -353,6 +390,7 @@
             <a href="../reports.html">Reports</a>
             <a href="../methods.html">Methods</a>
         </div>
+        <div class="reading-progress"></div>
     </nav>
 
     <header class="hero">
@@ -608,6 +646,15 @@
                 toggle.textContent = 'Show All ▼';
             }
         }
+
+        // Reading Progress Bar
+        const progressBar = document.querySelector('.reading-progress');
+        window.addEventListener('scroll', () => {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.scrollY;
+            const progress = Math.min((scrolled / docHeight) * 100, 100);
+            progressBar.style.width = progress + '%';
+        });
 
         // Misquote Chart
         const misquoteCtx = document.getElementById('misquoteChart').getContext('2d');

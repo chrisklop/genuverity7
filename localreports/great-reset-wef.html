@@ -6,6 +6,33 @@
     <title>The Great Reset: WEF Conspiracy Theory Fact Check | GenuVerity</title>
     <link rel="stylesheet" href="../styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- GenuVerity Chart.js Watermark Plugin -->
+    <script>
+        const genuVerityWatermark = {
+            id: 'genuVerityWatermark',
+            afterDraw: (chart) => {
+                const ctx = chart.ctx;
+                const { width } = chart;
+                ctx.save();
+                const x = width - 8;
+                const y = 16;
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'top';
+                ctx.font = 'bold 10px Inter, sans-serif';
+                ctx.fillStyle = '#ffffff';
+                const genuText = 'Genu';
+                const verityText = 'Verity';
+                const verityWidth = ctx.measureText(verityText).width;
+                ctx.fillText(genuText, x - verityWidth, y);
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillText(verityText, x, y);
+                ctx.restore();
+            }
+        };
+        Chart.register(genuVerityWatermark);
+    </script>
+
     <style>
         :root {
             --bg-primary: #0a0a0f;
