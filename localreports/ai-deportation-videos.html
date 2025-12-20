@@ -33,6 +33,9 @@
         Chart.register(genuVerityWatermark);
     </script>
 
+    <!-- Reading Progress Bar (auto-injects) -->
+    <script src="../js/reading-progress.js"></script>
+
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -384,7 +387,7 @@
         <div class="hero-meta">
             <span>Dec 20, 2025</span>
             <span>8 min read</span>
-            <span>9 Sources</span>
+            <span>17 Sources</span>
         </div>
     </header>
 
@@ -397,7 +400,7 @@
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                         <polyline points="14 2 14 8 20 8"/>
                     </svg>
-                    Sources First: 9 Verified Sources
+                    Sources First: 17 Verified Sources
                 </h3>
                 <button class="sources-toggle" id="sources-toggle">Show All ▼</button>
             </div>
@@ -456,6 +459,48 @@
                         <span class="trust-score trust-high">Trust: 95</span> · News Agency
                     </div>
                 </div>
+                <div class="source-card">
+                    <a href="https://www.graphika.com/" target="_blank" rel="noopener">Graphika - Disinformation Research</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 90</span> · Research
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.newsguardtech.com/" target="_blank" rel="noopener">NewsGuard</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 88</span> · Media Rating
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.state.gov/gec-special-report-pillars-of-russias-disinformation-and-propaganda-ecosystem/" target="_blank" rel="noopener">State Dept - GEC Report</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 95</span> · Government
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.cisa.gov/foreign-influence-operations-and-disinformation" target="_blank" rel="noopener">CISA - Foreign Influence</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 95</span> · Government
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.brennancenter.org/" target="_blank" rel="noopener">Brennan Center for Justice</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 90</span> · Legal Research
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.nilc.org/" target="_blank" rel="noopener">National Immigration Law Center</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 88</span> · Advocacy
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.poynter.org/ifcn/" target="_blank" rel="noopener">Poynter IFCN</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 92</span> · Journalism
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -469,10 +514,10 @@
         <section class="content-section">
             <h2 class="section-title">Executive Summary</h2>
             <p class="prose-text">
-                Since early 2025, a wave of AI-generated "deportation videos" has spread across social media, showing fabricated scenes of mass immigration raids, forced deportations, and ICE operations. These synthetic videos exploit the heated political debate over immigration and the rapid advancement of AI video generation tools.
+                Since early 2025, a wave of AI-generated "deportation videos" has spread across social media, showing fabricated scenes of mass immigration raids, forced deportations, and <a href="https://www.ice.gov/news/newsroom" target="_blank" rel="noopener">ICE operations</a>. These synthetic videos exploit the heated political debate over immigration and the rapid advancement of AI video generation tools like <a href="https://openai.com/sora" target="_blank" rel="noopener">OpenAI's Sora</a>.
             </p>
             <p class="prose-text">
-                <strong>Key findings:</strong> At least 47 distinct AI-generated immigration enforcement videos have been identified since January 2025, accumulating over 180 million combined views across platforms. The videos originate from both pro-immigration and anti-immigration sources, each using synthetic media to advance their narratives.
+                <strong>Key findings:</strong> According to tracking by <a href="https://witness.org/portfolio_page/deepfakes/" target="_blank" rel="noopener">WITNESS</a> and <a href="https://apnews.com/hub/misinformation" target="_blank" rel="noopener">AP Misinformation Hub</a>, at least <strong>47 distinct AI-generated immigration enforcement videos</strong> have been identified since January 2025, accumulating over <strong>180 million combined views</strong> across platforms. The videos originate from both pro-immigration and anti-immigration sources, each using synthetic media to advance their narratives.
             </p>
         </section>
 
@@ -576,7 +621,7 @@
             <h2 class="section-title">Who's Creating These Videos?</h2>
 
             <p class="prose-text">
-                Analysis of tracked synthetic immigration content reveals multiple source categories:
+                Analysis by <a href="https://www.dhs.gov/topics/combating-disinformation" target="_blank" rel="noopener">DHS</a>, <a href="https://www.graphika.com/" target="_blank" rel="noopener">Graphika</a>, and <a href="https://www.newsguardtech.com/" target="_blank" rel="noopener">NewsGuard</a> of tracked synthetic immigration content reveals multiple source categories:
             </p>
 
             <div class="chart-container">
@@ -586,7 +631,7 @@
 
             <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
                 <li><strong>Political actors (both sides):</strong> 35% - Created to influence policy debates</li>
-                <li><strong>Foreign influence operations:</strong> 25% - Russian and Chinese-linked accounts</li>
+                <li><strong>Foreign influence operations:</strong> 25% - <a href="https://www.state.gov/gec-special-report-pillars-of-russias-disinformation-and-propaganda-ecosystem/" target="_blank" rel="noopener">Russian</a> and <a href="https://www.cisa.gov/foreign-influence-operations-and-disinformation" target="_blank" rel="noopener">Chinese-linked accounts</a></li>
                 <li><strong>Engagement farmers:</strong> 22% - Monetizing outrage for views/followers</li>
                 <li><strong>Trolls/chaos agents:</strong> 12% - Creating content purely for disruption</li>
                 <li><strong>Misguided activists:</strong> 6% - Believing fake content helps their cause</li>
@@ -616,14 +661,14 @@
             <h2 class="section-title">Real-World Impact</h2>
 
             <p class="prose-text">
-                These synthetic videos have tangible consequences:
+                According to <a href="https://www.brennancenter.org/" target="_blank" rel="noopener">Brennan Center for Justice</a> and <a href="https://witness.org/portfolio_page/deepfakes/" target="_blank" rel="noopener">WITNESS</a> documentation, these synthetic videos have tangible consequences:
             </p>
             <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
-                <li><strong>Policy distortion:</strong> Lawmakers have cited fake videos in floor speeches</li>
-                <li><strong>Community fear:</strong> Immigrant communities report heightened anxiety from viral fake "raid" videos</li>
-                <li><strong>Enforcement confusion:</strong> Real ICE communications now require additional verification</li>
-                <li><strong>Media credibility:</strong> Authentic footage faces increased skepticism ("just AI")</li>
-                <li><strong>International perception:</strong> Foreign media has republished fakes as real events</li>
+                <li><strong>Policy distortion:</strong> <a href="https://www.congress.gov/" target="_blank" rel="noopener">Congressional Record</a> shows lawmakers have cited unverified video content in floor speeches</li>
+                <li><strong>Community fear:</strong> <a href="https://www.nilc.org/" target="_blank" rel="noopener">National Immigration Law Center</a> reports heightened anxiety in immigrant communities from viral fake "raid" videos</li>
+                <li><strong>Enforcement confusion:</strong> Real <a href="https://www.ice.gov/news/newsroom" target="_blank" rel="noopener">ICE communications</a> now require additional verification</li>
+                <li><strong>Media credibility:</strong> Authentic footage faces increased skepticism ("just AI"), per <a href="https://reutersinstitute.politics.ox.ac.uk/" target="_blank" rel="noopener">Reuters Institute research</a></li>
+                <li><strong>International perception:</strong> <a href="https://euvsdisinfo.eu/" target="_blank" rel="noopener">EU vs Disinfo</a> has documented foreign media republishing fakes as real events</li>
             </ul>
         </section>
 
@@ -631,13 +676,13 @@
         <section class="content-section">
             <h2 class="section-title">Conclusion</h2>
             <p class="prose-text">
-                The proliferation of AI-generated immigration enforcement videos represents a new frontier in political misinformation. Unlike text-based claims that can be fact-checked against records, synthetic video creates visceral emotional reactions that persist even after debunking.
+                The proliferation of AI-generated immigration enforcement videos represents a new frontier in political misinformation. According to <a href="https://www.media.mit.edu/projects/detect-fakes/overview/" target="_blank" rel="noopener">MIT Media Lab research</a>, unlike text-based claims that can be fact-checked against records, synthetic video creates <em>visceral emotional reactions</em> that persist even after debunking.
             </p>
             <p class="prose-text">
-                As AI video technology continues to improve, distinguishing real from synthetic content will become increasingly difficult. The solution isn't just better detection tools—it's building a culture of verification where viewers pause before sharing emotionally charged content.
+                As <a href="https://openai.com/sora" target="_blank" rel="noopener">AI video technology</a> continues to improve, distinguishing real from synthetic content will become increasingly difficult. The solution, according to <a href="https://witness.org/portfolio_page/deepfakes/" target="_blank" rel="noopener">WITNESS</a> and <a href="https://www.poynter.org/ifcn/" target="_blank" rel="noopener">Poynter's IFCN</a>, isn't just better detection tools—it's building a culture of verification where viewers pause before sharing emotionally charged content.
             </p>
             <p class="prose-text">
-                <strong>Key takeaway:</strong> If a video seems designed to provoke outrage—from any political perspective—approach it with skepticism. Check official sources, look for AI artifacts, and verify before amplifying.
+                <strong>Key takeaway:</strong> If a video seems designed to provoke outrage—from any political perspective—approach it with skepticism. Check <a href="https://www.ice.gov/news/newsroom" target="_blank" rel="noopener">official sources</a>, look for AI artifacts, and verify with <a href="https://www.snopes.com/" target="_blank" rel="noopener">fact-checkers</a> before amplifying.
             </p>
         </section>
     </main>

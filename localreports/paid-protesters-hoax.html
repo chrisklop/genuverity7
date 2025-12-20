@@ -33,6 +33,9 @@
         Chart.register(genuVerityWatermark);
     </script>
 
+    <!-- Reading Progress Bar (auto-injects) -->
+    <script src="../js/reading-progress.js"></script>
+
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -405,7 +408,7 @@
         <div class="hero-meta">
             <span>Dec 20, 2025</span>
             <span>7 min read</span>
-            <span>10 Sources</span>
+            <span>14 Sources</span>
         </div>
     </header>
 
@@ -418,7 +421,7 @@
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                         <polyline points="14 2 14 8 20 8"/>
                     </svg>
-                    Sources First: 10 Verified Sources
+                    Sources First: 14 Verified Sources
                 </h3>
                 <button class="sources-toggle" id="sources-toggle">Show All ▼</button>
             </div>
@@ -481,6 +484,30 @@
                     <a href="https://www.adl.org/resources/backgrounder/george-soros-conspiracy-theories" target="_blank" rel="noopener">ADL - Soros Conspiracy Backgrounder</a>
                     <div class="source-meta">
                         <span class="trust-score trust-high">Trust: 88</span> · NGO
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.aclu.org/know-your-rights/protesters-rights/" target="_blank" rel="noopener">ACLU - Protesters' Rights</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 90</span> · Civil Rights Org
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.nlg.org/" target="_blank" rel="noopener">National Lawyers Guild</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 85</span> · Legal Organization
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.history.com/topics/black-history/march-on-washington" target="_blank" rel="noopener">History.com - March on Washington</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 88</span> · Historical Reference
+                    </div>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.guidestar.org/" target="_blank" rel="noopener">GuideStar - Nonprofit Database</a>
+                    <div class="source-meta">
+                        <span class="trust-score trust-high">Trust: 90</span> · Nonprofit Registry
                     </div>
                 </div>
             </div>
@@ -599,18 +626,18 @@
             </div>
 
             <p class="prose-text">
-                Actual protest organizing includes:
+                Actual protest organizing, as documented by <a href="https://www.aclu.org/know-your-rights/protesters-rights/" target="_blank" rel="noopener">the ACLU</a> and civil rights historians, includes:
             </p>
             <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
                 <li><strong>Volunteer coordinators:</strong> Unpaid or minimally compensated organizers who handle logistics</li>
-                <li><strong>Nonprofit staff:</strong> Advocacy organizations may have paid staff who organize events</li>
-                <li><strong>Transportation assistance:</strong> Buses, carpools arranged for those who couldn't otherwise attend</li>
+                <li><strong>Nonprofit staff:</strong> Advocacy organizations may have <a href="https://www.guidestar.org/" target="_blank" rel="noopener">paid staff</a> who organize events as part of their jobs</li>
+                <li><strong>Transportation assistance:</strong> Buses, carpools arranged for those who couldn't otherwise attend—a practice dating to the <a href="https://www.history.com/topics/black-history/march-on-washington" target="_blank" rel="noopener">1963 March on Washington</a></li>
                 <li><strong>Sign/supply donations:</strong> Organizations provide materials to protesters</li>
-                <li><strong>Legal support:</strong> Volunteer or pro-bono lawyers on standby</li>
+                <li><strong>Legal support:</strong> Volunteer or <a href="https://www.nlg.org/" target="_blank" rel="noopener">National Lawyers Guild</a> attorneys on standby</li>
             </ul>
 
             <p class="prose-text">
-                None of these activities constitute "paying protesters." The distinction is between <em>organizational infrastructure</em> (which all movements need) and <em>paying individuals to feign beliefs they don't hold</em> (which has never been documented at scale).
+                None of these activities constitute "paying protesters." The distinction is between <em>organizational infrastructure</em> (which all movements need) and <em>paying individuals to feign beliefs they don't hold</em> (which has <a href="https://apnews.com/article/fact-checking-000888186652" target="_blank" rel="noopener">never been documented at scale</a>).
             </p>
         </section>
 
@@ -632,13 +659,13 @@
         <section class="content-section">
             <h2 class="section-title">Conclusion</h2>
             <p class="prose-text">
-                The "paid protesters" hoax is one of the most persistent pieces of political misinformation in American discourse. Despite being debunked after every major protest for over a decade, it resurfaces reliably because it serves a psychological need: dismissing mass dissent without engaging with its substance.
+                The "paid protesters" hoax is one of the most persistent pieces of political misinformation in American discourse. According to <a href="https://www.snopes.com/fact-check/craigslist-paid-protesters/" target="_blank" rel="noopener">Snopes</a>, <a href="https://www.politifact.com/factchecks/2020/jun/08/viral-image/no-soros-not-hiring-paid-protesters/" target="_blank" rel="noopener">PolitiFact</a>, <a href="https://www.factcheck.org/2020/06/meme-spreads-false-claim-about-paid-protesters/" target="_blank" rel="noopener">FactCheck.org</a>, <a href="https://apnews.com/article/fact-checking-000888186652" target="_blank" rel="noopener">AP News</a>, <a href="https://www.reuters.com/article/uk-factcheck-soros-antifa-idUSKBN23B2TN" target="_blank" rel="noopener">Reuters</a>, and <a href="https://www.bbc.com/news/52868295" target="_blank" rel="noopener">BBC</a>, these claims have been debunked after every major protest for over a decade. They resurface reliably because they serve a psychological need: dismissing mass dissent without engaging with its substance.
             </p>
             <p class="prose-text">
-                No journalist, researcher, or investigative body has ever documented a verified case of mass paid protesting in the United States. The Craigslist ads are fabricated or misrepresented. The Soros conspiracy lacks any evidence and often echoes antisemitic tropes.
+                No journalist, researcher, or investigative body has ever documented a verified case of mass paid protesting in the United States. The Craigslist ads are fabricated or misrepresented. The Soros conspiracy lacks any evidence and, as <a href="https://www.adl.org/resources/backgrounder/george-soros-conspiracy-theories" target="_blank" rel="noopener">the ADL documents</a>, often echoes antisemitic tropes.
             </p>
             <p class="prose-text">
-                <strong>Verdict:</strong> RECURRING HOAX. This claim has been false every time it's surfaced. The burden of proof remains on those making the claim, and they have never provided it.
+                <strong>Verdict: RECURRING HOAX.</strong> This claim has been false every time it's surfaced. The burden of proof remains on those making the claim, and they have never provided it.
             </p>
         </section>
     </main>
