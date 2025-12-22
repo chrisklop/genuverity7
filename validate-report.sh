@@ -1,5 +1,5 @@
 #!/bin/bash
-# GenuVerity Report Validation Script
+# GenuVerity Report Validation Script v2
 # Reports Instance - Run before every commit
 
 set -e
@@ -46,7 +46,7 @@ for ID in $IDS; do
     EXPECTED=$((EXPECTED + 1))
 done
 if [ $ID_ERROR -eq 0 ]; then
-    echo "   ✅ IDs are sequential (0-$((EXPECTED-1)))"
+    echo "   ✅ IDs are sequential ($((EXPECTED)) reports)"
 fi
 
 # 3. Check for relative path errors
@@ -74,7 +74,6 @@ fi
 # 5. Check Chart.js syntax
 echo "5️⃣  Checking Chart.js configuration..."
 if grep -q "new Chart(" "$REPORT_FILE"; then
-    # Check for common errors
     if grep -q "ticks:\s*$" "$REPORT_FILE"; then
         echo "   ❌ Found 'ticks:' without opening brace"
         ERRORS=$((ERRORS + 1))
@@ -97,8 +96,31 @@ else
     echo "   ✅ $INLINE_LINKS inline links found"
 fi
 
-# 7. Check for sources banner chevron
-echo "7️⃣  Checking sources banner chevron..."
+# 7. CRITICAL: Verify source URLs are accessible
+echo "7️⃣  🚨 VERIFYING SOURCE URLs (CRITICAL)..."
+BROKEN_URLS=0
+TOTAL_URLS=0
+
+while IFS= read -r url; do
+    TOTAL_URLS=$((TOTAL_URLS + 1))
+    HTTP_CODE=$(curl -o /dev/null -s -w "%{http_code}" -L --max-time 5 "$url" 2>/dev/null || echo "000")
+    
+    if [ "$HTTP_CODE" != "200" ]; then
+        echo "   ❌ BROKEN ($HTTP_CODE): $url"
+        BROKEN_URLS=$((BROKEN_URLS + 1))
+        ERRORS=$((ERRORS + 1))
+    fi
+done < <(grep -o 'href="https://[^"]*"' "$REPORT_FILE" | cut -d'"' -f2 | sort -u)
+
+if [ $BROKEN_URLS -eq 0 ]; then
+    echo "   ✅ All $TOTAL_URLS unique URLs accessible (HTTP 200)"
+else
+    echo "   ❌ $BROKEN_URLS of $TOTAL_URLS URLs are broken/inaccessible"
+    echo "   🚨 FIX REQUIRED: Replace broken URLs with working primary sources"
+fi
+
+# 8. Check for sources banner chevron
+echo "8️⃣  Checking sources banner chevron..."
 if grep -q 'data-lucide="chevron-down"' "$REPORT_FILE"; then
     echo "   ✅ Chevron icon found in sources banner"
 else
@@ -113,5 +135,8 @@ if [ $ERRORS -eq 0 ]; then
     exit 0
 else
     echo "❌ $ERRORS error(s) found. Fix before committing."
+    echo ""
+    echo "📌 REMINDER: EVERY source URL must resolve to accessible primary content"
+    echo "   NO homepages, NO 404s. Use working news articles if primary source broken."
     exit 1
 fi
