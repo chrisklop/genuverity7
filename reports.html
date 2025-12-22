@@ -14,8 +14,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Shared Reports Data -->
-    <script src="js/reports-data.js"></script>
+    <!-- Shared Reports Data (v param busts CDN cache on updates) -->
+    <script src="js/reports-data.js?v=3"></script>
+    <!-- Vercel Analytics -->
+    <script defer src="/_vercel/insights/script.js"></script>
     <style>
         /* === CORE VARIABLES === */
         :root {
@@ -321,13 +323,14 @@
             position: relative;
             z-index: 1;
             padding: 80px 0 40px;
-            overflow: hidden;
+            overflow: visible; /* Changed from hidden - required for 3D hit-testing */
             width: 100%;
         }
 
         .carousel-container {
             perspective: 1200px;
             perspective-origin: 50% 50%;
+            transform-style: preserve-3d; /* CRITICAL: Enables 3D hit-testing for children */
             height: 480px;
             display: flex;
             align-items: center;
@@ -367,6 +370,7 @@
             backface-visibility: hidden;
             transform-style: preserve-3d;
             pointer-events: auto;
+            user-select: none;
         }
 
         .carousel-card:hover {
@@ -1813,18 +1817,18 @@
 
                 // Add click handler directly to card
                 card.addEventListener('click', (e) => {
+                    // Don't interfere with CTA button clicks
+                    if (e.target.closest('.card-cta')) return;
+
                     // Ignore if this was a drag gesture
                     if (wasDragging) {
                         wasDragging = false;
                         return;
                     }
-                    // Don't interfere with CTA button clicks
-                    if (e.target.closest('.card-cta')) return;
 
                     const cardIndex = parseInt(card.dataset.index);
                     if (cardIndex !== currentCardIndex) {
                         // Background card - bring to focus
-                        e.preventDefault();
                         e.stopPropagation();
                         goToCard(cardIndex);
                     } else {
@@ -1875,7 +1879,9 @@
                 if (absOffset === 0) {
                     card.style.zIndex = 100;
                 } else {
-                    card.style.zIndex = 50 - absOffset;
+                    // Ensure background cards have higher z-index than base (10+)
+                    // but lower than active card, with closer cards on top
+                    card.style.zIndex = Math.max(10, 90 - (absOffset * 5));
                 }
 
                 // Enable pointer events for visible cards
@@ -1991,9 +1997,40 @@
                 if (hasDragged && Math.abs(diff) > 30) {
                     wasDragging = true; // Prevent click from firing
                     navigateCarousel(diff > 0 ? 1 : -1);
+                    // Reset wasDragging flag after a short delay to allow clicks again
+                    setTimeout(() => { wasDragging = false; }, 100);
+                } else if (!hasDragged) {
+                    // This was a click, not a drag - handle card selection
+                    // 3D transforms break native hit-testing, so we calculate position manually
+                    handleCarouselClick(e);
                 }
-                // Clicks are handled by card click listeners directly
             });
+
+            // Handle click on carousel by calculating which card was clicked
+            function handleCarouselClick(e) {
+                const containerRect = container.getBoundingClientRect();
+                const clickX = e.clientX - containerRect.left - (containerRect.width / 2);
+
+                // Each card is offset by ~280px from center
+                // Calculate which card was likely clicked based on X position
+                const cardSpacing = 280;
+                const clickedOffset = Math.round(clickX / cardSpacing);
+                const targetIndex = currentCardIndex + clickedOffset;
+
+                // Clamp to valid range
+                if (targetIndex >= 0 && targetIndex < totalCards) {
+                    if (targetIndex === currentCardIndex) {
+                        // Clicked on active card - navigate to report
+                        const report = reports[currentCardIndex];
+                        if (report) {
+                            window.location.href = report.slug;
+                        }
+                    } else {
+                        // Clicked on background card - bring to front
+                        goToCard(targetIndex);
+                    }
+                }
+            }
         }
 
         // Keyboard navigation

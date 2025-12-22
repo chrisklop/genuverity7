@@ -16,17 +16,19 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="GenuVerity - Fact Checking Traced to Primary Sources">
-    <meta property="og:description" content="The future of fact-checking. Every claim traced to its origin. Every source verified and linked.">
+    <meta property="og:description" content="The future of fact-checking. Every claim traced to primary sources. Transparent verification you can follow.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://genuverity7.vercel.app">
 
     <!-- Dependencies -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Shared Reports Data -->
-    <script src="js/reports-data.js"></script>
+    <!-- Shared Reports Data (v param busts CDN cache on updates) -->
+    <script src="js/reports-data.js?v=3"></script>
     <!-- Reading Progress Bar (auto-injects) -->
     <script src="js/reading-progress.js"></script>
+    <!-- Vercel Analytics -->
+    <script defer src="/_vercel/insights/script.js"></script>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -914,21 +916,6 @@
             color: var(--text-primary);
         }
 
-        /* Diagram container */
-        .diagram-container {
-            margin: 24px 0;
-            border-radius: 16px;
-            overflow: hidden;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-        }
-
-        .diagram-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
         /* Callout */
         .callout {
             background: rgba(59, 130, 246, 0.08);
@@ -1004,59 +991,6 @@
             border-radius: 50%;
             margin-top: 8px;
             flex-shrink: 0;
-        }
-
-        /* Trust scale */
-        .trust-scale {
-            display: flex;
-            gap: 12px;
-            margin: 24px 0;
-        }
-
-        .trust-tier {
-            flex: 1;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .trust-tier.high {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-
-        .trust-tier.medium {
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-
-        .trust-tier.low {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        .trust-tier h5 {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
-        }
-
-        .trust-tier.high h5 { color: #10b981; }
-        .trust-tier.medium h5 { color: #f59e0b; }
-        .trust-tier.low h5 { color: #ef4444; }
-
-        .trust-tier .score {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .trust-tier .sources {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 8px;
         }
 
         /* Verdict badges */
@@ -1179,10 +1113,6 @@
 
             .tech-stack {
                 grid-template-columns: 1fr;
-            }
-
-            .trust-scale {
-                flex-direction: column;
             }
         }
 
@@ -1411,6 +1341,385 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* ============================== */
+        /* DIAGRAM ANIMATIONS             */
+        /* ============================== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes barGrow {
+            from { width: 0; }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(6, 182, 212, 0.5); }
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: -200% 0; }
+            50% { background-position: 200% 0; }
+        }
+
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes stripes {
+            from { background-position: 0 0; }
+            to { background-position: 22px 0; }
+        }
+
+        /* ============================== */
+        /* COMPARISON DIAGRAM             */
+        /* ============================== */
+        .comparison-diagram {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .comparison-column {
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            animation: fadeInUp 0.6s ease-out both;
+            backdrop-filter: blur(10px);
+        }
+
+        .comparison-column.old {
+            animation-delay: 0.1s;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .comparison-column.new {
+            animation-delay: 0.3s;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .comparison-column.new::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(135deg, var(--verdict-true), var(--accent-cyan));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .comparison-column.new:hover::after { opacity: 1; }
+
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .comparison-column:hover .comparison-icon { transform: scale(1.1); }
+
+        .comparison-column.old .comparison-icon {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--verdict-false);
+        }
+
+        .comparison-column.new .comparison-icon {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(6, 182, 212, 0.3));
+            color: var(--verdict-true);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+        }
+
+        .comparison-title { font-weight: 700; font-size: 1.1rem; }
+
+        .comparison-list { list-style: none; }
+
+        .comparison-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            opacity: 0;
+            animation: slideIn 0.4s ease-out forwards;
+        }
+
+        .comparison-column.old .comparison-list li:nth-child(1) { animation-delay: 0.2s; }
+        .comparison-column.old .comparison-list li:nth-child(2) { animation-delay: 0.3s; }
+        .comparison-column.old .comparison-list li:nth-child(3) { animation-delay: 0.4s; }
+        .comparison-column.old .comparison-list li:nth-child(4) { animation-delay: 0.5s; }
+        .comparison-column.old .comparison-list li:nth-child(5) { animation-delay: 0.6s; }
+
+        .comparison-column.new .comparison-list li:nth-child(1) { animation-delay: 0.4s; }
+        .comparison-column.new .comparison-list li:nth-child(2) { animation-delay: 0.5s; }
+        .comparison-column.new .comparison-list li:nth-child(3) { animation-delay: 0.6s; }
+        .comparison-column.new .comparison-list li:nth-child(4) { animation-delay: 0.7s; }
+        .comparison-column.new .comparison-list li:nth-child(5) { animation-delay: 0.8s; }
+
+        .comparison-list li .icon { flex-shrink: 0; margin-top: 2px; transition: transform 0.2s; }
+        .comparison-list li:hover .icon { transform: scale(1.2); }
+        .comparison-column.old .comparison-list li .icon { color: var(--verdict-false); }
+        .comparison-column.new .comparison-list li .icon { color: var(--verdict-true); }
+
+        .source-emphasis {
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid var(--accent-blue);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ============================== */
+        /* FLOW PIPELINE                  */
+        /* ============================== */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 20px 0;
+            overflow-x: auto;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .flow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 100px;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .flow-step:nth-child(1) { animation-delay: 0.1s; }
+        .flow-step:nth-child(3) { animation-delay: 0.3s; }
+        .flow-step:nth-child(5) { animation-delay: 0.5s; }
+        .flow-step:nth-child(7) { animation-delay: 0.7s; }
+        .flow-step:nth-child(9) { animation-delay: 0.9s; }
+
+        .flow-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .flow-step:hover .flow-icon { transform: translateY(-6px) scale(1.05); }
+
+        .flow-step:nth-child(1) .flow-icon { background: linear-gradient(135deg, #ef4444, #f87171); box-shadow: 0 8px 32px rgba(239, 68, 68, 0.3); }
+        .flow-step:nth-child(3) .flow-icon { background: linear-gradient(135deg, #f59e0b, #fbbf24); box-shadow: 0 8px 32px rgba(245, 158, 11, 0.3); }
+        .flow-step:nth-child(5) .flow-icon { background: linear-gradient(135deg, #3b82f6, #60a5fa); box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3); }
+        .flow-step:nth-child(7) .flow-icon { background: linear-gradient(135deg, #06b6d4, #22d3ee); box-shadow: 0 8px 32px rgba(6, 182, 212, 0.3); }
+        .flow-step:nth-child(9) .flow-icon { background: linear-gradient(135deg, #10b981, #34d399); box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3); animation: glow 2s ease-in-out infinite; }
+
+        .flow-icon svg { color: white; }
+        .flow-label { font-weight: 600; font-size: 0.85rem; color: var(--text-primary); margin-bottom: 4px; }
+        .flow-sublabel { font-size: 0.7rem; color: var(--text-muted); }
+        .flow-arrow { color: var(--text-muted); flex-shrink: 0; opacity: 0; animation: fadeInUp 0.3s ease-out forwards; }
+        .flow-arrow:nth-child(2) { animation-delay: 0.2s; }
+        .flow-arrow:nth-child(4) { animation-delay: 0.4s; }
+        .flow-arrow:nth-child(6) { animation-delay: 0.6s; }
+        .flow-arrow:nth-child(8) { animation-delay: 0.8s; }
+
+        /* ============================== */
+        /* BENEFIT CARDS                  */
+        /* ============================== */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .benefit-card {
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 28px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .benefit-card:nth-child(1) { animation-delay: 0.1s; }
+        .benefit-card:nth-child(2) { animation-delay: 0.2s; }
+        .benefit-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .benefit-card:hover::before { opacity: 1; }
+
+        .benefit-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15);
+        }
+
+        .benefit-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: rgba(6, 182, 212, 0.1);
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .benefit-card:hover .benefit-icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.3);
+        }
+
+        .benefit-icon-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: spinSlow 80s linear infinite;
+        }
+
+        .benefit-icon-wrapper svg { color: var(--accent-cyan); transition: color 0.3s; }
+        .benefit-card:hover .benefit-icon-wrapper svg { color: var(--text-primary); }
+        .benefit-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 10px; }
+        .benefit-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+
+        /* ============================== */
+        /* SPEED COMPARISON (COMPACT)     */
+        /* ============================== */
+        .speed-compact {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 16px 24px;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            max-width: 700px;
+            margin: 32px auto 0;
+        }
+
+        .speed-item { display: flex; align-items: center; gap: 12px; flex: 1; }
+        .speed-item-label { font-size: 0.85rem; color: var(--text-secondary); white-space: nowrap; }
+
+        .speed-bar-inline {
+            flex: 1;
+            height: 24px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            min-width: 80px;
+        }
+
+        .speed-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .speed-item.traditional .speed-bar-fill {
+            width: 100%;
+            background: linear-gradient(90deg, #dc2626, #ef4444);
+            animation: barGrow 1.2s ease-out forwards;
+        }
+
+        .speed-item.traditional .speed-bar-fill::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(255,255,255,0.1) 8px, rgba(255,255,255,0.1) 16px);
+            animation: stripes 1s linear infinite;
+        }
+
+        .speed-item.genuverity .speed-bar-fill {
+            width: 15%;
+            background: linear-gradient(90deg, var(--verdict-true), var(--accent-cyan));
+            animation: barGrow 0.4s ease-out forwards;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .speed-time-label { font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
+        .speed-item.traditional .speed-time-label { color: var(--verdict-false); }
+        .speed-item.genuverity .speed-time-label { color: var(--verdict-true); }
+        .speed-divider { width: 1px; height: 32px; background: var(--border-color); }
+
+        @media (max-width: 768px) {
+            .comparison-diagram { grid-template-columns: 1fr; }
+            .benefits-grid { grid-template-columns: 1fr; }
+            .flow-diagram { flex-wrap: wrap; justify-content: center; gap: 16px; }
+            .flow-arrow { display: none; }
+            .speed-compact { flex-direction: column; gap: 12px; }
+            .speed-divider { width: 100%; height: 1px; }
+        }
     </style>
 </head>
 <body>
@@ -1468,7 +1777,7 @@
         <section class="hero">
             <div class="hero-eyebrow">
                 <span class="hero-eyebrow-dot"></span>
-                Building the Future of Fact-Checking
+                AI-Powered Investigative Journalism
             </div>
             <h1 class="hero-title">
                 <span class="hero-title-line1"><span class="genu">Genu</span><span class="verity">Verity</span></span>
@@ -1492,86 +1801,236 @@
             </div>
         </section>
 
-        <!-- Features -->
-        <section class="features">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i data-lucide="shield-check" style="width:24px;height:24px;"></i>
+        <!-- Comparison Diagram: Traditional vs GenuVerity -->
+        <section style="padding: 40px 20px;">
+            <div class="comparison-diagram">
+                <div class="comparison-column old">
+                    <div class="comparison-header">
+                        <div class="comparison-icon">
+                            <i data-lucide="clock" style="width:22px;height:22px;"></i>
+                        </div>
+                        <span class="comparison-title">Traditional Fact-Checking</span>
+                    </div>
+                    <ul class="comparison-list">
+                        <li>
+                            <i data-lucide="x" class="icon" style="width:16px;height:16px;"></i>
+                            <span>Days or weeks to publish</span>
+                        </li>
+                        <li>
+                            <i data-lucide="x" class="icon" style="width:16px;height:16px;"></i>
+                            <span>Sources buried in footnotes</span>
+                        </li>
+                        <li>
+                            <i data-lucide="x" class="icon" style="width:16px;height:16px;"></i>
+                            <span>Editorial bias concerns</span>
+                        </li>
+                        <li>
+                            <i data-lucide="x" class="icon" style="width:16px;height:16px;"></i>
+                            <span>Cherry-picked topics</span>
+                        </li>
+                        <li>
+                            <i data-lucide="x" class="icon" style="width:16px;height:16px;"></i>
+                            <span>"Trust us" methodology</span>
+                        </li>
+                    </ul>
                 </div>
-                <h3 class="feature-title">Sources First Philosophy</h3>
-                <p class="feature-desc">
-                    Primary sources displayed prominently before analysis. See exactly where evidence comes from before reading our conclusions.
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i data-lucide="search" style="width:24px;height:24px;"></i>
+                <div class="comparison-column new">
+                    <div class="comparison-header">
+                        <div class="comparison-icon">
+                            <i data-lucide="zap" style="width:22px;height:22px;"></i>
+                        </div>
+                        <span class="comparison-title">GenuVerity</span>
+                    </div>
+                    <ul class="comparison-list">
+                        <li>
+                            <i data-lucide="check" class="icon" style="width:16px;height:16px;"></i>
+                            <span>Real-time verification</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check" class="icon" style="width:16px;height:16px;"></i>
+                            <span>Sources displayed first</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check" class="icon" style="width:16px;height:16px;"></i>
+                            <span>Algorithmic objectivity</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check" class="icon" style="width:16px;height:16px;"></i>
+                            <span>Monitors all viral claims</span>
+                        </li>
+                        <li>
+                            <i data-lucide="check" class="icon" style="width:16px;height:16px;"></i>
+                            <span>Verify it yourself</span>
+                        </li>
+                    </ul>
+                    <div class="source-emphasis">
+                        <i data-lucide="external-link" style="width:16px;height:16px;"></i>
+                        Every source is clickable. Follow the links, and follow their sources too.
+                    </div>
                 </div>
-                <h3 class="feature-title">Deep Source Verification</h3>
-                <p class="feature-desc">
-                    Every claim is traced to primary sources with full citation chains. See exactly where the evidence comes from.
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i data-lucide="git-branch" style="width:24px;height:24px;"></i>
-                </div>
-                <h3 class="feature-title">Claim Genealogy Tracking</h3>
-                <p class="feature-desc">
-                    Track how misinformation mutates and spreads. Understand the origin and evolution of false narratives.
-                </p>
             </div>
         </section>
 
-        <!-- Our Principles Section -->
+        <!-- User Benefits -->
+        <section style="padding: 40px 20px;">
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrapper">
+                        <i data-lucide="clock" style="width:34px;height:34px;"></i>
+                    </div>
+                    <h3 class="benefit-title">Stop Spreading Lies</h3>
+                    <p class="benefit-desc">Verify claims before you share. Know the truth in minutes, not days.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrapper">
+                        <i data-lucide="mouse-pointer-click" style="width:34px;height:34px;"></i>
+                    </div>
+                    <h3 class="benefit-title">Click Every Source</h3>
+                    <p class="benefit-desc">Every source is linked. Don't trust our summary—read the originals yourself.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrapper">
+                        <i data-lucide="shield-check" style="width:34px;height:34px;"></i>
+                    </div>
+                    <h3 class="benefit-title">No Hidden Agenda</h3>
+                    <p class="benefit-desc">AI doesn't have political bias. Just evidence, analyzed objectively.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Algorithmic Objectivity Section -->
         <section class="constitutional-section" id="learn-more">
             <div class="section-label">
-                <i data-lucide="scale" style="width:14px;height:14px;"></i>
-                Our Approach
+                <i data-lucide="cpu" style="width:14px;height:14px;"></i>
+                What Makes Us Different
             </div>
-            <h2 class="section-title">Our Verification Principles</h2>
+            <h2 class="section-title">Algorithmic Objectivity</h2>
             <p class="section-desc">
-                GenuVerity follows explicit principles that guide every investigation. Every fact-check comes with a transparent audit trail so you can verify our work.
+                GenuVerity continuously monitors breaking news, viral claims, and contested topics. When misinformation spreads, our AI generates comprehensive fact-checks in real time—verified against primary sources, free from editorial bias.
             </p>
 
             <div class="principles-grid">
                 <div class="principle-card">
-                    <div class="principle-number">1</div>
+                    <div class="principle-number"><i data-lucide="zap" style="width:18px;height:18px;"></i></div>
                     <div class="principle-content">
-                        <h4>Source Primacy</h4>
-                        <p>Primary sources always take precedence. We trace claims to their origin, not just secondary reporting.</p>
+                        <h4>Always-On Verification</h4>
+                        <p>No waiting for fact-checkers to catch up. GenuVerity detects viral claims as they emerge and delivers verdicts before misinformation can take root.</p>
                     </div>
                 </div>
                 <div class="principle-card">
-                    <div class="principle-number">2</div>
+                    <div class="principle-number"><i data-lucide="scale" style="width:18px;height:18px;"></i></div>
                     <div class="principle-content">
-                        <h4>Epistemic Humility</h4>
-                        <p>When evidence is uncertain, we say so. No false confidence. Clear confidence intervals on every verdict.</p>
+                        <h4>Just the Facts</h4>
+                        <p>Algorithms don't have political leanings, personal agendas, or emotional reactions. Every report follows the evidence—wherever it leads.</p>
                     </div>
                 </div>
                 <div class="principle-card">
-                    <div class="principle-number">3</div>
+                    <div class="principle-number"><i data-lucide="eye" style="width:18px;height:18px;"></i></div>
                     <div class="principle-content">
-                        <h4>Reasoning Transparency</h4>
-                        <p>See exactly how conclusions were reached. Every logical step is documented and challengeable.</p>
+                        <h4>Full Transparency</h4>
+                        <p>See exactly how conclusions were reached. Every source is linked, every logical step documented, every verdict challengeable.</p>
                     </div>
                 </div>
                 <div class="principle-card">
-                    <div class="principle-number">4</div>
+                    <div class="principle-number"><i data-lucide="shield-check" style="width:18px;height:18px;"></i></div>
                     <div class="principle-content">
-                        <h4>Adversarial Review</h4>
-                        <p>Our AI actively searches for evidence against its initial conclusions, not just confirmation.</p>
+                        <h4>Primary Sources First</h4>
+                        <p>We trace claims to their origin—government documents, research papers, official statements—not just secondary reporting.</p>
+                    </div>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-number"><i data-lucide="target" style="width:18px;height:18px;"></i></div>
+                    <div class="principle-content">
+                        <h4>Origin Tracing</h4>
+                        <p>We identify when and where disinformation first appeared—pinpointing bot injections, coordinated campaigns, and patient zero posts.</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Claim-to-Verdict Pipeline -->
+            <div class="flow-diagram" style="margin-top: 40px;">
+                <div class="flow-step">
+                    <div class="flow-icon">
+                        <i data-lucide="radar" style="width:28px;height:28px;"></i>
+                    </div>
+                    <span class="flow-label">Viral Claim Found</span>
+                    <span class="flow-sublabel">Spreading online</span>
+                </div>
+                <div class="flow-arrow">
+                    <i data-lucide="chevron-right" style="width:22px;height:22px;"></i>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-icon">
+                        <i data-lucide="search" style="width:28px;height:28px;"></i>
+                    </div>
+                    <span class="flow-label">Sources Found</span>
+                    <span class="flow-sublabel">Primary documents</span>
+                </div>
+                <div class="flow-arrow">
+                    <i data-lucide="chevron-right" style="width:22px;height:22px;"></i>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-icon">
+                        <i data-lucide="shield" style="width:28px;height:28px;"></i>
+                    </div>
+                    <span class="flow-label">Trust Scored</span>
+                    <span class="flow-sublabel">Credibility rated</span>
+                </div>
+                <div class="flow-arrow">
+                    <i data-lucide="chevron-right" style="width:22px;height:22px;"></i>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-icon">
+                        <i data-lucide="cpu" style="width:28px;height:28px;"></i>
+                    </div>
+                    <span class="flow-label">AI Analysis</span>
+                    <span class="flow-sublabel">Evidence weighed</span>
+                </div>
+                <div class="flow-arrow">
+                    <i data-lucide="chevron-right" style="width:22px;height:22px;"></i>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-icon">
+                        <i data-lucide="check-circle" style="width:28px;height:28px;"></i>
+                    </div>
+                    <span class="flow-label">Verdict + Sources</span>
+                    <span class="flow-sublabel">You verify</span>
+                </div>
+            </div>
+
+            <!-- Speed Comparison -->
+            <div class="speed-compact">
+                <div class="speed-item traditional">
+                    <span class="speed-item-label">Traditional</span>
+                    <div class="speed-bar-inline">
+                        <div class="speed-bar-fill"></div>
+                    </div>
+                    <span class="speed-time-label">2-7 days</span>
+                </div>
+                <div class="speed-divider"></div>
+                <div class="speed-item genuverity">
+                    <span class="speed-item-label">GenuVerity</span>
+                    <div class="speed-bar-inline">
+                        <div class="speed-bar-fill"></div>
+                    </div>
+                    <span class="speed-time-label">Minutes</span>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 32px;">
+                <a href="methodology.html" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 8px;">
+                    <i data-lucide="book-open" style="width:16px;height:16px;"></i>
+                    Learn More About Our Methodology
+                </a>
+            </div>
         </section>
 
-        <!-- Notify Section -->
-        <section class="notify-section" id="notify">
-            <h3 class="notify-title">Be the First to Know</h3>
+        <!-- Early Access Signup -->
+        <section class="notify-section" id="notify" style="margin: 60px auto 0;">
+            <h3 class="notify-title">Join the Truth Movement</h3>
             <div class="notify-discount">
-                <i data-lucide="tag" style="width:14px;height:14px;"></i>
-                Early access members get a steep discount at launch
+                <i data-lucide="shield-check" style="width:14px;height:14px;"></i>
+                Be a founding member of the next generation of fact-checking
             </div>
             <form class="notify-form" onsubmit="handleWaitlistSubmit(event)">
                 <div class="notify-fields">
@@ -1581,323 +2040,12 @@
                         <textarea class="notify-textarea" id="notify-usecase" placeholder="e.g., Verify news before sharing, research for journalism, fact-check social media claims..."></textarea>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary" id="notify-btn">
-                    <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
-                    Join Waitlist
+                <button type="submit" class="btn btn-glow btn-reports" id="notify-btn">
+                    <i data-lucide="zap" style="width:18px;height:18px;"></i>
+                    Claim My Spot
                 </button>
             </form>
             <p class="notify-success" id="notify-success" style="display:none; color: var(--verdict-true); margin-top: 16px;"></p>
-        </section>
-
-        <!-- ============================================ -->
-        <!-- METHODS SECTION - Integrated from methods.html -->
-        <!-- ============================================ -->
-        <div class="methods-section" id="how-it-works">
-            <!-- Divider -->
-            <div class="methods-divider">
-                <div class="methods-divider-line"></div>
-                <div class="methods-divider-badge">
-                    <i data-lucide="book-open" style="width:16px;height:16px;"></i>
-                    How GenuVerity Works
-                </div>
-            </div>
-
-            <!-- Sources First Philosophy -->
-            <section class="method-section">
-                <div class="method-header">
-                    <div class="method-icon">
-                        <i data-lucide="compass" style="width:24px;height:24px;"></i>
-                    </div>
-                    <div>
-                        <h2 class="method-title">Sources First Philosophy</h2>
-                        <p class="method-subtitle">Transparency at the core of every investigation</p>
-                    </div>
-                </div>
-                <div class="method-content">
-                    <p>GenuVerity inverts the traditional journalism model. Instead of burying sources in footnotes, we display them <strong>prominently above the content</strong>. Every report opens with a tabbed Sources panel showing exactly where our information comes from.</p>
-
-                    <div class="callout">
-                        <p>"Trust is built through transparency. When readers can see and verify our sources before reading our analysis, they become active participants in the investigation rather than passive consumers."</p>
-                    </div>
-
-                    <div class="method-card-grid">
-                        <div class="method-feature-card">
-                            <h4><i data-lucide="eye" style="width:16px;height:16px;color:var(--accent-blue)"></i> Visible Sources</h4>
-                            <p>Primary sources displayed in a collapsible banner above every report, organized by trust score.</p>
-                        </div>
-                        <div class="method-feature-card">
-                            <h4><i data-lucide="link" style="width:16px;height:16px;color:var(--accent-green)"></i> Direct Links</h4>
-                            <p>Every citation links directly to the original source document, not to an intermediary.</p>
-                        </div>
-                        <div class="method-feature-card">
-                            <h4><i data-lucide="bar-chart-3" style="width:16px;height:16px;color:var(--accent-teal)"></i> Trust Scores</h4>
-                            <p>Algorithmic assessment of source credibility based on domain reputation and historical accuracy.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Investigation Mode -->
-            <section class="method-section">
-                <div class="method-header">
-                    <div class="method-icon">
-                        <i data-lucide="search" style="width:24px;height:24px;"></i>
-                    </div>
-                    <div>
-                        <h2 class="method-title">Investigation Mode</h2>
-                        <p class="method-subtitle">Deep-dive research on any topic</p>
-                    </div>
-                </div>
-                <div class="method-content">
-                    <p>Enter any topic and GenuVerity generates a comprehensive investigative report. Our system combines real-time web search with advanced AI analysis to produce data-driven, source-backed journalism.</p>
-
-                    <div class="diagram-container">
-                        <img src="infographics/methods/investigation_pipeline.png" alt="Investigation Pipeline - showing flow from User Query through Web Search, Source Verification, Trust Scoring, AI Analysis, Data Visualization to Final Report" loading="lazy">
-                    </div>
-
-                    <h4 style="font-size: 1.1rem; font-weight: 600; margin: 24px 0 16px; color: var(--text-primary);">What You Get</h4>
-                    <ul class="styled-list">
-                        <li><span class="bullet"></span><strong>Executive Summary</strong> — Key findings distilled into actionable insights</li>
-                        <li><span class="bullet"></span><strong>Data Visualizations</strong> — AI-generated infographics in Midnight Tech style</li>
-                        <li><span class="bullet"></span><strong>Fractal Triggers</strong> — Expandable context on key terms, people, and organizations</li>
-                        <li><span class="bullet"></span><strong>Citation Spades</strong> — Hover any spade to see source details and trust scores</li>
-                        <li><span class="bullet"></span><strong>Living Numbers</strong> — Animated statistics that draw attention to key data points</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Fact Check Mode -->
-            <section class="method-section">
-                <div class="method-header">
-                    <div class="method-icon teal">
-                        <i data-lucide="scale" style="width:24px;height:24px;"></i>
-                    </div>
-                    <div>
-                        <h2 class="method-title">Fact Check Mode</h2>
-                        <p class="method-subtitle">Verify claims with evidence-based verdicts</p>
-                    </div>
-                </div>
-                <div class="method-content">
-                    <p>Paste any claim, quote, or statement and GenuVerity will analyze it against verified sources. Our system produces a clear verdict with supporting evidence, prior fact checks from professional organizations, and a detailed claims breakdown.</p>
-
-                    <h4 style="font-size: 1.1rem; font-weight: 600; margin: 24px 0 16px; color: var(--text-primary);">Verdict Scale</h4>
-                    <div class="verdict-examples">
-                        <span class="verdict-badge true">True</span>
-                        <span class="verdict-badge mostly-true">Mostly True</span>
-                        <span class="verdict-badge mixed">Mixed</span>
-                        <span class="verdict-badge mostly-false">Mostly False</span>
-                        <span class="verdict-badge false">False</span>
-                    </div>
-
-                    <div class="diagram-container">
-                        <img src="infographics/methods/fact_check_pipeline.png" alt="Fact Check Pipeline - showing flow from Claim Input through Prior Fact Checks, Professional Reviews, Web Search, AI Analysis, Evidence Compilation to Verdict" loading="lazy">
-                    </div>
-
-                    <div class="method-card-grid">
-                        <div class="method-feature-card">
-                            <h4><i data-lucide="check-circle-2" style="width:16px;height:16px;color:var(--accent-teal)"></i> Claims Tab</h4>
-                            <p>Individual claim breakdown with per-claim verdicts and evidence citations.</p>
-                        </div>
-                        <div class="method-feature-card">
-                            <h4><i data-lucide="file-search" style="width:16px;height:16px;color:var(--accent-teal)"></i> Evidence Tab</h4>
-                            <p>Supporting and contradicting evidence organized for easy review.</p>
-                        </div>
-                        <div class="method-feature-card">
-                            <h4><i data-lucide="history" style="width:16px;height:16px;color:var(--accent-teal)"></i> Pro Checks Tab</h4>
-                            <p>Prior fact checks from Snopes, PolitiFact, and other professional fact-checkers.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Fractal Analysis -->
-            <section class="method-section">
-                <div class="method-header">
-                    <div class="method-icon green">
-                        <i data-lucide="layers" style="width:24px;height:24px;"></i>
-                    </div>
-                    <div>
-                        <h2 class="method-title">Fractal Analysis</h2>
-                        <p class="method-subtitle">Coming Soon — Explore infinitely deeper into any topic</p>
-                    </div>
-                </div>
-                <div class="method-content">
-                    <p><em style="color: var(--accent-cyan);">This feature is currently in development and will be available in a future release.</em></p>
-                    <p>Every report will contain <strong>fractal triggers</strong> — underlined terms that expand to reveal context. Click the <code>+</code> button to queue a full Fractal Analysis on any related topic. Research continues in the background while you keep reading.</p>
-
-                    <div class="diagram-container">
-                        <img src="infographics/methods/fractal_research_flow.png" alt="Fractal Trigger Flow - showing parent report with fractal triggers leading to child reports in a branching pattern" loading="lazy">
-                    </div>
-
-                    <ul class="styled-list">
-                        <li><span class="bullet"></span><strong>Parent/Child Relationships</strong> — Fractal analyses link back to their source report for context</li>
-                        <li><span class="bullet"></span><strong>Queue System</strong> — Up to 5 concurrent generations, tracked in Research Status panel</li>
-                        <li><span class="bullet"></span><strong>Non-Blocking UX</strong> — Continue browsing while reports generate in background</li>
-                        <li><span class="bullet"></span><strong>50+ Triggers Per Report</strong> — Extensive opportunities for deeper exploration</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Trust Scoring -->
-            <section class="method-section">
-                <div class="method-header">
-                    <div class="method-icon warm">
-                        <i data-lucide="shield" style="width:24px;height:24px;"></i>
-                    </div>
-                    <div>
-                        <h2 class="method-title">Source Trust Scoring</h2>
-                        <p class="method-subtitle">Algorithmic credibility assessment</p>
-                    </div>
-                </div>
-                <div class="method-content">
-                    <p>Every source in GenuVerity receives a trust score based on domain reputation, historical accuracy, editorial standards, and transparency practices. Scores are displayed throughout the interface with color-coded indicators.</p>
-
-                    <div class="diagram-container">
-                        <img src="infographics/methods/trust_scoring_tiers.png" alt="Trust Scoring Tiers - Tier 1 (85-100) High Trust in green, Tier 2 (70-84) Medium Trust in amber, Tier 3 (below 70) Lower Trust in red" loading="lazy">
-                    </div>
-
-                    <div class="trust-scale">
-                        <div class="trust-tier high">
-                            <h5>Tier 1</h5>
-                            <div class="score">85-100</div>
-                            <div class="sources">Reuters, AP, NYT, WSJ, .gov, .edu</div>
-                        </div>
-                        <div class="trust-tier medium">
-                            <h5>Tier 2</h5>
-                            <div class="score">70-84</div>
-                            <div class="sources">CNN, Forbes, ProPublica, BBC</div>
-                        </div>
-                        <div class="trust-tier low">
-                            <h5>Tier 3</h5>
-                            <div class="score">Below 70</div>
-                            <div class="sources">Blogs, Opinion Sites, Unverified</div>
-                        </div>
-                    </div>
-
-                    <p>Sources are sorted by trust score in the Sources panel, so the most credible information appears first. Low-trust sources are still included for completeness but are clearly marked.</p>
-                </div>
-            </section>
-
-            <!-- Technology Stack -->
-            <section class="method-section">
-                <div class="method-header">
-                    <div class="method-icon">
-                        <i data-lucide="cpu" style="width:24px;height:24px;"></i>
-                    </div>
-                    <div>
-                        <h2 class="method-title">Technology Stack</h2>
-                        <p class="method-subtitle">The AI systems powering GenuVerity</p>
-                    </div>
-                </div>
-                <div class="method-content">
-                    <div class="diagram-container">
-                        <img src="infographics/methods/technology_stack.png" alt="Technology Stack - Text AI for report generation, Image AI for infographics, Search API for source verification" loading="lazy">
-                    </div>
-
-                    <div class="tech-stack">
-                        <div class="tech-item">
-                            <div class="tech-icon" style="background: #f59e0b;">
-                                <i data-lucide="brain" style="width:24px;height:24px;color:white"></i>
-                            </div>
-                            <h5>Text Analysis AI</h5>
-                            <p>Advanced language model for report generation, analysis, and fact verification</p>
-                        </div>
-                        <div class="tech-item">
-                            <div class="tech-icon" style="background: #4285f4;">
-                                <i data-lucide="image" style="width:24px;height:24px;color:white"></i>
-                            </div>
-                            <h5>Image Generation AI</h5>
-                            <p>Multimodal AI for data visualization and infographic generation</p>
-                        </div>
-                        <div class="tech-item">
-                            <div class="tech-icon" style="background: #06b6d4;">
-                                <i data-lucide="search" style="width:24px;height:24px;color:white"></i>
-                            </div>
-                            <h5>Web Search API</h5>
-                            <p>Real-time web search for finding verified source URLs</p>
-                        </div>
-                    </div>
-
-                    <div class="callout">
-                        <p>All infographics are generated in our proprietary <strong>Midnight Tech</strong> visual style — dark gradients, electric blue accents, and clean data visualization designed for investigative journalism.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Nuance Measurement -->
-            <section class="method-section">
-                <div class="method-header">
-                    <div class="method-icon warm">
-                        <i data-lucide="gauge" style="width:24px;height:24px;"></i>
-                    </div>
-                    <div>
-                        <h2 class="method-title">Nuance Measurement</h2>
-                        <p class="method-subtitle">Avoiding oversimplification</p>
-                    </div>
-                </div>
-                <div class="method-content">
-                    <p>Complex issues rarely have simple answers. GenuVerity is designed to preserve nuance rather than flatten it. Our approach measures and presents multiple dimensions of contested topics.</p>
-
-                    <div class="method-card-grid">
-                        <div class="method-feature-card">
-                            <h4><i data-lucide="scale" style="width:16px;height:16px;color:var(--accent-warm)"></i> Mixed Verdicts</h4>
-                            <p>Fact checks can return MIXED, MOSTLY TRUE, or MOSTLY FALSE — not just binary TRUE/FALSE when evidence is complex.</p>
-                        </div>
-                        <div class="method-feature-card">
-                            <h4><i data-lucide="git-branch" style="width:16px;height:16px;color:var(--accent-warm)"></i> Competing Viewpoints</h4>
-                            <p>Evidence tabs show both supporting AND contradicting points, letting readers weigh the full picture.</p>
-                        </div>
-                        <div class="method-feature-card">
-                            <h4><i data-lucide="info" style="width:16px;height:16px;color:var(--accent-warm)"></i> Context Matters</h4>
-                            <p>Context tabs provide historical background and situational factors that affect interpretation.</p>
-                        </div>
-                    </div>
-
-                    <div class="callout">
-                        <p>"A claim can be technically true but misleading, or technically false but directionally correct. Our verdicts account for these distinctions with explanatory nuance summaries."</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Known Limitations -->
-            <section class="method-section">
-                <div class="method-header">
-                    <div class="method-icon gray">
-                        <i data-lucide="alert-triangle" style="width:24px;height:24px;"></i>
-                    </div>
-                    <div>
-                        <h2 class="method-title">Known Limitations</h2>
-                        <p class="method-subtitle">What we can't do (yet)</p>
-                    </div>
-                </div>
-                <div class="method-content">
-                    <p>Transparency requires acknowledging boundaries. Here's what GenuVerity does well and where it has limitations:</p>
-
-                    <ul class="styled-list">
-                        <li><span class="bullet"></span><strong>Real-Time Lag</strong> — Live search typically reflects web content from the past few hours to days. Breaking news from the last few minutes may not be indexed yet.</li>
-                        <li><span class="bullet"></span><strong>Paywalled Sources</strong> — We cannot access content behind paywalls. Articles from premium publications may only include publicly available excerpts.</li>
-                        <li><span class="bullet"></span><strong>Non-English Sources</strong> — Our search and analysis primarily covers English-language sources. International perspectives may be underrepresented.</li>
-                        <li><span class="bullet"></span><strong>Visual Verification</strong> — We cannot verify images or videos. Deepfake detection and visual media authentication are beyond current capabilities.</li>
-                        <li><span class="bullet"></span><strong>Primary Source Access</strong> — We rely on published sources. We cannot conduct interviews, file FOIA requests, or access unpublished documents.</li>
-                        <li><span class="bullet"></span><strong>AI Hallucination Risk</strong> — While we use real search results and verified sources, AI analysis may occasionally misinterpret or overstate conclusions. Always verify critical claims through original sources.</li>
-                    </ul>
-
-                    <div class="callout">
-                        <p>GenuVerity is a research assistant, not a replacement for professional journalism, legal advice, or medical consultation. Use our analyses as a starting point for your own investigation.</p>
-                    </div>
-                </div>
-            </section>
-
-        </div>
-
-        <!-- Final CTA - Outside methods-section for proper centering -->
-        <section class="notify-section" style="margin: 60px auto 0;">
-            <h3 class="notify-title">Ready to Try It?</h3>
-            <p class="notify-desc">Join our waitlist for early access and be among the first to experience fact-checking with full source transparency.</p>
-            <a href="#notify" class="btn btn-primary">
-                <i data-lucide="bell" style="width:18px;height:18px;"></i>
-                Get Early Access
-            </a>
         </section>
     </main>
 
@@ -1921,8 +2069,9 @@
         </p>
         <div class="footer-links">
             <a href="mailto:hello@genuverity.com" class="footer-link">Contact</a>
+            <a href="methodology.html" class="footer-link">Methodology</a>
+            <a href="transparency.html" class="footer-link">Transparency</a>
             <a href="#" class="footer-link">Privacy</a>
-            <a href="#" class="footer-link">Terms</a>
         </div>
     </footer>
 
