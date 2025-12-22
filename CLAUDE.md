@@ -73,10 +73,11 @@ When uncertain, ASK the user which role you should follow.
    - **ALWAYS verify** with: `node -c js/reports-data.js` before commit
    - **ALWAYS check** sequential IDs: `grep -n "^\s*id:" js/reports-data.js | head -45`
 3. Add metadata entry to `js/reports-data.js` array (new entry at position 0)
-4. Verify JavaScript syntax is valid (no duplicate keys)
-5. `git add localreports/your-report.html js/reports-data.js`
-6. `git commit` and `git push`
-7. Done - tiles render automatically from REPORTS_DATA
+4. **RUN VALIDATION SCRIPT:** `./validate-report.sh localreports/your-report.html`
+5. Fix any errors flagged by the validator
+6. `git add localreports/your-report.html js/reports-data.js`
+7. `git commit` and `git push`
+8. Done - tiles render automatically from REPORTS_DATA
 
 **DO NOT:**
 - Edit `reports.html` - tiles are generated dynamically via JavaScript
