@@ -65,14 +65,23 @@ When uncertain, ASK the user which role you should follow.
 ### Reports Instance - Workflow
 **To add a new report:**
 1. Create report HTML file in `localreports/your-report-slug.html`
-2. Add metadata entry to `js/reports-data.js` array
-3. `git add localreports/your-report.html js/reports-data.js`
-4. `git commit` and `git push`
-5. Done - tiles render automatically from REPORTS_DATA
+2. **CRITICAL ID MANAGEMENT:**
+   - New reports go at ID 0 (top of array)
+   - Manually increment ALL existing IDs by +1
+   - **NEVER use automation** (perl/sed/regex) - causes duplicate `id:` keys
+   - Use `multi_replace_file_content` with explicit chunks OR Python script
+   - **ALWAYS verify** with: `node -c js/reports-data.js` before commit
+   - **ALWAYS check** sequential IDs: `grep -n "^\s*id:" js/reports-data.js | head -45`
+3. Add metadata entry to `js/reports-data.js` array (new entry at position 0)
+4. Verify JavaScript syntax is valid (no duplicate keys)
+5. `git add localreports/your-report.html js/reports-data.js`
+6. `git commit` and `git push`
+7. Done - tiles render automatically from REPORTS_DATA
 
 **DO NOT:**
 - Edit `reports.html` - tiles are generated dynamically via JavaScript
 - Run `vercel --prod` - let GitHub auto-deploy or ask Architecture Instance
+- Use perl/sed one-liners for ID increments (creates `id: id: N,` syntax errors)
 
 ### Architecture Instance - Git Boundaries (HARDCODED)
 **ONLY commit/push these paths:**
@@ -280,6 +289,8 @@ Reports should include these shared scripts (auto-inject features):
 
 ## Templates Reference
 
+**Master Template**: `docs/report-template.html` - Use this as the starting point for ALL new reports.
+
 **See `docs/templates.md` for complete templates including:**
 - Content report HTML structure
 - Source citation standards
@@ -287,15 +298,37 @@ Reports should include these shared scripts (auto-inject features):
 - Chart.js configuration
 - Pre-generation checklists
 
+### Verdict Badge System (REQUIRED for all fact-checks)
+
+Every fact-check report MUST include a verdict badge with the appropriate styling:
+
+| Verdict | When to Use | Color | Icon | Classes |
+|---------|-------------|-------|------|---------|
+| **FALSE** | Factually incorrect, debunked | Red `#ef4444` | `x-circle` | `badge-false`, `verdict-false` |
+| **TRUE** | Factually correct, verified | Green `#10b981` | `check-circle` | `badge-true`, `verdict-true` |
+| **MISLEADING** | Contains truth but misleads | Amber `#f59e0b` | `alert-triangle` | `badge-misleading`, `verdict-misleading` |
+| **MIXED** | Partially true, partially false | Cyan `#06b6d4` | `circle-help` | `badge-mixed`, `verdict-mixed` |
+| **UNVERIFIED** | Cannot verify either way | Blue `#3b82f6` | `circle-help` | `badge-unverified`, `verdict-unverified` |
+| **DEVELOPING** | Ongoing story, new info emerging | Cyan `#06b6d4` | `clock` | `badge-developing`, `verdict-developing` |
+| **CONTEXT NEEDED** | Nuanced, requires critical thinking | Amber `#f59e0b` | `book-open` | `badge-context`, `verdict-context` |
+
+**Example FALSE verdict badge:**
+```html
+<div class="verdict-badge badge-false">
+    <i data-lucide="x-circle" style="width: 28px; height: 28px;"></i>
+    <span>FALSE</span>
+</div>
+```
+
 **Quick Reference - Color Palette:**
 
 | Use | Color | Hex |
 |-----|-------|-----|
 | Primary accent | Blue | `#3b82f6` |
 | Secondary accent | Cyan | `#06b6d4` |
-| Success/Green | Green | `#10b981` |
-| Warning | Amber | `#f59e0b` |
-| Danger/False | Red | `#FF2A2A` |
+| Success/True | Green | `#10b981` |
+| Warning/Misleading | Amber | `#f59e0b` |
+| Danger/False | Red | `#ef4444` |
 | **FORBIDDEN** | Purple | `#8b5cf6` - NEVER USE |
 
 **Quick Reference - GenuVerity Branding:**
