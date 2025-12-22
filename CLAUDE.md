@@ -83,6 +83,44 @@ When uncertain, ASK the user which role you should follow.
 - Run `vercel --prod` - let GitHub auto-deploy or ask Architecture Instance
 - Use perl/sed one-liners for ID increments (creates `id: id: N,` syntax errors)
 
+### ⚠️ MANDATORY PRE-COMMIT VALIDATION (Reports Instance)
+**Before EVERY `git commit` of a new report, run these checks:**
+
+```bash
+# 1. Validate JavaScript syntax
+node -c js/reports-data.js
+
+# 2. Verify sequential IDs (0, 1, 2, 3...)
+grep -n "^\s*id:" js/reports-data.js | head -45
+
+# 3. Check for relative path errors in new report
+grep -E 'href="(index\.html|reports\.html)"' localreports/your-new-report.html
+# Should return NOTHING - all paths must use ../
+
+# 4. Verify no manual copyable-section classes
+grep "copyable-section" localreports/your-new-report.html
+# Should ONLY appear in CSS, not in HTML elements
+
+# 5. Check Chart.js syntax if charts present
+# Look for missing braces { } in chart config
+```
+
+**HTML Report Quality Checklist:**
+- [ ] All navbar links use `../` prefix (e.g., `href="../index.html"`)
+- [ ] Chart.js config has proper `{ }` braces for all objects
+- [ ] NO manual `class="copyable-section"` on HTML elements (JS auto-adds it)
+- [ ] NO typos in JavaScript (e.g., `functio n` → `function`)
+- [ ] 8+ inline links to primary sources throughout content
+- [ ] All external links verified accessible (no 404s)
+- [ ] Chevron icon in sources banner (`data-lucide="chevron-down"`)
+- [ ] Chart watermark plugin registered globally
+
+**Common Pitfalls:**
+1. **Path Errors**: Files in `/localreports/` must use `../` to access root files
+2. **JavaScript Typos**: Space in `functio n`, missing braces, etc. break charts
+3. **Auto-Init Conflicts**: Adding `copyable-section` class prevents button auto-injection
+4. **ID Duplication**: Using automation creates `id: id: 3,` syntax
+
 ### Architecture Instance - Git Boundaries (HARDCODED)
 **ONLY commit/push these paths:**
 - `api/*`
