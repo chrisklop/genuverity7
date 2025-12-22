@@ -81,7 +81,7 @@ const REPORTS_DATA = [
         excerpt: "U.S. military strike near Venezuela killed survivors 'shirtless and struggling in the water.' Bipartisan outcry over transparency. Pentagon refuses to release video."
     },
     {
-        id: 7,
+        id: 6,
         title: "US Inflation: A Decade of Price Changes (2015-2025)",
         slug: "localreports/us-inflation-10-year-analysis.html",
         category: "Economic Analysis",
@@ -94,7 +94,7 @@ const REPORTS_DATA = [
         excerpt: "From pre-pandemic stability to 9.1% peak and back down to 2.7%. How COVID-19 reshaped US prices and how recovery compares to G7 peers. Interactive charts included."
     },
     {
-        id: 6,
+        id: 7,
         title: "Epstein Files: What December 2025 Release Actually Shows",
         slug: "localreports/epstein-documents-2025.html",
         category: "Document Analysis",
