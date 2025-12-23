@@ -797,59 +797,160 @@
             color: #ef6b5b;
         }
 
-        /* === BENEFITS SECTION === */
-        .benefits-section {
-            padding: 60px 40px;
-            max-width: 1200px;
+        /* === CONSTITUTIONAL SECTION === */
+        .constitutional-section {
+            padding: 80px 24px;
+            text-align: center;
+            background: var(--bg-primary);
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-blue);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 60px;
+            line-height: 1.7;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            text-align: left;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .benefit-card {
+        .principle-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 32px;
-            text-align: center;
+            padding: 24px;
+            display: flex;
+            gap: 20px;
             transition: all 0.3s;
         }
 
-        .benefit-card:hover {
-            border-color: var(--accent-cyan);
-            transform: translateY(-4px);
+        .principle-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
         }
 
-        .benefit-icon-wrapper {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
+        .principle-number {
+            width: 40px;
+            height: 40px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-blue);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(6, 182, 212, 0.1);
+            flex-shrink: 0;
         }
 
-        .benefit-icon-wrapper i {
-            color: var(--accent-cyan);
-        }
-
-        .benefit-title {
+        .principle-content h4 {
+            color: white;
+            margin-bottom: 8px;
             font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .benefit-desc {
+        .principle-content p {
             font-size: 0.9rem;
             color: var(--text-secondary);
             line-height: 1.6;
+            margin-bottom: 0;
         }
+
+        /* Coming Soon Badge */
+        .badge-coming-soon {
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        /* Flow Diagram */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 60px;
+        }
+
+        .flow-step {
+            text-align: center;
+            width: 120px;
+        }
+
+        .flow-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-blue);
+        }
+
+        .flow-step:last-child .flow-icon {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .flow-label {
+            display: block;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .flow-sublabel {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .flow-arrow {
+            color: var(--border-color);
+        }
+
+
 
         /* === FOOTER === */
         .footer {
@@ -1173,31 +1274,84 @@
             </div>
         </section>
 
-        <!-- Benefits Section -->
-        <section class="benefits-section">
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-icon-wrapper">
-                        <i data-lucide="clock" style="width:28px;height:28px;"></i>
+        <!-- Algorithmic Objectivity -->
+        <section class="constitutional-section" id="how-it-works">
+            <div class="section-label">
+                <i data-lucide="cpu" style="width:14px;height:14px;"></i>
+                What Makes Us Different
+            </div>
+            <h2 class="section-title">Algorithmic Objectivity</h2>
+            <p class="section-desc">
+                GenuVerity continuously monitors breaking news, viral claims, and contested topics. When misinformation
+                spreads, our AI generates comprehensive fact-checks in real time—verified against primary sources.
+            </p>
+
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <div class="principle-number"><i data-lucide="zap" style="width:18px;height:18px;"></i></div>
+                    <div class="principle-content">
+                        <h4>Always-On Verification <span class="badge-coming-soon">COMING SOON</span></h4>
+                        <p>No waiting for fact-checkers to catch up. GenuVerity detects viral claims as they emerge.</p>
                     </div>
-                    <h3 class="benefit-title">Stop Spreading Lies</h3>
-                    <p class="benefit-desc">Verify claims before you share. Know the truth in minutes, not days.</p>
                 </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon-wrapper">
-                        <i data-lucide="mouse-pointer-click" style="width:28px;height:28px;"></i>
+                <div class="principle-card">
+                    <div class="principle-number"><i data-lucide="scale" style="width:18px;height:18px;"></i></div>
+                    <div class="principle-content">
+                        <h4>Just the Facts</h4>
+                        <p>Algorithms don't have political leanings. Every report follows the evidence—wherever it
+                            leads.</p>
                     </div>
-                    <h3 class="benefit-title">Click Every Source</h3>
-                    <p class="benefit-desc">Every source is linked. Don't trust our summary—read the originals yourself.
-                    </p>
                 </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon-wrapper">
-                        <i data-lucide="shield-check" style="width:28px;height:28px;"></i>
+                <div class="principle-card">
+                    <div class="principle-number"><i data-lucide="eye" style="width:18px;height:18px;"></i></div>
+                    <div class="principle-content">
+                        <h4>Full Transparency</h4>
+                        <p>See exactly how conclusions were reached. Every source is linked, every logical step
+                            documented.</p>
                     </div>
-                    <h3 class="benefit-title">No Hidden Agenda</h3>
-                    <p class="benefit-desc">AI doesn't have political bias. Just evidence, analyzed objectively.</p>
                 </div>
+                <div class="principle-card">
+                    <div class="principle-number"><i data-lucide="target" style="width:18px;height:18px;"></i></div>
+                    <div class="principle-content">
+                        <h4>Origin Tracing</h4>
+                        <p>We identify when and where disinformation first appeared—pinpointing bot injections.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flow Pipeline -->
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <div class="flow-icon"><i data-lucide="radar" style="width:24px;height:24px;"></i></div>
+                    <span class="flow-label">Viral Claim</span>
+                    <span class="flow-sublabel">Found</span>
+                </div>
+                <div class="flow-arrow"><i data-lucide="chevron-right"></i></div>
+                <div class="flow-step">
+                    <div class="flow-icon"><i data-lucide="search" style="width:24px;height:24px;"></i></div>
+                    <span class="flow-label">Sources</span>
+                    <span class="flow-sublabel">Fetched</span>
+                </div>
+                <div class="flow-arrow"><i data-lucide="chevron-right"></i></div>
+                <div class="flow-step">
+                    <div class="flow-icon"><i data-lucide="cpu" style="width:24px;height:24px;"></i></div>
+                    <span class="flow-label">AI Analysis</span>
+                    <span class="flow-sublabel">Weighed</span>
+                </div>
+                <div class="flow-arrow"><i data-lucide="chevron-right"></i></div>
+                <div class="flow-step">
+                    <div class="flow-icon"><i data-lucide="check-circle" style="width:24px;height:24px;"></i></div>
+                    <span class="flow-label">Verdict</span>
+                    <span class="flow-sublabel">Published</span>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 32px;">
+                <a href="methodology.html"
+                    style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">
+                    <i data-lucide="book-open" style="width:16px;height:16px;"></i>
+                    Learn More About Our Methodology
+                </a>
             </div>
         </section>
 
