@@ -177,9 +177,9 @@ const REPORTS_DATA = [
         readTime: "6 min",
         excerpt: "The viral 'loser' quote attributed to decorated Army nurse Colonel Ruby Bradley is fabricated. No primary source exists. Honor her by sharing her real heroic story.",
         chart: {
-            type: "donut",
+            type: "bar",
             color: "#ef4444",
-            data: 0
+            data: [45, 38, 32, 28, 25, 40]
         }
     },
     {
@@ -267,9 +267,9 @@ const REPORTS_DATA = [
         readTime: "7 min",
         excerpt: "Left-wing conspiracy theory claims Starlink can alter votes. Reality: voting machines are air-gapped and not connected to any network during elections.",
         chart: {
-            type: "donut",
+            type: "bar",
             color: "#ef4444",
-            data: 0
+            data: [45, 38, 22, 15, 8]
         }
     },
     {
@@ -303,9 +303,9 @@ const REPORTS_DATA = [
         readTime: "6 min",
         excerpt: "Viral claims that 10 people died in protests over Tommy Robinson's arrest in Guadeloupe are false. French officials confirm no fatalities occurred.",
         chart: {
-            type: "donut",
+            type: "line",
             color: "#ef4444",
-            data: 0
+            data: [1, 12, 42, 76, 95, 100]
         }
     },
     {
