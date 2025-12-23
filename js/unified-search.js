@@ -542,7 +542,7 @@ class UnifiedSearch {
                 this.dragOffset = diff;
             }
 
-            if (Math.abs(diff) > 5) this.wasDragging = true;
+            if (Math.abs(diff) > 10) this.wasDragging = true;
             this.updateCarousel(); // Real-time update
         };
 
@@ -668,12 +668,16 @@ class UnifiedSearch {
             // Custom scale logic to keep center large
             const scale = Math.max(0.7, 1 - (absOffset * 0.15));
             const opacity = Math.max(0.3, 1 - (absOffset * 0.25));
-            const zIndex = 100 - Math.round(absOffset * 10);
+            // Strict Z-Index Layering to prevent overlap hijacking
+            let zIndex = 50;
+            if (absOffset < 0.5) zIndex = 100; // Center (Active)
+            else if (absOffset < 1.5) zIndex = 90; // Immediate neighbors
+            else zIndex = 100 - Math.round(absOffset * 10); // Others
 
             // Special handling for the "center" card (approximate)
             if (absOffset < 0.5) {
                 card.classList.add('active');
-                card.style.zIndex = 100;
+                card.style.zIndex = zIndex;
                 card.style.transform = `translateX(${translateX}px) translateZ(${Math.abs(offset) * -100}px) rotateY(${rotateY}deg) scale(${scale})`;
             } else {
                 card.classList.remove('active');
