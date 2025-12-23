@@ -1115,44 +1115,118 @@
                 padding: 40px 20px;
             }
 
-            .benefits-grid {
-                grid-template-columns: 1fr;
+            /* === REDESIGNED MOBILE GRID (2x2) === */
+            .benefits-grid,
+            .principles-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
             }
 
-            .constitutional-section {
-                padding: 60px 20px;
-            }
-
-            .flow-diagram {
+            .principle-card {
+                padding: 16px 12px;
+                text-align: center;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+            }
+
+            .principle-number {
+                margin: 0 auto 12px;
+                background: rgba(59, 130, 246, 0.1);
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
                 justify-content: center;
-                gap: 16px;
+            }
+
+            .principle-content h4 {
+                font-size: 0.85rem;
+                margin-bottom: 6px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+            }
+
+            /* Badge adjustment for small grid */
+            .badge-coming-soon {
+                font-size: 0.55rem;
+                padding: 2px 6px;
+                margin-left: 0;
+            }
+
+            .principle-content p {
+                font-size: 0.7rem;
+                line-height: 1.4;
+                color: var(--text-muted);
+            }
+
+
+            /* === REDESIGNED FLOW (Horizontal Stepper) === */
+            .flow-diagram {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 0;
                 width: 100%;
                 margin-top: 40px;
+                position: relative;
+                padding: 0 4px;
+            }
+
+            /* Connecting Line */
+            .flow-diagram::after {
+                content: '';
+                position: absolute;
+                top: 20px;
+                left: 40px;
+                right: 40px;
+                height: 1px;
+                background: var(--border-color);
+                z-index: 0;
             }
 
             .flow-step {
-                width: 100%;
+                width: auto;
+                flex: 1;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                text-align: center;
-                margin: 0 auto;
+                z-index: 1;
             }
 
             .flow-icon {
-                margin: 0 auto 12px;
+                width: 40px;
+                height: 40px;
+                margin: 0 auto 8px;
+                background: var(--bg-primary);
+                /* Hide line behind */
+                border-radius: 50%;
+                /* Circle */
+                font-size: 1rem;
             }
 
-            .flow-arrow {
-                transform: rotate(90deg);
-                margin: 8px 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
+            .flow-icon svg {
+                width: 18px !important;
+                height: 18px !important;
+            }
+
+            .flow-label {
+                font-size: 0.65rem;
+                color: var(--text-secondary);
+                text-align: center;
+                white-space: normal;
+                line-height: 1.2;
+                max-width: 60px;
+            }
+
+            /* Hide Desktop Elements */
+            .flow-arrow,
+            .flow-sublabel {
+                display: none;
             }
         }
 
