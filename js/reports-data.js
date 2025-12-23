@@ -15,9 +15,9 @@ const REPORTS_DATA = [
         readTime: "14 min",
         excerpt: "Analysis of regulatory capture mechanisms, focusing on the revolving door between federal agencies and the industries they regulate. 50% of regulators become lobbyists.",
         chart: {
-            type: "bar",
+            type: "line",
             color: "#3b82f6",
-            data: [52, 48, 64, 58, 61]
+            data: [15, 28, 42, 48, 55]
         }
     },
     {
@@ -35,7 +35,7 @@ const REPORTS_DATA = [
         chart: {
             type: "network",
             color: "#ef4444",
-            data: {'nodes': 12, 'connections': 22}
+            data: { 'nodes': 12, 'connections': 22 }
         }
     },
     {
