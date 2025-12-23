@@ -1002,6 +1002,172 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* === CONTENT SECTIONS === */
+        .content-block {
+            padding: 80px 24px;
+            border-top: 1px solid var(--border-color);
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-card) 100%);
+        }
+
+        .content-block.darker {
+            background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-primary) 100%);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-title span {
+            color: var(--accent-blue);
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* About & Mission Grid */
+        .dual-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .text-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            height: 100%;
+        }
+
+        .text-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .text-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        /* Contact Form */
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-blue);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            background: rgba(5, 10, 20, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+        }
+
+        .form-btn {
+            width: 100%;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .form-btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .success-message {
+            display: none;
+            padding: 20px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            color: var(--accent-green);
+            text-align: center;
+            margin-top: 24px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .dual-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content-block {
+                padding: 60px 20px;
+            }
+
+            .contact-container {
+                padding: 24px;
+            }
+        }
     </style>
 </head>
 
@@ -1031,9 +1197,14 @@
             <span class="navbar-badge">COMING SOON</span>
         </a>
         <div class="navbar-right">
-            <a href="#notify" class="navbar-cta">
-                <i data-lucide="bell" style="width:14px;height:14px;"></i>
-                Get Early Access
+            <a href="#how-it-works" class="navbar-link"
+                style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; margin-right: 20px; font-weight: 500;">How
+                it Works</a>
+            <a href="#about" class="navbar-link"
+                style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; margin-right: 20px; font-weight: 500;">About</a>
+            <a href="#contact" class="navbar-cta">
+                <i data-lucide="mail" style="width:14px;height:14px;"></i>
+                Contact
             </a>
         </div>
         <button class="navbar-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
@@ -1045,13 +1216,17 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
-        <a href="request-report.html">
-            <i data-lucide="file-plus" style="width:20px;height:20px;"></i>
-            Request Investigation
+        <a href="#how-it-works" onclick="toggleMobileMenu()">
+            <i data-lucide="zap" style="width:20px;height:20px;"></i>
+            How it Works
         </a>
-        <a href="#notify" onclick="toggleMobileMenu()">
-            <i data-lucide="bell" style="width:20px;height:20px;"></i>
-            Get Early Access
+        <a href="#about" onclick="toggleMobileMenu()">
+            <i data-lucide="info" style="width:20px;height:20px;"></i>
+            About & Mission
+        </a>
+        <a href="#contact" onclick="toggleMobileMenu()">
+            <i data-lucide="mail" style="width:20px;height:20px;"></i>
+            Contact
         </a>
     </div>
 
@@ -1094,30 +1269,95 @@
             </div>
         </section>
 
-        <!-- Benefits Section -->
-        <section class="benefits-section">
+        <!-- How It Works (Enhanced Benefits) -->
+        <section id="how-it-works" class="content-block">
+            <div class="section-header">
+                <h2 class="section-title">Operational <span>Protocol</span></h2>
+                <p class="section-desc">We are drowning in noise. Signal is the only currency that matters. GenuVerity
+                    uses a recursive intelligence engine to cut through the sludge.</p>
+            </div>
             <div class="benefits-grid">
                 <div class="benefit-card">
                     <div class="benefit-icon-wrapper">
-                        <i data-lucide="clock" style="width:28px;height:28px;"></i>
+                        <i data-lucide="zap" style="width:28px;height:28px;"></i>
                     </div>
-                    <h3 class="benefit-title">Stop Spreading Lies</h3>
-                    <p class="benefit-desc">Verify claims before you share. Know the truth in minutes, not days.</p>
+                    <h3 class="benefit-title">1. The Stream</h3>
+                    <p class="benefit-desc">An algorithmic feed of high-impact vectors. Our engine prioritizes verified
+                        signal over viral noise.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon-wrapper">
-                        <i data-lucide="mouse-pointer-click" style="width:28px;height:28px;"></i>
+                        <i data-lucide="search-check" style="width:28px;height:28px;"></i>
                     </div>
-                    <h3 class="benefit-title">Click Every Source</h3>
-                    <p class="benefit-desc">Every source is linked. Don't trust our summary—read the originals yourself.
-                    </p>
+                    <h3 class="benefit-title">2. Deep Dive Analysis</h3>
+                    <p class="benefit-desc">Multi-agent synthesis checks every claim against the Google Fact Check Tools
+                        API and primary sources.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon-wrapper">
-                        <i data-lucide="shield-check" style="width:28px;height:28px;"></i>
+                        <i data-lucide="network" style="width:28px;height:28px;"></i>
                     </div>
-                    <h3 class="benefit-title">No Hidden Agenda</h3>
-                    <p class="benefit-desc">AI doesn't have political bias. Just evidence, analyzed objectively.</p>
+                    <h3 class="benefit-title">3. The Rabbit Hole</h3>
+                    <p class="benefit-desc">Every report is a node. Highlight text to spawn a <em>new</em> investigation
+                        instantly.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About & Mission -->
+        <section id="about" class="content-block darker">
+            <div class="dual-grid">
+                <div class="text-card">
+                    <h3><i data-lucide="archive" class="text-blue-500"></i> The Infinite Archive</h3>
+                    <p>We verify reality. In an age of synthetic media and cascading misinformation, we don't take
+                        sides. We take data.</p>
+                    <p>GenuVerity is built on the belief that truth is not a matter of opinion, but a matter of
+                        verifiable record. We are building the tools to make that record accessible, transparent, and
+                        irrefutable.</p>
+                </div>
+                <div class="text-card">
+                    <h3><i data-lucide="scale" class="text-emerald-500"></i> Veritas et Aequitas</h3>
+                    <p>Our mission is to democratize high-fidelity intelligence. Falsehood diffuses significantly
+                        farther, faster, deeper, and more broadly than the truth.</p>
+                    <p>We are the immune system for the information age. By tracing every claim back to its primary
+                        source, we restore trust in the written word.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="content-block">
+            <div class="section-header">
+                <h2 class="section-title">Secure <span>Comms</span></h2>
+                <p class="section-desc">Initiate encrypted handshake. Whether for early access or feedback, we are
+                    listening.</p>
+            </div>
+            <div class="contact-container">
+                <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                    <div class="form-group">
+                        <label class="form-label">Transmission Type</label>
+                        <select class="form-select">
+                            <option>Request Early Access</option>
+                            <option>Report Intelligence</option>
+                            <option>General Feedback</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Signal Origin (Email)</label>
+                        <input type="email" required class="form-input" placeholder="you@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Payload (Optional Message)</label>
+                        <textarea class="form-textarea" rows="4" placeholder="Enter transmission..."></textarea>
+                    </div>
+                    <button type="submit" class="form-btn">
+                        <span>TRANSMIT</span>
+                        <i data-lucide="send" style="width:16px;height:16px;"></i>
+                    </button>
+                </form>
+                <div id="contactSuccess" class="success-message">
+                    <i data-lucide="check-circle" style="width:24px;height:24px;margin:0 auto 8px;"></i><br>
+                    TRANSMISSION RECEIVED.<br>ENCRYPTION KEY EXCHANGED.
                 </div>
             </div>
         </section>
@@ -1466,7 +1706,31 @@
             });
         }
 
-        // Keyboard navigation
+        // Form Handling
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            const successMsg = document.getElementById('contactSuccess');
+            const form = document.getElementById('contactForm');
+
+            btn.disabled = true;
+            btn.innerHTML = `<span>ENCRYPTING...</span> <i data-lucide="lock" style="width:16px;height:16px;" class="animate-pulse"></i>`;
+
+            // Simulate API call
+            setTimeout(() => {
+                btn.innerHTML = `<span>SENT</span> <i data-lucide="check" style="width:16px;height:16px;"></i>`;
+                form.reset();
+
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    successMsg.style.display = 'block';
+                    successMsg.classList.add('animate-pulse');
+                }, 800);
+            }, 1500);
+        }
+
+        // Initialize keyboard nav
         function initKeyboardNav() {
             document.addEventListener('keydown', (e) => {
                 // Skip if search overlay is open
