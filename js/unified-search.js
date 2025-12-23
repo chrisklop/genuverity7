@@ -618,20 +618,26 @@ class UnifiedSearch {
                 </div>
             `;
 
-            // Click Handler
-            card.addEventListener('click', (e) => {
-                if (this.wasDragging) return; // Ignore if it was a drag
+            // Direct onclick to bypass potential listener conflicts
+            card.onclick = (e) => {
+                if (this.wasDragging) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
 
                 // Click to center functionality
                 if (index !== this.currentCardIndex) {
+                    e.preventDefault();
                     this.goToCard(index);
                 } else {
-                    // It's the center card, allow navigation
-                    if (e.target.closest('.card-cta') || e.target.closest('.card-content')) {
+                    // It's the center card, allow navigation if clicking content
+                    // The main card click will bubble up if we don't handle it
+                    if (e.target.closest('.card-cta') || e.target.closest('.card-content') || e.target.closest('.carousel-card')) {
                         window.location.href = report.slug;
                     }
                 }
-            });
+            };
 
             this.carouselTrack.appendChild(card);
 
