@@ -2,12 +2,120 @@
  * Unified Search and 3D Carousel Logic for GenuVerity Landing Page
  */
 
+// Chart Generators (Ported from reports.html/index.html)
+function generateBarChart(color, data) {
+    const bars = data && Array.isArray(data) ? data : Array.from({ length: 10 }, () => Math.random() * 80 + 20);
+    return `<div class="chart-container"><div class="chart-bars">${bars.map(h =>
+        `<div class="bar" style="height: ${h}%; background: ${color};"></div>`
+    ).join('')}</div></div>`;
+}
+
+function generateLineChart(color, data) {
+    let points;
+    if (data && Array.isArray(data)) {
+        points = data.map((val, i) => ({
+            x: i * (100 / (data.length - 1)),
+            y: val
+        }));
+    } else {
+        points = Array.from({ length: 8 }, (_, i) => ({
+            x: i * 14.3,
+            y: 20 + Math.random() * 60
+        }));
+    }
+
+    const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${100 - p.y}`).join(' ');
+    const areaD = pathD + ` L 100 100 L 0 100 Z`;
+    return `<div class="chart-container"><div class="chart-line">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path class="area" d="${areaD}" fill="${color}"/>
+            <path d="${pathD}" stroke="${color}"/>
+        </svg>
+    </div></div>`;
+}
+
+function generateDonutChart(percent, color) {
+    const circumference = 2 * Math.PI * 45;
+    const offset = circumference * (1 - percent / 100);
+    return `<div class="chart-container" style="justify-content: center; align-items: center;">
+        <div class="chart-donut">
+            <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" stroke="var(--border-color)"/>
+                <circle cx="50" cy="50" r="45" stroke="${color}"
+                    stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"/>
+            </svg>
+            <span class="donut-label">${percent}%</span>
+        </div>
+    </div>`;
+}
+
+function generateNetworkChart(nodeColor, lineColor) {
+    const nodes = Array.from({ length: 12 }, () => ({
+        x: 10 + Math.random() * 80,
+        y: 10 + Math.random() * 80,
+        size: 6 + Math.random() * 10
+    }));
+    const nodesHTML = nodes.map((n, i) =>
+        `<div class="node" style="left: ${n.x}%; top: ${n.y}%; width: ${n.size}px; height: ${n.size}px; background: ${nodeColor}; animation-delay: ${i * 0.15}s;"></div>`
+    ).join('');
+    const linesHTML = nodes.slice(0, 6).map((n, i) => {
+        const target = nodes[(i + 3) % nodes.length];
+        const dx = target.x - n.x;
+        const dy = target.y - n.y;
+        const length = Math.sqrt(dx * dx + dy * dy);
+        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+        return `<div class="line" style="left: ${n.x}%; top: ${n.y}%; width: ${length}%; transform: rotate(${angle}deg); background: ${lineColor};"></div>`;
+    }).join('');
+    return `<div class="chart-container"><div class="chart-network">${linesHTML}${nodesHTML}</div></div>`;
+}
+
+function generateHBarChart(data, colors) {
+    return `<div class="chart-container" style="align-items: center;"><div class="chart-hbars">${data.map((d, i) =>
+        `<div class="hbar-row">
+            <span class="hbar-label">${d.label}</span>
+            <div class="hbar" style="width: ${d.value}%; background: ${colors[i % colors.length]};"></div>
+        </div>`
+    ).join('')}</div></div>`;
+}
+
+function generateTimelineChart(points, color) {
+    return `<div class="chart-container" style="align-items: center;"><div class="chart-timeline">
+        <div class="timeline-line">
+            ${points.map(p => `<div class="timeline-point" style="left: ${p}%; background: ${color};"></div>`).join('')}
+        </div>
+    </div></div>`;
+}
+
+// Chart Dispatcher
+function generateChartForReport(report) {
+    const config = report.chart || { type: 'bar', color: '#3b82f6', data: [50, 50, 50] }; // Fallback
+
+    switch (config.type) {
+        case 'line':
+            return generateLineChart(config.color, config.data);
+        case 'bar':
+            return generateBarChart(config.color, config.data);
+        case 'donut':
+            return generateDonutChart(config.data, config.color);
+        case 'network':
+            return generateNetworkChart(config.color, config.color);
+        case 'hbar':
+            return generateHBarChart(config.data, [config.color, '#64748b', '#475569']);
+        case 'timeline':
+            return generateTimelineChart(config.data, config.color);
+        default:
+            return generateBarChart(config.color);
+    }
+}
+
+
 class UnifiedSearch {
     constructor() {
         this.reports = typeof REPORTS_DATA !== 'undefined' ? REPORTS_DATA : [];
         this.filteredReports = [...this.reports];
         this.currentCardIndex = 0;
         this.isSearching = false;
+        this.wasDragging = false; // Track dragging state
 
         this.init();
     }
@@ -27,6 +135,7 @@ class UnifiedSearch {
         this.carouselDots = document.getElementById('carouselDots');
         this.currentIndexDisplay = document.getElementById('currentIndex');
         this.totalCountDisplay = document.getElementById('totalCount');
+        this.carouselContainer = document.querySelector('.carousel-container');
 
         // Stats elements
         this.reportCountEl = document.getElementById('reportCount');
@@ -39,14 +148,53 @@ class UnifiedSearch {
             this.searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
         }
 
-        // Global keyboard shortcut for search (Cmd/Ctrl + K)
+        // Hero Search Input Sync
+        const heroInput = document.querySelector('.hero-search-input');
+        if (heroInput) {
+            heroInput.addEventListener('input', (e) => {
+                const val = e.target.value;
+                this.toggleSearchOverlay(true);
+                if (this.searchInput) {
+                    this.searchInput.value = val;
+                    this.searchInput.focus();
+                }
+                this.handleSearch(val);
+            });
+            // Also open on click/focus if not empty or just to show
+            // But we want to allow typing, so maybe just on input or click
+            // If we just click, we might want to just focus it. 
+            // The overlay toggle is handled by the parent div onclick in HTML, 
+            // but we need to prevent that if we are typing?
+            // Actually index.html has onclick="toggleUnifiedSearch()" on the parent .hero-search div.
+            // We should probably rely on this listener and stopPropagation if needed, or better yet,
+            // let the event bubble? If event bubbles, toggleUnifiedSearch() calls toggleSearchOverlay(true).
+            // That sets focus to searchInput (overlay). 
+            // IF we type in heroInput, we want focus to switch to overlay input?
+            // Yes, per requirement "Auto-Search... displaying them within an opaque overlay".
+
+            // We'll trust the input listener above to handle the sync and switch.
+        }
+
+        // Global keyboard interactions
         document.addEventListener('keydown', (e) => {
+            // Search shortcut
             if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
                 e.preventDefault();
                 this.toggleSearchOverlay(true);
             }
+            // Close search
             if (e.key === 'Escape') {
                 this.toggleSearchOverlay(false);
+            }
+
+            // Carousel Navigation (only if search is closed)
+            const isSearchOpen = this.searchOverlay && this.searchOverlay.classList.contains('active');
+            if (!isSearchOpen) {
+                if (e.key === 'ArrowLeft') {
+                    this.navigateCarousel(-1);
+                } else if (e.key === 'ArrowRight') {
+                    this.navigateCarousel(1);
+                }
             }
         });
 
@@ -82,7 +230,69 @@ class UnifiedSearch {
 
         this.currentCardIndex = 0;
         this.renderCarousel();
+        this.renderSearchResults();
         this.updateStats();
+    }
+
+    renderSearchResults() {
+        if (!this.searchResults) return;
+        this.searchResults.innerHTML = '';
+
+        if (this.filteredReports.length === 0) {
+            this.searchResults.innerHTML = '<div style="color:var(--text-secondary); text-align:center; padding:20px; font-family:var(--font-mono);">No reports found.</div>';
+            return;
+        }
+
+        const list = document.createElement('div');
+        list.style.display = 'flex';
+        list.style.flexDirection = 'column';
+        list.style.gap = '12px';
+        list.style.maxHeight = '60vh';
+        list.style.overflowY = 'auto';
+        list.style.paddingRight = '8px'; // For scrollbar
+
+        this.filteredReports.forEach(report => {
+            const item = document.createElement('div');
+            // Inline styles for speed/simplicity as separate CSS file edits weren't planned extensively
+            item.style.background = 'var(--bg-card)';
+            item.style.border = '1px solid var(--border-color)';
+            item.style.borderRadius = '12px';
+            item.style.padding = '16px';
+            item.style.cursor = 'pointer';
+            item.style.transition = 'all 0.2s';
+
+            item.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:8px;">
+                    <h4 style="color:var(--text-primary); margin:0; font-size:1rem; font-weight:600;">${report.title}</h4>
+                    <span style="font-size:0.75rem; color:var(--accent-cyan); background:rgba(6,182,212,0.1); padding:4px 8px; border-radius:6px; white-space:nowrap; margin-left:12px;">${report.date}</span>
+                </div>
+                <p style="color:var(--text-secondary); font-size:0.85rem; margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.5;">${report.excerpt}</p>
+                <div style="display:flex; gap:8px; margin-top:12px; font-size:0.75rem; color:var(--text-muted);">
+                    <span style="display:flex; align-items:center; gap:4px;"><i data-lucide="${report.icon || 'file-text'}" style="width:12px;height:12px;"></i> ${report.category}</span>
+                    <span style="color:var(--border-color);">|</span>
+                    <span>${report.readTime || '5 min'} read</span>
+                </div>
+            `;
+
+            // Hover effects via JS for inline styles
+            item.onmouseenter = () => {
+                item.style.borderColor = 'var(--accent-cyan)';
+                item.style.background = 'var(--bg-tertiary)';
+            }
+            item.onmouseleave = () => {
+                item.style.borderColor = 'var(--border-color)';
+                item.style.background = 'var(--bg-card)';
+            }
+
+            item.onclick = () => {
+                window.location.href = report.slug;
+            };
+
+            list.appendChild(item);
+        });
+
+        this.searchResults.appendChild(list);
+        if (typeof lucide !== 'undefined') lucide.createIcons({ root: this.searchResults });
     }
 
     updateStats() {
@@ -120,15 +330,17 @@ class UnifiedSearch {
     initCarousel() {
         this.renderCarousel();
 
-        // Swipe and Wheel gestures (ported from reports.html)
-        const container = document.querySelector('.carousel-container');
-        if (!container) return;
+        if (!this.carouselContainer) return;
 
+        // --- GESTURES (Merged from index.html & unified-search.js) ---
         let startX = 0;
         let isDragging = false;
         let lastWheelTime = 0;
+        let hasDragged = false; // Distinguish click vs drag
 
-        container.addEventListener('wheel', (e) => {
+        // Mouse Wheel
+        this.carouselContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
             const now = Date.now();
             if (now - lastWheelTime < 150) return;
             lastWheelTime = now;
@@ -137,17 +349,47 @@ class UnifiedSearch {
             else if (delta < -10) this.navigateCarousel(-1);
         }, { passive: false });
 
-        container.addEventListener('mousedown', (e) => {
+        // Touch Swipe
+        this.carouselContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        }, { passive: true });
+
+        this.carouselContainer.addEventListener('touchend', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+            if (Math.abs(diff) > 30) {
+                this.navigateCarousel(diff > 0 ? 1 : -1);
+            }
+        }, { passive: true });
+
+        // Mouse Drag
+        this.carouselContainer.addEventListener('mousedown', (e) => {
             startX = e.clientX;
             isDragging = true;
+            hasDragged = false;
+            this.carouselContainer.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            if (Math.abs(e.clientX - startX) > 5) {
+                hasDragged = true;
+            }
         });
 
         document.addEventListener('mouseup', (e) => {
             if (!isDragging) return;
             isDragging = false;
+            this.carouselContainer.style.cursor = '';
             const diff = startX - e.clientX;
-            if (Math.abs(diff) > 50) {
+
+            if (hasDragged && Math.abs(diff) > 30) {
+                this.wasDragging = true;
                 this.navigateCarousel(diff > 0 ? 1 : -1);
+                setTimeout(() => { this.wasDragging = false; }, 100);
             }
         });
     }
@@ -162,16 +404,12 @@ class UnifiedSearch {
             card.className = 'carousel-card';
             card.dataset.index = index;
 
-            // Simplified chart placeholder logic for now
-            const chartColor = index % 2 === 0 ? 'var(--accent-blue)' : 'var(--accent-cyan)';
+            // USE DYNAMIC CHART GENERATOR
+            const chartHTML = generateChartForReport(report);
 
             card.innerHTML = `
                 <div class="card-preview">
-                    <div class="chart-container">
-                        <div class="chart-bars">
-                            ${Array.from({ length: 8 }, () => `<div class="bar" style="height: ${Math.random() * 60 + 20}%; background: ${chartColor}; width: 8px; border-radius: 4px;"></div>`).join('')}
-                        </div>
-                    </div>
+                    ${chartHTML}
                 </div>
                 <div class="card-content">
                     <span class="card-tag ${report.tagClass || 'tag-blue'}">
@@ -189,7 +427,17 @@ class UnifiedSearch {
                 </div>
             `;
 
-            card.addEventListener('click', () => {
+            card.addEventListener('click', (e) => {
+                // Prevent click if we just dragged
+                if (this.wasDragging) return;
+
+                // If clicking CTA, let it propagate (or handle navigation)
+                if (e.target.closest('.card-cta')) {
+                    e.stopPropagation(); // Stop card click from triggering carousel nav
+                    window.location.href = report.slug;
+                    return;
+                }
+
                 if (index === this.currentCardIndex) {
                     window.location.href = report.slug;
                 } else {
@@ -264,4 +512,7 @@ function toggleUnifiedSearch() {
 
 document.addEventListener('DOMContentLoaded', () => {
     window.unifiedSearch = new UnifiedSearch();
+
+    // Legacy global functions for HTML onclick handlers
+    window.navigateCarousel = (dir) => window.unifiedSearch.navigateCarousel(dir);
 });
