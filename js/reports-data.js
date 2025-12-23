@@ -17,7 +17,13 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#3b82f6",
-            data: [40000, 28000, 15000, 13000, 9700]
+            data: [
+                { label: 'BBG', value: 40000, color: '#3b82f6' },
+                { label: 'Kirov', value: 28000, color: '#ef4444' },
+                { label: 'Zumwalt', value: 15000, color: '#06b6d4' },
+                { label: 'Type 055', value: 13000, color: '#ef4444' },
+                { label: 'Burke', value: 9700, color: '#3b82f6' }
+            ]
         }
     },
     {

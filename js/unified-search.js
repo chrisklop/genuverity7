@@ -3,24 +3,59 @@
  */
 
 // Chart Generators (Ported from reports.html/index.html)
-function generateBarChart(color, data) {
-    const barsData = data && Array.isArray(data) ? data : Array.from({ length: 10 }, () => Math.random() * 80 + 20);
+function generateBarChart(baseColor, rawData) {
+    let data = [];
 
-    // Normalize data to fits in 100 height
-    const max = Math.max(...barsData, 100);
-    const bars = barsData.map((d, i) => {
-        const height = (d / max) * 100;
-        const count = barsData.length;
-        const totalGap = 30; // Gap space in 180 width
-        const barWidth = (180 - totalGap) / count;
-        const gap = totalGap / (count - 1 || 1);
+    // Normalize Data
+    if (rawData && Array.isArray(rawData)) {
+        if (typeof rawData[0] === 'number') {
+            // Legacy: simple array of numbers
+            data = rawData.map(v => ({ value: v, label: '', color: baseColor }));
+        } else {
+            // Rich Data: Objects with { label, value, color }
+            data = rawData.map(d => ({
+                value: d.value,
+                label: d.label || '',
+                color: d.color || baseColor
+            }));
+        }
+    } else {
+        // Fallback: Random bars
+        const randoms = Array.from({ length: 10 }, () => Math.random() * 80 + 20);
+        data = randoms.map(v => ({ value: v, label: '', color: baseColor }));
+    }
+
+    // Determine scale
+    const maxValue = Math.max(...data.map(d => d.value), 1);
+
+    const count = data.length;
+    const totalGap = 30;
+    const barWidth = (180 - totalGap) / count;
+    const gap = totalGap / (count - 1 || 1);
+
+    const bars = data.map((d, i) => {
+        const height = (d.value / maxValue) * 80; // Reserve bottom 20% for labels? No, let's say 85 height
+        // If we have labels, shrink bars to make room
+        const hasLabels = data.some(item => item.label);
+        const graphHeight = hasLabels ? 80 : 100;
+        const normalizedHeight = (d.value / maxValue) * graphHeight;
+
         const x = i * (barWidth + gap);
-        return `<rect x="${x}" y="${100 - height}" width="${barWidth}" height="${height}" fill="${color}" rx="2" />`;
+        const y = graphHeight - normalizedHeight;
+
+        let el = `<rect x="${x}" y="${y}" width="${barWidth}" height="${normalizedHeight}" fill="${d.color}" rx="2" opacity="0.9" />`;
+
+        if (hasLabels && d.label) {
+            // Center text under bar
+            const textX = x + (barWidth / 2);
+            el += `<text x="${textX}" y="95" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="sans-serif" style="pointer-events:none;">${d.label}</text>`;
+        }
+        return el;
     }).join('');
 
     return `<div class="chart-container">
         <div class="chart-bars" style="width:100%; height:100%;">
-            <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet" style="width:100%; height:100%;">
+            <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet" style="width:100%; height:100%; overflow:visible;">
                 ${bars}
             </svg>
         </div>
