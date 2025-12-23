@@ -421,7 +421,17 @@ class UnifiedSearch {
         this.carouselContainer.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
             isDragging = true;
-        }, { passive: true });
+        }, { passive: false });
+
+        this.carouselContainer.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const currentX = e.touches[0].clientX;
+            const diff = startX - currentX;
+            // If movement is horizontal, prevent page scroll
+            if (Math.abs(diff) > 5) {
+                e.preventDefault();
+            }
+        }, { passive: false });
 
         this.carouselContainer.addEventListener('touchend', (e) => {
             if (!isDragging) return;
@@ -431,7 +441,7 @@ class UnifiedSearch {
             if (Math.abs(diff) > 30) {
                 this.navigateCarousel(diff > 0 ? 1 : -1);
             }
-        }, { passive: true });
+        }, { passive: false });
 
         // Mouse Drag
         this.carouselContainer.addEventListener('mousedown', (e) => {
