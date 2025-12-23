@@ -250,8 +250,14 @@ class UnifiedSearch {
         this.reports = typeof REPORTS_DATA !== 'undefined' ? REPORTS_DATA : [];
         this.filteredReports = [...this.reports];
         this.currentCardIndex = 0;
-        this.isSearching = false;
-        this.wasDragging = false; // Track dragging state
+
+        // Physics state
+        this.dragOffset = 0;         // Current drag distance in pixels
+        this.isDragging = false;
+        this.startX = 0;
+        this.currentX = 0;
+        this.wasDragging = false;    // Distinguish click vs drag
+        this.CARD_WIDTH = 280;       // Spacing between cards
 
         this.init();
     }
@@ -277,6 +283,11 @@ class UnifiedSearch {
         this.reportCountEl = document.getElementById('reportCount');
         this.sourceCountEl = document.getElementById('sourceCount');
         this.verifiedCountEl = document.getElementById('verifiedCount');
+
+        // View Toggles
+        this.viewToggleBtn = document.getElementById('viewToggleBtn');
+        this.listView = document.getElementById('listView');
+        this.carouselSection = document.getElementById('carouselSection');
     }
 
     bindEvents() {
@@ -296,19 +307,6 @@ class UnifiedSearch {
                 }
                 this.handleSearch(val);
             });
-            // Also open on click/focus if not empty or just to show
-            // But we want to allow typing, so maybe just on input or click
-            // If we just click, we might want to just focus it. 
-            // The overlay toggle is handled by the parent div onclick in HTML, 
-            // but we need to prevent that if we are typing?
-            // Actually index.html has onclick="toggleUnifiedSearch()" on the parent .hero-search div.
-            // We should probably rely on this listener and stopPropagation if needed, or better yet,
-            // let the event bubble? If event bubbles, toggleUnifiedSearch() calls toggleSearchOverlay(true).
-            // That sets focus to searchInput (overlay). 
-            // IF we type in heroInput, we want focus to switch to overlay input?
-            // Yes, per requirement "Auto-Search... displaying them within an opaque overlay".
-
-            // We'll trust the input listener above to handle the sync and switch.
         }
 
         // Global keyboard interactions
@@ -337,19 +335,20 @@ class UnifiedSearch {
         // Click outside search to close
         if (this.searchOverlay) {
             this.searchOverlay.addEventListener('click', (e) => {
-                if (e.target === this.searchOverlay) {
-                    this.toggleSearchOverlay(false);
-                }
+                if (e.target === this.searchOverlay) this.toggleSearchOverlay(false);
             });
+        }
+
+        // View Toggle
+        if (this.viewToggleBtn) {
+            this.viewToggleBtn.addEventListener('click', () => this.toggleViewMode());
         }
     }
 
     toggleSearchOverlay(show) {
         if (!this.searchOverlay) return;
         this.searchOverlay.classList.toggle('active', show);
-        if (show) {
-            this.searchInput.focus();
-        }
+        if (show) this.searchInput.focus();
     }
 
     handleSearch(query) {
@@ -366,8 +365,72 @@ class UnifiedSearch {
 
         this.currentCardIndex = 0;
         this.renderCarousel();
+        this.renderListView();
         this.renderSearchResults();
         this.updateStats();
+    }
+
+    toggleViewMode() {
+        this.isListView = !this.isListView;
+        const icon = this.viewToggleBtn.querySelector('i');
+
+        if (this.isListView) {
+            this.carouselSection.classList.add('hidden');
+            this.listView.classList.add('active');
+            this.viewToggleBtn.classList.add('active');
+            if (icon) icon.setAttribute('data-lucide', 'gallery-horizontal');
+            this.renderListView();
+        } else {
+            this.carouselSection.classList.remove('hidden');
+            this.listView.classList.remove('active');
+            this.viewToggleBtn.classList.remove('active');
+            if (icon) icon.setAttribute('data-lucide', 'list');
+            this.renderCarousel();
+        }
+
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    renderListView() {
+        if (!this.listView) return;
+        this.listView.innerHTML = '';
+
+        if (this.filteredReports.length === 0) {
+            this.listView.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-muted);">No reports found matching your criteria.</div>';
+            return;
+        }
+
+        this.filteredReports.forEach((report, index) => {
+            const item = document.createElement('div');
+            item.className = 'list-item';
+            // Stagger animation
+            item.style.animationDelay = `${index * 50}ms`;
+
+            item.innerHTML = `
+                <div class="list-item-icon">
+                    <i data-lucide="${report.icon || 'file-text'}" style="width:24px;height:24px;"></i>
+                </div>
+                <div class="list-item-content">
+                    <div class="list-item-meta">
+                        <span>${report.category}</span>
+                        <span>•</span>
+                        <span>${report.date}</span>
+                        <span>•</span>
+                        <span>${report.readTime}</span>
+                    </div>
+                    <div class="list-item-title">${report.title}</div>
+                    <div class="list-item-excerpt">${report.excerpt}</div>
+                </div>
+                <div class="list-item-action">
+                    <i data-lucide="arrow-right" style="color:var(--accent-cyan);"></i>
+                </div>
+            `;
+
+            item.addEventListener('click', () => window.location.href = report.slug);
+            this.listView.appendChild(item);
+        });
+
+        if (typeof lucide !== 'undefined') lucide.createIcons({ root: this.listView });
     }
 
     renderSearchResults() {
@@ -380,22 +443,18 @@ class UnifiedSearch {
         }
 
         const list = document.createElement('div');
-        list.style.display = 'flex';
-        list.style.flexDirection = 'column';
-        list.style.gap = '12px';
-        list.style.maxHeight = '60vh';
-        list.style.overflowY = 'auto';
-        list.style.paddingRight = '8px'; // For scrollbar
+        Object.assign(list.style, {
+            display: 'flex', flexDirection: 'column', gap: '12px',
+            maxHeight: '60vh', overflowY: 'auto', paddingRight: '8px'
+        });
 
         this.filteredReports.forEach(report => {
             const item = document.createElement('div');
-            // Inline styles for speed/simplicity as separate CSS file edits weren't planned extensively
-            item.style.background = 'var(--bg-card)';
-            item.style.border = '1px solid var(--border-color)';
-            item.style.borderRadius = '12px';
-            item.style.padding = '16px';
-            item.style.cursor = 'pointer';
-            item.style.transition = 'all 0.2s';
+            // Simplified inline styles
+            Object.assign(item.style, {
+                background: 'var(--bg-card)', border: '1px solid var(--border-color)',
+                borderRadius: '12px', padding: '16px', cursor: 'pointer', transition: 'all 0.2s'
+            });
 
             item.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:8px;">
@@ -410,19 +469,9 @@ class UnifiedSearch {
                 </div>
             `;
 
-            // Hover effects via JS for inline styles
-            item.onmouseenter = () => {
-                item.style.borderColor = 'var(--accent-cyan)';
-                item.style.background = 'var(--bg-tertiary)';
-            }
-            item.onmouseleave = () => {
-                item.style.borderColor = 'var(--border-color)';
-                item.style.background = 'var(--bg-card)';
-            }
-
-            item.onclick = () => {
-                window.location.href = report.slug;
-            };
+            item.onmouseenter = () => { item.style.borderColor = 'var(--accent-cyan)'; item.style.background = 'var(--bg-tertiary)'; };
+            item.onmouseleave = () => { item.style.borderColor = 'var(--border-color)'; item.style.background = 'var(--bg-card)'; };
+            item.onclick = () => window.location.href = report.slug;
 
             list.appendChild(item);
         });
@@ -463,85 +512,76 @@ class UnifiedSearch {
         window.requestAnimationFrame(step);
     }
 
+    // --- CAROUSEL PHYSICS ENGINE ---
+
     initCarousel() {
         this.renderCarousel();
-
         if (!this.carouselContainer) return;
 
-        // --- GESTURES (Merged from index.html & unified-search.js) ---
-        let startX = 0;
-        let isDragging = false;
-        let lastWheelTime = 0;
-        let hasDragged = false; // Distinguish click vs drag
-
-        // Mouse Wheel
-        this.carouselContainer.addEventListener('wheel', (e) => {
-            if (isDragging) return; // Ignore wheel if currently touching/dragging
-            e.preventDefault();
-            const now = Date.now();
-            if (now - lastWheelTime < 150) return;
-            lastWheelTime = now;
-            const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-            if (delta > 10) this.navigateCarousel(1);
-            else if (delta < -10) this.navigateCarousel(-1);
-        }, { passive: false });
-
-        // Touch Swipe
-        this.carouselContainer.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            isDragging = true;
-        }, { passive: false });
-
-        this.carouselContainer.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            const currentX = e.touches[0].clientX;
-            const diff = startX - currentX;
-            // If movement is horizontal, prevent page scroll
-            // Increased threshold to 15px to distinguish swipes from sloppy taps
-            if (Math.abs(diff) > 15) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
-        this.carouselContainer.addEventListener('touchend', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-            const endX = e.changedTouches[0].clientX;
-            const diff = startX - endX;
-            if (Math.abs(diff) > 30) {
-                this.navigateCarousel(diff > 0 ? 1 : -1);
-                // Prevent mouse emulation events (mousedown/up/click) from firing after a swipe
-                // This stops the "double skip" where both touch and mouse handlers trigger
-                if (e.cancelable) e.preventDefault();
-            }
-        }, { passive: false });
-
-        // Mouse Drag
-        this.carouselContainer.addEventListener('mousedown', (e) => {
-            startX = e.clientX;
-            isDragging = true;
-            hasDragged = false;
+        // Unified Pointer Events (Mouse + Touch)
+        const startDrag = (x) => {
+            this.isDragging = true;
+            this.startX = x;
+            this.currentX = x;
+            this.dragOffset = 0;
+            this.wasDragging = false;
             this.carouselContainer.style.cursor = 'grabbing';
-        });
+            // Disable transitions during drag for 1:1 feel
+            const cards = this.carouselContainer.querySelectorAll('.carousel-card');
+            cards.forEach(c => c.style.transition = 'none');
+        };
 
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            if (Math.abs(e.clientX - startX) > 5) {
-                hasDragged = true;
+        const moveDrag = (x) => {
+            if (!this.isDragging) return;
+            const diff = x - this.startX;
+            // Resistance at edges
+            if ((this.currentCardIndex === 0 && diff > 0) ||
+                (this.currentCardIndex === this.filteredReports.length - 1 && diff < 0)) {
+                this.dragOffset = diff * 0.4;
+            } else {
+                this.dragOffset = diff;
+            }
+
+            if (Math.abs(diff) > 5) this.wasDragging = true;
+            this.updateCarousel(); // Real-time update
+        };
+
+        const endDrag = (x) => {
+            if (!this.isDragging) return;
+            this.isDragging = false;
+            this.carouselContainer.style.cursor = 'grab';
+
+            // Re-enable transitions
+            const cards = this.carouselContainer.querySelectorAll('.carousel-card');
+            cards.forEach(c => c.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)');
+
+            // Snap logic
+            const threshold = this.CARD_WIDTH * 0.2; // 20% swipe to change
+            if (this.dragOffset > threshold && this.currentCardIndex > 0) {
+                this.currentCardIndex--;
+            } else if (this.dragOffset < -threshold && this.currentCardIndex < this.filteredReports.length - 1) {
+                this.currentCardIndex++;
+            }
+
+            this.dragOffset = 0;
+            this.updateCarousel();
+        };
+
+        // Touch Listeners
+        this.carouselContainer.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX), { passive: true });
+        this.carouselContainer.addEventListener('touchmove', (e) => moveDrag(e.touches[0].clientX), { passive: true });
+        this.carouselContainer.addEventListener('touchend', (e) => endDrag(e.changedTouches[0].clientX), { passive: true });
+
+        // Mouse Listeners
+        this.carouselContainer.addEventListener('mousedown', (e) => startDrag(e.clientX));
+        window.addEventListener('mousemove', (e) => {
+            if (this.isDragging) {
+                e.preventDefault(); // Prevent selection
+                moveDrag(e.clientX);
             }
         });
-
-        document.addEventListener('mouseup', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-            this.carouselContainer.style.cursor = '';
-            const diff = startX - e.clientX;
-
-            if (hasDragged && Math.abs(diff) > 30) {
-                this.wasDragging = true;
-                this.navigateCarousel(diff > 0 ? 1 : -1);
-                setTimeout(() => { this.wasDragging = false; }, 100);
-            }
+        window.addEventListener('mouseup', (e) => {
+            if (this.isDragging) endDrag(e.clientX);
         });
     }
 
@@ -578,21 +618,18 @@ class UnifiedSearch {
                 </div>
             `;
 
+            // Click Handler
             card.addEventListener('click', (e) => {
-                // Prevent click if we just dragged
-                if (this.wasDragging) return;
+                if (this.wasDragging) return; // Ignore if it was a drag
 
-                // If clicking CTA, let it propagate (or handle navigation)
-                if (e.target.closest('.card-cta')) {
-                    e.stopPropagation(); // Stop card click from triggering carousel nav
-                    window.location.href = report.slug;
-                    return;
-                }
-
-                if (index === this.currentCardIndex) {
-                    window.location.href = report.slug;
-                } else {
+                // Click to center functionality
+                if (index !== this.currentCardIndex) {
                     this.goToCard(index);
+                } else {
+                    // It's the center card, allow navigation
+                    if (e.target.closest('.card-cta') || e.target.closest('.card-content')) {
+                        window.location.href = report.slug;
+                    }
                 }
             });
 
@@ -613,22 +650,40 @@ class UnifiedSearch {
     updateCarousel() {
         const cards = document.querySelectorAll('.carousel-card');
         const dots = document.querySelectorAll('.carousel-dot');
+        const dragShift = this.dragOffset; // Pixels to shift
 
         cards.forEach((card, index) => {
-            const offset = index - this.currentCardIndex;
+            // Calculate distance including drag offset
+            // Standard offset: index - currentIndex (e.g., -1, 0, 1)
+            // Convert pixels to index-units for transform calculation
+            const dragIndexShift = dragShift / this.CARD_WIDTH;
+            const offset = (index - this.currentCardIndex) + dragIndexShift;
+
             const absOffset = Math.abs(offset);
 
-            const translateX = offset * 280;
-            const translateZ = absOffset === 0 ? 0 : -150 - (absOffset * 50);
+            const translateX = offset * this.CARD_WIDTH;
+            const translateZ = -150 - (absOffset * 50); // Base Z pushback
             const rotateY = offset * -25;
-            const scale = absOffset === 0 ? 1 : Math.max(0.7, 1 - (absOffset * 0.15));
-            const opacity = absOffset > 3 ? 0 : Math.max(0.3, 1 - (absOffset * 0.25));
 
-            card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
-            card.style.opacity = opacity;
-            card.style.zIndex = absOffset === 0 ? 100 : Math.max(10, 90 - (absOffset * 5));
-            card.style.pointerEvents = opacity > 0 ? 'auto' : 'none';
-            card.classList.toggle('active', absOffset === 0);
+            // Custom scale logic to keep center large
+            const scale = Math.max(0.7, 1 - (absOffset * 0.15));
+            const opacity = Math.max(0.3, 1 - (absOffset * 0.25));
+            const zIndex = 100 - Math.round(absOffset * 10);
+
+            // Special handling for the "center" card (approximate)
+            if (absOffset < 0.5) {
+                card.classList.add('active');
+                card.style.zIndex = 100;
+                card.style.transform = `translateX(${translateX}px) translateZ(${Math.abs(offset) * -100}px) rotateY(${rotateY}deg) scale(${scale})`;
+            } else {
+                card.classList.remove('active');
+                card.style.zIndex = zIndex;
+                card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+            }
+
+            card.style.opacity = opacity > 0 ? opacity : 0;
+            // Enable pointer events for click-to-center on visible side cards
+            card.style.pointerEvents = opacity > 0.3 ? 'auto' : 'none';
         });
 
         dots.forEach((dot, index) => {
