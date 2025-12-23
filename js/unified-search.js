@@ -155,16 +155,49 @@ function generateTimelineChart(points, color) {
 }
 
 // Chart Dispatcher
+// Chart Dispatcher
 function generateChartForReport(report) {
-    const config = report.chart || { type: 'bar', color: '#3b82f6', data: [50, 50, 50] }; // Fallback
+    let config = report.chart;
+
+    // Deterministic fallback if no chart data
+    if (!config) {
+        // Simple hash of title to seed random selection
+        let hash = 0;
+        const str = report.title || "default";
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        const seed = Math.abs(hash);
+
+        const types = ['bar', 'line', 'donut', 'network', 'timeline'];
+        const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#06b6d4'];
+
+        config = {
+            type: types[seed % types.length],
+            color: colors[(seed >> 2) % colors.length],
+            data: null // Generators usually have their own random data fallback
+        };
+
+        // Specific data tweaks for types that need arrays
+        if (config.type === 'timeline') config.data = [10, 30, 50, 70, 90].map(v => v + (seed % 10));
+        if (config.type === 'donut') config.data = 60 + (seed % 35);
+        if (config.type === 'hbar') {
+            config.data = [
+                { label: 'A', value: 80 + (seed % 20) },
+                { label: 'B', value: 50 + (seed % 40) }
+            ];
+        }
+    }
 
     switch (config.type) {
         case 'line':
             return generateLineChart(config.color, config.data);
         case 'bar':
+            // Ensure bar chart has random data if none provided
             return generateBarChart(config.color, config.data);
         case 'donut':
-            return generateDonutChart(config.data, config.color);
+            return generateDonutChart(config.data || 75, config.color);
         case 'network':
             return generateNetworkChart(config.color, config.color);
         case 'hbar':
