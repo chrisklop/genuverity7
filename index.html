@@ -35,22 +35,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap"
-        rel="stylesheet">
 
     <style>
-        /* === CORE VARIABLES (Darker theme from reports.html) === */
         :root {
             --bg-deep: #030304;
+            --bg-card: #0f172a;
+            --bg-tertiary: #1e293b;
             --accent-blue: #3b82f6;
-            --accent-indigo: #6366f1;
+            --accent-cyan: #06b6d4;
             --accent-green: #10b981;
+            --accent-amber: #f59e0b;
             --glass: rgba(15, 15, 20, 0.95);
             --border-color: rgba(255, 255, 255, 0.08);
             --text-primary: #ffffff;
             --text-secondary: #a1a1aa;
             --font-display: 'Plus Jakarta Sans', sans-serif;
-            --font-body: 'Crimson Pro', serif;
             --font-mono: 'JetBrains Mono', monospace;
             --verdict-true: #10b981;
             --verdict-false: #ef4444;
@@ -72,9 +71,8 @@
             font-family: var(--font-display);
             background-color: var(--bg-deep);
             color: var(--text-primary);
-            min-height: 100vh;
-            line-height: 1.5;
             overflow-x: hidden;
+            line-height: 1.5;
         }
 
         /* === BACKGROUND EFFECTS === */
@@ -796,98 +794,6 @@
             color: #ef6b5b;
         }
 
-        /* === BENEFITS SECTION === */
-        .benefits-section {
-            padding: 60px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .benefit-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 32px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .benefit-card:hover {
-            border-color: var(--accent-cyan);
-            transform: translateY(-4px);
-        }
-
-        .benefit-icon-wrapper {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(6, 182, 212, 0.1);
-        }
-
-        .benefit-icon-wrapper i {
-            color: var(--accent-cyan);
-        }
-
-        .benefit-title {
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
-
-        .benefit-desc {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* === FOOTER === */
-        .footer {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            padding: 40px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .footer-brand {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .footer p {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-top: 16px;
-        }
-
-        .footer-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.2s;
-        }
-
-        .footer-link:hover {
-            color: var(--accent-cyan);
-        }
-
         /* === SEARCH OVERLAY (from unified-search.js) === */
         .search-overlay {
             position: fixed;
@@ -1003,142 +909,355 @@
             }
         }
 
-        /* === SERIOUS PROSE CONTENT === */
-        .content-block {
-            padding: 100px 24px;
-            border-top: 1px solid var(--border-color);
-            background: transparent;
+        /* === MARKETING SECTIONS === */
+
+        /* Benefits Grid */
+        .benefits-section {
+            padding: 20px 24px;
+            margin-top: 40px;
         }
 
-        .prose-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .section-label {
-            font-family: var(--font-mono);
-            color: var(--accent-blue);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 40px;
-            letter-spacing: -0.02em;
-            color: white;
-        }
-
-        /* Journalistic Prose Style */
-        .prose-custom {
-            font-family: var(--font-body);
-            font-size: 1.35rem;
-            line-height: 1.7;
-            color: #d4d4d8;
-        }
-
-        .prose-custom p {
-            margin-bottom: 24px;
-        }
-
-        .prose-custom h2 {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            margin-top: 48px;
-            margin-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
-        }
-
-        .prose-custom a.citation-link {
-            text-decoration: none;
-            margin-left: 4px;
-            font-size: 0.8em;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-
-        .prose-custom a.citation-link:hover {
-            opacity: 1;
-        }
-
-        /* About & Mission Split */
-        .split-section {
+        .benefits-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
             max-width: 1000px;
             margin: 0 auto;
         }
 
-        @media (max-width: 768px) {
-            .split-section {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .content-block {
-                padding: 60px 20px;
-            }
-
-            .prose-custom {
-                font-size: 1.2rem;
-            }
+        .benefit-card {
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-card) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 28px;
+            text-align: center;
+            transition: transform 0.3s;
         }
 
-        /* Minimal Form */
-        .minimal-form {
-            max-width: 500px;
-            margin-top: 40px;
+        .benefit-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-cyan);
         }
 
-        .minimal-input {
+        .benefit-icon-wrapper {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--accent-cyan);
+        }
+
+        .benefit-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .benefit-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Algorithmic Objectivity */
+        .constitutional-section {
+            padding: 100px 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 60px;
+            line-height: 1.7;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            text-align: left;
+        }
+
+        .principle-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .principle-number {
+            width: 40px;
+            height: 40px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-blue);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .principle-content h4 {
+            color: white;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .principle-content p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* Flow Diagram */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 60px;
+        }
+
+        .flow-step {
+            text-align: center;
+            width: 120px;
+        }
+
+        .flow-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-blue);
+        }
+
+        .flow-step:last-child .flow-icon {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .flow-label {
+            display: block;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .flow-sublabel {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .flow-arrow {
+            color: var(--border-color);
+        }
+
+        /* Speed Comparison */
+        .speed-compact {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 16px 24px;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            max-width: 700px;
+            margin: 60px auto 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .speed-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .speed-item-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .speed-bar-inline {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .speed-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .speed-item.traditional .speed-bar-fill {
             width: 100%;
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--verdict-false);
+        }
+
+        .speed-item.genuverity .speed-bar-fill {
+            width: 15%;
+            background: var(--verdict-true);
+        }
+
+        .speed-time-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .speed-item.traditional .speed-time-label {
+            color: var(--verdict-false);
+        }
+
+        .speed-item.genuverity .speed-time-label {
+            color: var(--verdict-true);
+        }
+
+        .speed-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--border-color);
+        }
+
+        /* Truth Movement (Notify) */
+        .notify-section {
+            padding: 80px 24px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-card) 100%);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .notify-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .notify-discount {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+        }
+
+        .notify-form {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .notify-input,
+        .notify-textarea {
+            width: 100%;
+            padding: 14px;
+            background: var(--bg-deep);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 16px;
             color: white;
             font-family: var(--font-display);
-            margin-bottom: 20px;
-            transition: border-color 0.2s;
+            margin-bottom: 16px;
         }
 
-        .minimal-input:focus {
-            outline: none;
-            border-color: var(--accent-blue);
+        .notify-textarea {
+            height: 100px;
+            resize: none;
         }
 
-        .minimal-label {
-            display: block;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--accent-blue);
+        .notify-optional {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
             margin-bottom: 8px;
-            text-transform: uppercase;
+            display: block;
         }
 
-        .minimal-btn {
+        .btn-glow {
             width: 100%;
             padding: 16px;
             background: var(--accent-blue);
             color: white;
             border: none;
             border-radius: 8px;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 1rem;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             transition: background 0.2s;
         }
 
-        .minimal-btn:hover {
+        .btn-glow:hover {
             background: #2563eb;
+        }
+
+        @media (max-width: 768px) {
+
+            .benefits-grid,
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .speed-compact {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .speed-divider {
+                height: 1px;
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -1172,9 +1291,10 @@
             <a href="#how-it-works" class="navbar-link"
                 style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; margin-right: 20px; font-weight: 500;">How
                 it Works</a>
-            <a href="#about" class="navbar-link"
-                style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; margin-right: 20px; font-weight: 500;">About</a>
-            <a href="#contact" class="navbar-cta">
+            <a href="#notify" class="navbar-link"
+                style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; margin-right: 20px; font-weight: 500;">Join
+                the Movement</a>
+            <a href="#notify" class="navbar-cta">
                 <i data-lucide="mail" style="width:14px;height:14px;"></i>
                 Contact
             </a>
@@ -1192,11 +1312,11 @@
             <i data-lucide="zap" style="width:20px;height:20px;"></i>
             How it Works
         </a>
-        <a href="#about" onclick="toggleMobileMenu()">
+        <a href="#notify" onclick="toggleMobileMenu()">
             <i data-lucide="info" style="width:20px;height:20px;"></i>
-            About & Mission
+            Join the Movement
         </a>
-        <a href="#contact" onclick="toggleMobileMenu()">
+        <a href="#notify" onclick="toggleMobileMenu()">
             <i data-lucide="mail" style="width:20px;height:20px;"></i>
             Contact
         </a>
@@ -1241,83 +1361,158 @@
             </div>
         </section>
 
-        <!-- How It Works (Protocol) -->
-        <section id="how-it-works" class="content-block">
-            <div class="prose-container">
-                <span class="section-label">01 // PROTOCOL</span>
-                <h2 class="section-title">Operational Protocol</h2>
-
-                <div class="prose-custom">
-                    <p>We are drowning in noise. Signal is the only currency that matters. GenuVerity uses a recursive
-                        intelligence engine to cut through the sludge.</p>
-
-                    <h2>1. The Stream (Discovery)</h2>
-                    <p>An algorithmic feed of high-impact vectors. Swipe Right to queue. Swipe Left to discard.</p>
-
-                    <h2>2. The Deep Dive (Analysis)</h2>
-                    <p>Our multi-agent system synthesizes data into a cohesive report, checking claims against the
-                        <strong>Google Fact Check Tools API</strong><a href="#" class="citation-link">🔗</a>.</p>
-
-                    <h2>3. The Rabbit Hole</h2>
-                    <p>Every report is a node. Highlight text to spawn a *new* investigation.</p>
+        <!-- Benefits Section (Screenshot Restore) -->
+        <section class="benefits-section">
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrapper">
+                        <i data-lucide="clock" style="width:28px;height:28px;"></i>
+                    </div>
+                    <h3 class="benefit-title">Stop Spreading Lies</h3>
+                    <p class="benefit-desc">Verify claims before you share. Know the truth in minutes, not days.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrapper">
+                        <i data-lucide="mouse-pointer-click" style="width:28px;height:28px;"></i>
+                    </div>
+                    <h3 class="benefit-title">Click Every Source</h3>
+                    <p class="benefit-desc">Every source is linked. Don't trust our summary—read the originals yourself.
+                    </p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrapper">
+                        <i data-lucide="shield-check" style="width:28px;height:28px;"></i>
+                    </div>
+                    <h3 class="benefit-title">No Hidden Agenda</h3>
+                    <p class="benefit-desc">AI doesn't have political bias. Just evidence, analyzed objectively.</p>
                 </div>
             </div>
         </section>
 
-        <!-- About & Mission (Archive) -->
-        <section id="about" class="content-block">
-            <div class="split-section">
-                <!-- About -->
-                <div>
-                    <span class="section-label">02 // ARCHIVE</span>
-                    <h2 class="section-title">About</h2>
-                    <div class="prose-custom">
-                        <p>We are the "Infinite Archive." We verify reality.</p>
-                        <p>We don't take sides. We take data.</p>
+        <!-- Algorithmic Objectivity (Screenshot Restore) -->
+        <section class="constitutional-section" id="how-it-works">
+            <div class="section-label">
+                <i data-lucide="cpu" style="width:14px;height:14px;"></i>
+                What Makes Us Different
+            </div>
+            <h2 class="section-title">Algorithmic Objectivity</h2>
+            <p class="section-desc">
+                GenuVerity continuously monitors breaking news, viral claims, and contested topics. When misinformation
+                spreads, our AI generates comprehensive fact-checks in real time—verified against primary sources.
+            </p>
+
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <div class="principle-number"><i data-lucide="zap" style="width:18px;height:18px;"></i></div>
+                    <div class="principle-content">
+                        <h4>Always-On Verification</h4>
+                        <p>No waiting for fact-checkers to catch up. GenuVerity detects viral claims as they emerge.</p>
                     </div>
                 </div>
-
-                <!-- Mission -->
-                <div id="mission">
-                    <span class="section-label">03 // MISSION</span>
-                    <h2 class="section-title">Veritas et Aequitas</h2>
-                    <div class="prose-custom">
-                        <p>To democratize high-fidelity intelligence.</p>
-                        <p>Falsehood diffuses significantly farther, faster, deeper, and more broadly than the truth <a
-                                href="#" class="citation-link">🔗</a>. We build the tools to catch up.</p>
+                <div class="principle-card">
+                    <div class="principle-number"><i data-lucide="scale" style="width:18px;height:18px;"></i></div>
+                    <div class="principle-content">
+                        <h4>Just the Facts</h4>
+                        <p>Algorithms don't have political leanings. Every report follows the evidence—wherever it
+                            leads.</p>
+                    </div>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-number"><i data-lucide="eye" style="width:18px;height:18px;"></i></div>
+                    <div class="principle-content">
+                        <h4>Full Transparency</h4>
+                        <p>See exactly how conclusions were reached. Every source is linked, every logical step
+                            documented.</p>
+                    </div>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-number"><i data-lucide="target" style="width:18px;height:18px;"></i></div>
+                    <div class="principle-content">
+                        <h4>Origin Tracing</h4>
+                        <p>We identify when and where disinformation first appeared—pinpointing bot injections.</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Flow Pipeline -->
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <div class="flow-icon"><i data-lucide="radar" style="width:24px;height:24px;"></i></div>
+                    <span class="flow-label">Viral Claim</span>
+                    <span class="flow-sublabel">Found</span>
+                </div>
+                <div class="flow-arrow"><i data-lucide="chevron-right"></i></div>
+                <div class="flow-step">
+                    <div class="flow-icon"><i data-lucide="search" style="width:24px;height:24px;"></i></div>
+                    <span class="flow-label">Sources</span>
+                    <span class="flow-sublabel">Fetched</span>
+                </div>
+                <div class="flow-arrow"><i data-lucide="chevron-right"></i></div>
+                <div class="flow-step">
+                    <div class="flow-icon"><i data-lucide="cpu" style="width:24px;height:24px;"></i></div>
+                    <span class="flow-label">AI Analysis</span>
+                    <span class="flow-sublabel">Weighed</span>
+                </div>
+                <div class="flow-arrow"><i data-lucide="chevron-right"></i></div>
+                <div class="flow-step">
+                    <div class="flow-icon"><i data-lucide="check-circle" style="width:24px;height:24px;"></i></div>
+                    <span class="flow-label">Verdict</span>
+                    <span class="flow-sublabel">Published</span>
+                </div>
+            </div>
+
+            <!-- Speed Comparison -->
+            <div class="speed-compact">
+                <div class="speed-item traditional">
+                    <span class="speed-item-label">Traditional</span>
+                    <div class="speed-bar-inline">
+                        <div class="speed-bar-fill"></div>
+                    </div>
+                    <span class="speed-time-label">2-7 days</span>
+                </div>
+                <div class="speed-divider"></div>
+                <div class="speed-item genuverity">
+                    <span class="speed-item-label">GenuVerity</span>
+                    <div class="speed-bar-inline">
+                        <div class="speed-bar-fill"></div>
+                    </div>
+                    <span class="speed-time-label">Minutes</span>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 32px;">
+                <a href="methodology.html"
+                    style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none;">
+                    <i data-lucide="book-open" style="width:16px;height:16px;"></i>
+                    Learn More About Our Methodology
+                </a>
+            </div>
         </section>
 
-        <!-- Contact (Secure Comms) -->
-        <section id="contact" class="content-block">
-            <div class="prose-container">
-                <span class="section-label">04 // TRANSMISSION</span>
-                <h2 class="section-title">Secure Comms</h2>
-                <div class="prose-custom">
-                    <p>Initiate encrypted handshake.</p>
-                </div>
+        <!-- Join Truth Movement (Screenshot Restore) -->
+        <section class="notify-section" id="notify">
+            <h3 class="notify-title">Join the Truth Movement</h3>
+            <div class="notify-discount">
+                <i data-lucide="shield-check" style="width:14px;height:14px;"></i>
+                Be a founding member of the next generation of fact-checking
+            </div>
 
-                <form id="contactForm" onsubmit="handleContactSubmit(event)" class="minimal-form">
-                    <div class="form-group">
-                        <label class="minimal-label">Transmission Type</label>
-                        <select class="minimal-input">
-                            <option>Early Access</option>
-                            <option>Feedback</option>
-                        </select>
+            <form class="notify-form" onsubmit="handleContactSubmit(event)" id="contactForm">
+                <div class="notify-fields">
+                    <input type="email" class="notify-input" placeholder="you@example.com" required>
+                    <div>
+                        <p class="notify-optional">Optional: How do you plan to use GenuVerity?</p>
+                        <textarea class="notify-textarea" placeholder="e.g., Verify news before sharing..."></textarea>
                     </div>
-                    <div class="form-group">
-                        <label class="minimal-label">Signal Origin (Email)</label>
-                        <input type="email" required class="minimal-input" placeholder="you@example.com">
-                    </div>
-                    <button type="submit" class="minimal-btn">
-                        TRANSMIT
-                    </button>
-                </form>
-                <div id="contactSuccess" class="success-message">
-                    TRANSMISSION RECEIVED.<br>ENCRYPTION KEY EXCHANGED.
                 </div>
+                <button type="submit" class="btn-glow">
+                    <i data-lucide="zap" style="width:18px;height:18px;"></i>
+                    Claim My Spot
+                </button>
+            </form>
+            <div id="contactSuccess"
+                style="display:none; text-align: center; color: var(--accent-green); margin-top: 16px;">
+                TRANSMISSION RECEIVED. WELCOME TO THE MOVEMENT.
             </div>
         </section>
     </main>
@@ -1669,16 +1864,16 @@
         function handleContactSubmit(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
-            const originalText = btn.innerHTML;
+            const originalHTML = btn.innerHTML;
             const successMsg = document.getElementById('contactSuccess');
             const form = document.getElementById('contactForm');
 
             btn.disabled = true;
-            btn.innerHTML = `ENCRYPTING...`;
+            btn.innerHTML = `Encrypting...`;
 
             // Simulate API call
             setTimeout(() => {
-                btn.innerHTML = `SENT`;
+                btn.innerHTML = `Sent`;
                 form.reset();
 
                 setTimeout(() => {
