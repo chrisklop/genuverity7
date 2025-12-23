@@ -50,23 +50,46 @@ function generateDonutChart(percent, color) {
 }
 
 function generateNetworkChart(nodeColor, lineColor) {
-    const nodes = Array.from({ length: 12 }, () => ({
-        x: 10 + Math.random() * 80,
+    const nodes = Array.from({ length: 15 }, () => ({
+        x: 10 + Math.random() * 160,
         y: 10 + Math.random() * 80,
-        size: 6 + Math.random() * 10
+        r: 3 + Math.random() * 2
     }));
-    const nodesHTML = nodes.map((n, i) =>
-        `<div class="node" style="left: ${n.x}%; top: ${n.y}%; width: ${n.size}px; height: ${n.size}px; background: ${nodeColor}; animation-delay: ${i * 0.15}s;"></div>`
+
+    // Generate connections
+    const links = [];
+    nodes.forEach((node, i) => {
+        // Connect to 2-3 nearest neighbors to form a nicer graph
+        const neighbors = nodes
+            .map((n, idx) => ({ idx, dist: Math.hypot(n.x - node.x, n.y - node.y) }))
+            .filter(n => n.idx !== i)
+            .sort((a, b) => a.dist - b.dist)
+            .slice(0, Math.random() > 0.5 ? 2 : 3);
+
+        neighbors.forEach(n => {
+            // Avoid duplicates (only connect if i < n.idx)
+            if (i < n.idx) {
+                links.push({ source: node, target: nodes[n.idx] });
+            }
+        });
+    });
+
+    const linesHTML = links.map(link =>
+        `<line x1="${link.source.x}" y1="${link.source.y}" x2="${link.target.x}" y2="${link.target.y}" stroke="${lineColor}" stroke-width="0.5" opacity="0.4" />`
     ).join('');
-    const linesHTML = nodes.slice(0, 6).map((n, i) => {
-        const target = nodes[(i + 3) % nodes.length];
-        const dx = target.x - n.x;
-        const dy = target.y - n.y;
-        const length = Math.sqrt(dx * dx + dy * dy);
-        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-        return `<div class="line" style="left: ${n.x}%; top: ${n.y}%; width: ${length}%; transform: rotate(${angle}deg); background: ${lineColor};"></div>`;
-    }).join('');
-    return `<div class="chart-container"><div class="chart-network">${linesHTML}${nodesHTML}</div></div>`;
+
+    const nodesHTML = nodes.map((n, i) =>
+        `<circle cx="${n.x}" cy="${n.y}" r="${n.r}" fill="${nodeColor}" style="animation: pulse 3s ease-in-out infinite; animation-delay: ${i * 0.2}s; transform-box: fill-box; transform-origin: center;" />`
+    ).join('');
+
+    return `<div class="chart-container">
+        <div class="chart-network" style="width:100%; height:100%;">
+            <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid slice" style="width:100%; height:100%; overflow:visible;">
+                ${linesHTML}
+                ${nodesHTML}
+            </svg>
+        </div>
+    </div>`;
 }
 
 function generateHBarChart(data, colors) {
