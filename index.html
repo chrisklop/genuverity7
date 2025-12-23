@@ -36,6 +36,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+    <!-- Service Worker Kill Switch -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                for (let registration of registrations) {
+                    console.log('Unregistering Service Worker:', registration);
+                    registration.unregister();
+                }
+            });
+            // Force reload if we suspect SW was controlling
+            if (navigator.serviceWorker.controller) {
+                console.log('Reloading to clear SW control...');
+                // window.location.reload(); // Optional: risky loop, better to just let them reload
+            }
+        }
+    </script>
     <style>
         /* === CORE VARIABLES (Darker theme from reports.html) === */
         :root {
