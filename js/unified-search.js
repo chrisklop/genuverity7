@@ -4,30 +4,47 @@
 
 // Chart Generators (Ported from reports.html/index.html)
 function generateBarChart(color, data) {
-    const bars = data && Array.isArray(data) ? data : Array.from({ length: 10 }, () => Math.random() * 80 + 20);
-    return `<div class="chart-container"><div class="chart-bars">${bars.map(h =>
-        `<div class="bar" style="height: ${h}%; background: ${color};"></div>`
-    ).join('')}</div></div>`;
+    const barsData = data && Array.isArray(data) ? data : Array.from({ length: 10 }, () => Math.random() * 80 + 20);
+
+    // Normalize data to fits in 100 height
+    const max = Math.max(...barsData, 100);
+    const bars = barsData.map((d, i) => {
+        const height = (d / max) * 100;
+        const count = barsData.length;
+        const totalGap = 30; // Gap space in 180 width
+        const barWidth = (180 - totalGap) / count;
+        const gap = totalGap / (count - 1 || 1);
+        const x = i * (barWidth + gap);
+        return `<rect x="${x}" y="${100 - height}" width="${barWidth}" height="${height}" fill="${color}" rx="2" />`;
+    }).join('');
+
+    return `<div class="chart-container">
+        <div class="chart-bars" style="width:100%; height:100%;">
+            <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet" style="width:100%; height:100%;">
+                ${bars}
+            </svg>
+        </div>
+    </div>`;
 }
 
 function generateLineChart(color, data) {
     let points;
     if (data && Array.isArray(data)) {
         points = data.map((val, i) => ({
-            x: i * (100 / (data.length - 1)),
+            x: i * (180 / (data.length - 1)),
             y: val
         }));
     } else {
         points = Array.from({ length: 8 }, (_, i) => ({
-            x: i * 14.3,
+            x: i * (180 / 7),
             y: 20 + Math.random() * 60
         }));
     }
 
     const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${100 - p.y}`).join(' ');
-    const areaD = pathD + ` L 100 100 L 0 100 Z`;
+    const areaD = pathD + ` L 180 100 L 0 100 Z`;
     return `<div class="chart-container"><div class="chart-line">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet">
             <path class="area" d="${areaD}" fill="${color}"/>
             <path d="${pathD}" stroke="${color}"/>
         </svg>
@@ -35,13 +52,13 @@ function generateLineChart(color, data) {
 }
 
 function generateDonutChart(percent, color) {
-    const circumference = 2 * Math.PI * 45;
+    const circumference = 2 * Math.PI * 40;
     const offset = circumference * (1 - percent / 100);
     return `<div class="chart-container" style="justify-content: center; align-items: center;">
         <div class="chart-donut">
-            <svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="45" stroke="var(--border-color)"/>
-                <circle cx="50" cy="50" r="45" stroke="${color}"
+            <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet">
+                <circle cx="90" cy="50" r="40" stroke="var(--border-color)"/>
+                <circle cx="90" cy="50" r="40" stroke="${color}"
                     stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"/>
             </svg>
             <span class="donut-label">${percent}%</span>
@@ -93,20 +110,48 @@ function generateNetworkChart(nodeColor, lineColor) {
 }
 
 function generateHBarChart(data, colors) {
-    return `<div class="chart-container" style="align-items: center;"><div class="chart-hbars">${data.map((d, i) =>
-        `<div class="hbar-row">
-            <span class="hbar-label">${d.label}</span>
-            <div class="hbar" style="width: ${d.value}%; background: ${colors[i % colors.length]};"></div>
-        </div>`
-    ).join('')}</div></div>`;
+    // data is array of {label, value}
+    const rowHeight = 100 / (data.length || 1);
+    const barHeight = rowHeight * 0.4;
+
+    const content = data.map((d, i) => {
+        const yCenter = i * rowHeight + rowHeight / 2;
+        const yBar = yCenter - barHeight / 2;
+        const color = colors[i % colors.length];
+
+        return `
+            <!-- Label -->
+            <text x="0" y="${yCenter}" dominant-baseline="middle" fill="#94a3b8" font-size="10" font-family="sans-serif" style="text-anchor: start;">${d.label}</text>
+            <!-- Bar Background -->
+            <rect x="50" y="${yBar}" width="130" height="${barHeight}" fill="${color}" opacity="0.1" rx="2" />
+            <!-- Value Bar -->
+            <rect x="50" y="${yBar}" width="${d.value * 1.3}" height="${barHeight}" fill="${color}" rx="2" />
+        `;
+    }).join('');
+
+    return `<div class="chart-container">
+        <div class="chart-hbars" style="width:100%; height:100%;">
+            <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet" style="width:100%; height:100%; overflow:visible;">
+                ${content}
+            </svg>
+        </div>
+    </div>`;
 }
 
 function generateTimelineChart(points, color) {
-    return `<div class="chart-container" style="align-items: center;"><div class="chart-timeline">
-        <div class="timeline-line">
-            ${points.map(p => `<div class="timeline-point" style="left: ${p}%; background: ${color};"></div>`).join('')}
+    // points is array of percentages 0-100
+    const dots = points.map(p =>
+        `<circle cx="${p * 1.8}" cy="50" r="4" fill="${color}" stroke="#111827" stroke-width="2" />`
+    ).join('');
+
+    return `<div class="chart-container">
+        <div class="chart-timeline" style="width:100%; height:100%;">
+             <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet" style="width:100%; height:100%; overflow:visible;">
+                <line x1="0" y1="50" x2="180" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="2" />
+                ${dots}
+            </svg>
         </div>
-    </div></div>`;
+    </div>`;
 }
 
 // Chart Dispatcher

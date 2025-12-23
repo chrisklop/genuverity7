@@ -13,7 +13,12 @@ const REPORTS_DATA = [
         date: "Dec 22, 2025",
         sources: "12 Sources",
         readTime: "16 min",
-        excerpt: "Forensic investigation of viral IRS $1,390 & Social Security $4,500 hoaxes, exposing AI-driven content farms, algorithmic feedback loops, and identity theft pipelines."
+        excerpt: "Forensic investigation of viral IRS $1,390 & Social Security $4,500 hoaxes, exposing AI-driven content farms, algorithmic feedback loops, and identity theft pipelines.",
+        chart: {
+            type: "network",
+            color: "#ef4444",
+            data: { nodes: 15, connections: 25 }
+        }
     },
     {
         id: 1,
@@ -26,7 +31,12 @@ const REPORTS_DATA = [
         date: "Dec 22, 2025",
         sources: "15 Sources",
         readTime: "18 min",
-        excerpt: "Forensic analysis of the $40B Argentina bailout, market displacement of US soybeans, Chapter 12 bankruptcies surging 68%, and oligopolistic market structures."
+        excerpt: "Forensic analysis of the $40B Argentina bailout, market displacement of US soybeans, Chapter 12 bankruptcies surging 68%, and oligopolistic market structures.",
+        chart: {
+            type: "line",
+            color: "#f59e0b",
+            data: [20, 35, 45, 60, 55, 68, 80, 95]
+        }
     },
     {
         id: 2,
@@ -39,7 +49,12 @@ const REPORTS_DATA = [
         date: "Dec 22, 2025",
         sources: "10 Sources",
         readTime: "8 min",
-        excerpt: "Viral false claims about Muslim men 'storming' Christmas markets debunked. Far-right groups spread doctored videos, AI imagery, and exploit Magdeburg attack."
+        excerpt: "Viral false claims about Muslim men 'storming' Christmas markets debunked. Far-right groups spread doctored videos, AI imagery, and exploit Magdeburg attack.",
+        chart: {
+            type: "hbar",
+            color: "#ef4444",
+            data: [{ label: 'TikTok', value: 85 }, { label: 'X/Avian', value: 70 }, { label: 'Telegram', value: 60 }, { label: 'Insta', value: 30 }]
+        }
     },
     {
         id: 3,
@@ -52,7 +67,12 @@ const REPORTS_DATA = [
         date: "Dec 21, 2025",
         sources: "12 Sources",
         readTime: "12 min",
-        excerpt: "Comprehensive analysis of viral hoaxes following Rob Reiner's murder. Trump's 'TDS' post is real, but the fake 2023 tweet and Epstein connections are fabricated."
+        excerpt: "Comprehensive analysis of viral hoaxes following Rob Reiner's murder. Trump's 'TDS' post is real, but the fake 2023 tweet and Epstein connections are fabricated.",
+        chart: {
+            type: "timeline",
+            color: "#06b6d4",
+            data: [10, 25, 50, 65, 90]
+        }
     },
     {
         id: 4,
@@ -65,7 +85,12 @@ const REPORTS_DATA = [
         date: "Dec 21, 2025",
         sources: "10 Sources",
         readTime: "10 min",
-        excerpt: "50,000+ posts spread false info about Syria's new government. 60% from foreign accounts. Russia, Iran wage information war after military defeat."
+        excerpt: "50,000+ posts spread false info about Syria's new government. 60% from foreign accounts. Russia, Iran wage information war after military defeat.",
+        chart: {
+            type: "network",
+            color: "#ef4444",
+            data: { nodes: 20, connections: 40 }
+        }
     },
     {
         id: 5,
@@ -78,7 +103,12 @@ const REPORTS_DATA = [
         date: "Dec 21, 2025",
         sources: "10 Sources",
         readTime: "12 min",
-        excerpt: "RFK Jr.'s hand-picked CDC panel votes 8-3 to end 30-year universal vaccination policy. AAP boycotts meetings, states rebel, medical community sounds alarm."
+        excerpt: "RFK Jr.'s hand-picked CDC panel votes 8-3 to end 30-year universal vaccination policy. AAP boycotts meetings, states rebel, medical community sounds alarm.",
+        chart: {
+            type: "donut",
+            color: "#f59e0b",
+            data: 73
+        }
     },
     {
         id: 6,
@@ -91,7 +121,12 @@ const REPORTS_DATA = [
         date: "Dec 21, 2025",
         sources: "9 Sources",
         readTime: "10 min",
-        excerpt: "U.S. military strike near Venezuela killed survivors 'shirtless and struggling in the water.' Bipartisan outcry over transparency. Pentagon refuses to release video."
+        excerpt: "U.S. military strike near Venezuela killed survivors 'shirtless and struggling in the water.' Bipartisan outcry over transparency. Pentagon refuses to release video.",
+        chart: {
+            type: "timeline",
+            color: "#06b6d4",
+            data: [15, 30, 45, 60, 85]
+        }
     },
     {
         id: 7,
@@ -104,7 +139,12 @@ const REPORTS_DATA = [
         date: "Dec 21, 2025",
         sources: "14 Sources",
         readTime: "15 min",
-        excerpt: "From pre-pandemic stability to 9.1% peak and back down to 2.7%. How COVID-19 reshaped US prices and how recovery compares to G7 peers. Interactive charts included."
+        excerpt: "From pre-pandemic stability to 9.1% peak and back down to 2.7%. How COVID-19 reshaped US prices and how recovery compares to G7 peers. Interactive charts included.",
+        chart: {
+            type: "line",
+            color: "#3b82f6",
+            data: [10, 15, 85, 95, 60, 40, 30, 27]
+        }
     },
     {
         id: 8,
@@ -117,7 +157,12 @@ const REPORTS_DATA = [
         date: "Dec 21, 2025",
         sources: "18 Sources",
         readTime: "12 min",
-        excerpt: "DOJ releases 300,000+ pages then removes 16 files including Trump photo. Bipartisan outrage over redactions. 680+ pages entirely blacked out. Updated Dec 21."
+        excerpt: "DOJ releases 300,000+ pages then removes 16 files including Trump photo. Bipartisan outrage over redactions. 680+ pages entirely blacked out. Updated Dec 21.",
+        chart: {
+            type: "bar",
+            color: "#f59e0b",
+            data: [80, 40, 60, 90, 20, 50, 70, 30]
+        }
     },
     {
         id: 9,
@@ -130,7 +175,12 @@ const REPORTS_DATA = [
         date: "Dec 20, 2025",
         sources: "8 Sources",
         readTime: "6 min",
-        excerpt: "The viral 'loser' quote attributed to decorated Army nurse Colonel Ruby Bradley is fabricated. No primary source exists. Honor her by sharing her real heroic story."
+        excerpt: "The viral 'loser' quote attributed to decorated Army nurse Colonel Ruby Bradley is fabricated. No primary source exists. Honor her by sharing her real heroic story.",
+        chart: {
+            type: "donut",
+            color: "#ef4444",
+            data: 0
+        }
     },
     {
         id: 10,
@@ -143,7 +193,12 @@ const REPORTS_DATA = [
         date: "Dec 20, 2025",
         sources: "10 Sources",
         readTime: "7 min",
-        excerpt: "Claims of Soros-funded paid protesters via Craigslist ads have been debunked after every major protest for over a decade. Zero verified instances of mass paid protesting."
+        excerpt: "Claims of Soros-funded paid protesters via Craigslist ads have been debunked after every major protest for over a decade. Zero verified instances of mass paid protesting.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [5, 12, 8, 25, 45, 65, 85, 95]
+        }
     },
     {
         id: 11,
@@ -156,7 +211,12 @@ const REPORTS_DATA = [
         date: "Dec 20, 2025",
         sources: "9 Sources",
         readTime: "8 min",
-        excerpt: "At least 47 AI-generated fake videos depicting immigration raids have gone viral in 2025, created with tools like Sora. None depict real events."
+        excerpt: "At least 47 AI-generated fake videos depicting immigration raids have gone viral in 2025, created with tools like Sora. None depict real events.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [5, 10, 25, 40, 65, 80, 90, 100]
+        }
     },
     {
         id: 12,
@@ -169,7 +229,12 @@ const REPORTS_DATA = [
         date: "Dec 20, 2025",
         sources: "11 Sources",
         readTime: "9 min",
-        excerpt: "The Great Reset is real but conspiracy claims vastly exaggerate its scope. The WEF is a discussion forum with no power to implement policies."
+        excerpt: "The Great Reset is real but conspiracy claims vastly exaggerate its scope. The WEF is a discussion forum with no power to implement policies.",
+        chart: {
+            type: "network",
+            color: "#f59e0b",
+            data: { nodes: 12, connections: 18 }
+        }
     },
     {
         id: 13,
@@ -182,7 +247,12 @@ const REPORTS_DATA = [
         date: "Dec 20, 2025",
         sources: "10 Sources",
         readTime: "7 min",
-        excerpt: "The chemtrails conspiracy resurges on TikTok with 18,300+ videos in Dec 2025. Science is clear: contrails are frozen water vapor, not chemical spraying."
+        excerpt: "The chemtrails conspiracy resurges on TikTok with 18,300+ videos in Dec 2025. Science is clear: contrails are frozen water vapor, not chemical spraying.",
+        chart: {
+            type: "hbar",
+            color: "#ef4444",
+            data: [{ label: 'TikTok', value: 92 }, { label: 'Facebook', value: 45 }, { label: 'YouTube', value: 30 }, { label: 'X', value: 65 }]
+        }
     },
     {
         id: 14,
@@ -195,7 +265,12 @@ const REPORTS_DATA = [
         date: "Dec 20, 2025",
         sources: "10 Sources",
         readTime: "7 min",
-        excerpt: "Left-wing conspiracy theory claims Starlink can alter votes. Reality: voting machines are air-gapped and not connected to any network during elections."
+        excerpt: "Left-wing conspiracy theory claims Starlink can alter votes. Reality: voting machines are air-gapped and not connected to any network during elections.",
+        chart: {
+            type: "donut",
+            color: "#ef4444",
+            data: 0
+        }
     },
     {
         id: 15,
@@ -208,7 +283,12 @@ const REPORTS_DATA = [
         date: "Dec 20, 2025",
         sources: "9 Sources",
         readTime: "8 min",
-        excerpt: "HAARP blamed for LA wildfires and hurricanes. Science: HAARP operates 60+ miles up in the ionosphere—weather forms in the troposphere below 10 miles."
+        excerpt: "HAARP blamed for LA wildfires and hurricanes. Science: HAARP operates 60+ miles up in the ionosphere—weather forms in the troposphere below 10 miles.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [10, 20, 15, 40, 60, 50, 80, 90]
+        }
     },
     {
         id: 16,
@@ -221,7 +301,12 @@ const REPORTS_DATA = [
         date: "Dec 20, 2025",
         sources: "8 Sources",
         readTime: "6 min",
-        excerpt: "Viral claims that 10 people died in protests over Tommy Robinson's arrest in Guadeloupe are false. French officials confirm no fatalities occurred."
+        excerpt: "Viral claims that 10 people died in protests over Tommy Robinson's arrest in Guadeloupe are false. French officials confirm no fatalities occurred.",
+        chart: {
+            type: "donut",
+            color: "#ef4444",
+            data: 0
+        }
     },
     {
         id: 17,
@@ -234,7 +319,12 @@ const REPORTS_DATA = [
         date: "Dec 20, 2025",
         sources: "10 Sources",
         readTime: "8 min",
-        excerpt: "Musk calls DSA fines 'censorship' but EU content moderation applies to all platforms equally. His claims about discriminatory targeting are MOSTLY FALSE."
+        excerpt: "Musk calls DSA fines 'censorship' but EU content moderation applies to all platforms equally. His claims about discriminatory targeting are MOSTLY FALSE.",
+        chart: {
+            type: "bar",
+            color: "#f59e0b",
+            data: [45, 50, 48, 52, 49, 51, 53, 50]
+        }
     },
     {
         id: 18,
