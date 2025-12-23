@@ -303,6 +303,48 @@
             display: block;
         }
 
+        /* === DATA TABLES === */
+        .data-table-container {
+            margin: 32px 0;
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-card);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 16px 24px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .data-table th {
+            font-weight: 600;
+            color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.05);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-primary);
+        }
+
+
         /* === MOBILE === */
         @media (max-width: 768px) {
             h1 {
@@ -413,12 +455,20 @@
         </section>
 
         <section class="content-section">
-            <h2 class="prose-h2"><i data-lucide="cpu"></i> The Anatomy of Deception</h2>
+            <h2 class="prose-h2"><i data-lucide="cpu"></i> The Architecture of Evasion</h2>
+
+            <h3 style="color:white;margin:24px 0 16px;font-size:1.4rem;">The "Zero Trust" Paradox</h3>
             <p class="prose-text">
-                Modern laptop farms are not merely "click farms" relying on low-wage labor. They are sophisticated,
-                automated environments leveraging hardware-level remote control. Facilitators in the U.S. receive
-                legitimate corporate laptops, connect them to KVM-over-IP switches, and allow overseas operatives to
-                control them as if they were sitting in an American home office.
+                The modern laptop farm is designed to weaponize the very "Zero Trust" security models that were meant to
+                protect enterprise networks. By physically aggregating hardware, these facilities satisfy the two
+                pillars of digital trust: <strong>Device Fingerprinting</strong> and <strong>Geolocation</strong>.
+            </p>
+            <p class="prose-text">
+                Facilitators within the United States receive legitimate, company-issued laptops. These devices are not
+                merely stored; they are integrated into a local network infrastructure that provides a "domestic"
+                identity to an overseas operator. Hardware components frequently identified include <strong>KVM-over-IP
+                    switches</strong>, which allow for low-level BIOS and OS control without the need for software-based
+                remote desktop agents (like TeamViewer) that might be detected by enterprise security suites (EDR).
             </p>
 
             <div class="infographic-container">
@@ -426,21 +476,109 @@
                     class="infographic-img">
             </div>
 
+            <h3 style="color:white;margin:24px 0 16px;font-size:1.4rem;">Physical Layer & Residential Proxies</h3>
             <p class="prose-text">
-                To corporate security systems, the traffic appears impeccable: coming from a verified residential ISP
-                (Comcast, Verizon) with a valid local device fingerprint. Behind this façade, AI-driven "mouse jiggle"
-                software mimics human motor patterns, defeating behavioral biometrics designed to flag bots.
+                In more advanced setups, facilitators utilize micro-computers like <strong>Raspberry Pis</strong> to
+                maintain persistent connections and execute automated scripts locally on the workstation. The
+                facilitator—often a domestic US citizen—is compensated with monthly fees to manage power cycles,
+                internet stability, and the logistics of receiving and shipping hardware.
+            </p>
+            <p class="prose-text">
+                Critically, this traffic is routed through <strong>Residential Proxy Networks</strong>. To a victim
+                company's server, the traffic appears to originate from a trusted residential ISP like Comcast or
+                Verizon. This creates a "layered" identity: a verified device at a verified home address, masking an
+                operator in Pyongyang or St. Petersburg.
+            </p>
+
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Technical Vector</th>
+                            <th>Mechanism</th>
+                            <th>Objective</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight:600;color:var(--accent-cyan);">KVM-over-IP</td>
+                            <td>Hardware-level remote control</td>
+                            <td>Bypass software-based remote desktop detection</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:600;color:var(--accent-cyan);">Residential Proxies</td>
+                            <td>Routing traffic through ISP-issued IPs</td>
+                            <td>Evade geolocation filters and IP blocklists</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:600;color:var(--accent-cyan);">Mouse Emulation</td>
+                            <td>Algorithmic curved trajectories</td>
+                            <td>Bypass behavioral anti-bot systems</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:600;color:var(--accent-cyan);">Identity Hijacking</td>
+                            <td>Leveraging stolen PII and LinkedIn profiles</td>
+                            <td>Establish credible "human" personas for hiring</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="prose-text">
+                As corporate security has evolved toward behavioral analytics, laptop farm operators have adopted
+                advanced emulation techniques. Software packages now utilize interpolation algorithms to create
+                <strong>non-linear, curved mouse trajectories</strong> that mirror human motor patterns, effectively
+                bypassing machine-learning defenses that flag robotic, straight-line movements.
             </p>
         </section>
 
         <section class="content-section">
-            <h2 class="prose-h2"><i data-lucide="briefcase"></i> The Amazon Infiltration & DPRK Revenue</h2>
+            <h2 class="prose-h2"><i data-lucide="briefcase"></i> The Amazon Infiltration & The "Andrew M." Case</h2>
             <p class="prose-text">
-                In late 2025, Amazon's CISO revealed the company had blocked over <strong>1,800 suspected North Korean
-                    operatives</strong> attempting to secure remote IT roles. This is not isolated. The indictment of
-                Arizona resident Christina Marie Chapman exposed a scheme generating <strong>$6.8 million</strong> in
-                illegal revenue for the DPRK regime.
+                In late 2025, Amazon's Chief Security Officer reported that the company had identified and blocked
+                approximately <strong>1,800 suspected North Korean IT job scammers</strong>. This case highlights a
+                systematic, state-sponsored effort to infiltrate the global tech workforce, moving beyond sporadic
+                attempts toward a high-volume, automated "funnel".
             </p>
+            <p class="prose-text">
+                A notable trend is the strategic targeting of roles in <strong>Artificial Intelligence (AI) and Machine
+                    Learning (ML)</strong>. This suggests an intent by the DPRK to not only generate revenue but also to
+                acquire sensitive intellectual property and technical data critical to national security.
+            </p>
+
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Detail</th>
+                            <th>Source</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Total Revenue (Chapman Scheme)</td>
+                            <td style="color:var(--accent-green);font-weight:700;">$17.1 Million</td>
+                            <td>DOJ Indictment</td>
+                        </tr>
+                        <tr>
+                            <td>Impacted Companies</td>
+                            <td>300+ (Chapman), 100+ (Wang)</td>
+                            <td>Federal Court Filings</td>
+                        </tr>
+                        <tr>
+                            <td>Worker Earnings</td>
+                            <td>Up to <strong>$300,000</strong> / year</td>
+                            <td>US State Dept</td>
+                        </tr>
+                        <tr>
+                            <td>Identity Theft Victims</td>
+                            <td>68+ Verified US Persons</td>
+                            <td>FBI Cyber Division</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <figure class="float-figure">
                 <canvas id="lazarusPipelineChart"></canvas>
@@ -449,21 +587,77 @@
                 </figcaption>
             </figure>
 
+            <h3 style="color:white;margin:24px 0 16px;font-size:1.4rem;">Case Study: "Andrew M." and the Human Cost</h3>
             <p class="prose-text">
-                Operatives frequently target AI and Machine Learning roles, seeking not just salaries (up to $300k/year)
-                but access to intellectual property. They utilize stolen identities of real U.S. citizens—like "Andrew
-                M.," whose identity was used to earn nearly a quarter-million dollars while saddling the victim with a
-                massive surprise tax liability.
+                The prosecution of <strong>Christina Marie Chapman</strong> in Arizona provides a granular view of the
+                human wreckage left by these operations. Chapman hosted over 90 laptops at her residence, facilitating
+                employment for North Korean workers at more than 300 U.S. companies.
+            </p>
+            <p class="prose-text">
+                One significant victim was a U.S. citizen identified only as "Andrew M." His identity was stolen and
+                used by a North Korean worker to obtain high-paying jobs at media and technology firms. The impostor
+                earned over <strong>$250,000 in a single year</strong> under Andrew's name. The result was catastrophic
+                for the victim: a massive, surprise tax liability from the IRS for income he never earned, and a
+                shattered credit score, demonstrating that this is not a victimless crime.
             </p>
         </section>
 
         <section class="content-section">
-            <h2 class="prose-h2"><i data-lucide="vote"></i> The Democracy Tax</h2>
+            <h2 class="prose-h2"><i data-lucide="vote"></i> Industrialized Disinformation</h2>
             <p class="prose-text">
-                The infrastructure built for fraud is now rented for influence. Research from the <strong>University of
-                    Cambridge</strong> shows a direct correlation between election cycles and the black-market price of
-                fake accounts.
+                The infrastructure developed for commercial fraud is increasingly repurposed for geopolitical influence.
+                State actors, primarily Russia, utilize "bot farms" to manipulate public perception. In September 2024,
+                the DOJ disrupted a Russian bot farm utilizing AI-enhanced software known as
+                <strong>"Meliorator"</strong>.
             </p>
+            <p class="prose-text">
+                "Meliorator" was designed to create and manage a multitude of fake personas that appeared as ordinary
+                Americans, amplifying Kremlin narratives while blending into local conversations.
+            </p>
+
+            <h3 style="color:white;margin:24px 0 16px;font-size:1.4rem;">Storm-1516 & The Fake San Francisco Station
+            </h3>
+            <p class="prose-text">
+                The group "Storm-1516" demonstrated the potential for these farms to spread targeted disinformation.
+                They produced a viral video featuring an actor playing a victim of a fake 2011 hit-and-run involving
+                <strong>Kamala Harris</strong>. The video was hosted on a domain designed to mimic a legitimate San
+                Francisco TV station and was boosted by a network of bot-like accounts, reaching millions of views
+                within days.
+            </p>
+
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Platform</th>
+                            <th>Verification Cost</th>
+                            <th>Election Price Spike</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="color:var(--accent-green);font-weight:700;">WhatsApp</td>
+                            <td>$1.02</td>
+                            <td><strong>+15%</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--accent-blue);font-weight:700;">Telegram</td>
+                            <td>$0.89</td>
+                            <td><strong>+12%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>X (Twitter)</td>
+                            <td>$0.10</td>
+                            <td>Negligible</td>
+                        </tr>
+                        <tr>
+                            <td>Facebook</td>
+                            <td>$0.08</td>
+                            <td>Negligible</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <figure class="float-figure">
                 <canvas id="democracyTaxChart"></canvas>
@@ -473,20 +667,62 @@
             </figure>
 
             <p class="prose-text">
-                Because platforms like Telegram and WhatsApp require SMS verification from local numbers, demand for
-                these "verified" accounts spikes by <strong>12-15%</strong> in the 30 days preceding a national
-                election. This price volatility serves as an early warning system for coordinated disinformation
-                campaigns, such as the Russian "Doppelganger" operation.
+                Research from the <strong>University of Cambridge</strong> has identified a direct correlation between
+                election cycles and the pricing of fake accounts. Because platforms like Telegram and WhatsApp require
+                SMS verification from phone numbers local to the target country, demand spikes by 12-15% in the 30 days
+                leading up to a national election. This price volatility serves as a quantitative "early warning system"
+                for coordinated influence operations.
             </p>
         </section>
 
         <section class="content-section">
             <h2 class="prose-h2"><i data-lucide="trending-up"></i> The Hundred Billion Dollar Lie</h2>
             <p class="prose-text">
-                Beyond espionage, these farms power the massive engine of global ad fraud. By mimicking human engagement
-                on a massive scale, "device farms" drain marketing budgets with ruthless efficiency. Losses are
-                projected to exceed <strong>$170 billion</strong> by 2025.
+                Beyond espionage, these farms represent the primary engine of global ad fraud. A critical development in
+                2025 is the shift away from software-based emulators toward <strong>physical device farms</strong>.
+                Fraudsters utilize warehouses filled with thousands of actual smartphones and tablets that exhibit
+                authentic hardware signatures, genuine GPS data, and real touchscreen interaction patterns.
             </p>
+            <p class="prose-text">
+                A device farm with only 500 smartphones can generate over <strong>10 million fraudulent ad clicks per
+                    month</strong>. These operations are typically located in regions with low labor costs (Southeast
+                Asia, Eastern Europe) but use VPNs to appear as though they are located in high-value ad markets like
+                New York or London.
+            </p>
+
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Ad Fraud Category</th>
+                            <th>Contribution</th>
+                            <th>Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight:600;color:var(--accent-red);">Click Spamming</td>
+                            <td>76.6%</td>
+                            <td>Budget depletion / Skewed analytics</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:600;color:var(--accent-amber);">Bot Activity</td>
+                            <td>~20%</td>
+                            <td>Metric inflation / Engagement loss</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:600;color:var(--accent-cyan);">Click Injection</td>
+                            <td>15-30% (Android)</td>
+                            <td>Attribution theft</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:600;color:var(--text-muted);">SDK Spoofing</td>
+                            <td>Variable</td>
+                            <td>Fabrication of entire funnel</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <figure class="float-figure">
                 <canvas id="adFraudChart"></canvas>
@@ -495,10 +731,35 @@
                 </figcaption>
             </figure>
 
+            <h3 style="color:white;margin:24px 0 16px;font-size:1.4rem;">Click Injection & SDK Spoofing</h3>
             <p class="prose-text">
-                As the DOJ's "DPRK RevGen" initiative cracks down on domestic enablers, the battle moves from cyberspace
-                to physical space. The future security of the digital economy may depend less on firewalls and more on
-                identifying the physical warehouses where the internet's "ghosts" reside.
+                In the mobile sector, "click injection" is a particularly pervasive threat. This involves malicious apps
+                on a user's device that "listen" for when a new app is being installed. The malicious app then "injects"
+                a click seconds before the installation completes, allowing the fraudster to steal the attribution
+                credit (and the commission) from the legitimate marketing channel.
+            </p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="prose-h2"><i data-lucide="shield"></i> Counter-Offensive: DPRK RevGen</h2>
+            <p class="prose-text">
+                In response to the escalating threat, the U.S. government has launched the <strong>"DPRK RevGen:
+                    Domestic Enabler Initiative."</strong> This program prioritizes the identification and shutdown of
+                U.S.-based laptop farms. Companies are being urged to shift away from simple geolocation toward
+                <strong>"Identity-Based Triage"</strong>—grouping alert telemetry by individual users and looking for
+                behavioral anomalies.
+            </p>
+            <p class="prose-text">
+                On the global stage, the United Kingdom became the first European country to make <strong>SIM farms
+                    illegal</strong> in April 2025. This move targets the physical infrastructure used for mass account
+                verification, making it significantly harder for bot farm operators to function within that
+                jurisdiction.
+            </p>
+            <p class="prose-text">
+                As the DOJ pursues civil forfeiture—seizing over <strong>$15 million</strong> in virtual currency linked
+                to North Korean hacking units—the battle moves from cyberspace to physical space. The future security of
+                the digital economy may depend less on firewalls and more on identifying the physical warehouses where
+                the internet's "ghosts" reside.
             </p>
         </section>
 
