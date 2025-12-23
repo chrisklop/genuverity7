@@ -84,6 +84,27 @@ When uncertain, ASK the user which role you should follow.
 - Run `vercel --prod` - let GitHub auto-deploy or ask Architecture Instance
 - Use perl/sed one-liners for ID increments (creates `id: id: N,` syntax errors)
 
+### Chart Object Structure (For `js/reports-data.js`)
+To generate a custom infographic preview for a report card, include the `chart` object in the report entry:
+
+```javascript
+{
+    // ... id, title, slug, etc ...
+    chart: {
+        type: "line",           // Options: "line", "bar", "donut", "network", "hbar", "timeline"
+        color: "#f59e0b",       // Hex color (Amber=#f59e0b, Red=#ef4444, Blue=#3b82f6, Green=#10b981)
+        data: [20, 35, 45, 60]  // Array of numbers for line/bar/timeline, OR number for donut, OR object for network
+    }
+}
+```
+
+**Data Formats per Type:**
+- **line/bar**: Array of numbers (e.g., `[10, 20, 15, 40]`)
+- **donut**: Single number 0-100 (e.g., `72`)
+- **network**: Object with nodes/connections (e.g., `{ nodes: 15, connections: 25 }`) OR just color/data (chart generator handles randomness if data omitted)
+- **hbar**: Array of objects (e.g., `[{ label: 'TikTok', value: 85 }, { label: 'X', value: 70 }]`)
+- **timeline**: Array of numbers 0-100 representing % position (e.g., `[10, 50, 90]`)
+
 ### ⚠️ MANDATORY PRE-COMMIT VALIDATION (Reports Instance)
 **Before EVERY `git commit` of a new report, run these checks:**
 

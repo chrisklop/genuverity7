@@ -441,6 +441,7 @@ class UnifiedSearch {
 
         // Mouse Wheel
         this.carouselContainer.addEventListener('wheel', (e) => {
+            if (isDragging) return; // Ignore wheel if currently touching/dragging
             e.preventDefault();
             const now = Date.now();
             if (now - lastWheelTime < 150) return;
@@ -461,7 +462,8 @@ class UnifiedSearch {
             const currentX = e.touches[0].clientX;
             const diff = startX - currentX;
             // If movement is horizontal, prevent page scroll
-            if (Math.abs(diff) > 5) {
+            // Increased threshold to 15px to distinguish swipes from sloppy taps
+            if (Math.abs(diff) > 15) {
                 e.preventDefault();
             }
         }, { passive: false });
@@ -473,6 +475,9 @@ class UnifiedSearch {
             const diff = startX - endX;
             if (Math.abs(diff) > 30) {
                 this.navigateCarousel(diff > 0 ? 1 : -1);
+                // Prevent mouse emulation events (mousedown/up/click) from firing after a swipe
+                // This stops the "double skip" where both touch and mouse handlers trigger
+                if (e.cancelable) e.preventDefault();
             }
         }, { passive: false });
 

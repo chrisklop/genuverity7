@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Chart Verification</title>
+    <style>
+        body {
+            background: #0a0f1a;
+            color: white;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .chart-wrapper {
+            width: 300px;
+            height: 180px;
+            border: 1px solid #333;
+            background: #0f172a;
+            position: relative;
+        }
+
+        .label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px 5px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+
+    <!-- Mocks if files missing -->
+    <script>
+        const REPORTS_DATA = [];
+    </script>
+    <script src="js/reports-data.js"></script>
+    <script src="js/unified-search.js"></script>
+
+    <script>
+        const container = document.getElementById('container');
+        const configs = [
+            { type: 'bar', color: '#ef4444', data: [20, 50, 80, 40, 90, 30, 60] },
+            { type: 'line', color: '#3b82f6', data: [10, 40, 30, 70, 50, 90, 60] },
+            { type: 'hbar', color: '#10b981', data: [{ label: 'Source A', value: 80 }, { label: 'Source B', value: 45 }, { label: 'Source C', value: 60 }] },
+            { type: 'network', color: '#8b5cf6' },
+            { type: 'timeline', color: '#f59e0b', data: [10, 35, 60, 85] },
+            { type: 'donut', color: '#ec4899', data: 75 }
+        ];
+
+        configs.forEach(config => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'chart-wrapper';
+            wrapper.innerHTML = `<div class="label">${config.type}</div>` + generateChartForReport({ chart: config });
+            container.appendChild(wrapper);
+        });
+    </script>
+</body>
+
+</html>
