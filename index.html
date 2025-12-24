@@ -26,9 +26,9 @@
 
     <!-- Dependencies -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="js/reports-data.js?v=7"></script>
+    <script src="js/reports-data.js?v=8"></script>
     <!-- Unified Search & Carousel -->
-    <script src="js/unified-search.js?v=7" defer></script>
+    <script src="js/unified-search.js?v=8" defer></script>
     <!-- Vercel Analytics -->
     <script defer src="/_vercel/insights/script.js"></script>
 
@@ -37,20 +37,44 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Service Worker Kill Switch -->
+    <!-- Aggressive Cache Busting & SW Cleanup -->
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        (async function () {
+            // 1. Service Worker Kill Switch
+            if ('serviceWorker' in navigator) {
+                const registrations = await navigator.serviceWorker.getRegistrations();
                 for (let registration of registrations) {
-                    console.log('Unregistering Service Worker:', registration);
-                    registration.unregister();
+                    console.log('Force unregistering SW:', registration);
+                    await registration.unregister();
                 }
-            });
-            // Force reload if we suspect SW was controlling
-            if (navigator.serviceWorker.controller) {
-                console.log('Reloading to clear SW control...');
-                // window.location.reload(); // Optional: risky loop, better to just let them reload
             }
-        }
+
+            // 2. Build ID Check (Force Reload on New Deploy)
+            try {
+                const response = await fetch('/build-id.json?t=' + Date.now()); // Bypass cache for the check itself
+                if (response.ok) {
+                    const data = await response.json();
+                    const serverBuildId = data.buildId;
+                    const localBuildId = localStorage.getItem('gv_build_id');
+
+                    if (serverBuildId && serverBuildId !== localBuildId) {
+                        console.log(`New build detected (Server: ${serverBuildId}, Local: ${localBuildId}). Reloading...`);
+                        localStorage.setItem('gv_build_id', serverBuildId);
+
+                        // Clear all caches
+                        if ('caches' in window) {
+                            const names = await caches.keys();
+                            await Promise.all(names.map(name => caches.delete(name)));
+                        }
+
+                        // Force reload from server
+                        window.location.reload(true);
+                    }
+                }
+            } catch (e) {
+                console.warn('Build ID check failed:', e);
+            }
+        })();
     </script>
     <style>
         /* === CORE VARIABLES (Darker theme from reports.html) === */

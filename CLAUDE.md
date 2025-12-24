@@ -18,7 +18,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 □ Text: NO GRADIENT TEXT - use solid colors only
 □ Data: Verify against live sources, add date context
 □ Charts (in-page): Chart.js with Midnight Tech colors
-□ Charts (standalone image): Gemini 3 Pro Image Preview
+□ Charts (in-page): Chart.js with Midnight Tech colors
+□ Visuals (Infographics/Diagrams): Chart.js/D3/Mermaid (NO Gemini image generation)
 ```
 
 **Shorthand triggers:**
@@ -281,7 +282,7 @@ Single-page app with three views:
 |---------|----------|----------|
 | **Fact-Check Text** | `claude-sonnet-4-20250514` | Production (`api/index.py`) |
 | **Deep Dives** | `claude-sonnet-4-5-20250929` | Local (`server.py`) |
-| **Infographics** | `gemini-3-pro-image-preview` | Scripts/API |
+| **Infographics/Diagrams** | `claude-sonnet-4-5-20250929` (via Chart.js/D3 code) | Scripts |
 
 **CRITICAL RESTRICTIONS (USER HAS REPEATEDLY COMPLAINED ABOUT VIOLATIONS):**
 
@@ -310,10 +311,13 @@ Single-page app with three views:
 |-------------|------|-----|
 | **Bar/Line/Pie charts** | Chart.js | Interactive, fast, auto-watermark |
 | **Data comparisons** | Chart.js | In-page, responsive |
-| **Flowcharts/Diagrams** | Gemini 3 Pro Image Preview | Complex visual layout |
-| **Process diagrams** | Gemini 3 Pro Image Preview | Boxes, arrows, flow |
-| **Infographics** | Gemini 3 Pro Image Preview | Standalone shareable image |
-| **Network graphs** | D3.js or Gemini | Depends on interactivity needs |
+| **Flowcharts/Diagrams** | Mermaid/D3.js | Maintainable code, consistent style |
+| **Process diagrams** | Mermaid/D3.js | Vector scalable |
+| **Infographics** | Chart.js/D3.js | No image generation hallucinations |
+| **Network graphs** | D3.js | Interactive, data-driven |
+
+**CRITICAL: DO NOT USE GEMINI IMAGE GENERATION.**
+All visuals must be generated as code (Chart.js, D3, Mermaid).
 
 ### Chart.js (In-Page Charts)
 ```html
@@ -324,18 +328,13 @@ Single-page app with three views:
 - Use for data that benefits from hover/interaction
 - Midnight Tech colors: Blue #3b82f6, Cyan #06b6d4, Green #10b981, Amber #f59e0b, Red #ef4444
 
-### Gemini Diagrams (Standalone Images)
-**Model:** `gemini-3-pro-image-preview` ONLY (never other Gemini models)
-
-**Midnight Tech Style Prompt:**
-```
-Theme: "Midnight Tech" HUD style
-Background: Dark navy gradient (#050A14 to #0a0a12) with faint circuit grid
-Colors: Blue #3b82f6, Cyan #06b6d4, Green #10b981, Amber #f59e0b, Red #FF2A2A
-NO PURPLE (#8b5cf6) anywhere
-Branding: "GenuVerity" wordmark bottom-right (Genu=white, Verity=blue)
-Format: 16:9 aspect ratio
-```
+### Report Conversion Fidelity (Lessons Learned)
+**When converting source content (e.g., Markdown reports) to HTML:**
+1. **Source Parity**: If the source text lists 28 citations, your HTML sources grid MUST list all 28. Do not truncate.
+2. **Label Accuracy**: Use the label "Sources First" for the source banner.
+3. **Data Integrity**: Preserve ALL data tables from the source. Use the `.data-table` class. Do not flatten tables into paragraphs.
+4. **Deep Dive Depth**: Maintain technical specificity (models, vectors, financial figures found in source). Do not summarize case studies into generic points.
+5. **Infographic Paths**: Prefer code-generated visuals. If using images, ensure `<img src>` tags point to `images/` relative paths.
 
 ## Shared Architecture Scripts
 
@@ -621,7 +620,7 @@ Execute this pipeline FOR EACH report sequentially:
 
 | Element | Requirement | Example |
 |---------|-------------|---------|
-| **Collapsible Sources Banner** | At top, expandable grid | `<section class="sources-banner">` |
+| **Sources Sidebar** | Left column, sticky | `<aside class="sources-sidebar">` |
 | **Trust Scores** | 0-100 per source | `<span class="source-score high">95</span>` |
 | **Inline Citations** | Linked text throughout body | `<a href="URL" target="_blank">cited fact</a>` |
 | **Bold Emphasis** | Key terms, names, verdicts | `<strong>FALSE</strong>` |
@@ -704,35 +703,27 @@ Execute this pipeline FOR EACH report sequentially:
     </header>
 
     <main class="container">
-        <!-- 1. Sources Banner (collapsible) -->
-        <div class="sources-banner">...</div>
+        <div class="content-grid">
+            <!-- 1. Sources Sidebar (Left sticky) -->
+            <aside class="sources-sidebar">
+                <div class="sources-header">...</div>
+                <div class="sources-list">...</div>
+            </aside>
 
-        <!-- 2. Executive Summary -->
-        <section class="content-section">
-            <h2>Executive Summary</h2>
-            <p>Summary with <strong>bold</strong> and <em>italic</em> and
-               <a href="URL">inline citations</a>.</p>
-        </section>
+            <!-- 2. Main Article Content -->
+            <article class="article-content">
+                <header>
+                    <div class="verdict-tag">[VERDICT]</div>
+                    <h1>[TITLE]</h1>
+                </header>
 
-        <!-- 3. Claim Analysis (multiple cards) -->
-        <section class="content-section">
-            <div class="claim-card">
-                <span class="claim-text"><em>"Claim being analyzed"</em></span>
-                <span class="claim-verdict verdict-false">FALSE</span>
-                <p class="claim-evidence">Evidence with <a href="URL">source link</a>.</p>
-            </div>
-        </section>
+                <!-- Executive Summary -->
+                <section>...</section>
 
-        <!-- 4. Charts with data -->
-        <div class="chart-container">
-            <canvas id="chartId"></canvas>
+                <!-- Content -->
+                <section>...</section>
+            </article>
         </div>
-
-        <!-- 5. Conclusion/Verdict -->
-        <section class="content-section">
-            <h2>Conclusion</h2>
-            <p><strong>Verdict:</strong> [VERDICT]. [Explanation].</p>
-        </section>
     </main>
 
     <script>
