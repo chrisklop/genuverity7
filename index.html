@@ -2023,19 +2023,33 @@
         }
 
         // Navigate carousel
+        let isAnimating = false;
+
         function navigateCarousel(direction) {
+            if (isAnimating) return;
+
             const newIndex = currentCardIndex + direction;
             if (newIndex >= 0 && newIndex < totalCards) {
                 currentCardIndex = newIndex;
                 updateCarousel();
+
+                // Lock navigation for the duration of the transition (500ms)
+                // This prevents "double-swipes" or event ghosting from skipping cards
+                isAnimating = true;
+                setTimeout(() => { isAnimating = false; }, 500);
             }
         }
 
         // Go to specific card
         function goToCard(index) {
+            if (isAnimating) return;
+
             if (index >= 0 && index < totalCards) {
                 currentCardIndex = index;
                 updateCarousel();
+
+                isAnimating = true;
+                setTimeout(() => { isAnimating = false; }, 500);
             }
         }
 
