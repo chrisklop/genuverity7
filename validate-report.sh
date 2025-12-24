@@ -15,6 +15,23 @@ if [ ! -f "$FILE" ]; then
     exit 1
 fi
 
+# Pre-validation checks for critical architectural components
+# These checks cause immediate exit if failed, as they indicate fundamental structural issues.
+
+# Check for Google Fonts (Crimson Pro as a representative standard font)
+if ! grep -q "family=Crimson+Pro" "$FILE"; then
+    echo "❌ FAIL: Missing Standard Font Pack (e.g., Crimson Pro) in $FILE"
+    echo "   Must include: <link href='...family=Crimson+Pro...' rel='stylesheet'>"
+    exit 1
+fi
+
+# Check for standard navigation header
+if ! grep -q 'class="nav-header"' "$FILE"; then
+    echo "❌ FAIL: Invalid Header Structure in $FILE"
+    echo "   Must use standard <nav class='nav-header'> component."
+    exit 1
+fi
+
 echo "🔍 Validating $FILE..."
 ERRORS=0
 

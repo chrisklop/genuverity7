@@ -63,26 +63,35 @@ When uncertain, ASK the user which role you should follow.
 - `CLAUDE.md` (except for this setup section if needed)
 - Any other files
 
-### Reports Instance - Workflow
+### Reports Instance - Workflow (MANDATORY TEMPLATE USAGE)
 **To add a new report:**
-1. Create report HTML file in `localreports/your-report-slug.html`
+1. **START FROM GOLDEN TEMPLATE:**
+   - Run: `cp docs/report-template-2025.html localreports/your-report-slug.html`
+   - **NEVER** write HTML from scratch.
+   - **never** copy an old report (it may have legacy bugs).
+   - Use the 2025 Golden Template.
+
 2. **CRITICAL ID MANAGEMENT:**
-   - New reports go at ID 0 (top of array)
+   - New reports go at ID 0 (top of array) in `js/reports-data.js`
    - Manually increment ALL existing IDs by +1
    - **NEVER use automation** (perl/sed/regex) - causes duplicate `id:` keys
-   - Use `multi_replace_file_content` with explicit chunks OR Python script
    - **ALWAYS verify** with: `node -c js/reports-data.js` before commit
-   - **ALWAYS check** sequential IDs: `grep -n "^\s*id:" js/reports-data.js | head -45`
-3. Add metadata entry to `js/reports-data.js` array (new entry at position 0)
+
+3. **Content Injection:**
+   - Fill in the Title, Hero, and Meta data.
+   - Inject article content into the `.article-content` block.
+   - Add sources to the `.sources-sidebar`.
+   - Ensure all sources have `id="source-N"` and citations match `onclick="highlightSource(event, 'source-N')"`.
+
 4. **RUN VALIDATION SCRIPT:** `./validate-report.sh localreports/your-report.html`
-5. Fix any errors flagged by the validator
+5. Fix any errors flagged by the validator.
 6. `git add localreports/your-report.html js/reports-data.js`
 7. `git commit` and `git push`
-8. Done - tiles render automatically from REPORTS_DATA
 
 **DO NOT:**
 - Edit `reports.html` - tiles are generated dynamically via JavaScript
 - Run `vercel --prod` - let GitHub auto-deploy or ask Architecture Instance
+- Overwrite standard fonts or header classes.
 - Use perl/sed one-liners for ID increments (creates `id: id: N,` syntax errors)
 
 ### Chart Object Structure (For `js/reports-data.js`)

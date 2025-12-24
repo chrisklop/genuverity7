@@ -118,3 +118,30 @@ All visuals must be generated as code (Chart.js, D3, Mermaid) by the Claude agen
 - **NEVER** run `vercel --prod` or `vercel deploy`.
 - After pushing to git, GitHub auto-deploys.
 - Stay in your lane (only edit `localreports/` and `js/reports-data.js`).
+
+## 📜 REPORT GENERATION WORKFLOW (MANDATORY)
+
+**To add a new report:**
+
+1. **START FROM GOLDEN TEMPLATE:**
+   - Run: `cp docs/report-template-2025.html localreports/your-report-slug.html`
+   - **NEVER** write HTML from scratch.
+   - **NEVER** copy an old report (it may have legacy bugs).
+   - Use the 2025 Golden Template.
+
+2. **CRITICAL ID MANAGEMENT:**
+   - New reports go at ID 0 (top of array) in `js/reports-data.js`
+   - Manually increment ALL existing IDs by +1
+   - **NEVER use automation** (perl/sed/regex) - causes duplicate `id:` keys
+   - **ALWAYS verify** with: `node -c js/reports-data.js` before commit
+
+3. **Content Injection:**
+   - **Dynamic Length:** The `.article-content` and `.sources-sidebar` areas are designed to expand infinitely.
+   - **Structure:** Use `<h2 class="prose-h2">` for sections. You can add 10, 50, or 100 sections; the layout handles strict vertical flow automatically.
+   - **Visuals:** Inject `<figure class="float-figure copyable-section">` blocks between paragraphs.
+
+4. **Validation:**
+   - Run: `./validate-report.sh localreports/your-report.html`
+
+5. **Commit:**
+   - `git add ...` and `git commit`.

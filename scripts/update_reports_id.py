@@ -5,20 +5,20 @@ import sys
 # New report to insert
 new_report = {
     "id": 0,
-    "title": "The Panopticon of Efficiency: Palantir & The Surveillance State",
-    "slug": "localreports/palantir-panopticon.html",
-    "category": "Surveillance State",
+    "title": "The Silicon Sleeper Cells: Laptop Farms & The New Digital Front",
+    "slug": "localreports/laptop-farms.html",
+    "category": "State-Sponsored Fraud",
     "tagClass": "tag-red",
     "catClass": "cat-cyber",
-    "icon": "eye",
+    "icon": "cpu",
     "date": "Dec 23, 2025",
-    "sources": "25 Sources",
-    "readTime": "20 min",
-    "excerpt": "Palantir is no longer just a contractor; it is the operating system of the American government. From 'ImmigrationOS' to the 'Mega-API', we analyze the architecture of the 2025 surveillance state.",
+    "sources": "28 Sources",
+    "readTime": "22 min",
+    "excerpt": "The 'Laptop Farm' has mutated from ad fraud into critical espionage infrastructure. How DPRK and Russian operatives influence US elections from American living rooms.",
     "chart": {
-        "type": "network",
+        "type": "line",
         "color": "#ef4444",
-        "data": { "nodes": 12, "connections": 22 }
+        "data": [65, 81, 125, 172, 185, 200]
     }
 }
 
