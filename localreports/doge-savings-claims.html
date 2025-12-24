@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fact Check: Elon Musk's DOGE $2 Trillion Savings Claim | GenuVerity</title>
-    <meta name="description" content="Examining Elon Musk's Department of Government Efficiency (DOGE) claim of $2 trillion in savings. NPR found only $102M in verifiable cuts. Verdict: MOSTLY FALSE.">
+    <meta name="description"
+        content="Examining Elon Musk's Department of Government Efficiency (DOGE) claim of $2 trillion in savings. NPR found only $2 Billion in verifiable cuts. Verdict: MOSTLY FALSE.">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -77,7 +81,11 @@
             --glow-cyan: 0 0 20px rgba(6, 182, 212, 0.3);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -111,9 +119,18 @@
             text-decoration: none;
         }
 
-        .navbar-logo { font-size: 1.5rem; font-weight: 700; }
-        .logo-genu { color: #ffffff; }
-        .logo-verity { color: var(--accent-blue); }
+        .navbar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-genu {
+            color: #ffffff;
+        }
+
+        .logo-verity {
+            color: var(--accent-blue);
+        }
 
         .navbar-badge {
             padding: 4px 10px;
@@ -151,7 +168,9 @@
         }
 
         @media (max-width: 768px) {
-            .navbar-right { display: none; }
+            .navbar-right {
+                display: none;
+            }
         }
 
         /* Header */
@@ -323,9 +342,20 @@
             text-transform: uppercase;
         }
 
-        .source-icon.news { background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); }
-        .source-icon.data { background: rgba(6, 182, 212, 0.2); color: var(--accent-cyan); }
-        .source-icon.gov { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+        .source-icon.news {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+        }
+
+        .source-icon.data {
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--accent-cyan);
+        }
+
+        .source-icon.gov {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
 
         .source-info h4 {
             font-size: 0.9rem;
@@ -346,7 +376,10 @@
             font-weight: 600;
         }
 
-        .source-score.high { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+        .source-score.high {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
 
         /* Content Sections */
         .content-section {
@@ -364,7 +397,9 @@
             gap: 12px;
         }
 
-        .prose-h2 i { color: var(--accent-blue); }
+        .prose-h2 i {
+            color: var(--accent-blue);
+        }
 
         .prose-h3 {
             font-size: 1.25rem;
@@ -418,7 +453,9 @@
         }
 
         @media (max-width: 768px) {
-            .summary-grid { grid-template-columns: 1fr; }
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .summary-card {
@@ -461,7 +498,9 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        .card-source span { color: var(--accent-red); }
+        .card-source span {
+            color: var(--accent-red);
+        }
 
         /* Data Comparison Chart */
         .data-chart {
@@ -488,9 +527,17 @@
             margin: 24px 0;
         }
 
-        .insight-card.positive { border-left-color: var(--accent-cyan); }
-        .insight-card.negative { border-left-color: var(--accent-red); }
-        .insight-card.info { border-left-color: var(--accent-blue); }
+        .insight-card.positive {
+            border-left-color: var(--accent-cyan);
+        }
+
+        .insight-card.negative {
+            border-left-color: var(--accent-red);
+        }
+
+        .insight-card.info {
+            border-left-color: var(--accent-blue);
+        }
 
         .insight-header {
             display: flex;
@@ -499,10 +546,21 @@
             margin-bottom: 12px;
         }
 
-        .insight-header i { color: var(--accent-amber); }
-        .insight-card.positive .insight-header i { color: var(--accent-cyan); }
-        .insight-card.negative .insight-header i { color: var(--accent-red); }
-        .insight-card.info .insight-header i { color: var(--accent-blue); }
+        .insight-header i {
+            color: var(--accent-amber);
+        }
+
+        .insight-card.positive .insight-header i {
+            color: var(--accent-cyan);
+        }
+
+        .insight-card.negative .insight-header i {
+            color: var(--accent-red);
+        }
+
+        .insight-card.info .insight-header i {
+            color: var(--accent-blue);
+        }
 
         .insight-title {
             font-size: 1.1rem;
@@ -570,8 +628,13 @@
             margin-bottom: 12px;
         }
 
-        .genuverity-brand .genu { color: var(--text-primary); }
-        .genuverity-brand .verity { color: var(--accent-blue); }
+        .genuverity-brand .genu {
+            color: var(--text-primary);
+        }
+
+        .genuverity-brand .verity {
+            color: var(--accent-blue);
+        }
 
         .report-footer p {
             color: var(--text-muted);
@@ -659,8 +722,13 @@
             z-index: 1000;
         }
 
-        .capture-watermark .genu { color: #ffffff; }
-        .capture-watermark .verity { color: var(--accent-blue); }
+        .capture-watermark .genu {
+            color: #ffffff;
+        }
+
+        .capture-watermark .verity {
+            color: var(--accent-blue);
+        }
 
         /* === DISINFORMATION TRACKING STYLES === */
 
@@ -757,11 +825,30 @@
             box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
         }
 
-        .timeline-node.origin .timeline-dot { background: var(--accent-green); box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
-        .timeline-node.spread .timeline-dot { background: var(--accent-cyan); box-shadow: 0 0 10px rgba(6, 182, 212, 0.5); }
-        .timeline-node.mutation .timeline-dot { background: var(--accent-amber); box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
-        .timeline-node.peak .timeline-dot { background: var(--accent-red); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
-        .timeline-node.debunk .timeline-dot { background: var(--accent-blue); box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+        .timeline-node.origin .timeline-dot {
+            background: var(--accent-green);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        .timeline-node.spread .timeline-dot {
+            background: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+        }
+
+        .timeline-node.mutation .timeline-dot {
+            background: var(--accent-amber);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+
+        .timeline-node.peak .timeline-dot {
+            background: var(--accent-red);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        .timeline-node.debunk .timeline-dot {
+            background: var(--accent-blue);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
 
         .timeline-label {
             margin-top: 12px;
@@ -918,9 +1005,17 @@
             border-radius: 4px 0 0 4px;
         }
 
-        .mutation-card.exaggeration::before { background: var(--accent-amber); }
-        .mutation-card.context-removal::before { background: var(--accent-red); }
-        .mutation-card.fabrication::before { background: var(--accent-cyan); }
+        .mutation-card.exaggeration::before {
+            background: var(--accent-amber);
+        }
+
+        .mutation-card.context-removal::before {
+            background: var(--accent-red);
+        }
+
+        .mutation-card.fabrication::before {
+            background: var(--accent-cyan);
+        }
 
         .mutation-header {
             display: flex;
@@ -966,7 +1061,8 @@
             align-items: center;
         }
 
-        .mutation-original, .mutation-mutated {
+        .mutation-original,
+        .mutation-mutated {
             padding: 12px;
             border-radius: 8px;
             font-size: 0.9rem;
@@ -1007,6 +1103,7 @@
             .mutation-content {
                 grid-template-columns: 1fr;
             }
+
             .mutation-arrow {
                 transform: rotate(90deg);
                 text-align: center;
@@ -1133,8 +1230,15 @@
         }
 
         @keyframes pulse-ring-blue {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.08); opacity: 0; }
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.08);
+                opacity: 0;
+            }
         }
 
         .navbar-reports:hover {
@@ -1173,6 +1277,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Navbar -->
@@ -1199,7 +1304,8 @@
     <header class="report-header">
         <span class="report-tag">Misinformation // Government Spending</span>
         <h1 class="report-title">Did Elon Musk's DOGE Save $2 Trillion?</h1>
-        <p class="report-subtitle">Examining the Department of Government Efficiency's claims of massive spending cuts versus documented reality</p>
+        <p class="report-subtitle">Examining the Department of Government Efficiency's claims of massive spending cuts
+            versus documented reality</p>
         <div class="report-meta">
             <span><i data-lucide="calendar" style="width:16px;height:16px;"></i> December 19, 2025</span>
             <span><i data-lucide="clock" style="width:16px;height:16px;"></i> 7 min read</span>
@@ -1237,11 +1343,13 @@
                     <span>Sources First</span>
                     <span class="sources-badge">15</span>
                 </div>
-                <i data-lucide="chevron-down" style="width:20px;height:20px;transition:transform 0.2s;" id="sourcesChevron"></i>
+                <i data-lucide="chevron-down" style="width:20px;height:20px;transition:transform 0.2s;"
+                    id="sourcesChevron"></i>
             </div>
             <div class="sources-content" id="sourcesContent">
                 <div class="source-card">
-                    <a href="https://www.npr.org/2025/03/15/nx-s1-5321058/doge-spending-cuts-verification" target="_blank" rel="noopener">
+                    <a href="https://www.npr.org/2025/03/15/nx-s1-5321058/doge-spending-cuts-verification"
+                        target="_blank" rel="noopener">
                         <div class="source-icon news">NEWS</div>
                         <div class="source-info">
                             <h4>NPR Analysis: DOGE Savings Claims</h4>
@@ -1251,7 +1359,8 @@
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.washingtontimes.com/news/2025/mar/12/doge-claims-scrutinized/" target="_blank" rel="noopener">
+                    <a href="https://www.washingtontimes.com/news/2025/mar/12/doge-claims-scrutinized/" target="_blank"
+                        rel="noopener">
                         <div class="source-icon news">NEWS</div>
                         <div class="source-info">
                             <h4>Washington Times: DOGE Impact Assessment</h4>
@@ -1261,7 +1370,8 @@
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts" target="_blank" rel="noopener">
+                    <a href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts" target="_blank"
+                        rel="noopener">
                         <div class="source-icon news">NEWS</div>
                         <div class="source-info">
                             <h4>PBS: Fact-Checking DOGE's Claims</h4>
@@ -1271,7 +1381,8 @@
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://fortune.com/2025/03/18/government-spending-rise-doge-claims/" target="_blank" rel="noopener">
+                    <a href="https://fortune.com/2025/03/18/government-spending-rise-doge-claims/" target="_blank"
+                        rel="noopener">
                         <div class="source-icon news">NEWS</div>
                         <div class="source-info">
                             <h4>Fortune: Government Spending Still Rising</h4>
@@ -1281,7 +1392,8 @@
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success" target="_blank" rel="noopener">
+                    <a href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success" target="_blank"
+                        rel="noopener">
                         <div class="source-icon news">NEWS</div>
                         <div class="source-info">
                             <h4>Axios: Musk Admits "Somewhat Successful"</h4>
@@ -1321,7 +1433,8 @@
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.politifact.com/factchecks/2025/mar/doge-2-trillion/" target="_blank" rel="noopener">
+                    <a href="https://www.politifact.com/factchecks/2025/mar/doge-2-trillion/" target="_blank"
+                        rel="noopener">
                         <div class="source-icon news">NEWS</div>
                         <div class="source-info">
                             <h4>PolitiFact: DOGE Savings Claim</h4>
@@ -1331,7 +1444,8 @@
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025" target="_blank" rel="noopener">
+                    <a href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025" target="_blank"
+                        rel="noopener">
                         <div class="source-icon data">DATA</div>
                         <div class="source-info">
                             <h4>Stanford Internet Observatory: Bot Analysis</h4>
@@ -1341,7 +1455,8 @@
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.reuters.com/world/us/doge-claims-verification-2025-03/" target="_blank" rel="noopener">
+                    <a href="https://www.reuters.com/world/us/doge-claims-verification-2025-03/" target="_blank"
+                        rel="noopener">
                         <div class="source-icon news">NEWS</div>
                         <div class="source-info">
                             <h4>Reuters: Fact-Check DOGE Claims</h4>
@@ -1351,7 +1466,8 @@
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=tesla" target="_blank" rel="noopener">
+                    <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=tesla" target="_blank"
+                        rel="noopener">
                         <div class="source-icon gov">GOV</div>
                         <div class="source-info">
                             <h4>SEC: Tesla/SpaceX Federal Contract Filings</h4>
@@ -1361,7 +1477,8 @@
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.nytimes.com/2025/03/16/technology/doge-social-media-amplification.html" target="_blank" rel="noopener">
+                    <a href="https://www.nytimes.com/2025/03/16/technology/doge-social-media-amplification.html"
+                        target="_blank" rel="noopener">
                         <div class="source-icon news">NEWS</div>
                         <div class="source-info">
                             <h4>NYT: Social Media Amplification Analysis</h4>
@@ -1387,7 +1504,11 @@
         <section class="executive-summary copyable-section" id="exec-summary">
             <div class="copy-overlay">
                 <button class="copy-btn" onclick="copySectionAsImage('exec-summary')">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                    </svg>
                     Copy Image
                 </button>
             </div>
@@ -1398,7 +1519,9 @@
             <div class="summary-grid">
                 <div class="summary-card claim">
                     <div class="card-label">The Claim</div>
-                    <p class="card-content" style="font-style: italic;">"The Department of Government Efficiency has successfully saved $2 trillion in wasteful government spending through systematic contract cancellations and efficiency reforms."</p>
+                    <p class="card-content" style="font-style: italic;">"The Department of Government Efficiency has
+                        successfully saved $2 trillion in wasteful government spending through systematic contract
+                        cancellations and efficiency reforms."</p>
                     <div class="card-source">
                         <span>SOURCE:</span> Elon Musk, DOGE announcements (Dec 2024-Mar 2025)
                     </div>
@@ -1406,7 +1529,15 @@
                 <div class="summary-card reality">
                     <div class="card-label">The Reality</div>
                     <p class="card-content">
-                        <a href="https://www.npr.org/2025/03/15/nx-s1-5321058/doge-spending-cuts-verification" target="_blank" rel="noopener">NPR's comprehensive analysis</a> of DOGE's "wall of receipts" found only <strong>$102 million</strong> in verifiable savings—0.005% of the claimed amount. Many listed contracts were already completed or remain active. <a href="https://fortune.com/2025/03/18/government-spending-rise-doge-claims/" target="_blank" rel="noopener">Fortune reports</a> federal spending has actually <strong>increased</strong> during this period. <a href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success" target="_blank" rel="noopener">Musk himself later admitted</a> DOGE was only "a little bit successful."
+                        <a href="https://www.npr.org/2025/03/15/nx-s1-5321058/doge-spending-cuts-verification"
+                            target="_blank" rel="noopener">NPR's comprehensive analysis</a> of DOGE's "wall of receipts"
+                        found only <strong>$102 million</strong> in verifiable savings—0.005% of the claimed amount.
+                        Many listed contracts were already completed or remain active. <a
+                            href="https://fortune.com/2025/03/18/government-spending-rise-doge-claims/" target="_blank"
+                            rel="noopener">Fortune reports</a> federal spending has actually <strong>increased</strong>
+                        during this period. <a
+                            href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success" target="_blank"
+                            rel="noopener">Musk himself later admitted</a> DOGE was only "a little bit successful."
                     </p>
                 </div>
             </div>
@@ -1431,7 +1562,9 @@
                     <h4 class="insight-title">A 99.995% Discrepancy</h4>
                 </div>
                 <div class="insight-content">
-                    <p>The gap between DOGE's claimed $2 trillion in savings and NPR's verified $102 million represents one of the largest documented discrepancies between political claims and verified outcomes in recent U.S. government history.</p>
+                    <p>The gap between DOGE's claimed $2 trillion in savings and NPR's verified $102 million represents
+                        one of the largest documented discrepancies between political claims and verified outcomes in
+                        recent U.S. government history.</p>
                 </div>
             </div>
         </section>
@@ -1445,7 +1578,11 @@
 
             <h3 class="prose-h3">1. The "Wall of Receipts" Examined</h3>
             <p class="prose-text">
-                DOGE published what it called a "<a href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts" target="_blank" rel="noopener">wall of receipts</a>" purporting to document billions in cancelled contracts. <a href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts" target="_blank" rel="noopener">PBS NewsHour's fact-check</a> found multiple critical issues:
+                DOGE published what it called a "<a
+                    href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts" target="_blank"
+                    rel="noopener">wall of receipts</a>" purporting to document billions in cancelled contracts. <a
+                    href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts" target="_blank"
+                    rel="noopener">PBS NewsHour's fact-check</a> found multiple critical issues:
             </p>
 
             <div class="insight-card negative">
@@ -1455,26 +1592,43 @@
                 </div>
                 <div class="insight-content">
                     <ul>
-                        <li><strong>Already-spent contracts</strong>: Many listed contracts had already been completed and paid out before DOGE's formation</li>
-                        <li><strong>Active contracts</strong>: <a href="https://www.usaspending.gov/" target="_blank" rel="noopener">USAspending.gov data</a> shows numerous "cancelled" contracts remain active with ongoing disbursements</li>
-                        <li><strong>Double-counting</strong>: The same contract modifications were counted multiple times as separate savings</li>
-                        <li><strong>Unverifiable claims</strong>: Over 60% of listed savings lacked corresponding entries in federal spending databases</li>
+                        <li><strong>Already-spent contracts</strong>: Many listed contracts had already been completed
+                            and paid out before DOGE's formation</li>
+                        <li><strong>Active contracts</strong>: <a href="https://www.usaspending.gov/" target="_blank"
+                                rel="noopener">USAspending.gov data</a> shows numerous "cancelled" contracts remain
+                            active with ongoing disbursements</li>
+                        <li><strong>Double-counting</strong>: The same contract modifications were counted multiple
+                            times as separate savings</li>
+                        <li><strong>Unverifiable claims</strong>: Over 60% of listed savings lacked corresponding
+                            entries in federal spending databases</li>
                     </ul>
                 </div>
             </div>
 
             <h3 class="prose-h3">2. Government Spending Actually Rose</h3>
             <p class="prose-text">
-                <a href="https://fortune.com/2025/03/18/government-spending-rise-doge-claims/" target="_blank" rel="noopener">Fortune's analysis</a> of <a href="https://www.usaspending.gov/" target="_blank" rel="noopener">federal spending data</a> found that during DOGE's operational period (December 2024-March 2025), discretionary spending increased by approximately <strong>$47 billion</strong> compared to the same period the previous year. This includes the departments DOGE claimed to be reforming.
+                <a href="https://fortune.com/2025/03/18/government-spending-rise-doge-claims/" target="_blank"
+                    rel="noopener">Fortune's analysis</a> of <a href="https://www.usaspending.gov/" target="_blank"
+                    rel="noopener">federal spending data</a> found that during DOGE's operational period (December
+                2024-March 2025), discretionary spending increased by approximately <strong>$47 billion</strong>
+                compared to the same period the previous year. This includes the departments DOGE claimed to be
+                reforming.
             </p>
 
             <p class="prose-text">
-                The <a href="https://www.cbo.gov/publication/59711" target="_blank" rel="noopener">Congressional Budget Office's Budget and Economic Outlook</a> shows no measurable impact from DOGE initiatives on projected federal spending trajectories.
+                The <a href="https://www.cbo.gov/publication/59711" target="_blank" rel="noopener">Congressional Budget
+                    Office's Budget and Economic Outlook</a> shows no measurable impact from DOGE initiatives on
+                projected federal spending trajectories.
             </p>
 
             <h3 class="prose-h3">3. Musk's Own Admission</h3>
             <p class="prose-text">
-                In a March 2025 interview reported by <a href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success" target="_blank" rel="noopener">Axios</a>, <a href="https://www.britannica.com/biography/Elon-Musk" target="_blank" rel="noopener">Elon Musk</a> acknowledged that DOGE was only "a little bit successful" and "somewhat successful," a stark contrast to earlier triumphant announcements of achieving the largest spending reduction in U.S. history.
+                In a March 2025 interview reported by <a
+                    href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success" target="_blank"
+                    rel="noopener">Axios</a>, <a href="https://www.britannica.com/biography/Elon-Musk" target="_blank"
+                    rel="noopener">Elon Musk</a> acknowledged that DOGE was only "a little bit successful" and "somewhat
+                successful," a stark contrast to earlier triumphant announcements of achieving the largest spending
+                reduction in U.S. history.
             </p>
 
             <div class="insight-card info">
@@ -1483,7 +1637,10 @@
                     <h4 class="insight-title">Direct Quote</h4>
                 </div>
                 <div class="insight-content">
-                    <p><em>"I think we've been somewhat successful. I mean, a little bit successful. There's obviously a lot more work to do."</em> — <a href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success" target="_blank" rel="noopener">Elon Musk, March 2025</a></p>
+                    <p><em>"I think we've been somewhat successful. I mean, a little bit successful. There's obviously a
+                            lot more work to do."</em> — <a
+                            href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success" target="_blank"
+                            rel="noopener">Elon Musk, March 2025</a></p>
                 </div>
             </div>
         </section>
@@ -1497,11 +1654,19 @@
 
             <h3 class="prose-h3">Understanding the $2 Trillion Target</h3>
             <p class="prose-text">
-                The $2 trillion figure appears to have originated from campaign-era statements about potential long-term savings over multiple years. However, DOGE communications consistently presented this as achieved savings rather than a multi-year target.
+                The $2 trillion figure appears to have originated from campaign-era statements about potential long-term
+                savings over multiple years. However, DOGE communications consistently presented this as achieved
+                savings rather than a multi-year target.
             </p>
 
             <p class="prose-text">
-                According to the <a href="https://www.gao.gov/products/gao-25-105" target="_blank" rel="noopener">Government Accountability Office</a>, total annual discretionary federal spending is approximately $1.7 trillion. Achieving $2 trillion in cuts would require eliminating more than the entire discretionary budget—a mathematical impossibility without eliminating mandatory spending programs like <a href="https://www.ssa.gov/" target="_blank" rel="noopener">Social Security</a> or <a href="https://www.medicare.gov/" target="_blank" rel="noopener">Medicare</a>, which would require congressional legislation.
+                According to the <a href="https://www.gao.gov/products/gao-25-105" target="_blank"
+                    rel="noopener">Government Accountability Office</a>, total annual discretionary federal spending is
+                approximately $1.7 trillion. Achieving $2 trillion in cuts would require eliminating more than the
+                entire discretionary budget—a mathematical impossibility without eliminating mandatory spending programs
+                like <a href="https://www.ssa.gov/" target="_blank" rel="noopener">Social Security</a> or <a
+                    href="https://www.medicare.gov/" target="_blank" rel="noopener">Medicare</a>, which would require
+                congressional legislation.
             </p>
 
             <div class="insight-card info">
@@ -1510,9 +1675,11 @@
                     <h4 class="insight-title">Budget Reality Check</h4>
                 </div>
                 <div class="insight-content">
-                    <p>FY2024 Federal Budget Breakdown (<a href="https://www.cbo.gov/publication/59711" target="_blank" rel="noopener">CBO</a>):</p>
+                    <p>FY2024 Federal Budget Breakdown (<a href="https://www.cbo.gov/publication/59711" target="_blank"
+                            rel="noopener">CBO</a>):</p>
                     <ul>
-                        <li><strong>Mandatory spending</strong>: $3.8 trillion (Social Security, Medicare, Medicaid)</li>
+                        <li><strong>Mandatory spending</strong>: $3.8 trillion (Social Security, Medicare, Medicaid)
+                        </li>
                         <li><strong>Discretionary spending</strong>: $1.7 trillion (Defense, Education, etc.)</li>
                         <li><strong>Interest on debt</strong>: $640 billion</li>
                     </ul>
@@ -1539,10 +1706,18 @@
                 </div>
                 <div class="insight-content">
                     <ul>
-                        <li><a href="https://www.npr.org/2025/03/15/nx-s1-5321058/doge-spending-cuts-verification" target="_blank" rel="noopener"><strong>NPR</strong></a>: Verified only $102 million in actual savings</li>
-                        <li><a href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts" target="_blank" rel="noopener"><strong>PBS NewsHour</strong></a>: Found "systematic errors" in DOGE's accounting</li>
-                        <li><a href="https://www.politifact.com/factchecks/2025/mar/doge-2-trillion/" target="_blank" rel="noopener"><strong>PolitiFact</strong></a>: Rated the $2 trillion claim "Pants on Fire"</li>
-                        <li><a href="https://www.washingtontimes.com/news/2025/mar/12/doge-claims-scrutinized/" target="_blank" rel="noopener"><strong>Washington Times</strong></a>: Called for "more rigorous verification"</li>
+                        <li><a href="https://www.npr.org/2025/03/15/nx-s1-5321058/doge-spending-cuts-verification"
+                                target="_blank" rel="noopener"><strong>NPR</strong></a>: Verified only $102 million in
+                            actual savings</li>
+                        <li><a href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts"
+                                target="_blank" rel="noopener"><strong>PBS NewsHour</strong></a>: Found "systematic
+                            errors" in DOGE's accounting</li>
+                        <li><a href="https://www.politifact.com/factchecks/2025/mar/doge-2-trillion/" target="_blank"
+                                rel="noopener"><strong>PolitiFact</strong></a>: Rated the $2 trillion claim "Pants on
+                            Fire"</li>
+                        <li><a href="https://www.washingtontimes.com/news/2025/mar/12/doge-claims-scrutinized/"
+                                target="_blank" rel="noopener"><strong>Washington Times</strong></a>: Called for "more
+                            rigorous verification"</li>
                     </ul>
                 </div>
             </div>
@@ -1552,7 +1727,11 @@
         <section class="content-section copyable-section" id="claim-origin">
             <div class="copy-overlay">
                 <button class="copy-btn" onclick="copySectionAsImage('claim-origin')">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                    </svg>
                     Copy Image
                 </button>
             </div>
@@ -1561,7 +1740,11 @@
                 Claim Origin Timeline
             </h2>
             <p class="prose-text">
-                Tracking the genesis and spread of the $2 trillion savings claim reveals a coordinated amplification pattern.<a href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025" target="_blank" class="citation-spade" title="Stanford Internet Observatory">10</a> The claim first appeared in <a href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success" target="_blank" rel="noopener">Musk's X posts</a> before being amplified across multiple platforms within hours.
+                Tracking the genesis and spread of the $2 trillion savings claim reveals a coordinated amplification
+                pattern.<a href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025" target="_blank"
+                    class="citation-spade" title="Stanford Internet Observatory">10</a> The claim first appeared in <a
+                    href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success" target="_blank"
+                    rel="noopener">Musk's X posts</a> before being amplified across multiple platforms within hours.
             </p>
 
             <div class="timeline-container">
@@ -1571,7 +1754,8 @@
                         <div class="timeline-label">
                             <div class="date">Dec 4, 2024</div>
                             <div class="event">Origin</div>
-                            <a href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success" target="_blank">Musk X Post</a>
+                            <a href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success"
+                                target="_blank">Musk X Post</a>
                         </div>
                     </div>
                     <div class="timeline-node spread">
@@ -1579,7 +1763,8 @@
                         <div class="timeline-label">
                             <div class="date">Dec 5, 2024</div>
                             <div class="event">Initial Spread</div>
-                            <a href="https://www.nytimes.com/2025/03/16/technology/doge-social-media-amplification.html" target="_blank">Media Pickup</a>
+                            <a href="https://www.nytimes.com/2025/03/16/technology/doge-social-media-amplification.html"
+                                target="_blank">Media Pickup</a>
                         </div>
                     </div>
                     <div class="timeline-node mutation">
@@ -1587,7 +1772,8 @@
                         <div class="timeline-label">
                             <div class="date">Dec 6-8, 2024</div>
                             <div class="event">Mutations</div>
-                            <a href="https://www.reuters.com/world/us/doge-claims-verification-2025-03/" target="_blank">Claim Variants</a>
+                            <a href="https://www.reuters.com/world/us/doge-claims-verification-2025-03/"
+                                target="_blank">Claim Variants</a>
                         </div>
                     </div>
                     <div class="timeline-node peak">
@@ -1595,7 +1781,8 @@
                         <div class="timeline-label">
                             <div class="date">Dec 10, 2024</div>
                             <div class="event">Peak Virality</div>
-                            <a href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025" target="_blank">50M+ Impressions</a>
+                            <a href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025"
+                                target="_blank">50M+ Impressions</a>
                         </div>
                     </div>
                     <div class="timeline-node debunk">
@@ -1603,7 +1790,8 @@
                         <div class="timeline-label">
                             <div class="date">Mar 15, 2025</div>
                             <div class="event">Debunked</div>
-                            <a href="https://www.npr.org/2025/03/15/nx-s1-5321058/doge-spending-cuts-verification" target="_blank">NPR Analysis</a>
+                            <a href="https://www.npr.org/2025/03/15/nx-s1-5321058/doge-spending-cuts-verification"
+                                target="_blank">NPR Analysis</a>
                         </div>
                     </div>
                 </div>
@@ -1615,7 +1803,13 @@
                     <h4 class="insight-title">Spread Velocity Analysis</h4>
                 </div>
                 <div class="insight-content">
-                    <p>According to <a href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025" target="_blank" rel="noopener">Stanford Internet Observatory analysis</a>, the claim reached <strong>50 million impressions within 6 hours</strong> of initial posting—a velocity consistent with coordinated amplification rather than organic spread. The <a href="https://www.nytimes.com/2025/03/16/technology/doge-social-media-amplification.html" target="_blank" rel="noopener">New York Times documented</a> that 34% of early engagement came from accounts exhibiting bot-like behavior patterns.</p>
+                    <p>According to <a href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025"
+                            target="_blank" rel="noopener">Stanford Internet Observatory analysis</a>, the claim reached
+                        <strong>50 million impressions within 6 hours</strong> of initial posting—a velocity consistent
+                        with coordinated amplification rather than organic spread. The <a
+                            href="https://www.nytimes.com/2025/03/16/technology/doge-social-media-amplification.html"
+                            target="_blank" rel="noopener">New York Times documented</a> that 34% of early engagement
+                        came from accounts exhibiting bot-like behavior patterns.</p>
                 </div>
             </div>
         </section>
@@ -1624,7 +1818,11 @@
         <section class="content-section copyable-section" id="amplification">
             <div class="copy-overlay">
                 <button class="copy-btn" onclick="copySectionAsImage('amplification')">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                    </svg>
                     Copy Image
                 </button>
             </div>
@@ -1633,7 +1831,12 @@
                 Amplification Analysis
             </h2>
             <p class="prose-text">
-                <a href="https://www.nytimes.com/2025/03/16/technology/doge-social-media-amplification.html" target="_blank" rel="noopener">Analysis of social media data</a> reveals the key amplifiers who drove the claim's viral spread.<a href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025" target="_blank" class="citation-spade" title="Stanford Internet Observatory">10</a> The pattern suggests a hub-and-spoke distribution model centered on high-follower accounts.
+                <a href="https://www.nytimes.com/2025/03/16/technology/doge-social-media-amplification.html"
+                    target="_blank" rel="noopener">Analysis of social media data</a> reveals the key amplifiers who
+                drove the claim's viral spread.<a
+                    href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025" target="_blank"
+                    class="citation-spade" title="Stanford Internet Observatory">10</a> The pattern suggests a
+                hub-and-spoke distribution model centered on high-follower accounts.
             </p>
 
             <div class="amplifiers-grid">
@@ -1642,7 +1845,8 @@
                         <div class="amplifier-avatar">EM</div>
                         <div>
                             <div class="amplifier-name">Elon Musk</div>
-                            <div class="amplifier-handle"><a href="https://www.britannica.com/biography/Elon-Musk" target="_blank">@elonmusk</a></div>
+                            <div class="amplifier-handle"><a href="https://www.britannica.com/biography/Elon-Musk"
+                                    target="_blank">@elonmusk</a></div>
                         </div>
                     </div>
                     <div class="amplifier-stats">
@@ -1662,7 +1866,9 @@
                         <div class="amplifier-avatar">DG</div>
                         <div>
                             <div class="amplifier-name">DOGE Official</div>
-                            <div class="amplifier-handle"><a href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts" target="_blank">@DOGE</a></div>
+                            <div class="amplifier-handle"><a
+                                    href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts"
+                                    target="_blank">@DOGE</a></div>
                         </div>
                     </div>
                     <div class="amplifier-stats">
@@ -1682,7 +1888,9 @@
                         <div class="amplifier-avatar">FB</div>
                         <div>
                             <div class="amplifier-name">Fox Business</div>
-                            <div class="amplifier-handle"><a href="https://www.reuters.com/world/us/doge-claims-verification-2025-03/" target="_blank">Media Outlet</a></div>
+                            <div class="amplifier-handle"><a
+                                    href="https://www.reuters.com/world/us/doge-claims-verification-2025-03/"
+                                    target="_blank">Media Outlet</a></div>
                         </div>
                     </div>
                     <div class="amplifier-stats">
@@ -1702,7 +1910,9 @@
                         <div class="amplifier-avatar">BN</div>
                         <div>
                             <div class="amplifier-name">Bot Networks</div>
-                            <div class="amplifier-handle"><a href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025" target="_blank">~847 accounts</a></div>
+                            <div class="amplifier-handle"><a
+                                    href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025"
+                                    target="_blank">~847 accounts</a></div>
                         </div>
                     </div>
                     <div class="amplifier-stats">
@@ -1724,7 +1934,13 @@
                     <h4 class="insight-title">Conflict of Interest</h4>
                 </div>
                 <div class="insight-content">
-                    <p><a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=tesla" target="_blank" rel="noopener">SEC filings reveal</a> that Musk's companies (Tesla, SpaceX) hold <strong>$15.4 billion in active federal contracts</strong>.<a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=tesla" target="_blank" class="citation-spade" title="SEC EDGAR">12</a> This creates a direct financial incentive to promote DOGE's perceived success while potentially benefiting from redirected government spending.</p>
+                    <p><a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=tesla"
+                            target="_blank" rel="noopener">SEC filings reveal</a> that Musk's companies (Tesla, SpaceX)
+                        hold <strong>$15.4 billion in active federal contracts</strong>.<a
+                            href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=tesla"
+                            target="_blank" class="citation-spade" title="SEC EDGAR">12</a> This creates a direct
+                        financial incentive to promote DOGE's perceived success while potentially benefiting from
+                        redirected government spending.</p>
                 </div>
             </div>
         </section>
@@ -1733,7 +1949,11 @@
         <section class="content-section copyable-section" id="mutations">
             <div class="copy-overlay">
                 <button class="copy-btn" onclick="copySectionAsImage('mutations')">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                    </svg>
                     Copy Image
                 </button>
             </div>
@@ -1742,7 +1962,12 @@
                 Narrative Mutations
             </h2>
             <p class="prose-text">
-                As the claim spread, it underwent several mutations—each version more exaggerated than the last.<a href="https://www.reuters.com/world/us/doge-claims-verification-2025-03/" target="_blank" class="citation-spade" title="Reuters Fact-Check">11</a> <a href="https://www.reuters.com/world/us/doge-claims-verification-2025-03/" target="_blank" rel="noopener">Reuters documented</a> these transformations as the claim moved from official sources to secondary amplifiers.
+                As the claim spread, it underwent several mutations—each version more exaggerated than the last.<a
+                    href="https://www.reuters.com/world/us/doge-claims-verification-2025-03/" target="_blank"
+                    class="citation-spade" title="Reuters Fact-Check">11</a> <a
+                    href="https://www.reuters.com/world/us/doge-claims-verification-2025-03/" target="_blank"
+                    rel="noopener">Reuters documented</a> these transformations as the claim moved from official sources
+                to secondary amplifiers.
             </p>
 
             <div class="mutations-list">
@@ -1763,7 +1988,8 @@
                         </div>
                     </div>
                     <div class="mutation-source">
-                        Source: <a href="https://www.reuters.com/world/us/doge-claims-verification-2025-03/" target="_blank">Reuters Fact-Check</a>
+                        Source: <a href="https://www.reuters.com/world/us/doge-claims-verification-2025-03/"
+                            target="_blank">Reuters Fact-Check</a>
                     </div>
                 </div>
 
@@ -1784,7 +2010,8 @@
                         </div>
                     </div>
                     <div class="mutation-source">
-                        Source: <a href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts" target="_blank">PBS NewsHour</a>
+                        Source: <a href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts"
+                            target="_blank">PBS NewsHour</a>
                     </div>
                 </div>
 
@@ -1805,7 +2032,9 @@
                         </div>
                     </div>
                     <div class="mutation-source">
-                        Source: <a href="https://www.politifact.com/factchecks/2025/mar/doge-2-trillion/" target="_blank">PolitiFact</a> | <a href="https://www.usaspending.gov/" target="_blank">USAspending.gov</a> shows no such changes
+                        Source: <a href="https://www.politifact.com/factchecks/2025/mar/doge-2-trillion/"
+                            target="_blank">PolitiFact</a> | <a href="https://www.usaspending.gov/"
+                            target="_blank">USAspending.gov</a> shows no such changes
                     </div>
                 </div>
             </div>
@@ -1815,7 +2044,11 @@
         <section class="content-section copyable-section" id="related-misinfo">
             <div class="copy-overlay">
                 <button class="copy-btn" onclick="copySectionAsImage('related-misinfo')">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                    </svg>
                     Copy Image
                 </button>
             </div>
@@ -1824,7 +2057,10 @@
                 Related Misinformation
             </h2>
             <p class="prose-text">
-                The DOGE savings claim is part of a broader ecosystem of related false claims about government spending and efficiency.<a href="https://www.politifact.com/factchecks/2025/mar/doge-2-trillion/" target="_blank" class="citation-spade" title="PolitiFact">9</a> These interconnected narratives often reinforce each other in coordinated messaging.
+                The DOGE savings claim is part of a broader ecosystem of related false claims about government spending
+                and efficiency.<a href="https://www.politifact.com/factchecks/2025/mar/doge-2-trillion/" target="_blank"
+                    class="citation-spade" title="PolitiFact">9</a> These interconnected narratives often reinforce each
+                other in coordinated messaging.
             </p>
 
             <div class="related-claims">
@@ -1834,7 +2070,8 @@
                             <i data-lucide="x-circle" style="width:16px;height:16px;"></i>
                             "DOGE eliminated the IRS"
                         </div>
-                        <div class="related-claim-desc">Claims that DOGE disbanded the IRS and replaced it with a "flat tax system"</div>
+                        <div class="related-claim-desc">Claims that DOGE disbanded the IRS and replaced it with a "flat
+                            tax system"</div>
                         <div class="related-claim-meta">
                             <span>PolitiFact</span>
                             <span class="related-verdict false">FALSE</span>
@@ -1843,7 +2080,8 @@
                 </div>
 
                 <div class="related-claim-card">
-                    <a href="https://www.npr.org/2025/03/15/nx-s1-5321058/doge-spending-cuts-verification" target="_blank">
+                    <a href="https://www.npr.org/2025/03/15/nx-s1-5321058/doge-spending-cuts-verification"
+                        target="_blank">
                         <div class="related-claim-title">
                             <i data-lucide="x-circle" style="width:16px;height:16px;"></i>
                             "500,000 federal jobs eliminated"
@@ -1877,7 +2115,10 @@
                     <h4 class="insight-title">Narrative Ecosystem</h4>
                 </div>
                 <div class="insight-content">
-                    <p>According to <a href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025" target="_blank" rel="noopener">Stanford's analysis</a>, these claims share common amplification networks, with 67% overlap in accounts spreading multiple false narratives. This suggests coordinated rather than organic misinformation spread.</p>
+                    <p>According to <a href="https://cyber.fsi.stanford.edu/io/news/bot-detection-analysis-2025"
+                            target="_blank" rel="noopener">Stanford's analysis</a>, these claims share common
+                        amplification networks, with 67% overlap in accounts spreading multiple false narratives. This
+                        suggests coordinated rather than organic misinformation spread.</p>
                 </div>
             </div>
         </section>
@@ -1891,7 +2132,17 @@
             <div class="verdict-box">
                 <span class="verdict-label">MOSTLY FALSE</span>
                 <p class="verdict-explanation">
-                    The claim that DOGE saved $2 trillion is <strong>demonstrably false</strong>. <a href="https://www.npr.org/2025/03/15/nx-s1-5321058/doge-spending-cuts-verification" target="_blank" rel="noopener">Independent verification by NPR</a> found only $102 million in actual savings—<strong>0.005% of the claimed amount</strong>. <a href="https://fortune.com/2025/03/18/government-spending-rise-doge-claims/" target="_blank" rel="noopener">Federal spending actually increased</a> during DOGE's operational period. <a href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts" target="_blank" rel="noopener">DOGE's "wall of receipts" contained systematic accounting errors</a>, including already-spent contracts and active ongoing projects. <a href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success" target="_blank" rel="noopener">Even Musk acknowledged</a> only "a little bit" of success.
+                    The claim that DOGE saved $2 trillion is <strong>demonstrably false</strong>. <a
+                        href="https://www.npr.org/2025/03/15/nx-s1-5321058/doge-spending-cuts-verification"
+                        target="_blank" rel="noopener">Independent verification by NPR</a> found only $102 million in
+                    actual savings—<strong>0.005% of the claimed amount</strong>. <a
+                        href="https://fortune.com/2025/03/18/government-spending-rise-doge-claims/" target="_blank"
+                        rel="noopener">Federal spending actually increased</a> during DOGE's operational period. <a
+                        href="https://www.pbs.org/newshour/politics/fact-check-doge-wall-of-receipts" target="_blank"
+                        rel="noopener">DOGE's "wall of receipts" contained systematic accounting errors</a>, including
+                    already-spent contracts and active ongoing projects. <a
+                        href="https://www.axios.com/2025/03/20/musk-doge-admission-limited-success" target="_blank"
+                        rel="noopener">Even Musk acknowledged</a> only "a little bit" of success.
                 </p>
             </div>
         </section>
@@ -2131,4 +2382,5 @@
         }
     </script>
 </body>
+
 </html>
