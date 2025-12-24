@@ -2045,9 +2045,13 @@
             let startX = 0;
             let isDragging = false;
             let lastWheelTime = 0;
+            let isTouch = false;
 
             // Mouse wheel scroll
             container.addEventListener('wheel', (e) => {
+                // Prevent wheel scroll if we just touched (stops momentum scrolling from skipping cards)
+                if (isTouch) return;
+
                 e.preventDefault();
                 const now = Date.now();
                 if (now - lastWheelTime < 150) return;
@@ -2064,6 +2068,7 @@
 
             // Touch swipe
             container.addEventListener('touchstart', (e) => {
+                isTouch = true;
                 startX = e.touches[0].clientX;
                 isDragging = true;
             }, { passive: true });
@@ -2074,15 +2079,20 @@
                 const endX = e.changedTouches[0].clientX;
                 const diff = startX - endX;
 
-                if (Math.abs(diff) > 30) {
+                // Threshold 35px: Sensitive enough for short swipes, but 'isTouch' prevents momentum double-jumps
+                if (Math.abs(diff) > 35) {
                     navigateCarousel(diff > 0 ? 1 : -1);
                 }
+
+                // Reset touch flag after a delay to allow mouse emulation AND momentum to pass safely
+                setTimeout(() => { isTouch = false; }, 800);
             }, { passive: true });
 
             // Mouse drag
             let hasDragged = false;
 
             container.addEventListener('mousedown', (e) => {
+                if (isTouch) return; // Ignore if touch active
                 startX = e.clientX;
                 isDragging = true;
                 hasDragged = false;
@@ -2090,19 +2100,19 @@
             });
 
             document.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
+                if (!isDragging || isTouch) return;
                 if (Math.abs(e.clientX - startX) > 5) {
                     hasDragged = true;
                 }
             });
 
             document.addEventListener('mouseup', (e) => {
-                if (!isDragging) return;
+                if (!isDragging || isTouch) return;
                 isDragging = false;
                 container.style.cursor = '';
                 const diff = startX - e.clientX;
 
-                if (hasDragged && Math.abs(diff) > 30) {
+                if (hasDragged && Math.abs(diff) > 50) {
                     wasDragging = true;
                     navigateCarousel(diff > 0 ? 1 : -1);
                     setTimeout(() => { wasDragging = false; }, 100);
