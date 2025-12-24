@@ -17,14 +17,15 @@ This file provides guidance to Gemini when working with code in this repository.
 □ Colors: NO purple (#8b5cf6) anywhere
 □ Text: NO GRADIENT TEXT - use solid colors only
 □ Data: Verify against live sources, add date context
-□ Charts (in-page): Chart.js with Midnight Tech colors
-□ Charts (standalone image): Gemini 3 Pro Image Preview
+
+□ Visuals (Infographics/Diagrams): Claude generates using Chart.js/D3/Mermaid (NO Gemini image generation)
 ```
 
 **Shorthand triggers:**
 - `[TEMPLATE]` = Read and follow docs/templates.md
 - `[INFOGRAPHIC]` = Use gemini-3-pro-image-preview + GenuVerity branding
 - `[REPORT]` = Full report generation following all templates
+- **VALIDATION**: All HTML output MUST pass `./validate-report.sh` (Interactive citations, Copy buttons, etc.)
 
 ---
 
@@ -93,25 +94,23 @@ To generate a custom infographic preview for a report card, include the `chart` 
 
 | Visual Type | Tool | Why |
 |-------------|------|-----|
-| **Bar/Line/Pie charts** | Chart.js | Interactive, fast, auto-watermark |
-| **Data comparisons** | Chart.js | In-page, responsive |
-| **Flowcharts/Diagrams** | **Gemini 3 Pro** | Complex visual layout |
-| **Process diagrams** | **Gemini 3 Pro** | Boxes, arrows, flow |
-| **Infographics** | **Gemini 3 Pro** | Standalone shareable image |
-| **Network graphs** | D3.js or Gemini | Depends on interactivity needs |
+| **Bar/Line/Pie charts** | Chart.js (via Claude) | Interactive, fast, auto-watermark |
+| **Data comparisons** | Chart.js (via Claude) | In-page, responsive |
+| **Flowcharts/Diagrams** | Mermaid/D3 (via Claude) | Maintainable code, consistent style |
+| **Process diagrams** | Mermaid/D3 (via Claude) | Boxes, arrows, flow |
+| **Infographics** | Chart.js/D3 (via Claude) | No image generation hallucinations |
+| **Network graphs** | D3.js (via Claude) | Interactive, data-driven |
 
-### Gemini Infographic Prompt Template
-**Model:** `gemini-3-pro-image-preview` ONLY
+**CRITICAL: DO NOT USE GEMINI IMAGE GENERATION.**
+All visuals must be generated as code (Chart.js, D3, Mermaid) by the Claude agent.
 
-**Midnight Tech Style Prompt:**
-```
-Theme: "Midnight Tech" HUD style
-Background: Dark navy gradient (#050A14 to #0a0a12) with faint circuit grid
-Colors: Blue #3b82f6, Cyan #06b6d4, Green #10b981, Amber #f59e0b, Red #FF2A2A
-NO PURPLE (#8b5cf6) anywhere
-Branding: "GenuVerity" wordmark bottom-right (Genu=white, Verity=blue)
-Format: 16:9 aspect ratio
-```
+## ⚠️ REPORT CONVERSION FIDELITY (LESSONS LEARNED)
+**When converting source Markdown (report1.md) to HTML:**
+1. **Source Parity**: If source lists 28 citations, HTML grid MUST contain 28 cards. NO truncation.
+2. **Label Precision**: The valid label is "Sources First" (never "Primary Sources Verified").
+3. **Data Tables**: Preserve ALL tabular data. Use `.data-table` class. Do not flatten tables into text.
+4. **No Shallow Summaries**: Retain deep technical specs (e.g., KVM, Raspberry Pi), case studies (names/dates), and financial metrics. The user expects "Deep Dive Dossiers", not light blogs.
+5. **Infographic Paths**: Use relative paths `images/` for any existing assets, but prefer code-generated visuals.
 
 ---
 

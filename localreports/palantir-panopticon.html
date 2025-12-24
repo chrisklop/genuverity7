@@ -13,6 +13,8 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="../js/copyable-sections.js" defer></script>
+    <script src="../js/chart-watermark.js"></script>
+
 
     <!-- Fonts -->
     <link
@@ -406,7 +408,7 @@
         <div class="sources-grid" id="sourcesGrid">
             <!-- Source Cards -->
             <a href="https://sites.suffolk.edu/jhtl/2025/10/07/palantir-spearheads-as-the-master-database-on-americans/"
-                target="_blank" class="source-card">
+                target="_blank" class="source-card" id="source-1">
                 <i data-lucide="database" style="color:var(--text-secondary)"></i>
                 <div>
                     <div style="font-weight:600;font-size:0.9rem;">Suffolk Journal</div>
@@ -415,7 +417,7 @@
                 <span class="source-score">100</span>
             </a>
             <a href="https://www.finance.senate.gov/ranking-members-news/wyden-ocasio-cortez-demand-answers-from-palantir-about-plans-to-build-irs-mega-database-of-american-citizens"
-                target="_blank" class="source-card">
+                target="_blank" class="source-card" id="source-2">
                 <i data-lucide="landmark" style="color:var(--text-secondary)"></i>
                 <div>
                     <div style="font-weight:600;font-size:0.9rem;">Senate.gov</div>
@@ -423,7 +425,8 @@
                 </div>
                 <span class="source-score">100</span>
             </a>
-            <a href="https://home.treasury.gov/news/press-releases/sb0260" target="_blank" class="source-card">
+            <a href="https://home.treasury.gov/news/press-releases/sb0260" target="_blank" class="source-card"
+                id="source-3">
                 <i data-lucide="file-text" style="color:var(--text-secondary)"></i>
                 <div>
                     <div style="font-weight:600;font-size:0.9rem;">Treasury.gov</div>
@@ -432,7 +435,7 @@
                 <span class="source-score">100</span>
             </a>
             <a href="https://immpolicytracking.org/policies/reported-palantir-awarded-30-million-to-build-immigrationos-surveillance-platform-for-ice/"
-                target="_blank" class="source-card">
+                target="_blank" class="source-card" id="source-4">
                 <i data-lucide="search" style="color:var(--text-secondary)"></i>
                 <div>
                     <div style="font-weight:600;font-size:0.9rem;">ImmPolicy</div>
@@ -441,7 +444,7 @@
                 <span class="source-score">95</span>
             </a>
             <a href="https://www.amnesty.org/en/latest/news/2025/08/usa-global-tech-made-by-palantir-and-babel-street-pose-surveillance-threats-to-pro-palestine-student-protestors-migrants/"
-                target="_blank" class="source-card">
+                target="_blank" class="source-card" id="source-5">
                 <i data-lucide="flag" style="color:var(--text-secondary)"></i>
                 <div>
                     <div style="font-weight:600;font-size:0.9rem;">Amnesty Int.</div>
@@ -450,7 +453,7 @@
                 <span class="source-score">90</span>
             </a>
             <a href="https://investors.palantir.com/news-details/2022/Army-Selects-Palantir-to-Build-TITAN-Program-Competitive-Prototype/"
-                target="_blank" class="source-card">
+                target="_blank" class="source-card" id="source-6">
                 <i data-lucide="briefcase" style="color:var(--text-secondary)"></i>
                 <div>
                     <div style="font-weight:600;font-size:0.9rem;">Palantir IR</div>
@@ -465,7 +468,7 @@
     <main class="content-container">
 
         <!-- Executive Summary -->
-        <section class="exec-summary executive-summary">
+        <section class="exec-summary executive-summary copyable-section">
             <h3 style="display:flex;align-items:center;gap:10px;margin-bottom:16px;color:var(--accent-red);">
                 <i data-lucide="activity" style="width:20px;height:20px;"></i>
                 EXECUTIVE SUMMARY: THE OPERATING SYSTEM OF THE LEVIATHAN
@@ -504,7 +507,7 @@
             Palantir builds the "connective tissue" of the state, creating massive lock-in effects.
         </p>
 
-        <figure class="float-figure">
+        <figure class="float-figure copyable-section">
             <canvas id="revenueChart"></canvas>
             <figcaption style="margin-top:12px;color:var(--text-muted);font-size:0.85rem;text-align:center;">
                 Palantir Government Revenue & Stock Performance (2024-2025)
@@ -567,7 +570,9 @@
         <p class="prose-text">
             The system weaponizes student visas to enforce ideological conformity. <a
                 href="https://www.amnesty.org/en/latest/news/2025/08/usa-global-tech-made-by-palantir-and-babel-street-pose-surveillance-threats-to-pro-palestine-student-protestors-migrants/">Amnesty
-                International documents</a> cases of students like Rümeysa Öztürk having visas revoked after algorithms
+                International documents</a> <a href="#source-5" class="citation-link"
+                onclick="highlightSource(event, 'source-5')">[5]</a> cases of students like Rümeysa Öztürk having visas
+            revoked after algorithms
             flagged their social media protest activity as "support for terrorism."
         </p>
 
@@ -596,7 +601,8 @@
         </p>
         <p class="prose-text">
             On the border, MSS builds "patterns of life" analyses. <a
-                href="https://investors.palantir.com/news-details/2022/Army-Selects-Palantir-to-Build-TITAN-Program-Competitive-Prototype/">TITAN</a>,
+                href="https://investors.palantir.com/news-details/2022/Army-Selects-Palantir-to-Build-TITAN-Program-Competitive-Prototype/">TITAN</a>
+            <a href="#source-6" class="citation-link" onclick="highlightSource(event, 'source-6')">[6]</a>,
             a ground station for space-based intelligence, offers "Deep Sensing" that can monitor domestic protests or
             infrastructure. Even disaster response (Hurricane Helene) became a vector for data collection, validating
             the software in civilian environments.

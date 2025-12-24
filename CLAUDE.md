@@ -657,6 +657,44 @@ Execute this pipeline FOR EACH report sequentially:
 
 ---
 
+## Interactive Report Specification (ARCHITECTURAL STANDARD)
+
+**All new reports MUST pass `./validate-report.sh` before deployment.**
+
+### 1. Interactive Citations
+- **Requirement:** Clicking a citation `[1]` MUST scroll the sidebar to the source card.
+- **Implementation:**
+  - Citation in text: `<a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>`
+  - Source Card in sidebar: `<a href="..." target="_blank" class="source-card" id="source-1">`
+- **Validation:** Script checks for `highlightSource` usage and `id="source-1"` existence.
+
+### 2. Copy/Share Functionality
+- **Requirement:** Users must be able to straightforwardly copy charts and summaries as images.
+- **Implementation:**
+  1. Include dependencies in `<head>`:
+     ```html
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+     <script src="../js/copyable-sections.js" defer></script>
+     ```
+  2. Add class `copyable-section` to:
+     - The `.executive-summary` container
+     - Every `.chart-wrapper` (or `.float-figure`)
+     - The `.verdict-box` or Conclusion container
+- **Validation:** Script checks for `copyable-section` class and script tags.
+
+### 3. Layout Standards
+- **Sources Sidebar:** MUST use the "Sources First" left-sidebar layout (`.sources-sidebar`).
+- **Data Tables:** MUST use `.data-table` class for any tabular data.
+- **Verdict:** MUST use standard verdict colors (Green/Red/Amber).
+
+### 4. Deployment Gatekeeping
+**Before `git push`:**
+1. Run: `./validate-report.sh localreports/your-report.html`
+2. Run: `node -c js/reports-data.js`
+3. Fix ANY errors. **Do not bypass.**
+
+---
+
 ### PHASE 4: REQUIRED HTML STRUCTURE
 
 ```html
