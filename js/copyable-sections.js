@@ -1,7 +1,7 @@
 // GenuVerity Copyable Sections Feature
 // Include html2canvas before this script
 
-(function() {
+(function () {
     'use strict';
 
     // CSS for copyable sections (injected dynamically)
@@ -79,7 +79,7 @@
     document.head.appendChild(styleSheet);
 
     // Copy section as image function
-    window.copySectionAsImage = async function(sectionId) {
+    window.copySectionAsImage = async function (sectionId) {
         const section = document.getElementById(sectionId);
         if (!section) {
             console.error('[Copy] Section not found:', sectionId);
@@ -143,7 +143,7 @@
                 button.classList.add('copied');
             }
 
-            setTimeout(function() {
+            setTimeout(function () {
                 button.innerHTML = originalText;
                 button.classList.remove('copied');
                 button.disabled = false;
@@ -152,7 +152,7 @@
         } catch (error) {
             console.error('[Copy] Capture failed:', error);
             button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Error';
-            setTimeout(function() {
+            setTimeout(function () {
                 button.innerHTML = originalText;
                 button.disabled = false;
             }, 2000);
@@ -170,11 +170,13 @@
         ];
 
         var index = 0;
-        selectors.forEach(function(selector) {
-            document.querySelectorAll(selector).forEach(function(section) {
-                // Skip if already initialized or is a child of another copyable section
-                if (section.classList.contains('copyable-section')) return;
-                if (section.closest('.copyable-section') && section !== section.closest('.copyable-section')) return;
+        selectors.forEach(function (selector) {
+            document.querySelectorAll(selector).forEach(function (section) {
+                // Skip if already initialized (but allow nested copyable sections)
+                if (section.classList.contains('copyable-section') && section.querySelector('.copy-btn')) return;
+
+                // We REMOVED the check that prevents nested sections:
+                // if (section.closest('.copyable-section') && section !== section.closest('.copyable-section')) return;
 
                 section.classList.add('copyable-section');
                 var id = section.id || ('copyable-' + index++);
