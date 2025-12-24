@@ -752,7 +752,7 @@
     <main class="report-container">
 
         <!-- Collapsible Sources First Banner -->
-        <section class="sources-banner">
+        <section class="sources-banner sources-sidebar">
             <div class="sources-header" onclick="toggleSources()">
                 <div class="sources-title">
                     <i data-lucide="shield-check" style="width:20px;height:20px;"></i>
@@ -763,7 +763,7 @@
                     id="sourcesChevron"></i>
             </div>
             <div class="sources-content" id="sourcesContent">
-                <div class="source-card">
+                <div class="source-card" id="source-1">
                     <a href="https://www.thelocal.de/20251222/german-christmas-markets-hit-by-flood-of-fake-news"
                         target="_blank" rel="noopener">
                         <div class="source-icon news">NEWS</div>
@@ -868,16 +868,15 @@
         </section>
 
         <!-- Executive Summary -->
-        <section class="executive-summary">
+        <section class="executive-summary copyable-section">
             <h2 class="prose-h2"><i data-lucide="alert-triangle" style="width: 28px; height: 28px;"></i> Executive
                 Summary</h2>
             <p class="prose-text">
                 German Christmas markets have become the target of a <strong>coordinated far-right disinfo
-
                     rmation campaign</strong> in December 2025, falsely claiming that Muslim individuals are "storming"
-                festive events across Germany. According to <a
-                    href="https://www.thelocal.de/20251222/german-christmas-markets-hit-by-flood-of-fake-news"
-                    target="_blank" rel="noopener">The Local Germany</a>, these viral claims utilize <strong>doctored
+                festive events across Germany. According to <a href="#source-1" class="citation-link"
+                    onclick="highlightSource(event, 'source-1')">The Local Germany</a>, these viral claims utilize
+                <strong>doctored
                     videos, misleading captions, and AI-generated imagery</strong> to stoke anti-Muslim prejudice and
                 xenophobia.
             </p>

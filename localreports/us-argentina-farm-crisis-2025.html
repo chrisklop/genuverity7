@@ -721,7 +721,7 @@
     <main class="report-container">
 
         <!-- Sources Banner -->
-        <section class="sources-banner">
+        <section class="sources-banner sources-sidebar">
             <div class="sources-header" onclick="toggleSources()">
                 <div class="sources-title">
                     <i data-lucide="shield-check" style="width:20px;height:20px;"></i>
@@ -732,7 +732,7 @@
                     id="sourcesChevron"></i>
             </div>
             <div class="sources-content" id="sourcesContent">
-                <div class="source-card">
+                <div class="source-card" id="source-1">
                     <a href="https://www.usda.gov" target="_blank" rel="noopener">
                         <div class="source-icon gov">GOV</div>
                         <div class="source-info">
@@ -886,14 +886,15 @@
         </section>
 
         <!-- Executive Summary -->
-        <section class="executive-summary">
+        <section class="executive-summary copyable-section">
             <h2 class="prose-h2"><i data-lucide="file-search" style="width: 28px; height: 28px;"></i> Executive Summary
             </h2>
             <p class="prose-text">
                 In October 2025, the <strong>US Treasury Department</strong> coordinated a <strong>$40 billion financial
                     intervention</strong> to stabilize Argentina's economy—a package comprising a $20B currency swap and
-                $20B in private capital mobilization. This occurred under <a href="https://www.treasury.gov"
-                    target="_blank" rel="noopener">Treasury Secretary Scott Bessent</a>, explicitly timed to support
+                $20B in private capital mobilization. This occurred under <a href="#source-3" class="citation-link"
+                    onclick="highlightSource(event, 'source-3')">Treasury Secretary Scott Bessent</a>, explicitly timed
+                to support
                 Argentine President Javier Milei ahead of midterm elections.
             </p>
             <p class="prose-text">
