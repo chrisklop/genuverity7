@@ -410,6 +410,59 @@
         .source-card.highlight {
             animation: flash-highlight 1.5s ease-out;
         }
+
+        /* === MEDIA & VISUALS (Magazine Style) === */
+        .float-figure {
+            float: right;
+            width: 45%;
+            max-width: 450px;
+            margin: 5px 0 20px 25px;
+            clear: right;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.27);
+            cursor: zoom-in;
+            z-index: 10;
+            background: var(--bg-card);
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .float-figure:hover {
+            transform: scale(1.6) translateX(-15%);
+            z-index: 1000;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border-color: var(--accent-blue);
+        }
+
+        .float-figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .float-figure figcaption {
+            margin-top: 8px;
+            padding: 0 4px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .float-figure {
+                float: none;
+                width: 100%;
+                max-width: none;
+                margin: 24px 0;
+            }
+
+            .float-figure:hover {
+                transform: none;
+            }
+        }
     </style>
 </head>
 
@@ -654,7 +707,7 @@
                 </div>
             </aside>
             <!-- ARTICLE CONTENT -->
-            <article class="article-content content-section">
+            <article class="article-content">
                 <div class="info-box copyable-section">
                     <div class="info-title"><i data-lucide="shield-alert"></i>Forensic Executive Summary
                     </div>
