@@ -30,18 +30,20 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 12px;
+            padding: 8px 14px;
             background: rgba(10, 15, 26, 0.95);
             border: 1px solid #06b6d4;
             border-radius: 8px;
             color: #06b6d4;
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
             font-family: 'JetBrains Mono', monospace;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            white-space: nowrap;
+            min-width: fit-content;
         }
         .copy-btn:hover {
             background: #06b6d4;
@@ -56,6 +58,7 @@
         .copy-btn svg {
             width: 14px;
             height: 14px;
+            flex-shrink: 0;
         }
         .capture-watermark {
             position: absolute;
