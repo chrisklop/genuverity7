@@ -23,7 +23,7 @@
             transition: opacity 0.2s ease;
             z-index: 100;
         }
-        .copyable-section:hover .copy-overlay {
+        .copyable-section:hover > .copy-overlay {
             opacity: 1;
         }
         .copy-btn {
@@ -166,17 +166,20 @@
             '.executive-summary',
             '.insight-card',
             '.float-figure',
-            '.live-data-panel'
+            '.live-data-panel',
+            '.copyable-section' // Add this to handle manual class additions too
         ];
 
         var index = 0;
+        var processedElements = new Set();
+
         selectors.forEach(function (selector) {
             document.querySelectorAll(selector).forEach(function (section) {
-                // Skip if already initialized (but allow nested copyable sections)
-                if (section.classList.contains('copyable-section') && section.querySelector('.copy-btn')) return;
+                // Skip if already processed in this loop or already has a button
+                if (processedElements.has(section) || section.querySelector('.copy-btn')) return;
 
-                // We REMOVED the check that prevents nested sections:
-                // if (section.closest('.copyable-section') && section !== section.closest('.copyable-section')) return;
+                // Mark as processed
+                processedElements.add(section);
 
                 section.classList.add('copyable-section');
                 var id = section.id || ('copyable-' + index++);
