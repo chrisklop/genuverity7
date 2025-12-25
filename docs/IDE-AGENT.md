@@ -104,9 +104,20 @@ Create Chart.js visualizations where data supports it:
 4. **Layout Standards (MANDATORY):**
    - **Figures/Charts:** Always use `float: right` with margin `5px 0 20px 25px` (standardized in template).
    - **Info Boxes/Alerts:** Always add `style="clear: both;"` to prevent overlapping with floated figures.
-   - **Nesting:** Never put `copyable-section` on nested elements if the parent already has it.
+   - **Nesting:** Automated. The system supports nested copy buttons (e.g., copying a section vs. copying a chart inside it).
 
-5. Generate source cards for EVERY source:
+5. **Copyable Sections (AUTOMATED):**
+   
+   The system automatically adds "Copy Image" functionality to all:
+   - `<section>` tags
+   - Charts (`.chart-wrapper`)
+   - Info boxes (`.info-box`)
+   - Tables (`.data-table-container`)
+   - Figures (`.float-figure`)
+   
+   **No manual tagging is required.** The script `js/copyable-sections.js` handles detection and button injection.
+
+6. Generate source cards for EVERY source:
    ```html
    <a href="{{URL}}" target="_blank" class="source-card" id="source-{{N}}">
        <span class="source-ref">{{N}}</span>

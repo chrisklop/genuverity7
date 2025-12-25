@@ -164,13 +164,19 @@
 
     // Auto-initialize all sections with specific classes
     function initCopyableSections() {
+        // Broad range of selectors for automatic coverage
         var selectors = [
+            'section:not(.nav-header):not(.footer-container)', // Main report sections (excluded nav/footer)
+            'article',                  // Articles
+            '.info-box',               // Info boxes
+            '.chart-wrapper',          // Charts
+            '.data-table-container',   // Tables
+            '.float-figure',           // Figures
             '.content-section',
             '.executive-summary',
             '.insight-card',
-            '.float-figure',
             '.live-data-panel',
-            '.copyable-section' // Add this to handle manual class additions too
+            '.copyable-section'        // Manual override
         ];
 
         var index = 0;
@@ -178,20 +184,40 @@
 
         selectors.forEach(function (selector) {
             document.querySelectorAll(selector).forEach(function (section) {
-                // Skip if already processed in this loop or already has a button
-                if (processedElements.has(section) || section.querySelector('.copy-btn')) return;
+                // Skip if already processed in this loop (but allow nested processing)
+                if (processedElements.has(section)) return;
+
+                // If it already has a button (e.g. from previous run), skip
+                if (section.querySelector(':scope > .copy-overlay')) return;
 
                 // Mark as processed
                 processedElements.add(section);
 
                 section.classList.add('copyable-section');
+
+                // Ensure ID exists
                 var id = section.id || ('copyable-' + index++);
                 section.id = id;
 
+                // Create overlay
                 var overlay = document.createElement('div');
                 overlay.className = 'copy-overlay';
-                overlay.innerHTML = '<button class="copy-btn" onclick="copySectionAsImage(\'' + id + '\')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy Image</button>';
-                section.insertBefore(overlay, section.firstChild);
+
+                // Customize button text based on element type
+                let label = "Copy Section";
+                if (section.classList.contains('chart-wrapper')) label = "Copy Chart";
+                if (section.classList.contains('data-table-container')) label = "Copy Table";
+                if (section.classList.contains('info-box')) label = "Copy Info";
+                if (section.tagName === 'FIGURE') label = "Copy Figure";
+
+                overlay.innerHTML = '<button class="copy-btn" onclick="copySectionAsImage(\'' + id + '\')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> ' + label + '</button>';
+
+                // Insert as first child
+                if (section.firstChild) {
+                    section.insertBefore(overlay, section.firstChild);
+                } else {
+                    section.appendChild(overlay);
+                }
             });
         });
     }
