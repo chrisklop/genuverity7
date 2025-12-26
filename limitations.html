@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Methodology - GenuVerity</title>
+    <title>System Limitations - GenuVerity</title>
 
     <!-- Dependencies -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -65,7 +65,8 @@
             transform: translateX(-50%);
             width: 1000px;
             height: 800px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(6, 182, 212, 0.02) 40%, transparent 70%);
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.08) 0%, rgba(245, 158, 11, 0.02) 40%, transparent 70%);
+            /* Red/Amber for Warning Vibe */
             pointer-events: none;
             z-index: -1;
         }
@@ -93,10 +94,11 @@
             bottom: -1px;
             left: 0;
             height: 2px;
-            background: var(--accent-cyan);
+            background: var(--accent-amber);
+            /* Amber for Warning/Limitations */
             width: var(--scroll-progress, 0%);
             transition: width 0.1s linear;
-            box-shadow: 0 0 10px var(--accent-cyan);
+            box-shadow: 0 0 10px var(--accent-amber);
             z-index: 1001;
         }
 
@@ -107,17 +109,16 @@
             text-decoration: none;
         }
 
-        .navbar-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
         .logo-genu {
             color: #ffffff;
+            font-weight: 700;
+            font-size: 1.5rem;
         }
 
         .logo-verity {
             color: var(--accent-blue);
+            font-weight: 700;
+            font-size: 1.5rem;
         }
 
         .navbar-center {
@@ -137,16 +138,15 @@
             align-items: center;
             padding: 0 12px;
             gap: 8px;
-            transition: all 0.3s ease;
         }
 
         .navbar-search-input {
             background: transparent;
             border: none;
             color: var(--text-primary);
-            font-size: 0.85rem;
             width: 100%;
             font-family: var(--font-display);
+            font-size: 0.85rem;
         }
 
         .navbar-right {
@@ -174,12 +174,11 @@
         }
 
         .btn-premium-glass:hover {
-            background: rgba(59, 130, 246, 0.25);
-            border-color: rgba(59, 130, 246, 0.6);
             transform: translateY(-1px);
+            background: rgba(59, 130, 246, 0.25);
         }
 
-        /* === THEMATIC SECTIONS === */
+        /* === PAGE CONTENT === */
         .page-header {
             padding-top: 140px;
             text-align: center;
@@ -230,6 +229,9 @@
             font-size: 2.2rem;
             margin-bottom: 20px;
             color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .feature-text p {
@@ -239,6 +241,12 @@
             margin-bottom: 24px;
         }
 
+        .feature-icon-warning {
+            color: var(--accent-amber);
+            width: 32px;
+            height: 32px;
+        }
+
         .feature-graphic {
             flex: 1;
             height: 360px;
@@ -246,7 +254,8 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.05), transparent 70%);
+            background: radial-gradient(circle at center, rgba(239, 68, 68, 0.05), transparent 70%);
+            /* Red tint */
         }
 
         /* === 3D ANIMATIONS === */
@@ -274,7 +283,7 @@
             }
         }
 
-        /* Shield */
+        /* Shield (Red Variant) */
         .shield-3d {
             width: 160px;
             height: 200px;
@@ -285,23 +294,24 @@
         .shield-layer {
             position: absolute;
             inset: 0;
-            border: 2px solid var(--accent-cyan);
+            border: 2px solid var(--accent-red);
+            /* Red Border */
             clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1));
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.1));
             backdrop-filter: blur(4px);
         }
 
         .shield-layer:nth-child(2) {
             transform: scale(0.9) translateZ(20px);
-            border-color: var(--accent-blue);
+            border-color: var(--accent-amber);
         }
 
         .shield-layer:nth-child(3) {
             transform: scale(0.8) translateZ(40px);
-            background: rgba(6, 182, 212, 0.1);
+            background: rgba(239, 68, 68, 0.1);
         }
 
-        /* Grid */
+        /* Grid (Locked Variant) */
         .grid-3d {
             width: 240px;
             height: 160px;
@@ -314,47 +324,16 @@
             position: absolute;
             bottom: 0;
             width: 24px;
-            background: linear-gradient(to top, var(--accent-blue), var(--accent-cyan));
-            opacity: 0.8;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-            animation: float 4s ease-in-out infinite;
-        }
-
-        /* Scale */
-        .scale-3d {
-            width: 180px;
-            height: 180px;
-            position: relative;
-            animation: balance 5s ease-in-out infinite;
-        }
-
-        .scale-bar {
-            width: 140px;
-            height: 4px;
-            background: var(--text-secondary);
-            position: absolute;
-            top: 20px;
-            left: 20px;
-        }
-
-        .scale-plate {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: absolute;
-            top: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: linear-gradient(to top, var(--text-muted), var(--text-secondary));
+            /* Gray Bars */
+            opacity: 0.5;
+            box-shadow: none;
             animation: float 4s ease-in-out infinite;
         }
 
         @media (max-width: 768px) {
             .navbar {
                 padding: 0 20px;
-                display: flex;
                 justify-content: space-between;
             }
 
@@ -363,14 +342,11 @@
                 display: none;
             }
 
-            .feature-block {
+            .feature-block,
+            .feature-block.reverse {
                 flex-direction: column;
                 text-align: center;
                 gap: 40px;
-            }
-
-            .feature-block.reverse {
-                flex-direction: column;
             }
 
             .feature-text,
@@ -378,109 +354,82 @@
                 width: 100%;
             }
         }
-
-        /* Limitations Section */
-        .limitations-section {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 24px 120px;
-        }
-
-        .glass-panel {
-            background: rgba(17, 24, 39, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 60px;
-        }
-
-        .limitations-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-top: 40px;
-        }
-
-        .limitation-card h3 {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.1rem;
-            color: white;
-            margin-bottom: 12px;
-        }
-
-        .limitation-card p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        @media (max-width: 768px) {
-            .limitations-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .glass-panel {
-                padding: 32px;
-            }
-        }
     </style>
 </head>
 
 <body>
-    <!-- Backgrounds -->
     <div class="bg-grid"></div>
     <div class="bg-glow"></div>
 
-    <!-- Navbar -->
     <nav class="navbar">
         <a href="index-gsap-pilot.html" class="navbar-brand">
             <span class="navbar-logo">
                 <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
             </span>
         </a>
-
         <div class="navbar-center">
             <div class="navbar-search-container">
-                <i data-lucide="search" style="width:16px; color:var(--accent-cyan);"></i>
+                <i data-lucide="search" style="width:16px; color:var(--text-muted);"></i>
                 <input type="text" class="navbar-search-input" placeholder="Search functionality on Home..." disabled
-                    style="cursor:not-allowed; opacity:0.7;">
+                    style="cursor:not-allowed; opacity:0.5;">
             </div>
         </div>
-
         <div class="navbar-right">
             <a href="index-gsap-pilot.html" class="navbar-back"
-                style="color:var(--text-secondary); text-decoration:none; font-size:0.9rem; font-weight:500;">Home</a>
-            <a href="index-gsap-pilot.html#contactForm" class="btn-premium-glass" style="margin-left:20px;">
-                <i data-lucide="zap" style="width:16px;"></i> Get Early Access
-            </a>
+                style="color:var(--text-secondary); text-decoration:none;">Home</a>
+            <a href="methodology.html" class="navbar-back"
+                style="color:var(--text-secondary); text-decoration:none;">Methodology</a>
         </div>
     </nav>
 
     <div class="page-header">
-        <h1 class="page-title">The Standard</h1>
-        <p class="page-desc">Our 3-step protocol for establishing verification in a zero-trust environment.</p>
+        <h1 class="page-title">Known Limitations</h1>
+        <p class="page-desc">Where our system stops, and where human judgment begins.</p>
     </div>
 
-    <!-- ZIG-ZAG SECTIONS -->
     <section class="thematic-section">
 
-        <!-- 1. INGEST (Zig) -->
+        <!-- 1. DATA HORIZONS (Zig) -->
         <div class="feature-block">
             <div class="feature-text">
-                <h2>1. Global Ingestion</h2>
-                <p><strong>Goal:</strong> Continuous algorithmic scanning of 50,000+ data points.</p>
-                <p><strong>Current Status:</strong> Our AI agents monitor legislative dockets and wire services to
-                    surface claims, which are then <em>manually reviewed and curated</em> by our research team to ensure
-                    relevance and accuracy during this pilot phase.</p>
+                <h2><i data-lucide="database" class="feature-icon-warning"></i> Data Horizons</h2>
+                <p>We cannot verify what we cannot see. While we scan 50,000+ sources, significant portions of the
+                    world's knowledge remain offline or gated.</p>
                 <ul style="list-style:none; opacity:0.8; font-size:0.9rem; line-height:2;">
-                    <li><i data-lucide="check" style="width:14px;color:var(--accent-green);display:inline;"></i>
-                        Human-Verified Sources</li>
-                    <li><i data-lucide="check" style="width:14px;color:var(--accent-green);display:inline;"></i> Curated
-                        Feed</li>
+                    <li><i data-lucide="x" style="width:14px;color:var(--accent-red);display:inline;"></i> <strong>Hard
+                            Paywalls:</strong> Premium financial data is often inaccessible.</li>
+                    <li><i data-lucide="x" style="width:14px;color:var(--accent-red);display:inline;"></i>
+                        <strong>Offline Records:</strong> Non-digitized county archives are invisible.
+                    </li>
+                    <li><i data-lucide="x" style="width:14px;color:var(--accent-red);display:inline;"></i>
+                        <strong>Private Channels:</strong> Signal/Telegram chats are out of scope.
+                    </li>
                 </ul>
+            </div>
+            <div class="feature-graphic">
+                <div class="grid-3d">
+                    <!-- Gray/Locked Bars -->
+                    <div class="data-bar" style="left:40px; height:80px; animation-delay:0s;"></div>
+                    <div class="data-bar" style="left:90px; height:120px; animation-delay:0.5s;"></div>
+                    <div class="data-bar" style="left:140px; height:60px; animation-delay:1s;"></div>
+                    <!-- Lock Icon Overlay -->
+                    <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                        <i data-lucide="lock"
+                            style="width:64px; height:64px; color:var(--text-muted); opacity:0.5;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. THE IRONY PROBLEM (Zag) -->
+        <div class="feature-block reverse">
+            <div class="feature-text">
+                <h2><i data-lucide="brain-circuit" class="feature-icon-warning"></i> The Nuance Gap</h2>
+                <p>Large Language Models are literalists. They struggle to detect satire, deep sarcasm, and cultural
+                    nuance. A statement like "Yeah, right" may be interpreted as confirmation rather than skepticism.
+                </p>
+                <p style="color:var(--accent-amber); font-family:monospace;">> DETECTING TONE...<br>> WARNING: SATIRE
+                    CONFIDENCE LOW (34%)</p>
             </div>
             <div class="feature-graphic">
                 <div class="shield-3d">
@@ -491,70 +440,35 @@
             </div>
         </div>
 
-        <!-- 2. ANALYZE (Zag) -->
-        <div class="feature-block reverse">
-            <div class="feature-text">
-                <h2>2. Algorithmic Audit</h2>
-                <p>Claims are cross-referenced against historical data. Our AI models assist researchers by flagging
-                    pattern anomalies and linguistic bias, acting as a "force multiplier" for human judgment rather than
-                    an autonomous arbiter.</p>
-                <p style="color:var(--accent-cyan); font-family:monospace;">> ASSISTING RESEARCHER... <br>> FLAGGING
-                    POTENTIAL BIAS</p>
-            </div>
-            <div class="feature-graphic">
-                <div class="grid-3d">
-                    <div class="data-bar" style="left:20px; height:80px; animation-delay:0s;"></div>
-                    <div class="data-bar" style="left:60px; height:120px; animation-delay:0.5s;"></div>
-                    <div class="data-bar" style="left:100px; height:60px; animation-delay:1s;"></div>
-                    <div class="data-bar" style="left:140px; height:150px; animation-delay:0.2s;"></div>
-                    <div class="data-bar" style="left:180px; height:90px; animation-delay:0.7s;"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. CONSENSUS (Zig) -->
+        <!-- 3. VISUAL BLINDSPOTS (Zig) -->
         <div class="feature-block">
             <div class="feature-text">
-                <h2>3. Final Consensus</h2>
-                <p>We don't publish "maybe." A verdict is only rendered when multiple primary sources corroborate the
-                    evidence. If the scale doesn't tip decisively, we report "Mixed" with full transparency.</p>
+                <h2><i data-lucide="eye-off" class="feature-icon-warning"></i> Visual Blindspots</h2>
+                <p>We currently verify <strong>text only</strong>. In an era of Generative AI, this is a significant
+                    limitation.</p>
+                <ul style="list-style:none; opacity:0.8; font-size:0.9rem; line-height:2;">
+                    <li><i data-lucide="alert-triangle"
+                            style="width:14px;color:var(--accent-amber);display:inline;"></i> Deepfake Videos</li>
+                    <li><i data-lucide="alert-triangle"
+                            style="width:14px;color:var(--accent-amber);display:inline;"></i> AI-Generated Images</li>
+                    <li><i data-lucide="alert-triangle"
+                            style="width:14px;color:var(--accent-amber);display:inline;"></i> Audio Voice Clones</li>
+                </ul>
+                <p style="margin-top:20px; font-size:0.9rem;"><em>Visual verification modules are scheduled for Q3
+                        2026.</em></p>
             </div>
             <div class="feature-graphic">
-                <div class="scale-3d">
+                <div
+                    style="position:relative; width:200px; height:200px; border:2px dashed var(--accent-red); border-radius:12px; display:flex; align-items:center; justify-content:center;">
+                    <i data-lucide="image-off"
+                        style="width:64px; height:64px; color:var(--accent-red); opacity:0.8;"></i>
                     <div
-                        style="width:4px; height:120px; background:var(--text-muted); position:absolute; left:88px; top:0;">
-                    </div>
-                    <div class="scale-bar" style="animation: balance 4s ease-in-out infinite reverse;"></div>
-                    <div class="scale-plate" style="left:20px; animation-delay:0s;">
-                        <i data-lucide="file-text" style="width:20px; color:var(--text-primary);"></i>
-                    </div>
-                    <div class="scale-plate" style="right:20px; animation-delay:0.5s;">
-                        <i data-lucide="check" style="width:20px; color:var(--accent-green);"></i>
-                    </div>
+                        style="position:absolute; bottom:-40px; color:var(--accent-red); font-family:monospace; font-size:0.8rem;">
+                        [NO SIGNAL]</div>
                 </div>
             </div>
         </div>
 
-    </section>
-
-    <!-- KNOWN LIMITATIONS -->
-    </section>
-
-    <!-- LIMITATIONS LINK CTA -->
-    <section class="limitations-link-section" style="text-align:center; padding-bottom:120px;">
-        <div class="glass-panel"
-            style="max-width:800px; margin:0 auto; display:flex; flex-direction:column; align-items:center; text-align:center;">
-            <i data-lucide="alert-triangle"
-                style="width:40px; height:40px; color:var(--accent-amber); margin-bottom:16px;"></i>
-            <h2 style="font-size:2rem; margin-bottom:16px;">System Limitations</h2>
-            <p style="color:var(--text-secondary); margin-bottom:32px; max-width:600px;">
-                We believe in radical transparency. Understanding what our system <em>cannot</em> do is just as
-                important as understanding what it can.
-            </p>
-            <a href="limitations.html" class="btn-premium-glass" style="padding:12px 32px; font-size:1rem;">
-                <i data-lucide="search" style="width:18px;"></i> View Full Limitations Report
-            </a>
-        </div>
     </section>
 
     <!-- Scripts -->
@@ -569,20 +483,12 @@
             document.querySelector('.navbar').style.setProperty('--scroll-progress', `${scrollPercent}%`);
         });
 
-        // Animations (Fade In on Scroll)
+        // Animations
         gsap.registerPlugin(ScrollTrigger);
-
-        gsap.utils.toArray('.feature-block').forEach((block, i) => {
+        gsap.utils.toArray('.feature-block').forEach((block) => {
             gsap.from(block, {
-                scrollTrigger: {
-                    trigger: block,
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
-                },
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                ease: "power3.out"
+                scrollTrigger: { trigger: block, start: "top 85%" },
+                y: 30, opacity: 0, duration: 0.8, ease: "power2.out"
             });
         });
     </script>
