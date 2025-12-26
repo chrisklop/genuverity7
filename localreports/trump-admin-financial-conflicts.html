@@ -58,7 +58,7 @@
             overflow-x: hidden;
         }
 
-        
+
         /* === NAVBAR (Consolidated Premium) === */
         .navbar {
             position: fixed;
@@ -117,14 +117,56 @@
         }
 
         @keyframes sweep-30 {
-            from { transform: rotate(-20deg); }
-            to { transform: rotate(20deg); }
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
+
+        /* Search Container */
+        .navbar-search-container {
+            display: flex;
+            align-items: center;
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0 16px;
+            height: 40px;
+            width: 300px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .navbar-search-container.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .navbar-search-input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            width: 100%;
+            outline: none;
+            margin-left: 10px;
+            font-family: 'Inter', sans-serif;
         }
 
         .nav-back-link {
             font-size: 0.9rem;
             font-weight: 500;
             transition: all 0.2s;
+            text-decoration: none;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .nav-back-link:hover {
@@ -135,9 +177,37 @@
         @media (max-width: 768px) {
             .navbar {
                 padding: 0 16px;
+                display: grid;
+                grid-template-columns: 48px 1fr 48px;
+            }
+
+            .navbar-search-container {
+                width: 100%;
+                opacity: 1;
+                pointer-events: all;
+                margin: 0 8px;
+            }
+
+            .navbar-right {
+                display: none;
             }
         }
-/* === LAYOUT UTILS === */
+
+        /* Scroll Progress Line */
+        .navbar::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            height: 2px;
+            background: var(--accent-cyan);
+            width: var(--scroll-progress, 0%);
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px var(--accent-cyan);
+            z-index: 1001;
+        }
+
+        /* === LAYOUT UTILS === */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -529,7 +599,7 @@
         .footer-link:hover {
             color: #fff;
         }
-    
+
         /* Footer Logo Wrapper (Scaled Down) */
         .footer-logo-wrapper {
             position: relative;
@@ -553,21 +623,30 @@
             background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
             animation: sweep-30 4s ease-in-out infinite alternate;
         }
-        
-        /* Global Logo Colors */
-        .logo-genu { color: #ffffff !important; }
-        .logo-verity { color: #3b82f6 !important; }
 
-        @keyframes sweep-30 {
-            from { transform: rotate(-20deg); }
-            to { transform: rotate(20deg); }
+        /* Global Logo Colors */
+        .logo-genu {
+            color: #ffffff !important;
         }
 
+        .logo-verity {
+            color: #3b82f6 !important;
+        }
+
+        @keyframes sweep-30 {
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
     </style>
 </head>
 
 <body>
-    
+
     <!-- STANDARD NAVBAR -->
     <nav class="navbar">
         <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
@@ -578,8 +657,15 @@
                 </div>
             </div>
         </a>
+
+        <!-- Persistent Search Bar -->
+        <div class="navbar-search-container" id="navSearchContainer">
+            <i data-lucide="search" style="width:16px; color:var(--accent-cyan);"></i>
+            <input type="text" class="navbar-search-input" placeholder="Search Intelligence..." id="navSearchInput">
+        </div>
+
         <div class="navbar-right">
-            <a href="../index.html" class="nav-back-link" style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+            <a href="../index.html" class="nav-back-link">
                 <i data-lucide="arrow-left" style="width:16px;"></i>
                 Back to Intelligence
             </a>
@@ -1253,12 +1339,14 @@
     </div>
 
     <!-- Persistent Footer -->
-    
+
     <!-- Footer -->
-    <footer class="footer" style="padding:40px 0; text-align:center; border-top:1px solid rgba(59,130,246,0.15); background:rgba(5,10,20,0.8); margin-top: 80px;">
+    <footer class="footer"
+        style="padding:40px 0; text-align:center; border-top:1px solid rgba(59,130,246,0.15); background:rgba(5,10,20,0.8); margin-top: 80px;">
         <div class="footer-logo-wrapper">
             <div class="ss-footer"></div>
-            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity" style="font-size:1.5rem; font-weight:700;">Verity</span>
+            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity"
+                style="font-size:1.5rem; font-weight:700;">Verity</span>
         </div>
         <p style="color:#a0aec0; margin-bottom:20px;">AI-Powered Investigative Journalism</p>
         <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
@@ -1271,6 +1359,24 @@
 
 
     <script>
+        // Reading Progress & Navbar Logic
+        window.addEventListener('scroll', () => {
+            // Progress Bar
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            document.documentElement.style.setProperty('--scroll-progress', `${progress}%`);
+
+            // Navbar Search Persistence (Desktop Scroll)
+            const navSearch = document.getElementById('navSearchContainer');
+            if (window.innerWidth > 768) {
+                if (window.scrollY > 200) {
+                    navSearch.classList.add('visible');
+                } else {
+                    navSearch.classList.remove('visible');
+                }
+            }
+        });
+
         // Initialize Lucide Icons
         lucide.createIcons();
 

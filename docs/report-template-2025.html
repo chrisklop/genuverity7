@@ -6,6 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{TITLE}} | GenuVerity</title>
     <meta name="description" content="{{META_DESCRIPTION}}">
+    <meta name="keywords" content="{{KEYWORDS}}">
+    <meta name="author" content="GenuVerity Intelligence">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://genuverity.org/localreports/{{SLUG}}">
+    <meta property="og:title" content="{{TITLE}} | GenuVerity">
+    <meta property="og:description" content="{{META_DESCRIPTION}}">
+    <meta property="og:image" content="https://genuverity.org/images/share-card-{{SLUG}}.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://genuverity.org/localreports/{{SLUG}}">
+    <meta property="twitter:title" content="{{TITLE}} | GenuVerity">
+    <meta property="twitter:description" content="{{META_DESCRIPTION}}">
+    <meta property="twitter:image" content="https://genuverity.org/images/share-card-{{SLUG}}.jpg">
+
+    <!-- Structured Data (JSON-LD) for Fact Check -->
+    <!-- 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ClaimReview",
+      "datePublished": "{{PUBLISH_DATE}}",
+      "url": "https://genuverity.org/localreports/{{SLUG}}",
+      "imprint": {
+         "@type": "Organization",
+         "name": "GenuVerity"
+      },
+      "claimReviewed": "{{CLAIM_TEXT}}",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "{{RATING_VALUE}}",
+        "bestRating": "5",
+        "worstRating": "1",
+        "alternateName": "{{VERDICT_TEXT}}"
+      },
+      "itemReviewed": {
+        "@type": "Claim",
+        "author": {
+          "@type": "Person",
+          "name": "{{CLAIM_AUTHOR}}"
+        },
+        "datePublished": "{{CLAIM_DATE}}",
+        "appearance": {
+          "@type": "CreativeWork",
+          "url": "{{CLAIM_SOURCE_URL}}"
+        }
+      }
+    }
+    </script>
+    -->
 
     <!-- Dependencies -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -57,44 +110,152 @@
             overflow-x: hidden;
         }
 
-        /* === NAV HEADER (Standardized) === */
-        .nav-header {
+        /* === NAVBAR (Consolidated Premium) === */
+        .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 60px;
-            background: rgba(5, 10, 20, 0.95);
-            backdrop-filter: blur(10px);
+            height: 64px;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-color);
-            z-index: 100;
+            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 24px;
+            padding: 0 40px;
         }
 
-        .nav-brand {
-            font-size: 1.25rem;
-            font-weight: 700;
-            text-decoration: none;
+        /* Scroll Progress Line */
+        .navbar::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            height: 2px;
+            background: var(--accent-cyan);
+            width: var(--scroll-progress, 0%);
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px var(--accent-cyan);
+            z-index: 1001;
+        }
+
+        .navbar-logo {
             display: flex;
             align-items: center;
+        }
+
+        .navbar-logo-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .ss-nav {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ss-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
+
+        @keyframes sweep-30 {
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
+
+        /* Search Container */
+        .navbar-search-container {
+            display: flex;
+            align-items: center;
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0 16px;
+            height: 40px;
+            width: 300px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .navbar-search-container.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .navbar-search-input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            width: 100%;
+            outline: none;
+            margin-left: 10px;
+            font-family: 'Inter', sans-serif;
         }
 
         .nav-back-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: var(--text-secondary);
             display: flex;
             align-items: center;
             gap: 8px;
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s;
         }
 
         .nav-back-link:hover {
-            color: var(--text-primary);
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 16px;
+                display: grid;
+                grid-template-columns: 48px 1fr 48px;
+            }
+
+            .navbar-search-container {
+                width: 100%;
+                opacity: 1;
+                pointer-events: all;
+                margin: 0 8px;
+            }
+
+            .navbar-right {
+                display: none;
+            }
         }
 
         .logo-genu {
@@ -481,15 +642,29 @@
 </head>
 
 <body>
-    <!-- STANDARD NAV HEADER -->
-    <nav class="nav-header">
-        <a href="../index.html" class="nav-brand">
-            <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
+    <!-- STANDARD NAVBAR -->
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
+            <div class="navbar-logo">
+                <div class="navbar-logo-wrapper">
+                    <div class="ss-nav"></div>
+                    <div class="g-icon-nav">G</div>
+                </div>
+            </div>
         </a>
-        <a href="../index.html" class="nav-back-link">
-            <i data-lucide="arrow-left" style="width:16px;"></i>
-            Back to Intelligence
-        </a>
+
+        <!-- Persistent Search Bar -->
+        <div class="navbar-search-container" id="navSearchContainer">
+            <i data-lucide="search" style="width:16px; color:var(--accent-cyan);"></i>
+            <input type="text" class="navbar-search-input" placeholder="Search Intelligence..." id="navSearchInput">
+        </div>
+
+        <div class="navbar-right">
+            <a href="../index.html" class="nav-back-link">
+                <i data-lucide="arrow-left" style="width:16px;"></i>
+                Back to Intelligence
+            </a>
+        </div>
     </nav>
 
     <div class="container">
@@ -537,8 +712,10 @@
 
                 <!-- {{ARTICLE_SECTIONS}} -->
                 <!-- TEMPLATE FOR EACH SECTION:
-                <h2>{{SECTION_TITLE}}</h2>
-                <p>{{SECTION_CONTENT}} <a href="#source-N" class="citation-link" onclick="highlightSource(event, 'source-N')">[N]</a></p>
+                <section class="copyable-section">
+                    <h2>{{SECTION_TITLE}}</h2>
+                    <p>{{SECTION_CONTENT}} <a href="#source-N" class="citation-link" onclick="highlightSource(event, 'source-N')">[N]</a></p>
+                </section>
                 -->
 
                 <!-- TEMPLATE FOR CHART:
@@ -593,6 +770,24 @@
     </div>
 
     <script>
+        // Reading Progress & Navbar Logic
+        window.addEventListener('scroll', () => {
+            // Progress Bar
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            document.documentElement.style.setProperty('--scroll-progress', `${progress}%`);
+
+            // Navbar Search Persistence (Desktop Scroll)
+            const navSearch = document.getElementById('navSearchContainer');
+            if (window.innerWidth > 768) {
+                if (window.scrollY > 200) {
+                    navSearch.classList.add('visible');
+                } else {
+                    navSearch.classList.remove('visible');
+                }
+            }
+        });
+
         // Initialize Lucide Icons
         lucide.createIcons();
 
@@ -611,6 +806,7 @@
                 element.classList.add('highlight');
             }
         }
+
 
         // {{CHART_JS_CONFIGS}}
         // TEMPLATE FOR CHART CONFIG:
