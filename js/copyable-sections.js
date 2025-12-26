@@ -150,6 +150,10 @@
 
     // --> Copy Text
     async function copyText(element, btn) {
+        // Close menu immediately
+        const wrapper = btn.closest('.copy-wrapper');
+        if (wrapper) wrapper.classList.remove('active');
+
         try {
             // Get clean text (remove copy UI if captured by mistake, though selectors should avoid it)
             const clone = element.cloneNode(true);
@@ -158,7 +162,7 @@
 
             const text = clone.innerText.trim();
             await navigator.clipboard.writeText(text);
-            showSuccess(btn);
+            showSuccess(wrapper ? wrapper.querySelector('.copy-trigger') : btn);
         } catch (err) {
             console.error('Copy Text Failed', err);
         }
@@ -166,6 +170,10 @@
 
     // --> Copy Image (Canvas)
     async function copyImage(element, btn) {
+        // Close menu immediately
+        const parentWrapper = btn.closest('.copy-wrapper');
+        if (parentWrapper) parentWrapper.classList.remove('active');
+
         const originalIcon = btn.innerHTML;
         btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-2 animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`;
 
@@ -200,14 +208,14 @@
             // Try Clipboard
             if (navigator.clipboard && typeof ClipboardItem !== 'undefined') {
                 await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-                showSuccess(document.querySelector('.copy-wrapper.active .copy-trigger')); // Flash main trigger
+                showSuccess(parentWrapper ? parentWrapper.querySelector('.copy-trigger') : btn);
             } else {
                 // Fallback Download
                 const link = document.createElement('a');
                 link.download = `genuverity-${new Date().getTime()}.png`;
                 link.href = canvas.toDataURL();
                 link.click();
-                showSuccess(document.querySelector('.copy-wrapper.active .copy-trigger'));
+                showSuccess(parentWrapper ? parentWrapper.querySelector('.copy-trigger') : btn);
             }
 
         } catch (err) {
@@ -226,9 +234,6 @@
         setTimeout(() => {
             triggerBtn.classList.remove('success');
             triggerBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`;
-            // Close menu
-            const wrapper = triggerBtn.closest('.copy-wrapper');
-            if (wrapper) wrapper.classList.remove('active');
         }, 1500);
     }
 
