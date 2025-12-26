@@ -295,19 +295,26 @@ class UnifiedSearch {
             this.searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
         }
 
-        // Hero Search Input Sync
-        const heroInput = document.querySelector('.hero-search-input');
-        if (heroInput) {
-            heroInput.addEventListener('input', (e) => {
+        // Global Input Sync (Hero + Navbar)
+        document.querySelectorAll('.search-sync-input').forEach(input => {
+            input.addEventListener('input', (e) => {
                 const val = e.target.value;
                 this.toggleSearchOverlay(true);
-                if (this.searchInput) {
-                    this.searchInput.value = val;
-                    this.searchInput.focus();
-                }
+
+                // Sync all other inputs
+                document.querySelectorAll('.search-sync-input').forEach(other => {
+                    if (other !== e.target) other.value = val;
+                });
+                if (this.searchInput) this.searchInput.value = val;
+
                 this.handleSearch(val);
             });
-        }
+
+            // Focus handler to open overlay
+            input.addEventListener('focus', () => {
+                this.toggleSearchOverlay(true);
+            });
+        });
 
         // Global keyboard interactions
         document.addEventListener('keydown', (e) => {
@@ -378,7 +385,7 @@ class UnifiedSearch {
             this.carouselSection.classList.add('hidden');
             this.listView.classList.add('active');
             this.viewToggleBtn.classList.add('active');
-            if (icon) icon.setAttribute('data-lucide', 'gallery-horizontal');
+            if (icon) icon.setAttribute('data-lucide', 'layers'); // "Overlapping squares" -> Go to Card View
             this.renderListView();
         } else {
             this.carouselSection.classList.remove('hidden');

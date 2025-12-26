@@ -4,24 +4,6 @@
 const REPORTS_DATA = [
     {
         id: 0,
-        title: "The Silicon Sleeper Cells: Laptop Farms & The New Digital Front",
-        slug: "localreports/laptop-farms.html",
-        category: "State-Sponsored Fraud",
-        tagClass: "tag-red",
-        catClass: "cat-cyber",
-        icon: "cpu",
-        date: "Dec 23, 2025",
-        sources: "28 Sources",
-        readTime: "22 min",
-        excerpt: "The 'Laptop Farm' has mutated from ad fraud into critical espionage infrastructure. How DPRK and Russian operatives influence US elections from American living rooms.",
-        chart: {
-            type: "line",
-            color: "#ef4444",
-            data: [65, 81, 125, 172, 185, 200]
-        }
-    },
-    {
-        id: 1,
         title: "The Sovereign-Commercial Hybrid",
         slug: "localreports/trump-admin-financial-conflicts.html",
         category: "Financial Forensics",
@@ -39,21 +21,21 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 2,
-        title: "Is 'FedNow Phase 2' Freezing Accounts?",
-        slug: "localreports/fednow-freeze.html",
-        category: "Misinformation",
+        id: 1,
+        title: "The Silicon Sleeper Cells: Laptop Farms & The New Digital Front",
+        slug: "localreports/laptop-farms.html",
+        category: "State-Sponsored Fraud",
         tagClass: "tag-red",
-        catClass: "cat-factcheck",
-        icon: "alert-triangle",
-        date: "Dec 17, 2025",
-        sources: "6 Sources",
-        readTime: "11 min",
-        excerpt: "Debunking viral claims about Project Hamilton 'Phase 2' freezing 15,000 accounts. Includes live FRED data showing Fed operations are normal.",
+        catClass: "cat-cyber",
+        icon: "cpu",
+        date: "Dec 23, 2025",
+        sources: "28 Sources",
+        readTime: "22 min",
+        excerpt: "The 'Laptop Farm' has mutated from ad fraud into critical espionage infrastructure. How DPRK and Russian operatives influence US elections from American living rooms.",
         chart: {
             type: "line",
-            color: "#3b82f6",
-            data: [100, 102, 105, 108, 110]
+            color: "#ef4444",
+            data: [65, 81, 125, 172, 185, 200]
         }
     },
     {
@@ -76,22 +58,23 @@ const REPORTS_DATA = [
     },
     {
         id: 3,
-        title: "The Silicon Sleeper Cells: Laptop Farms & The New Digital Front",
-        slug: "localreports/laptop-farms.html",
-        category: "State-Sponsored Fraud",
+        title: "Is 'FedNow Phase 2' Freezing Accounts?",
+        slug: "localreports/fednow-freeze.html",
+        category: "Misinformation",
         tagClass: "tag-red",
-        catClass: "cat-cyber",
-        icon: "cpu",
-        date: "Dec 23, 2025",
-        sources: "28 Sources",
-        readTime: "22 min",
-        excerpt: "The 'Laptop Farm' has mutated from ad fraud into critical espionage infrastructure. How DPRK and Russian operatives influence US elections from American living rooms.",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Dec 17, 2025",
+        sources: "6 Sources",
+        readTime: "11 min",
+        excerpt: "Debunking viral claims about Project Hamilton 'Phase 2' freezing 15,000 accounts. Includes live FRED data showing Fed operations are normal.",
         chart: {
             type: "line",
-            color: "#ef4444",
-            data: [65, 81, 125, 172, 185, 200]
+            color: "#3b82f6",
+            data: [100, 102, 105, 108, 110]
         }
-    }, {
+    },
+    {
         id: 4,
         title: "The Panopticon of Efficiency: Palantir & The Surveillance State",
         slug: "localreports/palantir-panopticon.html",

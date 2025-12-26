@@ -1,236 +1,334 @@
-// GenuVerity Copyable Sections Feature
-// Include html2canvas before this script
+// GenuVerity Unified Copy System
+// Replaces cluttered buttons with a sleek, context-aware dropdown
+// Dependencies: html2canvas, Lucide Icons
 
 (function () {
     'use strict';
 
-    // CSS for copyable sections (injected dynamically)
-    const copyableStyles = `
-        .copyable-section {
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        .copyable-section:hover {
-            outline: 2px solid rgba(6, 182, 212, 0.5);
-            outline-offset: 8px;
-            border-radius: 12px;
-        }
-        .copy-overlay {
+    // 1. DYNAMIC STYLES
+    const styles = `
+        .copy-wrapper {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: 12px;
+            right: 12px;
+            z-index: 50;
             opacity: 0;
             transition: opacity 0.2s ease;
-            z-index: 100;
         }
-        .copyable-section:hover > .copy-overlay {
+
+        /* Show on hover of parent section */
+        .copyable-section:hover > .copy-wrapper,
+        .copy-wrapper.active {
             opacity: 1;
         }
-        .copy-btn {
+
+        /* Trigger Button (The Icon) */
+        .copy-trigger {
+            width: 32px;
+            height: 32px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #94a3b8;
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            background: rgba(10, 15, 26, 0.95);
-            border: 1px solid #06b6d4;
-            border-radius: 8px;
-            color: #06b6d4;
-            font-size: 0.75rem;
-            font-weight: 700;
+            justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            white-space: nowrap;
-            min-width: fit-content;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-        .copy-btn:hover {
-            background: #06b6d4;
-            color: #050A14;
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+
+        .copy-trigger:hover, .copy-wrapper.active .copy-trigger {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+            color: white;
+            transform: translateY(-1px);
         }
-        .copy-btn.copied {
-            background: #10b981;
-            border-color: #10b981;
+
+        .copy-trigger svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Dropdown Menu */
+        .copy-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 6px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            width: 140px;
+            padding: 4px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            
+            /* Animation States */
+            opacity: 0;
+            transform: translateY(-8px) scale(0.95);
+            pointer-events: none;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: top right;
+        }
+
+        .copy-wrapper.active .copy-menu {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: all;
+        }
+
+        /* Menu Items */
+        .copy-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 8px 10px;
+            border: none;
+            background: transparent;
+            color: #cbd5e1;
+            font-size: 0.8rem;
+            font-family: inherit;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.15s;
+        }
+
+        .copy-item:hover {
+            background: rgba(59, 130, 246, 0.15);
             color: white;
         }
-        .copy-btn svg {
+
+        .copy-item svg {
             width: 14px;
             height: 14px;
-            flex-shrink: 0;
+            opacity: 0.7;
         }
+        
+        .copy-item:hover svg {
+            opacity: 1;
+            color: #3b82f6;
+        }
+
+        /* Success State */
+        .copy-trigger.success {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+            color: #10b981;
+        }
+
+        /* Capture Watermark (Hidden mostly) */
         .capture-watermark {
             position: absolute;
             bottom: 16px;
             right: 16px;
-            padding: 8px 16px;
-            background: rgba(10, 15, 26, 0.9);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 8px;
-            font-size: 12px;
+            padding: 6px 12px;
+            background: #050A14;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 6px;
+            font-size: 11px;
             font-weight: 700;
-            z-index: 1000;
+            z-index: 9999;
+            pointer-events: none;
+            display: flex;
+            gap: 2px;
         }
-        .capture-watermark .genu { color: #ffffff; }
+        .capture-watermark .genu { color: white; }
         .capture-watermark .verity { color: #3b82f6; }
     `;
 
-    // Inject styles
+    // Inject Styles
     const styleSheet = document.createElement('style');
-    styleSheet.textContent = copyableStyles;
+    styleSheet.textContent = styles;
     document.head.appendChild(styleSheet);
 
-    // Copy section as image function
-    window.copySectionAsImage = async function (sectionId) {
-        const section = document.getElementById(sectionId);
-        if (!section) {
-            console.error('[Copy] Section not found:', sectionId);
-            return;
+
+    // 2. CORE LOGIC
+
+    // --> Copy Text
+    async function copyText(element, btn) {
+        try {
+            // Get clean text (remove copy UI if captured by mistake, though selectors should avoid it)
+            const clone = element.cloneNode(true);
+            const ui = clone.querySelector('.copy-wrapper');
+            if (ui) ui.remove();
+
+            const text = clone.innerText.trim();
+            await navigator.clipboard.writeText(text);
+            showSuccess(btn);
+        } catch (err) {
+            console.error('Copy Text Failed', err);
         }
+    }
 
-        const button = section.querySelector('.copy-btn');
-        if (!button) return;
-
-        const originalText = button.innerHTML;
-        button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Capturing...';
-        button.disabled = true;
+    // --> Copy Image (Canvas)
+    async function copyImage(element, btn) {
+        const originalIcon = btn.innerHTML;
+        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-2 animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`;
 
         try {
-            // Hide overlay during capture
-            const copyOverlay = section.querySelector('.copy-overlay');
-            if (copyOverlay) copyOverlay.style.display = 'none';
+            // 1. Prepare DOM
+            const wrapper = element.querySelector('.copy-wrapper');
+            if (wrapper) wrapper.style.display = 'none'; // Hide UI for capture
 
-            // Add watermark
+            // Add temp watermark
             const watermark = document.createElement('div');
             watermark.className = 'capture-watermark';
             watermark.innerHTML = '<span class="genu">Genu</span><span class="verity">Verity</span>';
-            section.appendChild(watermark);
+            element.appendChild(watermark);
 
-            // Capture
-            const canvas = await html2canvas(section, {
-                backgroundColor: '#050A14',
-                scale: 2,
+            // 2. Render
+            const canvas = await html2canvas(element, {
+                backgroundColor: '#050A14', // Theme Deep BG
+                scale: 2, // Retina quality
                 logging: false,
                 useCORS: true,
                 allowTaint: true
             });
 
-            section.removeChild(watermark);
-            if (copyOverlay) copyOverlay.style.display = '';
+            // 3. Cleanup DOM
+            watermark.remove();
+            if (wrapper) wrapper.style.display = '';
+            btn.innerHTML = originalIcon;
 
-            // Try clipboard
-            let copied = false;
+            // 4. Output
             const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
 
+            // Try Clipboard
             if (navigator.clipboard && typeof ClipboardItem !== 'undefined') {
-                try {
-                    window.focus();
-                    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-                    copied = true;
-                } catch (e) {
-                    console.log('[Copy] Clipboard failed:', e.message);
-                }
-            }
-
-            if (copied) {
-                button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
-                button.classList.add('copied');
+                await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                showSuccess(document.querySelector('.copy-wrapper.active .copy-trigger')); // Flash main trigger
             } else {
-                // Fallback: download
+                // Fallback Download
                 const link = document.createElement('a');
-                link.download = 'genuverity-' + sectionId + '.png';
-                link.href = canvas.toDataURL('image/png');
+                link.download = `genuverity-${new Date().getTime()}.png`;
+                link.href = canvas.toDataURL();
                 link.click();
-                button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Downloaded!';
-                button.classList.add('copied');
+                showSuccess(document.querySelector('.copy-wrapper.active .copy-trigger'));
             }
 
-            setTimeout(function () {
-                button.innerHTML = originalText;
-                button.classList.remove('copied');
-                button.disabled = false;
-            }, 2000);
-
-        } catch (error) {
-            console.error('[Copy] Capture failed:', error);
-            button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Error';
-            setTimeout(function () {
-                button.innerHTML = originalText;
-                button.disabled = false;
-            }, 2000);
+        } catch (err) {
+            console.error('Capture Failed', err);
+            btn.innerHTML = originalIcon;
         }
-    };
+    }
 
-    // Auto-initialize all sections with specific classes
-    function initCopyableSections() {
-        // Broad range of selectors for automatic coverage
-        var selectors = [
-            'section:not(.nav-header):not(.footer-container)', // Main report sections (excluded nav/footer)
-            'article',                  // Articles
-            '.info-box',               // Info boxes
-            '.chart-wrapper',          // Charts
-            '.data-table-container',   // Tables
-            '.float-figure',           // Figures
+    // --> UI Helper: Success Flash
+    function showSuccess(triggerBtn) {
+        if (!triggerBtn) return;
+        const original = triggerBtn.innerHTML;
+        triggerBtn.classList.add('success');
+        triggerBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><polyline points="20 6 9 17 4 12"/></svg>`;
+
+        setTimeout(() => {
+            triggerBtn.classList.remove('success');
+            triggerBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`;
+            // Close menu
+            const wrapper = triggerBtn.closest('.copy-wrapper');
+            if (wrapper) wrapper.classList.remove('active');
+        }, 1500);
+    }
+
+    // 3. INITIALIZATION LOOP
+    function init() {
+        const selectors = [
+            'section:not(.nav-header):not(.footer-container)',
+            'article',
+            '.info-box',
+            '.chart-wrapper',
+            '.float-figure',
             '.content-section',
-            '.executive-summary',
-            '.insight-card',
-            '.live-data-panel',
-            '.copyable-section'        // Manual override
+            '.copyable-section'
         ];
 
-        var index = 0;
-        var processedElements = new Set();
+        // Unique set of elements
+        const elements = new Set();
+        selectors.forEach(sel => {
+            document.querySelectorAll(sel).forEach(el => elements.add(el));
+        });
 
-        selectors.forEach(function (selector) {
-            document.querySelectorAll(selector).forEach(function (section) {
-                // Skip if already processed in this loop (but allow nested processing)
-                if (processedElements.has(section)) return;
+        elements.forEach(el => {
+            // Avoid double init
+            if (el.querySelector('.copy-wrapper')) return;
+            if (el.tagName === 'NAV' || el.classList.contains('no-copy')) return;
 
-                // If it already has a button (e.g. from previous run), skip
-                if (section.querySelector(':scope > .copy-overlay')) return;
+            el.classList.add('copyable-section'); // For hover effect
+            if (!el.style.position) el.style.position = 'relative';
 
-                // Mark as processed
-                processedElements.add(section);
+            // Build UI
+            const wrapper = document.createElement('div');
+            wrapper.className = 'copy-wrapper';
 
-                section.classList.add('copyable-section');
+            // Buttons
+            let menuItems = '';
 
-                // Ensure ID exists
-                var id = section.id || ('copyable-' + index++);
-                section.id = id;
+            // 1. Copy Image (Always available mainly)
+            menuItems += `
+                <button class="copy-item" data-action="image">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                    Copy Image
+                </button>
+            `;
 
-                // Create overlay
-                var overlay = document.createElement('div');
-                overlay.className = 'copy-overlay';
+            // 2. Copy Text (If substantial text exists)
+            if (el.innerText.length > 20) {
+                menuItems += `
+                <button class="copy-item" data-action="text">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                    Copy Text
+                </button>
+            `;
+            }
 
-                // Customize button text based on element type
-                let label = "Copy Section";
-                if (section.classList.contains('chart-wrapper')) label = "Copy Chart";
-                if (section.classList.contains('data-table-container')) label = "Copy Table";
-                if (section.classList.contains('info-box')) label = "Copy Info";
-                if (section.tagName === 'FIGURE') label = "Copy Figure";
+            wrapper.innerHTML = `
+                <button class="copy-trigger" title="Copy Options">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <div class="copy-menu">
+                    ${menuItems}
+                </div>
+            `;
 
-                overlay.innerHTML = '<button class="copy-btn" onclick="copySectionAsImage(\'' + id + '\')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> ' + label + '</button>';
+            // Event Handlers
+            const trigger = wrapper.querySelector('.copy-trigger');
+            const menu = wrapper.querySelector('.copy-menu');
 
-                // Insert as first child
-                if (section.firstChild) {
-                    section.insertBefore(overlay, section.firstChild);
-                } else {
-                    section.appendChild(overlay);
-                }
+            // Toggle Menu
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Close others
+                document.querySelectorAll('.copy-wrapper.active').forEach(w => {
+                    if (w !== wrapper) w.classList.remove('active');
+                });
+                wrapper.classList.toggle('active');
             });
+
+            // Menu Options
+            menu.querySelectorAll('.copy-item').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const action = btn.dataset.action;
+                    if (action === 'image') copyImage(el, btn);
+                    if (action === 'text') copyText(el, trigger);
+                });
+            });
+
+            el.appendChild(wrapper);
+        });
+
+        // Close on outside click
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.copy-wrapper.active').forEach(w => w.classList.remove('active'));
         });
     }
 
-    // Initialize on DOM ready
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initCopyableSections);
+        document.addEventListener('DOMContentLoaded', init);
     } else {
-        initCopyableSections();
+        init();
     }
 
-    // Add spin animation
-    var spinAnimation = document.createElement('style');
-    spinAnimation.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
-    document.head.appendChild(spinAnimation);
 })();
