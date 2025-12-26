@@ -2920,27 +2920,34 @@
                     // We do NOT add 'search-sync-input' class to this input to avoid global binding
                     const navSearchContainer = document.getElementById('navSearchContainer');
                     const navSearch = navSearchContainer.querySelector('.navbar-search-container');
-                    const dropdown = document.createElement('div'); // Create dropdown dynamically
-                    dropdown.className = 'nexus-dropdown';
-                    dropdown.id = 'nexusDropdown';
-                    navSearch.appendChild(dropdown); // Append to the navSearch div
+
+                    // Create dropdown dynamically if not exists
+                    let dropdown = document.getElementById('nexusDropdown');
+                    if (!dropdown) {
+                        dropdown = document.createElement('div');
+                        dropdown.className = 'nexus-dropdown';
+                        dropdown.id = 'nexusDropdown';
+                        navSearch.appendChild(dropdown);
+                    }
 
                     const navInput = navSearch.querySelector('input');
                     const reports = typeof REPORTS_DATA !== 'undefined' ? REPORTS_DATA : [];
 
-                    navInput.addEventListener('input', (e) => {
-                        const query = e.target.value.toLowerCase().trim();
+                    const renderDropdown = (query) => {
                         const target = dropdown;
-                        target.innerHTML = '';
-
-                        if (query.length === 0) {
+                        if (!query) {
                             target.classList.remove('open');
-                            navSearch.classList.remove('active');
+                            target.innerHTML = '';
                             return;
                         }
 
                         // Filter logic (Local)
-                        const hits = reports.filter(r => r.title.toLowerCase().includes(query) || r.category.toLowerCase().includes(query));
+                        const hits = reports.filter(r =>
+                            r.title.toLowerCase().includes(query.toLowerCase()) ||
+                            r.category.toLowerCase().includes(query.toLowerCase())
+                        );
+
+                        target.innerHTML = ''; // Clear previous
 
                         if (hits.length === 0) {
                             target.innerHTML = '<div style="padding:20px; color:var(--text-muted); text-align:center;">No intelligence found.</div>';
@@ -2948,39 +2955,59 @@
                             // Render Top 5
                             hits.slice(0, 5).forEach(report => {
                                 const item = document.createElement('div');
-                                item.style.padding = '16px';
-                                item.style.marginBottom = '8px';
-                                item.style.background = 'rgba(255,255,255,0.03)';
-                                item.style.borderRadius = '12px';
+                                item.className = 'nexus-result-item'; // Use class for styling
+                                item.style.padding = '12px 16px';
+                                item.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
                                 item.style.cursor = 'pointer';
                                 item.style.display = 'flex';
                                 item.style.alignItems = 'center';
+                                item.style.gap = '10px';
                                 item.style.transition = 'background 0.2s';
 
                                 item.innerHTML = `
-                           <div style="flex:1">
-                               <div style="color:var(--text-primary); font-weight:600; font-size:0.9rem;">${report.title}</div>
-                               <div style="color:var(--text-secondary); font-size:0.8rem; margin-top:2px;">${report.date} • ${report.category}</div>
-                           </div>
-                           <i data-lucide="arrow-right" style="width:16px; color:var(--accent-cyan); opacity:0.7;"></i>
-                        `;
+                                    <div style="flex:1">
+                                        <div style="color:var(--text-primary); font-weight:600; font-size:0.9rem; line-height:1.2;">${report.title}</div>
+                                        <div style="color:var(--text-secondary); font-size:0.75rem; margin-top:4px;">${report.date} • ${report.category}</div>
+                                    </div>
+                                    <i data-lucide="arrow-right" style="width:14px; color:var(--accent-cyan); opacity:0.7;"></i>
+                                `;
+
                                 item.onmouseenter = () => item.style.background = 'rgba(6,182,212,0.1)';
-                                item.onmouseleave = () => item.style.background = 'rgba(255,255,255,0.03)';
-                                item.onclick = () => window.location.href = report.slug;
+                                item.onmouseleave = () => item.style.background = 'transparent';
+                                item.onclick = () => window.location.href = report.slug; // Direct navigation
+
                                 target.appendChild(item);
                             });
                             lucide.createIcons({ root: target });
                         }
 
                         target.classList.add('open');
-                        navSearch.classList.add('active');
+                    };
+
+                    navInput.addEventListener('input', (e) => {
+                        renderDropdown(e.target.value.trim());
+                    });
+
+                    // Enter key support
+                    navInput.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            const query = navInput.value.trim();
+                            if (query) {
+                                // Find best match
+                                const bestMatch = reports.find(r =>
+                                    r.title.toLowerCase().includes(query.toLowerCase())
+                                );
+                                if (bestMatch) {
+                                    window.location.href = bestMatch.slug;
+                                }
+                            }
+                        }
                     });
 
                     // Close logic
                     document.addEventListener('click', (e) => {
                         if (!navSearch.contains(e.target)) {
                             dropdown.classList.remove('open');
-                            navSearch.classList.remove('active');
                         }
                     });
 
@@ -2991,20 +3018,28 @@
                         const scrollPercent = (scrollTop / docHeight) * 100;
 
                         // 1. Update Progress Bar
-                        document.querySelector('.navbar').style.setProperty('--scroll-progress', `${scrollPercent}%`);
+                        const nav = document.querySelector('.navbar');
+                        if (nav) {
+                            nav.style.setProperty('--scroll-progress', `${scrollPercent}%`);
+                        }
 
                         // 2. Toggle Navbar Search (Show when Hero Search is scrolled out)
                         // On Mobile, we force it via CSS, so this logic is for Desktop
                         const isMobile = window.innerWidth <= 768;
-                        const navSearch = document.getElementById('navSearchContainer');
+                        const navSearchContainerEl = document.getElementById('navSearchContainer');
+                        // Inner container needs width expanded too
+                        const navSearchInner = navSearchContainerEl ? navSearchContainerEl.querySelector('.navbar-search-container') : null;
 
-                        if (!isMobile) {
+                        if (!isMobile && navSearchContainerEl && navSearchInner) {
                             if (scrollTop > 300) {
-                                navSearch.style.opacity = '1';
-                                navSearch.style.pointerEvents = 'all';
+                                navSearchContainerEl.style.opacity = '1';
+                                navSearchContainerEl.style.pointerEvents = 'all';
+                                navSearchInner.style.width = '320px'; // Force width expansion
                             } else {
-                                navSearch.style.opacity = '0';
-                                navSearch.style.pointerEvents = 'none';
+                                navSearchContainerEl.style.opacity = '0';
+                                navSearchContainerEl.style.pointerEvents = 'none';
+                                navSearchInner.style.width = '0'; // Force collapse
+                                dropdown.classList.remove('open'); // Hide dropdown when hidden
                             }
                         }
                     });
