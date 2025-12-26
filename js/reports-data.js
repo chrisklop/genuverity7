@@ -4,6 +4,27 @@
 const REPORTS_DATA = [
     {
         id: 0,
+        title: "The Age of Slop: AI-Generated Disinformation in 2025",
+        slug: "localreports/ai-slop-fake-local-news.html",
+        category: "Deep Dive Dossier",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "bot",
+        date: "Dec 26, 2025",
+        sources: "45 Sources",
+        readTime: "18 min",
+        excerpt: "Merriam-Webster named 'Slop' Word of the Year 2025. We investigate 'Pink Slime 2.0' networks, state-sponsored AI (Russia's Doppelgänger, China's Falsos Amigos), and why detection is a losing battle.",
+        chart: {
+            type: "hbar",
+            color: "#ef4444",
+            data: [
+                { label: 'AI Slop Farm', value: 400 },
+                { label: 'Human Newsroom', value: 5 }
+            ]
+        }
+    },
+    {
+        id: 1,
         title: "Dominion 'Remote Access' & 'Spyder': Kraken Lawsuits Debunked",
         slug: "localreports/dominion-voting-claims-2020.html",
         category: "Forensic Fact Check",
