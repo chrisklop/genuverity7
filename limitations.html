@@ -149,6 +149,40 @@
             font-size: 0.85rem;
         }
 
+        /* Footer Logo Wrapper */
+        .footer-logo-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 8px;
+        }
+
+        .ss-footer {
+            position: absolute;
+            inset: -6px;
+            border-radius: 40px;
+            pointer-events: none;
+        }
+
+        .ss-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes sweep-30 {
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
+
         .navbar-right {
             display: flex;
             align-items: center;
@@ -470,6 +504,22 @@
         </div>
 
     </section>
+
+    <!-- Footer -->
+    <footer class="footer"
+        style="padding:40px 0; text-align:center; border-top:1px solid var(--border-color); background:rgba(5,10,20,0.8);">
+        <div class="footer-logo-wrapper">
+            <div class="ss-footer"></div>
+            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity"
+                style="font-size:1.5rem; font-weight:700;">Verity</span>
+        </div>
+        <p style="color:var(--text-secondary); margin-bottom:20px;">AI-Powered Investigative Journalism</p>
+        <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
+            <a href="mailto:hello@genuverity.com" style="color:var(--text-muted); text-decoration:none;">Contact</a>
+            <a href="index.html" style="color:var(--text-muted); text-decoration:none;">Home</a>
+            <a href="methodology.html" style="color:var(--text-muted); text-decoration:none;">Methodology</a>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script>
