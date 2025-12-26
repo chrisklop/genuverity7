@@ -5,6 +5,73 @@
       "maxDuration": 300
     }
   },
+  "redirects": [
+    {
+      "source": "/warrior-dividend-analysis.html",
+      "destination": "/localreports/warrior-dividend-analysis.html",
+      "permanent": true
+    },
+    {
+      "source": "/fda-vaccine-memo-fact-check.html",
+      "destination": "/localreports/fda-vaccine-memo-fact-check.html",
+      "permanent": true
+    },
+    {
+      "source": "/boat-strike-investigation.html",
+      "destination": "/localreports/boat-strike-investigation.html",
+      "permanent": true
+    },
+    {
+      "source": "/trump-speech-factcheck.html",
+      "destination": "/localreports/trump-speech-factcheck.html",
+      "permanent": true
+    },
+    {
+      "source": "/mangione-trial-analysis.html",
+      "destination": "/localreports/mangione-trial-analysis.html",
+      "permanent": true
+    },
+    {
+      "source": "/tiktok-sale-analysis.html",
+      "destination": "/localreports/tiktok-sale-analysis.html",
+      "permanent": true
+    },
+    {
+      "source": "/cdc-vaccine-autism.html",
+      "destination": "/localreports/cdc-vaccine-autism.html",
+      "permanent": true
+    },
+    {
+      "source": "/marijuana-rescheduling.html",
+      "destination": "/localreports/marijuana-rescheduling.html",
+      "permanent": true
+    },
+    {
+      "source": "/treasury-leverage.html",
+      "destination": "/localreports/treasury-leverage.html",
+      "permanent": true
+    },
+    {
+      "source": "/inflation-methodology.html",
+      "destination": "/localreports/inflation-methodology.html",
+      "permanent": true
+    },
+    {
+      "source": "/doppelganger-analysis.html",
+      "destination": "/localreports/doppelganger-analysis.html",
+      "permanent": true
+    },
+    {
+      "source": "/network-analysis.html",
+      "destination": "/localreports/network-analysis.html",
+      "permanent": true
+    },
+    {
+      "source": "/plaque-fact-check.html",
+      "destination": "/localreports/plaque-fact-check.html",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*).html",

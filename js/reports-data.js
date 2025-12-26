@@ -630,7 +630,7 @@ const REPORTS_DATA = [
     {
         id: 36,
         title: "The $1,776 'Warrior Dividend': What It Really Is",
-        slug: "warrior-dividend-analysis.html",
+        slug: "localreports/warrior-dividend-analysis.html",
         category: "Policy Analysis",
         tagClass: "tag-amber",
         catClass: "cat-financial",
@@ -643,7 +643,7 @@ const REPORTS_DATA = [
     {
         id: 37,
         title: "Fact Check: FDA Memo Claims COVID Vaccines Killed 10 Children",
-        slug: "fda-vaccine-memo-fact-check.html",
+        slug: "localreports/fda-vaccine-memo-fact-check.html",
         category: "Public Health",
         tagClass: "tag-red",
         catClass: "cat-health",
@@ -656,7 +656,7 @@ const REPORTS_DATA = [
     {
         id: 38,
         title: "Gaza Boat Strikes: Pattern of Civilian Targeting?",
-        slug: "boat-strike-investigation.html",
+        slug: "localreports/boat-strike-investigation.html",
         category: "Military Investigation",
         tagClass: "tag-red",
         catClass: "cat-military",
@@ -669,7 +669,7 @@ const REPORTS_DATA = [
     {
         id: 39,
         title: "Trump's Dec 17 Speech: Claims vs Reality",
-        slug: "trump-speech-factcheck.html",
+        slug: "localreports/trump-speech-factcheck.html",
         category: "Fact Check",
         tagClass: "tag-amber",
         catClass: "cat-factcheck",
@@ -682,7 +682,7 @@ const REPORTS_DATA = [
     {
         id: 40,
         title: "Luigi Mangione Trial: Evidence and Legal Strategy",
-        slug: "mangione-trial-analysis.html",
+        slug: "localreports/mangione-trial-analysis.html",
         category: "Criminal Justice",
         tagClass: "tag-red",
         catClass: "cat-military",
@@ -695,7 +695,7 @@ const REPORTS_DATA = [
     {
         id: 41,
         title: "TikTok US Sale: What the Deal Actually Contains",
-        slug: "tiktok-sale-analysis.html",
+        slug: "localreports/tiktok-sale-analysis.html",
         category: "Tech Policy",
         tagClass: "tag-blue",
         catClass: "cat-tech",
@@ -708,7 +708,7 @@ const REPORTS_DATA = [
     {
         id: 42,
         title: "CDC Website Changes: Vaccine-Autism Claims Analyzed",
-        slug: "cdc-vaccine-autism.html",
+        slug: "localreports/cdc-vaccine-autism.html",
         category: "Public Health",
         tagClass: "tag-amber",
         catClass: "cat-health",
@@ -721,7 +721,7 @@ const REPORTS_DATA = [
     {
         id: 43,
         title: "Marijuana Rescheduling: From Schedule I to Schedule III",
-        slug: "marijuana-rescheduling.html",
+        slug: "localreports/marijuana-rescheduling.html",
         category: "Executive Action",
         tagClass: "tag-green",
         catClass: "cat-financial",
@@ -734,7 +734,7 @@ const REPORTS_DATA = [
     {
         id: 44,
         title: "Dollar Dominance: Treasury Bonds as Trade War Leverage",
-        slug: "treasury-leverage.html",
+        slug: "localreports/treasury-leverage.html",
         category: "Financial Analysis",
         tagClass: "tag-green",
         catClass: "cat-financial",
@@ -747,7 +747,7 @@ const REPORTS_DATA = [
     {
         id: 45,
         title: "US Inflation Data: Accurate Numbers, Compromised Collection",
-        slug: "inflation-methodology.html",
+        slug: "localreports/inflation-methodology.html",
         category: "Data Quality Alert",
         tagClass: "tag-amber",
         catClass: "cat-financial",
@@ -760,7 +760,7 @@ const REPORTS_DATA = [
     {
         id: 46,
         title: "Mirror Maze: Doppelganger Network Analysis",
-        slug: "doppelganger-analysis.html",
+        slug: "localreports/doppelganger-analysis.html",
         category: "Media Impersonation",
         tagClass: "tag-russia",
         catClass: "cat-disinfo",
@@ -773,7 +773,7 @@ const REPORTS_DATA = [
     {
         id: 47,
         title: "Spamouflage Network Analysis",
-        slug: "network-analysis.html",
+        slug: "localreports/network-analysis.html",
         category: "Active Threat",
         tagClass: "tag-china",
         catClass: "cat-disinfo",
@@ -786,7 +786,7 @@ const REPORTS_DATA = [
     {
         id: 48,
         title: "Fact Check: Biden White House Plaque Claims",
-        slug: "plaque-fact-check.html",
+        slug: "localreports/plaque-fact-check.html",
         category: "72% False or Misleading",
         tagClass: "tag-red",
         catClass: "cat-factcheck",
