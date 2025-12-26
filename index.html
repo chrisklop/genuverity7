@@ -1718,7 +1718,6 @@
             font-size: 1.5rem;
             font-weight: 700;
         }
-        }
 
         @media (max-width: 768px) {
             .navbar {
@@ -1727,6 +1726,28 @@
 
             .hero-compact {
                 padding: 72px 20px 16px;
+                overflow-x: hidden;
+            }
+
+            .feature-block {
+                flex-direction: column !important;
+                text-align: center;
+                margin-bottom: 80px;
+                gap: 40px;
+                padding: 0 24px;
+            }
+
+            .feature-text {
+                max-width: 100%;
+                margin: 0 auto;
+            }
+
+            .feature-graphic {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                transform: scale(0.85);
+                /* Scale down for mobile */
             }
 
             .hero-title {
@@ -1834,33 +1855,28 @@
             .flow-diagram {
                 display: flex;
                 flex-direction: row;
-                align-items: flex-start;
-                justify-content: space-between;
-                gap: 0;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
                 width: 100%;
                 margin-top: 40px;
                 position: relative;
-                padding: 0 4px;
+                padding: 0 20px;
             }
 
-            /* Connecting Line */
+            /* Hide connecting line on mobile wrap */
             .flow-diagram::after {
-                content: '';
-                position: absolute;
-                top: 20px;
-                left: 40px;
-                right: 40px;
-                height: 1px;
-                background: var(--border-color);
-                z-index: 0;
+                display: none;
             }
 
             .flow-step {
-                width: auto;
-                flex: 1;
+                width: calc(50% - 20px);
+                margin-bottom: 20px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                position: relative;
                 z-index: 1;
             }
 
