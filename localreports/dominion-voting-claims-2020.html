@@ -58,55 +58,86 @@
             overflow-x: hidden;
         }
 
-        /* === NAV HEADER (Standardized) === */
-        .nav-header {
+        
+        /* === NAVBAR (Consolidated Premium) === */
+        .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 60px;
-            background: rgba(5, 10, 20, 0.95);
-            backdrop-filter: blur(10px);
+            height: 64px;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-color);
-            z-index: 100;
+            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 24px;
+            padding: 0 40px;
         }
 
-        .nav-brand {
-            font-size: 1.25rem;
-            font-weight: 700;
-            text-decoration: none;
+        .navbar-logo {
             display: flex;
             align-items: center;
+        }
+
+        .navbar-logo-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .ss-nav {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ss-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
+
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
         }
 
         .nav-back-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: var(--text-secondary);
             font-size: 0.9rem;
             font-weight: 500;
-            transition: color 0.2s;
+            transition: all 0.2s;
         }
 
         .nav-back-link:hover {
-            color: var(--text-primary);
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
         }
 
-        .logo-genu {
-            color: #ffffff;
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 16px;
+            }
         }
-
-        .logo-verity {
-            color: var(--accent-blue);
-        }
-
-        /* === LAYOUT UTILS === */
+/* === LAYOUT UTILS === */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -523,16 +554,26 @@
 </head>
 
 <body>
-    <!-- STANDARD NAV HEADER -->
-    <nav class="nav-header">
-        <a href="../index.html" class="nav-brand">
-            <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
+    
+    <!-- STANDARD NAVBAR -->
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
+            <div class="navbar-logo">
+                <div class="navbar-logo-wrapper">
+                    <div class="ss-nav"></div>
+                    <div class="g-icon-nav">G</div>
+                </div>
+            </div>
         </a>
-        <a href="../index.html" class="nav-back-link">
-            <i data-lucide="arrow-left" style="width:16px;"></i>
-            Back to Intelligence
-        </a>
+        <div class="navbar-right">
+            <a href="../index.html" class="nav-back-link" style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="arrow-left" style="width:16px;"></i>
+                Back to Intelligence
+            </a>
+        </div>
     </nav>
+
+
 
     <div class="container">
         <!-- REPORT HEADER -->

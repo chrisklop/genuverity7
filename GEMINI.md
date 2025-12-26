@@ -46,7 +46,7 @@ This file provides guidance to Gemini when working with code in this repository.
 
 **NEVER commit/push:**
 - `api/*`
-- `index.html`
+- `index.html` (UNLESS EXPLICITLY REQUESTED BY USER)
 - `reports.html`
 - `js/*` (except reports-data.js)
 - `server.py`

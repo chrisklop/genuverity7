@@ -70,7 +70,8 @@
             z-index: -1;
         }
 
-        /* === NAVBAR === */
+        
+        /* === NAVBAR (Consolidated Premium) === */
         .navbar {
             position: fixed;
             top: 0;
@@ -81,145 +82,74 @@
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-color);
             z-index: 1000;
-            display: grid;
-            grid-template-columns: 200px 1fr 200px;
+            display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 0 40px;
         }
 
-        .navbar::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            height: 2px;
-            background: var(--accent-cyan);
-            width: var(--scroll-progress, 0%);
-            transition: width 0.1s linear;
-            box-shadow: 0 0 10px var(--accent-cyan);
-            z-index: 1001;
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
         .navbar-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .logo-genu {
-            color: #ffffff;
-        }
-
-        .logo-verity {
-            color: var(--accent-blue);
-        }
-
-        .navbar-center {
             display: flex;
+            align-items: center;
+        }
+
+        .navbar-logo-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
             justify-content: center;
+            width: 40px;
+            height: 40px;
         }
 
-        .navbar-search-container {
-            position: relative;
-            width: 100%;
-            max-width: 320px;
-            height: 36px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .navbar-search-input {
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            font-size: 0.85rem;
-            width: 100%;
-            font-family: var(--font-display);
-        }
-
-        .navbar-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            justify-content: flex-end;
-        }
-
-        .btn-premium-glass {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 50px;
-            color: #fff;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-decoration: none;
-            backdrop-filter: blur(4px);
-            transition: all 0.3s;
-        }
-
-        .btn-premium-glass:hover {
-            background: rgba(59, 130, 246, 0.25);
-            border-color: rgba(59, 130, 246, 0.6);
-            transform: translateY(-1px);
-        }
-
-        .btn-premium-glass:hover {
-            background: rgba(59, 130, 246, 0.25);
-            border-color: rgba(59, 130, 246, 0.6);
-            transform: translateY(-1px);
-        }
-
-        /* Footer Logo Wrapper */
-        .footer-logo-wrapper {
-            position: relative;
-            display: inline-block;
-            padding: 8px 16px;
-            margin-bottom: 8px;
-        }
-
-        .ss-footer {
+        .ss-nav {
             position: absolute;
-            inset: -6px;
-            border-radius: 40px;
+            inset: -4px;
+            border-radius: 50%;
             pointer-events: none;
         }
 
-        .ss-footer::before {
+        .ss-nav::before {
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: 40px;
-            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
             animation: sweep-30 4s ease-in-out infinite alternate;
         }
 
-        @keyframes sweep-30 {
-            from {
-                transform: rotate(-20deg);
-            }
-
-            to {
-                transform: rotate(20deg);
-            }
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
         }
 
-        /* === THEMATIC SECTIONS === */
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
+        }
+
+        .nav-back-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-back-link:hover {
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 16px;
+            }
+        }
+/* === THEMATIC SECTIONS === */
         .page-header {
             padding-top: 140px;
             text-align: center;
@@ -475,29 +405,25 @@
     <div class="bg-glow"></div>
 
     <!-- Navbar -->
+    
+    <!-- STANDARD NAVBAR -->
     <nav class="navbar">
-        <a href="index-gsap-pilot.html" class="navbar-brand">
-            <span class="navbar-logo">
-                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
-            </span>
-        </a>
-
-        <div class="navbar-center">
-            <div class="navbar-search-container">
-                <i data-lucide="search" style="width:16px; color:var(--accent-cyan);"></i>
-                <input type="text" class="navbar-search-input" placeholder="Search functionality on Home..." disabled
-                    style="cursor:not-allowed; opacity:0.7;">
+        <a href="index.html" class="navbar-brand" style="text-decoration: none; border: none;">
+            <div class="navbar-logo">
+                <div class="navbar-logo-wrapper">
+                    <div class="ss-nav"></div>
+                    <div class="g-icon-nav">G</div>
+                </div>
             </div>
-        </div>
-
+        </a>
         <div class="navbar-right">
-            <a href="index-gsap-pilot.html" class="navbar-back"
-                style="color:var(--text-secondary); text-decoration:none; font-size:0.9rem; font-weight:500;">Home</a>
-            <a href="index-gsap-pilot.html#contactForm" class="btn-premium-glass" style="margin-left:20px;">
-                <i data-lucide="zap" style="width:16px;"></i> Get Early Access
+            <a href="index.html" class="nav-back-link" style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="arrow-left" style="width:16px;"></i>
+                Back to Intelligence
             </a>
         </div>
     </nav>
+
 
     <div class="page-header">
         <h1 class="page-title">The Standard</h1>

@@ -2270,6 +2270,7 @@ Disallow: /api/
 class WaitlistSignup(BaseModel):
     email: str
     usecase: Optional[str] = None
+    source: Optional[str] = None
 
 WAITLIST_INDEX_PATH = "waitlist/_index.json"
 
@@ -2348,6 +2349,7 @@ async def join_waitlist(signup: WaitlistSignup):
     """Add email to waitlist, send confirmation and notification emails."""
     email = signup.email.strip().lower()
     usecase = signup.usecase.strip() if signup.usecase else ""
+    source = signup.source.strip() if signup.source else ""
 
     # Validate email format
     if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
@@ -2365,6 +2367,7 @@ async def join_waitlist(signup: WaitlistSignup):
     new_signup = {
         "email": email,
         "usecase": usecase,
+        "source": source,
         "timestamp": datetime.utcnow().isoformat(),
         "ip": None  # Could add IP tracking if needed
     }
@@ -2431,6 +2434,10 @@ async def join_waitlist(signup: WaitlistSignup):
         <div class="field">
             <div class="label">How they plan to use GenuVerity</div>
             <div class="value">{usecase if usecase else '(not provided)'}</div>
+        </div>
+        <div class="field">
+            <div class="label">How they heard about us</div>
+            <div class="value">{source if source else '(not provided)'}</div>
         </div>
         <div class="field">
             <div class="label">Timestamp</div>

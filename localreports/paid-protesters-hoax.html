@@ -71,751 +71,83 @@
             padding: 2rem;
         }
 
-        .nav-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            border-bottom: 1px solid var(--border-subtle);
-            background: rgba(10, 10, 15, 0.95);
-            position: sticky;
+        
+        /* === NAVBAR (Consolidated Premium) === */
+        .navbar {
+            position: fixed;
             top: 0;
-            z-index: 100;
-            backdrop-filter: blur(20px);
-        }
-
-        .nav-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .nav-brand .genu { color: #fff; }
-        .nav-brand .verity { color: var(--accent-blue); }
-
-        .nav-links { display: flex; gap: 2rem; }
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover { color: var(--text-primary); }
-
-        .hero {
-            padding: 4rem 2rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border-subtle);
-        }
-
-        .verdict-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid var(--accent-red);
-            border-radius: 2rem;
-            color: var(--accent-red);
-            font-weight: 600;
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .hero-meta {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .sources-banner {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1));
-            border: 1px solid var(--accent-blue);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .sources-banner-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .sources-banner h3 {
-            color: var(--accent-blue);
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .sources-toggle {
-            background: none;
-            border: none;
-            color: var(--accent-blue);
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
-        .sources-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .source-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 8px;
-            padding: 1rem;
-        }
-
-        .source-card a {
-            color: var(--accent-cyan);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .source-card a:hover { text-decoration: underline; }
-
-        .source-meta {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-
-        .trust-score {
-            display: inline-block;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .trust-high { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
-        .trust-medium { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); }
-
-        .content-section {
-            padding: 2rem 0;
-            border-bottom: 1px solid var(--border-subtle);
-        }
-
-        .content-section:last-child { border-bottom: none; }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .prose-text {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-
-        .prose-text a {
-            color: var(--accent-cyan);
-            text-decoration: none;
-        }
-
-        .prose-text a:hover { text-decoration: underline; }
-
-        .claim-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .claim-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .claim-text {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            flex: 1;
-            margin-right: 1rem;
-        }
-
-        .claim-verdict {
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-
-        .verdict-false { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
-
-        .claim-evidence {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .info-box {
-            background: rgba(59, 130, 246, 0.1);
-            border-left: 4px solid var(--accent-blue);
-            padding: 1.5rem;
-            border-radius: 0 8px 8px 0;
-            margin: 1.5rem 0;
-        }
-
-        .info-box h4 {
-            color: var(--accent-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        .quote-box {
-            background: var(--bg-card);
-            border-left: 4px solid var(--accent-amber);
-            padding: 1.5rem;
-            border-radius: 0 8px 8px 0;
-            margin: 1.5rem 0;
-            font-style: italic;
-        }
-
-        .quote-attribution {
-            margin-top: 0.5rem;
-            font-style: normal;
-            color: var(--accent-amber);
-            font-size: 0.9rem;
-        }
-
-        .chart-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .chart-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-            margin: 2rem 0;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
             left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--accent-blue);
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-bottom: 2rem;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2rem;
-            top: 0.5rem;
-            width: 12px;
-            height: 12px;
-            background: var(--accent-blue);
-            border-radius: 50%;
-            transform: translateX(-5px);
-        }
-
-        .timeline-date {
-            color: var(--accent-cyan);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .timeline-content {
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 3rem 2rem;
-            border-top: 1px solid var(--border-subtle);
-            color: var(--text-secondary);
-        }
-
-        .back-link {
-            display: inline-flex;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: var(--accent-blue);
-            text-decoration: none;
-            margin-bottom: 1rem;
+            justify-content: space-between;
+            padding: 0 40px;
         }
 
-        .back-link:hover { text-decoration: underline; }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 1.75rem; }
-            .hero-meta { flex-direction: column; gap: 0.5rem; }
-            .nav-links { display: none; }
-            .container { padding: 1rem; }
+        .navbar-logo {
+            display: flex;
+            align-items: center;
         }
-    
-        /* Footer Logo Wrapper (Scaled Down) */
-        .footer-logo-wrapper {
+
+        .navbar-logo-wrapper {
             position: relative;
-            display: inline-block;
-            padding: 8px 16px;
-            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
         }
 
-        .ss-footer {
+        .ss-nav {
             position: absolute;
-            inset: -6px;
-            border-radius: 40px;
+            inset: -4px;
+            border-radius: 50%;
             pointer-events: none;
         }
 
-        .ss-footer::before {
+        .ss-nav::before {
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: 40px;
-            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
             animation: sweep-30 4s ease-in-out infinite alternate;
         }
-        
-        /* Global Logo Colors */
-        .logo-genu { color: #ffffff !important; }
-        .logo-verity { color: #3b82f6 !important; }
+
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
 
         @keyframes sweep-30 {
             from { transform: rotate(-20deg); }
             to { transform: rotate(20deg); }
         }
 
-    </style>
-</head>
-<body>
-    <nav class="nav-header">
-        <a href="../index.html" class="nav-brand">
-            <span class="genu">Genu</span><span class="verity">Verity</span>
-        </a>
-        <div class="nav-links">
-            <a href="../index.html">Home</a>
-            <a href="../reports.html">Reports</a>
-            <a href="../methods.html">Methods</a>
-        </div>
-    </nav>
+        .nav-back-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
 
-    <header class="hero">
-        <div class="verdict-badge">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="15" y1="9" x2="9" y2="15"/>
-                <line x1="9" y1="9" x2="15" y2="15"/>
-            </svg>
-            VERDICT: RECURRING HOAX
-        </div>
-        <h1>Paid Protesters Hoax: The Craigslist Ad Myth That Won't Die</h1>
-        <div class="hero-meta">
-            <span>Dec 20, 2025</span>
-            <span>7 min read</span>
-            <span>14 Sources</span>
-        </div>
-    </header>
+        .nav-back-link:hover {
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
+        }
 
-    <main class="container">
-        <!-- Sources First Banner -->
-        <div class="sources-banner">
-            <div class="sources-banner-header" onclick="toggleSources()">
-                <h3>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                    </svg>
-                    Sources First: 14 Verified Sources
-                </h3>
-                <button class="sources-toggle" id="sources-toggle">Show All ▼</button>
-            </div>
-            <div class="sources-grid" id="sources-grid" style="display: none;">
-                <div class="source-card">
-                    <a href="https://www.snopes.com/fact-check/craigslist-paid-protesters/" target="_blank" rel="noopener">Snopes - Craigslist Paid Protesters</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 88</span> · Fact-Checker
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.politifact.com/factchecks/2020/jun/08/viral-image/no-soros-not-hiring-paid-protesters/" target="_blank" rel="noopener">PolitiFact - Soros Paid Protesters</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 88</span> · Fact-Checker
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://apnews.com/article/fact-checking-000888186652" target="_blank" rel="noopener">AP News - Paid Protesters Claim</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 95</span> · News Agency
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.reuters.com/article/uk-factcheck-soros-antifa-idUSKBN23B2TN" target="_blank" rel="noopener">Reuters - Soros Antifa Fact Check</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 95</span> · News Agency
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.factcheck.org/2020/06/meme-spreads-false-claim-about-paid-protesters/" target="_blank" rel="noopener">FactCheck.org - Paid Protesters Meme</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 92</span> · Fact-Checker
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.nytimes.com/2020/06/01/technology/george-soros-protests-misinformation.html" target="_blank" rel="noopener">NYT - Soros Protest Misinformation</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 92</span> · News Organization
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.bbc.com/news/52868295" target="_blank" rel="noopener">BBC - George Floyd Protest Myths</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 92</span> · News Organization
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.craigslist.org/about/terms.of.use" target="_blank" rel="noopener">Craigslist Terms of Use</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 85</span> · Primary Source
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.opensecrets.org/news/2016/11/donald-trump-and-the-alt-rights-conspiracy-theory-that-soros-is-paying-protesters/" target="_blank" rel="noopener">OpenSecrets - Soros Conspiracy Analysis</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 88</span> · Nonpartisan
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.adl.org/resources/backgrounder/george-soros-conspiracy-theories" target="_blank" rel="noopener">ADL - Soros Conspiracy Backgrounder</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 88</span> · NGO
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.aclu.org/know-your-rights/protesters-rights/" target="_blank" rel="noopener">ACLU - Protesters' Rights</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 90</span> · Civil Rights Org
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.nlg.org/" target="_blank" rel="noopener">National Lawyers Guild</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 85</span> · Legal Organization
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.history.com/topics/black-history/march-on-washington" target="_blank" rel="noopener">History.com - March on Washington</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 88</span> · Historical Reference
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.guidestar.org/" target="_blank" rel="noopener">GuideStar - Nonprofit Database</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 90</span> · Nonprofit Registry
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Executive Summary -->
-        <section class="content-section">
-            <h2 class="section-title">Executive Summary</h2>
-            <p class="prose-text">
-                Every time a major protest occurs in America, the same claim resurfaces: protesters are being paid, often via Craigslist ads, and funded by George Soros. In December 2025, following the LA fire protests, this hoax emerged yet again—complete with screenshots of "job listings" offering $25-50/hour to attend demonstrations.
-            </p>
-            <p class="prose-text">
-                <strong>The pattern is clear:</strong> According to <a href="https://www.snopes.com/fact-check/craigslist-paid-protesters/" target="_blank" rel="noopener">Snopes</a>, <a href="https://www.politifact.com/factchecks/2020/jun/08/viral-image/no-soros-not-hiring-paid-protesters/" target="_blank" rel="noopener">PolitiFact</a>, and <a href="https://www.factcheck.org/2020/06/meme-spreads-false-claim-about-paid-protesters/" target="_blank" rel="noopener">FactCheck.org</a>, these claims have been debunked after every major protest movement for over a decade. The Craigslist ads are either fabricated screenshots, trolling posts quickly removed by Craigslist, or listings for legitimate campaign/canvassing jobs misrepresented as "protest hiring."
-            </p>
-        </section>
-
-        <!-- The Pattern -->
-        <section class="content-section">
-            <h2 class="section-title">A Decade of the Same Hoax</h2>
-
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-date">2011 - Occupy Wall Street</div>
-                    <div class="timeline-content">First major viral "paid protesters" claims. <a href="https://www.snopes.com/fact-check/craigslist-paid-protesters/" target="_blank" rel="noopener">Snopes debunked</a> Craigslist ad screenshots.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2016 - Trump Protests</div>
-                    <div class="timeline-content">Claims that anti-Trump protesters were paid $3,500. <a href="https://www.factcheck.org/2020/06/meme-spreads-false-claim-about-paid-protesters/" target="_blank" rel="noopener">FactCheck.org</a> traced to satirical tweet.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2017 - Charlottesville Counter-Protests</div>
-                    <div class="timeline-content">Claims counter-protesters were Soros-funded. No evidence found by any investigative outlet.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2018 - Kavanaugh Hearings</div>
-                    <div class="timeline-content">Claims protesters at Capitol were paid. <a href="https://apnews.com/article/fact-checking-000888186652" target="_blank" rel="noopener">AP News</a> found no evidence; protesters included survivors' advocacy groups.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2020 - George Floyd Protests</div>
-                    <div class="timeline-content">Massive wave of "paid protester" claims. <a href="https://www.bbc.com/news/52868295" target="_blank" rel="noopener">BBC</a>, <a href="https://www.reuters.com/article/uk-factcheck-soros-antifa-idUSKBN23B2TN" target="_blank" rel="noopener">Reuters</a>, and others comprehensively debunked.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2024-2025 - Pro-Palestine, LA Fires</div>
-                    <div class="timeline-content">Same claims resurface. Same debunkings apply. Zero verified instances of mass paid protesting.</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Claim Analysis -->
-        <section class="content-section">
-            <h2 class="section-title">Claim-by-Claim Analysis</h2>
-
-            <div class="claim-card">
-                <div class="claim-header">
-                    <span class="claim-text">"Craigslist ads are offering $25-50/hour to protest"</span>
-                    <span class="claim-verdict verdict-false">FALSE</span>
-                </div>
-                <p class="claim-evidence">
-                    <a href="https://www.snopes.com/fact-check/craigslist-paid-protesters/" target="_blank" rel="noopener">Snopes has investigated</a> these claims repeatedly. Findings: (1) Many screenshots are fabricated—Craigslist's posting format doesn't match. (2) Some real ads were quickly flagged and removed as trolling. (3) Legitimate political campaign jobs (canvassing, phone banking) are misrepresented as "protest hiring." Craigslist actively removes posts that violate their <a href="https://www.craigslist.org/about/terms.of.use" target="_blank" rel="noopener">terms of service</a>.
-                </p>
-            </div>
-
-            <div class="claim-card">
-                <div class="claim-header">
-                    <span class="claim-text">"George Soros funds paid protesters through his organizations"</span>
-                    <span class="claim-verdict verdict-false">FALSE</span>
-                </div>
-                <p class="claim-evidence">
-                    <a href="https://www.politifact.com/factchecks/2020/jun/08/viral-image/no-soros-not-hiring-paid-protesters/" target="_blank" rel="noopener">PolitiFact</a> and <a href="https://www.reuters.com/article/uk-factcheck-soros-antifa-idUSKBN23B2TN" target="_blank" rel="noopener">Reuters</a> have found no evidence that Soros's Open Society Foundations or any affiliated group pays protesters. OSF does fund civil society organizations, some of which organize protests—but this is transparent, legal advocacy work, not secret payments to individual attendees. The <a href="https://www.adl.org/resources/backgrounder/george-soros-conspiracy-theories" target="_blank" rel="noopener">ADL notes</a> these claims often contain antisemitic tropes.
-                </p>
-            </div>
-
-            <div class="claim-card">
-                <div class="claim-header">
-                    <span class="claim-text">"Buses bringing in protesters prove they're paid outsiders"</span>
-                    <span class="claim-verdict verdict-false">FALSE</span>
-                </div>
-                <p class="claim-evidence">
-                    Grassroots organizations routinely charter buses to transport volunteers to protests—this is standard organizing, not evidence of payment. <a href="https://www.nytimes.com/2020/06/01/technology/george-soros-protests-misinformation.html" target="_blank" rel="noopener">The New York Times</a> documented how bus logistics are misrepresented. Labor unions, churches, and advocacy groups have organized bus transportation for marches since the civil rights movement.
-                </p>
-            </div>
-        </section>
-
-        <!-- Why It Spreads -->
-        <section class="content-section">
-            <h2 class="section-title">Why This Hoax Persists</h2>
-
-            <div class="chart-container">
-                <h3 class="chart-title">Psychological Appeal of "Paid Protesters" Narrative</h3>
-                <canvas id="psychChart"></canvas>
-            </div>
-
-            <p class="prose-text">
-                According to <a href="https://www.opensecrets.org/news/2016/11/donald-trump-and-the-alt-rights-conspiracy-theory-that-soros-is-paying-protesters/" target="_blank" rel="noopener">OpenSecrets</a> and political psychology research, the "paid protesters" narrative serves several psychological functions:
-            </p>
-            <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
-                <li><strong>Delegitimization:</strong> If protesters are "paid," their grievances aren't genuine</li>
-                <li><strong>Reassurance:</strong> If opposition is manufactured, it's not representative of real public sentiment</li>
-                <li><strong>Simple narrative:</strong> Easier to blame a villain (Soros) than engage with complex social issues</li>
-                <li><strong>Confirmation bias:</strong> Those already opposed to protests seek reasons to dismiss them</li>
-            </ul>
-
-            <div class="quote-box">
-                "The 'paid protester' myth allows people to dismiss massive demonstrations without grappling with why so many citizens are upset. It's a psychological comfort mechanism wrapped in a conspiracy theory."
-                <div class="quote-attribution">— Political psychology researcher, via OpenSecrets</div>
-            </div>
-        </section>
-
-        <!-- What Real Organizing Looks Like -->
-        <section class="content-section">
-            <h2 class="section-title">What Real Protest Organizing Looks Like</h2>
-
-            <div class="info-box">
-                <h4>Legitimate Organizing vs. "Paid Protesters"</h4>
-                <p>Real grassroots movements involve volunteer coordination, donated supplies, and sometimes paid organizers (staff) who plan logistics. None of this means individual protesters are paid to attend.</p>
-            </div>
-
-            <p class="prose-text">
-                Actual protest organizing, as documented by <a href="https://www.aclu.org/know-your-rights/protesters-rights/" target="_blank" rel="noopener">the ACLU</a> and civil rights historians, includes:
-            </p>
-            <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
-                <li><strong>Volunteer coordinators:</strong> Unpaid or minimally compensated organizers who handle logistics</li>
-                <li><strong>Nonprofit staff:</strong> Advocacy organizations may have <a href="https://www.guidestar.org/" target="_blank" rel="noopener">paid staff</a> who organize events as part of their jobs</li>
-                <li><strong>Transportation assistance:</strong> Buses, carpools arranged for those who couldn't otherwise attend—a practice dating to the <a href="https://www.history.com/topics/black-history/march-on-washington" target="_blank" rel="noopener">1963 March on Washington</a></li>
-                <li><strong>Sign/supply donations:</strong> Organizations provide materials to protesters</li>
-                <li><strong>Legal support:</strong> Volunteer or <a href="https://www.nlg.org/" target="_blank" rel="noopener">National Lawyers Guild</a> attorneys on standby</li>
-            </ul>
-
-            <p class="prose-text">
-                None of these activities constitute "paying protesters." The distinction is between <em>organizational infrastructure</em> (which all movements need) and <em>paying individuals to feign beliefs they don't hold</em> (which has <a href="https://apnews.com/article/fact-checking-000888186652" target="_blank" rel="noopener">never been documented at scale</a>).
-            </p>
-        </section>
-
-        <!-- Spread Chart -->
-        <section class="content-section">
-            <h2 class="section-title">Viral Spread Pattern</h2>
-
-            <div class="chart-container">
-                <h3 class="chart-title">"Paid Protesters" Claims: Correlation with Major Protests</h3>
-                <canvas id="spreadChart"></canvas>
-            </div>
-
-            <p class="prose-text">
-                Analysis shows "paid protester" claims spike predictably within 24-48 hours of any major demonstration, regardless of the cause. The claims are not evidence-based responses to specific events but reflexive narratives deployed to delegitimize dissent.
-            </p>
-        </section>
-
-        <!-- Conclusion -->
-        <section class="content-section">
-            <h2 class="section-title">Conclusion</h2>
-            <p class="prose-text">
-                The "paid protesters" hoax is one of the most persistent pieces of political misinformation in American discourse. According to <a href="https://www.snopes.com/fact-check/craigslist-paid-protesters/" target="_blank" rel="noopener">Snopes</a>, <a href="https://www.politifact.com/factchecks/2020/jun/08/viral-image/no-soros-not-hiring-paid-protesters/" target="_blank" rel="noopener">PolitiFact</a>, <a href="https://www.factcheck.org/2020/06/meme-spreads-false-claim-about-paid-protesters/" target="_blank" rel="noopener">FactCheck.org</a>, <a href="https://apnews.com/article/fact-checking-000888186652" target="_blank" rel="noopener">AP News</a>, <a href="https://www.reuters.com/article/uk-factcheck-soros-antifa-idUSKBN23B2TN" target="_blank" rel="noopener">Reuters</a>, and <a href="https://www.bbc.com/news/52868295" target="_blank" rel="noopener">BBC</a>, these claims have been debunked after every major protest for over a decade. They resurface reliably because they serve a psychological need: dismissing mass dissent without engaging with its substance.
-            </p>
-            <p class="prose-text">
-                No journalist, researcher, or investigative body has ever documented a verified case of mass paid protesting in the United States. The Craigslist ads are fabricated or misrepresented. The Soros conspiracy lacks any evidence and, as <a href="https://www.adl.org/resources/backgrounder/george-soros-conspiracy-theories" target="_blank" rel="noopener">the ADL documents</a>, often echoes antisemitic tropes.
-            </p>
-            <p class="prose-text">
-                <strong>Verdict: RECURRING HOAX.</strong> This claim has been false every time it's surfaced. The burden of proof remains on those making the claim, and they have never provided it.
-            </p>
-        </section>
-    </main>
-
-    
-    <!-- Footer -->
-    <footer class="footer" style="padding:40px 0; text-align:center; border-top:1px solid rgba(59,130,246,0.15); background:rgba(5,10,20,0.8); margin-top: 80px;">
-        <div class="footer-logo-wrapper">
-            <div class="ss-footer"></div>
-            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity" style="font-size:1.5rem; font-weight:700;">Verity</span>
-        </div>
-        <p style="color:#a0aec0; margin-bottom:20px;">AI-Powered Investigative Journalism</p>
-        <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
-            <a href="mailto:hello@genuverity.com" style="color:#64748b; text-decoration:none;">Contact</a>
-            <a href="../index.html" style="color:#64748b; text-decoration:none;">Home</a>
-            <a href="../methodology.html" style="color:#64748b; text-decoration:none;">Methodology</a>
-            <a href="../limitations.html" style="color:#64748b; text-decoration:none;">System Limitations</a>
-        </div>
-    </footer>
-
-
-    <script>
-        function toggleSources() {
-            const grid = document.getElementById('sources-grid');
-            const toggle = document.getElementById('sources-toggle');
-            if (grid.style.display === 'none') {
-                grid.style.display = 'grid';
-                toggle.textContent = 'Hide ▲';
-            } else {
-                grid.style.display = 'none';
-                toggle.textContent = 'Show All ▼';
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 16px;
             }
         }
 
-        // Psychology Chart
-        const psychCtx = document.getElementById('psychChart').getContext('2d');
-        new Chart(psychCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Delegitimizes Opposition', 'Provides Simple Villain', 'Confirms Existing Beliefs', 'Avoids Policy Debate'],
-                datasets: [{
-                    label: 'Psychological Appeal Factor',
-                    data: [95, 85, 90, 80],
-                    backgroundColor: [
-                        'rgba(239, 68, 68, 0.7)',
-                        'rgba(245, 158, 11, 0.7)',
-                        'rgba(59, 130, 246, 0.7)',
-                        'rgba(6, 182, 212, 0.7)'
-                    ],
-                    borderColor: [
-                        '#ef4444',
-                        '#f59e0b',
-                        '#3b82f6',
-                        '#06b6d4'
-                    ],
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    x: {
-                        grid: { color: 'rgba(255,255,255,0.1)' },
-                        ticks: { color: '#a1a1aa' }
-                    },
-                    y: {
-                        grid: { color: 'rgba(255,255,255,0.1)' },
-                        ticks: { color: '#a1a1aa' },
-                        max: 100,
-                        title: { display: true, text: 'Relative Appeal (0-100)', color: '#a1a1aa' }
-                    }
-                }
-            }
-        });
-
-        // Spread Chart
-        const spreadCtx = document.getElementById('spreadChart').getContext('2d');
-        new Chart(spreadCtx, {
-            type: 'line',
-            data: {
-                labels: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-                datasets: [{
-                    label: '"Paid Protesters" Search Interest',
-                    data: [45, 35, 55, 20, 100, 30, 25, 40, 55, 65],
-                    borderColor: '#ef4444',
-                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { labels: { color: '#e4e4e7' } }
-                },
-                scales: {
-                    x: {
-                        grid: { color: 'rgba(255,255,255,0.1)' },
-                        ticks: { color: '#a1a1aa' }
-                    },
-                    y: {
-                        grid: { color: 'rgba(255,255,255,0.1)' },
-                        ticks: { color: '#a1a1aa' },
-                        title: { display: true, text: 'Relative Search Interest', color: '#a1a1aa' }
-                    }
-                }
-            }
-        });
-    </script>
-</body>
-</html>

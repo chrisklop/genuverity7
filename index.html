@@ -352,7 +352,27 @@
 
         @media (max-width: 768px) {
             .navbar {
-                padding: 0 20px;
+                padding: 0 8px 0 16px;
+                /* Less padding on right to push hamburger closer */
+                grid-template-columns: 60px 1fr 48px;
+                /* Tighter right column */
+            }
+
+            .navbar-brand {
+                justify-self: start;
+            }
+
+            .navbar-center {
+                display: flex !important;
+                opacity: 1 !important;
+                pointer-events: all !important;
+                width: 100% !important;
+            }
+
+            .navbar-search-container {
+                width: 100% !important;
+                opacity: 1 !important;
+                margin: 0 4px;
             }
 
             .navbar-right {
@@ -361,6 +381,24 @@
 
             .navbar-hamburger {
                 display: flex;
+                justify-self: end;
+                margin-right: -4px;
+                /* Slight negative margin to offset internal padding */
+            }
+
+            .hero-search,
+            .hero-motto-badge {
+                display: none !important;
+            }
+
+            .hero-compact {
+                padding-top: 80px;
+                padding-bottom: 0;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+                margin-bottom: 12px;
             }
         }
 
@@ -1948,14 +1986,12 @@
                 </div>
             </a>
 
-            <!-- Navbar Search (Hidden initially on Home) -->
+            <!-- Navbar Search (Visible on Mobile, Hidden initially on Desktop Home) -->
             <div class="navbar-center" id="navSearchContainer"
-                style="opacity: 0; pointer-events: none; transition: opacity 0.3s ease;">
+                style="opacity: 0; pointer-events: none; transition: all 0.3s ease;">
                 <div class="navbar-search-container">
                     <i data-lucide="search" style="width:16px; color:var(--accent-cyan);"></i>
-                    <input type="text" class="navbar-search-input search-sync-input"
-                        placeholder="Search report database..."
-                        onfocus="window.scrollTo({top:0, behavior:'smooth'}); document.querySelector('.hero-search-input').focus();">
+                    <input type="text" class="navbar-search-input search-sync-input" placeholder="Search...">
                 </div>
             </div>
 
@@ -2896,13 +2932,18 @@
                         document.querySelector('.navbar').style.setProperty('--scroll-progress', `${scrollPercent}%`);
 
                         // 2. Toggle Navbar Search (Show when Hero Search is scrolled out)
+                        // On Mobile, we force it via CSS, so this logic is for Desktop
+                        const isMobile = window.innerWidth <= 768;
                         const navSearch = document.getElementById('navSearchContainer');
-                        if (scrollTop > 400) { // Approx height of hero compact section
-                            navSearch.style.opacity = '1';
-                            navSearch.style.pointerEvents = 'all';
-                        } else {
-                            navSearch.style.opacity = '0';
-                            navSearch.style.pointerEvents = 'none';
+
+                        if (!isMobile) {
+                            if (scrollTop > 300) {
+                                navSearch.style.opacity = '1';
+                                navSearch.style.pointerEvents = 'all';
+                            } else {
+                                navSearch.style.opacity = '0';
+                                navSearch.style.pointerEvents = 'none';
+                            }
                         }
                     });
 

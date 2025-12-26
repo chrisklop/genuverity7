@@ -85,152 +85,86 @@
             min-height: 100vh;
         }
 
-        /* === NAVBAR === */
+        
+        /* === NAVBAR (Consolidated Premium) === */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             height: 64px;
-            background: rgba(5, 10, 20, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-subtle);
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
             z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 24px;
+            padding: 0 40px;
         }
 
-        .navbar-brand {
+        .navbar-logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            text-decoration: none;
         }
 
-        .navbar-logo { font-size: 1.5rem; font-weight: 700; }
-        .logo-genu { color: #ffffff; }
-        .logo-verity { color: var(--accent-blue); }
-
-        .navbar-badge {
-            padding: 4px 10px;
-            background: rgba(245, 158, 11, 0.15);
-            border: 1px solid rgba(245, 158, 11, 0.4);
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--accent-amber);
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .navbar-right {
+        .navbar-logo-wrapper {
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 16px;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
         }
 
-        .navbar-link {
-            color: var(--text-secondary);
-            text-decoration: none;
+        .ss-nav {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ss-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
+
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
+        }
+
+        .nav-back-link {
             font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 12px;
-            border-radius: 8px;
+            font-weight: 500;
             transition: all 0.2s;
         }
 
-        .navbar-link:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
+        .nav-back-link:hover {
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
         }
 
         @media (max-width: 768px) {
-            .navbar-right { display: none; }
+            .navbar {
+                padding: 0 16px;
+            }
         }
-
-        /* Header */
-        .report-header {
-            padding: 100px 20px 40px;
-            text-align: center;
-            border-bottom: 1px solid var(--border-subtle);
-            background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, transparent 100%);
-        }
-
-        .report-tag {
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(245, 158, 11, 0.15);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent-amber);
-            margin-bottom: 20px;
-        }
-
-        .report-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 16px;
-            color: #ffffff;
-        }
-
-        .report-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto 24px;
-        }
-
-        .report-meta {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
-
-        .report-meta span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* Verdict Badge in Header */
-        .verdict-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            background: rgba(245, 158, 11, 0.15);
-            border: 2px solid var(--accent-amber);
-            border-radius: 8px;
-            margin-top: 24px;
-            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
-        }
-
-        .verdict-badge span {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-amber);
-            letter-spacing: 0.1em;
-        }
-
-        /* Main Container */
-        .report-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        /* === COLLAPSIBLE SOURCES BANNER === */
+/* === COLLAPSIBLE SOURCES BANNER === */
         .sources-banner {
             border-radius: 12px;
             margin: 0 auto 24px;
@@ -707,24 +641,25 @@
 <body>
 
     <!-- Navbar -->
+    
+    <!-- STANDARD NAVBAR -->
     <nav class="navbar">
-        <a href="index.html" class="navbar-brand">
+        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
             <div class="navbar-logo">
-                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
+                <div class="navbar-logo-wrapper">
+                    <div class="ss-nav"></div>
+                    <div class="g-icon-nav">G</div>
+                </div>
             </div>
-            <span class="navbar-badge">Fact Check</span>
         </a>
         <div class="navbar-right">
-            <a href="reports.html" class="navbar-link">
-                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-                Reports
-            </a>
-            <a href="request-report.html" class="navbar-link">
-                <i data-lucide="plus-circle" style="width:16px;height:16px;"></i>
-                Request Report
+            <a href="../index.html" class="nav-back-link" style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="arrow-left" style="width:16px;"></i>
+                Back to Intelligence
             </a>
         </div>
     </nav>
+
 
     <!-- Report Header -->
     <header class="report-header">

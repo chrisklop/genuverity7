@@ -71,701 +71,83 @@
             padding: 2rem;
         }
 
-        .nav-header {
-            position: sticky;
+        
+        /* === NAVBAR (Consolidated Premium) === */
+        .navbar {
+            position: fixed;
             top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            background: rgba(10, 10, 15, 0.95);
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.85);
             backdrop-filter: blur(20px);
-        }
-
-        .nav-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .nav-brand .genu { color: #fff; }
-        .nav-brand .verity { color: var(--accent-blue); }
-
-        .nav-links { display: flex; gap: 2rem; }
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover { color: var(--text-primary); }
-
-        .hero {
-            padding: 4rem 2rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border-subtle);
-        }
-
-        .verdict-badge {
-            display: inline-flex;
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid var(--accent-red);
-            border-radius: 2rem;
-            color: var(--accent-red);
-            font-weight: 600;
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .hero-meta {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .sources-banner {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1));
-            border: 1px solid var(--accent-blue);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .sources-banner-header {
-            display: flex;
             justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
+            padding: 0 40px;
         }
 
-        .sources-banner h3 {
-            color: var(--accent-blue);
-            font-size: 1rem;
+        .navbar-logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
         }
 
-        .sources-toggle {
-            background: none;
-            border: none;
-            color: var(--accent-blue);
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
-        .sources-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .source-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 8px;
-            padding: 1rem;
-        }
-
-        .source-card a {
-            color: var(--accent-cyan);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .source-card a:hover { text-decoration: underline; }
-
-        .source-meta {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-
-        .trust-score {
-            display: inline-block;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .trust-high { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
-        .trust-medium { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); }
-
-        .content-section {
-            padding: 2rem 0;
-            border-bottom: 1px solid var(--border-subtle);
-        }
-
-        .content-section:last-child { border-bottom: none; }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .prose-text {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-
-        .prose-text a {
-            color: var(--accent-cyan);
-            text-decoration: none;
-        }
-
-        .prose-text a:hover { text-decoration: underline; }
-
-        .quote-box {
-            background: var(--bg-card);
-            border-left: 4px solid var(--accent-red);
-            padding: 1.5rem;
-            border-radius: 0 8px 8px 0;
-            margin: 1.5rem 0;
-            font-style: italic;
-            font-size: 1.1rem;
-        }
-
-        .quote-box.debunked::before {
-            content: '❌ FABRICATED QUOTE';
-            display: block;
-            color: var(--accent-red);
-            font-weight: 600;
-            font-size: 0.8rem;
-            margin-bottom: 0.5rem;
-            font-style: normal;
-        }
-
-        .info-box {
-            background: rgba(59, 130, 246, 0.1);
-            border-left: 4px solid var(--accent-blue);
-            padding: 1.5rem;
-            border-radius: 0 8px 8px 0;
-            margin: 1.5rem 0;
-        }
-
-        .info-box h4 {
-            color: var(--accent-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        .bio-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .bio-card h3 {
-            color: var(--accent-green);
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .bio-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .bio-stat {
-            text-align: center;
-            padding: 1rem;
-            background: rgba(16, 185, 129, 0.1);
-            border-radius: 8px;
-        }
-
-        .bio-stat .number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-green);
-        }
-
-        .bio-stat .label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .chart-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .chart-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .misquote-examples {
-            display: grid;
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .misquote-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 1.5rem;
-        }
-
-        .misquote-card h4 {
-            color: var(--accent-red);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .misquote-card .quote {
-            font-style: italic;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .misquote-card .attribution {
-            color: var(--accent-amber);
-            font-size: 0.85rem;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 3rem 2rem;
-            border-top: 1px solid var(--border-subtle);
-            color: var(--text-secondary);
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--accent-blue);
-            text-decoration: none;
-            margin-bottom: 1rem;
-        }
-
-        .back-link:hover { text-decoration: underline; }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 1.75rem; }
-            .hero-meta { flex-direction: column; gap: 0.5rem; }
-            .nav-links { display: none; }
-            .container { padding: 1rem; }
-        }
-    
-        /* Footer Logo Wrapper (Scaled Down) */
-        .footer-logo-wrapper {
+        .navbar-logo-wrapper {
             position: relative;
-            display: inline-block;
-            padding: 8px 16px;
-            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
         }
 
-        .ss-footer {
+        .ss-nav {
             position: absolute;
-            inset: -6px;
-            border-radius: 40px;
+            inset: -4px;
+            border-radius: 50%;
             pointer-events: none;
         }
 
-        .ss-footer::before {
+        .ss-nav::before {
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: 40px;
-            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
             animation: sweep-30 4s ease-in-out infinite alternate;
         }
-        
-        /* Global Logo Colors */
-        .logo-genu { color: #ffffff !important; }
-        .logo-verity { color: #3b82f6 !important; }
+
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
 
         @keyframes sweep-30 {
             from { transform: rotate(-20deg); }
             to { transform: rotate(20deg); }
         }
 
-    </style>
-</head>
-<body>
-    <nav class="nav-header">
-        <a href="../index.html" class="nav-brand">
-            <span class="genu">Genu</span><span class="verity">Verity</span>
-        </a>
-        <div class="nav-links">
-            <a href="../index.html">Home</a>
-            <a href="../reports.html">Reports</a>
-            <a href="../methods.html">Methods</a>
-        </div>
-    </nav>
+        .nav-back-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
 
-    <header class="hero">
-        <div class="verdict-badge">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="15" y1="9" x2="9" y2="15"/>
-                <line x1="9" y1="9" x2="15" y2="15"/>
-            </svg>
-            VERDICT: FABRICATED QUOTE
-        </div>
-        <h1>Ruby Bradley "Loser" Quote: Honoring a Hero by Rejecting Fake Quotes</h1>
-        <div class="hero-meta">
-            <span>Dec 20, 2025</span>
-            <span>6 min read</span>
-            <span>14 Sources</span>
-        </div>
-    </header>
+        .nav-back-link:hover {
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
+        }
 
-    <main class="container">
-        <!-- Sources First Banner -->
-        <div class="sources-banner">
-            <div class="sources-banner-header" onclick="toggleSources()">
-                <h3>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                    </svg>
-                    Sources First: 14 Verified Sources
-                </h3>
-                <button class="sources-toggle" id="sources-toggle">Show All ▼</button>
-            </div>
-            <div class="sources-grid" id="sources-grid" style="display: none;">
-                <div class="source-card">
-                    <a href="https://www.army.mil/women/history/" target="_blank" rel="noopener">U.S. Army - Women in Military History</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 98</span> · Government
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.arlingtoncemetery.mil/Explore/Notable-Graves" target="_blank" rel="noopener">Arlington National Cemetery</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 98</span> · Government
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.snopes.com/fact-check/ruby-bradley/" target="_blank" rel="noopener">Snopes - Ruby Bradley Quote Check</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 88</span> · Fact-Checker
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.nationalww2museum.org/war/articles" target="_blank" rel="noopener">National WWII Museum</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 92</span> · Museum
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.history.army.mil/html/museums/index.html" target="_blank" rel="noopener">U.S. Army Center of Military History</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 98</span> · Government
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://quoteinvestigator.com/" target="_blank" rel="noopener">Quote Investigator</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 90</span> · Research
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.politifact.com/personalities/viral-image/" target="_blank" rel="noopener">PolitiFact - Viral Quote Checks</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 88</span> · Fact-Checker
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://apnews.com/hub/fact-check" target="_blank" rel="noopener">AP News Fact Check</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 95</span> · News Agency
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.factcheck.org/" target="_blank" rel="noopener">FactCheck.org</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 90</span> · Fact-Checker
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://misinforeview.hks.harvard.edu/" target="_blank" rel="noopener">Harvard Misinformation Review</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 96</span> · Academic
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://www.britannica.com/place/Santo-Tomas-Internment-Camp" target="_blank" rel="noopener">Britannica - Santo Tomas</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 92</span> · Encyclopedia
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://journals.sagepub.com/home/pss" target="_blank" rel="noopener">Psychological Science Journal</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 94</span> · Academic
-                    </div>
-                </div>
-                <div class="source-card">
-                    <a href="https://quoteinvestigator.com/2013/06/18/rifle-grass/" target="_blank" rel="noopener">Quote Investigator - Yamamoto</a>
-                    <div class="source-meta">
-                        <span class="trust-score trust-high">Trust: 90</span> · Research
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- The Fake Quote -->
-        <section class="content-section">
-            <h2 class="section-title">The Viral Quote</h2>
-
-            <div class="quote-box debunked">
-                "Anyone who hasn't served their country should shut their mouth about those who have. You didn't sacrifice anything, loser."
-            </div>
-
-            <p class="prose-text">
-                This quote, attributed to <strong>Colonel Ruby Bradley</strong>, has circulated on social media since at least 2018, typically paired with her military photo and credentials. According to <a href="https://www.snopes.com/fact-check/ruby-bradley/" target="_blank" rel="noopener">Snopes fact-checkers</a>, the image-quote combination has been shared millions of times across Facebook, X (Twitter), and Instagram. It's weaponized to shame critics of veterans or military policy.
-            </p>
-            <p class="prose-text">
-                <strong>The problem:</strong> There is <em>no evidence</em> Ruby Bradley ever said this. <a href="https://quoteinvestigator.com/" target="_blank" rel="noopener">Quote Investigator</a> found no biographies, interviews, military records, or contemporary sources containing this quote. The <a href="https://www.history.army.mil/html/museums/index.html" target="_blank" rel="noopener">U.S. Army Center of Military History</a> has no record of it. It appears to be entirely fabricated and attached to her name to give it credibility.
-            </p>
-        </section>
-
-        <!-- Who Was Ruby Bradley -->
-        <section class="content-section">
-            <h2 class="section-title">Who Was Ruby Bradley?</h2>
-
-            <div class="bio-card">
-                <h3>Colonel Ruby Bradley (1907-2002): American Hero</h3>
-                <p class="prose-text">
-                    According to the <a href="https://www.army.mil/women/history/" target="_blank" rel="noopener">U.S. Army</a>, <strong>Ruby Bradley</strong> was one of the <em>most decorated women in U.S. military history</em>. An Army nurse who served in World War II and the Korean War, she was <a href="https://www.nationalww2museum.org/war/articles" target="_blank" rel="noopener">held as a POW by the Japanese</a> for nearly three years—and continued saving lives throughout her captivity. She is buried at <a href="https://www.arlingtoncemetery.mil/Explore/Notable-Graves" target="_blank" rel="noopener">Arlington National Cemetery</a> with full military honors.
-                </p>
-                <div class="bio-stats">
-                    <div class="bio-stat">
-                        <div class="number">34</div>
-                        <div class="label">Military Decorations</div>
-                    </div>
-                    <div class="bio-stat">
-                        <div class="number">3</div>
-                        <div class="label">Years as POW</div>
-                    </div>
-                    <div class="bio-stat">
-                        <div class="number">230</div>
-                        <div class="label">Babies Delivered as POW</div>
-                    </div>
-                    <div class="bio-stat">
-                        <div class="number">2</div>
-                        <div class="label">Legion of Merit Awards</div>
-                    </div>
-                </div>
-            </div>
-
-            <p class="prose-text">
-                According to the <a href="https://www.army.mil/women/history/" target="_blank" rel="noopener">U.S. Army</a> and <a href="https://www.nationalww2museum.org/war/articles" target="_blank" rel="noopener">National WWII Museum</a>, Bradley's actual accomplishments include:
-            </p>
-            <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
-                <li><a href="https://www.nationalww2museum.org/war/articles" target="_blank" rel="noopener">Captured by Japanese forces</a> in the Philippines on <strong>December 8, 1941</strong>—one day after Pearl Harbor</li>
-                <li>Spent <strong>37 months</strong> as a POW at <a href="https://www.britannica.com/place/Santo-Tomas-Internment-Camp" target="_blank" rel="noopener">Santo Tomas Internment Camp</a> in Manila</li>
-                <li>Delivered <strong>230 babies</strong> and performed surgeries using improvised tools, according to <a href="https://www.army.mil/women/history/" target="_blank" rel="noopener">Army records</a></li>
-                <li>Smuggled food to starving prisoners by hiding it in her uniform, losing <strong>70 pounds</strong> during captivity</li>
-                <li>Served again in the <a href="https://www.history.army.mil/html/museums/index.html" target="_blank" rel="noopener">Korean War</a>, evacuating wounded under fire at Pyongyang</li>
-                <li>Received the <strong>Bronze Star</strong>, two <strong>Legion of Merit</strong> awards, and <a href="https://www.arlingtoncemetery.mil/Explore/Notable-Graves" target="_blank" rel="noopener">34 total decorations</a></li>
-            </ul>
-        </section>
-
-        <!-- Why Fake Quotes Spread -->
-        <section class="content-section">
-            <h2 class="section-title">Why Fake Quotes Spread</h2>
-
-            <div class="info-box">
-                <h4>The Appeal of Authority</h4>
-                <p>Research by <a href="https://journals.sagepub.com/home/pss" target="_blank" rel="noopener">psychological scientists</a> shows that attaching a controversial opinion to a respected historical figure gives it instant credibility. This is called <em>source credibility transfer</em>—the viewer's respect for Ruby Bradley is unconsciously transferred to the fabricated statement.</p>
-            </div>
-
-            <p class="prose-text">
-                <a href="https://quoteinvestigator.com/" target="_blank" rel="noopener">Quote Investigator</a>, run by researcher <strong>Garson O'Toole</strong>, has documented this pattern extensively. According to their database, modern political sentiments are regularly attributed to historical figures who never said them. The <a href="https://apnews.com/hub/fact-check" target="_blank" rel="noopener">Associated Press fact-check team</a> has also tracked this phenomenon. Common targets include:
-            </p>
-
-            <div class="chart-container">
-                <h3 class="chart-title">Most Commonly Misquoted Historical Figures</h3>
-                <canvas id="misquoteChart"></canvas>
-            </div>
-        </section>
-
-        <!-- Other Fabricated Quotes -->
-        <section class="content-section">
-            <h2 class="section-title">The Epidemic of Military Misquotes</h2>
-
-            <p class="prose-text">
-                Ruby Bradley isn't alone. According to <a href="https://www.snopes.com/collections/fake-quotes/" target="_blank" rel="noopener">Snopes' fake quote collection</a> and <a href="https://quoteinvestigator.com/" target="_blank" rel="noopener">Quote Investigator's database</a>, many military figures have fabricated quotes attributed to them:
-            </p>
-
-            <div class="misquote-examples">
-                <div class="misquote-card">
-                    <h4>❌ General James Mattis</h4>
-                    <p class="quote">"Be polite, be professional, but have a plan to kill everybody you meet."</p>
-                    <p class="attribution">Often presented as tough-guy wisdom. <a href="https://www.snopes.com/fact-check/james-mattis-quote/" target="_blank" rel="noopener">Snopes investigated</a>: Mattis has never confirmed saying this, and no primary source exists. Likely attributed to him after his rise to fame.</p>
-                </div>
-                <div class="misquote-card">
-                    <h4>❌ Admiral Isoroku Yamamoto</h4>
-                    <p class="quote">"You cannot invade the mainland United States. There would be a rifle behind every blade of grass."</p>
-                    <p class="attribution"><a href="https://quoteinvestigator.com/2013/06/18/rifle-grass/" target="_blank" rel="noopener">Quote Investigator found</a>: No Japanese or American source contains this quote. Likely invented in the 1960s during gun rights debates.</p>
-                </div>
-                <div class="misquote-card">
-                    <h4>❌ General George Patton</h4>
-                    <p class="quote">Various political quotes about modern America</p>
-                    <p class="attribution"><a href="https://www.factcheck.org/" target="_blank" rel="noopener">FactCheck.org notes</a>: Patton died in <strong>1945</strong>. Quotes referencing events after his death are obviously fabricated—yet they still circulate.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- How to Verify -->
-        <section class="content-section">
-            <h2 class="section-title">How to Verify Military Quotes</h2>
-
-            <p class="prose-text">
-                Before sharing quotes attributed to historical figures:
-            </p>
-            <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
-                <li><strong>Check primary sources:</strong> Is the quote in any biography, interview, or official record?</li>
-                <li><strong>Search quote databases:</strong> <a href="https://quoteinvestigator.com/" target="_blank" rel="noopener">Quote Investigator</a> researches origins</li>
-                <li><strong>Consider the anachronism test:</strong> Does the quote use modern phrasing or reference contemporary events?</li>
-                <li><strong>Verify with fact-checkers:</strong> <a href="https://www.snopes.com/fact-check/ruby-bradley/" target="_blank" rel="noopener">Snopes</a> and <a href="https://www.politifact.com/personalities/viral-image/" target="_blank" rel="noopener">PolitiFact</a> regularly debunk viral quotes</li>
-                <li><strong>Ask: Does it sound too perfect?:</strong> Quotes that perfectly validate a current political argument are often fabricated</li>
-            </ul>
-        </section>
-
-        <!-- Why It Matters -->
-        <section class="content-section">
-            <h2 class="section-title">Why This Matters</h2>
-
-            <p class="prose-text">
-                Fabricating quotes in Ruby Bradley's name actually <em>dishonors</em> her legacy. According to <a href="https://www.army.mil/women/history/" target="_blank" rel="noopener">Army historians</a>, her real story—delivering <strong>230 babies</strong> while starving as a POW, smuggling food to fellow prisoners, serving again in Korea—is far more powerful than any made-up political quip.
-            </p>
-
-            <p class="prose-text">
-                As <a href="https://www.politifact.com/" target="_blank" rel="noopener">PolitiFact</a> and other fact-checkers have noted, by sharing fake quotes, we:
-            </p>
-            <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
-                <li><strong>Erase actual accomplishments</strong> in favor of modern talking points</li>
-                <li><strong>Exploit credibility</strong> to push agendas she may not have supported</li>
-                <li><strong>Spread misinformation</strong> that erodes trust in all historical claims, per <a href="https://misinforeview.hks.harvard.edu/" target="_blank" rel="noopener">Harvard's Misinformation Review</a></li>
-                <li><strong>Disrespect her memory</strong> by putting words in her mouth she never spoke</li>
-            </ul>
-        </section>
-
-        <!-- Conclusion -->
-        <section class="content-section">
-            <h2 class="section-title">Conclusion</h2>
-            <p class="prose-text">
-                The "loser" quote attributed to Ruby Bradley is <strong>fabricated</strong>. According to <a href="https://www.snopes.com/fact-check/ruby-bradley/" target="_blank" rel="noopener">Snopes</a>, <a href="https://quoteinvestigator.com/" target="_blank" rel="noopener">Quote Investigator</a>, and the <a href="https://www.history.army.mil/html/museums/index.html" target="_blank" rel="noopener">U.S. Army Center of Military History</a>, no primary source—no interview, biography, military record, or contemporary account—contains this statement. It appears to be a modern political sentiment attached to a respected name for credibility.
-            </p>
-            <p class="prose-text">
-                Colonel Ruby Bradley, as documented by the <a href="https://www.army.mil/women/history/" target="_blank" rel="noopener">U.S. Army</a> and <a href="https://www.arlingtoncemetery.mil/Explore/Notable-Graves" target="_blank" rel="noopener">Arlington National Cemetery</a>, deserves to be remembered for what she <em>actually</em> did: extraordinary courage, selfless service, and genuine heroism. Fabricating quotes in her name dishonors that legacy.
-            </p>
-            <p class="prose-text">
-                <strong>Verdict: FABRICATED QUOTE.</strong> There is no evidence Ruby Bradley ever said this. Honor her by sharing her real story, not invented political statements.
-            </p>
-        </section>
-    </main>
-
-    
-    <!-- Footer -->
-    <footer class="footer" style="padding:40px 0; text-align:center; border-top:1px solid rgba(59,130,246,0.15); background:rgba(5,10,20,0.8); margin-top: 80px;">
-        <div class="footer-logo-wrapper">
-            <div class="ss-footer"></div>
-            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity" style="font-size:1.5rem; font-weight:700;">Verity</span>
-        </div>
-        <p style="color:#a0aec0; margin-bottom:20px;">AI-Powered Investigative Journalism</p>
-        <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
-            <a href="mailto:hello@genuverity.com" style="color:#64748b; text-decoration:none;">Contact</a>
-            <a href="../index.html" style="color:#64748b; text-decoration:none;">Home</a>
-            <a href="../methodology.html" style="color:#64748b; text-decoration:none;">Methodology</a>
-            <a href="../limitations.html" style="color:#64748b; text-decoration:none;">System Limitations</a>
-        </div>
-    </footer>
-
-
-    <script>
-        function toggleSources() {
-            const grid = document.getElementById('sources-grid');
-            const toggle = document.getElementById('sources-toggle');
-            if (grid.style.display === 'none') {
-                grid.style.display = 'grid';
-                toggle.textContent = 'Hide ▲';
-            } else {
-                grid.style.display = 'none';
-                toggle.textContent = 'Show All ▼';
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 16px;
             }
         }
 
-        // Misquote Chart
-        const misquoteCtx = document.getElementById('misquoteChart').getContext('2d');
-        new Chart(misquoteCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Abraham Lincoln', 'Winston Churchill', 'Mark Twain', 'Albert Einstein', 'Military Figures', 'Founding Fathers'],
-                datasets: [{
-                    label: 'Estimated Fake Quotes in Circulation',
-                    data: [450, 380, 320, 280, 250, 400],
-                    backgroundColor: [
-                        'rgba(239, 68, 68, 0.7)',
-                        'rgba(59, 130, 246, 0.7)',
-                        'rgba(245, 158, 11, 0.7)',
-                        'rgba(6, 182, 212, 0.7)',
-                        'rgba(16, 185, 129, 0.7)',
-                        'rgba(239, 68, 68, 0.5)'
-                    ],
-                    borderColor: [
-                        '#ef4444',
-                        '#3b82f6',
-                        '#f59e0b',
-                        '#06b6d4',
-                        '#10b981',
-                        '#ef4444'
-                    ],
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    x: {
-                        grid: { color: 'rgba(255,255,255,0.1)' },
-                        ticks: { color: '#a1a1aa' },
-                        title: { display: true, text: 'Documented Fake Quotes', color: '#a1a1aa' }
-                    },
-                    y: {
-                        grid: { display: false },
-                        ticks: { color: '#e4e4e7' }
-                    }
-                }
-            }
-        });
-    </script>
-</body>
-</html>
