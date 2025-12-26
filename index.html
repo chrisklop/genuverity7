@@ -2012,24 +2012,28 @@
                 <div id="intelligence-nexus"
                     style="position: relative; width: 100%; max-width: 1400px; margin: 0 auto;">
                     <!-- View Toggle -->
-                    .view-toggle-container {
-                    position: absolute;
-                    top: 0;
-                    right: 40px;
-                    z-index: 100;
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
-                    }
-                    .carousel-section, .list-section {
-                    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                    }
-                    @media (max-width: 768px) {
-                    .view-toggle-container {
-                    right: 20px;
-                    top: -10px;
-                    }
-                    }
+                    <style>
+                        .view-toggle-container {
+                            position: absolute;
+                            top: 0;
+                            right: 40px;
+                            z-index: 100;
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                        }
+
+                        .carousel-section,
+                        .list-section {
+                            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                        }
+
+                        @media (max-width: 768px) {
+                            .view-toggle-container {
+                                right: 20px;
+                                top: -10px;
+                            }
+                        }
                     </style>
                     <div class="view-toggle-container">
                         <button class="view-btn active" id="viewToggleBtn" aria-label="Toggle View">
