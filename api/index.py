@@ -2960,3 +2960,76 @@ async def get_fred_data(series_id: str, limit: int = 52):
         print(f"FRED API error: {error_detail}")
         print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Failed to fetch FRED data: {error_detail}")
+
+# === CONTACT & EMAIL INTEGRATION ===
+
+class ContactRequest(BaseModel):
+    name: str
+    email: str
+    inquiry_type: str
+    message: str
+
+
+@app.post("/api/contact")
+async def handle_contact(request: ContactRequest):
+    """Handle contact form submissions by sending email via Resend."""
+    
+    # 1. Validate Configuration
+    if not RESEND_API_KEY:
+        print("WARNING: RESEND_API_KEY not set. Email will not be sent.")
+        # We return success to the frontend even if backend email fails to avoid UX friction,
+        # but we log the error. In production, this should alert.
+        return {"status": "success", "message": "Message received (simulated - config missing)"}
+
+    headers = {
+        "Authorization": f"Bearer {RESEND_API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    # 2. Send Notification to Admin
+    admin_payload = {
+        "from": "GenuVerity Contact <system@genuverity.com>",
+        "to": [ADMIN_EMAIL],
+        "subject": f"[{request.inquiry_type.upper()}] New Contact from {request.name}",
+        "html": f"""
+        <h3>New Inquiry Received</h3>
+        <p><strong>Name:</strong> {request.name}</p>
+        <p><strong>Email:</strong> {request.email}</p>
+        <p><strong>Type:</strong> {request.inquiry_type}</p>
+        <hr>
+        <p><strong>Message:</strong></p>
+        <p style="white-space: pre-wrap;">{request.message}</p>
+        """
+    }
+
+    # 3. Send Auto-Reply to User
+    user_payload = {
+        "from": "Chris at GenuVerity <chris@genuverity.com>",
+        "to": [request.email],
+        "subject": "We received your message",
+        "html": f"""
+        <p>Hi {request.name},</p>
+        <p>Thanks for reaching out to GenuVerity. We've received your inquiry regarding <strong>{request.inquiry_type}</strong>.</p>
+        <p>A member of our team will review your message and get back to you shortly.</p>
+        <br>
+        <p>Best regards,</p>
+        <p><strong>Chris & The GenuVerity Team</strong></p>
+        """
+    }
+
+    try:
+        # Send Admin Email
+        r1 = requests.post("https://api.resend.com/emails", headers=headers, json=admin_payload, timeout=10)
+        if r1.status_code not in range(200, 300):
+            print(f"Resend Admin Error: {r1.text}")
+        
+        # Send User Auto-Reply
+        r2 = requests.post("https://api.resend.com/emails", headers=headers, json=user_payload, timeout=10)
+        if r2.status_code not in range(200, 300):
+            print(f"Resend User Error: {r2.text}")
+
+        return {"status": "success", "message": "Transmission complete"}
+
+    except Exception as e:
+        print(f"Email Dispatch Error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to dispatch email")

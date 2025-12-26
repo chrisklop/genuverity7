@@ -5,6 +5,35 @@
 
 ---
 
+## 🚨 DEEP DIVE PROTOCOL (MANDATORY FOR ALL REPORTS)
+
+To ensure reports are comprehensive "Deep Dive Dossiers" and NOT summaries, follow the **1:3 Rule**:
+
+**1. The 1:3 Rule**
+For every single metadata point or key finding in the research:
+- **Heading 2 (`<h2>`)**: The main claim.
+- **Introductory Paragraph**: Context and background.
+- **Evidence Block**: Detailed breakdown of the evidence (not just a citation).
+- **Counter-Argument**: Addressing potential critiques.
+- **Conclusion/Verdict**: Final synthesis for that specific point.
+
+**2. Evidence Locker**
+Nevers summarize raw text (transcripts, logs, email chains). Use the `<details>` pattern or explicit "Exhibit" blocks:
+```html
+<div class="data-table-container">
+    <div class="sources-header">Exhibit A: Full Transcript</div>
+    <pre style="white-space: pre-wrap; padding: 20px;">[PASTE FULL TEXT HERE]</pre>
+</div>
+```
+
+**3. Target Length**
+- Minimum 8-10 `<h2>` sections.
+- Minimum 2,000 words.
+- If a section feels "light," EXPAND it before finalizing.
+
+
+---
+
 ## WORKFLOW OVERVIEW
 
 ```
