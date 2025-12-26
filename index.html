@@ -2093,10 +2093,10 @@
                     </span>
                 </div>
                 <!-- Inline Search Box -->
-                <div class="hero-search" onclick="toggleUnifiedSearch()">
+                <div class="hero-search">
                     <i data-lucide="search" style="width:20px;height:20px;"></i>
-                    <input type="text" class="hero-search-input search-sync-input"
-                        placeholder="Search report database..." readonly onfocus="this.removeAttribute('readonly');">
+                    <input type="text" class="hero-search-input" placeholder="Search report database..."
+                        onfocus="this.removeAttribute('readonly');">
                     <span class="search-hint">ENTER ↵</span>
                 </div>
 
@@ -2933,11 +2933,32 @@
                     const navInput = navSearch.querySelector('input');
                     const reports = typeof REPORTS_DATA !== 'undefined' ? REPORTS_DATA : [];
 
-                    const renderDropdown = (query) => {
-                        const target = dropdown;
+                    // --- HERO SEARCH (Local Dropdown Logic) ---
+                    // 1. Get Elements
+                    const heroSearch = document.querySelector('.hero-search');
+                    // Remove the onclick that opens the overlay from HTML if it exists, or just ensure we don't use it
+                    heroSearch.removeAttribute('onclick');
+                    const heroInput = heroSearch.querySelector('input');
+
+                    // 2. Create Dropdown for Hero
+                    let heroDropdown = document.getElementById('heroNexusDropdown');
+                    if (!heroDropdown) {
+                        heroDropdown = document.createElement('div');
+                        heroDropdown.className = 'nexus-dropdown';
+                        heroDropdown.id = 'heroNexusDropdown';
+                        // Adjust position for Hero context (it's inside .hero-search which is relative/flex)
+                        heroDropdown.style.top = '60px';
+                        heroDropdown.style.width = '100%';
+                        heroDropdown.style.left = '0';
+                        heroSearch.style.position = 'relative'; // Ensure positioning context
+                        heroSearch.appendChild(heroDropdown);
+                    }
+
+                    // Shared Render Logic
+                    const renderLocalDropdown = (query, targetDropdown) => {
                         if (!query) {
-                            target.classList.remove('open');
-                            target.innerHTML = '';
+                            targetDropdown.classList.remove('open');
+                            targetDropdown.innerHTML = '';
                             return;
                         }
 
@@ -2947,10 +2968,10 @@
                             r.category.toLowerCase().includes(query.toLowerCase())
                         );
 
-                        target.innerHTML = ''; // Clear previous
+                        targetDropdown.innerHTML = ''; // Clear previous
 
                         if (hits.length === 0) {
-                            target.innerHTML = '<div style="padding:20px; color:var(--text-muted); text-align:center;">No intelligence found.</div>';
+                            targetDropdown.innerHTML = '<div style="padding:20px; color:var(--text-muted); text-align:center;">No intelligence found.</div>';
                         } else {
                             // Render Top 5
                             hits.slice(0, 5).forEach(report => {
@@ -2974,26 +2995,36 @@
 
                                 item.onmouseenter = () => item.style.background = 'rgba(6,182,212,0.1)';
                                 item.onmouseleave = () => item.style.background = 'transparent';
-                                item.onclick = () => window.location.href = report.slug; // Direct navigation
+                                item.onclick = (e) => {
+                                    e.stopPropagation(); // Prevent propagation
+                                    window.location.href = report.slug;
+                                };
 
-                                target.appendChild(item);
+                                targetDropdown.appendChild(item);
                             });
-                            lucide.createIcons({ root: target });
+                            lucide.createIcons({ root: targetDropdown });
                         }
 
-                        target.classList.add('open');
+                        targetDropdown.classList.add('open');
                     };
 
+                    // --- BIND EVENTS ---
+
+                    // Navbar Input
                     navInput.addEventListener('input', (e) => {
-                        renderDropdown(e.target.value.trim());
+                        renderLocalDropdown(e.target.value.trim(), dropdown);
                     });
 
-                    // Enter key support
-                    navInput.addEventListener('keydown', (e) => {
+                    // Hero Input
+                    heroInput.addEventListener('input', (e) => {
+                        renderLocalDropdown(e.target.value.trim(), heroDropdown);
+                    });
+
+                    // Enter key support (Generic)
+                    const handleEnter = (e, input) => {
                         if (e.key === 'Enter') {
-                            const query = navInput.value.trim();
+                            const query = input.value.trim();
                             if (query) {
-                                // Find best match
                                 const bestMatch = reports.find(r =>
                                     r.title.toLowerCase().includes(query.toLowerCase())
                                 );
@@ -3002,12 +3033,21 @@
                                 }
                             }
                         }
-                    });
+                    };
 
-                    // Close logic
+                    navInput.addEventListener('keydown', (e) => handleEnter(e, navInput));
+                    heroInput.addEventListener('keydown', (e) => handleEnter(e, heroInput));
+
+
+                    // Close logic (Global click)
                     document.addEventListener('click', (e) => {
+                        // Close Navbar Dropdown if click outside
                         if (!navSearch.contains(e.target)) {
                             dropdown.classList.remove('open');
+                        }
+                        // Close Hero Dropdown if click outside
+                        if (!heroSearch.contains(e.target)) {
+                            heroDropdown.classList.remove('open');
                         }
                     });
 
