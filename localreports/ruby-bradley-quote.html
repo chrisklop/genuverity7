@@ -375,6 +375,40 @@
             .nav-links { display: none; }
             .container { padding: 1rem; }
         }
+    
+        /* Footer Logo Wrapper (Scaled Down) */
+        .footer-logo-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 8px;
+        }
+
+        .ss-footer {
+            position: absolute;
+            inset: -6px;
+            border-radius: 40px;
+            pointer-events: none;
+        }
+
+        .ss-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+        
+        /* Global Logo Colors */
+        .logo-genu { color: #ffffff !important; }
+        .logo-verity { color: #3b82f6 !important; }
+
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
+        }
+
     </style>
 </head>
 <body>
@@ -655,10 +689,22 @@
         </section>
     </main>
 
-    <footer class="footer">
-        <a href="../reports.html" class="back-link">← Back to All Reports</a>
-        <p>© 2025 GenuVerity. Fact-checking in the public interest.</p>
+    
+    <!-- Footer -->
+    <footer class="footer" style="padding:40px 0; text-align:center; border-top:1px solid rgba(59,130,246,0.15); background:rgba(5,10,20,0.8); margin-top: 80px;">
+        <div class="footer-logo-wrapper">
+            <div class="ss-footer"></div>
+            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity" style="font-size:1.5rem; font-weight:700;">Verity</span>
+        </div>
+        <p style="color:#a0aec0; margin-bottom:20px;">AI-Powered Investigative Journalism</p>
+        <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
+            <a href="mailto:hello@genuverity.com" style="color:#64748b; text-decoration:none;">Contact</a>
+            <a href="../index.html" style="color:#64748b; text-decoration:none;">Home</a>
+            <a href="../methodology.html" style="color:#64748b; text-decoration:none;">Methodology</a>
+            <a href="../limitations.html" style="color:#64748b; text-decoration:none;">System Limitations</a>
+        </div>
     </footer>
+
 
     <script>
         function toggleSources() {
