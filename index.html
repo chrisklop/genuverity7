@@ -187,6 +187,46 @@
 
         /* Removed orphaned block */
 
+        @keyframes cta-pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+            }
+
+            50% {
+                transform: scale(1.03);
+                box-shadow: 0 0 15px 5px rgba(59, 130, 246, 0.2);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+            }
+        }
+
+        .pulsing-cta {
+            animation: cta-pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes join-glow {
+            0% {
+                box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 50px rgba(59, 130, 246, 0.8), 0 0 25px rgba(6, 182, 212, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+            }
+        }
+
+        .lens-glass-glow {
+            animation: join-glow 1.5s infinite alternate ease-in-out;
+            border-color: #3b82f6 !important;
+        }
+
         .navbar-logo {
             font-size: 1.5rem;
             font-weight: 700;
@@ -1964,8 +2004,8 @@
     <div id="truth-lens"
         style="position: fixed; top: 50%; left: 50%; width: 60px; height: 60px; z-index: 50; pointer-events: none; opacity: 0; transform: translate(-50%, -50%);">
         <!-- Glass -->
-        <div
-            style="width: 100%; height: 100%; border: 3px solid #06b6d4; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1), rgba(6,182,212,0.05)); box-shadow: 0 0 20px rgba(6,182,212,0.4), inset 0 0 10px rgba(6,182,212,0.2);">
+        <div class="lens-glass"
+            style="width: 100%; height: 100%; border: 3px solid #06b6d4; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1), rgba(6,182,212,0.05)); box-shadow: 0 0 20px rgba(6,182,212,0.4), inset 0 0 10px rgba(6,182,212,0.2); transition: border-color 0.3s ease;">
         </div>
         <!-- Handle -->
         <div
@@ -1996,7 +2036,7 @@
             </div>
 
             <div class="navbar-right">
-                <a href="#notify" class="btn-premium-glass">
+                <a href="#notify" class="btn-premium-glass pulsing-cta">
                     <i data-lucide="zap" style="width:16px;"></i> Get Early Access
                 </a>
             </div>
@@ -2250,7 +2290,7 @@
                                     <option value="other">Other</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn-premium-glass cyan"
+                            <button type="submit" class="btn-premium-glass cyan pulsing-cta"
                                 style="margin-top:20px; width:100%; justify-content:center;">
                                 <i data-lucide="zap" style="width:18px;"></i>
                                 Claim My Spot
@@ -2757,14 +2797,18 @@
                         const endX = e.changedTouches[0].clientX;
                         const diff = startX - endX;
 
-                        // Threshold 35px: Sensitive enough for short swipes, but 'isTouch' prevents momentum double-jumps
+                        // Threshold 35px: Sensitive enough for short swipes
                         if (Math.abs(diff) > 35) {
+                            e.preventDefault(); // Prevent click-throughs
+                            wasDragging = true;
                             navigateCarousel(diff > 0 ? 1 : -1);
+                            // Keep 'wasDragging' true until animation lock clears (500ms)
+                            setTimeout(() => { wasDragging = false; }, 500);
                         }
 
                         // Reset touch flag after a delay to allow mouse emulation AND momentum to pass safely
                         setTimeout(() => { isTouch = false; }, 800);
-                    }, { passive: true });
+                    }, { passive: false });
 
                     // Mouse drag
                     let hasDragged = false;
@@ -3046,6 +3090,44 @@
                             scale: 1.8,
                             borderColor: "#10b981",
                             ease: "expo.inOut"
+                        });
+
+                    // 4. Snap to Process (Graphic 4 - Left/Center)
+                    gsap.timeline({
+                        scrollTrigger: {
+                            trigger: ".trigger-4",
+                            start: "top center",
+                            end: "bottom center",
+                            scrub: 0.6
+                        }
+                    })
+                        .to(focusLens, {
+                            top: "50%",
+                            left: "25%",
+                            scale: 2.2,
+                            borderColor: "#3b82f6",
+                            ease: "expo.inOut"
+                        });
+
+                    // 5. Snap to Join Headline (Trigger 5 - Focused on text)
+                    gsap.timeline({
+                        scrollTrigger: {
+                            trigger: ".trigger-5",
+                            start: "top center",
+                            end: "bottom center",
+                            scrub: 0.6,
+                            onEnter: () => focusLens.querySelector('.lens-glass').classList.add("lens-glass-glow"),
+                            onLeave: () => focusLens.querySelector('.lens-glass').classList.remove("lens-glass-glow"),
+                            onEnterBack: () => focusLens.querySelector('.lens-glass').classList.add("lens-glass-glow"),
+                            onLeaveBack: () => focusLens.querySelector('.lens-glass').classList.remove("lens-glass-glow")
+                        }
+                    })
+                        .to(focusLens, {
+                            top: "50%",
+                            left: "55%", // Focus just to the right of the headline
+                            scale: 2.5,
+                            borderColor: "#06b6d4",
+                            ease: "back.out(1.7)"
                         });
 
 
