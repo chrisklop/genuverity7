@@ -70,7 +70,7 @@
             z-index: -1;
         }
 
-        
+
         /* === NAVBAR (Consolidated Premium) === */
         .navbar {
             position: fixed;
@@ -129,8 +129,13 @@
         }
 
         @keyframes sweep-30 {
-            from { transform: rotate(-20deg); }
-            to { transform: rotate(20deg); }
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
         }
 
         .nav-back-link {
@@ -149,7 +154,88 @@
                 padding: 0 16px;
             }
         }
-/* === THEMATIC SECTIONS === */
+
+        /* === PREMIUM BUTTONS === */
+        .btn-premium-glass {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-premium-glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-premium-glass:hover {
+            background: rgba(59, 130, 246, 0.25);
+            border-color: rgba(59, 130, 246, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-premium-glass:hover::before {
+            left: 100%;
+        }
+
+        /* Footer Logo Wrapper */
+        .footer-logo-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 8px;
+        }
+
+        .ss-footer {
+            position: absolute;
+            inset: -6px;
+            border-radius: 40px;
+            pointer-events: none;
+        }
+
+        .ss-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .logo-verity {
+            color: var(--accent-blue) !important;
+        }
+
+        @keyframes sweep-30 {
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
+
+        /* === THEMATIC SECTIONS === */
         .page-header {
             padding-top: 140px;
             text-align: center;
@@ -405,7 +491,7 @@
     <div class="bg-glow"></div>
 
     <!-- Navbar -->
-    
+
     <!-- STANDARD NAVBAR -->
     <nav class="navbar">
         <a href="index.html" class="navbar-brand" style="text-decoration: none; border: none;">
@@ -417,7 +503,8 @@
             </div>
         </a>
         <div class="navbar-right">
-            <a href="index.html" class="nav-back-link" style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+            <a href="index.html" class="nav-back-link"
+                style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
                 <i data-lucide="arrow-left" style="width:16px;"></i>
                 Back to Intelligence
             </a>
@@ -517,8 +604,8 @@
                 We believe in radical transparency. Understanding what our system <em>cannot</em> do is just as
                 important as understanding what it can.
             </p>
-            <a href="limitations.html" class="btn-premium-glass" style="padding:12px 32px; font-size:1rem;">
-                <i data-lucide="search" style="width:18px;"></i> View Full Limitations Report
+            <a href="limitations.html" class="btn-premium-glass">
+                <i data-lucide="book-open" style="width:18px;"></i> View Full Limitations Report
             </a>
         </div>
     </section>

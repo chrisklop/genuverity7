@@ -71,7 +71,7 @@
             z-index: -1;
         }
 
-        
+
         /* === NAVBAR (Consolidated Premium) === */
         .navbar {
             position: fixed;
@@ -130,8 +130,13 @@
         }
 
         @keyframes sweep-30 {
-            from { transform: rotate(-20deg); }
-            to { transform: rotate(20deg); }
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
         }
 
         .nav-back-link {
@@ -150,7 +155,46 @@
                 padding: 0 16px;
             }
         }
-/* === PAGE CONTENT === */
+
+        /* Footer Logo Wrapper */
+        .footer-logo-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 8px;
+        }
+
+        .ss-footer {
+            position: absolute;
+            inset: -6px;
+            border-radius: 40px;
+            pointer-events: none;
+        }
+
+        .ss-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .logo-verity {
+            color: var(--accent-blue) !important;
+        }
+
+        @keyframes sweep-30 {
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
+
+        /* === PAGE CONTENT === */
         .page-header {
             padding-top: 140px;
             text-align: center;
@@ -333,7 +377,7 @@
     <div class="bg-grid"></div>
     <div class="bg-glow"></div>
 
-    
+
     <!-- STANDARD NAVBAR -->
     <nav class="navbar">
         <a href="index.html" class="navbar-brand" style="text-decoration: none; border: none;">
@@ -345,7 +389,8 @@
             </div>
         </a>
         <div class="navbar-right">
-            <a href="index.html" class="nav-back-link" style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+            <a href="index.html" class="nav-back-link"
+                style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
                 <i data-lucide="arrow-left" style="width:16px;"></i>
                 Back to Intelligence
             </a>
