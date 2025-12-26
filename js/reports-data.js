@@ -4,6 +4,24 @@
 const REPORTS_DATA = [
     {
         id: 0,
+        title: "Metabolic Resurrection: Reversing Advanced Alzheimer's via NAD+ Restoration",
+        slug: "localreports/nad-alzheimers-recovery.html",
+        category: "Medical Breakthrough",
+        tagClass: "tag-cyan",
+        catClass: "cat-medical",
+        icon: "activity",
+        date: "Dec 26, 2025",
+        sources: "38 Sources",
+        readTime: "18 min",
+        excerpt: "December 2025 breakthrough: P7C3-A20 compound achieves complete reversal of advanced Alzheimer's disease in mice through NAD+ restoration. Full cognitive recovery, BBB repair, and biomarker normalization challenge century-old dogma of irreversibility.",
+        chart: {
+            type: "line",
+            color: "#06b6d4",
+            data: [85, 70, 55, 40, 25, 15, 10]
+        }
+    },
+    {
+        id: 1,
         title: "The Age of Slop: AI-Generated Disinformation in 2025",
         slug: "localreports/ai-slop-fake-local-news.html",
         category: "Deep Dive Dossier",
@@ -24,7 +42,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 1,
+        id: 2,
         title: "Dominion 'Remote Access' & 'Spyder': Kraken Lawsuits Debunked",
         slug: "localreports/dominion-voting-claims-2020.html",
         category: "Forensic Fact Check",
@@ -46,7 +64,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 11,
+        id: 12,
         title: "The Sovereign-Commercial Hybrid",
         slug: "localreports/trump-admin-financial-conflicts.html",
         category: "Financial Forensics",
