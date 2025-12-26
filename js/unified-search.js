@@ -382,13 +382,15 @@ class UnifiedSearch {
         const icon = this.viewToggleBtn.querySelector('i');
 
         if (this.isListView) {
-            this.carouselSection.classList.add('hidden');
+            this.carouselSection.style.display = 'none';
+            this.listView.style.display = 'block';
             this.listView.classList.add('active');
             this.viewToggleBtn.classList.add('active');
-            if (icon) icon.setAttribute('data-lucide', 'layers'); // "Overlapping squares" -> Go to Card View
+            if (icon) icon.setAttribute('data-lucide', 'layers');
             this.renderListView();
         } else {
-            this.carouselSection.classList.remove('hidden');
+            this.carouselSection.style.display = 'block';
+            this.listView.style.display = 'none';
             this.listView.classList.remove('active');
             this.viewToggleBtn.classList.remove('active');
             if (icon) icon.setAttribute('data-lucide', 'list');

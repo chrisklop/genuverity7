@@ -793,15 +793,7 @@
 
         /* === VIEW TOGGLE & LIST VIEW === */
         .view-toggle {
-            position: fixed;
-            top: 100px;
-            right: 40px;
-            z-index: 90;
             display: flex;
-            background: rgba(10, 15, 26, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
             padding: 4px;
         }
 
@@ -2016,30 +2008,67 @@
                     <span class="search-hint">ENTER ↵</span>
                 </div>
 
-                <!-- 3D Carousel Section (Moved) -->
-                <div class="carousel-section" id="carouselSection">
-                    <div class="carousel-container">
-                        <div class="carousel-track" id="carouselTrack">
-                            <!-- Cards Injected JS -->
+                <!-- Intelligence Nexus (Cards + List Toggle) -->
+                <div id="intelligence-nexus"
+                    style="position: relative; width: 100%; max-width: 1400px; margin: 0 auto;">
+                    <!-- View Toggle -->
+                    .view-toggle-container {
+                    position: absolute;
+                    top: 0;
+                    right: 40px;
+                    z-index: 100;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    }
+                    .carousel-section, .list-section {
+                    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+                    @media (max-width: 768px) {
+                    .view-toggle-container {
+                    right: 20px;
+                    top: -10px;
+                    }
+                    }
+                    </style>
+                    <div class="view-toggle-container">
+                        <button class="view-btn active" id="viewToggleBtn" aria-label="Toggle View">
+                            <i data-lucide="list"></i>
+                        </button>
+                    </div>
+
+                    <!-- 3D Carousel Section -->
+                    <div class="carousel-section" id="carouselSection">
+                        <div class="carousel-container">
+                            <div class="carousel-track" id="carouselTrack">
+                                <!-- Cards Injected JS -->
+                            </div>
+                        </div>
+
+                        <div class="carousel-nav">
+                            <button class="carousel-nav-btn" onclick="navigateCarousel(-1)">
+                                <i data-lucide="chevron-left"></i>
+                            </button>
+                            <div class="carousel-dots" id="carouselDots">
+                                <!-- Dots JS -->
+                            </div>
+                            <button class="carousel-nav-btn" onclick="navigateCarousel(1)">
+                                <i data-lucide="chevron-right"></i>
+                            </button>
+                        </div>
+
+                        <div class="carousel-counter">
+                            <span class="current" id="currentIndex">1</span> / <span class="total"
+                                id="totalCount">45</span>
+                            <div style="margin-top:4px; font-size:0.7em; opacity:0.6;">SWIPE TO NAVIGATE</div>
                         </div>
                     </div>
 
-                    <div class="carousel-nav">
-                        <button class="carousel-nav-btn" onclick="navigateCarousel(-1)">
-                            <i data-lucide="chevron-left"></i>
-                        </button>
-                        <div class="carousel-dots" id="carouselDots">
-                            <!-- Dots JS -->
-                        </div>
-                        <button class="carousel-nav-btn" onclick="navigateCarousel(1)">
-                            <i data-lucide="chevron-right"></i>
-                        </button>
-                    </div>
-
-                    <div class="carousel-counter">
-                        <span class="current" id="currentIndex">1</span> / <span class="total" id="totalCount">45</span>
-                        <div style="margin-top:4px; font-size:0.7em; opacity:0.6;">SWIPE TO NAVIGATE</div>
-                    </div>
+                    <!-- List View Section (Hidden by default, swapped via JS) -->
+                    <section class="list-section" id="listView"
+                        style="display:none; padding: 40px 20px; max-width: 1200px; margin: 0 auto;">
+                        <!-- List Items Injected JS -->
+                    </section>
                 </div>
             </section>
 
@@ -2106,12 +2135,6 @@
                 </div>
             </section>
 
-            <!-- View Toggle -->
-            <div class="view-toggle">
-                <button class="view-btn active" id="viewToggleBtn" aria-label="Toggle View">
-                    <i data-lucide="list"></i>
-                </button>
-            </div>
 
             <!-- BENEFITS / PROCESS REDESIGN (Zig Zag) -->
             <section class="thematic-section" style="padding-top: 0;">
@@ -2217,10 +2240,6 @@
             </section>
 
 
-            <!-- List View Section (Hidden/Replaced) -->
-            <section class="list-section" id="listView" style="display:none;">
-                <!-- List Items Injected JS -->
-            </section>
 
             <!-- Algorithmic Objectivity -->
             <section class="constitutional-section" id="how-it-works">
