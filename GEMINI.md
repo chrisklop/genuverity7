@@ -4,6 +4,43 @@ This file provides guidance to Gemini when working with code in this repository.
 
 ---
 
+## 🚨 MANDATORY VERIFICATION PROTOCOL (READ FIRST)
+
+**BEFORE claiming ANYTHING is "fixed" or "working", you MUST:**
+
+1. **Investigate First**
+   - Use `browser_subagent` to check deployed site if issue is user-facing
+   - Use `grep_search` to find all related code
+   - Read the actual implementation, don't assume
+
+2. **Understand the System**
+   - How does this feature actually work?
+   - What are ALL the files involved?
+   - What could cause this specific symptom?
+
+3. **Test Your Hypothesis**
+   - Make the change
+   - Verify on deployed site (for user-facing issues)
+   - Check console for errors
+   - Test the actual user flow
+
+4. **Only Then Claim Success**
+   - ❌ NEVER say: "Fixed" or "This should work now"
+   - ✅ ALWAYS say: "Applied change - verified on [deployed site/local/tests]"
+   - Include evidence (screenshot, console output, test results)
+
+**If you skip ANY of these steps, you are LYING to the user.**
+
+**CRITICAL QUESTIONS TO ASK YOURSELF:**
+- Have I actually seen this working with my own tools?
+- Did I check the deployed site, not just local code?
+- Do I understand WHY this fix works, or am I guessing?
+- Would I bet money that this actually fixes the user's problem?
+
+**If the answer to any is "no", DO NOT claim it's fixed.**
+
+---
+
 ## ⚠️ PRE-FLIGHT CHECKLIST (MANDATORY)
 
 **Before generating ANY content, run this checklist:**
