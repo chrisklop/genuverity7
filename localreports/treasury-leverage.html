@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer-when-downgrade">
     <title>Dollar Dominance: US Treasury Bonds as Trade War Leverage | GenuVerity Intelligence</title>
-    <link rel="stylesheet" href="../css/shared-components.css">
     <meta name="description" content="Analysis of how foreign nations could weaponize $8 trillion in US Treasury holdings as leverage in the escalating trade war - examining China, Japan, and hedge fund dynamics.">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -109,7 +108,76 @@
             75% { transform: translate(-50px, -30px) scale(1.05); }
         }
 
-        
+        /* === NAVBAR === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .navbar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-genu { color: #ffffff; }
+        .logo-verity { color: var(--accent-blue); }
+
+        .navbar-badge {
+            padding: 4px 10px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--dollar-green);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .navbar-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .navbar-link:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .navbar-link.active {
+            color: var(--accent-cyan);
+        }
 
         /* === MAIN CONTAINER === */
         .main-container {
@@ -888,7 +956,152 @@
             font-size: 0.9rem;
         }
 
-        
+        /* === FOOTER === */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer strong {
+            color: var(--text-primary);
+        }
+
+        /* === MOBILE NOTICE === */
+        .mobile-notice {
+            display: none;
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(6, 182, 212, 0.15));
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(8px);
+        }
+
+        .mobile-notice-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .mobile-notice-icon {
+            color: var(--accent-cyan);
+            flex-shrink: 0;
+        }
+
+        .mobile-notice-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .mobile-notice-text strong {
+            color: var(--text-primary);
+        }
+
+        .mobile-notice-dismiss {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+
+        .mobile-notice-dismiss:hover {
+            color: var(--text-primary);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .mobile-notice {
+                display: block;
+            }
+
+            .main-container {
+                padding-top: 120px;
+            }
+
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .stats-ticker {
+                gap: 24px;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .mechanism-header {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .mechanism-title {
+                flex-direction: column;
+            }
+
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* === SPINNER === */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* Copy/Share Buttons */
+        .copyable-component { position: relative; }
+        .component-actions { position: absolute; top: 12px; right: 12px; display: flex; gap: 6px; opacity: 0; visibility: hidden; transition: all 0.2s; z-index: 100; }
+        .copyable-component:hover .component-actions { opacity: 1; visibility: visible; }
+        .component-action-btn { width: 34px; height: 34px; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--accent-cyan); transition: all 0.2s; }
+        .component-action-btn:hover { background: rgba(59, 130, 246, 0.25); transform: scale(1.05); }
+        .component-action-btn.success { background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.4); color: var(--accent-green); }
+        .copyable-component.capturing { box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.5); }
+        @media (hover: none) { .component-actions { opacity: 0.7; visibility: visible; } }
+        .share-modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px); z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.2s; }
+        .share-modal-overlay.active { opacity: 1; visibility: visible; }
+        .share-modal { background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 16px; padding: 24px; max-width: 400px; width: 90%; }
+        .share-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .share-modal-header h3 { font-size: 1.1rem; font-weight: 600; }
+        .share-modal-close { background: none; border: none; color: var(--text-muted); cursor: pointer; }
+        .share-preview { background: var(--bg-secondary); border: 1px solid var(--border-glow); border-radius: 8px; padding: 8px; margin-bottom: 20px; }
+        .share-preview img { width: 100%; border-radius: 4px; }
+        .share-actions { display: flex; flex-direction: column; gap: 10px; }
+        .share-btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border: 1px solid var(--border-glow); border-radius: 10px; background: rgba(17, 24, 39, 0.6); color: var(--text-primary); font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+        .share-btn:hover { border-color: var(--accent-cyan); background: rgba(6, 182, 212, 0.1); }
+        .share-btn.primary { background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan)); border: none; }
     </style>
 </head>
 <body>
@@ -900,7 +1113,24 @@
     </div>
 
     <!-- Navbar -->
-    <div id="navbar-placeholder" data-page-type="report"></div>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <span class="navbar-logo">
+                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
+            </span>
+            <span class="navbar-badge">Financial Analysis</span>
+        </a>
+        <div class="navbar-right">
+            <a href="reports.html" class="navbar-link">
+                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
+                Reports
+            </a>
+            <a href="request-report.html" class="navbar-link">
+                <i data-lucide="plus-circle" style="width:16px;height:16px;"></i>
+                Request Report
+            </a>
+        </div>
+    </nav>
 
     <!-- Mobile Notice -->
     <div class="mobile-notice" id="mobile-notice">
@@ -1559,7 +1789,9 @@
     </section>
 
     <!-- Footer -->
-    <div id="footer-placeholder"></div>
+    <footer class="footer">
+        <p><strong>GenuVerity</strong> - AI-Powered Financial Analysis</p>
+    </footer>
 
     <script>
         // Initialize Lucide icons
@@ -1795,6 +2027,5 @@
     <!-- GenuVerity Copyable Sections -->
     <script src="/js/copyable-sections.js"></script>
 
-    <script src="../js/shared-components.js"></script>
 </body>
 </html>

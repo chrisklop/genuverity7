@@ -13,10 +13,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <script src="js/reports-data.js"></script>
-    <script src="js/unified-search.js" defer></script>
-    <script src="js/shared-components.js" defer></script>
-    <link rel="stylesheet" href="css/shared-components.css">
 
     <style>
         /* === CORE VARIABLES === */
@@ -77,7 +73,127 @@
         }
 
 
-        /* === PAGE CONTENT === */
+        /* === NAVBAR (Consolidated Premium) === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-logo-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .ss-nav {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ss-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
+
+        @keyframes sweep-30 {
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
+
+        .nav-back-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-back-link:hover {
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 16px;
+            }
+        }
+
+        /* Footer Logo Wrapper */
+        .footer-logo-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 8px;
+        }
+
+        .ss-footer {
+            position: absolute;
+            inset: -6px;
+            border-radius: 40px;
+            pointer-events: none;
+        }
+
+        .ss-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .logo-verity {
+            color: var(--accent-blue) !important;
+        }
+
+        @keyframes sweep-30 {
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
 
         /* === PAGE CONTENT === */
         .page-header {
@@ -233,6 +349,15 @@
         }
 
         @media (max-width: 768px) {
+            .navbar {
+                padding: 0 20px;
+                justify-content: space-between;
+            }
+
+            .navbar-center,
+            .navbar-right {
+                display: none;
+            }
 
             .feature-block,
             .feature-block.reverse {
@@ -254,8 +379,24 @@
     <div class="bg-glow"></div>
 
 
-    <!-- Nav Placeholder -->
-    <div id="navbar-placeholder"></div>
+    <!-- STANDARD NAVBAR -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand" style="text-decoration: none; border: none;">
+            <div class="navbar-logo">
+                <div class="navbar-logo-wrapper">
+                    <div class="ss-nav"></div>
+                    <div class="g-icon-nav">G</div>
+                </div>
+            </div>
+        </a>
+        <div class="navbar-right">
+            <a href="index.html" class="nav-back-link"
+                style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="arrow-left" style="width:16px;"></i>
+                Back to Intelligence
+            </a>
+        </div>
+    </nav>
 
 
     <div class="page-header">
@@ -347,8 +488,21 @@
 
     </section>
 
-    <!-- Footer Placeholder -->
-    <div id="footer-placeholder"></div>
+    <!-- Footer -->
+    <footer class="footer"
+        style="padding:40px 0; text-align:center; border-top:1px solid var(--border-color); background:rgba(5,10,20,0.8);">
+        <div class="footer-logo-wrapper">
+            <div class="ss-footer"></div>
+            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity"
+                style="font-size:1.5rem; font-weight:700;">Verity</span>
+        </div>
+        <p style="color:var(--text-secondary); margin-bottom:20px;">AI-Powered Investigative Journalism</p>
+        <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
+            <a href="mailto:hello@genuverity.com" style="color:var(--text-muted); text-decoration:none;">Contact</a>
+            <a href="index.html" style="color:var(--text-muted); text-decoration:none;">Home</a>
+            <a href="methodology.html" style="color:var(--text-muted); text-decoration:none;">Methodology</a>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script>

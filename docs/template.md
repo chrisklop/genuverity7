@@ -6,39 +6,11 @@ This document captures the design patterns and code snippets used in the best-pe
 
 ## Core Design Principles
 
-1. **Shared Components** - Use `#navbar-placeholder` and `#footer-placeholder` site-wide
-2. **Sources First** - Collapsible primary sources banner at the top
-3. **Midnight Tech** - Blue (#3b82f6) and Cyan (#06b6d4) color palette, NO green as primary
-4. **Magazine Layout** - Float figures wrap text naturally
-5. **Live Data Emphasis** - Subtle animated borders on real-time data panels
-6. **Executive Summary** - Claim vs Reality grid for fact-checks
-
----
-
-## Shared Components (Golden Pattern)
-
-To ensure site-wide consistency, all pages must use the shared component placeholders.
-
-### Placeholder Elements
-```html
-<!-- At start of <body> -->
-<div id="navbar-placeholder" data-page-type="report"></div>
-
-<!-- At end of <body> -->
-<div id="footer-placeholder"></div>
-```
-
-### Required Assets
-```html
-<head>
-    <!-- ... -->
-    <link rel="stylesheet" href="../css/shared-components.css">
-</head>
-<body>
-    <!-- ... -->
-    <script src="../js/shared-components.js" defer></script>
-</body>
-```
+1. **Sources First** - Collapsible primary sources banner at the top
+2. **Midnight Tech** - Blue (#3b82f6) and Cyan (#06b6d4) color palette, NO green as primary
+3. **Magazine Layout** - Float figures wrap text naturally
+4. **Live Data Emphasis** - Subtle animated borders on real-time data panels
+5. **Executive Summary** - Claim vs Reality grid for fact-checks
 
 ---
 

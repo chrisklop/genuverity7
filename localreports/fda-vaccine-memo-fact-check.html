@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer-when-downgrade">
     <title>Fact Check: FDA Memo Claims COVID Vaccines Killed 10 Children | GenuVerity</title>
-    <link rel="stylesheet" href="../css/shared-components.css">
     <meta name="description" content="The memo provides no supporting evidence—no ages, medical histories, vaccine types, timelines, or methodology. VAERS data explicitly cannot determine causation,">
     <meta property="og:title" content="Fact Check: FDA Memo Claims COVID Vaccines Killed 10 Children">
     <meta property="og:description" content="The memo provides no supporting evidence—no ages, medical histories, vaccine types, timelines, or methodology. VAERS data explicitly cannot determine causation,">
@@ -69,9 +68,42 @@
         }
 
         /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
 
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
 
+        .navbar-logo { font-size: 1.5rem; font-weight: 700; }
+        .logo-genu { color: #ffffff; }
+        .logo-verity { color: var(--accent-blue); }
 
+        .navbar-badge {
+            padding: 4px 10px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+        }
 
         /* Mobile Notice */
         .mobile-notice {
@@ -559,7 +591,29 @@
             box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
         }
 
-        
+        /* Footer */
+        .footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .footer p { color: var(--text-muted); font-size: 0.85rem; }
+
+        /* Clearfix */
+        .clearfix::after {
+            content: '';
+            display: table;
+            clear: both;
+        }
     </style>
     
 </head>
@@ -568,7 +622,19 @@
     <div class="bg-glow"></div>
 
     
-    <div id="navbar-placeholder" data-page-type="report"></div>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <span class="navbar-logo">
+                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
+            </span>
+            <span class="navbar-badge">COMING SOON</span>
+        </a>
+        <div style="display:flex;gap:12px;">
+            <a href="reports.html" style="color:var(--text-secondary);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:6px;">
+                <i data-lucide="file-text" style="width:16px;height:16px;"></i> Reports
+            </a>
+        </div>
+    </nav>
     
 
     
@@ -911,7 +977,12 @@
     </main>
 
     
-    <div id="footer-placeholder"></div>
+    <footer class="footer">
+        <div class="footer-brand">
+            <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
+        </div>
+        <p>AI-Powered Investigative Journalism</p>
+    </footer>
     
 
     
@@ -987,6 +1058,5 @@
     <!-- GenuVerity Copyable Sections -->
     <script src="/js/copyable-sections.js"></script>
 
-    <script src="../js/shared-components.js"></script>
 </body>
 </html>

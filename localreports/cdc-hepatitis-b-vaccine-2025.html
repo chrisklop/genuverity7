@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer-when-downgrade">
     <title>CDC Drops Universal Hepatitis B Vaccine for Newborns: What Changed | GenuVerity</title>
-    <link rel="stylesheet" href="../css/shared-components.css">
     <meta name="description" content="RFK Jr.'s hand-picked CDC panel votes 8-3 to end 30-year universal vaccination policy. AAP boycotts, states rebel, and medical community sounds alarm.">
 
     <!-- Fonts -->
@@ -76,12 +75,67 @@
         }
 
         /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
 
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
 
+        .navbar-logo { font-size: 1.5rem; font-weight: 700; }
+        .logo-genu { color: #ffffff; }
+        .logo-verity { color: var(--accent-blue); }
 
+        .navbar-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: var(--accent-amber);
+        }
 
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
 
+        .navbar-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
 
+        .navbar-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
 
         .reading-progress {
             position: absolute;
@@ -94,6 +148,7 @@
         }
 
         @media (max-width: 768px) {
+            .navbar-right { display: none; }
         }
 
         /* Report Header */
@@ -533,7 +588,58 @@
             margin: 0 auto;
         }
 
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .footer-brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+    
+        /* Footer Logo Wrapper (Scaled Down) */
+        .footer-logo-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 8px;
+        }
+
+        .ss-footer {
+            position: absolute;
+            inset: -6px;
+            border-radius: 40px;
+            pointer-events: none;
+        }
+
+        .ss-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
         
+        /* Global Logo Colors */
+        .logo-genu { color: #ffffff !important; }
+        .logo-verity { color: #3b82f6 !important; }
+
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
+        }
 
     </style>
 </head>
@@ -541,7 +647,22 @@
     <!-- Navbar -->
     
     <!-- STANDARD NAVBAR -->
-    <div id="navbar-placeholder" data-page-type="report"></div>
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
+            <div class="navbar-logo">
+                <div class="navbar-logo-wrapper">
+                    <div class="ss-nav"></div>
+                    <div class="g-icon-nav">G</div>
+                </div>
+            </div>
+        </a>
+        <div class="navbar-right">
+            <a href="../index.html" class="nav-back-link" style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="arrow-left" style="width:16px;"></i>
+                Back to Intelligence
+            </a>
+        </div>
+    </nav>
 
 
     <!-- Report Header -->
@@ -900,7 +1021,19 @@
 
     
     <!-- Footer -->
-    <div id="footer-placeholder"></div>
+    <footer class="footer" style="padding:40px 0; text-align:center; border-top:1px solid rgba(59,130,246,0.15); background:rgba(5,10,20,0.8); margin-top: 80px;">
+        <div class="footer-logo-wrapper">
+            <div class="ss-footer"></div>
+            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity" style="font-size:1.5rem; font-weight:700;">Verity</span>
+        </div>
+        <p style="color:#a0aec0; margin-bottom:20px;">AI-Powered Investigative Journalism</p>
+        <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
+            <a href="mailto:hello@genuverity.com" style="color:#64748b; text-decoration:none;">Contact</a>
+            <a href="../index.html" style="color:#64748b; text-decoration:none;">Home</a>
+            <a href="../methodology.html" style="color:#64748b; text-decoration:none;">Methodology</a>
+            <a href="../limitations.html" style="color:#64748b; text-decoration:none;">System Limitations</a>
+        </div>
+    </footer>
 
 
     <script>
@@ -991,6 +1124,5 @@
             }
         });
     </script>
-    <script src="../js/shared-components.js"></script>
 </body>
 </html>

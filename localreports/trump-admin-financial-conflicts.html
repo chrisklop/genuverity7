@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer-when-downgrade">
     <title>Trump Administration Financial Conflicts Analysis | GenuVerity</title>
-    <link rel="stylesheet" href="../css/shared-components.css">
     <meta name="description"
         content="Comprehensive analysis of financial entanglements, cabinet wealth concentration, and state-intermediated enterprise in the second Trump administration">
 
@@ -61,7 +60,153 @@
         }
 
 
-        
+        /* === NAVBAR (Consolidated Premium) === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-logo-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .ss-nav {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ss-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
+
+        @keyframes sweep-30 {
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
+
+        /* Search Container */
+        .navbar-search-container {
+            display: flex;
+            align-items: center;
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0 16px;
+            height: 40px;
+            width: 300px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .navbar-search-container.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .navbar-search-input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            width: 100%;
+            outline: none;
+            margin-left: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .nav-back-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-back-link:hover {
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 16px;
+                display: grid;
+                grid-template-columns: 48px 1fr 48px;
+            }
+
+            .navbar-search-container {
+                width: 100%;
+                opacity: 1;
+                pointer-events: all;
+                margin: 0 8px;
+            }
+
+            .navbar-right {
+                display: none;
+            }
+        }
+
+        /* Scroll Progress Line */
+        .navbar::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            height: 2px;
+            background: var(--accent-cyan);
+            width: var(--scroll-progress, 0%);
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px var(--accent-cyan);
+            z-index: 1001;
+        }
 
         /* === LAYOUT UTILS === */
         .container {
@@ -416,18 +561,78 @@
         }
 
         /* Footer Styles */
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: #050A14;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            margin-top: 80px;
+        }
 
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
 
+        .footer p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
 
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
 
+        .footer-link {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
 
+        .footer-link:hover {
+            color: #fff;
+        }
 
         /* Footer Logo Wrapper (Scaled Down) */
+        .footer-logo-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 8px;
+        }
 
+        .ss-footer {
+            position: absolute;
+            inset: -6px;
+            border-radius: 40px;
+            pointer-events: none;
+        }
 
+        .ss-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
 
         /* Global Logo Colors */
+        .logo-genu {
+            color: #ffffff !important;
+        }
 
+        .logo-verity {
+            color: #3b82f6 !important;
+        }
 
         @keyframes sweep-30 {
             from {
@@ -444,7 +649,30 @@
 <body>
 
     <!-- STANDARD NAVBAR -->
-    <div id="navbar-placeholder" data-page-type="report"></div>
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
+            <div class="navbar-logo">
+                <div class="navbar-logo-wrapper">
+                    <div class="ss-nav"></div>
+                    <div class="g-icon-nav">G</div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Persistent Search Bar -->
+        <div class="navbar-search-container" id="navSearchContainer">
+            <i data-lucide="search" style="width:16px; color:var(--accent-cyan);"></i>
+            <input type="text" class="navbar-search-input search-sync-input" placeholder="Search Intelligence..."
+                id="navSearchInput">
+        </div>
+
+        <div class="navbar-right">
+            <a href="../index.html" class="nav-back-link">
+                <i data-lucide="arrow-left" style="width:16px;"></i>
+                Back to Intelligence
+            </a>
+        </div>
+    </nav>
 
 
 
@@ -1115,7 +1343,21 @@
     <!-- Persistent Footer -->
 
     <!-- Footer -->
-    <div id="footer-placeholder"></div>
+    <footer class="footer"
+        style="padding:40px 0; text-align:center; border-top:1px solid rgba(59,130,246,0.15); background:rgba(5,10,20,0.8); margin-top: 80px;">
+        <div class="footer-logo-wrapper">
+            <div class="ss-footer"></div>
+            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity"
+                style="font-size:1.5rem; font-weight:700;">Verity</span>
+        </div>
+        <p style="color:#a0aec0; margin-bottom:20px;">AI-Powered Investigative Journalism</p>
+        <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
+            <a href="mailto:hello@genuverity.com" style="color:#64748b; text-decoration:none;">Contact</a>
+            <a href="../index.html" style="color:#64748b; text-decoration:none;">Home</a>
+            <a href="../methodology.html" style="color:#64748b; text-decoration:none;">Methodology</a>
+            <a href="../limitations.html" style="color:#64748b; text-decoration:none;">System Limitations</a>
+        </div>
+    </footer>
 
 
     <script>
@@ -1419,7 +1661,6 @@
             }
         });
     </script>
-    <script src="../js/shared-components.js"></script>
 </body>
 
 </html>

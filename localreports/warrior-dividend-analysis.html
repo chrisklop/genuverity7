@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer-when-downgrade">
     <title>Analysis: Trump's $1,776 "Warrior Dividend" | GenuVerity</title>
-    <link rel="stylesheet" href="../css/shared-components.css">
     <meta name="description" content="Fact-check: Trump's $1,776 military bonus rebrands Congressionally-approved housing funds as 'Warrior Dividend.' Analysis of what service members need to know.">
 
     <!-- Fonts -->
@@ -72,12 +71,67 @@
             min-height: 100vh;
         }
 
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
 
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
 
+        .navbar-logo { font-size: 1.5rem; font-weight: 700; }
+        .logo-genu { color: #ffffff; }
+        .logo-verity { color: var(--accent-blue); }
 
+        .navbar-badge {
+            padding: 4px 10px;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent-amber);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
 
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
 
+        .navbar-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
 
+        .navbar-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
 
         /* Hamburger Menu */
         .hamburger-btn {
@@ -154,6 +208,7 @@
         }
 
         @media (max-width: 768px) {
+            .navbar-right { display: none; }
             .hamburger-btn { display: flex; }
         }
 
@@ -694,11 +749,53 @@
             text-decoration: none;
         }
 
-        
+        /* Footer */
+        .report-footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-subtle);
+            margin-top: 60px;
+        }
+
+        .genuverity-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .genuverity-brand .genu { color: #ffffff; }
+        .genuverity-brand .verity { color: var(--accent-blue); }
+
+        .report-footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
-    <div id="navbar-placeholder" data-page-type="report"></div>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <span class="navbar-logo">
+                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
+            </span>
+            <span class="navbar-badge">Needs Context</span>
+        </a>
+        <div class="navbar-right">
+            <a href="/" class="navbar-link">
+                <i data-lucide="home" style="width:16px;height:16px;"></i>
+                Home
+            </a>
+            <a href="/reports.html" class="navbar-link">
+                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
+                Reports
+            </a>
+        </div>
+        <button class="hamburger-btn" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
 
     <div class="mobile-menu" id="mobileMenu">
         <a href="/"><i data-lucide="home" style="width:18px;height:18px;"></i> Home</a>
@@ -1015,7 +1112,13 @@
         </section>
 
         <!-- Footer -->
-        <div id="footer-placeholder"></div>
+        <footer class="report-footer">
+            <div class="genuverity-brand">
+                <span class="genu">Genu</span><span class="verity">Verity</span>
+            </div>
+            <p>Data-driven analysis backed by primary sources.</p>
+            <p style="margin-top: 8px;">Report generated December 19, 2025</p>
+        </footer>
     </main>
 
     <script>
@@ -1142,6 +1245,5 @@
     <!-- GenuVerity Copyable Sections -->
     <script src="/js/copyable-sections.js"></script>
 
-    <script src="../js/shared-components.js"></script>
 </body>
 </html>
