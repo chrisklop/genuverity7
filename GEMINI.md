@@ -83,6 +83,12 @@ To generate a custom infographic preview for a report card, include the `chart` 
 - **hbar**: Array of objects (e.g., `[{ label: 'TikTok', value: 85 }, { label: 'X', value: 70 }]`)
 - **timeline**: Array of numbers 0-100 representing % position (e.g., `[10, 50, 90]`)
 
+**CRITICAL: Use REAL Data from Report Charts**
+- **NEVER use placeholder/generic data** like `[100, 95, 88, 82]`
+- **ALWAYS extract actual data** from the first chart in the report
+- Example: If report has chart with `data: [1, 8, 12, 24, 28]`, use that EXACT data
+- This creates a "peek" preview showing what's actually inside the report
+
 ---
 
 ## Key Documentation
