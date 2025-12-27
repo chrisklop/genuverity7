@@ -7,9 +7,9 @@
 
 ## 🚨 DEEP DIVE PROTOCOL (MANDATORY FOR ALL REPORTS)
 
-To ensure reports are comprehensive "Deep Dive Dossiers" and NOT summaries, follow the **1:3 Rule**:
+To ensure reports are comprehensive "Deep Dive Dossiers" and NOT summaries, follow the **Mega-Expansion Protocol**:
 
-**1. The 1:3 Rule**
+**1. The 1:3 Rule (Density)**
 For every single metadata point or key finding in the research:
 - **Heading 2 (`<h2>`)**: The main claim.
 - **Introductory Paragraph**: Context and background.
@@ -17,19 +17,47 @@ For every single metadata point or key finding in the research:
 - **Counter-Argument**: Addressing potential critiques.
 - **Conclusion/Verdict**: Final synthesis for that specific point.
 
-**2. Evidence Locker**
-Nevers summarize raw text (transcripts, logs, email chains). Use the `<details>` pattern or explicit "Exhibit" blocks:
-```html
-<div class="data-table-container">
-    <div class="sources-header">Exhibit A: Full Transcript</div>
-    <pre style="white-space: pre-wrap; padding: 20px;">[PASTE FULL TEXT HERE]</pre>
-</div>
-```
+**2. Target Length & "Mega-Expansion"**
+- **Trigger**: If a report feels like a summary (~2000 words), initiate a **Mega-Expansion Pass**.
+- **Target**: **5,000+ words** for Deep Dives.
+- **Strategy**: 
+  - Expand "Context" sections into full historical comparisons (e.g., comparing 2025 vs 2014 vs 2008).
+  - Use "Living Numbers" tables to compare nominal vs real prices.
+  - Dedicate full sections to "Geopolitics" or "supply chain mechanics" rather than single paragraphs.
 
-**3. Target Length**
-- Minimum 8-10 `<h2>` sections.
-- Minimum 2,000 words.
-- If a section feels "light," EXPAND it before finalizing.
+**3. "Claude Persona" UI Standards (MANDATORY)**
+- **Theme**: Deep Navy Opaque (`#050A14` !important) - NO transparency/blur mixing.
+- **Navbar**: Command Center style with **500px wide search bar**.
+- **Copy Buttons**: Must appear on ALL charts, tables, and sections.
+
+
+---
+
+## 🎨 CSS/UI DEBUGGING PROTOCOL (MANDATORY)
+
+**For any CSS or layout issues, follow this protocol:**
+
+### **Step 1: Browser Inspection FIRST**
+- Use `browser_subagent` to inspect computed styles before attempting any fixes
+- Never guess based on code review alone
+- Get actual rendered values: width, height, position, z-index, etc.
+
+### **Step 2: Identify ALL Constraints**
+Check for:
+- `max-width` / `min-width` (overrides `width` even with `!important`)
+- Parent grid/flexbox constraints
+- Inline styles (highest specificity)
+- Multiple CSS files with duplicate selectors
+- Media queries applying incorrectly
+
+### **Step 3: Verify Fix**
+- Use browser_subagent to confirm fix worked, OR
+- Ask user to verify
+- **NEVER** claim "fixed" without evidence
+
+### **Communication:**
+- ❌ "Fixed" or "This should work"
+- ✅ "Applied change - please verify in browser"
 
 
 ---
@@ -47,9 +75,12 @@ Antigravity IDE (Claude/Gemini)
         ├── 2. Additional research if needed
         ├── 3. Structure into sections
         ├── 4. Create charts/visualizations
-        ├── 5. Generate HTML from template
-        ├── 6. Update reports-data.js (CRITICAL)
-        └── 7. Validate & deploy
+        ├── 5. Generate HTML from Golden Template (docs/report-template-2025.html)
+        ├── 6. Update reports-data.js (CRITICAL - manual ID increment)
+        ├── 7. Run validate-report.sh (citations, sources)
+        ├── 8. Run validate-standards.sh (placeholders, components)
+        ├── 9. Visual verification (navbar, footer, chart preview)
+        └── 10. Deploy (only if ALL validations pass)
 ```
 
 ---
@@ -61,8 +92,47 @@ Antigravity IDE (Claude/Gemini)
 [ ] Sources list included and verified
 [ ] Golden template location: docs/report-template-2025.html
 [ ] NEVER write HTML from scratch - use template
+[ ] NEVER copy HTML from existing reports (may have legacy bugs)
 [ ] NEVER use Wikipedia as a source
 ```
+
+---
+
+## ⚠️ MANDATORY VALIDATION (CRITICAL)
+
+**BEFORE COMMITTING ANY REPORT:**
+
+### 1. Template Compliance
+- ✅ File MUST be created from `docs/report-template-2025.html`
+- ❌ NEVER copy from existing reports (they may have legacy bugs)
+- ✅ All `<head>` dependencies must match Golden Template exactly
+
+### 2. Required Placeholders
+- ✅ `<div id="navbar-placeholder" data-page-type="report"></div>` in `<body>`
+- ✅ `<div id="footer-placeholder"></div>` BEFORE `</body>` tag
+- ❌ Footer placeholder must NOT be inside `<script>` tags
+
+### 3. Automated Validation (MANDATORY)
+Run BOTH scripts before commit:
+```bash
+./validate-report.sh localreports/[filename].html
+./validate-standards.sh localreports/[filename].html
+```
+Both MUST pass with ✅ ALL CHECKS PASSED
+
+### 4. reports-data.js Entry
+- ✅ New report at `id: 0` (top of array)
+- ✅ ALL existing IDs manually incremented by +1 (NO automation/regex)
+- ✅ `chart` object present and correctly formatted
+- ✅ Verify syntax: `node -c js/reports-data.js`
+
+### 5. Visual Verification
+- ✅ Open: `http://localhost:8000/localreports/[filename].html`
+- ✅ Navbar renders correctly
+- ✅ Footer renders correctly
+- ✅ Chart preview "peek" shows on landing page (`index.html`)
+
+**If ANY validation fails, DO NOT commit. Fix issues first.**
 
 ---
 

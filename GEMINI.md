@@ -25,7 +25,8 @@ This file provides guidance to Gemini when working with code in this repository.
 - `[TEMPLATE]` = Read and follow docs/templates.md
 - `[INFOGRAPHIC]` = Use gemini-3-pro-image-preview + GenuVerity branding
 - `[REPORT]` = Full report generation following all templates
-- **VALIDATION**: All HTML output MUST pass `./validate-report.sh` (Interactive citations, Copy buttons, etc.)
+- **VALIDATION**: All HTML output MUST pass `./validate-report.sh` AND `./validate-standards.sh`
+- **TEMPLATE SOURCE**: ALWAYS use `docs/report-template-2025.html` (NEVER copy from existing reports)
 
 ---
 
@@ -52,10 +53,14 @@ This file provides guidance to Gemini when working with code in this repository.
 - `server.py`
 
 ### Workflow: Adding a New Report
-1. **Create HTML**: `localreports/your-report-slug.html` using the template.
+1. **Create HTML**: `localreports/your-report-slug.html` from `docs/report-template-2025.html` (NEVER copy old reports).
 2. **Update Metadata**: Add entry to `REPORTS_DATA` in `js/reports-data.js`.
-   - **ID Management**: Newest report gets `id: 0`. Increment ALL other IDs by +1.
-   - **Validation**: Verify JSON syntax carefully.
+   - **ID Management**: Newest report gets `id: 0`. Increment ALL other IDs by +1 (MANUALLY, no automation).
+   - **Chart Object**: MUST include `chart` object for landing page preview.
+   - **Validation**: Verify JSON syntax carefully with `node -c js/reports-data.js`.
+3. **Run Validation**: BOTH `./validate-report.sh` AND `./validate-standards.sh` MUST pass.
+4. **Visual Check**: Verify navbar, footer, and chart preview render correctly.
+5. **Deploy**: Only after ALL validations pass.
 
 ### Chart Object Structure (For `js/reports-data.js`)
 To generate a custom infographic preview for a report card, include the `chart` object in the report entry:
@@ -121,7 +126,20 @@ All visuals must be generated as code (Chart.js, D3, Mermaid) by the Claude agen
 
 ## 📜 REPORT GENERATION WORKFLOW (MANDATORY)
 
-**To add a new report:**
+**The "Gemini -> Claude Persona" Pipeline:**
+
+1.  **STEP 1: GEMINI (Browser/Research)**
+    *   **User Action**: Prompt Gemini (browser) for "Deep Research" on the topic.
+    *   **Output**: Raw text, 30-50+ citations, key data points.
+    *   **Role**: *The Librarian / Investigator.*
+
+2.  **STEP 2: CLAUDE PERSONA (The Builder)**
+    *   **User Action**: Feed the raw research to the Agent (acting as Claude).
+    *   **Prompt**: "Build the Deep Dive Dossier using the Mega-Expansion Protocol."
+    *   **Role**: *The Editor-in-Chief / Architect.*
+    *   **Output**: The final 5,000+ word HTML file with high-fidelity UI.
+
+**Implementation Steps:**
 
 1. **START FROM GOLDEN TEMPLATE:**
    - Run: `cp docs/report-template-2025.html localreports/your-report-slug.html`
@@ -135,13 +153,63 @@ All visuals must be generated as code (Chart.js, D3, Mermaid) by the Claude agen
    - **NEVER use automation** (perl/sed/regex) - causes duplicate `id:` keys
    - **ALWAYS verify** with: `node -c js/reports-data.js` before commit
 
-3. **Content Injection:**
-   - **Dynamic Length:** The `.article-content` and `.sources-sidebar` areas are designed to expand infinitely.
-   - **Structure:** Use `<h2 class="prose-h2">` for sections. You can add 10, 50, or 100 sections; the layout handles strict vertical flow automatically.
-   - **Visuals:** Inject `<figure class="float-figure copyable-section">` blocks between paragraphs.
+3. **Content Injection (THE MEGA-EXPANSION):**
+   - **Density**: Target ~500 words per section.
+   - **Structure**: Use `<div class="chart-box copyable-section">` for all visuals.
+   - **Context**: If a section feels light, HALT and expand it with historical data.
 
 4. **Validation:**
    - Run: `./validate-report.sh localreports/your-report.html`
 
 5. **Commit:**
    - `git add ...` and `git commit`.
+
+---
+
+## 🎨 CSS/UI DEBUGGING PROTOCOL (CRITICAL)
+
+**Lesson Learned: December 2025 - Navbar Search Width Issue**
+
+When debugging CSS/layout issues, ALWAYS follow this protocol to avoid wasting time and user costs:
+
+### **MANDATORY FIRST STEP: Browser Inspection**
+- **NEVER** attempt CSS fixes based on code review alone
+- **ALWAYS** use `browser_subagent` to inspect computed styles FIRST
+- Get the actual rendered values, not what you think should be applied
+
+### **What to Check in Browser:**
+1. **Computed width/height** - what's actually rendered
+2. **All CSS rules** - which file/line is "winning"
+3. **Specificity conflicts** - `!important`, inline styles, cascade order
+4. **Hidden constraints** - `max-width`, `min-width`, `flex-basis`, grid constraints
+5. **Parent containers** - grid/flexbox that might constrain children
+
+### **Common CSS Gotchas:**
+- `max-width` overrides `width` (even with `!important` on width)
+- Inline `<style>` tags load AFTER external CSS files
+- Mobile media queries can apply to desktop if not properly scoped
+- CSS Grid `1fr` can constrain children even with explicit widths
+- Multiple CSS files can have duplicate selectors
+
+### **Communication Rules:**
+- ❌ **NEVER say**: "Fixed" or "This should work now"
+- ✅ **ALWAYS say**: "Applied change - please verify in browser"
+- ✅ **BETTER**: "Browser inspection shows X, applied Y - please verify"
+
+### **Verification Before Claiming Success:**
+- Use browser subagent to verify the fix worked, OR
+- Explicitly ask user to verify, OR
+- **NEVER** claim something is "fixed" without evidence
+
+### **Example Workflow:**
+```
+1. User reports: "Search bar is narrower than dropdown"
+2. Use browser_subagent to inspect both elements
+3. Identify: max-width: 320px is constraining search bar
+4. Fix: Change max-width to 500px
+5. Verify: Use browser_subagent to confirm both are now 500px
+6. Report: "Changed max-width from 320px to 500px - please verify"
+```
+
+**This protocol is MANDATORY for all CSS/UI work. No exceptions.**
+
