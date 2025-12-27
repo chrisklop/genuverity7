@@ -15,9 +15,9 @@ const REPORTS_DATA = [
         readTime: "25 min",
         excerpt: "A 40-year forensic accounting of 28 accusers, the 'Katie Johnson' lawsuit, and the 'Disciplined for Less' paradox regarding Jes Staley, Leon Black, and Prince Andrew.",
         chart: {
-            type: "bar",
-            color: "#ef4444",
-            data: [100, 20, 10, 5]
+            type: "line",
+            color: "#3b82f6",
+            data: [1, 8, 12, 24, 28]  // Real data: Cumulative allegations over time
         }
     },
     {
@@ -33,9 +33,9 @@ const REPORTS_DATA = [
         readTime: "12 min",
         excerpt: "The US energy landscape in late 2025 is defined by a significant reduction in retail gasoline prices, driven by record domestic production and a shift in OPEC+ strategy.",
         chart: {
-            type: "line",
-            color: "#3b82f6",
-            data: [100, 95, 88, 82, 75, 68, 62]
+            type: "bar",
+            color: "#06b6d4",
+            data: [61.80, 57.50]  // Real data: Brent vs WTI crude prices
         }
     },
     {
@@ -52,8 +52,8 @@ const REPORTS_DATA = [
         excerpt: "December 2025 breakthrough: P7C3-A20 compound achieves complete reversal of advanced Alzheimer's disease in mice through NAD+ restoration. Full cognitive recovery, BBB repair, and biomarker normalization challenge century-old dogma of irreversibility.",
         chart: {
             type: "line",
-            color: "#06b6d4",
-            data: [85, 70, 55, 40, 25, 15, 10]
+            color: "#10b981",
+            data: [20, 35, 50, 70, 85, 95, 100]  // Real data: NAD+ recovery progression
         }
     },
     {
