@@ -585,7 +585,7 @@
         }
 
         // Initialize Charts
-        window.addEventListener('gv:componentsReady', () => {
+        const initCharts = () => {
             // Timeline Chart
             new Chart(document.getElementById('timelineChart'), {
                 type: 'line',
@@ -596,7 +596,7 @@
                         data: [1, 8, 12, 24, 28],
                         borderColor: '#3b82f6',
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        borderWidth: 2, // Added borderWidth
+                        borderWidth: 2,
                         fill: true,
                         tension: 0.4
                     }]
@@ -674,7 +674,14 @@
                     }
                 }
             });
-        });
+        };
+
+        // Handle race condition: check if components already ready
+        if (window.gvComponentsReady) {
+            initCharts();
+        } else {
+            window.addEventListener('gv:componentsReady', initCharts);
+        }
 
         // Populate Sources
         const sourcesSidebar = document.getElementById('sourcesList');

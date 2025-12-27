@@ -501,7 +501,7 @@
         });
 
         // Initialize Charts (Claude Precision)
-        window.addEventListener('gv:componentsReady', () => {
+        const initCharts = () => {
             new Chart(document.getElementById('benchmarkChart'), {
                 type: 'bar',
                 data: {
@@ -554,7 +554,14 @@
 
             // Mermaid Init
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        });
+        };
+
+        // Handle race condition: check if components already ready
+        if (window.gvComponentsReady) {
+            initCharts();
+        } else {
+            window.addEventListener('gv:componentsReady', initCharts);
+        }
 
         // Real sources (EIA, BLS, FRED, etc.)
         const realSources = [
