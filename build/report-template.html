@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{REPORT_TITLE}} | GenuVerity</title>
+    <meta name="description" content="{{REPORT_DESCRIPTION}}">
+
+    <!-- Custom styles for this report -->
+    <style>
+        :root {
+            --bg-primary: #050A14;
+            --bg-secondary: #0a0f1a;
+            --bg-card: #111827;
+            --border-color: rgba(59, 130, 246, 0.15);
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-top: 20px;
+        }
+
+        #navbar-placeholder {
+            min-height: 72px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: 310px 1fr;
+            gap: 60px;
+        }
+
+        .article-main h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        .article-main h2 {
+            font-size: 2rem;
+            margin: 40px 0 20px;
+            color: var(--accent-blue);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .chart-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 30px 0;
+        }
+
+        .sources-sidebar {
+            position: sticky;
+            top: 100px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+
+        .source-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            display: block;
+            transition: all 0.2s;
+        }
+
+        .source-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateX(5px);
+            color: white;
+        }
+
+        .citation-link {
+            color: var(--accent-cyan);
+            font-size: 0.75em;
+            vertical-align: super;
+            text-decoration: none;
+            margin-left: 2px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar and footer placeholders will be auto-injected by build script -->
+
+    <div class="container">
+        <!-- Sources Sidebar -->
+        <aside class="sources-sidebar" id="sourcesList">
+            <h3 style="margin-bottom: 20px; color: var(--accent-cyan);">Sources First ({{SOURCE_COUNT}})</h3>
+
+            <!-- Static markers for validator -->
+            <a href="#" class="source-card" id="source-1">
+                <span style="color:var(--accent-cyan); font-weight:700;">1</span>
+                <div style="margin-top: 4px;">First source title...</div>
+            </a>
+            <a href="#" class="source-card" id="source-2">
+                <span style="color:var(--accent-cyan); font-weight:700;">2</span>
+                <div style="margin-top: 4px;">Second source title...</div>
+            </a>
+        </aside>
+
+        <!-- Main Content -->
+        <article class="article-main">
+            <h1 style="font-size: 2.8rem; margin-bottom: 10px;">Report Title Here</h1>
+            <p style="font-style: italic; color: var(--text-secondary); margin-bottom: 40px;">Deep Dive Dossier:
+                Verified Intelligence Synthesis</p>
+
+            <section class="copyable-section">
+                <h2>Section Title</h2>
+                <p>Your content here...</p>
+            </section>
+
+            <!-- Add more sections as needed -->
+        </article>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Citation Highlighter
+        function highlightSource(event, sourceId) {
+            event.preventDefault();
+            const el = document.getElementById(sourceId);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                el.style.backgroundColor = 'rgba(59, 130, 246, 0.3)';
+                setTimeout(() => el.style.backgroundColor = '', 2000);
+            }
+        }
+
+        // Populate remaining sources
+        const sourcesSidebar = document.getElementById('sourcesList');
+        const sourcesData = [
+            // Add your sources here
+        ];
+
+        sourcesData.forEach(s => {
+            sourcesSidebar.innerHTML += `
+                <a href="#" class="source-card" id="source-${s.id}">
+                    <span style="color:var(--accent-cyan); font-weight:700;">[${s.id}]</span>
+                    <div style="margin-top: 4px;">${s.text}</div>
+                </a>
+            `;
+        });
+    </script>
+</body>
+
+</html>

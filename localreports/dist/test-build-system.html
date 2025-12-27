@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Report | GenuVerity</title>
+    <meta name="description" content="Test report to verify build system functionality">
+
+    <style>
+        :root {
+            --bg-primary: #050A14;
+            --bg-secondary: #0a0f1a;
+            --bg-card: #111827;
+            --border-color: rgba(59, 130, 246, 0.15);
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-top: 20px;
+        }
+
+        #navbar-placeholder {
+            min-height: 72px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: 310px 1fr;
+            gap: 60px;
+        }
+
+        .article-main h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        .sources-sidebar {
+            position: sticky;
+            top: 100px;
+        }
+
+        .source-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            display: block;
+        }
+    </style>
+    <!-- INJECTED_DEPENDENCIES -->
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/chart-watermark.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- Search & UI Dependencies -->
+    <script src="../js/reports-data.js" defer></script>
+    <script src="../js/unified-search.js" defer></script>
+    <script src="../js/copyable-sections.js" defer></script>
+    <script src="../js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="../css/shared-components.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
+    <div class="container">
+        <aside class="sources-sidebar" id="sourcesList">
+            <h3 style="margin-bottom: 20px; color: var(--accent-cyan);">Sources First (2)</h3>
+            <a href="#" class="source-card" id="source-1">
+                <span style="color:var(--accent-cyan); font-weight:700;">1</span>
+                <div style="margin-top: 4px;">Test Source 1</div>
+            </a>
+            <a href="#" class="source-card" id="source-2">
+                <span style="color:var(--accent-cyan); font-weight:700;">2</span>
+                <div style="margin-top: 4px;">Test Source 2</div>
+            </a>
+        </aside>
+
+        <article class="article-main">
+            <h1>Build System Test Report</h1>
+            <p style="font-style: italic; color: var(--text-secondary); margin-bottom: 40px;">
+                This is a test report to verify the automated build system works correctly.
+            </p>
+
+            <section class="copyable-section">
+                <h2>Test Section</h2>
+                <p>This report should have navbar and footer placeholders auto-injected by the build script.</p>
+                <p>If you can see the navbar above and footer below, the build system is working!</p>
+            </section>
+        </article>
+    </div>
+
+    <script>
+        function highlightSource(event, sourceId) {
+            event.preventDefault();
+            const el = document.getElementById(sourceId);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                el.style.backgroundColor = 'rgba(59, 130, 246, 0.3)';
+                setTimeout(() => el.style.backgroundColor = '', 2000);
+            }
+        }
+    </script>
+
+    <div id="footer-placeholder"></div>
+</body>
+
+</html>
