@@ -213,3 +213,109 @@ When debugging CSS/layout issues, ALWAYS follow this protocol to avoid wasting t
 
 **This protocol is MANDATORY for all CSS/UI work. No exceptions.**
 
+---
+
+## 📊 CHART.JS CONFIGURATION (LESSONS LEARNED - DEC 2025)
+
+**Critical Issues Encountered:**
+
+### **Issue 1: Invisible Chart Lines**
+- **Problem**: Timeline chart appeared blank despite data being present
+- **Root Cause**: `borderWidth` was `null` (Chart.js v3+ doesn't default to visible width)
+- **Fix**: ALWAYS explicitly set `borderWidth: 2` (or appropriate value) for line charts
+
+### **Issue 2: Invisible Chart Segments**
+- **Problem**: Doughnut chart segment blended into dark background
+- **Root Cause**: Used `#111827` (nearly black) on `#050A14` background
+- **Fix**: Use colors with sufficient contrast - minimum `#64748b` for dark segments
+
+### **Issue 3: Missing Axis Labels**
+- **Problem**: Y-axis labels invisible or missing
+- **Root Cause**: Missing `ticks: { color: '#cbd5e1' }` in scales configuration
+- **Fix**: ALWAYS include tick colors in scales
+
+### **Issue 4: Full-Width Charts Instead of Magazine-Style**
+- **Problem**: Charts taking full article width instead of floating right
+- **Root Cause**: Missing or incorrect `.chart-box` CSS
+- **Fix**: Use this exact CSS:
+
+```css
+.chart-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+    float: right;
+    width: 450px;
+    margin-left: 30px;
+    transition: all 0.3s ease;
+}
+
+.chart-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+}
+
+/* Clear floats after sections */
+section::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+```
+
+### **MANDATORY Chart.js v3+ Configuration Template:**
+
+```javascript
+new Chart(document.getElementById('chartId'), {
+    type: 'line', // or 'bar', 'doughnut', etc.
+    data: {
+        labels: ['Label 1', 'Label 2'],
+        datasets: [{
+            label: 'Dataset Label',
+            data: [10, 20],
+            borderColor: '#3b82f6',
+            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+            borderWidth: 2  // CRITICAL: Must be explicit
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: { labels: { color: '#cbd5e1' } },
+            title: { display: true, text: 'Chart Title', color: '#fff' },
+            watermark: { text: "GenuVerity" }
+        },
+        scales: {  // CRITICAL: Include for bar/line charts
+            y: {
+                beginAtZero: true,
+                grid: { color: '#1e293b' },
+                ticks: { color: '#cbd5e1' }  // CRITICAL
+            },
+            x: {
+                grid: { display: false },
+                ticks: { color: '#cbd5e1' }  // CRITICAL
+            }
+        }
+    }
+});
+```
+
+### **Color Contrast Requirements:**
+- **Minimum contrast on dark background**: `#64748b` or lighter
+- **Avoid**: `#111827`, `#0a0f1a`, `#050A14` (too dark)
+- **Safe colors**: `#3b82f6` (blue), `#10b981` (green), `#f59e0b` (amber), `#ef4444` (red), `#64748b` (slate)
+
+### **Pre-Deployment Checklist for Charts:**
+```
+□ borderWidth explicitly set (line charts)
+□ All colors have sufficient contrast
+□ Tick colors set in scales (bar/line charts)
+□ .chart-box CSS includes float: right and width: 450px
+□ section::after clearfix present
+□ Watermark plugin included
+□ Test in browser before claiming "fixed"
+```
+
