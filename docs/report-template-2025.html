@@ -67,11 +67,15 @@
     <script src="../js/chart-watermark.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="../js/copyable-sections.js" defer></script>
+    <script src="../js/reports-data.js"></script>
+    <script src="../js/unified-search.js" defer></script>
+    <script src="../js/shared-components.js" defer></script>
 
     <!-- Fonts (Standard Pack) -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="../css/shared-components.css">
 
     <style>
         /* === CORE VARIABLES === */
@@ -111,162 +115,6 @@
             overflow-x: hidden;
         }
 
-        /* === NAVBAR (Consolidated Premium) === */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 64px;
-            background: rgba(5, 10, 20, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-        }
-
-        /* Scroll Progress Line */
-        .navbar::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            height: 2px;
-            background: var(--accent-cyan);
-            width: var(--scroll-progress, 0%);
-            transition: width 0.1s linear;
-            box-shadow: 0 0 10px var(--accent-cyan);
-            z-index: 1001;
-        }
-
-        .navbar-logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar-logo-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-        }
-
-        .ss-nav {
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .ss-nav::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
-            animation: sweep-30 4s ease-in-out infinite alternate;
-        }
-
-        .g-icon-nav {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.8rem;
-            color: white;
-            font-weight: 300;
-            position: relative;
-            z-index: 2;
-            line-height: 1;
-        }
-
-        @keyframes sweep-30 {
-            from {
-                transform: rotate(-20deg);
-            }
-
-            to {
-                transform: rotate(20deg);
-            }
-        }
-
-        /* Search Container */
-        .navbar-search-container {
-            display: flex;
-            align-items: center;
-            background: rgba(17, 24, 39, 0.8);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 0 16px;
-            height: 40px;
-            width: 300px;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-
-        .navbar-search-container.visible {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .navbar-search-input {
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            width: 100%;
-            outline: none;
-            margin-left: 10px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .nav-back-link {
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            text-decoration: none;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-back-link:hover {
-            color: var(--text-primary) !important;
-            transform: translateX(-4px);
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 0 16px;
-                display: grid;
-                grid-template-columns: 48px 1fr 48px;
-            }
-
-            .navbar-search-container {
-                width: 100%;
-                opacity: 1;
-                pointer-events: all;
-                margin: 0 8px;
-            }
-
-            .navbar-right {
-                display: none;
-            }
-        }
-
-        .logo-genu {
-            color: #ffffff;
-        }
-
-        .logo-verity {
-            color: var(--accent-blue);
-        }
-
         /* === LAYOUT UTILS === */
         .container {
             max-width: 1200px;
@@ -274,7 +122,7 @@
             padding: 0 20px;
             position: relative;
             z-index: 10;
-            padding-top: 80px;
+            padding-top: 100px;
         }
 
         .report-meta {
@@ -298,6 +146,12 @@
             background: rgba(239, 68, 68, 0.1);
             border-color: rgba(239, 68, 68, 0.2);
             color: var(--accent-red);
+        }
+
+        .meta-tag.amber {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.2);
+            color: var(--accent-amber);
         }
 
         .report-title {
@@ -643,31 +497,8 @@
 </head>
 
 <body>
-    <!-- STANDARD NAVBAR -->
-    <nav class="navbar">
-        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
-            <div class="navbar-logo">
-                <div class="navbar-logo-wrapper">
-                    <div class="ss-nav"></div>
-                    <div class="g-icon-nav">G</div>
-                </div>
-            </div>
-        </a>
-
-        <!-- Persistent Search Bar -->
-        <div class="navbar-search-container" id="navSearchContainer">
-            <i data-lucide="search" style="width:16px; color:var(--accent-cyan);"></i>
-            <input type="text" class="navbar-search-input search-sync-input" placeholder="Search Intelligence..."
-                id="navSearchInput">
-        </div>
-
-        <div class="navbar-right">
-            <a href="../index.html" class="nav-back-link">
-                <i data-lucide="arrow-left" style="width:16px;"></i>
-                Back to Intelligence
-            </a>
-        </div>
-    </nav>
+    <!-- Nav Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
 
     <div class="container">
         <!-- REPORT HEADER -->
@@ -771,26 +602,19 @@
         </div>
     </div>
 
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
     <script>
-        // Reading Progress & Navbar Logic
+        // Reading Progress Logic
         window.addEventListener('scroll', () => {
             // Progress Bar
             const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = (window.scrollY / totalHeight) * 100;
             document.documentElement.style.setProperty('--scroll-progress', `${progress}%`);
-
-            // Navbar Search Persistence (Desktop Scroll)
-            const navSearch = document.getElementById('navSearchContainer');
-            if (window.innerWidth > 768) {
-                if (window.scrollY > 200) {
-                    navSearch.classList.add('visible');
-                } else {
-                    navSearch.classList.remove('visible');
-                }
-            }
         });
 
-        // Initialize Lucide Icons
+        // Initialize Lucide Icons (Fallback if injection delay)
         lucide.createIcons();
 
         // Interactive Citation Highlighting
@@ -803,9 +627,8 @@
                     behavior: 'smooth',
                     block: 'center'
                 });
-                element.classList.remove('highlight');
-                void element.offsetWidth; // trigger reflow
                 element.classList.add('highlight');
+                setTimeout(() => element.classList.remove('highlight'), 2000);
             }
         }
 

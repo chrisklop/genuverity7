@@ -1,0 +1,327 @@
+/**
+ * GenuVerity Shared Components CSS
+ * Centralizes styles for Navbar, Search Overlay, and Footer.
+ */
+
+/* === SHARED COMPONENT STYLES === */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(5, 10, 20, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.navbar::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background: var(--accent-cyan);
+    width: var(--scroll-progress, 0%);
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px var(--accent-cyan);
+    z-index: 1001;
+}
+
+/* Logo Styles */
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    display: flex;
+}
+
+.logo-genu {
+    color: #ffffff;
+}
+
+.logo-verity {
+    color: var(--accent-blue);
+}
+
+.navbar-brand {
+    text-decoration: none;
+    border: none;
+}
+
+.navbar-logo-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.g-icon-nav {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.8rem;
+    color: white;
+    font-weight: 300;
+    position: relative;
+    z-index: 2;
+    line-height: 1;
+}
+
+.ss-nav {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.ss-nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+    animation: sweep-30 4s ease-in-out infinite alternate;
+}
+
+/* Search Styles */
+.navbar-center {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.navbar-search-container {
+    display: flex;
+    align-items: center;
+    background: rgba(17, 24, 39, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0 16px;
+    height: 40px;
+    width: 100%;
+    max-width: 400px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-search-container:focus-within {
+    background: rgba(17, 24, 39, 0.9);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+}
+
+.nav-search-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--accent-cyan);
+    opacity: 0.8;
+}
+
+.navbar-search-input {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    width: 100%;
+    outline: none;
+    margin-left: 10px;
+    font-family: inherit;
+}
+
+.navbar-search-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+/* Hamburger & Mobile Menu */
+.navbar-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 1002;
+}
+
+.navbar-hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all 0.3s;
+}
+
+.navbar-hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.navbar-hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.navbar-hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 64px;
+    right: 16px;
+    width: 220px;
+    background: rgba(5, 10, 20, 0.98);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    z-index: 999;
+    padding: 8px;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-menu.active {
+    display: flex;
+}
+
+/* Search Overlay */
+.search-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 10, 20, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 2000;
+    display: none;
+    padding-top: 100px;
+}
+
+.search-overlay.active {
+    display: block;
+}
+
+.search-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.search-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    margin-bottom: 24px;
+}
+
+.search-input-large {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    outline: none;
+}
+
+/* Footer Styles */
+.footer-logo-wrapper {
+    position: relative;
+    display: inline-block;
+    padding: 8px 16px;
+    margin-bottom: 8px;
+}
+
+.ss-footer {
+    position: absolute;
+    inset: -6px;
+    border-radius: 40px;
+    pointer-events: none;
+}
+
+.ss-footer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 40px;
+    background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.15) 30deg, transparent 60deg);
+    animation: sweep-30 4s ease-in-out infinite alternate;
+}
+
+/* Animations */
+@keyframes sweep-30 {
+    from {
+        transform: rotate(-30deg);
+    }
+
+    to {
+        transform: rotate(30deg);
+    }
+}
+
+@keyframes cta-pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+    }
+
+    50% {
+        transform: scale(1.03);
+        box-shadow: 0 0 15px 5px rgba(59, 130, 246, 0.2);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+    }
+}
+
+.pulsing-cta {
+    animation: cta-pulse 2s infinite ease-in-out;
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 16px;
+        grid-template-columns: auto 1fr auto;
+        gap: 12px;
+    }
+
+    .logo-text {
+        display: none;
+        /* Hide text on mobile to give room to search */
+    }
+
+    .navbar-search-container {
+        padding: 0 12px;
+    }
+
+    .navbar-right {
+        display: none;
+    }
+
+    .navbar-hamburger {
+        display: flex;
+    }
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer-when-downgrade">
     <title>US Inflation Data: Accurate Numbers, Compromised Collection | GenuVerity Intelligence</title>
+    <link rel="stylesheet" href="../css/shared-components.css">
     <meta name="description" content="Analysis of November 2025 CPI data, BLS methodology critiques, shutdown disruptions, and why official inflation diverges from consumer experience.">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -105,72 +106,7 @@
             75% { transform: translate(-50px, -30px) scale(1.05); }
         }
 
-        /* === NAVBAR === */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 64px;
-            background: rgba(5, 10, 20, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .navbar-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .logo-genu { color: #ffffff; }
-        .logo-verity { color: var(--accent-blue); }
-
-        .navbar-badge {
-            padding: 4px 10px;
-            background: rgba(59, 130, 246, 0.15);
-            border: 1px solid rgba(59, 130, 246, 0.4);
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--accent-blue);
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .navbar-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .navbar-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-
-        .navbar-link:hover {
-            color: var(--text-primary);
-            background: var(--bg-tertiary);
-        }
+        
 
         /* === MAIN CONTAINER === */
         .main-container {
@@ -850,9 +786,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .navbar-right {
-                display: none;
-            }
 
             .comparison-table {
                 font-size: 0.85rem;
@@ -874,24 +807,7 @@
     </div>
 
     <!-- Navbar -->
-    <nav class="navbar">
-        <a href="index.html" class="navbar-brand">
-            <div class="navbar-logo">
-                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
-            </div>
-            <span class="navbar-badge">Economic Analysis</span>
-        </a>
-        <div class="navbar-right">
-            <a href="reports.html" class="navbar-link">
-                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-                Reports
-            </a>
-            <a href="request-report.html" class="navbar-link">
-                <i data-lucide="plus-circle" style="width:16px;height:16px;"></i>
-                Request Report
-            </a>
-        </div>
-    </nav>
+    <div id="navbar-placeholder" data-page-type="report"></div>
 
     <!-- Mobile Notice -->
     <div class="mobile-notice" id="mobile-notice">
@@ -1571,5 +1487,7 @@
     <!-- GenuVerity Reading Progress Bar -->
     <script src="/js/reading-progress.js"></script>
 
+    <div id="footer-placeholder"></div>
+    <script src="../js/shared-components.js"></script>
 </body>
 </html>

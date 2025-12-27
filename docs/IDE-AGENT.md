@@ -60,6 +60,8 @@ Antigravity IDE (Claude/Gemini)
 [ ] Research received from browser Gemini
 [ ] Sources list included and verified
 [ ] Golden template location: docs/report-template-2025.html
+[ ] Shared components placeholders included: #navbar-placeholder, #footer-placeholder
+[ ] Shared components linked: shared-components.css, shared-components.js
 [ ] NEVER write HTML from scratch - use template
 [ ] NEVER use Wikipedia as a source
 ```
@@ -131,13 +133,19 @@ Create Chart.js visualizations where data supports it:
    - `{{CHART_JS_CONFIGS}}` - Chart initialization code
 
 4. **Layout Standards (MANDATORY):**
+   - **Shared Components:** Every report MUST use the following placeholders:
+     - `<div id="navbar-placeholder" data-page-type="report"></div>` (at the start of `<body>`)
+     - `<div id="footer-placeholder"></div>` (at the end of `<body>`)
+   - **External Assets:** Ensure the following are linked in `<head>` and before `</body>`:
+     - `<link rel="stylesheet" href="../css/shared-components.css">`
+     - `<script src="../js/shared-components.js" defer></script>`
    - **Figures/Charts:** Always use `float: right` with margin `5px 0 20px 25px` (standardized in template).
    - **Info Boxes/Alerts:** Always add `style="clear: both;"` to prevent overlapping with floated figures.
    - **Nesting:** Automated. The system supports nested copy buttons (e.g., copying a section vs. copying a chart inside it).
 
 5. **Copyable Sections (AUTOMATED):**
    
-   The system automatically adds "Copy Image" functionality to all:
+   The system automatically adds "Copy Image" functionality via `js/copyable-sections.js` to all:
    - `<section>` tags
    - Charts (`.chart-wrapper`)
    - Info boxes (`.info-box`)
@@ -244,7 +252,9 @@ plane, cpu, eye, radar, shield-alert, scale, file-text, database, activity, glob
 
 ### Validation Checks:
 - [ ] Crimson Pro font included
-- [ ] nav-header class present
+- [ ] navbar-placeholder ID exists with data-page-type="report"
+- [ ] footer-placeholder ID exists
+- [ ] shared-components.css and shared-components.js linked correctly
 - [ ] source-1 ID exists
 - [ ] highlightSource() function calls present
 - [ ] copyable-section classes on key elements
