@@ -11,6 +11,9 @@
 
     <!-- Dependencies -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="../css/shared-components.css">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/chart-watermark.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -59,7 +62,7 @@
             overflow-x: hidden;
         }
 
-        
+
         /* === NAVBAR (Consolidated Premium) === */
         .navbar {
             position: fixed;
@@ -118,8 +121,13 @@
         }
 
         @keyframes sweep-30 {
-            from { transform: rotate(-20deg); }
-            to { transform: rotate(20deg); }
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
         }
 
         .nav-back-link {
@@ -138,7 +146,8 @@
                 padding: 0 16px;
             }
         }
-/* === LAYOUT UTILS === */
+
+        /* === LAYOUT UTILS === */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -555,24 +564,12 @@
 </head>
 
 <body>
-    
+
     <!-- STANDARD NAVBAR -->
-    <nav class="navbar">
-        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
-            <div class="navbar-logo">
-                <div class="navbar-logo-wrapper">
-                    <div class="ss-nav"></div>
-                    <div class="g-icon-nav">G</div>
-                </div>
-            </div>
-        </a>
-        <div class="navbar-right">
-            <a href="../index.html" class="nav-back-link" style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
-                <i data-lucide="arrow-left" style="width:16px;"></i>
-                Back to Intelligence
-            </a>
-        </div>
-    </nav>
+
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
 
 
 
@@ -783,7 +780,8 @@
                         <em>"kept washing out of courses"</em> and never completed intelligence training. <a
                             href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>
                         The attorneys who filed these claims were sanctioned <strong>$175,000+</strong> and referred for
-                        disbarment. Every single lawsuit based on these allegations was dismissed.</p>
+                        disbarment. Every single lawsuit based on these allegations was dismissed.
+                    </p>
                 </div>
 
                 <h2>Video Transcription</h2>
@@ -838,7 +836,8 @@
                     <em>"former U.S. Military Intelligence expert"</em> and <em>"electronic intelligence analyst with
                         the 305th Military Intelligence Battalion."</em> This witness—initially protected by the
                     pseudonym "Spyder"—claimed to have detected foreign server traffic and Serbian email communications.
-                    <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a></p>
+                    <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>
+                </p>
 
                 <h3>The Redaction Failure</h3>
                 <p>The witness's identity was meant to remain sealed. However, the plaintiffs' attorneys made a critical
@@ -878,7 +877,8 @@
 
                 <p>A spokesperson for the U.S. Army Intelligence Center of Excellence provided a rare public correction:
                     <em>"He kept washing out of courses... He's not an intelligence analyst."</em> <a href="#source-1"
-                        class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a></p>
+                        class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>
+                </p>
 
                 <p>Following exposure, Merritt acknowledged to the Washington Post that the description of him as an
                     "intelligence analyst" was <strong>"wrong"</strong>—but blamed the attorneys' clerks for the false
@@ -931,7 +931,8 @@
                     <p>Voting system software is compiled in a "Clean Room" environment at the VSTL. Each file gets a
                         <strong>cryptographic hash</strong>—a digital fingerprint. If a single line of code were altered
                         by a hacker, the hash would change entirely, alerting officials. <a href="#source-8"
-                            class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a></p>
+                            class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a>
+                    </p>
                 </div>
 
                 <h2>Part III: The "Blue Shift" Phenomenon</h2>
@@ -958,7 +959,8 @@
                     <em>"unexpected"</em> based on historical trends. But the attorneys' complaint changed this to a
                     claim of <strong>190,000 "excess" and "likely fraudulent" votes</strong>. Judge Parker ruled this
                     was a <strong>sanctionable misrepresentation</strong>: unexpected ≠ fraudulent. <a href="#source-1"
-                        class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a></p>
+                        class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>
+                </p>
 
                 <div class="chart-wrapper copyable-section" id="lawsuits-chart-wrapper">
                     <div class="chart-header">
@@ -1054,7 +1056,7 @@
 
     <script>
         // Initialize Lucide Icons
-        lucide.createIcons();
+        window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
 
         // Interactive Citation Highlighting
         function highlightSource(event, id) {
@@ -1122,6 +1124,9 @@
             }
         });
     </script>
+
+    <div id="footer-placeholder"></div>
+
 </body>
 
 </html>
