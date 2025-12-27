@@ -601,14 +601,29 @@
                     }]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
                     plugins: {
-                        legend: { labels: { color: '#cbd5e1' } },
-                        title: { display: true, text: 'The Waves of Allegations (Cumulative)', color: '#fff' },
+                        legend: {
+                            labels: { color: '#cbd5e1' }
+                        },
+                        title: {
+                            display: true,
+                            text: 'The Waves of Allegations (Cumulative)',
+                            color: '#fff'
+                        },
                         watermark: { text: "GenuVerity" }
                     },
                     scales: {
-                        y: { title: { display: true, text: 'Total Accusers' }, grid: { color: '#1e293b' } },
-                        x: { grid: { color: '#1e293b' } }
+                        y: {
+                            title: { display: true, text: 'Total Accusers', color: '#cbd5e1' },
+                            grid: { color: '#1e293b' },
+                            ticks: { color: '#cbd5e1' }
+                        },
+                        x: {
+                            grid: { color: '#1e293b' },
+                            ticks: { color: '#cbd5e1' }
+                        }
                     }
                 }
             });
@@ -633,13 +648,28 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: true,
                     plugins: {
-                        title: { display: true, text: 'The Discipline Disparity: Consequences vs Allegations', color: '#fff' },
+                        title: {
+                            display: true,
+                            text: 'The Discipline Disparity: Consequences vs Allegations',
+                            color: '#fff'
+                        },
+                        legend: {
+                            labels: { color: '#cbd5e1' }
+                        },
                         watermark: { text: "GenuVerity" }
                     },
                     scales: {
-                        y: { beginAtZero: true, grid: { color: '#1e293b' } },
-                        x: { grid: { display: false } }
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#1e293b' },
+                            ticks: { color: '#cbd5e1' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#cbd5e1' }
+                        }
                     }
                 }
             });
