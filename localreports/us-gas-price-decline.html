@@ -496,7 +496,25 @@
                         backgroundColor: ['#06b6d4', '#3b82f6']
                     }]
                 },
-                options: { plugins: { watermark: { text: "GenuVerity" } } }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { labels: { color: '#cbd5e1' } },
+                        watermark: { text: "GenuVerity" }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#1e293b' },
+                            ticks: { color: '#cbd5e1' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#cbd5e1' }
+                        }
+                    }
+                }
             });
 
             new Chart(document.getElementById('sprChart'), {
@@ -507,6 +525,14 @@
                         data: [412, 302],
                         backgroundColor: ['#10b981', '#111827']
                     }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { labels: { color: '#cbd5e1' } },
+                        watermark: { text: "GenuVerity" }
+                    }
                 }
             });
 
@@ -567,6 +593,7 @@
             { id: 51, text: "EIA - 2026 Energy Forecast", url: "https://www.eia.gov/outlooks/aeo/" }
         ];
 
+        const sourcesSidebar = document.getElementById('sourcesList');
         realSources.forEach(s => {
             sourcesSidebar.innerHTML += `
                 <a href="${s.url}" class="source-card" id="source-${s.id}">
