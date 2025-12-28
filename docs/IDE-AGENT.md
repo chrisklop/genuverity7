@@ -62,26 +62,150 @@ Check for:
 
 ---
 
-## WORKFLOW OVERVIEW
+## 🔄 MULTI-MODEL WORKFLOW (MANDATORY)
+
+Reports are generated using a **3-phase pipeline** across different AI models. Each phase ends with a handoff prompt for the next model.
 
 ```
-Browser Gemini (Deep Research)
-        |
-        | User pastes research + sources
-        v
-Antigravity IDE (Claude/Gemini)
-        |
-        ├── 1. Intake & validate sources
-        ├── 2. Additional research if needed
-        ├── 3. Structure into sections
-        ├── 4. Create charts/visualizations
-        ├── 5. Generate HTML from Golden Template (docs/report-template-2025.html)
-        ├── 6. Update reports-data.js (CRITICAL - manual ID increment)
-        ├── 7. Run validate-report.sh (citations, sources)
-        ├── 8. Run validate-standards.sh (placeholders, components)
-        ├── 9. Visual verification (navbar, footer, chart preview)
-        └── 10. Deploy (only if ALL validations pass)
+┌─────────────────────────────────────────────────────────────────┐
+│  PHASE 1: RESEARCH (Gemini Browser)                             │
+│  → Deep research, 30+ sources, raw data gathering               │
+│  → OUTPUT: Research markdown with sources list                  │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓
+                    [User pastes to IDE]
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  PHASE 2: BUILD (Claude in Antigravity)                         │
+│  → Structure sections, generate HTML, create charts             │
+│  → OUTPUT: Complete report + HANDOFF PROMPT for Phase 3         │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓
+                    [User pastes handoff prompt]
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  PHASE 3: AUDIT & DEPLOY (Claude or Gemini in Antigravity)      │
+│  → Run validations, update reports-data.js, visual verification │
+│  → OUTPUT: Deployed report                                      │
+└─────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## 📋 PHASE 1: RESEARCH (Gemini Browser)
+
+**Model:** Gemini (via browser at gemini.google.com)
+
+**Task:** Deep research with primary source gathering
+
+**Output to user:**
+```markdown
+# RESEARCH REPORT: [Topic]
+
+## Key Findings
+- Finding 1
+- Finding 2
+
+## Detailed Analysis
+[Content with inline source numbers]
+
+## Sources (COMPLETE LIST - 30+ required)
+1. [Title] - [Publisher] - [URL]
+2. ...
+```
+
+---
+
+## 🔨 PHASE 2: BUILD (Claude in Antigravity)
+
+**Model:** Claude (in Antigravity IDE)
+
+**Steps:**
+1. Receive research from user
+2. Structure into 5-10 sections
+3. Generate HTML from `docs/report-template-2025.html`
+4. Create Chart.js visualizations
+5. Output complete report file
+
+### MANDATORY HANDOFF PROMPT (Copy-Paste This)
+
+After generating the report, Claude MUST provide this handoff prompt:
+
+```
+---
+## 🔄 PHASE 3 HANDOFF: Audit & Deploy
+
+**Model:** Claude or Gemini (Antigravity IDE)
+
+**Paste this prompt to continue:**
+
+I've completed Phase 2 (Build) for the report: `localreports/[SLUG].html`
+
+Please perform Phase 3 (Audit & Deploy):
+
+1. **Validate Report:**
+   ```bash
+   ./validate-report.sh localreports/[SLUG].html
+   ./validate-standards.sh localreports/[SLUG].html
+   ```
+
+2. **Update reports-data.js:**
+   - Add new entry with `id: 0`
+   - Increment ALL existing IDs by +1
+   - Include chart object for preview
+
+3. **Visual Verification:**
+   - Verify navbar renders
+   - Verify footer renders
+   - Verify chart preview on landing page
+
+4. **Deploy:**
+   - Commit only: `localreports/[SLUG].html` and `js/reports-data.js`
+   - Push to trigger auto-deploy
+
+Report details:
+- Title: [TITLE]
+- Slug: localreports/[SLUG].html
+- Sources: [N] sources
+- Category: [CATEGORY]
+---
+```
+
+---
+
+## ✅ PHASE 3: AUDIT & DEPLOY
+
+**Model:** Claude or Gemini (in Antigravity IDE)
+
+**Steps:**
+1. Run validation scripts
+2. Update `js/reports-data.js` (CRITICAL - manual ID increment)
+3. Visual verification in browser
+4. Commit and push
+
+---
+
+## 🔧 AUTO-FIX SYSTEM (New: Dec 2025)
+
+Layout issues are now **automatically fixed** by JavaScript at runtime.
+
+**What's Auto-Fixed:**
+| Issue | Auto-Fix |
+|-------|----------|
+| Missing `content-grid` wrapper | ✅ Injected by `shared-components.js` |
+| Wrong `article-main` class | ✅ Changed to `article-content` |
+| Layout structure order | ✅ Wrapped correctly |
+
+**What's Still Required in HTML:**
+| Element | Required |
+|---------|----------|
+| `data-page-type="report"` on navbar-placeholder | ✅ Yes |
+| `.sources-sidebar` on sidebar | ✅ Yes |
+| `<article>` element for main content | ✅ Yes |
+| Basic `.container` wrapper | ✅ Yes |
+
+**Console Debugging:**
+Check browser console for: `[GV Layout] ✅ Applied content-grid wrapper`
 
 ---
 
@@ -89,10 +213,10 @@ Antigravity IDE (Claude/Gemini)
 
 ```
 [ ] Research received from browser Gemini
-[ ] Sources list included and verified
-[ ] Golden template location: docs/report-template-2025.html
+[ ] Sources list included (30+ for Deep Dives)
+[ ] Golden template: docs/report-template-2025.html
 [ ] NEVER write HTML from scratch - use template
-[ ] NEVER copy HTML from existing reports (may have legacy bugs)
+[ ] NEVER copy from existing reports (may have bugs)
 [ ] NEVER use Wikipedia as a source
 ```
 
