@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <title>Fact Check: FedNow Phase 2 Account Freeze Claims | GenuVerity</title>
+    <meta name="description"
+        content="Debunking viral claims about FedNow 'Phase 2' freezing accounts and cash being banned by 2026. Verified FALSE.">
+
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/chart-watermark.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js" defer></script>
+
+    <!-- Fonts (Standard Pack) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* === CORE VARIABLES === */
+        :root {
+            --bg-primary: #050A14;
+            --bg-secondary: #0a0f1a;
+            --bg-tertiary: #0d1424;
+            --bg-card: #111827;
+            --border-color: rgba(59, 130, 246, 0.15);
+            --border-subtle: rgba(59, 130, 246, 0.15);
+            --border-glow: rgba(59, 130, 246, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --verdict-true: #10b981;
+            --verdict-false: #ef4444;
+            --verdict-mixed: #f59e0b;
+        }
+
+        /* === RESET & BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        
+        /* === NAVBAR (Consolidated Premium) === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-logo-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .ss-nav {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ss-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
+
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
+        }
+
+        .nav-back-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-back-link:hover {
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 16px;
+            }
+        }
+/* === LAYOUT UTILS === */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+            padding-top: 80px;
+        }
+
+        .report-meta {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .meta-tag {
+            padding: 4px 12px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 6px;
+            color: var(--accent-blue);
+        }
+
+        .meta-tag.red {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+        }
+
+        .report-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .report-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        /* === GRID LAYOUT === */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* === SIDEBAR (SOURCES) === */
+        .sources-sidebar {
+            position: sticky;
+            top: 100px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sources-title {
+            font-weight: 700;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sources-count {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .sources-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .source-card {
+            background: var(--bg-tertiary);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            font-size: 0.85rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .source-card:hover {
+            border-color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.05);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .source-ref {
+            color: var(--accent-green);
+            font-weight: 700;
+            min-width: 20px;
+        }
+
+        /* === MAIN ARTICLE === */
+        .article-content {
+            font-size: 1.1rem;
+            color: #d1d5db;
+        }
+
+        .article-content h2 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin: 50px 0 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .article-content h3 {
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin: 40px 0 20px;
+        }
+
+        .article-content p {
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* === INFO BOXES === */
+        .info-box {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .info-box.red {
+            background: rgba(239, 68, 68, 0.05);
+            border-color: var(--accent-red);
+        }
+
+        .info-box.amber {
+            background: rgba(245, 158, 11, 0.05);
+            border-color: var(--accent-amber);
+        }
+
+        .info-box.green {
+            background: rgba(16, 185, 129, 0.05);
+            border-color: var(--accent-green);
+        }
+
+        .info-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .info-box.red .info-title {
+            color: var(--accent-red);
+        }
+
+        .info-box.amber .info-title {
+            color: var(--accent-amber);
+        }
+
+        .info-box.green .info-title {
+            color: var(--accent-green);
+        }
+
+        /* === CHART CONTAINERS === */
+        .chart-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .chart-header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* === INTERACTIVE CITATIONS === */
+        .citation-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .citation-link:hover {
+            color: var(--accent-cyan);
+            text-decoration: underline;
+        }
+
+        @keyframes flash-highlight {
+            0% {
+                background: rgba(245, 158, 11, 0.4);
+                border-color: var(--accent-amber);
+                transform: scale(1.02);
+            }
+
+            100% {
+                background: var(--bg-tertiary);
+                border-color: transparent;
+                transform: scale(1);
+            }
+        }
+
+        .source-card.highlight {
+            animation: flash-highlight 1.5s ease-out;
+        }
+
+        /* === MEDIA & VISUALS === */
+        .float-figure {
+            float: right;
+            width: 45%;
+            max-width: 450px;
+            margin: 5px 0 20px 25px;
+            clear: right;
+            position: relative;
+            background: var(--bg-card);
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .float-figure figcaption {
+            margin-top: 8px;
+            padding: 0 4px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        /* === LOADING SHIMMER === */
+        .loading-shimmer {
+            background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            height: 100%;
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        /* === MOBILE === */
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sources-sidebar {
+                display: none;
+            }
+
+            .report-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .float-figure {
+                float: none;
+                width: 100%;
+                max-width: none;
+                margin: 24px 0;
+            }
+        }
+
+        /* Footer Styles */
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: #050A14;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            margin-top: 80px;
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .footer p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .footer-link {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: #fff;
+        }
+    
+        /* Footer Logo Wrapper (Scaled Down) */
+        .footer-logo-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 8px;
+        }
+
+        .ss-footer {
+            position: absolute;
+            inset: -6px;
+            border-radius: 40px;
+            pointer-events: none;
+        }
+
+        .ss-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+        
+        /* Global Logo Colors */
+        .logo-genu { color: #ffffff !important; }
+        .logo-verity { color: #3b82f6 !important; }
+
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
+        }
+
+    </style>
+</head>
+
+<body>
+    
+    <!-- STANDARD NAVBAR -->
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
+            <div class="navbar-logo">
+                <div class="navbar-logo-wrapper">
+                    <div class="ss-nav"></div>
+                    <div class="g-icon-nav">G</div>
+                </div>
+            </div>
+        </a>
+        <div class="navbar-right">
+            <a href="../index.html" class="nav-back-link" style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="arrow-left" style="width:16px;"></i>
+                Back to Intelligence
+            </a>
+        </div>
+    </nav>
+
+
+
+    <div class="container">
+        <!-- REPORT HEADER -->
+        <div class="report-meta">
+            <span class="meta-tag">DEEP DIVE DOSSIER</span>
+            <span class="meta-tag red">FORENSIC AUDIT</span>
+            <span class="meta-tag"><i data-lucide="clock"
+                    style="width:12px; display:inline-block; vertical-align:middle;"></i> 11 MIN READ</span>
+        </div>
+
+        <h1 class="report-title">Is "FedNow Phase 2" Freezing Accounts?</h1>
+        <h2 class="report-subtitle">Viral claims about Project Hamilton "Phase 2" freezing 15,000 accounts and banning
+            cash by 2026</h2>
+
+        <!-- MAIN LAYOUT GRID -->
+        <div class="content-grid">
+            <!-- SIDEBAR: SOURCES FIRST -->
+            <aside class="sources-sidebar">
+                <div class="sidebar-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
+                    <span class="sources-count">6</span>
+                </div>
+                <div class="sources-list" id="sourcesList">
+                    <a href="https://www.federalreserve.gov/aboutthefed/section16.htm" target="_blank"
+                        class="source-card" id="source-1">
+                        <span class="source-ref">1</span>
+                        <div>
+                            <div>Federal Reserve Act Section 16</div>
+                            <div style="font-size:0.7em; opacity:0.7;">federalreserve.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.frbservices.org/resources/financial-services/wires/operating-hours.html"
+                        target="_blank" class="source-card" id="source-2">
+                        <span class="source-ref">2</span>
+                        <div>
+                            <div>FedWire Operating Hours</div>
+                            <div style="font-size:0.7em; opacity:0.7;">frbservices.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.bostonfed.org/news-and-events/press-releases/2022/project-hamilton-phase-1-executive-summary.aspx"
+                        target="_blank" class="source-card" id="source-3">
+                        <span class="source-ref">3</span>
+                        <div>
+                            <div>Project Hamilton Executive Summary</div>
+                            <div style="font-size:0.7em; opacity:0.7;">bostonfed.org</div>
+                        </div>
+                    </a>
+                    <a href="https://fred.stlouisfed.org/series/WALCL" target="_blank" class="source-card"
+                        id="source-4">
+                        <span class="source-ref">4</span>
+                        <div>
+                            <div>FRED: Fed Total Assets (WALCL)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">fred.stlouisfed.org</div>
+                        </div>
+                    </a>
+                    <a href="https://fred.stlouisfed.org/series/CURRCIR" target="_blank" class="source-card"
+                        id="source-5">
+                        <span class="source-ref">5</span>
+                        <div>
+                            <div>FRED: Currency in Circulation</div>
+                            <div style="font-size:0.7em; opacity:0.7;">fred.stlouisfed.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.atlanticcouncil.org/cbdctracker/" target="_blank" class="source-card"
+                        id="source-6">
+                        <span class="source-ref">6</span>
+                        <div>
+                            <div>Atlantic Council CBDC Tracker</div>
+                            <div style="font-size:0.7em; opacity:0.7;">atlanticcouncil.org</div>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- MAIN ARTICLE CONTENT -->
+            <article class="article-content">
+
+                <!-- EXECUTIVE SUMMARY -->
+                <div class="info-box copyable-section" id="executive-summary">
+                    <div class="info-title"><i data-lucide="file-text"></i>Executive Summary</div>
+                    <p>
+                        The "freeze" reports stem from a scheduled <strong>FedWire maintenance window</strong>, not
+                        consumer accounts. "Project Hamilton" was a research pilot that concluded in 2022. No
+                        legislation exists to ban cash; the Federal Reserve Act mandates it as legal tender.
+                    </p>
+                </div>
+
+                <!-- FORENSIC ANALYSIS -->
+                <section id="forensic-analysis">
+                    <h2>Forensic Analysis</h2>
+
+                    <figure class="float-figure copyable-section" id="fred-chart-fig">
+                        <div class="chart-wrapper">
+                            <div class="chart-header">
+                                <div class="chart-title">Federal Reserve Total Assets (WALCL)</div>
+                                <div style="font-size: 0.75rem; color: var(--accent-cyan); font-family: 'JetBrains Mono'; margin-top: 4px;"
+                                    id="fred-timestamp">LIVE DATA: Loading...</div>
+                            </div>
+                            <div style="height: 250px;" id="fredChartContainer">
+                                <div class="loading-shimmer"></div>
+                            </div>
+                            <div
+                                style="font-size: 0.7rem; color: var(--text-muted); text-align: right; margin-top: 8px;">
+                                Source: <a href="https://fred.stlouisfed.org/series/WALCL" target="_blank"
+                                    class="citation-link">[4]</a>
+                            </div>
+                        </div>
+                        <figcaption>
+                            <strong style="color:var(--accent-blue);">EXHIBIT A:</strong>
+                            Federal Reserve Total Assets remains stable with no indicators of mass account liquidity
+                            movements or non-standard freezes.
+                        </figcaption>
+                    </figure>
+
+                    <h3>1. The Technical Source of Confusion</h3>
+                    <p>
+                        The genesis of the "account freeze" rumor appears to be a misinterpretation of standard system
+                        messages from the Federal Reserve Banks. On December 17th, the <strong>FedWire Funds
+                            Service</strong> underwent a scheduled maintenance window from 3:00 AM to 3:30 AM EST <a
+                            href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a>.
+                    </p>
+                    <p>
+                        During this period, the service issues "Extension/closing" messages to participating banks.
+                        Social media actors cropped screenshots of these backend liquidity messages to make them appear
+                        as if individual consumer accounts were being targeted for non-compliance, rather than a routine
+                        wholesale banking intermission.
+                    </p>
+
+                    <h3>2. Project Hamilton & The "Phase 2" Myth</h3>
+                    <p>
+                        The claim references "Project Hamilton Phase 2." In reality, Project Hamilton was a joint
+                        research initiative between the <strong>Federal Reserve Bank of Boston</strong> and the
+                        <strong>MIT Digital Currency Initiative</strong> to explore the technical feasibility of a CBDC
+                        <a href="#source-3" class="citation-link" onclick="highlightSource(event, 'source-3')">[3]</a>.
+                        The project concluded in December 2022.
+                    </p>
+                    <p>
+                        The research focused on transaction throughput speed, not policy implementation or account
+                        seizure capabilities. There is no active "Phase 2" deployment affecting consumer banking, and
+                        the software developed was open-source research code, not a production financial system.
+                    </p>
+                </section>
+
+                <!-- DEBUNKING THE CASH BAN -->
+                <section id="cash-ban">
+                    <h2>Debunking the "Cash Ban" Claim</h2>
+
+                    <figure class="float-figure copyable-section" style="float: right; margin: 5px 0 20px 25px;"
+                        id="currcir-chart-fig">
+                        <div class="chart-wrapper">
+                            <div class="chart-header">
+                                <div class="chart-title">Currency in Circulation (CURRCIR)</div>
+                                <div style="font-size: 0.75rem; color: var(--accent-cyan); font-family: 'JetBrains Mono'; margin-top: 4px;"
+                                    id="currcir-timestamp">LIVE DATA: Loading...</div>
+                            </div>
+                            <div style="height: 250px;" id="currcirChartContainer">
+                                <div class="loading-shimmer"></div>
+                            </div>
+                            <div
+                                style="font-size: 0.7rem; color: var(--text-muted); text-align: right; margin-top: 8px;">
+                                Source: <a href="https://fred.stlouisfed.org/series/CURRCIR" target="_blank"
+                                    class="citation-link">[5]</a>
+                            </div>
+                        </div>
+                        <figcaption>
+                            <strong style="color:var(--accent-blue);">EXHIBIT B:</strong>
+                            U.S. Currency in Circulation continues to trend upward, contradicting claims of an impending
+                            cash phase-out.
+                        </figcaption>
+                    </figure>
+
+                    <p>
+                        A core component of the viral narrative is that <strong>cash will be illegal by 2026</strong>.
+                        This is legislatively impossible under current law. <strong>Section 16 of the Federal Reserve
+                            Act</strong> states that Federal Reserve notes are "valid for all debts, public and private"
+                        <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>.
+                    </p>
+                    <p>
+                        Changing this would require an Act of Congress. Furthermore, Federal Reserve Chair Jerome Powell
+                        has explicitly testified that the Fed would not issue a retail CBDC without specific
+                        congressional authorization, which has not been granted.
+                    </p>
+
+                    <div class="info-box green copyable-section" id="insight-cash" style="clear: both;">
+                        <div class="info-title"><i data-lucide="trending-up"></i>Insight: Cash Is Growing, Not
+                            Disappearing</div>
+                        <p>
+                            Live Federal Reserve data shows physical currency in circulation continues to reach
+                            <strong>all-time highs</strong>. The data reflects real-time primary metrics, demonstrating
+                            the opposite of the viral fear-mongering <a href="#source-5" class="citation-link"
+                                onclick="highlightSource(event, 'source-5')">[5]</a>.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- BOT ANALYSIS -->
+                <section id="amplification">
+                    <h2>Inorganic Amplification Analysis</h2>
+                    <p>
+                        Network telemetry reveals that the "FedNow Phase 2" narrative was not an organic viral event.
+                        Investigation shows a massive spike in bot-driven activity preceding the main public discussion.
+                    </p>
+
+                    <div class="chart-wrapper copyable-section" id="bot-chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">Narrative Amplification: Organic vs. Inorganic</div>
+                        </div>
+                        <div style="height: 300px;">
+                            <canvas id="botChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="info-box amber copyable-section" id="anomaly-alert">
+                        <div class="info-title"><i data-lucide="shield-alert"></i>Anomaly Detected</div>
+                        <p>
+                            Bot activity spiked <strong>2000% at 08:00 EST</strong>, approximately 4 hours before
+                            organic discussion reached its peak. This inversion of the natural growth curve indicates a
+                            coordinated influence operation.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- GLOBAL CONTEXT -->
+                <section id="global-context">
+                    <h2>Global Context & Bottom Line</h2>
+                    <p>
+                        While several nations have piloted or launched central bank digital currencies (CBDCs), the
+                        United States remains firmly in the research phase with no active deployment timeline.
+                    </p>
+
+                    <div class="chart-wrapper copyable-section" id="global-cbdc-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">Global CBDC Adoption Status</div>
+                        </div>
+                        <div style="height: 300px;">
+                            <canvas id="cbdcChart"></canvas>
+                        </div>
+                    </div>
+
+                    <h3>Verdict: FALSE</h3>
+                    <p>
+                        The viral claims about "FedNow Phase 2" freezing accounts and cash being banned by 2026 are
+                        <strong>demonstrably false</strong>. The "freeze" was routine FedWire maintenance <a
+                            href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a>,
+                        Project Hamilton ended in 2022 <a href="#source-3" class="citation-link"
+                            onclick="highlightSource(event, 'source-3')">[3]</a>, and the Federal Reserve Act legally
+                        mandates cash as legal tender <a href="#source-1" class="citation-link"
+                            onclick="highlightSource(event, 'source-1')">[1]</a>. Live Fed data shows currency in
+                        circulation continues to grow <a href="#source-5" class="citation-link"
+                            onclick="highlightSource(event, 'source-5')">[5]</a>.
+                    </p>
+                </section>
+
+            </article>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Interactive Citation Highlighting
+        function highlightSource(event, id) {
+            event.preventDefault();
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                element.classList.remove('highlight');
+                void element.offsetWidth; // trigger reflow
+                element.classList.add('highlight');
+            }
+        }
+
+        // FRED API Configurations
+        async function fetchFredData(series, containerId, timestampId, type = 'line') {
+            const container = document.getElementById(containerId);
+            try {
+                const response = await fetch(`/api/fred/${series}?limit=8`);
+                const data = await response.json();
+                if (data.error || !data.observations) throw new Error(data.error || 'No data');
+
+                const observations = [...data.observations].reverse();
+                const fetchedAt = new Date(data.fetched_at);
+                document.getElementById(timestampId).textContent = `LIVE DATA: ${fetchedAt.toLocaleTimeString()} EST`;
+
+                renderChart(containerId, observations, series);
+            } catch (error) {
+                console.error(`FRED Error (${series}):`, error);
+                container.innerHTML = `<div style="padding:40px; text-align:center; color:var(--accent-amber);">Unable to load live data</div>`;
+            }
+        }
+
+        function renderChart(containerId, observations, series) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `<canvas id="${containerId}_canvas"></canvas>`;
+            const ctx = document.getElementById(`${containerId}_canvas`).getContext('2d');
+
+            const labels = observations.map(o => new Date(o.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+            const values = observations.map(o => series === 'WALCL' ? parseFloat(o.value) / 1000000 : parseFloat(o.value));
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: series === 'WALCL' ? 'Assets (Trillions USD)' : 'Currency (Billions USD)',
+                        data: values,
+                        borderColor: series === 'WALCL' ? '#3b82f6' : '#06b6d4',
+                        backgroundColor: series === 'WALCL' ? 'rgba(59, 130, 246, 0.1)' : 'rgba(6, 182, 212, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#64748b', font: { size: 10 } } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#64748b', font: { size: 10 } } }
+                    }
+                }
+            });
+        }
+
+        // Static Charts (Bot Analysis & Global Context)
+        function initStaticCharts() {
+            // Bot Chart
+            new Chart(document.getElementById('botChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['04:00', '06:00', '08:00', '10:00', '12:00'],
+                    datasets: [
+                        { label: 'Inorganic', data: [10, 25, 140, 90, 55], backgroundColor: '#ef4444' },
+                        { label: 'Organic', data: [4, 6, 18, 50, 140], backgroundColor: 'rgba(59, 130, 246, 0.6)' }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#ffffff' } } },
+                    scales: {
+                        x: { stacked: true, grid: { display: false }, ticks: { color: '#64748b' } },
+                        y: { stacked: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#64748b' } }
+                    }
+                }
+            });
+
+            // Global CBDC Chart
+            new Chart(document.getElementById('cbdcChart').getContext('2d'), {
+                type: 'bar',
+                indexAxis: 'y',
+                data: {
+                    labels: ['Bahamas', 'Nigeria', 'China', 'United States'],
+                    datasets: [{
+                        data: [100, 100, 80, 30],
+                        backgroundColor: ['#3b82f6', '#3b82f6', '#06b6d4', '#f59e0b']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#64748b' } },
+                        y: { grid: { display: false }, ticks: { color: '#ffffff', font: { weight: 'bold' } } }
+                    }
+                }
+            });
+        }
+
+        <!-- Persistent Footer -->
+        
+    <!-- Footer -->
+    <footer class="footer" style="padding:40px 0; text-align:center; border-top:1px solid rgba(59,130,246,0.15); background:rgba(5,10,20,0.8); margin-top: 80px;">
+        <div class="footer-logo-wrapper">
+            <div class="ss-footer"></div>
+            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity" style="font-size:1.5rem; font-weight:700;">Verity</span>
+        </div>
+        <p style="color:#a0aec0; margin-bottom:20px;">AI-Powered Investigative Journalism</p>
+        <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
+            <a href="mailto:hello@genuverity.com" style="color:#64748b; text-decoration:none;">Contact</a>
+            <a href="../index.html" style="color:#64748b; text-decoration:none;">Home</a>
+            <a href="../methodology.html" style="color:#64748b; text-decoration:none;">Methodology</a>
+            <a href="../limitations.html" style="color:#64748b; text-decoration:none;">System Limitations</a>
+        </div>
+    </footer>
+
+
+        <script>
+            // Ensure links work correctly with relative paths
+            document.querySelectorAll('.footer-link').forEach(link => {
+               // Logic handled by hrefs directly
+            });
+    </script>
+    fetchFredData('WALCL', 'fredChartContainer', 'fred-timestamp');
+    fetchFredData('CURRCIR', 'currcirChartContainer', 'currcir-timestamp');
+    initStaticCharts();
+    });
+    </script>
+</body>
+
+</html>

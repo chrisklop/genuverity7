@@ -31,8 +31,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
     <script src="js/reports-data.js?v=9"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
-
+    <script src="js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="css/shared-components.css">
     <!-- Unified Search & Carousel -->
     <script src="js/unified-search.js?v=9" defer></script>
     <!-- Vercel Analytics -->
@@ -359,6 +359,7 @@
             width: 220px;
             background: rgba(5, 10, 20, 0.98);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             z-index: 999;
@@ -411,7 +412,6 @@
             }
 
             .navbar-search-container {
-                width: 100% !important;
                 opacity: 1 !important;
                 margin: 0 4px;
             }
@@ -432,10 +432,7 @@
                 display: none !important;
             }
 
-            .hero-compact {
-                padding-top: 80px;
-                padding-bottom: 0;
-            }
+            .hero-compact {}
 
             .hero-title {
                 font-size: 2.2rem;
@@ -554,8 +551,8 @@
             border-radius: 12px;
             padding: 0 16px;
             height: 44px;
-            width: 0;
-            opacity: 0;
+            width: 500px;
+            opacity: 1;
             overflow: visible;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
@@ -1694,15 +1691,15 @@
         .navbar-search-container {
             position: relative;
             width: 100%;
-            max-width: 320px;
+            max-width: 500px;
             height: 36px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             display: flex;
             align-items: center;
-            padding: 0 12px;
-            gap: 8px;
+            padding: 0 16px;
+            gap: 10px;
             transition: all 0.3s ease;
         }
 
@@ -2033,37 +2030,7 @@
     <!-- MAIN CONTENT WRAPPER -->
     <div class="content-wrapper" style="position: relative; z-index: 1;">
         <!-- Navbar -->
-        <nav class="navbar">
-            <a href="/" class="navbar-brand" style="text-decoration: none; border: none;">
-                <div class="navbar-logo">
-                    <div class="navbar-logo-wrapper">
-                        <div class="ss-nav"></div>
-                        <div class="g-icon-nav">G</div>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Navbar Search (Visible on Mobile, Hidden initially on Desktop Home) -->
-            <div class="navbar-center" id="navSearchContainer"
-                style="opacity: 0; pointer-events: none; transition: all 0.3s ease;">
-                <div class="navbar-search-container">
-                    <i data-lucide="search" style="width:16px; color:var(--accent-cyan);"></i>
-                    <input type="text" class="navbar-search-input search-sync-input" placeholder="Search...">
-                </div>
-            </div>
-
-            <div class="navbar-right">
-                <a href="#notify" class="btn-premium-glass pulsing-cta">
-                    <i data-lucide="zap" style="width:16px;"></i> Get Early Access
-                </a>
-            </div>
-            <button class="navbar-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-
+        <div id="navbar-placeholder" data-page-type="home"></div>
         <!-- Mobile Menu -->
         <div class="mobile-menu" id="mobileMenu">
             <a href="request-report.html">
@@ -2425,136 +2392,126 @@
         </main>
 
         <!-- Footer -->
-        <footer class="footer">
-            <footer class="footer">
-                <div class="footer-logo-wrapper">
-                    <div class="ss-footer"></div>
-                    <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span
-                        class="logo-verity" style="font-size:1.5rem; font-weight:700;">Verity</span>
-                </div>
-                <p>AI-Powered Investigative Journalism</p>
-                <div class="footer-links">
-                    <a href="contact.html" class="footer-link">Contact</a>
-                    <a href="methodology.html" class="footer-link">Methodology</a>
-                    <a href="limitations.html" class="footer-link">System Limitations</a>
-                    <a href="#how-it-works" class="footer-link">Transparency</a>
-                </div>
-            </footer>
+        <div id="footer-placeholder"></div>
+        <script>
+            // Form Handling
+            async function handleContactSubmit(e) {
+                e.preventDefault();
+                const btn = e.target.querySelector('button');
+                const originalHTML = btn.innerHTML;
+                const successMsg = document.getElementById('contactSuccess');
+                const form = document.getElementById('contactForm');
+                const emailInput = document.getElementById('notify-email');
+                const usecaseInput = document.getElementById('notify-usecase');
 
-            <script>
-                // Form Handling
-                async function handleContactSubmit(e) {
-                    e.preventDefault();
-                    const btn = e.target.querySelector('button');
-                    const originalHTML = btn.innerHTML;
-                    const successMsg = document.getElementById('contactSuccess');
-                    const form = document.getElementById('contactForm');
-                    const emailInput = document.getElementById('notify-email');
-                    const usecaseInput = document.getElementById('notify-usecase');
+                btn.disabled = true;
+                btn.innerHTML = `Encrypting...`;
 
-                    btn.disabled = true;
-                    btn.innerHTML = `Encrypting...`;
+                try {
+                    const response = await fetch('/api/waitlist', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: emailInput.value,
+                            usecase: usecaseInput ? usecaseInput.value : "",
+                            source: document.getElementById('notify-source').value || ""
+                        })
+                    });
 
-                    try {
-                        const response = await fetch('/api/waitlist', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                email: emailInput.value,
-                                usecase: usecaseInput ? usecaseInput.value : "",
-                                source: document.getElementById('notify-source').value || ""
-                            })
-                        });
+                    const data = await response.json();
 
-                        const data = await response.json();
-
-                        if (data.success) {
-                            btn.innerHTML = `Sent`;
-                            form.reset();
-                            setTimeout(() => {
-                                form.style.display = 'none';
-                                successMsg.style.display = 'block';
-                            }, 800);
-                        } else {
-                            throw new Error(data.detail || data.message || 'Submission failed');
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        btn.innerHTML = originalHTML;
-                        btn.disabled = false;
-                        alert('Submission failed. Please try again.');
+                    if (data.success) {
+                        btn.innerHTML = `Sent`;
+                        form.reset();
+                        setTimeout(() => {
+                            form.style.display = 'none';
+                            successMsg.style.display = 'block';
+                        }, 800);
+                    } else {
+                        throw new Error(data.detail || data.message || 'Submission failed');
                     }
+                } catch (error) {
+                    console.error('Error:', error);
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                    alert('Submission failed. Please try again.');
                 }
+            }
 
-                // Use shared reports data from js/reports-data.js
-                const reports = REPORTS_DATA;
+            // Use shared reports data from js/reports-data.js
+            const reports = REPORTS_DATA;
 
-                let currentCardIndex = 0;
-                const totalCards = reports.length;
-                let wasDragging = false;
+            let currentCardIndex = 0;
+            const totalCards = reports.length;
+            let wasDragging = false;
 
-                // Initialize
-                document.addEventListener('DOMContentLoaded', () => {
-                    lucide.createIcons();
-                    initCarousel();
-                    initSwipeGestures();
-                    initKeyboardNav();
+            // Initialize after shared components are ready
+            window.addEventListener('gv:componentsReady', () => {
+                const navSearchContainer = document.getElementById('navSearchContainer');
+                const navInput = navSearchContainer.querySelector('input');
+                const heroSearch = document.querySelector('.hero-search');
+                const heroInput = heroSearch.querySelector('input');
 
-                    // Update placeholder with report count
-                    const searchInput = document.querySelector('.hero-search-input');
-                    if (searchInput) {
-                        searchInput.placeholder = `Search ${totalCards} investigative reports...`;
-                    }
-                });
+                lucide.createIcons();
+                initCarousel();
+                initSwipeGestures();
+                initKeyboardNav();
 
-                // Toggle mobile menu
-                function toggleMobileMenu() {
-                    const menu = document.getElementById('mobileMenu');
-                    const hamburger = document.querySelector('.navbar-hamburger');
-                    menu.classList.toggle('active');
-                    hamburger.classList.toggle('active');
+                // Update placeholder with report count
+                const searchInput = document.querySelector('.hero-search-input');
+                if (searchInput) {
+                    searchInput.placeholder = `Search ${totalCards} investigative reports...`;
                 }
+            });
 
-                // Close mobile menu when clicking outside
-                document.addEventListener('click', (e) => {
-                    const menu = document.getElementById('mobileMenu');
-                    const hamburger = document.querySelector('.navbar-hamburger');
-                    if (menu && menu.classList.contains('active') &&
-                        !menu.contains(e.target) && !hamburger.contains(e.target)) {
-                        menu.classList.remove('active');
-                        hamburger.classList.remove('active');
-                    }
-                });
+            // Toggle mobile menu
+            function toggleMobileMenu() {
+                const menu = document.getElementById('mobileMenu');
+                const hamburger = document.querySelector('.navbar-hamburger');
+                menu.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            }
 
-                // Chart generators
-                function generateBarChart(color, data) {
-                    const bars = data || Array.from({ length: 10 }, () => Math.random() * 80 + 20);
-                    return `<div class="chart-container"><div class="chart-bars">${bars.map(h =>
-                        `<div class="bar" style="height: ${h}%; background: ${color};"></div>`
-                    ).join('')}</div></div>`;
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                const menu = document.getElementById('mobileMenu');
+                const hamburger = document.querySelector('.navbar-hamburger');
+                if (menu && menu.classList.contains('active') &&
+                    !menu.contains(e.target) && !hamburger.contains(e.target)) {
+                    menu.classList.remove('active');
+                    hamburger.classList.remove('active');
                 }
+            });
 
-                function generateLineChart(color, data) {
-                    const pointsData = data || Array.from({ length: 8 }, (_, i) => 20 + Math.random() * 60);
-                    const step = 100 / (pointsData.length - 1);
-                    const points = pointsData.map((y, i) => ({ x: i * step, y }));
+            // Chart generators
+            function generateBarChart(color, data) {
+                const bars = data || Array.from({ length: 10 }, () => Math.random() * 80 + 20);
+                return `<div class="chart-container"><div class="chart-bars">${bars.map(h =>
+                    `<div class="bar" style="height: ${h}%; background: ${color};"></div>`
+                ).join('')}</div></div>`;
+            }
 
-                    const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${100 - p.y}`).join(' ');
-                    const areaD = pathD + ` L 100 100 L 0 100 Z`;
-                    return `<div class="chart-container"><div class="chart-line">
+            function generateLineChart(color, data) {
+                const pointsData = data || Array.from({ length: 8 }, (_, i) => 20 + Math.random() * 60);
+                const step = 100 / (pointsData.length - 1);
+                const points = pointsData.map((y, i) => ({ x: i * step, y }));
+
+                const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${100 - p.y}`).join(' ');
+                const areaD = pathD + ` L 100 100 L 0 100 Z`;
+                return `<div class="chart-container"><div class="chart-line">
                 <svg viewBox="0 0 100 100" preserveAspectRatio="none">
                     <path class="area" d="${areaD}" fill="${color}"/>
                     <path d="${pathD}" stroke="${color}"/>
                 </svg>
             </div></div>`;
-                }
+            }
 
-                function generateDonutChart(percent, color) {
-                    const circumference = 2 * Math.PI * 45;
-                    const offset = circumference * (1 - percent / 100);
-                    return `<div class="chart-container" style="justify-content: center; align-items: center;">
+            function generateDonutChart(percent, color) {
+                const circumference = 2 * Math.PI * 45;
+                const offset = circumference * (1 - percent / 100);
+                return `<div class="chart-container" style="justify-content: center; align-items: center;">
                 <div class="chart-donut">
                     <svg viewBox="0 0 100 100">
                         <circle cx="50" cy="50" r="45" stroke="var(--border-color)"/>
@@ -2564,92 +2521,92 @@
                     <span class="donut-label">${percent}%</span>
                 </div>
             </div>`;
-                }
+            }
 
-                function generateNetworkChart(nodeColor, lineColor, data) {
-                    const count = (data && data.nodes) ? data.nodes : 12;
-                    const nodes = Array.from({ length: count }, () => ({
-                        x: 10 + Math.random() * 80,
-                        y: 10 + Math.random() * 80,
-                        size: 6 + Math.random() * 10
-                    }));
-                    const nodesHTML = nodes.map((n, i) =>
-                        `<div class="node" style="left: ${n.x}%; top: ${n.y}%; width: ${n.size}px; height: ${n.size}px; background: ${nodeColor}; animation-delay: ${i * 0.15}s;"></div>`
-                    ).join('');
-                    const linesHTML = nodes.slice(0, Math.floor(count / 2)).map((n, i) => {
-                        const target = nodes[(i + 3) % nodes.length];
-                        const dx = target.x - n.x;
-                        const dy = target.y - n.y;
-                        const length = Math.sqrt(dx * dx + dy * dy);
-                        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-                        return `<div class="line" style="left: ${n.x}%; top: ${n.y}%; width: ${length}%; transform: rotate(${angle}deg); background: ${lineColor};"></div>`;
-                    }).join('');
-                    return `<div class="chart-container"><div class="chart-network">${linesHTML}${nodesHTML}</div></div>`;
-                }
+            function generateNetworkChart(nodeColor, lineColor, data) {
+                const count = (data && data.nodes) ? data.nodes : 12;
+                const nodes = Array.from({ length: count }, () => ({
+                    x: 10 + Math.random() * 80,
+                    y: 10 + Math.random() * 80,
+                    size: 6 + Math.random() * 10
+                }));
+                const nodesHTML = nodes.map((n, i) =>
+                    `<div class="node" style="left: ${n.x}%; top: ${n.y}%; width: ${n.size}px; height: ${n.size}px; background: ${nodeColor}; animation-delay: ${i * 0.15}s;"></div>`
+                ).join('');
+                const linesHTML = nodes.slice(0, Math.floor(count / 2)).map((n, i) => {
+                    const target = nodes[(i + 3) % nodes.length];
+                    const dx = target.x - n.x;
+                    const dy = target.y - n.y;
+                    const length = Math.sqrt(dx * dx + dy * dy);
+                    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                    return `<div class="line" style="left: ${n.x}%; top: ${n.y}%; width: ${length}%; transform: rotate(${angle}deg); background: ${lineColor};"></div>`;
+                }).join('');
+                return `<div class="chart-container"><div class="chart-network">${linesHTML}${nodesHTML}</div></div>`;
+            }
 
-                function generateHBarChart(data, colors) {
-                    return `<div class="chart-container" style="align-items: center;"><div class="chart-hbars">${data.map((d, i) =>
-                        `<div class="hbar-row">
+            function generateHBarChart(data, colors) {
+                return `<div class="chart-container" style="align-items: center;"><div class="chart-hbars">${data.map((d, i) =>
+                    `<div class="hbar-row">
                     <span class="hbar-label">${d.label}</span>
                     <div class="hbar" style="width: ${d.value}%; background: ${colors[i % colors.length]};"></div>
                 </div>`
-                    ).join('')}</div></div>`;
-                }
+                ).join('')}</div></div>`;
+            }
 
-                function generateTimelineChart(points, color) {
-                    return `<div class="chart-container" style="align-items: center;"><div class="chart-timeline">
+            function generateTimelineChart(points, color) {
+                return `<div class="chart-container" style="align-items: center;"><div class="chart-timeline">
                 <div class="timeline-line">
                     ${points.map(p => `<div class="timeline-point" style="left: ${p}%; background: ${color};"></div>`).join('')}
                 </div>
             </div></div>`;
-                }
+            }
 
-                // Chart configs per report
-                const chartConfigs = [
-                    () => generateHBarChart([{ label: 'VAERS', value: 90 }, { label: 'VSD', value: 45 }, { label: 'FDA', value: 70 }, { label: 'CDC', value: 60 }], ['#ef4444', '#f59e0b', '#3b82f6', '#10b981']),
-                    () => generateTimelineChart([10, 30, 55, 75, 95], '#ef4444'),
-                    () => generateBarChart('#f59e0b'),
-                    () => generateDonutChart(72, '#ef4444'),
-                    () => generateNetworkChart('#3b82f6', '#3b82f6'),
-                    () => generateLineChart('#f59e0b'),
-                    () => generateDonutChart(85, '#10b981'),
-                    () => generateLineChart('#10b981'),
-                    () => generateBarChart('#f59e0b'),
-                    () => generateNetworkChart('#4a7dcc', '#4a7dcc'),
-                    () => generateNetworkChart('#ef6b5b', '#ef6b5b'),
-                    () => generateLineChart('#ef4444'),
-                    () => generateHBarChart([{ label: 'True', value: 28 }, { label: 'Mixed', value: 22 }, { label: 'False', value: 72 }, { label: 'Mislead', value: 50 }], ['#10b981', '#f59e0b', '#ef4444', '#ef4444'])
-                ];
+            // Chart configs per report
+            const chartConfigs = [
+                () => generateHBarChart([{ label: 'VAERS', value: 90 }, { label: 'VSD', value: 45 }, { label: 'FDA', value: 70 }, { label: 'CDC', value: 60 }], ['#ef4444', '#f59e0b', '#3b82f6', '#10b981']),
+                () => generateTimelineChart([10, 30, 55, 75, 95], '#ef4444'),
+                () => generateBarChart('#f59e0b'),
+                () => generateDonutChart(72, '#ef4444'),
+                () => generateNetworkChart('#3b82f6', '#3b82f6'),
+                () => generateLineChart('#f59e0b'),
+                () => generateDonutChart(85, '#10b981'),
+                () => generateLineChart('#10b981'),
+                () => generateBarChart('#f59e0b'),
+                () => generateNetworkChart('#4a7dcc', '#4a7dcc'),
+                () => generateNetworkChart('#ef6b5b', '#ef6b5b'),
+                () => generateLineChart('#ef4444'),
+                () => generateHBarChart([{ label: 'True', value: 28 }, { label: 'Mixed', value: 22 }, { label: 'False', value: 72 }, { label: 'Mislead', value: 50 }], ['#10b981', '#f59e0b', '#ef4444', '#ef4444'])
+            ];
 
-                // Generate carousel cards
-                function initCarousel() {
-                    const track = document.getElementById('carouselTrack');
-                    const dotsContainer = document.getElementById('carouselDots');
+            // Generate carousel cards
+            function initCarousel() {
+                const track = document.getElementById('carouselTrack');
+                const dotsContainer = document.getElementById('carouselDots');
 
-                    // Fallback configs in case report missing chart data
-                    const lastResortConfigs = chartConfigs;
+                // Fallback configs in case report missing chart data
+                const lastResortConfigs = chartConfigs;
 
-                    reports.forEach((report, index) => {
-                        const card = document.createElement('div');
-                        card.className = 'carousel-card';
-                        card.dataset.index = index;
+                reports.forEach((report, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'carousel-card';
+                    card.dataset.index = index;
 
-                        // Get chart for this card - prioritize report specific data
-                        let chartHTML = '';
-                        if (report.chart) {
-                            const c = report.chart;
-                            if (c.type === 'hbar') chartHTML = generateHBarChart(c.data, Array.isArray(c.color) ? c.color : [c.color, '#f59e0b', '#3b82f6', '#10b981']);
-                            else if (c.type === 'timeline') chartHTML = generateTimelineChart(c.data, c.color);
-                            else if (c.type === 'bar') chartHTML = generateBarChart(c.color, c.data);
-                            else if (c.type === 'donut') chartHTML = generateDonutChart(c.data, c.color);
-                            else if (c.type === 'network') chartHTML = generateNetworkChart(c.color, c.color, c.data);
-                            else if (c.type === 'line') chartHTML = generateLineChart(c.color, c.data);
-                            else chartHTML = lastResortConfigs[index % lastResortConfigs.length]();
-                        } else {
-                            chartHTML = lastResortConfigs[index % lastResortConfigs.length]();
-                        }
+                    // Get chart for this card - prioritize report specific data
+                    let chartHTML = '';
+                    if (report.chart) {
+                        const c = report.chart;
+                        if (c.type === 'hbar') chartHTML = generateHBarChart(c.data, Array.isArray(c.color) ? c.color : [c.color, '#f59e0b', '#3b82f6', '#10b981']);
+                        else if (c.type === 'timeline') chartHTML = generateTimelineChart(c.data, c.color);
+                        else if (c.type === 'bar') chartHTML = generateBarChart(c.color, c.data);
+                        else if (c.type === 'donut') chartHTML = generateDonutChart(c.data, c.color);
+                        else if (c.type === 'network') chartHTML = generateNetworkChart(c.color, c.color, c.data);
+                        else if (c.type === 'line') chartHTML = generateLineChart(c.color, c.data);
+                        else chartHTML = lastResortConfigs[index % lastResortConfigs.length]();
+                    } else {
+                        chartHTML = lastResortConfigs[index % lastResortConfigs.length]();
+                    }
 
-                        card.innerHTML = `
+                    card.innerHTML = `
                     <div class="card-preview">
                         ${chartHTML}
                     </div>
@@ -2672,321 +2629,321 @@
                     </div>
                 `;
 
-                        // Add click handler
-                        card.addEventListener('click', (e) => {
-                            if (e.target.closest('.card-cta')) return;
-                            if (wasDragging) {
-                                wasDragging = false;
-                                return;
-                            }
-                            const cardIndex = parseInt(card.dataset.index);
-                            if (cardIndex !== currentCardIndex) {
-                                e.stopPropagation();
-                                goToCard(cardIndex);
-                            } else {
-                                window.location.href = report.slug;
-                            }
-                        });
-
-                        track.appendChild(card);
-
-                        // Create dot
-                        const dot = document.createElement('div');
-                        dot.className = 'carousel-dot';
-                        dot.dataset.index = index;
-                        dot.addEventListener('click', () => goToCard(index));
-                        dotsContainer.appendChild(dot);
-                    });
-
-                    // Update total count
-                    document.getElementById('totalCount').textContent = totalCards;
-
-                    updateCarousel();
-                    lucide.createIcons();
-                }
-
-                // Update carousel positions
-                function updateCarousel() {
-                    const cards = document.querySelectorAll('.carousel-card');
-                    const dots = document.querySelectorAll('.carousel-dot');
-
-                    cards.forEach((card, index) => {
-                        const offset = index - currentCardIndex;
-                        const absOffset = Math.abs(offset);
-
-                        const translateX = offset * 280;
-                        const translateZ = absOffset === 0 ? 0 : -150 - (absOffset * 50);
-                        const rotateY = offset * -25;
-                        const scale = absOffset === 0 ? 1 : Math.max(0.7, 1 - (absOffset * 0.15));
-                        const opacity = absOffset > 3 ? 0 : Math.max(0.3, 1 - (absOffset * 0.25));
-
-                        card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
-                        card.style.opacity = opacity;
-
-                        if (absOffset === 0) {
-                            card.style.zIndex = 100;
-                        } else {
-                            card.style.zIndex = Math.max(10, 90 - (absOffset * 5));
-                        }
-
-                        card.style.pointerEvents = opacity > 0 ? 'auto' : 'none';
-
-                        if (absOffset === 0) {
-                            card.classList.add('active');
-                        } else {
-                            card.classList.remove('active');
-                        }
-                    });
-
-                    dots.forEach((dot, index) => {
-                        dot.classList.toggle('active', index === currentCardIndex);
-                    });
-
-                    document.getElementById('currentIndex').textContent = currentCardIndex + 1;
-                }
-
-                // Navigate carousel
-                let isAnimating = false;
-
-                function navigateCarousel(direction) {
-                    if (isAnimating) return;
-
-                    const newIndex = currentCardIndex + direction;
-                    if (newIndex >= 0 && newIndex < totalCards) {
-                        currentCardIndex = newIndex;
-                        updateCarousel();
-
-                        // Lock navigation for the duration of the transition (500ms)
-                        // This prevents "double-swipes" or event ghosting from skipping cards
-                        isAnimating = true;
-                        setTimeout(() => { isAnimating = false; }, 500);
-                    }
-                }
-
-                // Go to specific card
-                function goToCard(index) {
-                    if (isAnimating) return;
-
-                    if (index >= 0 && index < totalCards) {
-                        currentCardIndex = index;
-                        updateCarousel();
-
-                        isAnimating = true;
-                        setTimeout(() => { isAnimating = false; }, 500);
-                    }
-                }
-
-                // Swipe gestures + wheel scroll
-                function initSwipeGestures() {
-                    const container = document.querySelector('.carousel-container');
-                    let startX = 0;
-                    let isDragging = false;
-                    let lastWheelTime = 0;
-                    let isTouch = false;
-
-                    // Mouse wheel scroll
-                    container.addEventListener('wheel', (e) => {
-                        // Prevent wheel scroll if we just touched (stops momentum scrolling from skipping cards)
-                        if (isTouch) return;
-
-                        e.preventDefault();
-                        const now = Date.now();
-                        if (now - lastWheelTime < 150) return;
-                        lastWheelTime = now;
-
-                        const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-
-                        if (delta > 10) {
-                            navigateCarousel(1);
-                        } else if (delta < -10) {
-                            navigateCarousel(-1);
-                        }
-                    }, { passive: false });
-
-                    // Touch swipe
-                    container.addEventListener('touchstart', (e) => {
-                        isTouch = true;
-                        startX = e.touches[0].clientX;
-                        isDragging = true;
-                    }, { passive: true });
-
-                    container.addEventListener('touchend', (e) => {
-                        if (!isDragging) return;
-                        isDragging = false;
-                        const endX = e.changedTouches[0].clientX;
-                        const diff = startX - endX;
-
-                        // Threshold 35px: Sensitive enough for short swipes
-                        if (Math.abs(diff) > 35) {
-                            e.preventDefault(); // Prevent click-throughs
-                            wasDragging = true;
-                            navigateCarousel(diff > 0 ? 1 : -1);
-                            // Keep 'wasDragging' true until animation lock clears (500ms)
-                            setTimeout(() => { wasDragging = false; }, 500);
-                        }
-
-                        // Reset touch flag after a delay to allow mouse emulation AND momentum to pass safely
-                        setTimeout(() => { isTouch = false; }, 800);
-                    }, { passive: false });
-
-                    // Mouse drag
-                    let hasDragged = false;
-
-                    container.addEventListener('mousedown', (e) => {
-                        if (isTouch) return; // Ignore if touch active
-                        startX = e.clientX;
-                        isDragging = true;
-                        hasDragged = false;
-                        container.style.cursor = 'grabbing';
-                    });
-
-                    document.addEventListener('mousemove', (e) => {
-                        if (!isDragging || isTouch) return;
-                        if (Math.abs(e.clientX - startX) > 5) {
-                            hasDragged = true;
-                        }
-                    });
-
-                    document.addEventListener('mouseup', (e) => {
-                        if (!isDragging || isTouch) return;
-                        isDragging = false;
-                        container.style.cursor = '';
-                        const diff = startX - e.clientX;
-
-                        if (hasDragged && Math.abs(diff) > 50) {
-                            wasDragging = true;
-                            navigateCarousel(diff > 0 ? 1 : -1);
-                            setTimeout(() => { wasDragging = false; }, 100);
-                        }
-                    });
-                }
-
-                // Keyboard navigation
-                function initKeyboardNav() {
-                    document.addEventListener('keydown', (e) => {
-                        // Skip if search overlay is open
-                        const searchOverlay = document.getElementById('searchOverlay');
-                        if (searchOverlay && searchOverlay.classList.contains('active')) return;
-
-                        if (e.key === 'ArrowLeft') {
-                            navigateCarousel(-1);
-                        } else if (e.key === 'ArrowRight') {
-                            navigateCarousel(1);
-                        } else if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-                            e.preventDefault();
-                            toggleUnifiedSearch();
-                        }
-                    });
-                }
-            </script>
-            <script>
-                // GSAP ANIMATION PILOT (Advanced Scroll)
-                document.addEventListener("DOMContentLoaded", (event) => {
-                    gsap.registerPlugin(ScrollTrigger);
-
-                    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-                    // --- 1. HERO ENTRANCE (Existing) ---
-                    gsap.set(".navbar", { y: -100, opacity: 0 });
-                    gsap.set(".hero-title .genu", { y: 50, opacity: 0 });
-                    gsap.set(".hero-title .verity", { y: 50, opacity: 0 });
-                    gsap.set(".hero-motto-badge", { y: 30, opacity: 0 });
-                    gsap.set(".hero-search", { scale: 0.9, opacity: 0 });
-                    gsap.set(".carousel-container", { y: 50, opacity: 0 });
-
-                    tl.to(".navbar", { duration: 1, y: 0, opacity: 1 })
-                        .to(".hero-title .genu", { duration: 0.8, y: 0, opacity: 1 }, "-=0.5")
-                        .to(".hero-title .verity", { duration: 0.8, y: 0, opacity: 1 }, "-=0.6")
-                        .to(".hero-motto-badge", { duration: 0.6, y: 0, opacity: 1 }, "-=0.4")
-                        .to(".hero-search", { duration: 0.8, scale: 1, opacity: 1 }, "-=0.2")
-                        .to(".carousel-container", { duration: 1, y: 0, opacity: 1 }, "-=0.4");
-
-                    // --- 2. PARALLAX GRID BACKGROUND ---
-                    // Moves the grid slowly as user scrolls for depth effect
-                    gsap.to(".bg-grid", {
-                        yPercent: 50,
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: "body",
-                            start: "top top",
-                            end: "bottom bottom",
-                            scrub: true
-                        }
-                    });
-
-                    // --- 3. NEXUS SEARCH (Centered & Dropdown) ---
-                    const navbar = document.querySelector('.navbar');
-
-                    // 3. DECOUPLED LOGIC: Navbar Search = Local Dropdown ONLY
-                    // We do NOT add 'search-sync-input' class to this input to avoid global binding
-                    const navSearchContainer = document.getElementById('navSearchContainer');
-                    const navSearch = navSearchContainer.querySelector('.navbar-search-container');
-
-                    // Create dropdown dynamically if not exists
-                    let dropdown = document.getElementById('nexusDropdown');
-                    if (!dropdown) {
-                        dropdown = document.createElement('div');
-                        dropdown.className = 'nexus-dropdown';
-                        dropdown.id = 'nexusDropdown';
-                        navSearch.appendChild(dropdown);
-                    }
-
-                    const navInput = navSearch.querySelector('input');
-                    const reports = typeof REPORTS_DATA !== 'undefined' ? REPORTS_DATA : [];
-
-                    // --- HERO SEARCH (Local Dropdown Logic) ---
-                    // 1. Get Elements
-                    const heroSearch = document.querySelector('.hero-search');
-                    // Remove the onclick that opens the overlay from HTML if it exists, or just ensure we don't use it
-                    heroSearch.removeAttribute('onclick');
-                    const heroInput = heroSearch.querySelector('input');
-
-                    // 2. Create Dropdown for Hero
-                    let heroDropdown = document.getElementById('heroNexusDropdown');
-                    if (!heroDropdown) {
-                        heroDropdown = document.createElement('div');
-                        heroDropdown.className = 'nexus-dropdown';
-                        heroDropdown.id = 'heroNexusDropdown';
-                        // Adjust position for Hero context (it's inside .hero-search which is relative/flex)
-                        heroDropdown.style.top = '60px';
-                        heroDropdown.style.width = '100%';
-                        heroDropdown.style.left = '0';
-                        heroSearch.style.position = 'relative'; // Ensure positioning context
-                        heroSearch.appendChild(heroDropdown);
-                    }
-
-                    // Shared Render Logic
-                    const renderLocalDropdown = (query, targetDropdown) => {
-                        if (!query) {
-                            targetDropdown.classList.remove('open');
-                            targetDropdown.innerHTML = '';
+                    // Add click handler
+                    card.addEventListener('click', (e) => {
+                        if (e.target.closest('.card-cta')) return;
+                        if (wasDragging) {
+                            wasDragging = false;
                             return;
                         }
-
-                        // Filter logic (Local)
-                        const hits = reports.filter(r =>
-                            r.title.toLowerCase().includes(query.toLowerCase()) ||
-                            r.category.toLowerCase().includes(query.toLowerCase())
-                        );
-
-                        targetDropdown.innerHTML = ''; // Clear previous
-
-                        if (hits.length === 0) {
-                            targetDropdown.innerHTML = '<div style="padding:20px; color:var(--text-muted); text-align:center;">No intelligence found.</div>';
+                        const cardIndex = parseInt(card.dataset.index);
+                        if (cardIndex !== currentCardIndex) {
+                            e.stopPropagation();
+                            goToCard(cardIndex);
                         } else {
-                            // Render Top 5
-                            hits.slice(0, 5).forEach(report => {
-                                const item = document.createElement('div');
-                                item.className = 'nexus-result-item'; // Use class for styling
-                                item.style.padding = '12px 16px';
-                                item.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
-                                item.style.cursor = 'pointer';
-                                item.style.display = 'flex';
-                                item.style.alignItems = 'center';
-                                item.style.gap = '10px';
-                                item.style.transition = 'background 0.2s';
+                            window.location.href = report.slug;
+                        }
+                    });
 
-                                item.innerHTML = `
+                    track.appendChild(card);
+
+                    // Create dot
+                    const dot = document.createElement('div');
+                    dot.className = 'carousel-dot';
+                    dot.dataset.index = index;
+                    dot.addEventListener('click', () => goToCard(index));
+                    dotsContainer.appendChild(dot);
+                });
+
+                // Update total count
+                document.getElementById('totalCount').textContent = totalCards;
+
+                updateCarousel();
+                lucide.createIcons();
+            }
+
+            // Update carousel positions
+            function updateCarousel() {
+                const cards = document.querySelectorAll('.carousel-card');
+                const dots = document.querySelectorAll('.carousel-dot');
+
+                cards.forEach((card, index) => {
+                    const offset = index - currentCardIndex;
+                    const absOffset = Math.abs(offset);
+
+                    const translateX = offset * 280;
+                    const translateZ = absOffset === 0 ? 0 : -150 - (absOffset * 50);
+                    const rotateY = offset * -25;
+                    const scale = absOffset === 0 ? 1 : Math.max(0.7, 1 - (absOffset * 0.15));
+                    const opacity = absOffset > 3 ? 0 : Math.max(0.3, 1 - (absOffset * 0.25));
+
+                    card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+                    card.style.opacity = opacity;
+
+                    if (absOffset === 0) {
+                        card.style.zIndex = 100;
+                    } else {
+                        card.style.zIndex = Math.max(10, 90 - (absOffset * 5));
+                    }
+
+                    card.style.pointerEvents = opacity > 0 ? 'auto' : 'none';
+
+                    if (absOffset === 0) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
+                    }
+                });
+
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentCardIndex);
+                });
+
+                document.getElementById('currentIndex').textContent = currentCardIndex + 1;
+            }
+
+            // Navigate carousel
+            let isAnimating = false;
+
+            function navigateCarousel(direction) {
+                if (isAnimating) return;
+
+                const newIndex = currentCardIndex + direction;
+                if (newIndex >= 0 && newIndex < totalCards) {
+                    currentCardIndex = newIndex;
+                    updateCarousel();
+
+                    // Lock navigation for the duration of the transition (500ms)
+                    // This prevents "double-swipes" or event ghosting from skipping cards
+                    isAnimating = true;
+                    setTimeout(() => { isAnimating = false; }, 500);
+                }
+            }
+
+            // Go to specific card
+            function goToCard(index) {
+                if (isAnimating) return;
+
+                if (index >= 0 && index < totalCards) {
+                    currentCardIndex = index;
+                    updateCarousel();
+
+                    isAnimating = true;
+                    setTimeout(() => { isAnimating = false; }, 500);
+                }
+            }
+
+            // Swipe gestures + wheel scroll
+            function initSwipeGestures() {
+                const container = document.querySelector('.carousel-container');
+                let startX = 0;
+                let isDragging = false;
+                let lastWheelTime = 0;
+                let isTouch = false;
+
+                // Mouse wheel scroll
+                container.addEventListener('wheel', (e) => {
+                    // Prevent wheel scroll if we just touched (stops momentum scrolling from skipping cards)
+                    if (isTouch) return;
+
+                    e.preventDefault();
+                    const now = Date.now();
+                    if (now - lastWheelTime < 150) return;
+                    lastWheelTime = now;
+
+                    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+
+                    if (delta > 10) {
+                        navigateCarousel(1);
+                    } else if (delta < -10) {
+                        navigateCarousel(-1);
+                    }
+                }, { passive: false });
+
+                // Touch swipe
+                container.addEventListener('touchstart', (e) => {
+                    isTouch = true;
+                    startX = e.touches[0].clientX;
+                    isDragging = true;
+                }, { passive: true });
+
+                container.addEventListener('touchend', (e) => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    const endX = e.changedTouches[0].clientX;
+                    const diff = startX - endX;
+
+                    // Threshold 35px: Sensitive enough for short swipes
+                    if (Math.abs(diff) > 35) {
+                        e.preventDefault(); // Prevent click-throughs
+                        wasDragging = true;
+                        navigateCarousel(diff > 0 ? 1 : -1);
+                        // Keep 'wasDragging' true until animation lock clears (500ms)
+                        setTimeout(() => { wasDragging = false; }, 500);
+                    }
+
+                    // Reset touch flag after a delay to allow mouse emulation AND momentum to pass safely
+                    setTimeout(() => { isTouch = false; }, 800);
+                }, { passive: false });
+
+                // Mouse drag
+                let hasDragged = false;
+
+                container.addEventListener('mousedown', (e) => {
+                    if (isTouch) return; // Ignore if touch active
+                    startX = e.clientX;
+                    isDragging = true;
+                    hasDragged = false;
+                    container.style.cursor = 'grabbing';
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (!isDragging || isTouch) return;
+                    if (Math.abs(e.clientX - startX) > 5) {
+                        hasDragged = true;
+                    }
+                });
+
+                document.addEventListener('mouseup', (e) => {
+                    if (!isDragging || isTouch) return;
+                    isDragging = false;
+                    container.style.cursor = '';
+                    const diff = startX - e.clientX;
+
+                    if (hasDragged && Math.abs(diff) > 50) {
+                        wasDragging = true;
+                        navigateCarousel(diff > 0 ? 1 : -1);
+                        setTimeout(() => { wasDragging = false; }, 100);
+                    }
+                });
+            }
+
+            // Keyboard navigation
+            function initKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    // Skip if search overlay is open
+                    const searchOverlay = document.getElementById('searchOverlay');
+                    if (searchOverlay && searchOverlay.classList.contains('active')) return;
+
+                    if (e.key === 'ArrowLeft') {
+                        navigateCarousel(-1);
+                    } else if (e.key === 'ArrowRight') {
+                        navigateCarousel(1);
+                    } else if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                        e.preventDefault();
+                        toggleUnifiedSearch();
+                    }
+                });
+            }
+        </script>
+        <script>
+            // GSAP ANIMATION PILOT (Advanced Scroll)
+            document.addEventListener("DOMContentLoaded", (event) => {
+                gsap.registerPlugin(ScrollTrigger);
+
+                const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+                // --- 1. HERO ENTRANCE (Existing) ---
+                gsap.set(".navbar", { y: -100, opacity: 0 });
+                gsap.set(".hero-title .genu", { y: 50, opacity: 0 });
+                gsap.set(".hero-title .verity", { y: 50, opacity: 0 });
+                gsap.set(".hero-motto-badge", { y: 30, opacity: 0 });
+                gsap.set(".hero-search", { scale: 0.9, opacity: 0 });
+                gsap.set(".carousel-container", { y: 50, opacity: 0 });
+
+                tl.to(".navbar", { duration: 1, y: 0, opacity: 1 })
+                    .to(".hero-title .genu", { duration: 0.8, y: 0, opacity: 1 }, "-=0.5")
+                    .to(".hero-title .verity", { duration: 0.8, y: 0, opacity: 1 }, "-=0.6")
+                    .to(".hero-motto-badge", { duration: 0.6, y: 0, opacity: 1 }, "-=0.4")
+                    .to(".hero-search", { duration: 0.8, scale: 1, opacity: 1 }, "-=0.2")
+                    .to(".carousel-container", { duration: 1, y: 0, opacity: 1 }, "-=0.4");
+
+                // --- 2. PARALLAX GRID BACKGROUND ---
+                // Moves the grid slowly as user scrolls for depth effect
+                gsap.to(".bg-grid", {
+                    yPercent: 50,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "body",
+                        start: "top top",
+                        end: "bottom bottom",
+                        scrub: true
+                    }
+                });
+
+                // --- 3. NEXUS SEARCH (Centered & Dropdown) ---
+                const navbar = document.querySelector('.navbar');
+
+                // 3. DECOUPLED LOGIC: Navbar Search = Local Dropdown ONLY
+                // We do NOT add 'search-sync-input' class to this input to avoid global binding
+                const navSearchContainer = document.getElementById('navSearchContainer');
+                const navSearch = navSearchContainer.querySelector('.navbar-search-container');
+
+                // Create dropdown dynamically if not exists
+                let dropdown = document.getElementById('nexusDropdown');
+                if (!dropdown) {
+                    dropdown = document.createElement('div');
+                    dropdown.className = 'nexus-dropdown';
+                    dropdown.id = 'nexusDropdown';
+                    navSearch.appendChild(dropdown);
+                }
+
+                const navInput = navSearch.querySelector('input');
+                const reports = typeof REPORTS_DATA !== 'undefined' ? REPORTS_DATA : [];
+
+                // --- HERO SEARCH (Local Dropdown Logic) ---
+                // 1. Get Elements
+                const heroSearch = document.querySelector('.hero-search');
+                // Remove the onclick that opens the overlay from HTML if it exists, or just ensure we don't use it
+                heroSearch.removeAttribute('onclick');
+                const heroInput = heroSearch.querySelector('input');
+
+                // 2. Create Dropdown for Hero
+                let heroDropdown = document.getElementById('heroNexusDropdown');
+                if (!heroDropdown) {
+                    heroDropdown = document.createElement('div');
+                    heroDropdown.className = 'nexus-dropdown';
+                    heroDropdown.id = 'heroNexusDropdown';
+                    // Adjust position for Hero context (it's inside .hero-search which is relative/flex)
+                    heroDropdown.style.top = '60px';
+                    heroDropdown.style.width = '100%';
+                    heroDropdown.style.left = '0';
+                    heroSearch.style.position = 'relative'; // Ensure positioning context
+                    heroSearch.appendChild(heroDropdown);
+                }
+
+                // Shared Render Logic
+                const renderLocalDropdown = (query, targetDropdown) => {
+                    if (!query) {
+                        targetDropdown.classList.remove('open');
+                        targetDropdown.innerHTML = '';
+                        return;
+                    }
+
+                    // Filter logic (Local)
+                    const hits = reports.filter(r =>
+                        r.title.toLowerCase().includes(query.toLowerCase()) ||
+                        r.category.toLowerCase().includes(query.toLowerCase())
+                    );
+
+                    targetDropdown.innerHTML = ''; // Clear previous
+
+                    if (hits.length === 0) {
+                        targetDropdown.innerHTML = '<div style="padding:20px; color:var(--text-muted); text-align:center;">No intelligence found.</div>';
+                    } else {
+                        // Render Top 5
+                        hits.slice(0, 5).forEach(report => {
+                            const item = document.createElement('div');
+                            item.className = 'nexus-result-item'; // Use class for styling
+                            item.style.padding = '12px 16px';
+                            item.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+                            item.style.cursor = 'pointer';
+                            item.style.display = 'flex';
+                            item.style.alignItems = 'center';
+                            item.style.gap = '10px';
+                            item.style.transition = 'background 0.2s';
+
+                            item.innerHTML = `
                                     <div style="flex:1">
                                         <div style="color:var(--text-primary); font-weight:600; font-size:0.9rem; line-height:1.2;">${report.title}</div>
                                         <div style="color:var(--text-secondary); font-size:0.75rem; margin-top:4px;">${report.date} • ${report.category}</div>
@@ -2994,266 +2951,266 @@
                                     <i data-lucide="arrow-right" style="width:14px; color:var(--accent-cyan); opacity:0.7;"></i>
                                 `;
 
-                                item.onmouseenter = () => item.style.background = 'rgba(6,182,212,0.1)';
-                                item.onmouseleave = () => item.style.background = 'transparent';
-                                item.onclick = (e) => {
-                                    e.stopPropagation(); // Prevent propagation
-                                    window.location.href = report.slug;
-                                };
+                            item.onmouseenter = () => item.style.background = 'rgba(6,182,212,0.1)';
+                            item.onmouseleave = () => item.style.background = 'transparent';
+                            item.onclick = (e) => {
+                                e.stopPropagation(); // Prevent propagation
+                                window.location.href = report.slug;
+                            };
 
-                                targetDropdown.appendChild(item);
-                            });
-                            lucide.createIcons({ root: targetDropdown });
-                        }
-
-                        targetDropdown.classList.add('open');
-                    };
-
-                    // --- BIND EVENTS ---
-
-                    // Navbar Input
-                    navInput.addEventListener('input', (e) => {
-                        renderLocalDropdown(e.target.value.trim(), dropdown);
-                    });
-
-                    // Hero Input
-                    heroInput.addEventListener('input', (e) => {
-                        renderLocalDropdown(e.target.value.trim(), heroDropdown);
-                    });
-
-                    // Enter key support (Generic)
-                    const handleEnter = (e, input) => {
-                        if (e.key === 'Enter') {
-                            const query = input.value.trim();
-                            if (query) {
-                                const bestMatch = reports.find(r =>
-                                    r.title.toLowerCase().includes(query.toLowerCase())
-                                );
-                                if (bestMatch) {
-                                    window.location.href = bestMatch.slug;
-                                }
-                            }
-                        }
-                    };
-
-                    navInput.addEventListener('keydown', (e) => handleEnter(e, navInput));
-                    heroInput.addEventListener('keydown', (e) => handleEnter(e, heroInput));
-
-
-                    // Close logic (Global click)
-                    document.addEventListener('click', (e) => {
-                        // Close Navbar Dropdown if click outside
-                        if (!navSearch.contains(e.target)) {
-                            dropdown.classList.remove('open');
-                        }
-                        // Close Hero Dropdown if click outside
-                        if (!heroSearch.contains(e.target)) {
-                            heroDropdown.classList.remove('open');
-                        }
-                    });
-
-                    // Scroll Progress & Navbar Search Logic
-                    window.addEventListener('scroll', () => {
-                        const scrollTop = window.scrollY;
-                        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                        const scrollPercent = (scrollTop / docHeight) * 100;
-
-                        // 1. Update Progress Bar
-                        const nav = document.querySelector('.navbar');
-                        if (nav) {
-                            nav.style.setProperty('--scroll-progress', `${scrollPercent}%`);
-                        }
-
-                        // 2. Toggle Navbar Search (Show when Hero Search is scrolled out)
-                        // On Mobile, we force it via CSS, so this logic is for Desktop
-                        const isMobile = window.innerWidth <= 768;
-                        const navSearchContainerEl = document.getElementById('navSearchContainer');
-                        // Inner container needs width expanded too
-                        const navSearchInner = navSearchContainerEl ? navSearchContainerEl.querySelector('.navbar-search-container') : null;
-
-                        if (!isMobile && navSearchContainerEl && navSearchInner) {
-                            if (scrollTop > 300) {
-                                navSearchContainerEl.style.opacity = '1';
-                                navSearchContainerEl.style.pointerEvents = 'all';
-                                navSearchInner.style.width = '320px'; // Force width expansion
-                            } else {
-                                navSearchContainerEl.style.opacity = '0';
-                                navSearchContainerEl.style.pointerEvents = 'none';
-                                navSearchInner.style.width = '0'; // Force collapse
-                                dropdown.classList.remove('open'); // Hide dropdown when hidden
-                            }
-                        }
-                    });
-
-                    // A. Navbar Search Expand
-                    gsap.registerPlugin(ScrollTrigger);
-
-                    // Initial "Slam" Animation for Motto
-                    const mottoSlam = gsap.timeline({ delay: 0.2 });
-                    mottoSlam.to(".slam-word", {
-                        duration: 0.15,
-                        opacity: 1,
-                        scale: 1,
-                        startAt: { scale: 4, opacity: 0 },
-                        ease: "power2.out",
-                        stagger: 0.15
-                    });
-
-                    ScrollTrigger.create({
-                        trigger: ".hero-search",
-                        start: "bottom top",
-                        onEnter: () => gsap.to(navSearch, {
-                            width: 320,
-                            opacity: 1,
-                            duration: 0.5,
-                            ease: "power4.out"
-                        }),
-                        onLeaveBack: () => {
-                            gsap.to(navSearch, {
-                                width: 0,
-                                opacity: 0,
-                                duration: 0.3
-                            });
-                            dropdown.classList.remove('open');
-                        }
-                    });
-
-                    // --- 5. ANIMATED FOCUS LENS (REPLACED OLD LOGIC) ---
-                    // The lens should "snap" to the graphics in the zig-zag layout
-
-                    // Note: 'lens' is already defined by document.getElementById("truth-lens") if needed,
-                    // but we can just reference the ID or re-select if scope allows. 
-                    // In this block, we just use the new Timeline logic.
-
-                    const focusLens = document.getElementById("truth-lens");
-
-                    // Reveal lens when we reach the features
-                    ScrollTrigger.create({
-                        trigger: ".thematic-section",
-                        start: "top center",
-                        onEnter: () => gsap.to(focusLens, { opacity: 1, scale: 1, duration: 0.5 }),
-                        onLeaveBack: () => gsap.to(focusLens, { opacity: 0, scale: 0.5, duration: 0.5 })
-                    });
-
-                    // 1. Snap to Shield (Graphic 1 - Right)
-                    gsap.timeline({
-                        scrollTrigger: {
-                            trigger: ".trigger-1",
-                            start: "top center",
-                            end: "bottom center",
-                            scrub: 0.6 // Slightly tighter scrub for responsiveness
-                        }
-                    })
-                        .to(focusLens, {
-                            top: "50%",
-                            left: "75%",
-                            scale: 1.8, // Larger zoom
-                            borderColor: "#3b82f6",
-                            ease: "expo.inOut" // Purposeful mechanical snap
+                            targetDropdown.appendChild(item);
                         });
-
-                    // 2. Snap to Grid (Graphic 2 - Left)
-                    gsap.timeline({
-                        scrollTrigger: {
-                            trigger: ".trigger-2",
-                            start: "top center",
-                            end: "bottom center",
-                            scrub: 0.6
-                        }
-                    })
-                        .to(focusLens, {
-                            top: "50%",
-                            left: "25%",
-                            scale: 1.8,
-                            borderColor: "#06b6d4",
-                            ease: "expo.inOut"
-                        });
-
-                    // 3. Snap to Globe (Graphic 3 - Right)
-                    gsap.timeline({
-                        scrollTrigger: {
-                            trigger: ".trigger-3",
-                            start: "top center",
-                            end: "bottom center",
-                            scrub: 0.6
-                        }
-                    })
-                        .to(focusLens, {
-                            top: "50%",
-                            left: "75%",
-                            scale: 1.8,
-                            borderColor: "#10b981",
-                            ease: "expo.inOut"
-                        });
-
-                    // 4. Snap to Process (Graphic 4 - Left/Center)
-                    gsap.timeline({
-                        scrollTrigger: {
-                            trigger: ".trigger-4",
-                            start: "top center",
-                            end: "bottom center",
-                            scrub: 0.6
-                        }
-                    })
-                        .to(focusLens, {
-                            top: "50%",
-                            left: "25%",
-                            scale: 2.2,
-                            borderColor: "#3b82f6",
-                            ease: "expo.inOut"
-                        });
-
-                    // 5. Snap to Join Headline (Trigger 5 - Focused on text)
-                    gsap.timeline({
-                        scrollTrigger: {
-                            trigger: ".trigger-5",
-                            start: "top center",
-                            end: "bottom center",
-                            scrub: 0.6,
-                            onEnter: () => focusLens.querySelector('.lens-glass').classList.add("lens-glass-glow"),
-                            onLeave: () => focusLens.querySelector('.lens-glass').classList.remove("lens-glass-glow"),
-                            onEnterBack: () => focusLens.querySelector('.lens-glass').classList.add("lens-glass-glow"),
-                            onLeaveBack: () => focusLens.querySelector('.lens-glass').classList.remove("lens-glass-glow")
-                        }
-                    })
-                        .to(focusLens, {
-                            top: "50%",
-                            left: "55%", // Focus just to the right of the headline
-                            scale: 2.5,
-                            borderColor: "#06b6d4",
-                            ease: "back.out(1.7)"
-                        });
-
-
-                    // --- 4. STAGGERED LIST REVEAL ---
-                    // If there's a list section, animate items in
-                    const listItems = document.querySelectorAll('.list-item');
-                    if (listItems.length > 0) {
-                        gsap.from(listItems, {
-                            y: 50,
-                            opacity: 0,
-                            duration: 0.8,
-                            stagger: 0.1,
-                            scrollTrigger: {
-                                trigger: ".list-section",
-                                start: "top 80%", // Start animating when top of section hits 80% viewport height
-                                toggleActions: "play none none reverse"
-                            }
-                        });
+                        lucide.createIcons({ root: targetDropdown });
                     }
 
+                    targetDropdown.classList.add('open');
+                };
+
+                // --- BIND EVENTS ---
+
+                // Navbar Input
+                navInput.addEventListener('input', (e) => {
+                    renderLocalDropdown(e.target.value.trim(), dropdown);
+                });
+
+                // Hero Input
+                heroInput.addEventListener('input', (e) => {
+                    renderLocalDropdown(e.target.value.trim(), heroDropdown);
+                });
+
+                // Enter key support (Generic)
+                const handleEnter = (e, input) => {
+                    if (e.key === 'Enter') {
+                        const query = input.value.trim();
+                        if (query) {
+                            const bestMatch = reports.find(r =>
+                                r.title.toLowerCase().includes(query.toLowerCase())
+                            );
+                            if (bestMatch) {
+                                window.location.href = bestMatch.slug;
+                            }
+                        }
+                    }
+                };
+
+                navInput.addEventListener('keydown', (e) => handleEnter(e, navInput));
+                heroInput.addEventListener('keydown', (e) => handleEnter(e, heroInput));
 
 
-
-                    // Allow manual toggle of sections to see effects
-                    window.toggleView = function (view) {
-                        // Existing toggle logic placeholder helper
-                        // In a real scenario, this connects to your existing view switcher
-                        // Just ensuring GSAP refreshes if layout changes
-                        setTimeout(() => ScrollTrigger.refresh(), 100);
+                // Close logic (Global click)
+                document.addEventListener('click', (e) => {
+                    // Close Navbar Dropdown if click outside
+                    if (!navSearch.contains(e.target)) {
+                        dropdown.classList.remove('open');
+                    }
+                    // Close Hero Dropdown if click outside
+                    if (!heroSearch.contains(e.target)) {
+                        heroDropdown.classList.remove('open');
                     }
                 });
-            </script>
+
+                // Scroll Progress & Navbar Search Logic
+                window.addEventListener('scroll', () => {
+                    const scrollTop = window.scrollY;
+                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrollPercent = (scrollTop / docHeight) * 100;
+
+                    // 1. Update Progress Bar
+                    const nav = document.querySelector('.navbar');
+                    if (nav) {
+                        nav.style.setProperty('--scroll-progress', `${scrollPercent}%`);
+                    }
+
+                    // 2. Toggle Navbar Search (Show when Hero Search is scrolled out)
+                    // On Mobile, we force it via CSS, so this logic is for Desktop
+                    const isMobile = window.innerWidth <= 768;
+                    const navSearchContainerEl = document.getElementById('navSearchContainer');
+                    // Inner container needs width expanded too
+                    const navSearchInner = navSearchContainerEl ? navSearchContainerEl.querySelector('.navbar-search-container') : null;
+
+                    if (!isMobile && navSearchContainerEl && navSearchInner) {
+                        if (scrollTop > 300) {
+                            navSearchContainerEl.style.opacity = '1';
+                            navSearchContainerEl.style.pointerEvents = 'all';
+                            navSearchInner.style.width = '320px'; // Force width expansion
+                        } else {
+                            navSearchContainerEl.style.opacity = '0';
+                            navSearchContainerEl.style.pointerEvents = 'none';
+                            navSearchInner.style.width = '0'; // Force collapse
+                            dropdown.classList.remove('open'); // Hide dropdown when hidden
+                        }
+                    }
+                });
+
+                // A. Navbar Search Expand
+                gsap.registerPlugin(ScrollTrigger);
+
+                // Initial "Slam" Animation for Motto
+                const mottoSlam = gsap.timeline({ delay: 0.2 });
+                mottoSlam.to(".slam-word", {
+                    duration: 0.15,
+                    opacity: 1,
+                    scale: 1,
+                    startAt: { scale: 4, opacity: 0 },
+                    ease: "power2.out",
+                    stagger: 0.15
+                });
+
+                ScrollTrigger.create({
+                    trigger: ".hero-search",
+                    start: "bottom top",
+                    onEnter: () => gsap.to(navSearch, {
+                        width: 320,
+                        opacity: 1,
+                        duration: 0.5,
+                        ease: "power4.out"
+                    }),
+                    onLeaveBack: () => {
+                        gsap.to(navSearch, {
+                            width: 0,
+                            opacity: 0,
+                            duration: 0.3
+                        });
+                        dropdown.classList.remove('open');
+                    }
+                });
+
+                // --- 5. ANIMATED FOCUS LENS (REPLACED OLD LOGIC) ---
+                // The lens should "snap" to the graphics in the zig-zag layout
+
+                // Note: 'lens' is already defined by document.getElementById("truth-lens") if needed,
+                // but we can just reference the ID or re-select if scope allows. 
+                // In this block, we just use the new Timeline logic.
+
+                const focusLens = document.getElementById("truth-lens");
+
+                // Reveal lens when we reach the features
+                ScrollTrigger.create({
+                    trigger: ".thematic-section",
+                    start: "top center",
+                    onEnter: () => gsap.to(focusLens, { opacity: 1, scale: 1, duration: 0.5 }),
+                    onLeaveBack: () => gsap.to(focusLens, { opacity: 0, scale: 0.5, duration: 0.5 })
+                });
+
+                // 1. Snap to Shield (Graphic 1 - Right)
+                gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".trigger-1",
+                        start: "top center",
+                        end: "bottom center",
+                        scrub: 0.6 // Slightly tighter scrub for responsiveness
+                    }
+                })
+                    .to(focusLens, {
+                        top: "50%",
+                        left: "75%",
+                        scale: 1.8, // Larger zoom
+                        borderColor: "#3b82f6",
+                        ease: "expo.inOut" // Purposeful mechanical snap
+                    });
+
+                // 2. Snap to Grid (Graphic 2 - Left)
+                gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".trigger-2",
+                        start: "top center",
+                        end: "bottom center",
+                        scrub: 0.6
+                    }
+                })
+                    .to(focusLens, {
+                        top: "50%",
+                        left: "25%",
+                        scale: 1.8,
+                        borderColor: "#06b6d4",
+                        ease: "expo.inOut"
+                    });
+
+                // 3. Snap to Globe (Graphic 3 - Right)
+                gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".trigger-3",
+                        start: "top center",
+                        end: "bottom center",
+                        scrub: 0.6
+                    }
+                })
+                    .to(focusLens, {
+                        top: "50%",
+                        left: "75%",
+                        scale: 1.8,
+                        borderColor: "#10b981",
+                        ease: "expo.inOut"
+                    });
+
+                // 4. Snap to Process (Graphic 4 - Left/Center)
+                gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".trigger-4",
+                        start: "top center",
+                        end: "bottom center",
+                        scrub: 0.6
+                    }
+                })
+                    .to(focusLens, {
+                        top: "50%",
+                        left: "25%",
+                        scale: 2.2,
+                        borderColor: "#3b82f6",
+                        ease: "expo.inOut"
+                    });
+
+                // 5. Snap to Join Headline (Trigger 5 - Focused on text)
+                gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".trigger-5",
+                        start: "top center",
+                        end: "bottom center",
+                        scrub: 0.6,
+                        onEnter: () => focusLens.querySelector('.lens-glass').classList.add("lens-glass-glow"),
+                        onLeave: () => focusLens.querySelector('.lens-glass').classList.remove("lens-glass-glow"),
+                        onEnterBack: () => focusLens.querySelector('.lens-glass').classList.add("lens-glass-glow"),
+                        onLeaveBack: () => focusLens.querySelector('.lens-glass').classList.remove("lens-glass-glow")
+                    }
+                })
+                    .to(focusLens, {
+                        top: "50%",
+                        left: "55%", // Focus just to the right of the headline
+                        scale: 2.5,
+                        borderColor: "#06b6d4",
+                        ease: "back.out(1.7)"
+                    });
+
+
+                // --- 4. STAGGERED LIST REVEAL ---
+                // If there's a list section, animate items in
+                const listItems = document.querySelectorAll('.list-item');
+                if (listItems.length > 0) {
+                    gsap.from(listItems, {
+                        y: 50,
+                        opacity: 0,
+                        duration: 0.8,
+                        stagger: 0.1,
+                        scrollTrigger: {
+                            trigger: ".list-section",
+                            start: "top 80%", // Start animating when top of section hits 80% viewport height
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                }
+
+
+
+
+                // Allow manual toggle of sections to see effects
+                window.toggleView = function (view) {
+                    // Existing toggle logic placeholder helper
+                    // In a real scenario, this connects to your existing view switcher
+                    // Just ensuring GSAP refreshes if layout changes
+                    setTimeout(() => ScrollTrigger.refresh(), 100);
+                }
+            });
+        </script>
 </body>
 
 </html>

@@ -9,6 +9,8 @@
 
     <!-- Dependencies -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="css/shared-components.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -380,23 +382,8 @@
 
 
     <!-- STANDARD NAVBAR -->
-    <nav class="navbar">
-        <a href="index.html" class="navbar-brand" style="text-decoration: none; border: none;">
-            <div class="navbar-logo">
-                <div class="navbar-logo-wrapper">
-                    <div class="ss-nav"></div>
-                    <div class="g-icon-nav">G</div>
-                </div>
-            </div>
-        </a>
-        <div class="navbar-right">
-            <a href="index.html" class="nav-back-link"
-                style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
-                <i data-lucide="arrow-left" style="width:16px;"></i>
-                Back to Intelligence
-            </a>
-        </div>
-    </nav>
+    <!-- Shared Navbar -->
+    <div id="navbar-placeholder" data-page-type="limitations"></div>
 
 
     <div class="page-header">
@@ -492,9 +479,8 @@
     <footer class="footer"
         style="padding:40px 0; text-align:center; border-top:1px solid var(--border-color); background:rgba(5,10,20,0.8);">
         <div class="footer-logo-wrapper">
-            <div class="ss-footer"></div>
-            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity"
-                style="font-size:1.5rem; font-weight:700;">Verity</span>
+            <!-- Shared Footer -->
+            <div id="footer-placeholder"></div>
         </div>
         <p style="color:var(--text-secondary); margin-bottom:20px;">AI-Powered Investigative Journalism</p>
         <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
@@ -506,7 +492,9 @@
 
     <!-- Scripts -->
     <script>
-        lucide.createIcons();
+        window.addEventListener('gv:componentsReady', () => {
+            lucide.createIcons();
+        });
 
         // Scroll Progress
         window.addEventListener('scroll', () => {

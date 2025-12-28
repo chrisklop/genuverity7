@@ -10,6 +10,8 @@
 
     <!-- Dependencies -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="css/shared-components.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <!-- Fonts -->
@@ -282,14 +284,15 @@
     <div class="bg-glow"></div>
 
     <!-- Navbar -->
-    <nav class="navbar">
-        <a href="/" class="navbar-logo">
-            <span>Genu</span><span class="logo-verity">Verity</span>
-        </a>
-        <div class="nav-links">
-            <a href="/" class="nav-link">Intelligence</a>
-            <a href="/methodology.html" class="nav-link">Methodology</a>
-        </div>
+    <!-- Shared Navbar -->
+    <div id="navbar-placeholder" data-page-type="contact"></div>
+    <a href="/" class="navbar-logo">
+        <span>Genu</span><span class="logo-verity">Verity</span>
+    </a>
+    <div class="nav-links">
+        <a href="/" class="nav-link">Intelligence</a>
+        <a href="/methodology.html" class="nav-link">Methodology</a>
+    </div>
     </nav>
 
     <!-- Main Content -->
@@ -346,9 +349,14 @@
         </div>
     </main>
 
+    <!-- Shared Footer -->
+    <div id="footer-placeholder"></div>
+
     <script>
         // Init Icons
-        lucide.createIcons();
+        window.addEventListener('gv:componentsReady', () => {
+            lucide.createIcons();
+        });
 
         // Form Handler
         async function handleContact(e) {

@@ -21,6 +21,8 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Shared Reports Data (v param busts CDN cache on updates) -->
     <script src="js/reports-data.js?v=3"></script>
+    <script src="js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="css/shared-components.css">
     <!-- Vercel Analytics -->
     <script defer src="/_vercel/insights/script.js"></script>
     <style>
@@ -1326,33 +1328,8 @@
     <div class="bg-glow"></div>
 
     <!-- Navbar -->
-    <nav class="navbar">
-        <a href="/" class="navbar-brand">
-            <span class="navbar-logo">
-                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
-            </span>
-            <span class="navbar-badge">COMING SOON</span>
-        </a>
-        <div class="navbar-right">
-            <a href="reports.html" class="navbar-link active">
-                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-                Reports
-            </a>
-            <a href="request-report.html" class="navbar-link">
-                <i data-lucide="plus-circle" style="width:16px;height:16px;"></i>
-                Request
-            </a>
-            <a href="/#notify" class="navbar-cta">
-                <i data-lucide="bell" style="width:14px;height:14px;"></i>
-                Early Access
-            </a>
-        </div>
-        <button class="navbar-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </nav>
+    <!-- Shared Navbar -->
+    <div id="navbar-placeholder" data-page-type="reports"></div>
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
@@ -1472,12 +1449,8 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-brand">
-            <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
-        </div>
-        <p>AI-Powered Investigative Journalism</p>
-    </footer>
+    <!-- Shared Footer -->
+    <div id="footer-placeholder"></div>
 
     <script>
         // Use shared reports data from js/reports-data.js

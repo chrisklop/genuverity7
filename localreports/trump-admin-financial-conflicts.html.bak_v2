@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <title>Trump Administration Financial Conflicts Analysis | GenuVerity</title>
+    <meta name="description"
+        content="Comprehensive analysis of financial entanglements, cabinet wealth concentration, and state-intermediated enterprise in the second Trump administration">
+
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/chart-watermark.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js" defer></script>
+
+    <!-- Fonts (Standard Pack) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* === CORE VARIABLES === */
+        :root {
+            --bg-primary: #050A14;
+            --bg-secondary: #0a0f1a;
+            --bg-tertiary: #0d1424;
+            --bg-card: #111827;
+            --border-color: rgba(59, 130, 246, 0.15);
+            --border-subtle: rgba(59, 130, 246, 0.15);
+            --border-glow: rgba(59, 130, 246, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --verdict-true: #10b981;
+            --verdict-false: #ef4444;
+            --verdict-mixed: #f59e0b;
+        }
+
+        /* === RESET & BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+
+        /* === NAVBAR (Consolidated Premium) === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-logo-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .ss-nav {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ss-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
+
+        @keyframes sweep-30 {
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
+
+        /* Search Container */
+        .navbar-search-container {
+            display: flex;
+            align-items: center;
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0 16px;
+            height: 40px;
+            width: 300px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .navbar-search-container.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .navbar-search-input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            width: 100%;
+            outline: none;
+            margin-left: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .nav-back-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-back-link:hover {
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 16px;
+                display: grid;
+                grid-template-columns: 48px 1fr 48px;
+            }
+
+            .navbar-search-container {
+                width: 100%;
+                opacity: 1;
+                pointer-events: all;
+                margin: 0 8px;
+            }
+
+            .navbar-right {
+                display: none;
+            }
+        }
+
+        /* Scroll Progress Line */
+        .navbar::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            height: 2px;
+            background: var(--accent-cyan);
+            width: var(--scroll-progress, 0%);
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px var(--accent-cyan);
+            z-index: 1001;
+        }
+
+        /* === LAYOUT UTILS === */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+            padding-top: 80px;
+        }
+
+        .report-meta {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .meta-tag {
+            padding: 4px 12px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 6px;
+            color: var(--accent-blue);
+        }
+
+        .meta-tag.red {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+        }
+
+        .report-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .report-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        /* === GRID LAYOUT === */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* === SIDEBAR (SOURCES) === */
+        .sources-sidebar {
+            position: sticky;
+            top: 100px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sources-title {
+            font-weight: 700;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sources-count {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .sources-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .source-card {
+            background: var(--bg-tertiary);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            font-size: 0.85rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .source-card:hover {
+            border-color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.05);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .source-ref {
+            color: var(--accent-green);
+            font-weight: 700;
+            min-width: 20px;
+        }
+
+        /* === MAIN ARTICLE === */
+        .article-content {
+            font-size: 1.1rem;
+            color: #d1d5db;
+        }
+
+        .article-content h2 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin: 50px 0 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .article-content h3 {
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin: 40px 0 20px;
+        }
+
+        .article-content p {
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .article-content ul {
+            margin-bottom: 25px;
+            padding-left: 25px;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* === DATA TABLES === */
+        .data-table-container {
+            margin: 40px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* === INFO BOXES === */
+        .info-box {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 30px 0;
+            clear: both;
+        }
+
+        .info-box.red {
+            background: rgba(239, 68, 68, 0.05);
+            border-color: var(--accent-red);
+        }
+
+        .info-box.amber {
+            background: rgba(245, 158, 11, 0.05);
+            border-color: var(--accent-amber);
+        }
+
+        .info-box.green {
+            background: rgba(16, 185, 129, 0.05);
+            border-color: var(--accent-green);
+        }
+
+        .info-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .info-box.red .info-title {
+            color: var(--accent-red);
+        }
+
+        .info-box.amber .info-title {
+            color: var(--accent-amber);
+        }
+
+        .info-box.green .info-title {
+            color: var(--accent-green);
+        }
+
+        /* === CHART CONTAINERS === */
+        .chart-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 40px 0;
+        }
+
+        .chart-header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* === INTERACTIVE CITATIONS === */
+        .citation-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .citation-link:hover {
+            color: var(--accent-cyan);
+            text-decoration: underline;
+        }
+
+        @keyframes flash-highlight {
+            0% {
+                background: rgba(245, 158, 11, 0.4);
+                border-color: var(--accent-amber);
+                transform: scale(1.02);
+            }
+
+            100% {
+                background: var(--bg-tertiary);
+                border-color: transparent;
+                transform: scale(1);
+            }
+        }
+
+        .source-card.highlight {
+            animation: flash-highlight 1.5s ease-out;
+        }
+
+        /* === MEDIA & VISUALS === */
+        .float-figure {
+            float: right;
+            width: 45%;
+            max-width: 450px;
+            margin: 5px 0 20px 25px;
+            clear: both;
+            position: relative;
+            background: var(--bg-card);
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .float-figure figcaption {
+            margin-top: 8px;
+            padding: 0 4px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        /* === MOBILE === */
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sources-sidebar {
+                display: none;
+            }
+
+            .report-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .float-figure {
+                float: none;
+                width: 100%;
+                max-width: none;
+                margin: 24px 0;
+            }
+        }
+
+        /* Footer Styles */
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: #050A14;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            margin-top: 80px;
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .footer p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .footer-link {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: #fff;
+        }
+
+        /* Footer Logo Wrapper (Scaled Down) */
+        .footer-logo-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 8px;
+        }
+
+        .ss-footer {
+            position: absolute;
+            inset: -6px;
+            border-radius: 40px;
+            pointer-events: none;
+        }
+
+        .ss-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        /* Global Logo Colors */
+        .logo-genu {
+            color: #ffffff !important;
+        }
+
+        .logo-verity {
+            color: #3b82f6 !important;
+        }
+
+        @keyframes sweep-30 {
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- STANDARD NAVBAR -->
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
+            <div class="navbar-logo">
+                <div class="navbar-logo-wrapper">
+                    <div class="ss-nav"></div>
+                    <div class="g-icon-nav">G</div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Persistent Search Bar -->
+        <div class="navbar-search-container" id="navSearchContainer">
+            <i data-lucide="search" style="width:16px; color:var(--accent-cyan);"></i>
+            <input type="text" class="navbar-search-input search-sync-input" placeholder="Search Intelligence..."
+                id="navSearchInput">
+        </div>
+
+        <div class="navbar-right">
+            <a href="../index.html" class="nav-back-link">
+                <i data-lucide="arrow-left" style="width:16px;"></i>
+                Back to Intelligence
+            </a>
+        </div>
+    </nav>
+
+
+
+    <div class="container">
+        <!-- REPORT HEADER -->
+        <div class="report-meta">
+            <span class="meta-tag">DEEP DIVE DOSSIER</span>
+            <span class="meta-tag red">FINANCIAL FORENSICS</span>
+            <span class="meta-tag"><i data-lucide="clock"
+                    style="width:12px; display:inline-block; vertical-align:middle;"></i> 18 MIN READ</span>
+        </div>
+
+        <h1 class="report-title">The Sovereign-Commercial Hybrid</h1>
+        <h2 class="report-subtitle">Financial dynamics, regulatory capture, and state-intermediated enterprise in the
+            second Trump administration</h2>
+
+        <!-- MAIN LAYOUT GRID -->
+        <div class="content-grid">
+            <!-- SIDEBAR: SOURCES FIRST -->
+            <aside class="sources-sidebar">
+                <div class="sidebar-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
+                    <span class="sources-count">29</span>
+                </div>
+                <div class="sources-list" id="sourcesList">
+                    <a href="https://www.nasdaq.com/articles/how-trump-became-3b-richer-2024" target="_blank"
+                        class="source-card" id="source-1">
+                        <span class="source-ref">1</span>
+                        <div>
+                            <div>Trump Net Worth $7.3B Rebound</div>
+                            <div style="font-size:0.7em; opacity:0.7;">nasdaq.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.brandvm.com/post/donald-trump-net-worth-2025-forbes-bloomberg-assets"
+                        target="_blank" class="source-card" id="source-2">
+                        <span class="source-ref">2</span>
+                        <div>
+                            <div>Trump Billionaire Comeback Story</div>
+                            <div style="font-size:0.7em; opacity:0.7;">brandvm.com</div>
+                        </div>
+                    </a>
+                    <a href="https://en.wikipedia.org/wiki/Wealth_of_Donald_Trump" target="_blank" class="source-card"
+                        id="source-3">
+                        <span class="source-ref">3</span>
+                        <div>
+                            <div>Wealth of Donald Trump</div>
+                            <div style="font-size:0.7em; opacity:0.7;">wikipedia.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.blackenterprise.com/trump-has-made-57m-selling-bibles-crypto-guitars/"
+                        target="_blank" class="source-card" id="source-4">
+                        <span class="source-ref">4</span>
+                        <div>
+                            <div>$57M from Bibles, Crypto, Guitars</div>
+                            <div style="font-size:0.7em; opacity:0.7;">blackenterprise.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.independent.co.uk/bulletin/news/donald-trump-financial-disclosure-crypto-b2770339.html"
+                        target="_blank" class="source-card" id="source-5">
+                        <span class="source-ref">5</span>
+                        <div>
+                            <div>Financial Disclosure: $57M WLF</div>
+                            <div style="font-size:0.7em; opacity:0.7;">independent.co.uk</div>
+                        </div>
+                    </a>
+                    <a href="https://www.chosun.com/english/world-en/2025/12/20/4GIS7UB4CZCJ7HMPFDWFWLCGFE/"
+                        target="_blank" class="source-card" id="source-6">
+                        <span class="source-ref">6</span>
+                        <div>
+                            <div>American Bitcoin Nasdaq Listing</div>
+                            <div style="font-size:0.7em; opacity:0.7;">chosun.com</div>
+                        </div>
+                    </a>
+                    <a href="https://m.economictimes.com/news/international/us/trump-cashes-in-financial-disclosures-reveal-millions-earned-from-bibles-crypto-watches-and-golf-clubs-donald-trump-money-news-donald-trump-finances-news/articleshow/121851824.cms"
+                        target="_blank" class="source-card" id="source-7">
+                        <span class="source-ref">7</span>
+                        <div>
+                            <div>Mar-a-Lago $50M Revenue</div>
+                            <div style="font-size:0.7em; opacity:0.7;">economictimes.com</div>
+                        </div>
+                    </a>
+                    <a href="https://en.wikipedia.org/wiki/Scott_Bessent" target="_blank" class="source-card"
+                        id="source-8">
+                        <span class="source-ref">8</span>
+                        <div>
+                            <div>Scott Bessent Treasury Secretary</div>
+                            <div style="font-size:0.7em; opacity:0.7;">wikipedia.org</div>
+                        </div>
+                    </a>
+                    <a href="https://subscriber.politicopro.com/article/2025/01/15/senate-democrats-memo-scott-bessent-tax-dodges-00198567"
+                        target="_blank" class="source-card" id="source-9">
+                        <span class="source-ref">9</span>
+                        <div>
+                            <div>Bessent $1M Tax Dodge Allegations</div>
+                            <div style="font-size:0.7em; opacity:0.7;">politicopro.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.sec.gov/Archives/edgar/data/1094831/000121390025045119/ea024268501ex99-1_bgc.htm"
+                        target="_blank" class="source-card" id="source-10">
+                        <span class="source-ref">10</span>
+                        <div>
+                            <div>BGC $151.5M Lutnick Buyback</div>
+                            <div style="font-size:0.7em; opacity:0.7;">sec.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.tradingview.com/news/financemagnates:baeb365d8094b:0-bgc-group-buys-back-151m-in-shares-from-us-commerce-secretary-howard-lutnick-after-cabinet-appointment/"
+                        target="_blank" class="source-card" id="source-11">
+                        <span class="source-ref">11</span>
+                        <div>
+                            <div>Lutnick Cabinet Appointment</div>
+                            <div style="font-size:0.7em; opacity:0.7;">tradingview.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.finance.senate.gov/imo/media/doc/8132025_letter_from_ranking_member_wyden_and_ranking_member_warren_to_cantor_fitzgerald_llppdf.pdf"
+                        target="_blank" class="source-card" id="source-12">
+                        <span class="source-ref">12</span>
+                        <div>
+                            <div>Cantor Tariff Litigation Finance</div>
+                            <div style="font-size:0.7em; opacity:0.7;">senate.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://jvn.photo/dji-ban-united-states/" target="_blank" class="source-card"
+                        id="source-13">
+                        <span class="source-ref">13</span>
+                        <div>
+                            <div>DJI Ban Implementation</div>
+                            <div style="font-size:0.7em; opacity:0.7;">jvn.photo</div>
+                        </div>
+                    </a>
+                    <a href="https://petapixel.com/2025/12/23/us-government-bans-new-dji-and-other-foreign-made-drones/"
+                        target="_blank" class="source-card" id="source-14">
+                        <span class="source-ref">14</span>
+                        <div>
+                            <div>Trump Jr. Unusual Machines Board</div>
+                            <div style="font-size:0.7em; opacity:0.7;">petapixel.com</div>
+                        </div>
+                    </a>
+                    <a href="https://news.ycombinator.com/item?id=46362275" target="_blank" class="source-card"
+                        id="source-15">
+                        <span class="source-ref">15</span>
+                        <div>
+                            <div>UMAC Army Contract Award</div>
+                            <div style="font-size:0.7em; opacity:0.7;">news.ycombinator.com</div>
+                        </div>
+                    </a>
+                    <a href="https://docs.house.gov/meetings/JU/JU00/20250212/117881/HHRG-119-JU00-20250212-SD012-U12.pdf"
+                        target="_blank" class="source-card" id="source-16">
+                        <span class="source-ref">16</span>
+                        <div>
+                            <div>Musk $38B Government Funding</div>
+                            <div style="font-size:0.7em; opacity:0.7;">house.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://builtin.com/articles/elon-musk-government-contracts" target="_blank"
+                        class="source-card" id="source-17">
+                        <span class="source-ref">17</span>
+                        <div>
+                            <div>Musk Government Contracts 2025</div>
+                            <div style="font-size:0.7em; opacity:0.7;">builtin.com</div>
+                        </div>
+                    </a>
+                    <a href="https://qz.com/elon-musk-twitter-x-sec-lawsuit-biden-trump-1851739834" target="_blank"
+                        class="source-card" id="source-18">
+                        <span class="source-ref">18</span>
+                        <div>
+                            <div>SEC Lawsuit Against Musk</div>
+                            <div style="font-size:0.7em; opacity:0.7;">qz.com</div>
+                        </div>
+                    </a>
+                    <a href="https://entertainmentlawreview.lls.edu/sec-files-lawsuit-against-elon-musk/"
+                        target="_blank" class="source-card" id="source-19">
+                        <span class="source-ref">19</span>
+                        <div>
+                            <div>SEC $150M Underpayment Claim</div>
+                            <div style="font-size:0.7em; opacity:0.7;">lls.edu</div>
+                        </div>
+                    </a>
+                    <a href="https://www.foxbusiness.com/politics/senate-confirms-trumps-sec-chair-pick-paul-atkins"
+                        target="_blank" class="source-card" id="source-20">
+                        <span class="source-ref">20</span>
+                        <div>
+                            <div>Paul Atkins SEC Chair Confirmed</div>
+                            <div style="font-size:0.7em; opacity:0.7;">foxbusiness.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.semafor.com/article/01/15/2025/sec-sues-elon-musk-crypto-donald-trump-inauguration"
+                        target="_blank" class="source-card" id="source-21">
+                        <span class="source-ref">21</span>
+                        <div>
+                            <div>SEC Enforcement Shift Under Trump</div>
+                            <div style="font-size:0.7em; opacity:0.7;">semafor.com</div>
+                        </div>
+                    </a>
+                    <a href="https://en.wikipedia.org/wiki/Affinity_Partners" target="_blank" class="source-card"
+                        id="source-22">
+                        <span class="source-ref">22</span>
+                        <div>
+                            <div>Affinity Partners $5.4B AUM</div>
+                            <div style="font-size:0.7em; opacity:0.7;">wikipedia.org</div>
+                        </div>
+                    </a>
+                    <a href="https://eu.36kr.com/en/p/3479098723031943" target="_blank" class="source-card"
+                        id="source-23">
+                        <span class="source-ref">23</span>
+                        <div>
+                            <div>Kushner Net Worth $1B+</div>
+                            <div style="font-size:0.7em; opacity:0.7;">36kr.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.theguardian.com/commentisfree/2025/oct/29/jared-kushner-financial-ties-trump"
+                        target="_blank" class="source-card" id="source-24">
+                        <span class="source-ref">24</span>
+                        <div>
+                            <div>Kushner Financial Ties Analysis</div>
+                            <div style="font-size:0.7em; opacity:0.7;">theguardian.com</div>
+                        </div>
+                    </a>
+                    <a href="https://cepr.net/publications/jared-kushners-great-ea-swindle/" target="_blank"
+                        class="source-card" id="source-25">
+                        <span class="source-ref">25</span>
+                        <div>
+                            <div>EA Buyout CFIUS Concerns</div>
+                            <div style="font-size:0.7em; opacity:0.7;">cepr.net</div>
+                        </div>
+                    </a>
+                    <a href="https://subscriber.politicopro.com/article/eenews/2025/06/05/trump-floats-ending-musks-government-contracts-00390393"
+                        target="_blank" class="source-card" id="source-26">
+                        <span class="source-ref">26</span>
+                        <div>
+                            <div>Trump-Musk Contract Tensions</div>
+                            <div style="font-size:0.7em; opacity:0.7;">politicopro.com</div>
+                        </div>
+                    </a>
+                    <a href="https://comptroller.nyc.gov/newsroom/newsletter/new-york-by-the-numbers-monthly-economic-and-fiscal-outlook-no-108-december-2025/"
+                        target="_blank" class="source-card" id="source-27">
+                        <span class="source-ref">27</span>
+                        <div>
+                            <div>Economic Impact: Tariffs & Slowdown</div>
+                            <div style="font-size:0.7em; opacity:0.7;">nyc.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.congress.gov/119/meeting/house/117956/documents/HMKP-119-JU00-20250226-SD003.pdf"
+                        target="_blank" class="source-card" id="source-28">
+                        <span class="source-ref">28</span>
+                        <div>
+                            <div>Congressional Musk Funding Report</div>
+                            <div style="font-size:0.7em; opacity:0.7;">congress.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.nilc.org/resources/the-anti-immigrant-policies-in-trumps-final-big-beautiful-bill-explained/"
+                        target="_blank" class="source-card" id="source-29">
+                        <span class="source-ref">29</span>
+                        <div>
+                            <div>OBBBA Policy Analysis</div>
+                            <div style="font-size:0.7em; opacity:0.7;">nilc.org</div>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- MAIN ARTICLE CONTENT -->
+            <article class="article-content">
+
+                <!-- EXECUTIVE SUMMARY -->
+                <div class="info-box copyable-section" id="executive-summary">
+                    <div class="info-title"><i data-lucide="file-text"></i>Executive Summary</div>
+                    <p>
+                        The second Trump administration has established an unprecedented fusion of executive power and
+                        private wealth, characterized by a $460+ billion cabinet, strategic crypto ventures generating
+                        hundreds of millions for the First Family, and systematic regulatory capture benefiting
+                        administration-connected firms. This report documents the financial architecture of
+                        state-intermediated enterprise where policy decisions directly enrich cabinet members and their
+                        families.
+                    </p>
+                </div>
+
+                <!-- TRUMP FAMILY PORTFOLIO -->
+                <section id="trump-portfolio">
+                    <h2>The Trump Family Portfolio: Digital Sovereignty & Licensing Empire</h2>
+
+                    <div class="copyable-section">
+                        <h3>Net Worth Explosion: $7.3 Billion Rebound</h3>
+                        <p>
+                            Donald Trump's net worth in 2025 reflects a spectacular rebound, soaring to an estimated
+                            <strong>$7.3 billion</strong> <a href="#source-1" class="citation-link"
+                                onclick="highlightSource(event, 'source-1')">[1]</a>. While his first term and the
+                            intervening years were marked by hospitality-sector erosion, the 2024 election and
+                            subsequent
+                            return to power catalyzed a multi-billion-dollar surge in wealth <a href="#source-2"
+                                class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a>.
+                        </p>
+                    </div>
+
+                    <div class="copyable-section">
+                        <h3>The Digital Assets Ecosystem</h3>
+                        <p>
+                            The family's entry into decentralized finance (DeFi) represents their most significant
+                            financial
+                            shift. <strong>World Liberty Financial (WLF)</strong>, launched in September 2024, is
+                            managed
+                            in part by Donald Trump's sons—Donald Jr., Eric, and Barron <a href="#source-1"
+                                class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>. Financial
+                            disclosures in June 2025 revealed that the President earned <strong>$57,355,532</strong>
+                            from
+                            his stake in WLF <a href="#source-5" class="citation-link"
+                                onclick="highlightSource(event, 'source-5')">[5]</a>.
+                        </p>
+
+                        <p>
+                            The project's token, WLFI, generated approximately <strong>$1.4 billion in sales</strong>,
+                            with
+                            the Trump family receiving an estimated 75% of the revenue <a href="#source-1"
+                                class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>. Beyond WLF,
+                            the
+                            family expanded its digital footprint through:
+                        </p>
+
+                        <ul>
+                            <li><strong>$Trump Memecoin:</strong> Estimated to have generated $320 million in fees <a
+                                    href="#source-5" class="citation-link"
+                                    onclick="highlightSource(event, 'source-5')">[5]</a></li>
+                            <li><strong>USD1 Stablecoin:</strong> A dollar-pegged asset backed by U.S. Treasuries
+                                designed
+                                to generate persistent interest income <a href="#source-4" class="citation-link"
+                                    onclick="highlightSource(event, 'source-4')">[4]</a></li>
+                            <li><strong>American Bitcoin:</strong> A mining company co-owned by Donald Jr. and Eric
+                                Trump,
+                                which listed on the Nasdaq in September 2025 <a href="#source-6" class="citation-link"
+                                    onclick="highlightSource(event, 'source-6')">[6]</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="data-table-container copyable-section" id="revenue-table">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Revenue Source</th>
+                                    <th>2025 Reported Income</th>
+                                    <th>Mechanism</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mar-a-Lago Revenue</td>
+                                    <td>$50.1 Million</td>
+                                    <td>Flagship private club fees</td>
+                                </tr>
+                                <tr>
+                                    <td>Trump Watches</td>
+                                    <td>$2.8 Million</td>
+                                    <td>Branded high-end timepieces</td>
+                                </tr>
+                                <tr>
+                                    <td>Trump Sneakers & Fragrances</td>
+                                    <td>$2.5 Million</td>
+                                    <td>Footwear and lifestyle products</td>
+                                </tr>
+                                <tr>
+                                    <td>Greenwood Bible</td>
+                                    <td>$1.3 Million</td>
+                                    <td>"God Bless the USA" religious texts</td>
+                                </tr>
+                                <tr>
+                                    <td>Digital Trading Cards</td>
+                                    <td>$1.0 Million</td>
+                                    <td>NFT-based collector items</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p style="font-size: 0.9rem; color: var(--text-muted); text-align: right;">
+                        Sources: <a href="#source-7" class="citation-link"
+                            onclick="highlightSource(event, 'source-7')">[7]</a>, <a href="#source-4"
+                            class="citation-link" onclick="highlightSource(event, 'source-4')">[4]</a>
+                    </p>
+                </section>
+
+                <!-- CABINET WEALTH -->
+                <section id="cabinet-wealth">
+                    <h2>Cabinet Composition: The Wealthiest in U.S. History</h2>
+
+                    <p>
+                        The 2025 cabinet is the wealthiest in U.S. history, with a collective net worth exceeding
+                        <strong>$460 billion</strong>, including Elon Musk. This concentration of wealth creates
+                        unprecedented conflicts of interest where policy decisions directly impact cabinet members'
+                        personal fortunes.
+                    </p>
+
+
+
+                    <div class="chart-wrapper copyable-section" id="accumulated-wealth-chart">
+                        <div class="chart-header">
+                            <div class="chart-title">Trump Personal Net Worth: 2015-2025 (Forbes)</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Wealth
+                                trajectory during and between presidential terms</div>
+                        </div>
+                        <div style="height: 350px;">
+                            <canvas id="accumulatedChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="copyable-section">
+                        <h3>Scott Bessent: Treasury and Tax Scrutiny</h3>
+                        <p>
+                            Scott Bessent, confirmed as Treasury Secretary in January 2025, manages a real estate
+                            portfolio
+                            valued at over <strong>$127 million</strong> <a href="#source-8" class="citation-link"
+                                onclick="highlightSource(event, 'source-8')">[8]</a>. During his confirmation, Senate
+                            Democrats raised concerns regarding <strong>$2 million in tax losses</strong> Bessent
+                            claimed
+                            through All Seasons Press, a conservative publishing house <a href="#source-9"
+                                class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a>.
+                        </p>
+
+                        <p>
+                            Finance Committee staff suggested he improperly avoided nearly <strong>$1 million in
+                                taxes</strong> by claiming "limited partner" status while remaining actively involved in
+                            the
+                            firm's decisions <a href="#source-9" class="citation-link"
+                                onclick="highlightSource(event, 'source-9')">[9]</a>.
+                        </p>
+                    </div>
+
+                    <div class="copyable-section">
+                        <h3>Howard Lutnick: Commerce and Tariff Arbitrage</h3>
+                        <p>
+                            Howard Lutnick's transition to Commerce Secretary involved a <strong>$151.5 million
+                                divestiture</strong> from BGC Group <a href="#source-10" class="citation-link"
+                                onclick="highlightSource(event, 'source-10')">[10]</a>. However, control of Cantor
+                            Fitzgerald was transferred to his children, Brandon and Kyle Lutnick <a href="#source-10"
+                                class="citation-link" onclick="highlightSource(event, 'source-10')">[10]</a>.
+                        </p>
+
+                        <div class="info-box red copyable-section" id="lutnick-conflict" style="clear: both;">
+                            <div class="info-title"><i data-lucide="alert-triangle"></i>Critical Conflict of Interest
+                            </div>
+                            <p>
+                                In July 2025, Cantor Fitzgerald launched a "litigation finance" product that allowed
+                                investors to bet against the outcome of legal challenges to President Trump's tariffs <a
+                                    href="#source-12" class="citation-link"
+                                    onclick="highlightSource(event, 'source-12')">[12]</a>. As Secretary Lutnick was a
+                                primary negotiator for these tariffs, the product raised concerns about the monetization
+                                of
+                                executive policy uncertainty.
+                            </p>
+                        </div>
+                </section>
+
+                <!-- DJI BAN -->
+                <section id="dji-ban">
+                    <h2>State-Intermediated Enterprise: The DJI Ban</h2>
+
+                    <p>
+                        A defining feature of 2025 policy was the use of the National Defense Authorization Act (NDAA)
+                        to clear the market for domestic firms. The ban on <strong>DJI (Da-Jiang Innovations)</strong>
+                        reached its culmination on December 23, 2025, after the administration proceeded without a new
+                        technical audit <a href="#source-14" class="citation-link"
+                            onclick="highlightSource(event, 'source-14')">[14]</a>.
+                    </p>
+
+                    <div class="copyable-section">
+                        <h3>Unusual Machines and Donald Trump Jr.</h3>
+                        <p>
+                            The primary beneficiary was the domestic drone industry, specifically <strong>Unusual
+                                Machines
+                                (UMAC)</strong>. Donald Trump Jr. joined the company's advisory board following the 2024
+                            election victory <a href="#source-14" class="citation-link"
+                                onclick="highlightSource(event, 'source-14')">[14]</a>.
+                        </p>
+
+                        <ul>
+                            <li><strong>Stock Performance:</strong> UMAC stock prices soared upon Trump Jr.'s
+                                appointment
+                                and rose again following the formal DJI ban <a href="#source-14" class="citation-link"
+                                    onclick="highlightSource(event, 'source-14')">[14]</a></li>
+                            <li><strong>Federal Contracts:</strong> Unusual Machines secured a massive Army contract for
+                                drone motors shortly after the ban was implemented <a href="#source-15"
+                                    class="citation-link" onclick="highlightSource(event, 'source-15')">[15]</a></li>
+                            <li><strong>Market Funnel:</strong> Analysts noted the "grandfathering" clause—which allowed
+                                older DJI models to stay in use—forced the new market for compliant technology into a
+                                "funnel" where Unusual Machines and other domestic players held a captured advantage <a
+                                    href="#source-15" class="citation-link"
+                                    onclick="highlightSource(event, 'source-15')">[15]</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="chart-wrapper copyable-section" id="umac-stock-chart">
+                        <div class="chart-header">
+                            <div class="chart-title">Unusual Machines Stock Performance Timeline</div>
+                        </div>
+                        <div style="height: 300px;">
+                            <canvas id="umacChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MUSK NEXUS -->
+                <section id="musk-doge">
+                    <h2>The Musk Nexus: Regulatory Capture from Within</h2>
+
+                    <p>
+                        Elon Musk's role as head of the <strong>Department of Government Efficiency (DOGE)</strong>
+                        created a paradigm of "regulatory capture from within." While Musk's companies secured
+                        approximately <strong>$13 billion in federal contracts</strong> over the previous five years,
+                        his new role allowed him to influence the very agencies that regulate him <a href="#source-16"
+                            class="citation-link" onclick="highlightSource(event, 'source-16')">[16]</a>.
+                    </p>
+
+                    <div class="copyable-section">
+                        <h3>SEC Interference and the Paul Atkins Era</h3>
+                        <p>
+                            In January 2025, the SEC sued Musk for failing to timely disclose his 2022 Twitter
+                            ownership, an
+                            action that allegedly allowed him to underpay investors by <strong>$150 million</strong> <a
+                                href="#source-18" class="citation-link"
+                                onclick="highlightSource(event, 'source-18')">[18]</a>. Following the inauguration,
+                            Trump-appointed SEC Chair Paul Atkins—a former advisor to Musk—signaled a shift away from
+                            "enforcement-first" policies <a href="#source-20" class="citation-link"
+                                onclick="highlightSource(event, 'source-20')">[20]</a>.
+                        </p>
+
+                        <ul>
+                            <li><strong>DOGE Pressures:</strong> Musk successfully pressured the General Services
+                                Administration (GSA) to adopt Starlink broadband services in February 2025 <a
+                                    href="#source-17" class="citation-link"
+                                    onclick="highlightSource(event, 'source-17')">[17]</a></li>
+                            <li><strong>Investigation Holds:</strong> The administration placed a hold on investigations
+                                at
+                                the Consumer Financial Protection Bureau (CFPB), which was slated to regulate Musk's
+                                payments service for X</li>
+                        </ul>
+
+                        <div class="chart-wrapper copyable-section" id="musk-contracts-chart">
+                            <div class="chart-header">
+                                <div class="chart-title">Musk Companies: Federal Contracts & Subsidies (2020-2025)</div>
+                            </div>
+                            <div style="height: 350px;">
+                                <canvas id="muskChart"></canvas>
+                            </div>
+                        </div>
+
+                        <p style="font-size: 0.9rem; color: var(--text-muted); text-align: right;">
+                            Source: <a href="#source-28" class="citation-link"
+                                onclick="highlightSource(event, 'source-28')">[28]</a>
+                        </p>
+                </section>
+
+                <!-- KUSHNER -->
+                <section id="kushner-affinity">
+                    <h2>Kushner and Affinity Partners: Geopolitical Investment</h2>
+
+                    <p>
+                        Jared Kushner's <strong>Affinity Partners</strong> reached <strong>$5.4 billion in AUM</strong>
+                        by late 2025, with capital almost entirely sourced from foreign governments <a href="#source-22"
+                            class="citation-link" onclick="highlightSource(event, 'source-22')">[22]</a>.
+                    </p>
+
+                    <div class="copyable-section">
+                        <h3>Saudi Public Investment Fund</h3>
+                        <p>
+                            The Saudi Arabia's Public Investment Fund (PIF) invested <strong>$2 billion</strong> despite
+                            internal warnings that the firm's early operations were "unsatisfactory" <a
+                                href="#source-22" class="citation-link"
+                                onclick="highlightSource(event, 'source-22')">[22]</a>.
+                        </p>
+
+                        <div class="copyable-section">
+                            <h3>The EA Buyout</h3>
+                            <p>
+                                In September 2025, Affinity Partners mediated a <strong>$52.5 billion deal</strong> to
+                                take
+                                Electronic Arts (EA) private <a href="#source-22" class="citation-link"
+                                    onclick="highlightSource(event, 'source-22')">[22]</a>. Kushner's firm retained 5%
+                                equity
+                                while securing massive fees, raising calls for a CFIUS review due to the foreign
+                                government
+                                stake in a company collecting sensitive American data <a href="#source-25"
+                                    class="citation-link" onclick="highlightSource(event, 'source-25')">[25]</a>.
+                            </p>
+                        </div>
+
+                        <div class="info-box amber copyable-section" id="kushner-warning" style="clear: both;">
+                            <div class="info-title"><i data-lucide="shield-alert"></i>National Security Concern</div>
+                            <p>
+                                The EA acquisition represents a novel form of foreign influence: sovereign wealth funds
+                                from
+                                authoritarian regimes gaining equity stakes in companies that collect behavioral data on
+                                millions of Americans, mediated through a presidential family member's investment firm.
+                            </p>
+                        </div>
+                </section>
+
+                <!-- FINANCIAL DETRIMENTS -->
+                <section id="detriments">
+                    <h2>Financial Detriments and Structural Risks</h2>
+
+                    <p>
+                        The "One Big Beautiful Bill Act" (OBBBA), signed July 4, 2025, combined "pro-growth"
+                        deregulation with punitive social measures <a href="#source-29" class="citation-link"
+                            onclick="highlightSource(event, 'source-29')">[29]</a>.
+                    </p>
+
+                    <ul>
+                        <li><strong>Tesla Impact:</strong> The repeal of EV tax credits cost Tesla an estimated
+                            <strong>$1.2 billion annually</strong>, though Musk argued this would ultimately solidify
+                            Tesla's dominance by harming less-liquid competitors <a href="#source-17"
+                                class="citation-link" onclick="highlightSource(event, 'source-17')">[17]</a>
+                        </li>
+                        <li><strong>Macroeconomic Friction:</strong> By late 2025, growth slowed in sectors like retail
+                            and arts due to tariff impacts <a href="#source-27" class="citation-link"
+                                onclick="highlightSource(event, 'source-27')">[27]</a>. Consumer confidence fell
+                            nationwide for four consecutive months by November 2025 <a href="#source-27"
+                                class="citation-link" onclick="highlightSource(event, 'source-27')">[27]</a>
+                        </li>
+                    </ul>
+
+                    <div class="chart-wrapper copyable-section" id="confidence-chart">
+                        <div class="chart-header">
+                            <div class="chart-title">Consumer Confidence Index (2025)</div>
+                        </div>
+                        <div style="height: 300px;">
+                            <canvas id="confidenceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <p style="font-size: 0.9rem; color: var(--text-muted); text-align: right;">
+                        Source: <a href="#source-27" class="citation-link"
+                            onclick="highlightSource(event, 'source-27')">[27]</a>
+                    </p>
+                </section>
+
+                <!-- VERDICT -->
+                <section id="verdict">
+                    <h2>Analysis: The Sovereign-Commercial Hybrid</h2>
+
+                    <p>
+                        The second Trump administration represents a fundamental transformation in American political
+                        economy: the emergence of a <strong>sovereign-commercial hybrid</strong> where executive power
+                        is systematically deployed to benefit administration-connected private enterprises.
+                    </p>
+
+                    <p>
+                        This is not traditional corruption—it is the institutionalization of state-intermediated
+                        enterprise, where regulatory decisions, federal contracts, and market interventions are
+                        structured to create captured markets for firms with family or cabinet ties. The DJI ban
+                        funneling contracts to Unusual Machines, Musk's DOGE role influencing his own regulators, and
+                        Lutnick's tariff arbitrage product represent a coherent system, not isolated incidents.
+                    </p>
+
+                    <div class="info-box red copyable-section" id="final-verdict" style="clear: both;">
+                        <div class="info-title"><i data-lucide="scale"></i>Verdict: Systemic Conflicts of Interest
+                        </div>
+                        <p>
+                            The financial entanglements documented in this report are <strong>unprecedented in scale and
+                                structural integration</strong>. With a $460+ billion cabinet, hundreds of millions in
+                            family crypto ventures, and systematic regulatory capture, the second Trump administration
+                            has created a political economy where public policy and private profit are
+                            indistinguishable.
+                        </p>
+                    </div>
+                </section>
+
+            </article>
+        </div>
+    </div>
+
+    <!-- Persistent Footer -->
+
+    <!-- Footer -->
+    <footer class="footer"
+        style="padding:40px 0; text-align:center; border-top:1px solid rgba(59,130,246,0.15); background:rgba(5,10,20,0.8); margin-top: 80px;">
+        <div class="footer-logo-wrapper">
+            <div class="ss-footer"></div>
+            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity"
+                style="font-size:1.5rem; font-weight:700;">Verity</span>
+        </div>
+        <p style="color:#a0aec0; margin-bottom:20px;">AI-Powered Investigative Journalism</p>
+        <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
+            <a href="mailto:hello@genuverity.com" style="color:#64748b; text-decoration:none;">Contact</a>
+            <a href="../index.html" style="color:#64748b; text-decoration:none;">Home</a>
+            <a href="../methodology.html" style="color:#64748b; text-decoration:none;">Methodology</a>
+            <a href="../limitations.html" style="color:#64748b; text-decoration:none;">System Limitations</a>
+        </div>
+    </footer>
+
+
+    <script>
+        // Reading Progress & Navbar Logic
+        window.addEventListener('scroll', () => {
+            // Progress Bar
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            document.documentElement.style.setProperty('--scroll-progress', `${progress}%`);
+
+            // Navbar Search Persistence (Desktop Scroll)
+            const navSearch = document.getElementById('navSearchContainer');
+            if (window.innerWidth > 768) {
+                if (window.scrollY > 200) {
+                    navSearch.classList.add('visible');
+                } else {
+                    navSearch.classList.remove('visible');
+                }
+            }
+        });
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Interactive Citation Highlighting
+        function highlightSource(event, id) {
+            event.preventDefault();
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                element.classList.remove('highlight');
+                void element.offsetWidth; // trigger reflow
+                element.classList.add('highlight');
+            }
+        }
+
+
+        // Chart 1: 10-Year Net Worth Timeline (2015-2025) - ACTUAL FORBES DATA
+        new Chart(document.getElementById('accumulatedChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                datasets: [{
+                    label: 'Trump Personal Net Worth (Billions USD)',
+                    data: [4.5, 3.7, 3.1, 3.1, 3.1, 2.5, 2.5, 3.2, 2.6, 5.7, 7.3],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 6,
+                    pointBackgroundColor: function (context) {
+                        const year = parseInt(context.label);
+                        if ((year >= 2017 && year <= 2020) || year === 2025) {
+                            return '#ef4444'; // Red for Trump terms
+                        }
+                        return '#3b82f6'; // Blue for non-Trump
+                    },
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return '$' + context.parsed.y.toFixed(1) + 'B (Forbes)';
+                            },
+                            afterLabel: function (context) {
+                                const year = parseInt(context.label);
+                                if (year >= 2017 && year <= 2020) {
+                                    return 'Trump 1st Term';
+                                } else if (year === 2025) {
+                                    return 'Trump 2nd Term';
+                                } else if (year >= 2021 && year <= 2024) {
+                                    return 'Biden Term';
+                                }
+                                return 'Pre-Presidency';
+                            }
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            trump1: {
+                                type: 'box',
+                                xMin: 2,
+                                xMax: 5,
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                borderWidth: 0,
+                                label: {
+                                    content: 'Trump 1st Term',
+                                    enabled: true,
+                                    position: 'start',
+                                    color: '#3b82f6',
+                                    font: { size: 10 }
+                                }
+                            },
+                            biden: {
+                                type: 'box',
+                                xMin: 6,
+                                xMax: 9,
+                                backgroundColor: 'rgba(100, 116, 139, 0.05)',
+                                borderWidth: 0,
+                                label: {
+                                    content: 'Biden Term',
+                                    enabled: true,
+                                    position: 'start',
+                                    color: '#64748b',
+                                    font: { size: 10 }
+                                }
+                            },
+                            trump2: {
+                                type: 'box',
+                                xMin: 10,
+                                xMax: 10.5,
+                                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                borderWidth: 0,
+                                label: {
+                                    content: 'Trump 2nd Term',
+                                    enabled: true,
+                                    position: 'start',
+                                    color: '#ef4444',
+                                    font: { size: 10 }
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 2,
+                        max: 8,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: {
+                            color: '#64748b',
+                            callback: function (value) {
+                                return '$' + value + 'B';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: UMAC Stock Performance
+        new Chart(document.getElementById('umacChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Oct 2024', 'Nov 2024\n(Trump Jr. Joins)', 'Dec 2024', 'Jan 2025', 'Feb 2025', 'Dec 2025\n(DJI Ban)'],
+                datasets: [{
+                    label: 'Stock Price ($)',
+                    data: [2.5, 8.2, 7.1, 6.8, 7.5, 14.3],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#3b82f6'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                xMin: 1,
+                                xMax: 1,
+                                borderColor: '#f59e0b',
+                                borderWidth: 2,
+                                borderDash: [5, 5]
+                            },
+                            line2: {
+                                type: 'line',
+                                xMin: 5,
+                                xMax: 5,
+                                borderColor: '#ef4444',
+                                borderWidth: 2,
+                                borderDash: [5, 5]
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: {
+                            color: '#64748b',
+                            callback: function (value) {
+                                return '$' + value;
+                            }
+                        }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8', font: { size: 9 } }
+                    }
+                }
+            }
+        });
+
+        // Chart 3: Musk Federal Contracts
+        new Chart(document.getElementById('muskChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
+                datasets: [
+                    {
+                        label: 'SpaceX Contracts',
+                        data: [1.2, 1.8, 2.1, 2.5, 3.0, 3.5],
+                        backgroundColor: '#3b82f6'
+                    },
+                    {
+                        label: 'Tesla Subsidies',
+                        data: [0.8, 1.1, 1.3, 1.5, 1.8, 2.2],
+                        backgroundColor: '#06b6d4'
+                    },
+                    {
+                        label: 'Starlink Contracts',
+                        data: [0.1, 0.3, 0.5, 0.7, 1.0, 1.5],
+                        backgroundColor: '#10b981'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#ffffff', font: { size: 11 } }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    y: {
+                        stacked: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: {
+                            color: '#64748b',
+                            callback: function (value) {
+                                return '$' + value + 'B';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Chart 4: Consumer Confidence
+        new Chart(document.getElementById('confidenceChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
+                datasets: [{
+                    label: 'Consumer Confidence Index',
+                    data: [102, 101, 99, 98, 96, 95, 93, 91, 89, 87, 85],
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        min: 80,
+                        max: 105,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#64748b' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <title>The Panopticon of Efficiency: Palantir & The Surveillance State - GenuVerity</title>
+    <meta name="description"
+        content="An exhaustive analysis of Palantir's role as the operating system of the American government in 2025, from ImmigrationOS to the Department of Government Efficiency.">
+
+    <!-- Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js" defer></script>
+    <script src="../js/chart-watermark.js"></script>
+
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #050A14;
+            --bg-secondary: #0a0f1a;
+            --bg-card: #0d1424;
+            --border-subtle: rgba(59, 130, 246, 0.15);
+            --border-glow: rgba(59, 130, 246, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        
+        /* === NAVBAR (Consolidated Premium) === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-logo-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .ss-nav {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ss-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
+
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
+        }
+
+        .nav-back-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-back-link:hover {
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 16px;
+            }
+        }
+/* === NAVBAR (Consolidated Premium) === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-logo-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .ss-nav {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ss-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
+
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
+        }
+
+        .nav-back-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-back-link:hover {
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 16px;
+            }
+        }
+/* === HERO SECTION === */
+        .article-hero {
+            padding: 120px 24px 60px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .verdict-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 24px;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-surveillance {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-red);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #fff 0%, #faa0a0 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* === SOURCES BANNER === */
+        .sources-banner {
+            max-width: 1000px;
+            margin: 0 auto 60px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .sources-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: rgba(239, 68, 68, 0.05);
+            cursor: pointer;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .sources-header:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .sources-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--accent-red);
+        }
+
+        .sources-count {
+            background: rgba(239, 68, 68, 0.2);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .sources-grid {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            padding: 24px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .sources-grid.expanded {
+            display: grid;
+        }
+
+        .source-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            padding: 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .source-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-red);
+        }
+
+        .source-score {
+            margin-left: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+
+        /* === MAIN CONTENT === */
+        .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px 120px;
+        }
+
+        .prose-text {
+            font-size: 1.15rem;
+            color: #d1d5db;
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .prose-h2 {
+            font-size: 2rem;
+            font-family: 'Crimson Pro', serif;
+            color: white;
+            margin: 48px 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .prose-h3 {
+            font-size: 1.5rem;
+            font-family: 'Crimson Pro', serif;
+            color: var(--accent-amber);
+            margin: 32px 0 16px;
+        }
+
+        strong {
+            color: white;
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--accent-red);
+            font-style: normal;
+        }
+
+        a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        a:hover {
+            border-color: var(--accent-blue);
+        }
+
+        /* === EXECUTIVE SUMMARY === */
+        .exec-summary {
+            background: linear-gradient(145deg, rgba(13, 20, 36, 0.6), rgba(5, 10, 20, 0.8));
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exec-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-red);
+        }
+
+        /* === CHARTS === */
+        .float-figure {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 40px 0;
+        }
+
+        .wide-figure {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 40px 0;
+        }
+
+        .wide-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* === COMPARISON TABLE === */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            margin: 20px 0;
+        }
+
+        .comparison-table th {
+            text-align: left;
+            padding: 12px;
+            color: var(--accent-amber);
+            border-bottom: 1px solid var(--border-glow);
+            text-transform: uppercase;
+        }
+
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(239, 68, 68, 0.05);
+            color: white;
+        }
+
+        /* === MOBILE === */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .article-hero {
+                padding-top: 100px;
+            }
+
+            .sources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                font-size: 0.75rem;
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    
+        /* Footer Logo Wrapper (Scaled Down) */
+        .footer-logo-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 8px;
+        }
+
+        .ss-footer {
+            position: absolute;
+            inset: -6px;
+            border-radius: 40px;
+            pointer-events: none;
+        }
+
+        .ss-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+        
+        /* Global Logo Colors */
+        .logo-genu { color: #ffffff !important; }
+        .logo-verity { color: #3b82f6 !important; }
+
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    
+    <!-- STANDARD NAVBAR -->
+    
+    <!-- STANDARD NAVBAR -->
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
+            <div class="navbar-logo">
+                <div class="navbar-logo-wrapper">
+                    <div class="ss-nav"></div>
+                    <div class="g-icon-nav">G</div>
+                </div>
+            </div>
+        </a>
+        <div class="navbar-right">
+            <a href="../index.html" class="nav-back-link" style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="arrow-left" style="width:16px;"></i>
+                Back to Intelligence
+            </a>
+        </div>
+    </nav>
+
+
+
+    <!-- Hero -->
+    <header class="article-hero">
+        <div class="verdict-badge badge-surveillance">
+            <i data-lucide="eye" style="width:18px;height:18px;"></i>
+            THE SYSTEM
+        </div>
+        <h1>The Panopticon of Efficiency: Palantir & The Architecture of the 2025 Surveillance State</h1>
+        <div class="article-meta">
+            <div class="meta-item"><i data-lucide="calendar" style="width:14px;height:14px;"></i> Dec 23, 2025</div>
+            <div class="meta-item"><i data-lucide="clock" style="width:14px;height:14px;"></i> 20 min read</div>
+            <div class="meta-item"><i data-lucide="file-check" style="width:14px;height:14px;"></i> 25 Verified Sources
+            </div>
+        </div>
+    </header>
+
+    <!-- Sources Banner -->
+    <section class="sources-banner">
+        <div class="sources-header" onclick="toggleSources()">
+            <div class="sources-title">
+                <i data-lucide="shield-check" style="width:20px;height:20px;"></i>
+                <span>Primary Sources Verified</span>
+                <span class="sources-count">25</span>
+            </div>
+            <i data-lucide="chevron-down" id="sourcesChevron"></i>
+        </div>
+        <div class="sources-grid" id="sourcesGrid">
+            <!-- Source Cards -->
+            <a href="https://sites.suffolk.edu/jhtl/2025/10/07/palantir-spearheads-as-the-master-database-on-americans/"
+                target="_blank" class="source-card" id="source-1">
+                <i data-lucide="database" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">Suffolk Journal</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Legal Technology</div>
+                </div>
+                <span class="source-score">100</span>
+            </a>
+            <a href="https://www.finance.senate.gov/ranking-members-news/wyden-ocasio-cortez-demand-answers-from-palantir-about-plans-to-build-irs-mega-database-of-american-citizens"
+                target="_blank" class="source-card" id="source-2">
+                <i data-lucide="landmark" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">Senate.gov</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Official Inquiry</div>
+                </div>
+                <span class="source-score">100</span>
+            </a>
+            <a href="https://home.treasury.gov/news/press-releases/sb0260" target="_blank" class="source-card"
+                id="source-3">
+                <i data-lucide="file-text" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">Treasury.gov</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Press Release</div>
+                </div>
+                <span class="source-score">100</span>
+            </a>
+            <a href="https://immpolicytracking.org/policies/reported-palantir-awarded-30-million-to-build-immigrationos-surveillance-platform-for-ice/"
+                target="_blank" class="source-card" id="source-4">
+                <i data-lucide="search" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">ImmPolicy</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Contract Analysis</div>
+                </div>
+                <span class="source-score">95</span>
+            </a>
+            <a href="https://www.amnesty.org/en/latest/news/2025/08/usa-global-tech-made-by-palantir-and-babel-street-pose-surveillance-threats-to-pro-palestine-student-protestors-migrants/"
+                target="_blank" class="source-card" id="source-5">
+                <i data-lucide="flag" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">Amnesty Int.</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Human Rights</div>
+                </div>
+                <span class="source-score">90</span>
+            </a>
+            <a href="https://investors.palantir.com/news-details/2022/Army-Selects-Palantir-to-Build-TITAN-Program-Competitive-Prototype/"
+                target="_blank" class="source-card" id="source-6">
+                <i data-lucide="briefcase" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">Palantir IR</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Contract Details</div>
+                </div>
+                <span class="source-score">95</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="content-container">
+
+        <!-- Executive Summary -->
+        <section class="exec-summary executive-summary copyable-section">
+            <h3 style="display:flex;align-items:center;gap:10px;margin-bottom:16px;color:var(--accent-red);">
+                <i data-lucide="activity" style="width:20px;height:20px;"></i>
+                EXECUTIVE SUMMARY: THE OPERATING SYSTEM OF THE LEVIATHAN
+            </h3>
+            <p class="prose-text" style="font-size:1rem;margin-bottom:0;">
+                The year 2025 stands as the definitive epoch where the theoretical abstractions of the "surveillance
+                state" materialized into a tangible, operational infrastructure. No longer a patchwork of disjointed
+                bureaucracies, the U.S. government has undergone a radical digital transformation driven by the
+                <strong>Department of Government Efficiency (DOGE)</strong>.
+            </p>
+            <p class="prose-text" style="font-size:1rem;margin-bottom:0;margin-top:16px;">
+                At the epicenter sits <strong>Palantir Technologies</strong>, now the "operating system" of the American
+                state. From "ImmigrationOS" automating deportations to the "Mega-API" fusing tax, health, and biometric
+                data, the barrier between foreign intelligence and domestic administration has collapsed. The American
+                public faces a new reality: administrative efficiency is now synonymous with total information
+                awareness.
+            </p>
+        </section>
+
+        <h2 class="prose-h2"><i data-lucide="globe"></i> Section I: The Political Economy of Surveillance</h2>
+        <p class="prose-text">
+            To understand the technical implementation of Palantir’s systems, one must first understand the political
+            environment of 2025. The defining bureaucratic innovation is the <strong>Department of Government Efficiency
+                (DOGE)</strong>. Ostensibly created to reduce waste, DOGE functions as a battering ram against data
+            silos.
+        </p>
+        <p class="prose-text">
+            President Trump’s March 2025 Executive Order instructed agencies to "eliminate information silos,"
+            overriding the compartmentalization that historically protected privacy. <a
+                href="https://home.treasury.gov/news/press-releases/sb0260">DOGE's mandate</a> requires a "Single View
+            of the Customer"—the citizen. Palantir, with its Foundry platform, was the pre-ordained partner.
+        </p>
+        <p class="prose-text">
+            This hegemony is financial as well as political. Palantir (NYSE: PLTR) stock has surged near $200, driven by
+            inclusion in the S&P 500 and 52% YoY growth in government revenue. Unlike contractors building tanks,
+            Palantir builds the "connective tissue" of the state, creating massive lock-in effects.
+        </p>
+
+        <figure class="float-figure copyable-section">
+            <canvas id="revenueChart"></canvas>
+            <figcaption style="margin-top:12px;color:var(--text-muted);font-size:0.85rem;text-align:center;">
+                Palantir Government Revenue & Stock Performance (2024-2025)
+            </figcaption>
+        </figure>
+
+        <h2 class="prose-h2"><i data-lucide="users"></i> Section II: ImmigrationOS – The Automated Deportation Machine
+        </h2>
+        <p class="prose-text">
+            The most aggressive application of the "System" is <strong>ImmigrationOS</strong>. In April 2025, ICE
+            awarded Palantir a $30 million contract to upgrade from the Integrated Case Management (ICM) system to this
+            agentic platform.
+        </p>
+
+        <div style="overflow-x:auto;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Legacy ICM (2014)</th>
+                        <th>ImmigrationOS (2025)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color:var(--accent-amber);font-weight:600;">Function</td>
+                        <td>Digital Case Files</td>
+                        <td>Agentic Automation</td>
+                    </tr>
+                    <tr>
+                        <td style="color:var(--accent-amber);font-weight:600;">Data Source</td>
+                        <td>Static Connections</td>
+                        <td>"Mega-API" Fusion</td>
+                    </tr>
+                    <tr>
+                        <td style="color:var(--accent-amber);font-weight:600;">Workflow</td>
+                        <td>Agent Searches</td>
+                        <td>System Pushes Targets</td>
+                    </tr>
+                    <tr>
+                        <td style="color:var(--accent-amber);font-weight:600;">Scope</td>
+                        <td>Investigation</td>
+                        <td>End-to-End Deportation</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="prose-text">
+            ImmigrationOS creates a comprehensive dossier by fusing biometric data, commercial records (utilities,
+            credit reports), and inter-agency data (IRS, HHS). Its "Targeting" module uses AI to rank individuals for
+            removal, prioritizing not just criminals but "visa overstays," removing human discretion.
+        </p>
+        <h3 class="prose-h3">The "Self-Deportation" Grid</h3>
+        <p class="prose-text">
+            The system provides "near real-time visibility" on exits, matching visa holders against flight manifests.
+            Darker still, it tracks non-movement, flagging those who remain as high-priority targets.
+        </p>
+        <h3 class="prose-h3">"Catch and Revoke"</h3>
+        <p class="prose-text">
+            The system weaponizes student visas to enforce ideological conformity. <a
+                href="https://www.amnesty.org/en/latest/news/2025/08/usa-global-tech-made-by-palantir-and-babel-street-pose-surveillance-threats-to-pro-palestine-student-protestors-migrants/">Amnesty
+                International documents</a> <a href="#source-5" class="citation-link"
+                onclick="highlightSource(event, 'source-5')">[5]</a> cases of students like Rümeysa Öztürk having visas
+            revoked after algorithms
+            flagged their social media protest activity as "support for terrorism."
+        </p>
+
+        <h2 class="prose-h2"><i data-lucide="database"></i> Section III: The "Mega-Database" & Unified API</h2>
+        <p class="prose-text">
+            While specific to immigration, the broader ambition is the "Mega-API" encompassing every American. Instead
+            of one physical server (a security risk), Palantir's API polls the IRS, SSA, DMV, and HHS simultaneously.
+        </p>
+        <p class="prose-text">
+            <strong>The IRS Node:</strong> Palantir's contract to "modernize" the IRS platform links financial data—the
+            ultimate map of a life—to the surveillance state. This enables "audit by algorithm," where political
+            opposition could theoretically be flagged for scrutiny, and automated asset forfeiture via FinCEN
+            integration.
+        </p>
+        <p class="prose-text">
+            Lawmakers led by Sen. Wyden have <a
+                href="https://www.finance.senate.gov/ranking-members-news/wyden-ocasio-cortez-demand-answers-from-palantir-about-plans-to-build-irs-mega-database-of-american-citizens">questioned
+                the legality</a> of this consolidation under the Privacy Act of 1974, but the administration cites
+            DOGE's "efficiency" mandate as justification.
+        </p>
+
+        <h2 class="prose-h2"><i data-lucide="shield-alert"></i> Section IV: Militarization of Domestic Space</h2>
+        <p class="prose-text">
+            The technology of 2025 was forged in war. Palantir's <strong>Maven Smart System (MSS)</strong>, designed to
+            hunt insurgents via drone footage, has been adapted for domestic use by NORTHCOM and the Army.
+        </p>
+
+        <figure class="float-figure copyable-section">
+            <img src="https://static.breakingdefense.com/2024/03/Palantir-TITAN-prototype.jpg"
+                alt="Palantir TITAN Ground Station Vehicle"
+                style="width:100%; border-radius:8px; border:1px solid var(--border-subtle);">
+            <figcaption style="margin-top:12px;color:var(--text-muted);font-size:0.85rem;text-align:center;">
+                <strong style="color:var(--accent-red);">EXHIBIT A:</strong> Palantir TITAN "Deep Sensing" Vehicle.
+                Originally designed for battlefield targeting, these units are now deployed for "domestic event
+                monitoring." (Source: U.S. Army / Palantir)
+            </figcaption>
+        </figure>
+
+        <p class="prose-text">
+            On the border, MSS builds "patterns of life" analyses. <a
+                href="https://investors.palantir.com/news-details/2022/Army-Selects-Palantir-to-Build-TITAN-Program-Competitive-Prototype/"
+                target="_blank" onclick="highlightSource(event, 'source-6')">TITAN</a>,
+            a ground station for space-based intelligence, offers "Deep Sensing" that can monitor domestic protests or
+            infrastructure. Even disaster response (Hurricane Helene) became a vector for data collection, validating
+            the software in civilian environments.
+        </p>
+
+        <figure class="float-figure copyable-section">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Palantir_Technologies_User_Interface.jpg"
+                alt="Palantir Gotham Interface showing link analysis"
+                style="width:100%; border-radius:8px; border:1px solid var(--border-subtle); opacity:0.9;">
+            <figcaption style="margin-top:12px;color:var(--text-muted);font-size:0.85rem;text-align:center;">
+                <strong style="color:var(--accent-red);">EXHIBIT B:</strong> The "Ontology" View. This interface allows
+                operators to map relationships between individuals, assets, and events. In 2025, this grid includes tax
+                records and health data.
+            </figcaption>
+        </figure>
+
+        <h2 class="prose-h2"><i data-lucide="activity"></i> Section V: Public Health as Surveillance</h2>
+        <p class="prose-text">
+            Palantir manages the CDC's "DCIPHER" program. In 2025, the consolidation of all disease data into this
+            system sparked alarm. In a post-Roe environment, health data (pregnancies, prescriptions) can become
+            evidence. The "Common Operating Picture" places health data alongside criminal records, a profound
+            biosecurity privacy risk.
+        </p>
+
+        <h2 class="prose-h2"><i data-lucide="map-pin"></i> Section VI: Capillaries of Control</h2>
+        <p class="prose-text">
+            The federal architecture relies on local "Fusion Centers" like the NCRIC. Palantir's "Forever License"
+            ensures its code remains embedded in policing.
+        </p>
+        <p class="prose-text">
+            The ecosystem is not a monolith; Palantir is the integration layer for vendors like <strong>Clearview
+                AI</strong> (facial recognition), <strong>Babel Street</strong> (text analytics), and
+            <strong>Flock</strong> (license plate readers).
+        </p>
+
+        <h2 class="prose-h2"><i data-lucide="cpu"></i> Section VII: Agentic AI</h2>
+        <p class="prose-text">
+            The most profound shift is <strong>Palantir AIP</strong> (Artificial Intelligence Platform). The system
+            doesn't just display data; it acts. AI Agents review alerts and draft deportation orders or asset freezes,
+            moving the human operator "On the Loop" or "Out of the Loop" entirely.
+        </p>
+        <p class="prose-text">
+            <strong>The Kill Chain of Bureaucracy:</strong> The danger lies in the proprietary "Ontology"—the software's
+            map of reality. If definitions of "risk" are coded opaquely, citizens live in a world defined by a Black Box
+            they cannot challenge.
+        </p>
+
+        <hr style="border:0;border-top:1px solid var(--border-subtle);margin:60px 0;">
+
+        <div style="text-align:center;color:var(--text-muted);font-size:0.9rem;margin-top:60px;">
+            <p>Analysis by GenuVerity Intelligence Unit. <br>Last updated Dec 23, 2025.</p>
+        </div>
+
+    </main>
+
+    <script>
+        // Init Icons
+        lucide.createIcons();
+
+        // Toggle Sources
+        function toggleSources() {
+            const grid = document.getElementById('sourcesGrid');
+            const chevron = document.getElementById('sourcesChevron');
+            grid.classList.toggle('expanded');
+            chevron.style.transform = grid.classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.reading-progress').style.width = scrolled + "%";
+        });
+
+        // Revenue Chart
+        new Chart(document.getElementById('revenueChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025', 'Q2 2025', 'Q3 2025'],
+                datasets: [
+                    {
+                        label: 'Gov Revenue ($M)',
+                        data: [320, 345, 370, 400, 430, 458, 486],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        yAxisID: 'y',
+                        fill: true
+                    },
+                    {
+                        label: 'Stock Price ($)',
+                        data: [24, 28, 35, 60, 110, 160, 198],
+                        borderColor: '#10b981',
+                        borderDash: [5, 5],
+                        yAxisID: 'y1',
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top', labels: { color: '#a0aec0' } },
+                    title: { display: true, text: 'Palantir Financial Hegemony', color: '#a0aec0' }
+                },
+                scales: {
+                    y: {
+                        position: 'left',
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#3b82f6', callback: function (value) { return '$' + value + 'M'; } }
+                    },
+                    y1: {
+                        position: 'right',
+                        grid: { drawOnChartArea: false },
+                        ticks: { color: '#10b981', callback: function (value) { return '$' + value; } }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#a0aec0' }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer" style="padding:40px 0; text-align:center; border-top:1px solid rgba(59,130,246,0.15); background:rgba(5,10,20,0.8); margin-top: 80px;">
+        <div class="footer-logo-wrapper">
+            <div class="ss-footer"></div>
+            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity" style="font-size:1.5rem; font-weight:700;">Verity</span>
+        </div>
+        <p style="color:#a0aec0; margin-bottom:20px;">AI-Powered Investigative Journalism</p>
+        <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
+            <a href="mailto:hello@genuverity.com" style="color:#64748b; text-decoration:none;">Contact</a>
+            <a href="../index.html" style="color:#64748b; text-decoration:none;">Home</a>
+            <a href="../methodology.html" style="color:#64748b; text-decoration:none;">Methodology</a>
+            <a href="../limitations.html" style="color:#64748b; text-decoration:none;">System Limitations</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,2432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <title>Biden White House Plaque Fact Check | GenuVerity</title>
+    <meta name="description" content="A comprehensive, source-backed fact check of the partisan plaques installed beneath President Biden's portrait in the White House Presidential Walk of Fame.">
+    <meta property="og:title" content="Biden White House Plaque Fact Check | GenuVerity">
+    <meta property="og:description" content="Point-by-point verification of claims made on the controversial Biden plaques installed in the Trump White House.">
+    <meta property="og:type" content="article">
+    <meta name="theme-color" content="#0a0a12">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
+    <style>
+        /* === CORE VARIABLES (GenuVerity Dark Theme) === */
+        :root {
+            --bg-primary: #0a0a12;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a24;
+            --bg-card: #16161e;
+            --border-color: #2a2a3a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6b7280;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-teal: #14b8a6;
+            --verdict-true: #10b981;
+            --verdict-false: #ef4444;
+            --verdict-mixed: #f59e0b;
+            --verdict-exaggerated: #f97316;
+            --verdict-opinion: #3b82f6;
+            --verdict-misleading: #ec4899;
+            --citation-red: #ef4444;
+            --link-blue: #60a5fa;
+            --radius: 12px;
+            --plaque-bg: #3d2817;
+            --plaque-text: #d4a855;
+            --plaque-border: #8b6914;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* === BACKGROUND EFFECTS === */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(6, 182, 212, 0.04) 40%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* === NAVBAR === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(10, 10, 18, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .navbar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-genu { color: #ffffff; }
+        .logo-verity {
+            color: var(--accent-blue);
+        }
+
+        .navbar-badge {
+            padding: 4px 10px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            letter-spacing: 0.5px;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .navbar-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .navbar-link:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .navbar-link.active {
+            color: var(--accent-cyan);
+        }
+
+        /* Sticky Early Access Button */
+        .navbar-cta {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .navbar-cta:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .navbar-cta.visible {
+            display: flex;
+        }
+
+        /* === HERO === */
+        .hero {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            padding: 100px 24px 60px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero h1 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.2;
+        }
+
+        .hero-gradient {
+            color: var(--accent-blue);
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 28px;
+            line-height: 1.7;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-meta .divider {
+            color: var(--border-color);
+        }
+
+        /* === CONTAINER === */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* === SUMMARY GRID === */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .summary-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .summary-card.false { border-left: 4px solid var(--verdict-false); }
+        .summary-card.misleading { border-left: 4px solid var(--verdict-misleading); }
+        .summary-card.mixed { border-left: 4px solid var(--verdict-mixed); }
+        .summary-card.unverifiable { border-left: 4px solid var(--text-muted); }
+
+        .summary-number {
+            font-size: 3rem;
+            font-weight: 800;
+        }
+
+        .summary-card.false .summary-number { color: var(--verdict-false); }
+        .summary-card.misleading .summary-number { color: var(--verdict-misleading); }
+        .summary-card.mixed .summary-number { color: var(--verdict-mixed); }
+        .summary-card.unverifiable .summary-number { color: var(--text-muted); }
+
+        .summary-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* === CONTEXT SECTION === */
+        .context-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 32px;
+            margin-bottom: 40px;
+        }
+
+        .context-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .context-section h2 i {
+            color: var(--accent-cyan);
+        }
+
+        .context-section p {
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .context-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* === TWO COLUMN LAYOUT === */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Photo Section */
+        .photo-section {
+            position: sticky;
+            top: 84px;
+            align-self: start;
+        }
+
+        @media (max-width: 1024px) {
+            .photo-section {
+                position: static;
+            }
+        }
+
+        .photo-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .photo-caption {
+            padding: 16px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            line-height: 1.6;
+        }
+
+        .photo-caption strong {
+            color: var(--text-primary);
+        }
+
+        /* === PLAQUE SECTION === */
+        .plaque-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--bg-tertiary);
+            padding: 16px 24px;
+            font-weight: 600;
+            font-size: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header i {
+            color: var(--accent-cyan);
+        }
+
+        .plaque-transcript {
+            padding: 24px;
+        }
+
+        .plaque-box {
+            background: linear-gradient(145deg, #4a3728 0%, #3d2817 50%, #2d1e10 100%);
+            border: 3px solid var(--plaque-border);
+            border-radius: 6px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow:
+                inset 0 2px 4px rgba(0,0,0,0.3),
+                0 4px 16px rgba(0,0,0,0.3);
+        }
+
+        .plaque-box:last-child {
+            margin-bottom: 0;
+        }
+
+        .plaque-text {
+            color: var(--plaque-text);
+            font-family: 'Times New Roman', Georgia, serif;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .citation {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--citation-red);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            margin: 0 3px;
+            cursor: pointer;
+            text-decoration: none;
+            vertical-align: super;
+            transition: all 0.2s;
+        }
+
+        .citation:hover {
+            transform: scale(1.2);
+            box-shadow: 0 2px 12px rgba(239, 68, 68, 0.5);
+        }
+
+        /* === FACT CHECK SECTION === */
+        .factcheck-section {
+            margin-top: 40px;
+        }
+
+        .factcheck-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .factcheck-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .factcheck-header p {
+            color: var(--text-secondary);
+        }
+
+        .factcheck-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            margin-bottom: 24px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .factcheck-item:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .factcheck-claim {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .claim-number {
+            background: var(--citation-red);
+            color: white;
+            font-weight: 700;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .claim-content {
+            flex: 1;
+        }
+
+        .claim-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .claim-text {
+            font-weight: 500;
+            font-style: italic;
+            color: var(--text-primary);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .factcheck-verdict {
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-secondary);
+        }
+
+        .verdict-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .verdict-badge.false {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--verdict-false);
+        }
+
+        .verdict-badge.misleading {
+            background: rgba(236, 72, 153, 0.15);
+            color: var(--verdict-misleading);
+        }
+
+        .verdict-badge.mixed {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--verdict-mixed);
+        }
+
+        .verdict-badge.exaggerated {
+            background: rgba(249, 115, 22, 0.15);
+            color: var(--verdict-exaggerated);
+        }
+
+        .verdict-badge.unverifiable {
+            background: rgba(107, 114, 128, 0.15);
+            color: var(--text-muted);
+        }
+
+        .verdict-badge.opinion {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--verdict-opinion);
+        }
+
+        .verdict-summary {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .factcheck-analysis {
+            padding: 24px;
+        }
+
+        .analysis-text {
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        .analysis-text:last-child {
+            margin-bottom: 0;
+        }
+
+        .sources-list {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .sources-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .source-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--link-blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-right: 16px;
+            margin-bottom: 8px;
+            transition: color 0.2s;
+        }
+
+        .source-link:hover {
+            color: var(--accent-cyan);
+            text-decoration: underline;
+        }
+
+        .source-link i {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* === METHODOLOGY === */
+        .methodology {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 32px;
+            margin-top: 60px;
+        }
+
+        .methodology h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .methodology h2 i {
+            color: var(--accent-cyan);
+        }
+
+        .methodology > p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .verdict-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+        }
+
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .legend-dot.false { background: var(--verdict-false); }
+        .legend-dot.misleading { background: var(--verdict-misleading); }
+        .legend-dot.mixed { background: var(--verdict-mixed); }
+        .legend-dot.exaggerated { background: var(--verdict-exaggerated); }
+        .legend-dot.opinion { background: var(--verdict-opinion); }
+
+        .legend-text {
+            font-size: 0.9rem;
+        }
+
+        .legend-text strong {
+            color: var(--text-primary);
+        }
+
+        .legend-text span {
+            color: var(--text-secondary);
+        }
+
+        /* === INFOGRAPHIC STYLES === */
+        .infographic-container {
+            max-width: 600px;
+            margin: 24px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            cursor: zoom-in;
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .infographic-container:hover {
+            max-width: 100%;
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+        }
+
+        .infographic-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        /* Hero infographic (verdict breakdown) */
+        .hero-infographic {
+            max-width: 700px;
+            margin: 24px auto 40px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            cursor: zoom-in;
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .hero-infographic:hover {
+            max-width: 100%;
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+        }
+
+        .hero-infographic img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .infographic-container,
+            .hero-infographic {
+                max-width: 100%;
+            }
+        }
+
+        /* === FULLSCREEN LIGHTBOX === */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 20px;
+        }
+
+        .lightbox-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 100%;
+            max-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .lightbox-hint {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        /* Tap hint on mobile */
+        .infographic-container::after,
+        .hero-infographic::after {
+            content: 'Tap to enlarge';
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+
+        .infographic-container,
+        .hero-infographic {
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .infographic-container::after,
+            .hero-infographic::after {
+                opacity: 0.8;
+            }
+        }
+
+        /* === FLOATING CTA === */
+        .floating-cta {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: white;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s;
+        }
+
+        .floating-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+        }
+
+        .floating-cta.visible {
+            display: flex;
+        }
+
+        /* === FEEDBACK SECTION === */
+        .feedback-section {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(180deg, var(--bg-primary), rgba(59, 130, 246, 0.03));
+            border-top: 1px solid var(--border-color);
+            padding: 60px 24px;
+            margin-top: 60px;
+        }
+
+        .feedback-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .feedback-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .feedback-header p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .feedback-form {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .feedback-meta {
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .feedback-report-name {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a0a0b0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 40px;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px 20px;
+            background: var(--accent-blue);
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .feedback-success {
+            text-align: center;
+            padding: 40px 24px;
+        }
+
+        .feedback-success .success-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .feedback-success h4 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .feedback-success p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* === FOOTER === */
+        .footer {
+            position: relative;
+            z-index: 1;
+            background: var(--bg-secondary);
+            padding: 40px 24px;
+            text-align: center;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .footer strong {
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* === SCROLL TO TOP === */
+        .scroll-top {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            z-index: 999;
+            transition: all 0.3s;
+        }
+
+        .scroll-top:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .scroll-top.visible {
+            display: flex;
+        }
+
+        /* === MOBILE NOTICE === */
+        .mobile-notice {
+            display: none;
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(6, 182, 212, 0.15));
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(8px);
+        }
+
+        .mobile-notice-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .mobile-notice-icon {
+            color: var(--accent-cyan);
+            flex-shrink: 0;
+        }
+
+        .mobile-notice-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .mobile-notice-text strong {
+            color: var(--text-primary);
+        }
+
+        .mobile-notice-dismiss {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+
+        .mobile-notice-dismiss:hover {
+            color: var(--text-primary);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .mobile-notice {
+                display: block;
+            }
+
+            .container {
+                padding-top: 120px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .hero-meta .divider {
+                display: none;
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .factcheck-claim {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .floating-cta {
+                bottom: 16px;
+                right: 16px;
+                left: 16px;
+                justify-content: center;
+            }
+
+            .scroll-top {
+                display: none !important;
+            }
+        }
+
+        /* === PRINT STYLES === */
+        @media print {
+            .navbar, .scroll-top, .floating-cta, .bg-grid, .bg-glow {
+                display: none !important;
+            }
+
+            .photo-section {
+                position: static;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+        }
+        /* Copy/Share Buttons */
+        .copyable-component { position: relative; }
+        .component-actions { position: absolute; top: 12px; right: 12px; display: flex; gap: 6px; opacity: 0; visibility: hidden; transition: all 0.2s; z-index: 100; }
+        .copyable-component:hover .component-actions { opacity: 1; visibility: visible; }
+        .component-action-btn { width: 34px; height: 34px; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--accent-cyan); transition: all 0.2s; }
+        .component-action-btn:hover { background: rgba(59, 130, 246, 0.25); transform: scale(1.05); }
+        .component-action-btn.success { background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.4); color: var(--accent-green); }
+        .copyable-component.capturing { box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.5); }
+        @media (hover: none) { .component-actions { opacity: 0.7; visibility: visible; } }
+        .share-modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px); z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.2s; }
+        .share-modal-overlay.active { opacity: 1; visibility: visible; }
+        .share-modal { background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 16px; padding: 24px; max-width: 400px; width: 90%; }
+        .share-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .share-modal-header h3 { font-size: 1.1rem; font-weight: 600; }
+        .share-modal-close { background: none; border: none; color: var(--text-muted); cursor: pointer; }
+        .share-preview { background: var(--bg-secondary); border: 1px solid var(--border-glow); border-radius: 8px; padding: 8px; margin-bottom: 20px; }
+        .share-preview img { width: 100%; border-radius: 4px; }
+        .share-actions { display: flex; flex-direction: column; gap: 10px; }
+        .share-btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border: 1px solid var(--border-glow); border-radius: 10px; background: rgba(17, 24, 39, 0.6); color: var(--text-primary); font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+        .share-btn:hover { border-color: var(--accent-cyan); background: rgba(6, 182, 212, 0.1); }
+        .share-btn.primary { background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan)); border: none; }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <span class="navbar-logo">
+                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
+            </span>
+            <span class="navbar-badge">COMING SOON</span>
+        </a>
+        <div class="navbar-right">
+            <a href="reports.html" class="navbar-link active">
+                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
+                Custom Reports
+            </a>
+            <a href="/#notify" class="navbar-cta" id="navbar-cta">
+                <i data-lucide="bell" style="width:14px;height:14px;"></i>
+                Early Access
+            </a>
+        </div>
+    </nav>
+
+    <!-- Mobile Notice -->
+    <div class="mobile-notice" id="mobile-notice">
+        <div class="mobile-notice-content">
+            <i data-lucide="monitor" class="mobile-notice-icon" style="width:18px;height:18px;"></i>
+            <span class="mobile-notice-text">
+                <strong>Best on Desktop</strong> — Detailed fact-checks and expandable sources work best on larger screens.
+            </span>
+            <button class="mobile-notice-dismiss" onclick="dismissMobileNotice()" aria-label="Dismiss">
+                <i data-lucide="x" style="width:16px;height:16px;"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <header class="hero">
+        <h1>Fact Check: <span class="hero-gradient">Biden White House Plaque Claims</span></h1>
+        <p class="hero-subtitle">A comprehensive, source-backed analysis of the partisan plaques installed beneath President Biden's portrait in the White House "Presidential Walk of Fame"</p>
+        <div class="hero-meta">
+            <span>
+                <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+                Published: December 17, 2025
+            </span>
+            <span class="divider">|</span>
+            <span>
+                <i data-lucide="check-circle" style="width:16px;height:16px;"></i>
+                18 Claims Analyzed
+            </span>
+            <span class="divider">|</span>
+            <span>
+                <i data-lucide="link" style="width:16px;height:16px;"></i>
+                25+ Sources Cited
+            </span>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Summary -->
+        <section class="summary-grid">
+            <div class="summary-card false">
+                <div class="summary-number">7</div>
+                <div class="summary-label">False Claims</div>
+            </div>
+            <div class="summary-card misleading">
+                <div class="summary-number">6</div>
+                <div class="summary-label">Misleading Claims</div>
+            </div>
+            <div class="summary-card mixed">
+                <div class="summary-number">3</div>
+                <div class="summary-label">Mixed/Exaggerated</div>
+            </div>
+            <div class="summary-card unverifiable">
+                <div class="summary-number">2</div>
+                <div class="summary-label">Opinion/Unverifiable</div>
+            </div>
+        </section>
+
+        <!-- Verdict Breakdown Infographic -->
+        <div class="hero-infographic" role="button" tabindex="0" onclick="openLightboxFromElement(this)">
+            <img src="infographics/plaque/verdict_breakdown.png" alt="Biden Plaque Fact-Check Results - Donut chart showing 7 False, 6 Misleading, 3 Mixed/Exaggerated, 2 Opinion claims out of 18 total" loading="lazy">
+        </div>
+
+        <!-- Context -->
+        <section class="context-section">
+            <h2>
+                <i data-lucide="info" style="width:24px;height:24px;"></i>
+                Background
+            </h2>
+            <p>In January 2025, the Trump administration installed two bronze plaques beneath the official portrait of President Joe Biden in the White House Colonnade's "Presidential Walk of Fame." Unlike traditional presidential plaques which contain neutral biographical information, these plaques feature highly partisan language and multiple factual claims about the Biden administration.</p>
+            <p>This fact-check examines each verifiable claim made on the plaques, comparing them against official government data, nonpartisan analyses, and primary source reporting from major news organizations.</p>
+        </section>
+
+        <!-- Two Column Layout -->
+        <div class="content-grid">
+            <!-- Photo Column -->
+            <div class="photo-section">
+                <div class="photo-card">
+                    <img src="251217-white-house-presidential-plaque-joe-biden-vl-212p-6bd15d.webp" alt="Bronze plaques installed beneath Biden portrait at the White House">
+                    <div class="photo-caption">
+                        <strong>Photo:</strong> The partisan plaques installed beneath President Biden's portrait in the White House "Presidential Walk of Fame" on the Colonnade. <em>Credit: Mark Schiefelbein / AP</em>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plaque Transcript Column -->
+            <div class="plaque-section">
+                <div class="section-header">
+                    <i data-lucide="file-text" style="width:18px;height:18px;"></i>
+                    Plaque Transcript with Citations
+                </div>
+                <div class="plaque-transcript">
+                    <!-- Plaque 1 -->
+                    <div class="plaque-box">
+                        <p class="plaque-text">
+                            "Sleepy Joe Biden was, by far, <a href="#fact-1" class="citation">1</a>the worst President in American History. Taking office as a result of <a href="#fact-2" class="citation">2</a>the most corrupt Election ever seen in the United States, Biden oversaw a series of unprecedented disasters that brought our Nation to the brink of destruction. His policies caused <a href="#fact-3" class="citation">3</a>the highest Inflation ever recorded, leading <a href="#fact-4" class="citation">4</a>the U.S. Dollar to lose more than 20% of its value in 4 years. His <a href="#fact-5" class="citation">5</a>Green New Scam surrendered American Energy Dominance and, by <a href="#fact-6" class="citation">6</a>abolishing the Southern Border, Biden let <a href="#fact-7" class="citation">7</a>21 million people from all over the World pour into the United States, <a href="#fact-8" class="citation">8</a>including from prisons, jails, mental institutions, and insane asylums. His <a href="#fact-9" class="citation">9</a>Afghanistan Disaster was among the most humiliating events in American History, and resulted in the murder of 13 brave American Servicemembers, with many others gravely wounded. Seeing <a href="#fact-10" class="citation">10</a>Biden's devastating weakness, Russia invaded Ukraine, and Hamas terrorists launched the heinous October 7th attack on Israel."
+                        </p>
+                    </div>
+
+                    <!-- Plaque 2 -->
+                    <div class="plaque-box">
+                        <p class="plaque-text">
+                            "Nicknamed both "Sleepy" and "Crooked," Joe Biden was dominated by his <a href="#fact-11" class="citation">11</a>Radical Left handlers. They and their allies in the Fake News Media attempted to <a href="#fact-12" class="citation">12</a>cover up his severe mental decline, and his <a href="#fact-13" class="citation">13</a>unprecedented use of the Autopen. Following his humiliating debate loss to President Trump in the big June 2024 debate, he was <a href="#fact-14" class="citation">14</a>forced to withdraw from his campaign for re-election in disgrace. Biden <a href="#fact-15" class="citation">15</a>weaponized Law Enforcement against his political opponent, while also persecuting many other innocent people. He left office issuing <a href="#fact-16" class="citation">16</a>blanket pardons to Radical Democrat criminals and thugs, as well as <a href="#fact-17" class="citation">17</a>members of the Biden Crime Family — But despite it all, <a href="#fact-18" class="citation">18</a>President Trump would get Re-Elected in a Landslide, and SAVE AMERICA!"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fact Checks -->
+        <section class="factcheck-section">
+            <div class="factcheck-header">
+                <h2>Claim-by-Claim Analysis</h2>
+                <p>Each claim evaluated against official data and primary sources</p>
+            </div>
+
+            <!-- Fact Check 1 -->
+            <article class="factcheck-item" id="fact-1">
+                <div class="factcheck-claim">
+                    <div class="claim-number">1</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"[Biden was] by far, the worst President in American History"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge opinion">Opinion</span>
+                    <span class="verdict-summary">Subjective claim - not factually verifiable</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">This is a <strong>subjective opinion</strong>, not a factual claim. Presidential rankings by historians vary significantly based on methodology and timing. In C-SPAN's 2024 Presidential Historians Survey, Biden was <strong>ranked 30th</strong> out of 45 presidents in his first survey appearance. For comparison, Trump <strong>ranked 45th (last)</strong> in the same survey.</p>
+                    <p class="analysis-text">Academic rankings <strong>consistently place</strong> presidents like James Buchanan, Andrew Johnson, and Franklin Pierce at the bottom due to their handling of slavery and Reconstruction issues.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.npr.org/2024/02/19/1232447088/historians-presidents-survey-trump-last-biden-14th" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            NPR - 2024 Presidential Historians Survey
+                        </a>
+                        <a href="https://thehill.com/homenews/4476288-presidential-experts-rank-biden-14th-among-presidents-in-survey-trump-comes-in-last/" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            The Hill - Presidential Rankings Analysis
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 2 -->
+            <article class="factcheck-item" id="fact-2">
+                <div class="factcheck-claim">
+                    <div class="claim-number">2</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"Taking office as a result of the most corrupt Election ever seen in the United States"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge false">False</span>
+                    <span class="verdict-summary">No evidence supports this claim</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">This claim has been <strong>thoroughly investigated and rejected</strong>. More than <strong>60 lawsuits</strong> challenging the 2020 election were <strong>dismissed</strong> by courts, including judges appointed by Trump. The Department of Homeland Security's Cybersecurity and Infrastructure Security Agency (CISA) called it "the <strong>most secure election</strong> in American history."</p>
+                    <p class="analysis-text">Trump's own Attorney General William Barr stated the DOJ found <strong>no evidence of fraud</strong> that would change the election outcome. State election officials from both parties, including Republican Secretaries of State in Georgia and Arizona, <strong>certified the results</strong> after audits and recounts.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.cisa.gov/news/2020/11/12/joint-statement-elections-infrastructure-government-coordinating-council-election" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            CISA Joint Statement on Election Security
+                        </a>
+                        <a href="https://apnews.com/article/barr-no-widespread-election-fraud-b1f1488796c9a98c4b1a9061a6c7f49d" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            AP News - Barr: No Evidence of Fraud
+                        </a>
+                        <a href="https://campaignlegal.org/results-lawsuits-regarding-2020-elections" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            Campaign Legal Center - Election Lawsuits Results
+                        </a>
+                        <a href="https://judicature.duke.edu/articles/2020-election-litigation-the-courts-held/" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            Duke Law - 2020 Election Litigation Analysis
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 3 -->
+            <article class="factcheck-item" id="fact-3">
+                <div class="factcheck-claim">
+                    <div class="claim-number">3</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"His policies caused the highest Inflation ever recorded"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge false">False</span>
+                    <span class="verdict-summary">Inflation peaked at 9.1% - far from historical highs</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">U.S. inflation <strong>peaked at 9.1%</strong> in June 2022 - significantly high but <strong>nowhere near historical records</strong>. Inflation reached <strong>23.7%</strong> in June 1920, and during the Civil War era, it exceeded <strong>25%</strong>. Even in recent memory, inflation hit <strong>14.8%</strong> in March 1980.</p>
+
+                    <!-- COVID-19 Context Disclaimer -->
+                    <div class="context-callout" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; padding: 16px 20px; margin: 20px 0;">
+                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                            <i data-lucide="alert-circle" style="width: 20px; height: 20px; color: var(--accent-blue); flex-shrink: 0; margin-top: 2px;"></i>
+                            <div>
+                                <strong style="color: var(--accent-blue); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em;">COVID-19 Context</strong>
+                                <p style="margin: 8px 0 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">The 2022 inflation spike was a <strong style="color: var(--text-primary);">global phenomenon</strong> affecting virtually all developed economies simultaneously. Contributing factors included: COVID-19 pandemic supply chain disruptions, unprecedented government stimulus spending (under both Trump and Biden), pent-up consumer demand following lockdowns, labor market disruptions, and energy price shocks from Russia's invasion of Ukraine. The Federal Reserve's characterization of inflation as "transitory" in 2021 delayed interest rate increases.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inflation Chart -->
+                    <div class="infographic-container" role="button" tabindex="0" onclick="openLightboxFromElement(this)">
+                        <img src="infographics/plaque/inflation_20year_chart.png" alt="U.S. Annual Inflation Rate 2005-2024 - showing inflation remained under 4% from 2005-2020, spiked to 9.1% in June 2022, then declined to under 3% by late 2024" loading="lazy">
+                    </div>
+
+                    <p class="analysis-text">By the end of Biden's term, inflation had <strong>fallen to approximately 2.9%</strong>, near the Federal Reserve's 2% target. The <strong>Inflation Reduction Act</strong> (signed August 2022) included provisions to reduce healthcare and energy costs, though economists <strong>debate its direct impact</strong> on overall inflation rates. The law's name was primarily political messaging; its main effects were on prescription drug pricing and clean energy investment.</p>
+
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.bls.gov/regions/mid-atlantic/data/consumerpriceindexhistorical_us_table.htm" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            BLS - Historical CPI Data Tables
+                        </a>
+                        <a href="https://www.minneapolisfed.org/about-us/monetary-policy/inflation-calculator/consumer-price-index-1800-" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            Federal Reserve Bank - Historical Inflation
+                        </a>
+                        <a href="https://www.imf.org/en/Publications/WEO" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            IMF World Economic Outlook
+                        </a>
+                        <a href="https://www.democrats.senate.gov/imo/media/doc/inflation_reduction_act_of_2022.pdf" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            Senate - Inflation Reduction Act Full Text (PDF)
+                        </a>
+                        <a href="https://www.crfb.org/blogs/cbo-scores-ira-238-billion-deficit-reduction" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            CRFB - CBO Score of Inflation Reduction Act
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 4 -->
+            <article class="factcheck-item" id="fact-4">
+                <div class="factcheck-claim">
+                    <div class="claim-number">4</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"The U.S. Dollar to lose more than 20% of its value in 4 years"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge mixed">Misleading</span>
+                    <span class="verdict-summary">Conflates purchasing power with currency value</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">This claim <strong>conflates two different concepts</strong>. If referring to cumulative inflation (purchasing power), prices rose approximately 20% from January 2021 to January 2025. However, this is a measure of domestic purchasing power, <strong>not the dollar's international value</strong>.</p>
+                    <p class="analysis-text">The U.S. Dollar Index (DXY), which measures the dollar against major foreign currencies, actually <strong>strengthened</strong> during much of Biden's term, reaching <strong>multi-decade highs</strong> in 2022. The dollar remained one of the world's <strong>strongest currencies</strong> throughout this period.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.bls.gov/data/inflation_calculator.htm" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            BLS Inflation Calculator
+                        </a>
+                        <a href="https://www.marketwatch.com/investing/index/dxy" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            MarketWatch - Dollar Index
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 5 -->
+            <article class="factcheck-item" id="fact-5">
+                <div class="factcheck-claim">
+                    <div class="claim-number">5</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"His Green New Scam surrendered American Energy Dominance"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge false">False</span>
+                    <span class="verdict-summary">U.S. broke oil production records under Biden</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">The United States produced <strong>more crude oil under Biden than under any president in history</strong>. According to the U.S. Energy Information Administration, U.S. crude oil production reached a <strong>record 13.2 million barrels per day</strong> in 2023, <strong>surpassing</strong> the previous high of 12.3 million bpd in 2019.</p>
+
+                    <!-- Oil Production Chart -->
+                    <div class="infographic-container" role="button" tabindex="0" onclick="openLightboxFromElement(this)">
+                        <img src="infographics/plaque/oil_production_chart.png" alt="U.S. Crude Oil Production 2008-2024 - Bar chart showing record production of 13.2 million barrels per day under Biden, surpassing all previous administrations" loading="lazy">
+                    </div>
+
+                    <p class="analysis-text">Biden <strong>did not implement</strong> the "Green New Deal" - that proposal was <strong>never passed</strong> by Congress. The Inflation Reduction Act, which Biden signed, provided clean energy incentives while oil and gas production <strong>continued to increase</strong>.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=MCRFPUS2&f=A" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            EIA - U.S. Crude Oil Production
+                        </a>
+                        <a href="https://www.eia.gov/todayinenergy/detail.php?id=61545" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            EIA - Record Oil Production 2023
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 6 -->
+            <article class="factcheck-item" id="fact-6">
+                <div class="factcheck-claim">
+                    <div class="claim-number">6</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"By abolishing the Southern Border"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge false">False</span>
+                    <span class="verdict-summary">The border was not "abolished"</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">The U.S.-Mexico border was <strong>not "abolished."</strong> Customs and Border Protection <strong>continued operations</strong> throughout Biden's term, with annual budgets exceeding $18 billion. Border apprehensions increased significantly, which actually <strong>reflects enforcement activity</strong>, not lack thereof.</p>
+                    <p class="analysis-text">Biden reversed some Trump-era policies (like "Remain in Mexico") but also <strong>implemented new enforcement measures</strong> and, in June 2024, issued an executive order <strong>significantly restricting</strong> asylum claims when encounter numbers exceeded certain thresholds.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.cbp.gov/newsroom/stats/southwest-land-border-encounters" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            CBP - Southwest Border Encounters
+                        </a>
+                        <a href="https://www.dhs.gov/archive/news/2024/06/04/fact-sheet-presidential-proclamation-suspend-and-limit-entry-and-joint-dhs-doj" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            DHS - June 2024 Border Order Fact Sheet
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 7 -->
+            <article class="factcheck-item" id="fact-7">
+                <div class="factcheck-claim">
+                    <div class="claim-number">7</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"Biden let 21 million people from all over the World pour into the United States"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge exaggerated">Exaggerated</span>
+                    <span class="verdict-summary">Number is inflated and misleading</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">CBP recorded approximately <strong>10.2 million encounters</strong> at the Southwest border during Biden's term - <strong>significantly less than 21 million</strong>. However, "encounters" <strong>does not mean "let in."</strong> This figure includes people apprehended and expelled multiple times, asylum seekers processed and released pending hearings, and those turned away at ports of entry.</p>
+                    <p class="analysis-text">The actual number of people who entered and remained in the U.S. without authorization is <strong>difficult to measure precisely</strong> but is <strong>substantially lower</strong> than encounter figures suggest. Many encountered individuals were <strong>removed, returned, or denied entry</strong>.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.cbp.gov/newsroom/stats/nationwide-encounters" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            CBP - Nationwide Encounters Data
+                        </a>
+                        <a href="https://www.cnn.com/2024/10/18/politics/fact-check-trump-october-immigration/index.html" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            CNN - Trump Immigration Claims Fact Check
+                        </a>
+                        <a href="https://www.themarshallproject.org/2024/10/21/fact-check-12000-trump-statements-immigrants" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            The Marshall Project - Immigration Statements Analysis
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 8 -->
+            <article class="factcheck-item" id="fact-8">
+                <div class="factcheck-claim">
+                    <div class="claim-number">8</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"Including from prisons, jails, mental institutions, and insane asylums"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge misleading">Misleading</span>
+                    <span class="verdict-summary">Unsubstantiated claim lacking evidence</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">There is <strong>no credible evidence</strong> that foreign governments systematically emptied prisons or mental institutions to send people to the U.S. border. This claim has been <strong>repeatedly made without supporting documentation</strong>.</p>
+                    <p class="analysis-text">While some migrants do have criminal histories (as would any large population), CBP and ICE <strong>screen arrivals</strong> and have <strong>deported individuals</strong> with criminal records. <strong>No evidence supports</strong> claims of coordinated releases from foreign institutions.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.themarshallproject.org/2024/10/21/fact-check-12000-trump-statements-immigrants/emptying_prisons_jails_mental_institutions" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            The Marshall Project - Prison Emptying Claim Analysis
+                        </a>
+                        <a href="https://www.factcheck.org/2024/06/crime-drop-in-venezuela-does-not-prove-trumps-claim-the-country-is-sending-criminals-to-u-s/" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            FactCheck.org - Venezuela Crime Claims
+                        </a>
+                        <a href="https://www.cnn.com/2024/10/18/politics/fact-check-trump-october-immigration/index.html" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            CNN - Immigration Fact Check
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 9 -->
+            <article class="factcheck-item" id="fact-9">
+                <div class="factcheck-claim">
+                    <div class="claim-number">9</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"His Afghanistan Disaster...resulted in the murder of 13 brave American Servicemembers"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge mixed">Mixed</span>
+                    <span class="verdict-summary">Casualties factual; "murder" characterization disputed</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">Thirteen U.S. service members were killed in the August 26, 2021 suicide bombing at Abbey Gate, Kabul Airport - <strong>this is accurate</strong>. The withdrawal was chaotic and <strong>widely criticized</strong>.</p>
+                    <p class="analysis-text">However, the term "murder" implies intent or culpability that <strong>investigations have not established</strong>. The Doha Agreement negotiated by the Trump administration in February 2020 set the withdrawal timeline and conditions. Military leaders have testified that <strong>both administrations bear responsibility</strong> for aspects of the withdrawal.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.cbsnews.com/news/kabul-airport-attack-victims-united-states-military-service-members/" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            CBS News - Abbey Gate Attack Victims
+                        </a>
+                        <a href="https://en.wikipedia.org/wiki/United_States–Taliban_deal" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            Wikipedia - U.S.-Taliban Doha Agreement
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 10 -->
+            <article class="factcheck-item" id="fact-10">
+                <div class="factcheck-claim">
+                    <div class="claim-number">10</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"Seeing Biden's devastating weakness, Russia invaded Ukraine, and Hamas terrorists launched the heinous October 7th attack"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge misleading">Misleading</span>
+                    <span class="verdict-summary">Causation not established; oversimplifies complex events</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">This implies <strong>direct causation without evidence</strong>. Russia's invasion of Ukraine followed years of tensions, including the 2014 annexation of Crimea (during Obama's term) and ongoing conflict in the Donbas. Putin's stated motivations centered on NATO expansion and Ukrainian sovereignty, <strong>not U.S. presidential leadership</strong>.</p>
+                    <p class="analysis-text">The October 7 Hamas attack was the culmination of <strong>decades of Israeli-Palestinian conflict</strong>. Hamas's stated motivations related to Israeli policies toward Palestinians and the Al-Aqsa Mosque, <strong>not U.S. domestic politics</strong>. Intelligence officials from multiple countries <strong>failed to predict</strong> the attack.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.cfr.org/global-conflict-tracker/conflict/conflict-ukraine" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            CFR - Ukraine Conflict Timeline
+                        </a>
+                        <a href="https://www.bbc.com/news/world-middle-east-67039975" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            BBC - October 7 Attack Analysis
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 11 -->
+            <article class="factcheck-item" id="fact-11">
+                <div class="factcheck-claim">
+                    <div class="claim-number">11</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"Joe Biden was dominated by his Radical Left handlers"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge opinion">Opinion</span>
+                    <span class="verdict-summary">Subjective political characterization</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">This is a <strong>political opinion</strong>, not a verifiable claim. Biden's policy positions, while more progressive than his earlier Senate career, remained within <strong>mainstream Democratic positions</strong>. He notably <strong>opposed calls</strong> from the party's left wing on issues like Medicare for All, defunding police, and court packing.</p>
+                    <p class="analysis-text">Biden's cabinet and advisors included individuals from <strong>various ideological backgrounds</strong> within the Democratic Party, including moderates and progressives.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.politico.com/2020-election/candidates-views-on-the-issues/joe-biden/" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            Politico - Biden Policy Positions
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 12 -->
+            <article class="factcheck-item" id="fact-12">
+                <div class="factcheck-claim">
+                    <div class="claim-number">12</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"They...attempted to cover up his severe mental decline"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge misleading">Misleading</span>
+                    <span class="verdict-summary">Conflates age-related concerns with "severe mental decline"</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">Questions about Biden's age and acuity were <strong>discussed extensively</strong> in media throughout his presidency. Biden's annual physicals, released publicly, showed <strong>no cognitive impairment diagnoses</strong>.</p>
+                    <p class="analysis-text">After the June 2024 debate performance raised widespread concerns, Biden ultimately <strong>withdrew from the race</strong> - the <strong>opposite of a successful "cover-up."</strong> The extensive media coverage of his debate performance <strong>contradicts claims</strong> that media attempted to hide concerns.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://bidenwhitehouse.archives.gov/briefing-room/statements-releases/2024/02/28/president-bidens-current-health-summary-february-2024/" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            Biden White House Archives - Health Summary 2024
+                        </a>
+                        <a href="https://www.nytimes.com/2024/06/28/us/politics/biden-debate-age-reaction.html" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            NYT - Post-Debate Coverage
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 13 -->
+            <article class="factcheck-item" id="fact-13">
+                <div class="factcheck-claim">
+                    <div class="claim-number">13</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"His unprecedented use of the Autopen"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge false">False</span>
+                    <span class="verdict-summary">Autopen use is routine and not unprecedented</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">The autopen - a mechanical device that replicates signatures - has been <strong>used by presidents since the Eisenhower administration</strong>. Presidents Obama and Trump <strong>both used autopens</strong> to sign legislation and documents.</p>
+                    <p class="analysis-text">There is <strong>no evidence</strong> Biden used the autopen more frequently than predecessors or in inappropriate contexts. Its use for routine documents while traveling or otherwise unavailable is <strong>standard practice</strong>.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.cbsnews.com/news/what-is-an-autopen-president-biden-trump-signature/" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            CBS News - What is an Autopen?
+                        </a>
+                        <a href="https://www.npr.org/2025/03/17/nx-s1-5330709/autopen-biden-pardon-void" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            NPR - Trump Autopen Challenge
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 14 -->
+            <article class="factcheck-item" id="fact-14">
+                <div class="factcheck-claim">
+                    <div class="claim-number">14</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"He was forced to withdraw from his campaign for re-election in disgrace"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge mixed">Mixed</span>
+                    <span class="verdict-summary">Withdrawal factual; "forced" and "disgrace" are interpretations</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">Biden <strong>did withdraw</strong> from the 2024 presidential race on July 21, 2024, following his poor debate performance and pressure from Democratic leaders. <strong>This much is factual.</strong></p>
+                    <p class="analysis-text">"Disgrace" is a <strong>subjective characterization</strong>. Biden stated he withdrew to pass the torch to a new generation. His endorsement of Vice President Harris and subsequent support for her campaign were <strong>presented as voluntary acts</strong> of party unity.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.npr.org/2024/07/21/g-s1-12544/biden-letter-withdraw-harris-endorsement" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            NPR - Biden Withdrawal Letter Full Text
+                        </a>
+                        <a href="https://www.cbsnews.com/news/biden-dropping-out-2024-presidential-election/" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            CBS News - Biden Drops Out
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 15 -->
+            <article class="factcheck-item" id="fact-15">
+                <div class="factcheck-claim">
+                    <div class="claim-number">15</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"Biden weaponized Law Enforcement against his political opponent"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge false">False</span>
+                    <span class="verdict-summary">No evidence Biden directed DOJ prosecutions</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">The federal and state prosecutions of Trump were brought by <strong>independent prosecutors</strong>. The federal cases were handled by Special Counsel Jack Smith, appointed by Attorney General Garland specifically to <strong>ensure independence</strong> from the White House.</p>
+                    <p class="analysis-text">State cases in New York and Georgia were brought by local prosecutors, over whom the President <strong>has no authority</strong>. Biden repeatedly stated he <strong>would not interfere</strong> with DOJ decisions. <strong>No evidence has emerged</strong> of White House direction of these prosecutions.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.npr.org/2022/11/18/1137736663/special-counsel-trump-justice-department-jan-6-mar-a-lago" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            NPR - Special Counsel Appointment
+                        </a>
+                        <a href="https://thehill.com/policy/national-security/3742282-garland-appoints-special-counsel-to-oversee-trump-investigations/" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            The Hill - Garland Appoints Special Counsel
+                        </a>
+                        <a href="https://www.cnbc.com/2022/11/18/merrick-garland-names-special-counsel-to-oversee-trump-investigations.html" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            CNBC - Special Counsel Overview
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 16 -->
+            <article class="factcheck-item" id="fact-16">
+                <div class="factcheck-claim">
+                    <div class="claim-number">16</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"He left office issuing blanket pardons to Radical Democrat criminals and thugs"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge misleading">Misleading</span>
+                    <span class="verdict-summary">Pardons were issued but characterization is politically loaded</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">Biden <strong>issued preemptive pardons</strong> to several individuals, including Dr. Anthony Fauci, General Mark Milley, and members of the January 6th Select Committee. He stated these were to protect them from "politically motivated prosecutions."</p>
+                    <p class="analysis-text">"Criminals and thugs" is <strong>inflammatory language</strong>. <strong>None of these individuals had been charged with or convicted</strong> of crimes at the time of the pardons. Preemptive pardons, while controversial, have <strong>historical precedent</strong> (Ford's pardon of Nixon).</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.npr.org/2025/01/20/nx-s1-5268258/biden-pardons-fauci-milley-and-members-of-jan-6-panel" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            NPR - Biden Preemptive Pardons
+                        </a>
+                        <a href="https://www.reuters.com/world/us/biden-issues-preemptive-pardons-fauci-milley-jan-6-committee-2025-01-20/" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            Reuters - Biden Pardons
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 17 -->
+            <article class="factcheck-item" id="fact-17">
+                <div class="factcheck-claim">
+                    <div class="claim-number">17</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"Members of the Biden Crime Family"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge misleading">Misleading</span>
+                    <span class="verdict-summary">Inflammatory term; criminal convictions limited to Hunter Biden</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">Biden <strong>did pardon</strong> his son Hunter Biden, who had been <strong>convicted</strong> of federal gun charges and <strong>pleaded guilty</strong> to tax charges. This pardon was <strong>controversial</strong>, as Biden had previously said he would not pardon his son.</p>
+                    <p class="analysis-text">However, "Crime Family" implies organized criminal enterprise - a characterization <strong>not supported by evidence</strong>. House Republican investigations <strong>did not result in charges</strong> against President Biden or other family members beyond Hunter.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.npr.org/2024/12/01/g-s1-36324/president-biden-pardons-son-hunter" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            NPR - Biden Pardons Son Hunter
+                        </a>
+                        <a href="https://www.cnn.com/2024/06/11/politics/hunter-biden-gun-trial-verdict/index.html" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            CNN - Hunter Biden Verdict
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fact Check 18 -->
+            <article class="factcheck-item" id="fact-18">
+                <div class="factcheck-claim">
+                    <div class="claim-number">18</div>
+                    <div class="claim-content">
+                        <div class="claim-label">Claim</div>
+                        <div class="claim-text">"President Trump would get Re-Elected in a Landslide"</div>
+                    </div>
+                </div>
+                <div class="factcheck-verdict">
+                    <span class="verdict-badge exaggerated">Exaggerated</span>
+                    <span class="verdict-summary">Trump won but margin not a historical "landslide"</span>
+                </div>
+                <div class="factcheck-analysis">
+                    <p class="analysis-text">Trump won the 2024 election with <strong>312 electoral votes</strong> to Harris's 226, and approximately <strong>50.2% of the popular vote</strong> to 48.3%. While a <strong>decisive victory</strong>, this <strong>does not constitute a "landslide"</strong> by historical standards.</p>
+                    <p class="analysis-text">Historical landslides include Reagan's 1984 victory (<strong>525-13 electoral</strong>, 58.8% popular vote), Nixon's 1972 win (<strong>520-17 electoral</strong>), and FDR's 1936 victory (<strong>523-8 electoral</strong>). Trump's 2024 margin ranks as a <strong>moderate-to-comfortable victory</strong>, not a landslide.</p>
+                    <div class="sources-list">
+                        <div class="sources-label">Sources</div>
+                        <a href="https://www.archives.gov/electoral-college/results" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            National Archives - Electoral Results
+                        </a>
+                        <a href="https://www.270towin.com/historical-presidential-elections/" class="source-link" target="_blank" rel="noreferrer" referrerpolicy="origin">
+                            <i data-lucide="external-link"></i>
+                            270toWin - Historical Elections
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- Methodology -->
+        <section class="methodology">
+            <h2>
+                <i data-lucide="scale" style="width:24px;height:24px;"></i>
+                Our Methodology
+            </h2>
+            <p>GenuVerity evaluates claims using primary sources, official government data, and reporting from established news organizations. We distinguish between factual claims that can be verified and subjective opinions that cannot.</p>
+            <p>Each claim is rated based on the available evidence:</p>
+            <div class="verdict-legend">
+                <div class="legend-item">
+                    <span class="legend-dot false"></span>
+                    <div class="legend-text">
+                        <strong>False</strong> <span>- Claim contradicts available evidence</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot misleading"></span>
+                    <div class="legend-text">
+                        <strong>Misleading</strong> <span>- Contains truth but presented in deceptive context</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot mixed"></span>
+                    <div class="legend-text">
+                        <strong>Mixed</strong> <span>- Partially true, partially false</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot exaggerated"></span>
+                    <div class="legend-text">
+                        <strong>Exaggerated</strong> <span>- Based in truth but overstated</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot opinion"></span>
+                    <div class="legend-text">
+                        <strong>Opinion</strong> <span>- Subjective claim that cannot be fact-checked</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Feedback Section -->
+    <section class="feedback-section">
+        <div class="feedback-container">
+            <div class="feedback-header">
+                <i data-lucide="message-square-plus" style="width:24px;height:24px;color:var(--accent-cyan);"></i>
+                <div>
+                    <h3>Report Feedback</h3>
+                    <p>Found an error, have additional sources, or want to suggest improvements?</p>
+                </div>
+            </div>
+            <form id="feedback-form" class="feedback-form">
+                <input type="hidden" id="feedback-report" value="plaque-fact-check">
+                <div class="feedback-meta">
+                    <span class="feedback-report-name">
+                        <i data-lucide="file-text" style="width:14px;height:14px;"></i>
+                        Biden White House Plaque Fact Check
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="feedback-type">Feedback Type</label>
+                    <select id="feedback-type" class="form-select" required>
+                        <option value="">Select type...</option>
+                        <option value="error">Factual Error</option>
+                        <option value="source">Additional Source</option>
+                        <option value="clarification">Needs Clarification</option>
+                        <option value="suggestion">Improvement Suggestion</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="feedback-message">Your Feedback</label>
+                    <textarea id="feedback-message" class="form-textarea" placeholder="Describe the issue or suggestion in detail..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="feedback-email">Email (optional)</label>
+                    <input type="email" id="feedback-email" class="form-input" placeholder="your@email.com">
+                    <p class="form-hint">Only if you'd like us to follow up with you</p>
+                </div>
+                <button type="submit" class="submit-btn" id="feedback-submit">
+                    <i data-lucide="send" style="width:18px;height:18px;"></i>
+                    Submit Feedback
+                </button>
+            </form>
+            <div id="feedback-success" class="feedback-success" style="display:none;">
+                <div class="success-icon">
+                    <i data-lucide="check-circle" style="width:32px;height:32px;color:var(--verdict-true);"></i>
+                </div>
+                <h4>Thank You!</h4>
+                <p>Your feedback has been received. We review all submissions and update reports accordingly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p><strong>GenuVerity</strong> - Independent Fact Verification</p>
+        <p>Report generated December 17, 2025 | Last updated December 17, 2025</p>
+        <p style="margin-top: 12px; font-size: 0.75rem;">This fact-check is provided for informational purposes. Sources are linked for reader verification.</p>
+        <div class="footer-links">
+            <a href="mailto:hello@genuverity.com" class="footer-link">Contact</a>
+            <a href="#" class="footer-link">Privacy</a>
+            <a href="#" class="footer-link">Terms</a>
+        </div>
+    </footer>
+
+    <!-- Floating CTA -->
+    <a href="/#notify" class="floating-cta" id="floating-cta">
+        <i data-lucide="bell" style="width:18px;height:18px;"></i>
+        Get Early Access
+    </a>
+
+    <!-- Scroll to Top -->
+    <a href="#" class="scroll-top" id="scroll-top" title="Back to top">
+        <i data-lucide="arrow-up" style="width:20px;height:20px;"></i>
+    </a>
+
+    <script>
+        // Mobile notice dismiss
+        function dismissMobileNotice() {
+            const notice = document.getElementById('mobile-notice');
+            notice.style.display = 'none';
+            document.querySelector('.container').style.paddingTop = '100px';
+            localStorage.setItem('genuverity-mobile-notice-dismissed', 'true');
+        }
+
+        // Check if mobile notice was previously dismissed
+        if (localStorage.getItem('genuverity-mobile-notice-dismissed') === 'true') {
+            const notice = document.getElementById('mobile-notice');
+            if (notice) notice.style.display = 'none';
+        }
+
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+
+        // Smooth scroll for citation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#fact-')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        // Highlight the fact check briefly
+                        target.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.4)';
+                        setTimeout(() => {
+                            target.style.boxShadow = '';
+                        }, 2000);
+                    }
+                }
+            });
+        });
+
+        // Show/hide sticky elements on scroll
+        let lastScrollY = window.scrollY;
+        const navbarCta = document.getElementById('navbar-cta');
+        const floatingCta = document.getElementById('floating-cta');
+        const scrollTop = document.getElementById('scroll-top');
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+
+            // Show CTAs after scrolling 400px
+            if (currentScrollY > 400) {
+                navbarCta.classList.add('visible');
+                floatingCta.classList.add('visible');
+            } else {
+                navbarCta.classList.remove('visible');
+                floatingCta.classList.remove('visible');
+            }
+
+            // Show scroll-to-top after scrolling 800px
+            if (currentScrollY > 800) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+
+            lastScrollY = currentScrollY;
+        });
+
+        // Scroll to top
+        document.getElementById('scroll-top').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Lightbox functionality for infographics
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.querySelector('.lightbox-close');
+
+        // Global function called by onclick attribute (iOS Safari compatible)
+        window.openLightboxFromElement = function(container) {
+            const img = container.querySelector('img');
+            if (img) {
+                lightboxImg.src = img.src;
+                lightboxImg.alt = img.alt;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
+        // Close lightbox
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close button
+        lightboxClose.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeLightbox();
+        };
+
+        // Close on overlay click (but not image)
+        lightbox.onclick = function(e) {
+            if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+                closeLightbox();
+            }
+        };
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+
+        // Feedback form handler
+        document.getElementById('feedback-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('feedback-submit');
+            const form = document.getElementById('feedback-form');
+            const success = document.getElementById('feedback-success');
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner" style="width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.8s linear infinite;"></span> Sending...';
+
+            const feedbackType = document.getElementById('feedback-type').value;
+            const message = document.getElementById('feedback-message').value;
+
+            // Format comment with type prefix
+            const comment = `[${feedbackType.toUpperCase()}] ${message}`;
+
+            const data = {
+                report_slug: document.getElementById('feedback-report').value,
+                rating: 3, // Neutral default - we're collecting qualitative feedback
+                comment: comment,
+                email: document.getElementById('feedback-email').value || null
+            };
+
+            try {
+                const response = await fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    form.style.display = 'none';
+                    success.style.display = 'block';
+                } else {
+                    throw new Error(result.detail || 'Submission failed');
+                }
+            } catch (err) {
+                console.error('Feedback error:', err);
+                btn.disabled = false;
+                btn.innerHTML = '<i data-lucide="send" style="width:18px;height:18px;"></i> Submit Feedback';
+                lucide.createIcons();
+                alert('Failed to submit feedback. Please try again.');
+            }
+        });
+    </script>
+
+    <!-- Lightbox Overlay -->
+    <div class="lightbox-overlay" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" aria-label="Close fullscreen">&times;</button>
+            <img id="lightbox-img" src="" alt="">
+            <div class="lightbox-hint">Tap outside or press ESC to close</div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="share-modal-overlay" id="shareModalOverlay" onclick="closeShareModal(event)">
+        <div class="share-modal" onclick="event.stopPropagation()">
+            <div class="share-modal-header">
+                <h3>Share this content</h3>
+                <button class="share-modal-close" onclick="closeShareModal()"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
+            </div>
+            <div class="share-preview"><img id="sharePreviewImg" src="" alt="Preview"></div>
+            <div class="share-actions">
+                <button class="share-btn primary" onclick="downloadShareImage()"><i data-lucide="download" style="width:18px;height:18px;"></i> Download Image</button>
+                <button class="share-btn" onclick="copyReportLink()"><i data-lucide="link" style="width:18px;height:18px;"></i> Copy Report Link</button>
+                <a class="share-btn" id="shareTwitter" href="#" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Share on X</a>
+                <a class="share-btn" id="shareLinkedIn" href="#" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> Share on LinkedIn</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const COPYABLE_SELECTORS = ['.verdict-card', '.verdict-box', '.executive-summary', '.bottom-line-box', '.float-figure', '.quote-box', '.timeline', '.insight-card', '.data-card', '.fact-card', '.plaque-image-section', '.evidence-grid'];
+        let currentShareBlob = null, currentShareUrl = null;
+        document.addEventListener('DOMContentLoaded', () => { initCopyShare(); });
+        function initCopyShare() {
+            COPYABLE_SELECTORS.forEach(selector => {
+                document.querySelectorAll(selector).forEach(el => {
+                    if (el.classList.contains('copyable-component')) return;
+                    el.classList.add('copyable-component');
+                    const actions = document.createElement('div');
+                    actions.className = 'component-actions';
+                    actions.innerHTML = '<button class="component-action-btn copy-btn" title="Copy as image"><i data-lucide="copy" style="width:16px;height:16px;"></i></button><button class="component-action-btn share-btn" title="Share"><i data-lucide="share-2" style="width:16px;height:16px;"></i></button>';
+                    el.appendChild(actions);
+                    actions.querySelector('.copy-btn').addEventListener('click', (e) => { e.stopPropagation(); copyComponentAsImage(el, actions.querySelector('.copy-btn')); });
+                    actions.querySelector('.share-btn').addEventListener('click', (e) => { e.stopPropagation(); shareComponent(el); });
+                });
+            });
+            lucide.createIcons();
+        }
+        async function captureComponent(element) {
+            element.classList.add('capturing');
+            const actions = element.querySelector('.component-actions');
+            if (actions) actions.style.display = 'none';
+            try {
+                await new Promise(r => setTimeout(r, 100));
+                const dataUrl = await htmlToImage.toPng(element, { pixelRatio: 2, backgroundColor: '#0a0a12', style: { transform: 'none', borderRadius: '12px' } });
+                return await addWatermark(dataUrl);
+            } finally {
+                element.classList.remove('capturing');
+                if (actions) actions.style.display = '';
+            }
+        }
+        function addWatermark(dataUrl) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width; canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    const padding = 12;
+                    ctx.font = 'bold 24px Inter, sans-serif';
+                    const textWidth = ctx.measureText('GenuVerity').width;
+                    const pillWidth = textWidth + padding * 2, pillHeight = 36;
+                    const pillX = canvas.width - pillWidth - 16, pillY = canvas.height - pillHeight - 16;
+                    ctx.fillStyle = 'rgba(5, 10, 20, 0.85)';
+                    ctx.beginPath(); ctx.roundRect(pillX, pillY, pillWidth, pillHeight, 8); ctx.fill();
+                    ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
+                    const textY = pillY + pillHeight / 2;
+                    ctx.fillStyle = '#ffffff'; ctx.fillText('Genu', pillX + padding, textY);
+                    const genuWidth = ctx.measureText('Genu').width;
+                    ctx.fillStyle = '#3b82f6'; ctx.fillText('Verity', pillX + padding + genuWidth, textY);
+                    resolve(canvas.toDataURL('image/png'));
+                };
+                img.src = dataUrl;
+            });
+        }
+        async function copyComponentAsImage(element, button) {
+            try {
+                const dataUrl = await captureComponent(element);
+                const response = await fetch(dataUrl);
+                const blob = await response.blob();
+                if (navigator.clipboard && navigator.clipboard.write) {
+                    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                    button.classList.add('success');
+                    button.innerHTML = '<i data-lucide="check" style="width:16px;height:16px;"></i>';
+                    lucide.createIcons();
+                    setTimeout(() => { button.classList.remove('success'); button.innerHTML = '<i data-lucide="copy" style="width:16px;height:16px;"></i>'; lucide.createIcons(); }, 2000);
+                } else { showShareModal(dataUrl, blob); }
+            } catch (err) { console.error('Copy failed:', err); alert('Could not copy to clipboard. Try the share button instead.'); }
+        }
+        async function shareComponent(element) {
+            try {
+                const dataUrl = await captureComponent(element);
+                const response = await fetch(dataUrl);
+                const blob = await response.blob();
+                if (navigator.share && navigator.canShare) {
+                    const file = new File([blob], 'genuverity-share.png', { type: 'image/png' });
+                    const shareData = { files: [file], title: document.title, url: window.location.href };
+                    if (navigator.canShare(shareData)) { await navigator.share(shareData); return; }
+                }
+                showShareModal(dataUrl, blob);
+            } catch (err) { if (err.name !== 'AbortError') console.error('Share failed:', err); }
+        }
+        function showShareModal(dataUrl, blob) {
+            currentShareBlob = blob; currentShareUrl = dataUrl;
+            document.getElementById('sharePreviewImg').src = dataUrl;
+            const pageUrl = encodeURIComponent(window.location.href), title = encodeURIComponent(document.title);
+            document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?text=${title}&url=${pageUrl}`;
+            document.getElementById('shareLinkedIn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`;
+            document.getElementById('shareModalOverlay').classList.add('active');
+            lucide.createIcons();
+        }
+        function closeShareModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('shareModalOverlay').classList.remove('active');
+            currentShareBlob = null; currentShareUrl = null;
+        }
+        function downloadShareImage() {
+            if (!currentShareUrl) return;
+            const link = document.createElement('a');
+            link.href = currentShareUrl; link.download = 'genuverity-' + Date.now() + '.png';
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
+        }
+        async function copyReportLink() {
+            try { await navigator.clipboard.writeText(window.location.href); alert('Report link copied!'); }
+            catch (err) { const input = document.createElement('input'); input.value = window.location.href; document.body.appendChild(input); input.select(); document.execCommand('copy'); document.body.removeChild(input); alert('Report link copied!'); }
+        }
+    </script>
+
+    <!-- html2canvas for copyable sections -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <!-- GenuVerity Copyable Sections -->
+    <script src="/js/copyable-sections.js"></script>
+
+</body>
+</html>

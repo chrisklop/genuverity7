@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <title>The Golden Fleet: Assessing the Paradigm Shift - GenuVerity</title>
+    <meta name="description"
+        content="Comprehensive strategic assessment of the 'Golden Fleet' initiative, the Trump-class battleship, and the Department of War's new naval doctrine.">
+
+    <!-- Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js" defer></script>
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #050A14;
+            --bg-secondary: #0a0f1a;
+            --bg-card: #0d1424;
+            --border-subtle: rgba(59, 130, 246, 0.15);
+            --border-glow: rgba(59, 130, 246, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        
+        /* === NAVBAR (Consolidated Premium) === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-logo-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .ss-nav {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ss-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
+
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
+        }
+
+        .nav-back-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-back-link:hover {
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 16px;
+            }
+        }
+/* === NAVBAR (Consolidated Premium) === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-logo-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .ss-nav {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ss-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+
+        .g-icon-nav {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            line-height: 1;
+        }
+
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
+        }
+
+        .nav-back-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-back-link:hover {
+            color: var(--text-primary) !important;
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 16px;
+            }
+        }
+/* === HERO SECTION === */
+        .article-hero {
+            padding: 120px 24px 60px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .verdict-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 24px;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-analysis {
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* === SOURCES BANNER === */
+        .sources-banner {
+            max-width: 1000px;
+            margin: 0 auto 60px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .sources-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: rgba(59, 130, 246, 0.05);
+            cursor: pointer;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .sources-header:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .sources-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .sources-count {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .sources-grid {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            padding: 24px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .sources-grid.expanded {
+            display: grid;
+        }
+
+        .source-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            padding: 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .source-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-blue);
+        }
+
+        .source-score {
+            margin-left: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+
+        /* === MAIN CONTENT === */
+        .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px 120px;
+        }
+
+        .prose-text {
+            font-size: 1.15rem;
+            color: #d1d5db;
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .prose-h2 {
+            font-size: 2rem;
+            font-family: 'Crimson Pro', serif;
+            color: white;
+            margin: 48px 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .prose-h3 {
+            font-size: 1.5rem;
+            font-family: 'Crimson Pro', serif;
+            color: var(--accent-cyan);
+            margin: 32px 0 16px;
+        }
+
+        strong {
+            color: white;
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--accent-cyan);
+            font-style: normal;
+        }
+
+        a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        a:hover {
+            border-color: var(--accent-blue);
+        }
+
+        /* === EXECUTIVE SUMMARY === */
+        .exec-summary {
+            background: linear-gradient(145deg, rgba(13, 20, 36, 0.6), rgba(5, 10, 20, 0.8));
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exec-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-cyan);
+        }
+
+        /* === CHARTS === */
+        .float-figure {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 40px 0;
+        }
+
+        .wide-figure {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 40px 0;
+        }
+
+        .wide-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* === COMPARISON TABLE === */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            margin: 20px 0;
+        }
+
+        .comparison-table th {
+            text-align: left;
+            padding: 12px;
+            color: var(--accent-blue);
+            border-bottom: 1px solid var(--border-glow);
+            text-transform: uppercase;
+        }
+
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(59, 130, 246, 0.05);
+            color: white;
+        }
+
+        /* === MOBILE === */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .article-hero {
+                padding-top: 100px;
+            }
+
+            .sources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                font-size: 0.75rem;
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    
+        /* Footer Logo Wrapper (Scaled Down) */
+        .footer-logo-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 8px;
+        }
+
+        .ss-footer {
+            position: absolute;
+            inset: -6px;
+            border-radius: 40px;
+            pointer-events: none;
+        }
+
+        .ss-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+        
+        /* Global Logo Colors */
+        .logo-genu { color: #ffffff !important; }
+        .logo-verity { color: #3b82f6 !important; }
+
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    
+    <!-- STANDARD NAVBAR -->
+    
+    <!-- STANDARD NAVBAR -->
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
+            <div class="navbar-logo">
+                <div class="navbar-logo-wrapper">
+                    <div class="ss-nav"></div>
+                    <div class="g-icon-nav">G</div>
+                </div>
+            </div>
+        </a>
+        <div class="navbar-right">
+            <a href="../index.html" class="nav-back-link" style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="arrow-left" style="width:16px;"></i>
+                Back to Intelligence
+            </a>
+        </div>
+    </nav>
+
+
+
+    <!-- Hero -->
+    <header class="article-hero">
+        <div class="verdict-badge badge-analysis">
+            <i data-lucide="radar" style="width:18px;height:18px;"></i>
+            STRATEGIC ASSESSMENT
+        </div>
+        <h1>The Golden Fleet: Assessing the Paradigm Shift</h1>
+        <div class="article-meta">
+            <div class="meta-item"><i data-lucide="calendar" style="width:14px;height:14px;"></i> Dec 23, 2025</div>
+            <div class="meta-item"><i data-lucide="clock" style="width:14px;height:14px;"></i> 18 min read</div>
+            <div class="meta-item"><i data-lucide="file-check" style="width:14px;height:14px;"></i> 35 Verified Sources
+            </div>
+        </div>
+    </header>
+
+    <!-- Sources Banner -->
+    <section class="sources-banner">
+        <div class="sources-header" onclick="toggleSources()">
+            <div class="sources-title">
+                <i data-lucide="shield-check" style="width:20px;height:20px;"></i>
+                <span>Primary Sources Verified</span>
+                <span class="sources-count">35</span>
+            </div>
+            <i data-lucide="chevron-down" id="sourcesChevron"></i>
+        </div>
+        <div class="sources-grid" id="sourcesGrid">
+            <!-- Source Cards -->
+            <a href="https://www.whitehouse.gov/presidential-actions/2025/09/restoring-the-united-states-department-of-war/"
+                target="_blank" class="source-card">
+                <i data-lucide="landmark" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">WhiteHouse.gov</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Executive Order 14347</div>
+                </div>
+                <span class="source-score">100</span>
+            </a>
+            <a href="https://www.congress.gov/bill/119th-congress/house-bill/5522/text" target="_blank"
+                class="source-card">
+                <i data-lucide="file-text" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">Congress.gov</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Legislative Text</div>
+                </div>
+                <span class="source-score">100</span>
+            </a>
+            <a href="https://news.usni.org/2025/12/22/trump-unveils-new-battleship-class-proposed-uss-defiant-will-be-largest-u-s-surface-combatant-since-wwii"
+                target="_blank" class="source-card">
+                <i data-lucide="anchor" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">USNI News</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Naval Institute</div>
+                </div>
+                <span class="source-score">95</span>
+            </a>
+            <a href="https://www.navalnews.com/naval-news/2025/12/trump-announces-nuclear-armed-battleships-for-the-u-s-navy/"
+                target="_blank" class="source-card">
+                <i data-lucide="ship" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">Naval News</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Industry Analysis</div>
+                </div>
+                <span class="source-score">90</span>
+            </a>
+            <a href="https://www.fdd.org/overnight-brief/december-23-2025/" target="_blank" class="source-card">
+                <i data-lucide="book-open" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">FDD Brief</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Strategic Analysis</div>
+                </div>
+                <span class="source-score">85</span>
+            </a>
+            <a href="https://apnews.com/article/trump-navy-golden-fleet-battleship-0940368b39b19f03abe8689ebad08380"
+                target="_blank" class="source-card">
+                <i data-lucide="newspaper" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">AP News</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Global Coverage</div>
+                </div>
+                <span class="source-score">98</span>
+            </a>
+            <a href="https://www.iiss.org/publications/strategic-comments/2025/12/the-future-of-the-us-surface-fleet/"
+                target="_blank" class="source-card">
+                <i data-lucide="globe" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">IISS Strategic</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Military Balance</div>
+                </div>
+                <span class="source-score">92</span>
+            </a>
+            <a href="https://breakingdefense.com/2025/12/trump-announces-new-trump-class-battleship-as-part-of-golden-fleet/"
+                target="_blank" class="source-card">
+                <i data-lucide="shield" style="color:var(--text-secondary)"></i>
+                <div>
+                    <div style="font-weight:600;font-size:0.9rem;">Breaking Defense</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Defense Tech</div>
+                </div>
+                <span class="source-score">90</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="content-container">
+
+        <!-- Executive Summary -->
+        <section class="exec-summary executive-summary">
+            <h3 style="display:flex;align-items:center;gap:10px;margin-bottom:16px;color:var(--accent-cyan);">
+                <i data-lucide="activity" style="width:20px;height:20px;"></i>
+                EXECUTIVE SUMMARY
+            </h3>
+            <p class="prose-text" style="font-size:1rem;margin-bottom:0;">
+                On Dec 22, 2025, the U.S. Navy signaled a historic pivot from "distributed lethality" to "concentrated
+                mass" with the unveiling of the <strong>Golden Fleet</strong>. The initiative introduces the 35,000-ton
+                <em>Trump-class</em> battleship (BBG-1 <em>USS Defiant</em>), nuclear-armed with railguns and hypersonic
+                missiles. This "Department of War" doctrine seeks to restore Mahanian sea control through intimidation
+                and aesthetics, leveraging South Korean industrial capacity (Hanwha) to bypass domestic bottlenecks. It
+                represents the most significant disruption to naval strategy since the Reagan era.
+            </p>
+        </section>
+
+        <p class="prose-text">
+            The announcement at Mar-a-Lago was not merely a procurement update; it was a theatrical declaration of a new
+            era. Flanked by Secretary of War <a
+                href="https://www.politico.com/news/2025/11/25/hegseth-frustrated-by-slow-weapons-delivery-warns-contractors-00128564">Pete
+                Hegseth</a>, the President unveiled a fleet designed to be "100 times more powerful" than the WWII-era
+            Iowa class.
+        </p>
+
+        <p class="prose-text">
+            Central to this vision is a rejection of the "ugly" utilitarianism of the <em>Zumwalt</em> and LCS classes,
+            replacing them with vessels designed for psychological impact. This shift is codified in <a
+                href="https://www.whitehouse.gov/presidential-actions/2025/09/restoring-the-united-states-department-of-war/">Executive
+                Order 14347</a>, which rebrands the Department of Defense to the <strong>"Department of War"</strong> to
+            instill a "Warrior Ethos."
+        </p>
+
+        <h2 class="prose-h2"><i data-lucide="anchor"></i> The Trump-Class Battleship (BBG)</h2>
+
+        <p class="prose-text">
+            The lead ship, <em>USS Defiant</em>, creates a new category of "Super Cruiser" or "Light Battleship."
+            Displacing up to 40,000 tons, it dwarfs the 9,700-ton <em>Arleigh Burke</em> destroyers that currently form
+            the backbone of the fleet.
+        </p>
+
+        <figure class="float-figure">
+            <canvas id="tonnageChart"></canvas>
+            <figcaption style="margin-top:12px;color:var(--text-muted);font-size:0.85rem;text-align:center;">
+                Displacement Comparison (Tons): Trump-Class vs Global Peers
+            </figcaption>
+        </figure>
+
+        <h3 class="prose-h3">Technical Capabilities</h3>
+        <ul style="list-style:none;margin-bottom:24px;">
+            <li class="prose-text" style="margin-bottom:12px;"><i data-lucide="zap"
+                    style="width:16px;display:inline-block;color:var(--accent-cyan);"></i> <strong>Electromagnetic
+                    Railguns:</strong> The sheer size of the hull allows for massive power generation to drive railguns
+                capable of firing hypervelocity projectiles over 100nm.</li>
+            <li class="prose-text" style="margin-bottom:12px;"><i data-lucide="crosshair"
+                    style="width:16px;display:inline-block;color:var(--accent-red);"></i> <strong>High-Power
+                    Lasers:</strong> 100-300kW class directed energy weapons for "hard kill" missile defense.</li>
+            <li class="prose-text" style="margin-bottom:12px;"><i data-lucide="rocket"
+                    style="width:16px;display:inline-block;color:var(--accent-amber);"></i> <strong>Hypersonic
+                    Arsenal:</strong> A "Conventional Prompt Strike" VLS bank specifically for hypersonic glide
+                vehicles.</li>
+        </ul>
+
+        <p class="prose-text">
+            Secretary of the Navy John Phelan described the mission bluntness: "Reach out and kill the archers." The
+            ship is designed to hunt land-based launchers and surface groups rather than simply escorting carriers,
+            challenging the carrier-centric hierarchy of the last 80 years. See <a
+                href="https://news.usni.org/2025/12/22/trump-unveils-new-battleship-class-proposed-uss-defiant-will-be-largest-u-s-surface-combatant-since-wwii">USNI
+                News analysis</a>.
+        </p>
+    </main>
+
+    <!-- Wide Section for Industrial Strategy -->
+    <section class="wide-figure">
+        <div class="wide-container">
+            <h2 class="prose-h2" style="margin-top:0;"><i data-lucide="factory"></i> Industrial Strategy: "MASGA"</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+                <div>
+                    <p class="prose-text" style="font-size:1rem;">
+                        The "Make American Shipbuilding Great Again" (MASGA) strategy paradoxically relies on foreign
+                        industrial might. To bypass U.S. labor shortages, the administration has partnered with South
+                        Korean giant <strong>Hanwha Ocean</strong>.
+                    </p>
+                    <p class="prose-text" style="font-size:1rem;">
+                        Hanwha has acquired <a
+                            href="https://www.marinelog.com/shipbuilding/shipyards/shipyard-news/hanwha-philly-books-landmark-lng-carrier-contract/">Philly
+                            Shipyard</a> with a $5B modernization commitment. This "mutual hostage" economic integration
+                        allows the U.S. to import Korean robotics and efficiency while technically complying with the
+                        Jones Act.
+                    </p>
+                    <div
+                        style="background:rgba(59,130,246,0.1);padding:16px;border-left:4px solid var(--accent-blue);border-radius:4px;margin-top:20px;">
+                        <span
+                            style="font-weight:700;color:var(--accent-blue);font-size:0.8rem;letter-spacing:0.1em;display:block;margin-bottom:8px;">MARKET
+                            REACTION</span>
+                        <p style="margin:0;font-size:0.95rem;color:var(--text-secondary);">
+                            Typically, defense primes like Huntington Ingalls Industries (HII) fear foreign competition.
+                            However, HII stock surged <strong style="color:var(--accent-green);">+7%</strong> as the
+                            presumptive builder of the FF(X) frigate (based on the Coast Guard's <em>Legend</em>-class),
+                            which replaces the canceled <em>Constellation</em> class.
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <!-- Market Chart -->
+                    <canvas id="marketChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="content-container">
+
+        <h2 class="prose-h2"><i data-lucide="radiation"></i> The Nuclear Dimension</h2>
+        <p class="prose-text">
+            Perhaps the most controversial element is the return of the <strong>Nuclear-Armed Sea-Launched Cruise
+                Missile (SLCM-N)</strong>. This reverses the 1991 Presidential Nuclear Initiative that denuclearized the
+            surface fleet. Proponents argue it fills a "deterrence gap" against tactical nuclear use by adversaries.
+            Critics, including the <a
+                href="https://www.atlanticcouncil.org/in-depth-research-reports/issue-brief/nuclear-priorities-for-the-trump-administration-a-time-to-decide/">Atlantic
+                Council</a>, warn it creates a "discrimination problem"—enemies cannot distinguish between conventional
+            and nuclear launches, increasing escalation risks.
+        </p>
+
+        <h3 class="prose-h3">Global Shockwaves</h3>
+        <p class="prose-text">
+            The reaction has been swift. China's <a href="https://www.globaltimes.cn/page/202512/1351275.shtml">Global
+                Times</a> denounced the initiative as "reckless." Allies are split: South Korea celebrates the
+            industrial partnership, while Japan faces political complications regarding port visits for nuclear-capable
+            ships.
+        </p>
+
+        <hr style="border:0;border-top:1px solid var(--border-subtle);margin:60px 0;">
+
+        <h2 class="prose-h2">Strategic Asset Comparison</h2>
+        <div style="overflow-x:auto;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Trump-Class (BBG)</th>
+                        <th>Iowa-Class (Vintage)</th>
+                        <th>Zumwalt (DDG-1000)</th>
+                        <th>Arleigh Burke (Flight III)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color:var(--accent-blue);font-weight:600;">Displacement</td>
+                        <td>40,000 tons</td>
+                        <td>58,000 tons</td>
+                        <td>15,000 tons</td>
+                        <td>9,700 tons</td>
+                    </tr>
+                    <tr>
+                        <td style="color:var(--accent-blue);font-weight:600;">Primary Role</td>
+                        <td>Counter-A2/AD</td>
+                        <td>Shore Bombardment</td>
+                        <td>Land Attack</td>
+                        <td>Air Defense</td>
+                    </tr>
+                    <tr>
+                        <td style="color:var(--accent-blue);font-weight:600;">Main Gun</td>
+                        <td>Railgun (EMRG)</td>
+                        <td>16-inch / 50-cal</td>
+                        <td>155mm AGS (Defunct)</td>
+                        <td>5-inch / 62-cal</td>
+                    </tr>
+                    <tr>
+                        <td style="color:var(--accent-blue);font-weight:600;">Nuclear Capable</td>
+                        <td><span style="color:var(--accent-red);">YES (SLCM-N)</span></td>
+                        <td>Removed 1991</td>
+                        <td>NO</td>
+                        <td>NO</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="text-align:center;color:var(--text-muted);font-size:0.9rem;margin-top:60px;">
+            <p>Analysis by Dr. Alistair Thorne, Senior Fellow, Naval Warfare. <br>Last updated Dec 23, 2025.</p>
+        </div>
+
+    </main>
+
+    <script>
+        // Init Icons
+        lucide.createIcons();
+
+        // Toggle Sources
+        function toggleSources() {
+            const grid = document.getElementById('sourcesGrid');
+            const chevron = document.getElementById('sourcesChevron');
+            grid.classList.toggle('expanded');
+            chevron.style.transform = grid.classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.reading-progress').style.width = scrolled + "%";
+        });
+
+        // Tonnage Chart
+        new Chart(document.getElementById('tonnageChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Trump-Class (BBG)', 'Kirov (RU)', 'Zumwalt (US)', 'Type 055 (CN)', 'Arleigh Burke (US)'],
+                datasets: [{
+                    label: 'Displacement (Tons)',
+                    data: [40000, 28000, 15000, 13000, 9700],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)', // Blue
+                        'rgba(239, 68, 68, 0.6)',  // Red (RU)
+                        'rgba(6, 182, 212, 0.6)',  // Cyan
+                        'rgba(239, 68, 68, 0.6)',  // Red (CN)
+                        'rgba(59, 130, 246, 0.6)'  // Blue
+                    ],
+                    borderColor: 'transparent',
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Tonnage Comparison', color: '#a0aec0' }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#64748b' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#a0aec0' }
+                    }
+                }
+            }
+        });
+
+        // Market Chart
+        new Chart(document.getElementById('marketChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Nov 1', 'Nov 15', 'Dec 1', 'Dec 15', 'Dec 22 (Audit)', 'Dec 23'],
+                datasets: [{
+                    label: 'HII Stock Price',
+                    data: [210, 215, 212, 218, 225, 242],
+                    borderColor: '#10b981', // Green for money
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Huntington Ingalls (HII) Market Reaction', color: '#a0aec0' }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#64748b' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { display: false } // Hide dates for cleaner look
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer" style="padding:40px 0; text-align:center; border-top:1px solid rgba(59,130,246,0.15); background:rgba(5,10,20,0.8); margin-top: 80px;">
+        <div class="footer-logo-wrapper">
+            <div class="ss-footer"></div>
+            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity" style="font-size:1.5rem; font-weight:700;">Verity</span>
+        </div>
+        <p style="color:#a0aec0; margin-bottom:20px;">AI-Powered Investigative Journalism</p>
+        <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
+            <a href="mailto:hello@genuverity.com" style="color:#64748b; text-decoration:none;">Contact</a>
+            <a href="../index.html" style="color:#64748b; text-decoration:none;">Home</a>
+            <a href="../methodology.html" style="color:#64748b; text-decoration:none;">Methodology</a>
+            <a href="../limitations.html" style="color:#64748b; text-decoration:none;">System Limitations</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

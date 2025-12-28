@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <title>Post-Assad Syria: The Disinformation War | GenuVerity</title>
+    <meta name="description" content="50,000+ posts spread false info about Syria's new government. 60% from foreign accounts. Russia, Iran wage information war after military defeat.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- GenuVerity Chart.js Watermark Plugin -->
+    <script>
+        const genuVerityWatermark = {
+            id: 'genuVerityWatermark',
+            afterDraw: (chart) => {
+                const ctx = chart.ctx;
+                const { width } = chart;
+                ctx.save();
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'top';
+                ctx.font = 'bold 10px Inter, sans-serif';
+                const verityWidth = ctx.measureText('Verity').width;
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText('Genu', width - 8 - verityWidth, 8);
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillText('Verity', width - 8, 8);
+                ctx.restore();
+            }
+        };
+        Chart.register(genuVerityWatermark);
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- html2canvas for copyable sections -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <!-- GenuVerity Copyable Sections (auto-adds copy buttons) -->
+    <script src="../js/copyable-sections.js"></script>
+
+    <style>
+        :root {
+            --bg-primary: #050A14;
+            --bg-secondary: #0a0f1a;
+            --bg-card: #0d1424;
+            --bg-card-hover: #111c2e;
+            --border-subtle: rgba(59, 130, 246, 0.2);
+            --border-glow: rgba(59, 130, 246, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --glow-red: 0 0 20px rgba(239, 68, 68, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, #020408 100%);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(5, 10, 20, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .navbar-logo { font-size: 1.5rem; font-weight: 700; }
+        .logo-genu { color: #ffffff; }
+        .logo-verity { color: var(--accent-blue); }
+
+        .navbar-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: var(--accent-red);
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .navbar-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .navbar-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .reading-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-amber));
+            width: 0%;
+            transition: width 0.1s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-right { display: none; }
+        }
+
+        /* Report Header */
+        .report-header {
+            padding: 100px 20px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-subtle);
+            background: linear-gradient(180deg, rgba(239, 68, 68, 0.05) 0%, transparent 100%);
+        }
+
+        .verdict-stamp {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid var(--accent-red);
+            border-radius: 16px;
+            margin-bottom: 24px;
+            box-shadow: var(--glow-red);
+        }
+
+        .verdict-stamp i { color: var(--accent-red); }
+        .verdict-stamp span {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-red);
+            letter-spacing: 1px;
+        }
+
+        .report-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            max-width: 900px;
+            margin: 0 auto 16px;
+            line-height: 1.3;
+        }
+
+        .report-meta {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .report-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Sources Banner */
+        .sources-banner {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+
+        .sources-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .sources-header:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .sources-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sources-header-left i { color: var(--accent-blue); }
+
+        .sources-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .sources-count {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .sources-toggle {
+            color: var(--text-secondary);
+            transition: transform 0.3s;
+        }
+
+        .sources-toggle.expanded { transform: rotate(180deg); }
+
+        .sources-grid {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+            padding: 0 20px 20px;
+        }
+
+        .sources-grid.expanded { display: grid; }
+
+        .source-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 14px;
+            transition: all 0.2s;
+        }
+
+        .source-card:hover {
+            border-color: var(--border-glow);
+            transform: translateY(-2px);
+        }
+
+        .source-card a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .source-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.65rem;
+            flex-shrink: 0;
+        }
+
+        .source-icon.think {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.1));
+            color: var(--accent-blue);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .source-icon.news {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(6, 182, 212, 0.1));
+            color: var(--accent-cyan);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .source-icon.factcheck {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
+            color: var(--accent-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .source-info { flex: 1; min-width: 0; }
+
+        .source-info h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .source-domain {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .source-score {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .source-score.high {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+        }
+
+        .source-score.medium {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-amber);
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i { color: var(--accent-blue); }
+
+        .prose {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        .prose p { margin-bottom: 16px; }
+
+        .prose a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .prose a:hover { border-bottom-color: var(--accent-cyan); }
+
+        .prose strong { color: var(--text-primary); font-weight: 600; }
+        .prose em { font-style: italic; }
+
+        .prose ul {
+            margin: 16px 0 16px 24px;
+        }
+
+        .prose li {
+            margin-bottom: 8px;
+        }
+
+        /* Key Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-red);
+            margin-bottom: 4px;
+        }
+
+        .stat-value.blue { color: var(--accent-blue); }
+        .stat-value.amber { color: var(--accent-amber); }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Fake Claims Grid */
+        .claims-grid {
+            display: grid;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .claim-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .claim-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .claim-badge {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-red);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .claim-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .claim-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .claim-reality {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid var(--accent-green);
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .claim-reality strong {
+            color: var(--accent-green);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .claim-reality p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        /* Actor Cards */
+        .actors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .actor-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .actor-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .actor-flag {
+            font-size: 1.5rem;
+        }
+
+        .actor-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .actor-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-title i { color: var(--accent-blue); }
+
+        /* Quote Block */
+        .quote-block {
+            background: var(--bg-card);
+            border-left: 4px solid var(--accent-cyan);
+            border-radius: 0 12px 12px 0;
+            padding: 20px 24px;
+            margin: 24px 0;
+        }
+
+        .quote-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .quote-attribution {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .quote-attribution strong { color: var(--accent-cyan); }
+
+        /* Verdict Box */
+        .verdict-box {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+            border: 2px solid var(--accent-red);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .verdict-box h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-red);
+        }
+
+        .verdict-box p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .footer-brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+    
+        /* Footer Logo Wrapper (Scaled Down) */
+        .footer-logo-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 8px;
+        }
+
+        .ss-footer {
+            position: absolute;
+            inset: -6px;
+            border-radius: 40px;
+            pointer-events: none;
+        }
+
+        .ss-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: sweep-30 4s ease-in-out infinite alternate;
+        }
+        
+        /* Global Logo Colors */
+        .logo-genu { color: #ffffff !important; }
+        .logo-verity { color: #3b82f6 !important; }
+
+        @keyframes sweep-30 {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(20deg); }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    
+    <!-- STANDARD NAVBAR -->
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
+            <div class="navbar-logo">
+                <div class="navbar-logo-wrapper">
+                    <div class="ss-nav"></div>
+                    <div class="g-icon-nav">G</div>
+                </div>
+            </div>
+        </a>
+        <div class="navbar-right">
+            <a href="../index.html" class="nav-back-link" style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="arrow-left" style="width:16px;"></i>
+                Back to Intelligence
+            </a>
+        </div>
+    </nav>
+
+
+    <!-- Report Header -->
+    <header class="report-header">
+        <div class="verdict-stamp">
+            <i data-lucide="alert-octagon" style="width: 28px; height: 28px;"></i>
+            <span>ACTIVE DISINFO CAMPAIGN</span>
+        </div>
+        <h1 class="report-title">Post-Assad Syria: The Disinformation War</h1>
+        <div class="report-meta">
+            <span><i data-lucide="calendar" style="width: 16px; height: 16px;"></i> Dec 21, 2025</span>
+            <span><i data-lucide="clock" style="width: 16px; height: 16px;"></i> 10 min read</span>
+            <span><i data-lucide="bookmark" style="width: 16px; height: 16px;"></i> 10 Sources</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Sources Banner -->
+        <section class="sources-banner">
+            <div class="sources-header" onclick="toggleSources()">
+                <div class="sources-header-left">
+                    <i data-lucide="shield-check" style="width: 20px; height: 20px;"></i>
+                    <h3>Primary Sources</h3>
+                    <span class="sources-count">10 Verified</span>
+                </div>
+                <i data-lucide="chevron-down" class="sources-toggle" style="width: 20px; height: 20px;"></i>
+            </div>
+            <div class="sources-grid" id="sourcesGrid">
+                <div class="source-card">
+                    <a href="https://www.atlanticcouncil.org/blogs/menasource/sectarianism-social-media-and-syrias-information-blackhole/" target="_blank" rel="noopener">
+                        <div class="source-icon think">ATLC</div>
+                        <div class="source-info">
+                            <h4>Syria's Information Blackhole</h4>
+                            <span class="source-domain">atlanticcouncil.org</span>
+                        </div>
+                        <span class="source-score high">92</span>
+                    </a>
+                </div>
+                <div class="source-card">
+                    <a href="https://timep.org/2025/01/30/truth-in-transition-disinformation-in-post-assad-syria/" target="_blank" rel="noopener">
+                        <div class="source-icon think">TIMEP</div>
+                        <div class="source-info">
+                            <h4>Truth in Transition</h4>
+                            <span class="source-domain">timep.org</span>
+                        </div>
+                        <span class="source-score high">90</span>
+                    </a>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.middleeasteye.net/news/foreign-run-accounts-x-spreading-fake-news-about-syria-report-finds" target="_blank" rel="noopener">
+                        <div class="source-icon news">MEE</div>
+                        <div class="source-info">
+                            <h4>Foreign Accounts on X</h4>
+                            <span class="source-domain">middleeasteye.net</span>
+                        </div>
+                        <span class="source-score high">88</span>
+                    </a>
+                </div>
+                <div class="source-card">
+                    <a href="https://institute.aljazeera.net/en/ajr/article/2983" target="_blank" rel="noopener">
+                        <div class="source-icon news">AJI</div>
+                        <div class="source-info">
+                            <h4>Chaos or Organised Campaign?</h4>
+                            <span class="source-domain">institute.aljazeera.net</span>
+                        </div>
+                        <span class="source-score high">90</span>
+                    </a>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.aap.com.au/factcheck/falsehoods-spread-following-fall-of-assads-syrian-regime/" target="_blank" rel="noopener">
+                        <div class="source-icon factcheck">AAP</div>
+                        <div class="source-info">
+                            <h4>Falsehoods After Assad's Fall</h4>
+                            <span class="source-domain">aap.com.au</span>
+                        </div>
+                        <span class="source-score high">94</span>
+                    </a>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.euronews.com/my-europe/2024/12/09/fact-check-photos-falsely-claim-to-show-bashar-al-assad-and-wife-in-moscow" target="_blank" rel="noopener">
+                        <div class="source-icon factcheck">EURO</div>
+                        <div class="source-info">
+                            <h4>Fake Assad Moscow Photos</h4>
+                            <span class="source-domain">euronews.com</span>
+                        </div>
+                        <span class="source-score high">92</span>
+                    </a>
+                </div>
+                <div class="source-card">
+                    <a href="https://fullfact.org/online/picture-assad-moscow-2023-aleppo-earthquake-syria/" target="_blank" rel="noopener">
+                        <div class="source-icon factcheck">FULL</div>
+                        <div class="source-info">
+                            <h4>2023 Photo Misattributed</h4>
+                            <span class="source-domain">fullfact.org</span>
+                        </div>
+                        <span class="source-score high">94</span>
+                    </a>
+                </div>
+                <div class="source-card">
+                    <a href="https://www.context.news/digital-rights/digital-discord-online-disinformation-sowing-discontent-in-syria" target="_blank" rel="noopener">
+                        <div class="source-icon news">CTX</div>
+                        <div class="source-info">
+                            <h4>Digital Discord in Syria</h4>
+                            <span class="source-domain">context.news</span>
+                        </div>
+                        <span class="source-score high">88</span>
+                    </a>
+                </div>
+                <div class="source-card">
+                    <a href="https://verify-sy.com/en" target="_blank" rel="noopener">
+                        <div class="source-icon factcheck">V-SY</div>
+                        <div class="source-info">
+                            <h4>Verify-Sy (Syrian Fact-Check)</h4>
+                            <span class="source-domain">verify-sy.com</span>
+                        </div>
+                        <span class="source-score high">90</span>
+                    </a>
+                </div>
+                <div class="source-card">
+                    <a href="https://disa.org/disinformation-and-the-shifting-landscape-of-truth-in-post-assad-syria/" target="_blank" rel="noopener">
+                        <div class="source-icon think">DISA</div>
+                        <div class="source-info">
+                            <h4>Shifting Landscape of Truth</h4>
+                            <span class="source-domain">disa.org</span>
+                        </div>
+                        <span class="source-score high">88</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Executive Summary -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <i data-lucide="zap" style="width: 24px; height: 24px;"></i>
+                Executive Summary
+            </h2>
+            <div class="prose">
+                <p>When <strong>Bashar al-Assad fled Syria on December 8, 2024</strong>, his propaganda machine collapsed—but disinformation did not. A massive information void emerged, and <a href="https://www.atlanticcouncil.org/blogs/menasource/sectarianism-social-media-and-syrias-information-blackhole/" target="_blank" rel="noopener">foreign actors rushed to fill it</a>.</p>
+
+                <p>According to <a href="https://www.middleeasteye.net/news/foreign-run-accounts-x-spreading-fake-news-about-syria-report-finds" target="_blank" rel="noopener">Middle East Eye research</a>, at least <strong>50,000 posts</strong> spread false or unreliable information about Syria's new administration. <strong>60% originated from accounts outside Syria</strong>—in Iraq, Yemen, Lebanon, and Iran.</p>
+
+                <p>Russia and Iran, having lost their military foothold, have pivoted to <em>information warfare</em> to destabilize the transition. The goal: amplify sectarian tensions, discredit the new government, and create the impression of chaos.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">50K+</div>
+                    <div class="stat-label">False/unreliable posts identified</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value amber">60%</div>
+                    <div class="stat-label">From foreign accounts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value blue">100K+</div>
+                    <div class="stat-label">Hate speech posts vs Alawis (BBC)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">Dec 8</div>
+                    <div class="stat-label">Assad fled to Russia</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Debunked Claims -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <i data-lucide="x-circle" style="width: 24px; height: 24px;"></i>
+                Major Debunked Claims
+            </h2>
+
+            <div class="claims-grid">
+                <div class="claim-card">
+                    <div class="claim-header">
+                        <span class="claim-badge">FALSE</span>
+                        <span class="claim-title">"First Photo of Assad in Moscow"</span>
+                    </div>
+                    <p class="claim-text">"Breaking: First images of Bashar al-Assad and wife Asma arriving in Moscow after fleeing Syria"</p>
+                    <div class="claim-reality">
+                        <strong>Reality:</strong>
+                        <p><a href="https://www.euronews.com/my-europe/2024/12/09/fact-check-photos-falsely-claim-to-show-bashar-al-assad-and-wife-in-moscow" target="_blank" rel="noopener">Euronews</a> and <a href="https://fullfact.org/online/picture-assad-moscow-2023-aleppo-earthquake-syria/" target="_blank" rel="noopener">Full Fact</a> traced the images to February 2023 footage of Assad visiting earthquake victims in Aleppo. No verified photos of Assad in Russia have emerged.</p>
+                    </div>
+                </div>
+
+                <div class="claim-card">
+                    <div class="claim-header">
+                        <span class="claim-badge">FALSE</span>
+                        <span class="claim-title">"Assad's Plane Shot Down"</span>
+                    </div>
+                    <p class="claim-text">"Assad's plane lost 6,700 meters in seconds—video shows plane fragment engulfed in flames"</p>
+                    <div class="claim-reality">
+                        <strong>Reality:</strong>
+                        <p><a href="https://www.aap.com.au/factcheck/falsehoods-spread-following-fall-of-assads-syrian-regime/" target="_blank" rel="noopener">AAP fact-checkers</a> found the image was from September 2024 showing an Indian Air Force jet on fire in Rajasthan. Assad's flight to Moscow was uneventful.</p>
+                    </div>
+                </div>
+
+                <div class="claim-card">
+                    <div class="claim-header">
+                        <span class="claim-badge">FALSE</span>
+                        <span class="claim-title">"HTS Leader Coordinated with Israel"</span>
+                    </div>
+                    <p class="claim-text">"Ahmed Al-Sharaa (Abu Mohamed al-Jolani) coordinated with Israeli intelligence to topple Assad"</p>
+                    <div class="claim-reality">
+                        <strong>Reality:</strong>
+                        <p><a href="https://timep.org/2025/01/30/truth-in-transition-disinformation-in-post-assad-syria/" target="_blank" rel="noopener">TIMEP investigation</a> found the claim was supported by a fabricated image falsely attributed to Alsharq News. No such statement or photo exists on the outlet's platforms.</p>
+                    </div>
+                </div>
+
+                <div class="claim-card">
+                    <div class="claim-header">
+                        <span class="claim-badge">MISLEADING</span>
+                        <span class="claim-title">"Christmas Tree Burning in Damascus"</span>
+                    </div>
+                    <p class="claim-text">"Video shows Syrian rebels burning Christmas decorations after taking Damascus"</p>
+                    <div class="claim-reality">
+                        <strong>Reality:</strong>
+                        <p>The video was <a href="https://disa.org/disinformation-and-the-shifting-landscape-of-truth-in-post-assad-syria/" target="_blank" rel="noopener">decontextualized and amplified</a> to inflame religious tensions. Christian communities in Syria have reported no systematic targeting by the new administration.</p>
+                    </div>
+                </div>
+
+                <div class="claim-card">
+                    <div class="claim-header">
+                        <span class="claim-badge">FALSE</span>
+                        <span class="claim-title">"Maher al-Assad Returning with Russian Army"</span>
+                    </div>
+                    <p class="claim-text">"Maher al-Assad is returning to the Syrian coast with Russian military support to reclaim power"</p>
+                    <div class="claim-reality">
+                        <strong>Reality:</strong>
+                        <p><a href="https://www.atlanticcouncil.org/blogs/menasource/sectarianism-social-media-and-syrias-information-blackhole/" target="_blank" rel="noopener">Atlantic Council</a> identified this as a deliberate rumor spread through WhatsApp groups by Assad loyalists waging an "information war" to create panic.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Actors -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <i data-lucide="users" style="width: 24px; height: 24px;"></i>
+                Foreign Actors Driving Disinformation
+            </h2>
+            <div class="prose">
+                <p>The <a href="https://institute.aljazeera.net/en/ajr/article/2983" target="_blank" rel="noopener">Al Jazeera Media Institute</a> and <a href="https://disa.org/disinformation-and-the-shifting-landscape-of-truth-in-post-assad-syria/" target="_blank" rel="noopener">DISA</a> have identified multiple state and non-state actors exploiting Syria's information vacuum:</p>
+            </div>
+
+            <div class="actors-grid">
+                <div class="actor-card">
+                    <div class="actor-header">
+                        <span class="actor-flag">🇷🇺</span>
+                        <span class="actor-name">Russia</span>
+                    </div>
+                    <p class="actor-description">Sputnik and RT amplify narratives framing HTS as "terrorists" and the transition as Western-backed regime change. Continues decades-long <strong>White Helmets attacks</strong>, accusing the humanitarian group of staging chemical attacks.</p>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-header">
+                        <span class="actor-flag">🇮🇷</span>
+                        <span class="actor-name">Iran</span>
+                    </div>
+                    <p class="actor-description">PressTV and Iranian state media push narratives about <strong>"American-Zionist agenda"</strong> destabilizing the region. Accounts from Iran amplify sectarian content targeting Sunni-led new government.</p>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-header">
+                        <span class="actor-flag">🇱🇧</span>
+                        <span class="actor-name">Hezbollah-Aligned</span>
+                    </div>
+                    <p class="actor-description">Accounts linked to Hezbollah push <strong>sectarian narratives</strong> warning of Shia persecution under the new administration. Some originate from Iraq, Lebanon, and Yemen.</p>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-header">
+                        <span class="actor-flag">🇸🇦🇹🇷</span>
+                        <span class="actor-name">Saudi & Turkish Accounts</span>
+                    </div>
+                    <p class="actor-description">BBC identified over <strong>100,000 posts</strong> spreading hate speech against Alawis, many from Saudi and Turkish-based accounts seeking to inflame sectarian divisions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chart: Disinformation Sources -->
+        <section class="content-section">
+            <div class="chart-container">
+                <h3 class="chart-title">
+                    <i data-lucide="pie-chart" style="width: 20px; height: 20px;"></i>
+                    Origin of Disinformation Posts (per Middle East Eye)
+                </h3>
+                <canvas id="originChart" height="300"></canvas>
+            </div>
+        </section>
+
+        <!-- Quote -->
+        <section class="content-section">
+            <div class="quote-block">
+                <p class="quote-text">"Our team has not witnessed a flood of misleading news like the one we are facing now."</p>
+                <p class="quote-attribution">— <strong>CEO, Taakad Platform</strong> (Syrian fact-checking organization)</p>
+            </div>
+
+            <div class="quote-block">
+                <p class="quote-text">"It has markedly increased since the fall of the Assad regime. Years of revolution, then civil war, have left behind deeply entrenched grievances, and various factions—both local and international—are now leveraging disinformation to strengthen their positions."</p>
+                <p class="quote-attribution">— <strong>Zouhir Al-Shimale</strong>, Verify-Sy</p>
+            </div>
+        </section>
+
+        <!-- How It Spreads -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <i data-lucide="share-2" style="width: 24px; height: 24px;"></i>
+                How Disinformation Spreads
+            </h2>
+            <div class="prose">
+                <p>The <a href="https://www.context.news/digital-rights/digital-discord-online-disinformation-sowing-discontent-in-syria" target="_blank" rel="noopener">Thomson Reuters Foundation</a> documented the spread mechanisms:</p>
+                <ul>
+                    <li><strong>WhatsApp Groups:</strong> Assad loyalists wage "information war" through massive group chats. Unverified reports shared in sizable channels create impressions of anarchy.</li>
+                    <li><strong>Recycled Footage:</strong> Old videos from other conflicts (Libya, Iraq, Palestine) relabeled as "Syria December 2024" to fabricate atrocities.</li>
+                    <li><strong>AI-Generated Content:</strong> AI tools used to create fake statements, fabricated photos, and doctored videos.</li>
+                    <li><strong>Fake Facebook Pages:</strong> Pages mimicking human rights organizations incite violence against Alawite communities.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Impact Section -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <i data-lucide="flame" style="width: 24px; height: 24px;"></i>
+                Real-World Impact
+            </h2>
+            <div class="prose">
+                <p>Disinformation has already caused real violence. In early 2025, a <a href="https://disa.org/disinformation-and-the-shifting-landscape-of-truth-in-post-assad-syria/" target="_blank" rel="noopener">series of violent incidents in Homs</a> were preceded by sharp spikes in disinformation targeting minority communities in Latakia and Tartous.</p>
+
+                <p>False reports of attacks on religious sites triggered <strong>protests and civil unrest</strong>. One video claiming to show an attack on an Alawite shrine in Aleppo was debunked by <a href="https://verify-sy.com/en" target="_blank" rel="noopener">Verify-Sy</a>—it was weeks old and taken during HTS operations in November 2024—but not before it inflamed tensions.</p>
+
+                <p>The targeting of fact-checkers has also intensified. A man from Ayn Al Sharqiyah who posted a video challenging false narratives was <strong>doxxed and harassed</strong> by groups seeking to silence corrections.</p>
+            </div>
+        </section>
+
+        <!-- Verdict Box -->
+        <div class="verdict-box">
+            <h2>ACTIVE DISINFORMATION CAMPAIGN</h2>
+            <p>Syria is experiencing one of the largest coordinated disinformation surges in recent history. Foreign state actors—particularly Russia, Iran, and Hezbollah-aligned networks—are exploiting the post-Assad information vacuum to destabilize the transition. <strong>Verify all Syria-related claims before sharing.</strong> Check with <a href="https://verify-sy.com/en" target="_blank" rel="noopener" style="color: var(--accent-cyan);">Verify-Sy</a>, AAP, AFP, or Reuters before amplifying any content from the region.</p>
+        </div>
+    </main>
+
+    
+    <!-- Footer -->
+    <footer class="footer" style="padding:40px 0; text-align:center; border-top:1px solid rgba(59,130,246,0.15); background:rgba(5,10,20,0.8); margin-top: 80px;">
+        <div class="footer-logo-wrapper">
+            <div class="ss-footer"></div>
+            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity" style="font-size:1.5rem; font-weight:700;">Verity</span>
+        </div>
+        <p style="color:#a0aec0; margin-bottom:20px;">AI-Powered Investigative Journalism</p>
+        <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
+            <a href="mailto:hello@genuverity.com" style="color:#64748b; text-decoration:none;">Contact</a>
+            <a href="../index.html" style="color:#64748b; text-decoration:none;">Home</a>
+            <a href="../methodology.html" style="color:#64748b; text-decoration:none;">Methodology</a>
+            <a href="../limitations.html" style="color:#64748b; text-decoration:none;">System Limitations</a>
+        </div>
+    </footer>
+
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Reading Progress Bar
+        const progressBar = document.querySelector('.reading-progress');
+        window.addEventListener('scroll', () => {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.scrollY;
+            progressBar.style.width = Math.min((scrolled / docHeight) * 100, 100) + '%';
+        });
+
+        // Toggle Sources
+        function toggleSources() {
+            const grid = document.getElementById('sourcesGrid');
+            const toggle = document.querySelector('.sources-toggle');
+            grid.classList.toggle('expanded');
+            toggle.classList.toggle('expanded');
+        }
+
+        // Origin Chart
+        const ctx = document.getElementById('originChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Syria (40%)', 'Iraq', 'Iran', 'Lebanon', 'Yemen', 'Other Foreign'],
+                datasets: [{
+                    data: [40, 15, 15, 12, 8, 10],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(239, 68, 68, 0.8)',
+                        'rgba(245, 158, 11, 0.8)',
+                        'rgba(6, 182, 212, 0.8)',
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(100, 116, 139, 0.8)'
+                    ],
+                    borderColor: 'rgba(5, 10, 20, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            color: '#a0aec0',
+                            padding: 16,
+                            font: { size: 12 }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#0d1424',
+                        titleColor: '#ffffff',
+                        bodyColor: '#a0aec0',
+                        borderColor: 'rgba(59, 130, 246, 0.3)',
+                        borderWidth: 1,
+                        padding: 12
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

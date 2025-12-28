@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Request a Report | GenuVerity</title>
-    <meta name="description" content="Submit a topic for investigation by GenuVerity's research team. We'll create a comprehensive, source-backed analysis.">
+    <meta name="description"
+        content="Submit a topic for investigation by GenuVerity's research team. We'll create a comprehensive, source-backed analysis.">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="css/shared-components.css">
     <style>
         :root {
             --bg-primary: #0a0a12;
@@ -95,8 +99,13 @@
             font-weight: 700;
         }
 
-        .logo-genu { color: #ffffff; }
-        .logo-verity { color: var(--accent-blue); }
+        .logo-genu {
+            color: #ffffff;
+        }
+
+        .logo-verity {
+            color: var(--accent-blue);
+        }
 
         .navbar-badge {
             padding: 4px 10px;
@@ -358,7 +367,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* === SUCCESS STATE === */
@@ -453,29 +464,14 @@
         }
     </style>
 </head>
+
 <body>
     <div class="bg-grid"></div>
     <div class="bg-glow"></div>
 
     <!-- Navbar -->
-    <nav class="navbar">
-        <a href="/" class="navbar-brand">
-            <span class="navbar-logo">
-                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
-            </span>
-            <span class="navbar-badge">COMING SOON</span>
-        </a>
-        <div class="navbar-right">
-            <a href="reports.html" class="navbar-link">
-                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-                Reports
-            </a>
-            <a href="/#notify" class="navbar-cta">
-                <i data-lucide="bell" style="width:14px;height:14px;"></i>
-                Early Access
-            </a>
-        </div>
-    </nav>
+    <!-- Shared Navbar -->
+    <div id="navbar-placeholder" data-page-type="other"></div>
 
     <!-- Main Content -->
     <main class="container">
@@ -486,7 +482,8 @@
                 Beta Program
             </div>
             <h1>Request a <span class="hero-gradient">Report</span></h1>
-            <p>Submit a topic for investigation. Our team will research it and create a comprehensive, source-backed analysis.</p>
+            <p>Submit a topic for investigation. Our team will research it and create a comprehensive, source-backed
+                analysis.</p>
         </header>
 
         <!-- Info Box -->
@@ -496,8 +493,10 @@
                 Platform Status
             </h3>
             <p>
-                GenuVerity's automated fact-checking platform is currently being used internally for testing while our tools complete development.
-                During this phase, we're producing manual investigative reports and actively seeking compelling topics to analyze.
+                GenuVerity's automated fact-checking platform is currently being used internally for testing while our
+                tools complete development.
+                During this phase, we're producing manual investigative reports and actively seeking compelling topics
+                to analyze.
             </p>
             <ul>
                 <li>Submit any claim, event, or topic you'd like us to investigate</li>
@@ -512,42 +511,24 @@
             <form id="report-request-form" onsubmit="submitRequest(event)">
                 <div class="form-group">
                     <label class="form-label" for="topic">Investigation Topic *</label>
-                    <input
-                        type="text"
-                        id="topic"
-                        name="topic"
-                        class="form-input"
-                        placeholder="e.g., Claims about [topic] from [source]"
-                        maxlength="100"
-                        required
-                        oninput="updateCharCount('topic', 100)"
-                    >
+                    <input type="text" id="topic" name="topic" class="form-input"
+                        placeholder="e.g., Claims about [topic] from [source]" maxlength="100" required
+                        oninput="updateCharCount('topic', 100)">
                     <div class="char-count" id="topic-count">0 / 100</div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="description">Additional Context</label>
-                    <textarea
-                        id="description"
-                        name="description"
-                        class="form-textarea"
+                    <textarea id="description" name="description" class="form-textarea"
                         placeholder="Any additional details, links, or context that would help our investigation..."
-                        maxlength="300"
-                        oninput="updateCharCount('description', 300)"
-                    ></textarea>
+                        maxlength="300" oninput="updateCharCount('description', 300)"></textarea>
                     <div class="char-count" id="description-count">0 / 300</div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="email">Your Email *</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        class="form-input"
-                        placeholder="you@example.com"
-                        required
-                    >
+                    <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com"
+                        required>
                     <p class="form-hint">We'll notify you when your report is ready.</p>
                 </div>
 
@@ -566,7 +547,8 @@
             <h2>Request Submitted!</h2>
             <p>We've received your topic and will begin research shortly. Check your email for confirmation.</p>
             <div class="request-id" id="request-id">REQ-XXXXX</div>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">Save this ID for reference. Most reports are completed within 48-72 hours.</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Save this ID for reference. Most reports are
+                completed within 48-72 hours.</p>
             <a href="reports.html" class="back-btn">
                 <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
                 View Published Reports
@@ -575,13 +557,12 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <p><strong>GenuVerity</strong> - AI-Powered Fact Verification</p>
-    </footer>
+    <!-- Shared Footer -->
+    <div id="footer-placeholder"></div>
 
     <script>
         // Initialize Lucide icons
-        document.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('gv:componentsReady', () => {
             lucide.createIcons();
         });
 
@@ -662,4 +643,5 @@
         }
     </script>
 </body>
+
 </html>

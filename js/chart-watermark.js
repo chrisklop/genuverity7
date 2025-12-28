@@ -5,7 +5,7 @@
  * Usage: Just add <script src="../js/chart-watermark.js"></script> after Chart.js
  */
 
-(function() {
+(function () {
     'use strict';
 
     // Wait for Chart.js to be available
@@ -13,6 +13,12 @@
         console.warn('[GenuVerity] Chart.js not found. Watermark plugin not registered.');
         return;
     }
+
+    // STRICT STYLE GUIDE ENFORCEMENT
+    // User Requirement: Use "Inter" for all data visualizations. No "playful" system fonts.
+    Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    Chart.defaults.color = '#94a3b8'; // Matches var(--text-muted)
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)'; // Subtle borders
 
     const genuVerityWatermark = {
         id: 'genuVerityWatermark',
