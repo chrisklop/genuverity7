@@ -604,12 +604,23 @@ class UnifiedSearch {
             card.className = 'carousel-card';
             card.dataset.index = index;
 
-            // USE DYNAMIC CHART GENERATOR
+            // USE DYNAMIC CHART GENERATOR (Fallback)
             const chartHTML = generateChartForReport(report);
+            const slugBase = report.slug.split('/').pop().replace('.html', '');
+            const thumbPath = `images/thumbnails/${slugBase}.webp?v=1766960197`; // Cache bust thumbnails too
 
             card.innerHTML = `
                 <div class="card-preview">
-                    ${chartHTML}
+                    <img src="${thumbPath}" 
+                         alt="Chart Preview"
+                         class="card-preview-img"
+                         loading="lazy"
+                         onerror="this.style.display='none'; this.parentElement.querySelector('.chart-container-wrapper').style.display='block';"
+                         style="width:100%; height:100%; object-fit:cover; display:block;"
+                    >
+                    <div class="chart-container-wrapper" style="display:none; width:100%; height:100%;">
+                        ${chartHTML}
+                    </div>
                 </div>
                 <div class="card-content">
                     <span class="card-tag ${report.tagClass || 'tag-blue'}">
