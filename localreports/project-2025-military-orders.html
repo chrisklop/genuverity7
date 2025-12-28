@@ -204,6 +204,18 @@
     <script src="../js/chart-defaults.js"></script>
 
     <script>
+        // Interactive Citation Highlighting
+        function highlightSource(id) {
+            // Remove 'highlight' from all source items
+            document.querySelectorAll('.source-item').forEach(el => el.classList.remove('highlight'));
+            
+            // Add to clicked item
+            const element = document.getElementById('source-' + id);
+            if (element) {
+                element.classList.add('highlight');
+            }
+        }
+
         // Initialize Charts
         const initCharts = () => {
             // Chart 1: Viral Volume (Line)
