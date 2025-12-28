@@ -89,6 +89,53 @@
     z-index: 10;
 }
 
+/* === SEARCH OVERLAY (Critical - prevents blur artifact) === */
+.search-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 10, 20, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 2000;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 120px 24px 24px;
+}
+
+.search-overlay.active {
+    display: flex;
+}
+
+.search-container {
+    width: 100%;
+    max-width: 700px;
+}
+
+.search-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    margin-bottom: 24px;
+}
+
+.search-input-large {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-family: inherit;
+    outline: none;
+}
+
+.search-input-large::placeholder {
+    color: var(--text-muted);
+}
+
 /* === SEARCH OVERLAY FIX === */
 /* Ensure search overlay appears above carousel cards */
 .search-overlay {
