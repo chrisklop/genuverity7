@@ -15,18 +15,25 @@ echo "🚀 Initiate Cache Busting sequence. Target Build ID: $BUILD_ID"
 TARGET_FILES="index.html reports.html localreports/*.html js/shared-components.js"
 
 # 1. Update references to reports-data.js
-# Pattern: reports-data.js?v=ANYTHING up to literal " or '
+# This handles both cases: already versioned (?v=123) and unversioned (reports-data.js)
 echo "  - Updating reports-data.js references..."
+# First, update already versioned ones
 sed -i '' "s/reports-data\.js?v=[0-9]*/reports-data.js?v=$BUILD_ID/g" $TARGET_FILES
+# Second, catch any that were missed (unversioned) - using a slightly safer approach to avoid double-appending
+sed -i '' "s/reports-data\.js\([\"']\)/reports-data.js?v=$BUILD_ID\1/g" $TARGET_FILES
 
 # 2. Update references to unified-search.js
 echo "  - Updating unified-search.js references..."
 sed -i '' "s/unified-search\.js?v=[0-9]*/unified-search.js?v=$BUILD_ID/g" $TARGET_FILES
+sed -i '' "s/unified-search\.js\([\"']\)/unified-search.js?v=$BUILD_ID\1/g" $TARGET_FILES
 
-# 3. Update references to shared-components.css and reports.css (Optional but good)
+# 3. Update references to CSS (shared-components.css and reports.css)
 echo "  - Updating CSS references..."
 sed -i '' "s/shared-components\.css?v=[0-9]*/shared-components.css?v=$BUILD_ID/g" $TARGET_FILES
+sed -i '' "s/shared-components\.css\([\"']\)/shared-components.css?v=$BUILD_ID\1/g" $TARGET_FILES
+
 sed -i '' "s/reports\.css?v=[0-9]*/reports.css?v=$BUILD_ID/g" $TARGET_FILES
+sed -i '' "s/reports\.css\([\"']\)/reports.css?v=$BUILD_ID\1/g" $TARGET_FILES
 
 echo "✅ Cache Busting Complete. New Version: $BUILD_ID"
 echo "   Files updated. Commit these changes to trigger a fresh deployment."

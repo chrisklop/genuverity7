@@ -88,9 +88,9 @@ function injectSharedComponents() {
     const footerPlaceholder = document.getElementById('footer-placeholder');
 
     // Inject reports data script if not already loaded
-    if (typeof REPORTS_DATA === 'undefined' && !document.querySelector('script[src*="reports-data.js"]')) {
+    if (typeof REPORTS_DATA === 'undefined' && !document.querySelector('script[src*="reports-data.js?v=1766960197"]')) {
         const script = document.createElement('script');
-        script.src = '/js/reports-data.js?v=1766959921';
+        script.src = '/js/reports-data.js?v=1766960197';
         document.head.appendChild(script);
     }
 
