@@ -4,7 +4,25 @@
 const REPORTS_DATA = [
     {
         id: 0,
-        title: "Forensic Analysis: The Tesla Pi Phone Information Operation",
+        title: "The Tesla Pi Phone: Anatomy of a Digital Ghost Product (Claude Build)",
+        slug: "localreports/tesla-pi-phone-claude.html",
+        category: "Deep Dive Dossier",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "smartphone",
+        date: "Dec 28, 2025",
+        sources: "34 Sources",
+        readTime: "22 min",
+        excerpt: "Forensic deconstruction of a multi-year information operation—from ADR Studio concept art to $500M engagement economy. Enhanced narrative depth and psychographic analysis.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [5, 25, 65, 85, 75, 90]
+        }
+    },
+    {
+        id: 1,
+        title: "Forensic Analysis: The Tesla Pi Phone Information Operation (Gemini Build)",
         slug: "localreports/tesla-pi-phone-rumor.html",
         category: "Deep Dive Dossier",
         tagClass: "tag-red",
