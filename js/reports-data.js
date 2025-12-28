@@ -4,6 +4,24 @@
 const REPORTS_DATA = [
     {
         id: 0,
+        title: "Is the US Economy Headed for Recession? A Data-Driven Analysis",
+        slug: "localreports/us-recession-analysis-2025.html",
+        category: "Economic Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-financial",
+        icon: "trending-down",
+        date: "Dec 28, 2025",
+        sources: "38 Sources",
+        readTime: "28 min",
+        excerpt: "Comprehensive analysis of US recession probability with 38 sources from government, Wall Street, and independent economists. Examining GDP, unemployment, the Sahm Rule, and government data reliability.",
+        chart: {
+            type: "donut",
+            color: "#f59e0b",
+            data: 30
+        }
+    },
+    {
+        id: 1,
         title: "The Tesla Pi Phone: Anatomy of a Digital Ghost Product",
         slug: "localreports/tesla-pi-phone-fake.html",
         category: "Deep Dive Dossier",
@@ -20,8 +38,9 @@ const REPORTS_DATA = [
             data: [5, 25, 65, 85, 75, 90]
         }
     },
+
     {
-        id: 1,
+        id: 2,
         title: "The Great Smishing Surge of Late 2025: A Forensic Deep Dive",
         slug: "localreports/smishing-surge-2025.html",
         category: "Deep Dive Dossier",
@@ -39,7 +58,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 2,
+        id: 3,
         title: "Forensic Audit: 28 Trump Accusers & The Epstein Discipline Gap",
         slug: "localreports/trump-allegations-epstein.html",
         category: "Forensic Audit",
@@ -57,7 +76,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 3,
+        id: 4,
         title: "Market Equilibrium and the Deceleration of United States Petroleum Costs",
         slug: "localreports/us-gas-price-decline.html",
         category: "Economic Analysis",
@@ -75,7 +94,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 4,
+        id: 5,
         title: "Metabolic Resurrection: Reversing Advanced Alzheimer's via NAD+ Restoration",
         slug: "localreports/nad-alzheimers-recovery.html",
         category: "Medical Breakthrough",
@@ -93,7 +112,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 5,
+        id: 6,
         title: "The Age of Slop: AI-Generated Disinformation in 2025",
         slug: "localreports/ai-slop-fake-local-news.html",
         category: "Deep Dive Dossier",
@@ -114,7 +133,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 6,
+        id: 7,
         title: "Dominion 'Remote Access' & 'Spyder': Kraken Lawsuits Debunked",
         slug: "localreports/dominion-voting-claims-2020.html",
         category: "Forensic Fact Check",
