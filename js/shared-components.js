@@ -7,7 +7,6 @@ const SHARED_NAV_HTML = `
     <nav class="navbar">
         <a href="/" class="navbar-logo">
             <div class="navbar-logo-wrapper">
-                <div class="ss-nav"></div>
                 <span class="g-icon-nav">G</span>
             </div>
         </a>
@@ -36,7 +35,6 @@ const SHARED_NAV_HTML = `
         <div class="mobile-menu-header">
             <div class="navbar-logo">
                 <div class="navbar-logo-wrapper">
-                    <div class="ss-nav"></div>
                     <div class="g-icon-nav">G</div>
                 </div>
                 <!-- Text removed per user request -->
