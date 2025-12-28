@@ -3,6 +3,24 @@
 
 const REPORTS_DATA = [
     {
+        id: 53,
+        title: "CDC Reverses Vaccine-Autism Stance: A Scientific Fact-Check",
+        slug: "localreports/hhs-vaccine-autism-claims.html",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-health",
+        icon: "shield-alert",
+        date: "Dec 28, 2025",
+        sources: "35 Sources",
+        readTime: "24 min",
+        excerpt: "HHS under RFK Jr. rewrote the CDC's vaccine-autism page. We analyze 35 peer-reviewed studies and institutional sources to fact-check the claim that vaccines cause autism. Verdict: FALSE.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [95, 20]
+        }
+    },
+    {
         id: 0,
         title: "Is the US Economy Headed for Recession? A Data-Driven Analysis",
         slug: "localreports/us-recession-analysis-2025.html",
