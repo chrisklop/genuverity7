@@ -1,0 +1,11 @@
+{
+    "name": "genuverity",
+    "version": "1.0.0",
+    "description": "GenuVerity Fact-Checking Platform",
+    "scripts": {
+        "build": "chmod +x bust-cache.sh && ./bust-cache.sh"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

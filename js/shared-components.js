@@ -90,7 +90,7 @@ function injectSharedComponents() {
     // Inject reports data script if not already loaded
     if (typeof REPORTS_DATA === 'undefined' && !document.querySelector('script[src*="reports-data.js"]')) {
         const script = document.createElement('script');
-        script.src = '/js/reports-data.js?v=10';
+        script.src = '/js/reports-data.js?v=1766959921';
         document.head.appendChild(script);
     }
 
