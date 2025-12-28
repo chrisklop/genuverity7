@@ -51,6 +51,20 @@
     height: 40px;
 }
 
+/* Scroll Progress Bar */
+.navbar::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background: var(--accent-cyan);
+    width: var(--scroll-progress, 0%);
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px var(--accent-cyan);
+    z-index: 1001;
+}
+
 /* Searchlight Animation (Matching Landing Page) */
 .ss-nav {
     position: absolute;

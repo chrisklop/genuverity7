@@ -225,6 +225,20 @@ function injectSharedComponents() {
         footerPlaceholder.innerHTML = SHARED_FOOTER_HTML;
     }
 
+    // === SCROLL PROGRESS BAR ===
+    // Update progress bar as user scrolls through the page
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+        const nav = document.querySelector('.navbar');
+        if (nav) {
+            nav.style.setProperty('--scroll-progress', `${scrollPercent}%`);
+        }
+    });
+
+
     // Final Lucide pass
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
