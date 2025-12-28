@@ -2441,7 +2441,7 @@
             }
 
             // Use shared reports data from js/reports-data.js
-            const reports = REPORTS_DATA;
+            const reports = [...REPORTS_DATA].sort((a, b) => b.id - a.id);
 
             let currentCardIndex = 0;
             const totalCards = reports.length;
@@ -2889,7 +2889,7 @@
                 }
 
                 const navInput = navSearch.querySelector('input');
-                const reports = typeof REPORTS_DATA !== 'undefined' ? REPORTS_DATA : [];
+                const reports = typeof REPORTS_DATA !== 'undefined' ? [...REPORTS_DATA].sort((a, b) => b.id - a.id) : [];
 
                 // --- HERO SEARCH (Local Dropdown Logic) ---
                 // 1. Get Elements

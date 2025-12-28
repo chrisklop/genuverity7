@@ -1454,7 +1454,7 @@
 
     <script>
         // Use shared reports data from js/reports-data.js
-        const reports = REPORTS_DATA;
+        const reports = [...REPORTS_DATA].sort((a, b) => b.id - a.id);
 
         // Legacy inline array removed - now using shared REPORTS_DATA
         // To add a new report, edit js/reports-data.js
