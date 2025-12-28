@@ -25,10 +25,10 @@ if ! grep -q "family=Crimson+Pro" "$FILE"; then
     exit 1
 fi
 
-# Check for standard navigation header
-if ! grep -qE 'class="navbar"|class="nav-header"' "$FILE"; then
+# Check for standard navigation header (or unified placeholder)
+if ! grep -qE 'class="navbar"|class="nav-header"|id="navbar-placeholder"' "$FILE"; then
     echo "❌ FAIL: Invalid Header Structure in $FILE"
-    echo "   Must use standard <nav class='navbar'> or <nav class='nav-header'> component."
+    echo "   Must use standard <nav class='navbar'> or <nav class='nav-header'> or <div id='navbar-placeholder'> component."
     exit 1
 fi
 

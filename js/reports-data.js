@@ -4,6 +4,24 @@
 const REPORTS_DATA = [
     {
         id: 0,
+        title: "Forensic Analysis: The Tesla Pi Phone Information Operation",
+        slug: "localreports/tesla-pi-phone-rumor.html",
+        category: "Deep Dive Dossier",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "smartphone",
+        date: "Dec 27, 2025",
+        sources: "34 Sources",
+        readTime: "20 min",
+        excerpt: "Forensic investigation into the multi-year information operation surrounding the non-existent Tesla Pi Phone. Analyzing the physics of solar charging, Starlink integration myths, and the $500M engagement economy driving the rumor mill.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [5, 15, 45, 85, 100, 95, 80]
+        }
+    },
+    {
+        id: 1,
         title: "The Great Smishing Surge of Late 2025: A Forensic Deep Dive",
         slug: "localreports/smishing-surge-2025.html",
         category: "Deep Dive Dossier",
@@ -21,7 +39,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 1,
+        id: 2,
         title: "Forensic Audit: 28 Trump Accusers & The Epstein Discipline Gap",
         slug: "localreports/trump-allegations-epstein.html",
         category: "Forensic Audit",
@@ -39,7 +57,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 2,
+        id: 3,
         title: "Market Equilibrium and the Deceleration of United States Petroleum Costs",
         slug: "localreports/us-gas-price-decline.html",
         category: "Economic Analysis",
@@ -57,7 +75,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 3,
+        id: 4,
         title: "Metabolic Resurrection: Reversing Advanced Alzheimer's via NAD+ Restoration",
         slug: "localreports/nad-alzheimers-recovery.html",
         category: "Medical Breakthrough",
@@ -75,7 +93,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 4,
+        id: 5,
         title: "The Age of Slop: AI-Generated Disinformation in 2025",
         slug: "localreports/ai-slop-fake-local-news.html",
         category: "Deep Dive Dossier",
@@ -96,7 +114,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 5,
+        id: 6,
         title: "Dominion 'Remote Access' & 'Spyder': Kraken Lawsuits Debunked",
         slug: "localreports/dominion-voting-claims-2020.html",
         category: "Forensic Fact Check",
@@ -118,7 +136,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 15,
+        id: 16,
         title: "The Sovereign-Commercial Hybrid",
         slug: "localreports/trump-admin-financial-conflicts.html",
         category: "Financial Forensics",
@@ -137,7 +155,7 @@ const REPORTS_DATA = [
     },
 
     {
-        id: 14,
+        id: 15,
         title: "The Silicon Sleeper Cells: Laptop Farms & The New Digital Front",
         slug: "localreports/laptop-farms.html",
         category: "State-Sponsored Fraud",
@@ -155,7 +173,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 14,
+        id: 15,
         title: "Aerial Assets & Sovereign Logistics: A Forensic Audit",
         slug: "localreports/epstein-air-logistics.html",
         category: "Forensic Audit",
@@ -173,7 +191,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 14,
+        id: 15,
         title: "Is 'FedNow Phase 2' Freezing Accounts?",
         slug: "localreports/fednow-freeze.html",
         category: "Misinformation",
@@ -191,7 +209,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 14,
+        id: 15,
         title: "The Panopticon of Efficiency: Palantir & The Surveillance State",
         slug: "localreports/palantir-panopticon.html",
         category: "Surveillance State",
@@ -209,7 +227,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 14,
+        id: 15,
         title: "The Golden Fleet: Assessing the Paradigm Shift",
         slug: "localreports/golden-fleet-analysis.html",
         category: "Strategic Assessment",
@@ -233,7 +251,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 14,
+        id: 15,
         title: "The December 2025 Financial Disinformation Complex",
         slug: "localreports/irs-social-security-payment-hoax-2025.html",
         category: "Disinformation Forensics",
@@ -251,7 +269,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 14,
+        id: 15,
         title: "The 2025 Farm Crisis: Did Treasury Prioritize Argentina Over US Farmers?",
         slug: "localreports/us-argentina-farm-crisis-2025.html",
         category: "Economic Analysis",
@@ -269,7 +287,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 14,
+        id: 15,
         title: "German Christmas Markets: Flood of Far-Right Fake News",
         slug: "localreports/german-christmas-market-disinfo.html",
         category: "Disinformation",
@@ -287,7 +305,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 14,
+        id: 15,
         title: "Rob Reiner Death: Separating Fact from Fiction",
         slug: "localreports/rob-reiner-misinformation-2025.html",
         category: "Disinformation Analysis",
@@ -305,7 +323,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 14,
+        id: 15,
         title: "Post-Assad Syria: The Disinformation War",
         slug: "localreports/syria-disinformation-2024.html",
         category: "Active Threat",
@@ -323,7 +341,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 15,
+        id: 16,
         title: "CDC Drops Universal Hepatitis B Vaccine for Newborns",
         slug: "localreports/cdc-hepatitis-b-vaccine-2025.html",
         category: "Policy Analysis",
@@ -341,7 +359,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 16,
+        id: 17,
         title: "Pete Hegseth 'Double-Tap' Strike: What We Know",
         slug: "localreports/hegseth-boat-strike.html",
         category: "Developing Story",
@@ -359,7 +377,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 17,
+        id: 18,
         title: "US Inflation: A Decade of Price Changes (2015-2025)",
         slug: "localreports/us-inflation-10-year-analysis.html",
         category: "Economic Analysis",
@@ -377,7 +395,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 18,
+        id: 19,
         title: "Epstein Files: What December 2025 Release Actually Shows",
         slug: "localreports/epstein-documents-2025.html",
         category: "Document Analysis",
@@ -395,7 +413,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 19,
+        id: 20,
         title: "Ruby Bradley 'Loser' Quote: Viral Military Misquote Debunked",
         slug: "localreports/ruby-bradley-quote.html",
         category: "Fact Check",
@@ -413,7 +431,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 20,
+        id: 21,
         title: "Paid Protesters Hoax: The Craigslist Ad Myth That Won't Die",
         slug: "localreports/paid-protesters-hoax.html",
         category: "Recurring Hoax",
@@ -431,7 +449,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 21,
+        id: 22,
         title: "AI-Generated Deportation Videos: The Sora Deepfake Crisis",
         slug: "localreports/ai-deportation-videos.html",
         category: "Synthetic Media Alert",
@@ -449,7 +467,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 22,
+        id: 23,
         title: "The Great Reset: WEF Conspiracy Theory Fact Check",
         slug: "localreports/great-reset-wef.html",
         category: "Conspiracy Analysis",
@@ -467,7 +485,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 23,
+        id: 24,
         title: "Chemtrails in 2025: TikTok's Resurgent Conspiracy Theory",
         slug: "localreports/chemtrails-2025.html",
         category: "Fact Check",
@@ -485,7 +503,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 24,
+        id: 25,
         title: "BlueAnon: Can Starlink Satellites Manipulate Elections?",
         slug: "localreports/blueanon-starlink.html",
         category: "Conspiracy Analysis",
@@ -503,7 +521,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 25,
+        id: 26,
         title: "HAARP Weather Control Conspiracy: Science vs Fiction",
         slug: "localreports/haarp-weather-control.html",
         category: "Fact Check",
@@ -521,7 +539,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 26,
+        id: 27,
         title: "Tommy Robinson 'Death' in Guadeloupe: False Claims Debunked",
         slug: "localreports/tommy-robinson-guadeloupe.html",
         category: "Fact Check",
@@ -539,7 +557,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 27,
+        id: 28,
         title: "Elon Musk vs EU: Claims Fact-Checked",
         slug: "localreports/musk-eu-claims.html",
         category: "Fact Check",
@@ -557,7 +575,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 28,
+        id: 29,
         title: "IRS $2,000 Stimulus Check Hoax: December 2025",
         slug: "localreports/irs-stimulus-hoax.html",
         category: "Fact Check",
@@ -570,7 +588,7 @@ const REPORTS_DATA = [
         excerpt: "Viral claims about IRS sending $2,000 stimulus checks in December 2025 are completely false. No such program exists. Verdict: FALSE."
     },
     {
-        id: 29,
+        id: 30,
         title: "New Jersey Drone Sightings: Conspiracy Theories Debunked",
         slug: "localreports/nj-drone-conspiracy.html",
         category: "Fact Check",
@@ -583,7 +601,7 @@ const REPORTS_DATA = [
         excerpt: "Debunking viral claims about mysterious drones over New Jersey including Project Blue Beam, Iranian involvement, and alien theories. Verdict: MOSTLY FALSE."
     },
     {
-        id: 30,
+        id: 31,
         title: "MAGA Accounts: Foreign Location Reveal",
         slug: "localreports/maga-accounts-foreign.html",
         category: "Platform Analysis",
@@ -596,7 +614,7 @@ const REPORTS_DATA = [
         excerpt: "X's new location transparency feature reveals surprising foreign origins for accounts amplifying pro-Trump content."
     },
     {
-        id: 31,
+        id: 32,
         title: "Immigration Crime Wave: Claims vs Data",
         slug: "localreports/immigration-crime-claims.html",
         category: "Fact Check",
@@ -609,7 +627,7 @@ const REPORTS_DATA = [
         excerpt: "Examining viral claims about immigrant crime rates. DOJ and academic research show immigrants commit crimes at lower rates than native-born citizens."
     },
     {
-        id: 32,
+        id: 33,
         title: "Hamas 51% Youth Support Claim",
         slug: "localreports/hamas-youth-support.html",
         category: "Fact Check",
@@ -622,7 +640,7 @@ const REPORTS_DATA = [
         excerpt: "Viral claim that 51% of young Americans support Hamas is misleading. Original poll asked about sympathy, not support, and results are more nuanced."
     },
     {
-        id: 33,
+        id: 34,
         title: "Trump's Grocery Prices Claim: Fact Check",
         slug: "localreports/grocery-prices-claim.html",
         category: "Fact Check",
@@ -635,7 +653,7 @@ const REPORTS_DATA = [
         excerpt: "Trump claimed grocery prices are 'falling rapidly.' BLS data shows more items increased than decreased. Verdict: FALSE."
     },
     {
-        id: 34,
+        id: 35,
         title: "The 2025 AI Deepfake Crisis",
         slug: "localreports/ai-deepfakes-2025.html",
         category: "AI & Technology",
@@ -648,7 +666,7 @@ const REPORTS_DATA = [
         excerpt: "AI-generated deepfakes targeting public figures, 93% of social videos now synthetic, and the erosion of trust in digital content."
     },
     {
-        id: 35,
+        id: 36,
         title: "Climate Skeptics Misuse Ice Age Research",
         slug: "localreports/climate-ice-age-study.html",
         category: "Climate Misinformation",
@@ -661,7 +679,7 @@ const REPORTS_DATA = [
         excerpt: "Viral Breitbart headline cherry-picks legitimate climate science to mislead readers about current global warming threat."
     },
     {
-        id: 36,
+        id: 37,
         title: "Bondi Beach Attack: Viral Misinformation Wave",
         slug: "localreports/bondi-beach-misinfo.html",
         category: "Misinformation",
@@ -674,7 +692,7 @@ const REPORTS_DATA = [
         excerpt: "Multiple false claims spread within hours of Sydney shooting. Hero's identity fabricated, shooter's background distorted, non-existent second shooting claimed."
     },
     {
-        id: 37,
+        id: 38,
         title: "Did Elon Musk's DOGE Save $2 Trillion?",
         slug: "localreports/doge-savings-claims.html",
         category: "Fact Check",
@@ -687,7 +705,7 @@ const REPORTS_DATA = [
         excerpt: "Examining DOGE's claim of $2 trillion in savings. NPR found only $102M verified—0.005% of claimed amount. Federal spending actually rose."
     },
     {
-        id: 38,
+        id: 39,
         title: "Trump's '25 Million Migrants' Claim",
         slug: "localreports/trump-25m-migrants.html",
         category: "Fact Check",
@@ -700,7 +718,7 @@ const REPORTS_DATA = [
         excerpt: "Trump claims 25 million migrants entered under Biden. Official CBP data shows ~10M encounters, many expelled. Verdict: FALSE."
     },
     {
-        id: 39,
+        id: 40,
         title: "The $1,776 'Warrior Dividend': What It Really Is",
         slug: "localreports/warrior-dividend-analysis.html",
         category: "Policy Analysis",
@@ -713,7 +731,7 @@ const REPORTS_DATA = [
         excerpt: "Trump's $1,776 military bonus is actually rebranded housing funds Congress already approved—not new presidential spending or tariff revenue."
     },
     {
-        id: 40,
+        id: 41,
         title: "Fact Check: FDA Memo Claims COVID Vaccines Killed 10 Children",
         slug: "localreports/fda-vaccine-memo-fact-check.html",
         category: "Public Health",
@@ -726,7 +744,7 @@ const REPORTS_DATA = [
         excerpt: "FDA CBER Director Vinay Prasad's leaked memo claims vaccines killed at least 10 children—but provides no evidence. Experts call it 'factually incorrect' and 'disingenuous.'"
     },
     {
-        id: 41,
+        id: 42,
         title: "Gaza Boat Strikes: Pattern of Civilian Targeting?",
         slug: "localreports/boat-strike-investigation.html",
         category: "Military Investigation",
@@ -739,7 +757,7 @@ const REPORTS_DATA = [
         excerpt: "Investigating IDF 'double-tap' strikes on Palestinian fishing boats and the legal questions surrounding targeting fleeing civilians."
     },
     {
-        id: 42,
+        id: 43,
         title: "Trump's Dec 17 Speech: Claims vs Reality",
         slug: "localreports/trump-speech-factcheck.html",
         category: "Fact Check",
@@ -752,7 +770,7 @@ const REPORTS_DATA = [
         excerpt: "Fact-checking the President's prime-time address on immigration, economy, and policy accomplishments. Claim-by-claim analysis with primary sources."
     },
     {
-        id: 43,
+        id: 44,
         title: "Luigi Mangione Trial: Evidence and Legal Strategy",
         slug: "localreports/mangione-trial-analysis.html",
         category: "Criminal Justice",
@@ -765,7 +783,7 @@ const REPORTS_DATA = [
         excerpt: "Analyzing the prosecution's case, defense arguments, and contested evidence in the UnitedHealthcare CEO murder trial."
     },
     {
-        id: 44,
+        id: 45,
         title: "TikTok US Sale: What the Deal Actually Contains",
         slug: "localreports/tiktok-sale-analysis.html",
         category: "Tech Policy",
@@ -778,7 +796,7 @@ const REPORTS_DATA = [
         excerpt: "Breaking down the Oracle, Silver Lake, and UAE consortium deal structure, and why ByteDance still controls the algorithm."
     },
     {
-        id: 45,
+        id: 46,
         title: "CDC Website Changes: Vaccine-Autism Claims Analyzed",
         slug: "localreports/cdc-vaccine-autism.html",
         category: "Public Health",
@@ -791,7 +809,7 @@ const REPORTS_DATA = [
         excerpt: "What the CDC actually changed on its website regarding vaccines and autism, and what the scientific consensus still shows."
     },
     {
-        id: 46,
+        id: 47,
         title: "Marijuana Rescheduling: From Schedule I to Schedule III",
         slug: "localreports/marijuana-rescheduling.html",
         category: "Executive Action",
@@ -804,7 +822,7 @@ const REPORTS_DATA = [
         excerpt: "Trump signs historic executive order directing federal reclassification of cannabis. Analysis of $2B+ tax relief and why this falls short of legalization."
     },
     {
-        id: 47,
+        id: 48,
         title: "Dollar Dominance: Treasury Bonds as Trade War Leverage",
         slug: "localreports/treasury-leverage.html",
         category: "Financial Analysis",
@@ -817,7 +835,7 @@ const REPORTS_DATA = [
         excerpt: "How China, Japan, and hedge funds could weaponize $8+ trillion in US Treasury holdings as tariffs escalate to 145%."
     },
     {
-        id: 48,
+        id: 49,
         title: "US Inflation Data: Accurate Numbers, Compromised Collection",
         slug: "localreports/inflation-methodology.html",
         category: "Data Quality Alert",
@@ -830,7 +848,7 @@ const REPORTS_DATA = [
         excerpt: "BLS reported 2.7% inflation—but a 43-day shutdown left October data uncollected. Analysis of why CPI diverges from consumer experience."
     },
     {
-        id: 49,
+        id: 50,
         title: "Mirror Maze: Doppelganger Network Analysis",
         slug: "localreports/doppelganger-analysis.html",
         category: "Media Impersonation",
@@ -843,7 +861,7 @@ const REPORTS_DATA = [
         excerpt: "Russia's sophisticated media impersonation: 60+ fake news websites mimicking Washington Post, Fox News, and major outlets."
     },
     {
-        id: 50,
+        id: 51,
         title: "Spamouflage Network Analysis",
         slug: "localreports/network-analysis.html",
         category: "Active Threat",
@@ -856,7 +874,7 @@ const REPORTS_DATA = [
         excerpt: "China's largest influence operation: 8,700+ coordinated accounts across 50+ platforms targeting Western democracies."
     },
     {
-        id: 51,
+        id: 52,
         title: "Fact Check: Biden White House Plaque Claims",
         slug: "localreports/plaque-fact-check.html",
         category: "72% False or Misleading",
@@ -869,7 +887,7 @@ const REPORTS_DATA = [
         excerpt: "Comprehensive analysis of 18 claims on partisan plaques installed beneath Biden's portrait in the White House."
     },
     {
-        id: 13,
+        id: 14,
         title: "Is 'FedNow Phase 2' Freezing Accounts?",
         slug: "localreports/fednow-freeze.html",
         category: "Deep Dive Dossier",
