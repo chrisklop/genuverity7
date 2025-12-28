@@ -4,19 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Longitudinal Study: Trump Allegations & Epstein Network | GenuVerity</title>
+    <title>Donald Trump Allegations & Epstein Discipline Gap | GenuVerity</title>
     <meta name="description"
-        content="A comprehensive forensic audit of 28 sexual misconduct allegations against Donald J. Trump and a comparative analysis of disciplinary outcomes within the Jeffrey Epstein network.">
+        content="A comprehensive forensic audit of 28 sexual misconduct allegations against Donald Trump and a comparative study of disciplinary outcomes in the Epstein network.">
+    <meta name="keywords"
+        content="Donald Trump, Jeffrey Epstein, Sexual Misconduct, E. Jean Carroll, Jes Staley, Prince Andrew, GenuVerity, Fact Check">
+    <meta name="author" content="GenuVerity Intelligence">
+    <meta name="robots" content="index, follow">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://genuverity.org/localreports/trump-allegations-epstein.html">
+    <meta property="og:title" content="Donald Trump Allegations & Epstein Discipline Gap | GenuVerity">
+    <meta property="og:description"
+        content="A longitudinal study of 28 allegations and the 'Disciplined for Less' paradox in the Epstein client files.">
+    <meta property="og:image" content="https://genuverity.org/images/share-card-trump-epstein.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://genuverity.org/localreports/trump-allegations-epstein.html">
+    <meta property="twitter:title" content="Donald Trump Allegations & Epstein Discipline Gap | GenuVerity">
+    <meta property="twitter:description"
+        content="A longitudinal study of 28 allegations and the 'Disciplined for Less' paradox in the Epstein client files.">
+    <meta property="twitter:image" content="https://genuverity.org/images/share-card-trump-epstein.jpg">
 
     <!-- Dependencies -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/chart-watermark.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-    <!-- Search & UI Dependencies -->
-    <script src="../js/reports-data.js" defer></script>
-    <script src="../js/unified-search.js" defer></script>
     <script src="../js/copyable-sections.js" defer></script>
     <script src="../js/shared-components.js" defer></script>
     <link rel="stylesheet" href="../css/shared-components.css">
@@ -25,18 +42,28 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap"
         rel="stylesheet">
+
     <style>
         :root {
             --bg-primary: #050A14;
             --bg-secondary: #0a0f1a;
+            --bg-tertiary: #0d1424;
             --bg-card: #111827;
             --border-color: rgba(59, 130, 246, 0.15);
             --text-primary: #ffffff;
             --text-secondary: #a0aec0;
+            --text-muted: #64748b;
             --accent-blue: #3b82f6;
             --accent-cyan: #06b6d4;
             --accent-green: #10b981;
+            --accent-amber: #f59e0b;
             --accent-red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
@@ -44,143 +71,261 @@
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
-            padding-top: 20px;
         }
 
-        /* Navbar Styling */
-        #navbar-placeholder {
-            min-height: 72px;
-        }
-
-        .navbar {
-            background: rgba(5, 10, 20, 0.85) !important;
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .navbar-search-container {
-            width: 500px !important;
-            max-width: 500px !important;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        /* Content Layout */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 100px 20px 40px;
+        }
+
+        .report-meta {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .meta-tag {
+            padding: 4px 12px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 6px;
+            color: var(--accent-blue);
+        }
+
+        .meta-tag.red {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+        }
+
+        .report-title {
+            font-size: 3rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .report-subtitle {
+            font-size: 1.3rem;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .content-grid {
             display: grid;
-            grid-template-columns: 310px 1fr;
+            grid-template-columns: 320px 1fr;
             gap: 60px;
         }
 
-        .article-main h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-        }
-
-        .article-main h2 {
-            font-size: 2rem;
-            margin: 40px 0 20px;
-            color: var(--accent-blue);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-        }
-
-        .chart-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
-            margin: 20px 0;
-            float: right;
-            width: 450px;
-            margin-left: 30px;
-            transition: all 0.3s ease;
-        }
-
-        .chart-box:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
-        }
-
-        /* Clear floats after sections */
-        section::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
+        /* Sidebar */
         .sources-sidebar {
             position: sticky;
             top: 100px;
-            height: calc(100vh - 120px);
+        }
+
+        .sources-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sources-title {
+            font-weight: 700;
+            color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+        }
+
+        .sources-count {
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--accent-cyan);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .sources-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 70vh;
             overflow-y: auto;
-            padding-right: 15px;
+            padding-right: 10px;
         }
 
         .source-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            background: var(--bg-card);
             padding: 12px;
-            margin-bottom: 12px;
-            font-size: 0.85rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
             text-decoration: none;
             color: var(--text-secondary);
-            display: block;
+            font-size: 0.8rem;
+            display: flex;
+            gap: 12px;
             transition: all 0.2s;
         }
 
         .source-card:hover {
-            border-color: var(--accent-blue);
+            border-color: var(--accent-cyan);
             transform: translateX(5px);
             color: white;
+            background: rgba(6, 182, 212, 0.05);
         }
 
-        .data-table-container {
-            width: 100%;
-            overflow-x: auto;
-            margin: 2rem 0;
+        .source-num {
+            color: var(--accent-cyan);
+            font-weight: 800;
+            min-width: 20px;
+        }
+
+        /* Article */
+        .article-content {
+            font-size: 1.1rem;
+            color: #d1d5db;
+        }
+
+        .article-content h2 {
+            font-size: 2rem;
+            color: #fff;
+            margin: 60px 0 25px;
+            border-left: 4px solid var(--accent-blue);
+            padding-left: 20px;
+        }
+
+        .article-content p {
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        /* Visuals */
+        .chart-wrapper {
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 40px 0;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-        }
-
-        th,
-        td {
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        th {
-            background: var(--bg-secondary);
-            color: var(--accent-blue);
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #fff;
             font-weight: 600;
         }
 
-        tr:hover {
-            background: rgba(30, 41, 59, 0.3);
+        .data-table-container {
+            margin: 40px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .data-table th {
+            background: var(--bg-tertiary);
+            color: var(--accent-cyan);
+            text-align: left;
+            padding: 16px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .info-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--accent-blue);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
         }
 
         .citation-link {
             color: var(--accent-cyan);
-            font-size: 0.75em;
-            vertical-align: super;
             text-decoration: none;
-            margin-left: 2px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
+            font-size: 0.8em;
+            vertical-align: super;
+            font-weight: 700;
+            margin: 0 2px;
+        }
+
+        .citation-link:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes highlight-pulse {
+            0% {
+                background: rgba(6, 182, 212, 0.4);
+                transform: scale(1.02);
+            }
+
+            100% {
+                background: var(--bg-card);
+                transform: scale(1);
+            }
+        }
+
+        .source-card.highlight {
+            animation: highlight-pulse 2s ease-out;
+            border-color: var(--accent-cyan);
+        }
+
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sources-sidebar {
+                display: none;
+            }
+
+            .report-title {
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
@@ -188,545 +333,530 @@
 <body>
     <div id="navbar-placeholder" data-page-type="report"></div>
 
-    <div class="container">
-        <!-- Sidebar Sources -->
-        <aside class="sources-sidebar" id="sourcesList">
-            <h3 style="margin-bottom: 20px; color: var(--accent-cyan);">Sources First (28)</h3>
+    <main class="container">
+        <!-- HEADER -->
+        <div class="report-meta">
+            <span class="meta-tag">Forensic Audit</span>
+            <span class="meta-tag red">Sexual Misconduct Analysis</span>
+            <span class="meta-tag"><i data-lucide="clock"
+                    style="width:12px; vertical-align:middle; margin-right:4px;"></i> 14 MIN READ</span>
+        </div>
 
-            <!-- Static markers for validator -->
-            <a href="#" class="source-card" id="source-1">
-                <span style="color:var(--accent-cyan); font-weight:700;">1</span>
-                <div style="margin-top: 4px;">Women's Agenda: 27 Accusers Count</div>
-            </a>
-            <a href="#" class="source-card" id="source-2">
-                <span style="color:var(--accent-cyan); font-weight:700;">2</span>
-                <div style="margin-top: 4px;">Wikipedia: Misconduct Allegations</div>
-            </a>
-        </aside>
+        <h1 class="report-title">The Trump Allegations & Epstein Discipline Gap</h1>
+        <p class="report-subtitle">A longitudinal study of 28 public allegations against Donald J. Trump compared with
+            disciplinary outcomes for corporate and royal figures identified in the Jeffrey Epstein files.</p>
 
-        <!-- Main Content -->
-        <article class="article-main">
-            <h1 style="font-size: 2.8rem; margin-bottom: 10px;">A Comprehensive Longitudinal Study of Sexual
-                Misconduct Allegations Against Donald J. Trump and Comparative Analysis of Disciplinary Outcomes Within
-                the Jeffrey Epstein Network</h1>
-            <p style="font-style: italic; color: var(--text-secondary); margin-bottom: 40px;">Deep Dive Dossier:
-                Forensic Audit & Legal Analysis</p>
+        <div class="content-grid">
+            <!-- SIDEBAR: SOURCES -->
+            <aside class="sources-sidebar">
+                <div class="sources-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i> Sources First</div>
+                    <span class="sources-count">28 Verifiable Citations</span>
+                </div>
+                <div class="sources-list" id="sourcesList">
+                    <!-- Dynamic Sources Hydrated by Script -->
+                </div>
+            </aside>
 
-            <section class="copyable-section">
-                <h2>Executive Summary</h2>
-                <p>The historical record concerning allegations of sexual misconduct brought against Donald J. Trump is
-                    a complex mosaic of personal testimony, civil litigation, and political discourse. Since the 1970s,
-                    a minimum of 28 women have publicly accused Trump of a wide spectrum of nonconsensual sexual
-                    behaviors, ranging from inappropriate touching and harassment to forcible sexual assault and rape.
-                    <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a> The
-                    emergence of these claims has occurred in distinct waves, often synchronized with political
-                    milestones or broader cultural shifts, such as the 2016 presidential campaign and the subsequent
-                    global resurgence of the MeToo movement.
-                </p>
-
-                <p>This report provides an exhaustive accounting of the claimants, assesses the substantiation of their
-                    allegations within the American legal framework—most notably the <em>E. Jean Carroll</em>
-                    verdict—and compares these outcomes with the disciplinary measures taken against other high-profile
-                    figures identified in the investigative files of the late Jeffrey Epstein. The analysis reveals a
-                    stark asymmetry: while corporate and royal figures like Jes Staley and Prince Andrew faced career
-                    termination for mere association or civil liability, political figures have largely retained their
-                    standing despite facing substantially more numerous and severe allegations.</p>
-            </section>
-
-            <section class="copyable-section">
-                <h2>Historical Enumeration: The 28 Accusers</h2>
-
-                <div class="chart-box copyable-section">
-                    <canvas id="timelineChart" height="250"></canvas>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 10px; text-align: center;">
-                        Figure 1: The three primary "waves" of allegations: The Pageant Era (1997-2006), The 2016
-                        Election (Access Hollywood catalyst), and the Post-Carroll Legal Era.</p>
+            <!-- ARTICLE -->
+            <article class="article-content">
+                <!-- EX SUM -->
+                <div class="info-box copyable-section">
+                    <div class="info-title"><i data-lucide="file-text"></i> Executive Summary</div>
+                    <p>The historical record concerning allegations of sexual misconduct brought against Donald J. Trump
+                        is a complex mosaic of personal testimony, civil litigation, and political discourse. Since the
+                        1970s, a minimum of <strong>28 women</strong> have publicly accused Trump of behaviors ranging
+                        from inappropriate touching to forcible rape. This report provides an exhaustive accounting of
+                        these claimants, assesses the substantiation of their allegations—focusing on the <strong>E.
+                            Jean Carroll verdict</strong>—and compares these outcomes with the disciplinary measures
+                        taken against other high-profile figures in the Jeffrey Epstein investigations. Our analysis
+                        reveals a "Disciplined for Less" paradox where corporate executives faced immediate career
+                        termination for associations alone, while political office has served as a shield against
+                        adjudicated findings of sexual abuse.</p>
                 </div>
 
-                <p>The documentation of claims against Donald Trump reveals a pattern of alleged behavior spanning over
-                    four decades. These allegations are not confined to a single demographic or professional environment
-                    but rather include former spouses, business associates, media professionals, and contestants within
-                    the beauty pageant circuit he owned. A significant cluster of allegations originates from the Miss
-                    USA and Miss Teen USA pageants, where claimants describe a persistent environment of objectification
-                    and physical boundary violations.</p>
+                <!-- SECTION 1 -->
+                <section class="copyable-section">
+                    <h2>The Waves of Allegations: A 40-Year Timeline</h2>
+                    <p>Documentation of claims against Donald Trump reveals a pattern of alleged behavior spanning over
+                        four
+                        decades, appearing in three distinct "waves": The Pageant Era (1997-2006), the 2016 Election
+                        (Access Hollywood catalyst), and the Post-Carroll Legal Era. <a href="#source-1"
+                            class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a> These allegations
+                        are not confined to a single demographic or professional environment but rather include former
+                        spouses, business associates, media professionals, and contestants within the beauty pageant
+                        circuit he owned. <a href="#source-2" class="citation-link"
+                            onclick="highlightSource(event, 'source-2')">[2]</a></p>
 
-                <p>In 1997, during Trump's first year of ownership of the Miss USA contest, Temple Taggart McDowell
-                    (Miss Utah) alleged that Trump subjected her to unwanted kisses and embraces. <a href="#source-2"
-                        class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a> McDowell recounted
-                    being warned by a chaperone never to be left alone in a room with him again. In the same year,
-                    Mariah Billado and Victoria Hughes, competing in Miss Teen USA, reported that Trump entered the
-                    contestants' dressing room while several young women were in various stages of undress—some as young
-                    as 15. <a href="#source-5" class="citation-link"
-                        onclick="highlightSource(event, 'source-5')">[5]</a></p>
+                    <div class="chart-wrapper copyable-section">
+                        <div class="chart-header">Cumulative Misconduct Allegations (1970s - 2025)</div>
+                        <canvas id="timelineChart" height="300"></canvas>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 15px; text-align: center;">
+                            Figure 1: Exponential growth of public allegations following the 2005 <em>Access
+                                Hollywood</em> tape disclosure and the E. Jean Carroll civil trial.</p>
+                    </div>
 
+                    <h3 style="font-size: 1.4rem; color: var(--text-primary); margin: 40px 0 20px;">The Pageant Circuit:
+                        A Pattern of Boundary Violations</h3>
+                    <p>A significant cluster of allegations originates from the <strong>Miss USA and Miss Teen
+                            USA</strong> pageants, which Trump owned from 1996 to 2015. Claimants in this category often
+                        describe a persistent environment of objectification and physical boundary violations that began
+                        almost immediately after Trump acquired the franchise. <a href="#source-5" class="citation-link"
+                            onclick="highlightSource(event, 'source-5')">[5]</a></p>
+
+                    <p>In 1997, during Trump's first year of ownership of the Miss USA contest, <strong>Temple Taggart
+                            McDowell</strong> (Miss Utah) alleged that Trump subjected her to unwanted kisses and
+                        embraces at Trump Tower and later at a pageant event. <a href="#source-2" class="citation-link"
+                            onclick="highlightSource(event, 'source-2')">[2]</a> McDowell recounted being warned by a
+                        chaperone never to be left alone in a room with him again, indicating an early awareness of
+                        potential risk among the pageant staff. This warning suggests that Trump's behavior was not an
+                        isolated incident but rather a known pattern within the organization.</p>
+
+                    <p>In the same year, <strong>Mariah Billado</strong> and <strong>Victoria Hughes</strong>, competing
+                        in Miss Teen USA, reported that Trump entered the contestants' dressing room while several young
+                        women were in various stages of undress. <a href="#source-1" class="citation-link"
+                            onclick="highlightSource(event, 'source-1')">[1]</a> Billado noted that some of the girls
+                        were as young as 15 at the time. <a href="#source-5" class="citation-link"
+                            onclick="highlightSource(event, 'source-5')">[5]</a> Similar accounts of dressing room
+                        intrusions surfaced in 2000 from <strong>Bridget Sullivan</strong> (Miss New Hampshire) and in
+                        2001 from <strong>Tasha Dixon</strong> (Miss Arizona). <a href="#source-4" class="citation-link"
+                            onclick="highlightSource(event, 'source-4')">[4]</a> Dixon described Trump as "waltzing in"
+                        while contestants were naked or half-naked, asserting that he did so because he knew he could
+                        exert such power as the owner. <a href="#source-6" class="citation-link"
+                            onclick="highlightSource(event, 'source-6')">[6]</a></p>
+
+                    <h3 style="font-size: 1.4rem; color: var(--text-primary); margin: 40px 0 20px;">The Access Hollywood
+                        Tape: Corroboration Through Admission</h3>
+                    <p>The significance of these pageant allegations was dramatically amplified in October 2016 when the
+                        <em>Washington Post</em> released the <strong>Access Hollywood</strong> tape from 2005. In the
+                        recording, Trump bragged to host Billy Bush about kissing women without waiting and stated: "I
+                        just start kissing them. It's like a magnet. Just kiss. I don't even wait. And when you're a
+                        star, they let you do it. You can do anything... Grab 'em by the pussy." <a href="#source-2"
+                            class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a>
+                    </p>
+
+                    <p>This admission provided a form of <strong>propensity evidence</strong>—a legal concept that would
+                        later prove crucial in the E. Jean Carroll trial. Trump's own words described the exact
+                        behavioral pattern alleged by multiple women: sudden, uninvited physical contact predicated on
+                        the assumption that his celebrity status granted him impunity. Similarly, his admission to radio
+                        host Howard Stern that he entered dressing rooms "because he could" provides direct
+                        corroboration for the claims made by Billado, Dixon, and others. <a href="#source-4"
+                            class="citation-link" onclick="highlightSource(event, 'source-4')">[4]</a></p>
+                </section>
+
+                <!-- SECTION 2: THE TABLE -->
                 <div class="data-table-container copyable-section">
                     <h3
-                        style="padding: 15px; margin: 0; background: rgba(30,41,59,0.5); font-size: 1rem; color: var(--accent-cyan);">
-                        Table 1: Accusers from the Pageant and Modeling Domains</h3>
-                    <table>
+                        style="padding: 15px; background: var(--bg-tertiary); color: var(--accent-cyan); font-size: 1rem;">
+                        Chronology of High-Profile Allegations</h3>
+                    <table class="data-table">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Accuser</th>
                                 <th>Year</th>
-                                <th>Allegation Type</th>
-                                <th>Documentation</th>
+                                <th>Setting</th>
+                                <th>Allegation</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Temple Taggart McDowell</td>
-                                <td>1997</td>
-                                <td>Unwanted kissing/embracing</td>
-                                <td>New York Times [2]</td>
-                            </tr>
-                            <tr>
-                                <td>Mariah Billado</td>
-                                <td>1997</td>
-                                <td>Dressing room intrusion</td>
-                                <td>BuzzFeed News [1]</td>
-                            </tr>
-                            <tr>
-                                <td>Tasha Dixon</td>
-                                <td>2001</td>
-                                <td>Dressing room intrusion</td>
-                                <td>CBS News [4]</td>
-                            </tr>
-                            <tr>
-                                <td>Samantha Holvey</td>
-                                <td>2006</td>
-                                <td>Harassment/Objectification</td>
-                                <td>CNN [3]</td>
-                            </tr>
-                            <tr>
-                                <td>Victoria Hughes</td>
-                                <td>1997</td>
-                                <td>Dressing room intrusion</td>
-                                <td>BuzzFeed News [1]</td>
-                            </tr>
-                            <tr>
-                                <td>Bridget Sullivan</td>
-                                <td>2000</td>
-                                <td>Unwanted touching/Intrusion</td>
-                                <td>BuzzFeed News [7]</td>
+                                <td>Jessica Leeds</td>
+                                <td>1980s</td>
+                                <td>First Class Flight</td>
+                                <td>Groping (Octopus-like)</td>
                             </tr>
                             <tr>
                                 <td>Kristin Anderson</td>
                                 <td>1990s</td>
-                                <td>Groping (under skirt)</td>
-                                <td>Washington Post [2]</td>
+                                <td>China Club NYC</td>
+                                <td>Groping under skirt</td>
                             </tr>
                             <tr>
                                 <td>Stacey Williams</td>
                                 <td>1993</td>
-                                <td>Forcible groping</td>
-                                <td>The Guardian [1]</td>
+                                <td>Trump Tower</td>
+                                <td>Forcible groping (with Epstein)</td>
                             </tr>
                             <tr>
-                                <td>Beatrice Keul</td>
-                                <td>1993</td>
-                                <td>Forcible groping</td>
-                                <td>Daily Mail [2]</td>
-                            </tr>
-                            <tr>
-                                <td>Amy Dorris</td>
-                                <td>1997</td>
-                                <td>Groping and kissing</td>
-                                <td>Public disclosure [1]</td>
+                                <td>E. Jean Carroll</td>
+                                <td>1996</td>
+                                <td>Bergdorf Goodman</td>
+                                <td>Rape/Sexual Abuse</td>
                             </tr>
                             <tr>
                                 <td>Jill Harth</td>
-                                <td>1992-1993</td>
-                                <td>Unwanted sexual advances</td>
-                                <td>Court Filing [7]</td>
+                                <td>1997</td>
+                                <td>Mar-a-Lago</td>
+                                <td>Forcible sexual advance</td>
+                            </tr>
+                            <tr>
+                                <td>Temple Taggart</td>
+                                <td>1997</td>
+                                <td>Miss USA</td>
+                                <td>Unwanted kissing/embracing</td>
                             </tr>
                             <tr>
                                 <td>Rachel Crooks</td>
                                 <td>2005</td>
-                                <td>Forced kissing</td>
-                                <td>CNN [3]</td>
+                                <td>Elevator Bank</td>
+                                <td>Forcible kissing</td>
                             </tr>
                             <tr>
                                 <td>Natasha Stoynoff</td>
                                 <td>2005</td>
-                                <td>Forced kissing</td>
-                                <td>People Magazine [3]</td>
+                                <td>Mar-a-Lago</td>
+                                <td>Forcible kissing/Tongue</td>
                             </tr>
                             <tr>
                                 <td>Summer Zervos</td>
                                 <td>2007</td>
-                                <td>Groping/Kissing</td>
-                                <td>Defamation suit [3]</td>
-                            </tr>
-                            <tr>
-                                <td>Jessica Leeds</td>
-                                <td>Early 1980s</td>
-                                <td>Groping on airplane</td>
-                                <td>New York Times [2]</td>
-                            </tr>
-                            <tr>
-                                <td>E. Jean Carroll</td>
-                                <td>1995-1996</td>
-                                <td>Rape</td>
-                                <td>Federal jury verdict [12]</td>
-                            </tr>
-                            <tr>
-                                <td>Ninni Laaksonen</td>
-                                <td>2006</td>
-                                <td>Groping (buttocks)</td>
-                                <td>Ilta-Sanomat [3]</td>
+                                <td>Beverly Hills Hotel</td>
+                                <td>Groping/Assault</td>
                             </tr>
                             <tr>
                                 <td>Cassandra Searles</td>
                                 <td>2013</td>
-                                <td>Groping/Unwanted advances</td>
-                                <td>Rolling Stone [7]</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section class="copyable-section">
-                <h2>Substantiation: The Civil Liability Threshold</h2>
-                <p>To date, Donald Trump has not been criminally charged or convicted of any sexual offense. However,
-                    the American civil court system has found him liable for sexual abuse in a case that carried
-                    significant evidentiary weight. In May 2023, a federal jury in the Southern District of New York
-                    (SDNY) reached a unanimous verdict in <em>Carroll II</em>. <a href="#source-12"
-                        class="citation-link" onclick="highlightSource(event, 'source-12')">[12]</a></p>
-
-                <p>The jury found Trump liable for "sexual abuse" and defamation, awarding E. Jean Carroll a total of $5
-                    million in damages (later increased to $83.3 million in <em>Carroll I</em>). While the jury did not
-                    find enough evidence to label the encounter "rape" under the specific, technical definition in New
-                    York's criminal code—which requires penile penetration—Judge Lewis Kaplan clarified that the jury's
-                    finding of sexual abuse meant they found he had "deliberately and forcibly penetrated Ms. Carroll's
-                    vagina with his fingers". <a href="#source-14" class="citation-link"
-                        onclick="highlightSource(event, 'source-14')">[14]</a></p>
-
-                <div class="data-table-container copyable-section">
-                    <h3
-                        style="padding: 15px; margin: 0; background: rgba(30,41,59,0.5); font-size: 1rem; color: var(--accent-green);">
-                        Table 2: Breakdown of Damages in E. Jean Carroll v. Donald J. Trump</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Case</th>
-                                <th>Legal Claim</th>
-                                <th>Compensatory</th>
-                                <th>Punitive</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Carroll II (May 2023)</td>
-                                <td>Sexual Battery/Abuse</td>
-                                <td>$2,000,000</td>
-                                <td>$20,000</td>
-                                <td>$2,020,000</td>
-                            </tr>
-                            <tr>
-                                <td>Carroll II (May 2023)</td>
-                                <td>Defamation (2022)</td>
-                                <td>$2,700,000</td>
-                                <td>$280,000</td>
-                                <td>$2,980,000</td>
-                            </tr>
-                            <tr>
-                                <td>Carroll I (Jan 2024)</td>
-                                <td>Defamation (2019)</td>
-                                <td>$18,300,000</td>
-                                <td>$65,000,000</td>
-                                <td>$83,300,000</td>
+                                <td>Miss USA</td>
+                                <td>Groping/Advances</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <p>The substantiation in the Carroll case was bolstered by the testimony of "outcry witnesses" Lisa
-                    Birnbach and Carol Martin, and critically, the "propensity" testimony of Jessica Leeds and Natasha
-                    Stoynoff. <a href="#source-15" class="citation-link"
-                        onclick="highlightSource(event, 'source-15')">[15]</a> This legal mechanism allows a jury to
-                    consider a defendant's past alleged conduct to determine the likelihood of the specific assault in
-                    question, creating a bridge between the 28 public allegations and the single judicial finding.</p>
-            </section>
+                <!-- SECTION 3: CARROLL -->
+                <section class="copyable-section">
+                    <h2>Substantiation: The Civil Liability Threshold</h2>
+                    <p>The question of whether these allegations are "substantiated" requires a critical distinction
+                        between criminal conviction and civil liability. To date, Donald Trump has not been criminally
+                        charged or convicted of any sexual offense. However, the American civil court system has
+                        established liability for <strong>sexual abuse</strong> in a case that carried significant
+                        evidentiary weight and set a precedent for how pattern evidence can be used in sexual assault
+                        litigation.</p>
 
-            <section class="copyable-section">
-                <h2>The Epstein Network and the "Katie Johnson" Lawsuit</h2>
-                <div
-                    style="border-left: 4px solid #ef4444; background: rgba(239, 68, 68, 0.1); padding: 15px; margin: 20px 0; border-radius: 4px;">
-                    <h4 style="margin-top:0; color:#ef4444;">⚠️ Content Warning</h4>
-                    <p style="font-size:0.9rem; margin-bottom:0;">The following section details allegations of child
-                        sexual abuse involving Jeffrey Epstein.</p>
-                </div>
+                    <h3 style="font-size: 1.4rem; color: var(--text-primary); margin: 40px 0 20px;">The Carroll Verdict:
+                        Judicially Established Facts</h3>
+                    <p>In May 2023, a federal jury in the Southern District of New York (SDNY) reached a unanimous
+                        verdict in <em>Carroll II</em>. <a href="#source-12" class="citation-link"
+                            onclick="highlightSource(event, 'source-12')">[12]</a> The jury found Trump liable for
+                        "sexual abuse" and defamation, awarding E. Jean Carroll a total of $5 million in damages in the
+                        first trial. <a href="#source-12" class="citation-link"
+                            onclick="highlightSource(event, 'source-12')">[12]</a> A second defamation trial in January
+                        2024 (<em>Carroll I</em>) resulted in an additional $83.3 million verdict, bringing the total
+                        damages to <strong>$88.3 million</strong>.</p>
 
-                <p>The most severe and controversial allegation involving Trump intersects with the criminal network of
-                    Jeffrey Epstein. In 2016, a woman using the pseudonym "Jane Doe" or "Katie Johnson" filed a federal
-                    lawsuit alleging that she was recruited by Epstein and raped by both Epstein and Trump in 1994 when
-                    she was 13 years old. <a href="#source-8" class="citation-link"
-                        onclick="highlightSource(event, 'source-8')">[8]</a></p>
+                    <p>While the jury did not find enough evidence to label the encounter "rape" under the specific,
+                        technical definition in New York's criminal code—which requires penile penetration—the presiding
+                        judge, <strong>Lewis Kaplan</strong>, issued a clarifying ruling that has profound implications.
+                        Judge Kaplan stated that the jury's finding of sexual abuse meant they found Trump had
+                        "deliberately and forcibly penetrated Ms. Carroll's vagina with his fingers." <a
+                            href="#source-14" class="citation-link"
+                            onclick="highlightSource(event, 'source-14')">[14]</a> The judge further noted that this act
+                        would constitute "rape" as the term is "commonly understood" and as defined under federal law
+                        and the laws of most states.</p>
 
-                <p>The lawsuit included a detailed affidavit from a witness, "Tiffany Doe," who claimed she was hired by
-                    Epstein to recruit adolescent girls for parties. Tiffany Doe swore under penalty of perjury that she
-                    witnessed Trump rape the 13-year-old plaintiff on at least one occasion. <a href="#source-9"
-                        class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a> However, the lawsuit
-                    was voluntarily withdrawn by the plaintiff in November 2016, preventing any formal substantiation.
-                    Trump's legal team characterized it as a "political hoax." Despite the withdrawal, the association
-                    remains a focal point of public scrutiny as more documents from the Epstein investigations are
-                    unsealed.</p>
-                <div class="data-table-container copyable-section">
-                    <h3
-                        style="padding: 15px; margin: 0; background: rgba(30,41,59,0.5); font-size: 1rem; color: var(--accent-cyan);">
-                        Table 3: Disciplinary Repercussions for Epstein Associates</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Role</th>
-                                <th>Nature of Association</th>
-                                <th>Resulting Discipline</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Jes Staley</td>
-                                <td>CEO, Barclays</td>
-                                <td>"Close" professional ties; emails</td>
-                                <td>Resignation; £1.8M fine; industry ban [18]</td>
-                            </tr>
-                            <tr>
-                                <td>Leon Black</td>
-                                <td>CEO, Apollo Global</td>
-                                <td>Paid $158M for tax/estate advice</td>
-                                <td>Forced early resignation [18]</td>
-                            </tr>
-                            <tr>
-                                <td>Prince Andrew</td>
-                                <td>Royal Family</td>
-                                <td>Friendship; assault allegations</td>
-                                <td>Stripped of military titles; £12M settlement [17]</td>
-                            </tr>
-                            <tr>
-                                <td>Alex Acosta</td>
-                                <td>U.S. Labor Secretary</td>
-                                <td>Negotiated 2008 "sweetheart deal"</td>
-                                <td>Forced resignation (2019) [21]</td>
-                            </tr>
-                            <tr>
-                                <td>Martin Nowak</td>
-                                <td>Harvard Professor</td>
-                                <td>Financial/Personal association</td>
-                                <td>Two-year institutional sanction [23]</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section class="copyable-section">
-                <h2>Comparative Discipline: The "Disciplined for Less" Analysis</h2>
-                <p>A critical component of this forensic audit concerns whether others in the Epstein files have been
-                    "disciplined for less" than the allegations facing Donald Trump. A review of the professional and
-                    legal repercussions for Epstein's associates suggests a disparity between the outcomes for corporate
-                    and institutional figures versus political leaders.</p>
-
-                <div class="chart-box copyable-section">
-                    <canvas id="disciplineChart" height="200"></canvas>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 10px; text-align: center;">
-                        Figure 2: The "Accountability Gap." Corporate leaders (Staley, Black) faced immediate
-                        termination and fines for association alone, while political figures faced no institutional
-                        sanctions.</p>
-                </div>
-
-                <p><strong>Jes Staley</strong>, the former CEO of Barclays, was forced to resign in 2021 and fined £1.8
-                    million by UK regulators solely for "misleading" them about the depth of his relationship with
-                    Epstein. <a href="#source-18" class="citation-link"
-                        onclick="highlightSource(event, 'source-18')">[18]</a> Similarly, <strong>Leon Black</strong>
-                    resigned from Apollo Global Management after it was revealed he paid Epstein $158 million for tax
-                    advice—despite no findings of criminal wrongdoing. <a href="#source-18" class="citation-link"
-                        onclick="highlightSource(event, 'source-18')">[18]</a></p>
-
-                <p>In the most prominent case, <strong>Prince Andrew</strong> settled a civil lawsuit with Virginia
-                    Giuffre for an estimated $16 million and was stripped of his military titles and "working royal"
-                    status. <a href="#source-17" class="citation-link"
-                        onclick="highlightSource(event, 'source-17')">[17]</a> This indicates that within the banking,
-                    corporate, and royal sectors, the <em>perception</em> of impropriety or the existence of a credible
-                    civil claim is sufficient for total removal. In contrast, the political sphere has proven uniquely
-                    resistant to such outcomes, creating a bifurcated system of accountability.</p>
-            </section>
-
-            <section class="copyable-section">
-                <h2>Verdict</h2>
-                <div
-                    style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--accent-blue); padding: 2rem; border-radius: 8px;">
-                    <h3 style="margin-top:0; color:var(--accent-blue);">Systemic Asymmetry Confirmed</h3>
-                    <p>The forensic data confirms a "Disciplined for Less" paradox. Individuals like Jes Staley and
-                        Prince Andrew lost their careers and standing due to <strong>associations</strong> and
-                        <strong>civil settlements</strong>, without criminal convictions. Conversely, Donald Trump has
-                        retained political viability despite 28 allegations and a <strong>jury verdict of sexual
-                            abuse</strong>. This suggests that the "electoral mandate" functions as a shield against the
-                        institutional accountability mechanisms that govern corporate and royal life.
+                    <h3 style="font-size: 1.4rem; color: var(--text-primary); margin: 40px 0 20px;">Propensity Evidence:
+                        The Legal Bridge Between 28 Allegations and One Verdict</h3>
+                    <p>The substantiation in the Carroll case was bolstered by a critical evidentiary mechanism:
+                        <strong>propensity testimony</strong>. Under Federal Rules of Evidence 413 and 415, the court
+                        permitted the testimony of <strong>Jessica Leeds</strong> and <strong>Natasha Stoynoff</strong>
+                        as "propensity witnesses." <a href="#source-15" class="citation-link"
+                            onclick="highlightSource(event, 'source-15')">[15]</a> This legal mechanism allows a jury to
+                        consider a defendant's past alleged conduct to determine the likelihood of the specific assault
+                        in question.
                     </p>
-                </div>
-            </section>
-        </article>
-    </div>
 
-    <!-- Scripts -->
+                    <p>Leeds testified that in the early 1980s, Trump groped her on an airplane, describing him as "like
+                        an octopus" whose hands were "everywhere." <a href="#source-2" class="citation-link"
+                            onclick="highlightSource(event, 'source-2')">[2]</a> Stoynoff, a <em>People</em> magazine
+                        reporter, testified that in 2005, Trump forcibly kissed her at Mar-a-Lago, pushing her against a
+                        wall and forcing his tongue into her mouth. <a href="#source-3" class="citation-link"
+                            onclick="highlightSource(event, 'source-3')">[3]</a> The jury's decision to award millions
+                        in damages suggests they found the cumulative testimony of these three women—combined with
+                        Trump's own admissions on the <em>Access Hollywood</em> tape—to be credible evidence of a
+                        persistent behavioral pattern.</p>
+
+                    <p>Additionally, Carroll's account was supported by "outcry witnesses" <strong>Lisa
+                            Birnbach</strong> and <strong>Carol Martin</strong>, to whom Carroll spoke shortly after the
+                        1996 incident. <a href="#source-15" class="citation-link"
+                            onclick="highlightSource(event, 'source-15')">[15]</a> Their testimony established that
+                        Carroll's disclosure was contemporaneous, not a recent fabrication, which is a key factor in
+                        assessing credibility in sexual assault cases.</p>
+
+                    <div class="info-box green copyable-section" style="border-left: 5px solid var(--accent-green);">
+                        <div class="info-title" style="color: var(--accent-green);"><i data-lucide="check-circle"></i>
+                            Judicial Findings in SDNY</div>
+                        <p>Judge Lewis Kaplan's clarification that the jury found Trump "deliberately and forcibly"
+                            penetrated Carroll establishes a judicial fact: the civil standard of proof (preponderance
+                            of evidence) was met for an act that constitutes rape under common understanding and federal
+                            law. The verdict was bolstered by propensity testimony from Leeds and Stoynoff, establishing
+                            a decades-long behavioral pattern. <a href="#source-14" class="citation-link"
+                                onclick="highlightSource(event, 'source-14')">[14, 15]</a></p>
+                    </div>
+
+                    <h3 style="font-size: 1.4rem; color: var(--text-primary); margin: 40px 0 20px;">The $83.3 Million
+                        Question: Punitive Damages as Deterrence</h3>
+                    <p>The damages breakdown reveals the jury's intent to both compensate Carroll and punish Trump for
+                        his conduct. In <em>Carroll I</em> (the defamation trial), the jury awarded $18.3 million in
+                        compensatory damages for reputational harm and emotional distress, but the punitive
+                        component—<strong>$65 million</strong>—was designed to deter future defamatory conduct. <a
+                            href="#source-12" class="citation-link"
+                            onclick="highlightSource(event, 'source-12')">[12]</a> This ratio (3.5:1 punitive to
+                        compensatory) signals that the jury viewed Trump's continued attacks on Carroll's credibility as
+                        particularly egregious, especially given his position of power and public platform.</p>
+                </section>
+
+                <!-- SECTION 4: EPSTEIN -->
+                <section class="copyable-section">
+                    <h2>The Epstein Connection: The "Katie Johnson" Lawsuit</h2>
+                    <p>The most severe and controversial allegation involving Trump intersects with the criminal network
+                        of Jeffrey Epstein. In 2016, a woman using the pseudonym "Jane Doe" or "Katie Johnson" filed a
+                        federal lawsuit alleging that she was recruited by Epstein and raped by both Epstein and Trump
+                        in 1994 when she was 13 years old. <a href="#source-8" class="citation-link"
+                            onclick="highlightSource(event, 'source-8')">[8]</a></p>
+
+                    <h3 style="font-size: 1.4rem; color: var(--text-primary); margin: 40px 0 20px;">The Lawsuit Timeline
+                        and Witness Affidavits</h3>
+                    <p>The lawsuit included a detailed affidavit from a witness, "Tiffany Doe," who claimed she was
+                        hired by Epstein to recruit adolescent girls for parties. <a href="#source-9"
+                            class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a> Tiffany Doe swore
+                        under penalty of perjury that she witnessed Trump rape the 13-year-old plaintiff on at least one
+                        occasion and saw him threaten the girl and her family with physical harm to ensure their
+                        silence. According to the filings, Trump and Epstein allegedly bickered over who should have
+                        taken the minor's virginity. <a href="#source-16" class="citation-link"
+                            onclick="highlightSource(event, 'source-16')">[16]</a></p>
+
+                    <p>Despite the extreme nature of these charges, the lawsuit was voluntarily withdrawn by the
+                        plaintiff in November 2016, and the allegations were never tested in a court of law. <a
+                            href="#source-8" class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a>
+                        Trump's legal team characterized the lawsuit as a "political tool" and a "hoax" intended to
+                        undermine his first presidential campaign. The plaintiff's attorney cited fears for her safety
+                        and the challenges of pursuing a case against an individual with "unlimited resources" as
+                        reasons for the withdrawal.</p>
+
+                    <h3 style="font-size: 1.4rem; color: var(--text-primary); margin: 40px 0 20px;">The Unsealed Epstein
+                        Files: Contact Logs and Flight Manifests</h3>
+                    <p>While the withdrawal prevented any formal substantiation of the Katie Johnson allegations, the
+                        association between Trump and Epstein remains a focal point of public scrutiny, particularly as
+                        more documents from the Epstein investigations have been unsealed. The U.S. Department of
+                        Justice clarified in July 2025 that a singular "client list" containing names for blackmail
+                        purposes does not exist. <a href="#source-25" class="citation-link"
+                            onclick="highlightSource(event, 'source-25')">[25]</a> Instead, the records consist of
+                        flight logs, contact directories, and deposition transcripts unsealed as part of the
+                        <em>Virginia Giuffre v. Ghislaine Maxwell</em> litigation.</p>
+
+                    <p>These files place Trump in Epstein's orbit on multiple occasions between 1986 and 2019, though
+                        their inclusion does not inherently imply criminal wrongdoing. <a href="#source-17"
+                            class="citation-link" onclick="highlightSource(event, 'source-17')">[17]</a> Nevertheless,
+                        the "disciplined for less" argument remains poignant: figures like Jes Staley were terminated
+                        for the <em>perception</em> of impropriety and the failure to disclose associations with a
+                        predator, whereas political figures have frequently survived such disclosures. <a
+                            href="#source-18" class="citation-link"
+                            onclick="highlightSource(event, 'source-18')">[18]</a></p>
+                </section>
+
+                <!-- SECTION 5: DISCIPLINE GAP -->
+                <section class="copyable-section">
+                    <h2>The Accountability Gap: Disciplined for Less</h2>
+                    <p>A critical component of this forensic audit concerns whether others in the Epstein files have
+                        been "disciplined for less" than the allegations facing Donald Trump. A review of the
+                        professional and legal repercussions for Epstein's associates suggests a stark disparity between
+                        the outcomes for corporate and institutional figures versus political leaders.</p>
+
+                    <h3 style="font-size: 1.4rem; color: var(--text-primary); margin: 40px 0 20px;">Case Study: Jes
+                        Staley and the FCA Investigation</h3>
+                    <p><strong>Jes Staley</strong>, the former CEO of Barclays, was forced to resign in 2021 following
+                        an investigation by the UK Financial Conduct Authority (FCA). <a href="#source-18"
+                            class="citation-link" onclick="highlightSource(event, 'source-18')">[18]</a> The FCA found
+                        that Staley had "misled" regulators regarding the depth of his relationship with Epstein, which
+                        included visiting Epstein's private island and exchanging hundreds of emails after Epstein's
+                        2008 conviction for soliciting prostitution involving a minor. Staley was fined <strong>£1.8
+                            million</strong> and permanently banned from senior roles in the UK's financial sector. <a
+                            href="#source-19" class="citation-link"
+                            onclick="highlightSource(event, 'source-19')">[19]</a></p>
+
+                    <p>The FCA's ruling emphasized that Staley was aware of the risk his association with Epstein posed
+                        to his career, yet he failed to disclose the full extent of their relationship. Emails between
+                        them showed Staley describing Epstein as one of his "deepest" and "most cherished" friends. <a
+                            href="#source-19" class="citation-link"
+                            onclick="highlightSource(event, 'source-19')">[19]</a> This indicates that within the
+                        banking sector, the <em>perception</em> of impropriety and the failure to maintain transparency
+                        are sufficient grounds for total removal from leadership.</p>
+
+                    <h3 style="font-size: 1.4rem; color: var(--text-primary); margin: 40px 0 20px;">Case Study: Leon
+                        Black and the $158 Million Question</h3>
+                    <p><strong>Leon Black</strong>, the former CEO of private equity firm Apollo Global Management,
+                        resigned in March 2021 after it was revealed he had transferred over $150 million to Epstein for
+                        tax and estate planning advice between 2012 and 2017. <a href="#source-18" class="citation-link"
+                            onclick="highlightSource(event, 'source-18')">[18]</a> While an independent investigation
+                        found no evidence that Black was involved in any criminal activity, the reputational damage and
+                        the perceived lack of transparency were deemed incompatible with his role at a major investment
+                        firm.</p>
+
+                    <div class="chart-wrapper copyable-section">
+                        <div class="chart-header">The Discipline Disparity: Consequences vs Adjudicated Findings</div>
+                        <canvas id="disciplineChart" height="300"></canvas>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 15px; text-align: center;">
+                            Figure 2: Corporate leaders faced 100% career termination for "improper association," while
+                            political leadership survives civil liability for "sexual abuse."</p>
+                    </div>
+
+                    <h3 style="font-size: 1.4rem; color: var(--text-primary); margin: 40px 0 20px;">Case Study: Prince
+                        Andrew and the Monarchy's Accountability Standard</h3>
+                    <p><strong>Prince Andrew</strong>, Duke of York, represents the most prominent instance of a figure
+                        who faced severe institutional discipline without a criminal conviction. After being accused by
+                        Virginia Giuffre of sexually assaulting her when she was a teenager, the Prince was stripped of
+                        his military titles and "working royal" status by King Charles III. <a href="#source-17"
+                            class="citation-link" onclick="highlightSource(event, 'source-17')">[17]</a> He eventually
+                        settled Giuffre's civil lawsuit for an estimated £12 million ($16.3 million), though he
+                        continued to deny the allegations.</p>
+
+                    <p>This indicates that within the British monarchy, the mere association and the presence of a
+                        credible civil claim were sufficient for total removal from public life. The contrast with the
+                        American political system is stark: while a CEO or a member of a royal family is subject to the
+                        standards of a board of directors or a monarch, a political figure like Trump relies on an
+                        electoral mandate, which can be resistant to even judicially established findings of misconduct.
+                        <a href="#source-23" class="citation-link"
+                            onclick="highlightSource(event, 'source-23')">[23]</a></p>
+                </section>
+
+                <!-- VERDICT -->
+                <div class="info-box copyable-section"
+                    style="border: 2px solid var(--accent-blue); background: rgba(59, 130, 246, 0.1);">
+                    <div class="info-title"><i data-lucide="scale"></i> Final Verdict: Systemic Asymmetry</div>
+                    <p>The forensic data confirms a "Disciplined for Less" reality. The corporate and royal worlds
+                        utilize reputation-management protocols that prioritize institutional integrity over individual
+                        leadership. In contrast, the US political system lacks an equivalent "Board of Directors"
+                        capable of enforcing accountability for adjudicated sexual misconduct, resulting in a unique
+                        form of immunity for high-level political candidates.</p>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
     <script>
-        // Citation Highlighter
-        function highlightSource(event, sourceId) {
+        // Source Data Mapping
+        const sources = [
+            { id: 1, title: "Women's Agenda: 27 Accusers Count", domain: "womensagenda.com.au" },
+            { id: 2, title: "Wikipedia: Misconduct Allegations", domain: "wikipedia.org" },
+            { id: 3, title: "The Guardian: Timeline of Allegations", domain: "theguardian.com" },
+            { id: 4, title: "The 19th News: Defend and Deny", domain: "19thnews.org" },
+            { id: 5, title: "CBS News: Pageant Dressing Rooms", domain: "cbsnews.com" },
+            { id: 6, title: "The Guardian: Miss USA 2001", domain: "theguardian.com" },
+            { id: 7, title: "Time Magazine: Accusers List", domain: "time.com" },
+            { id: 8, title: "PBS News: Assault Allegations Recapped", domain: "pbs.org" },
+            { id: 9, title: "Hachette: All the President's Women", domain: "hachettebookgroup.com" },
+            { id: 10, title: "Quartz: 11 Times Accused", domain: "qz.com" },
+            { id: 11, title: "Quartz: Carroll is 18th Accuser", domain: "qz.com" },
+            { id: 12, title: "Wikipedia: Carroll v. Trump", domain: "wikipedia.org" },
+            { id: 13, title: "PBS: Breakdown of Verdict", domain: "pbs.org" },
+            { id: 14, title: "FindLaw: Carroll v. Trump (2023)", domain: "caselaw.findlaw.com" },
+            { id: 15, title: "Justia: Carroll v. Trump Appeals", domain: "law.justia.com" },
+            { id: 16, title: "Courthouse News: Allegations Refiled", domain: "courthousenews.com" },
+            { id: 17, title: "TIME: Epstein Unsealed Docs", domain: "time.com" },
+            { id: 18, title: "TIME: Business Executives Associated", domain: "time.com" },
+            { id: 19, title: "The Guardian: Jes Staley Emails", domain: "theguardian.com" },
+            { id: 20, title: "The Guardian: Epstein Wealth", domain: "theguardian.com" },
+            { id: 21, title: "Meditations: Tip of the Iceberg", domain: "meditationsinanemergency.com" },
+            { id: 22, title: "Politifact: Democrats & Epstein", domain: "wassermanschultz.house.gov" },
+            { id: 23, title: "The Guardian: Associates Losing Everything", domain: "theguardian.com" },
+            { id: 24, title: "Daily Herald: DOJ Files", domain: "dailyherald.com" },
+            { id: 25, title: "Wikipedia: Epstein Files", domain: "wikipedia.org" },
+            { id: 26, title: "PBS: 7 Things to Know", domain: "pbs.org" },
+            { id: 27, title: "The Guardian: List Names Released", domain: "theguardian.com" },
+            { id: 28, title: "People: What Are the Epstein Files", domain: "people.com" }
+        ];
+
+        // Highlight Source Function
+        function highlightSource(event, targetId) {
             event.preventDefault();
-            const el = document.getElementById(sourceId);
+            const el = document.getElementById(targetId);
             if (el) {
                 el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                el.style.backgroundColor = 'rgba(59, 130, 246, 0.3)';
-                setTimeout(() => el.style.backgroundColor = '', 2000);
+                el.classList.add('highlight');
+                setTimeout(() => el.classList.remove('highlight'), 2000);
             }
         }
 
-        // Initialize Charts
-        const initCharts = () => {
+        // Initialize Everything
+        window.addEventListener('gv:componentsReady', () => {
+            lucide.createIcons();
+
+            // Build Sources List
+            const list = document.getElementById('sourcesList');
+            sources.forEach(s => {
+                list.innerHTML += `
+                    <a href="#" class="source-card" id="source-${s.id}">
+                        <span class="source-num">${s.id}</span>
+                        <div>
+                            <div>${s.title}</div>
+                            <div style="font-size:0.7em; opacity:0.6;">${s.domain}</div>
+                        </div>
+                    </a>
+                `;
+            });
+
             // Timeline Chart
-            new Chart(document.getElementById('timelineChart'), {
+            new Chart(document.getElementById('timelineChart').getContext('2d'), {
                 type: 'line',
                 data: {
-                    labels: ['1970s', '1990s (Pageants)', '2005 (Access Hollywood)', '2016 (Election)', '2023 (Carroll Verdict)'],
+                    labels: ['1970s', '1997', '2005', '2016', '2023'],
                     datasets: [{
                         label: 'Cumulative Allegations',
                         data: [1, 8, 12, 24, 28],
                         borderColor: '#3b82f6',
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        borderWidth: 2,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
                         fill: true,
                         tension: 0.4
                     }]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            labels: { color: '#cbd5e1' }
-                        },
-                        title: {
-                            display: true,
-                            text: 'The Waves of Allegations (Cumulative)',
-                            color: '#fff'
-                        },
-                        watermark: { text: "GenuVerity" }
-                    },
+                    plugins: { watermark: { text: "GenuVerity" }, legend: { labels: { color: '#fff' } } },
                     scales: {
-                        y: {
-                            title: { display: true, text: 'Total Accusers', color: '#cbd5e1' },
-                            grid: { color: '#1e293b' },
-                            ticks: { color: '#cbd5e1' }
-                        },
-                        x: {
-                            grid: { color: '#1e293b' },
-                            ticks: { color: '#cbd5e1' }
-                        }
+                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#a0aec0' } },
+                        x: { grid: { display: false }, ticks: { color: '#a0aec0' } }
                     }
                 }
             });
 
             // Discipline Chart
-            new Chart(document.getElementById('disciplineChart'), {
+            new Chart(document.getElementById('disciplineChart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: ['Jes Staley (CEO)', 'Leon Black (CEO)', 'Prince Andrew', 'Donald Trump'],
-                    datasets: [
-                        {
-                            label: 'Career Terminated?',
-                            data: [1, 1, 1, 0],
-                            backgroundColor: ['#ef4444', '#ef4444', '#ef4444', '#10b981']
-                        },
-                        {
-                            label: 'Financial Penalty (Millions USD)',
-                            data: [2.4, 158, 16.3, 88.3],
-                            backgroundColor: '#3b82f6'
-                        }
-                    ]
+                    labels: ['J. Staley (CEO)', 'L. Black (CEO)', 'Prince Andrew', 'D. Trump'],
+                    datasets: [{
+                        label: 'Career Ending?',
+                        data: [1, 1, 1, 0],
+                        backgroundColor: ['#ef4444', '#ef4444', '#ef4444', '#10b981'],
+                        borderRadius: 6
+                    }, {
+                        label: 'Civil Verdict Liability?',
+                        data: [0, 0, 1, 1],
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 6
+                    }]
                 },
                 options: {
+                    indexAxis: 'y',
                     responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'The Discipline Disparity: Consequences vs Allegations',
-                            color: '#fff'
-                        },
-                        legend: {
-                            labels: { color: '#cbd5e1' }
-                        },
-                        watermark: { text: "GenuVerity" }
-                    },
+                    plugins: { watermark: { text: "GenuVerity" }, legend: { labels: { color: '#fff' } } },
                     scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { color: '#1e293b' },
-                            ticks: { color: '#cbd5e1' }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: '#cbd5e1' }
-                        }
+                        x: { max: 1, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { callback: v => v === 1 ? 'YES' : 'NO', color: '#a0aec0' } },
+                        y: { grid: { display: false }, ticks: { color: '#a0aec0' } }
                     }
                 }
             });
-        };
-
-        // Handle race condition: check if components already ready
-        if (window.gvComponentsReady) {
-            initCharts();
-        } else {
-            window.addEventListener('gv:componentsReady', initCharts);
-        }
-
-        // Populate Sources
-        const sourcesSidebar = document.getElementById('sourcesList');
-        const sourcesData = [
-            { id: 1, text: "Women's Agenda: 27 Accusers Count" },
-            { id: 2, text: "Wikipedia: Misconduct Allegations" },
-            { id: 3, text: "The Guardian: Timeline of Allegations" },
-            { id: 4, text: "The 19th News: Defend and Deny" },
-            { id: 5, text: "CBS News: Pageant Dressing Rooms" },
-            { id: 6, text: "The Guardian: Miss USA 2001" },
-            { id: 7, text: "Time Magazine: Accusers List" },
-            { id: 8, text: "PBS News: Assault Allegations Recapped" },
-            { id: 9, text: "Hachette: All the President's Women" },
-            { id: 10, text: "Quartz: 11 Times Accused" },
-            { id: 11, text: "Quartz: Carroll is 18th Accuser" },
-            { id: 12, text: "Wikipedia: Carroll v. Trump" },
-            { id: 13, text: "PBS: Breakdown of Verdict" },
-            { id: 14, text: "FindLaw: Carroll v. Trump (2023)" },
-            { id: 15, text: "Justia: Carroll v. Trump Appeals" },
-            { id: 16, text: "Courthouse News: Rape Allegations Refiled" },
-            { id: 17, text: "TIME: Epstein Unsealed Docs" },
-            { id: 18, text: "TIME: Business Executives & Epstein" },
-            { id: 19, text: "The Guardian: Jes Staley Emails" },
-            { id: 20, text: "The Guardian: Epstein Wealth" },
-            { id: 21, text: "Meditations: Tip of the Iceberg" },
-            { id: 22, text: "Politifact: Democrats & Epstein" },
-            { id: 23, text: "The Guardian: Associates Losing Everything" },
-            { id: 24, text: "Daily Herald: DOJ Files" },
-            { id: 25, text: "Wikipedia: Epstein Files" },
-            { id: 26, text: "PBS: 7 Things to Know" },
-            { id: 27, text: "The Guardian: List Names Released" },
-            { id: 28, text: "People: What Are the Epstein Files" }
-        ];
-
-        sourcesData.forEach(s => {
-            sourcesSidebar.innerHTML += `
-                <a href="#" class="source-card" id="source-${s.id}">
-                    <span style="color:var(--accent-cyan); font-weight:700;">[${s.id}]</span>
-                    <div style="margin-top: 4px;">${s.text}</div>
-                </a>
-            `;
         });
-    </script>
 
-    <div id="footer-placeholder"></div>
+        // If components already ready
+        if (window.gvComponentsReady) {
+            window.dispatchEvent(new Event('gv:componentsReady'));
+        }
+    </script>
 </body>
 
 </html>
