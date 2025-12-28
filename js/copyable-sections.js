@@ -256,12 +256,19 @@
         });
 
         elements.forEach(el => {
-            // Avoid double init
+            // Skip if already initialized (has copy UI)
             if (el.querySelector('.copy-wrapper')) return;
+
+            // Skip navigation and explicitly excluded elements
             if (el.tagName === 'NAV' || el.classList.contains('no-copy')) return;
 
-            el.classList.add('copyable-section'); // For hover effect
-            if (!el.style.position) el.style.position = 'relative';
+            // Add class for hover effect (safe even if already present)
+            el.classList.add('copyable-section');
+
+            // Ensure relative positioning for absolute-positioned .copy-wrapper
+            if (!el.style.position || el.style.position === 'static') {
+                el.style.position = 'relative';
+            }
 
             // Build UI
             const wrapper = document.createElement('div');
