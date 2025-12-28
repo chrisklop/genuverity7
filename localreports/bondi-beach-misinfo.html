@@ -92,51 +92,15 @@
 
         
         /* === NAVBAR (Consolidated Premium) === */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 64px;
-            background: rgba(5, 10, 20, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-        }
+        
 
-        .navbar-logo {
-            display: flex;
-            align-items: center;
-        }
+        
 
-        .navbar-logo-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-        }
+        
 
-        .ss-nav {
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            pointer-events: none;
-        }
+        
 
-        .ss-nav::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
-            animation: sweep-30 4s ease-in-out infinite alternate;
-        }
+        
 
         .g-icon-nav {
             font-family: 'Inter', sans-serif;
@@ -165,9 +129,7 @@
         }
 
         @media (max-width: 768px) {
-            .navbar {
-                padding: 0 16px;
-            }
+            
         }
 /* === COLLAPSIBLE SOURCES BANNER === */
         .sources-banner {
@@ -624,28 +586,11 @@
         .capture-watermark .verity { color: var(--accent-blue); }
     
         /* Footer Logo Wrapper (Scaled Down) */
-        .footer-logo-wrapper {
-            position: relative;
-            display: inline-block;
-            padding: 8px 16px;
-            margin-bottom: 8px;
-        }
+        
 
-        .ss-footer {
-            position: absolute;
-            inset: -6px;
-            border-radius: 40px;
-            pointer-events: none;
-        }
+        
 
-        .ss-footer::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 40px;
-            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
-            animation: sweep-30 4s ease-in-out infinite alternate;
-        }
+        
         
         /* Global Logo Colors */
         .logo-genu { color: #ffffff !important; }
