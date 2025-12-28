@@ -3,6 +3,24 @@
 
 const REPORTS_DATA = [
     {
+        id: 55,
+        title: "Project 2025's \"Military Orders\": Rumors vs. Reality",
+        slug: "localreports/project-2025-military-orders.html",
+        category: "Deep Dive Dossier",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "shield-alert",
+        date: "Dec 28, 2025",
+        sources: "Verified Analysis",
+        readTime: "15 min",
+        excerpt: "Viral claims of 'secret military orders' are unproven, but the public plan to strip protections from 50,000 workers—30% of whom are veterans—is verified and specific.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [0, 2, 5, 8, 10, 15, 60, 95]
+        }
+    },
+    {
         id: 54,
         title: "Fact-Check: The Viral \"166-Name Epstein List\"",
         slug: "localreports/epstein-166-name-list-fake.html",
