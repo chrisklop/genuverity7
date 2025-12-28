@@ -1,57 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer-when-downgrade">
     <title>Fact Check: New Jersey Drone Sightings Conspiracy Theories | GenuVerity</title>
-    <meta name="description" content="Debunking viral claims about mysterious drones over New Jersey including Project Blue Beam, Iranian involvement, and alien theories. Verdict: MOSTLY FALSE.">
+    <meta name="description"
+        content="Debunking viral claims about mysterious drones over New Jersey including Project Blue Beam, Iranian involvement, and alien theories. Verdict: MOSTLY FALSE.">
 
-    <!-- Fonts -->
+    <!-- Fonts (2-Font System: Crimson Pro + Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
 
-    <!-- Chart.js -->
+    <!-- Dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../js/reading-progress.js"></script>
-
-    <!-- GenuVerity Chart.js Watermark Plugin -->
-    <script>
-        const genuVerityWatermark = {
-            id: 'genuVerityWatermark',
-            afterDraw: (chart) => {
-                const ctx = chart.ctx;
-                const { width } = chart;
-                ctx.save();
-                const x = width - 8;
-                const y = 16;
-                ctx.textAlign = 'right';
-                ctx.textBaseline = 'top';
-                ctx.font = 'bold 10px Inter, sans-serif';
-                ctx.fillStyle = '#ffffff';
-                const genuText = 'Genu';
-                const verityText = 'Verity';
-                const verityWidth = ctx.measureText(verityText).width;
-                ctx.fillText(genuText, x - verityWidth, y);
-                ctx.fillStyle = '#3b82f6';
-                ctx.fillText(verityText, x, y);
-                ctx.restore();
-            }
-        };
-        Chart.register(genuVerityWatermark);
-    </script>
-
-    <!-- Lucide Icons -->
+    <script src="../js/chart-watermark.js"></script>
+    <script src="../js/chart-defaults.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="../js/shared-components.js" defer></script>
-    <link rel="stylesheet" href="../css/shared-components.css?v=3.0">
+    <script src="../js/shared-components.js?v=4.0" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js?v=4.0" defer></script>
 
-
-    <!-- html2canvas for copyable sections -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <!-- GenuVerity Copyable Sections (auto-adds copy buttons) -->
-    <script src="../js/copyable-sections.js"></script>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/shared-components.css?v=4.0">
+    <link rel="stylesheet" href="../css/reports.css?v=4.0">
 
     <style>
         :root {
@@ -73,7 +49,11 @@
             --glow-cyan: 0 0 20px rgba(6, 182, 212, 0.3);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -83,17 +63,17 @@
             min-height: 100vh;
         }
 
-        
+
         /* === NAVBAR (Consolidated Premium) === */
-        
 
-        
 
-        
 
-        
 
-        
+
+
+
+
+
 
         .g-icon-nav {
             font-family: 'Inter', sans-serif;
@@ -106,8 +86,13 @@
         }
 
         @keyframes sweep-30 {
-            from { transform: rotate(-20deg); }
-            to { transform: rotate(20deg); }
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
         }
 
         .nav-back-link {
@@ -121,10 +106,9 @@
             transform: translateX(-4px);
         }
 
-        @media (max-width: 768px) {
-            
-        }
-/* === COLLAPSIBLE SOURCES BANNER === */
+        @media (max-width: 768px) {}
+
+        /* === COLLAPSIBLE SOURCES BANNER === */
         .sources-banner {
             border-radius: 12px;
             margin: 0 auto 24px;
@@ -214,9 +198,20 @@
             text-transform: uppercase;
         }
 
-        .source-icon.gov { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
-        .source-icon.news { background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); }
-        .source-icon.org { background: rgba(6, 182, 212, 0.2); color: var(--accent-cyan); }
+        .source-icon.gov {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
+
+        .source-icon.news {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+        }
+
+        .source-icon.org {
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--accent-cyan);
+        }
 
         .source-info h4 {
             font-size: 0.9rem;
@@ -237,8 +232,15 @@
             font-weight: 600;
         }
 
-        .source-score.high { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
-        .source-score.medium { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); }
+        .source-score.high {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
+
+        .source-score.medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-amber);
+        }
 
         /* Content Sections */
         .content-section {
@@ -256,7 +258,9 @@
             gap: 12px;
         }
 
-        .prose-h2 i { color: var(--accent-blue); }
+        .prose-h2 i {
+            color: var(--accent-blue);
+        }
 
         .prose-h3 {
             font-size: 1.25rem;
@@ -310,7 +314,9 @@
         }
 
         @media (max-width: 768px) {
-            .summary-grid { grid-template-columns: 1fr; }
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .summary-card {
@@ -353,7 +359,9 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        .card-source span { color: var(--accent-red); }
+        .card-source span {
+            color: var(--accent-red);
+        }
 
         /* Claims Grid */
         .claims-grid {
@@ -423,9 +431,17 @@
             margin: 24px 0;
         }
 
-        .insight-card.positive { border-left-color: var(--accent-cyan); }
-        .insight-card.negative { border-left-color: var(--accent-red); }
-        .insight-card.info { border-left-color: var(--accent-blue); }
+        .insight-card.positive {
+            border-left-color: var(--accent-cyan);
+        }
+
+        .insight-card.negative {
+            border-left-color: var(--accent-red);
+        }
+
+        .insight-card.info {
+            border-left-color: var(--accent-blue);
+        }
 
         .insight-header {
             display: flex;
@@ -434,10 +450,21 @@
             margin-bottom: 12px;
         }
 
-        .insight-header i { color: var(--accent-amber); }
-        .insight-card.positive .insight-header i { color: var(--accent-cyan); }
-        .insight-card.negative .insight-header i { color: var(--accent-red); }
-        .insight-card.info .insight-header i { color: var(--accent-blue); }
+        .insight-header i {
+            color: var(--accent-amber);
+        }
+
+        .insight-card.positive .insight-header i {
+            color: var(--accent-cyan);
+        }
+
+        .insight-card.negative .insight-header i {
+            color: var(--accent-red);
+        }
+
+        .insight-card.info .insight-header i {
+            color: var(--accent-blue);
+        }
 
         .insight-title {
             font-size: 1.1rem;
@@ -542,8 +569,13 @@
             margin-bottom: 12px;
         }
 
-        .genuverity-brand .genu { color: var(--text-primary); }
-        .genuverity-brand .verity { color: var(--accent-blue); }
+        .genuverity-brand .genu {
+            color: var(--text-primary);
+        }
+
+        .genuverity-brand .verity {
+            color: var(--accent-blue);
+        }
 
         .report-footer p {
             color: var(--text-muted);
@@ -556,31 +588,41 @@
             display: table;
             clear: both;
         }
-    
+
         /* Footer Logo Wrapper (Scaled Down) */
-        
 
-        
 
-        
-        
+
+
+
+
         /* Global Logo Colors */
-        .logo-genu { color: #ffffff !important; }
-        .logo-verity { color: #3b82f6 !important; }
-
-        @keyframes sweep-30 {
-            from { transform: rotate(-20deg); }
-            to { transform: rotate(20deg); }
+        .logo-genu {
+            color: #ffffff !important;
         }
 
+        .logo-verity {
+            color: #3b82f6 !important;
+        }
+
+        @keyframes sweep-30 {
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <!-- Navbar -->
-    
+
     <!-- STANDARD NAVBAR -->
-    
+
     <!-- Shared Navbar Placeholder -->
     <div id="navbar-placeholder" data-page-type="report"></div>
 
@@ -590,7 +632,8 @@
     <header class="report-header">
         <span class="report-tag">Conspiracy Analysis // Aviation</span>
         <h1 class="report-title">The New Jersey Drone Panic: Separating Fact from Fiction</h1>
-        <p class="report-subtitle">Analyzing viral claims about mysterious drones including Project Blue Beam, Iranian involvement, and government cover-ups</p>
+        <p class="report-subtitle">Analyzing viral claims about mysterious drones including Project Blue Beam, Iranian
+            involvement, and government cover-ups</p>
         <div class="report-meta">
             <span><i data-lucide="calendar" style="width:16px;height:16px;"></i> December 19, 2025</span>
             <span><i data-lucide="clock" style="width:16px;height:16px;"></i> 8 min read</span>
@@ -612,11 +655,13 @@
                     <span>Sources First</span>
                     <span class="sources-badge">9</span>
                 </div>
-                <i data-lucide="chevron-down" style="width:20px;height:20px;transition:transform 0.2s;" id="sourcesChevron"></i>
+                <i data-lucide="chevron-down" style="width:20px;height:20px;transition:transform 0.2s;"
+                    id="sourcesChevron"></i>
             </div>
             <div class="sources-content" id="sourcesContent">
                 <div class="source-card">
-                    <a href="https://www.nbcnews.com/news/us-news/white-house-says-new-jersey-drones-authorized-faa-was-not-enemy-rcna189646" target="_blank">
+                    <a href="https://www.nbcnews.com/news/us-news/white-house-says-new-jersey-drones-authorized-faa-was-not-enemy-rcna189646"
+                        target="_blank">
                         <div class="source-icon news">NEWS</div>
                         <div class="source-info">
                             <h4>White House: Drones Were FAA-Authorized</h4>
@@ -676,7 +721,8 @@
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://reason.com/2025/05/09/what-the-feds-knew-about-the-new-jersey-drone-scare/" target="_blank">
+                    <a href="https://reason.com/2025/05/09/what-the-feds-knew-about-the-new-jersey-drone-scare/"
+                        target="_blank">
                         <div class="source-icon news">NEWS</div>
                         <div class="source-info">
                             <h4>Reason: Federal Documents Analysis</h4>
@@ -686,7 +732,8 @@
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.popularmechanics.com/flight/drones/a63324150/new-jersey-drone-theories/" target="_blank">
+                    <a href="https://www.popularmechanics.com/flight/drones/a63324150/new-jersey-drone-theories/"
+                        target="_blank">
                         <div class="source-icon org">ORG</div>
                         <div class="source-info">
                             <h4>Popular Mechanics: Theory Ranking</h4>
@@ -717,7 +764,9 @@
             <div class="summary-grid">
                 <div class="summary-card claim">
                     <div class="card-label">The Viral Claims</div>
-                    <p class="card-content" style="font-style: italic;">"Mysterious drones are surveilling America. Iran is behind them. Project Blue Beam is being tested. The government is covering up an alien presence."</p>
+                    <p class="card-content" style="font-style: italic;">"Mysterious drones are surveilling America. Iran
+                        is behind them. Project Blue Beam is being tested. The government is covering up an alien
+                        presence."</p>
                     <div class="card-source">
                         <span>ORIGINS:</span> 4chan, Telegram, X (Twitter), Facebook groups
                     </div>
@@ -725,7 +774,13 @@
                 <div class="summary-card reality">
                     <div class="card-label">The Reality</div>
                     <p class="card-content">
-                        The <a href="https://www.nbcnews.com/news/us-news/white-house-says-new-jersey-drones-authorized-faa-was-not-enemy-rcna189646" target="_blank">White House confirmed</a> most drones were <strong>FAA-authorized</strong> for research and commercial purposes. The <a href="https://www.dhs.gov/" target="_blank">FBI and DHS</a> found "no evidence of national security threat." Many reported "drones" were actually <a href="https://www.cbsnews.com/news/drones-new-jersey-what-we-know/" target="_blank">misidentified aircraft</a>, including commercial planes and hobbyist drones.
+                        The <a
+                            href="https://www.nbcnews.com/news/us-news/white-house-says-new-jersey-drones-authorized-faa-was-not-enemy-rcna189646"
+                            target="_blank">White House confirmed</a> most drones were <strong>FAA-authorized</strong>
+                        for research and commercial purposes. The <a href="https://www.dhs.gov/" target="_blank">FBI and
+                            DHS</a> found "no evidence of national security threat." Many reported "drones" were
+                        actually <a href="https://www.cbsnews.com/news/drones-new-jersey-what-we-know/"
+                            target="_blank">misidentified aircraft</a>, including commercial planes and hobbyist drones.
                     </p>
                 </div>
             </div>
@@ -741,23 +796,30 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-date">November 13, 2024</div>
-                    <div class="timeline-content">First sightings reported near Picatinny Arsenal military base in Morris County, New Jersey. Social media posts begin circulating.</div>
+                    <div class="timeline-content">First sightings reported near Picatinny Arsenal military base in
+                        Morris County, New Jersey. Social media posts begin circulating.</div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">November - December 2024</div>
-                    <div class="timeline-content">Sightings expand to 10+ states. Over 5,000 reports filed with FBI. Facebook group "New Jersey Mystery Drones" reaches 73,000 members.</div>
+                    <div class="timeline-content">Sightings expand to 10+ states. Over 5,000 reports filed with FBI.
+                        Facebook group "New Jersey Mystery Drones" reaches 73,000 members.</div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">December 2024</div>
-                    <div class="timeline-content">Newark Airport briefly closes runway due to reported drone activity. Rep. Jeff Van Drew claims "Iran is piloting the drones." Defense Department quickly refutes this.</div>
+                    <div class="timeline-content">Newark Airport briefly closes runway due to reported drone activity.
+                        Rep. Jeff Van Drew claims "Iran is piloting the drones." Defense Department quickly refutes
+                        this.</div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">December 17, 2024</div>
-                    <div class="timeline-content">TSA internal briefing reveals three major "drone incidents" were actually normal air traffic: a medevac flight, ocean aircraft, and plane near a nuclear plant.</div>
+                    <div class="timeline-content">TSA internal briefing reveals three major "drone incidents" were
+                        actually normal air traffic: a medevac flight, ocean aircraft, and plane near a nuclear plant.
+                    </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">January 2025</div>
-                    <div class="timeline-content">White House Press Secretary Karoline Leavitt confirms most drones were FAA-authorized, stating "This was not the enemy."</div>
+                    <div class="timeline-content">White House Press Secretary Karoline Leavitt confirms most drones were
+                        FAA-authorized, stating "This was not the enemy."</div>
                 </div>
             </div>
         </section>
@@ -773,37 +835,54 @@
                 <div class="claim-card">
                     <span class="claim-verdict false">FALSE</span>
                     <h4>"Iran is operating drones over the US"</h4>
-                    <p>Rep. Jeff Van Drew (R-NJ) claimed Iranian involvement. The <a href="https://www.dhs.gov/" target="_blank">Department of Defense immediately refuted this</a>, stating there was no evidence of foreign state involvement. The claim appears to have originated from unverified social media speculation.</p>
+                    <p>Rep. Jeff Van Drew (R-NJ) claimed Iranian involvement. The <a href="https://www.dhs.gov/"
+                            target="_blank">Department of Defense immediately refuted this</a>, stating there was no
+                        evidence of foreign state involvement. The claim appears to have originated from unverified
+                        social media speculation.</p>
                 </div>
 
                 <div class="claim-card">
                     <span class="claim-verdict false">FALSE</span>
                     <h4>"Project Blue Beam is being tested"</h4>
-                    <p>This conspiracy theory, claiming the government will stage a fake alien invasion, has been debunked since the 1990s. There is <strong>zero evidence</strong> connecting the drone sightings to any such project. The theory garnered millions of views despite lacking any credible sources.</p>
+                    <p>This conspiracy theory, claiming the government will stage a fake alien invasion, has been
+                        debunked since the 1990s. There is <strong>zero evidence</strong> connecting the drone sightings
+                        to any such project. The theory garnered millions of views despite lacking any credible sources.
+                    </p>
                 </div>
 
                 <div class="claim-card">
                     <span class="claim-verdict false">FALSE</span>
                     <h4>"The drones are actually UFOs/alien spacecraft"</h4>
-                    <p>Senator Andy Kim went on patrol with police and <a href="https://www.cbsnews.com/news/drones-new-jersey-what-we-know/" target="_blank">concluded</a> that "most of the possible drone sightings that were pointed out to me were almost certainly planes." No evidence of extraterrestrial origin exists.</p>
+                    <p>Senator Andy Kim went on patrol with police and <a
+                            href="https://www.cbsnews.com/news/drones-new-jersey-what-we-know/"
+                            target="_blank">concluded</a> that "most of the possible drone sightings that were pointed
+                        out to me were almost certainly planes." No evidence of extraterrestrial origin exists.</p>
                 </div>
 
                 <div class="claim-card">
                     <span class="claim-verdict misleading">MISLEADING</span>
                     <h4>"Government refuses to explain the drones"</h4>
-                    <p>While initial government communication was slow, the <a href="https://www.nbcnews.com/news/us-news/white-house-says-new-jersey-drones-authorized-faa-was-not-enemy-rcna189646" target="_blank">White House eventually confirmed</a> that most sightings were FAA-authorized research and commercial drones. The "mystery" was largely manufactured by social media amplification.</p>
+                    <p>While initial government communication was slow, the <a
+                            href="https://www.nbcnews.com/news/us-news/white-house-says-new-jersey-drones-authorized-faa-was-not-enemy-rcna189646"
+                            target="_blank">White House eventually confirmed</a> that most sightings were FAA-authorized
+                        research and commercial drones. The "mystery" was largely manufactured by social media
+                        amplification.</p>
                 </div>
 
                 <div class="claim-card">
                     <span class="claim-verdict misleading">MISLEADING</span>
                     <h4>"15,000+ drones spotted over New Jersey"</h4>
-                    <p>While 5,000+ reports were filed with the FBI, <a href="https://www.tsa.gov/" target="_blank">TSA analysis</a> showed many were misidentified aircraft, hobbyist drones, or even wing-tip condensation trails from small planes. The actual number of anomalous drones is far lower.</p>
+                    <p>While 5,000+ reports were filed with the FBI, <a href="https://www.tsa.gov/" target="_blank">TSA
+                            analysis</a> showed many were misidentified aircraft, hobbyist drones, or even wing-tip
+                        condensation trails from small planes. The actual number of anomalous drones is far lower.</p>
                 </div>
 
                 <div class="claim-card">
                     <span class="claim-verdict unverified">UNVERIFIED</span>
                     <h4>"Drones are surveilling military bases"</h4>
-                    <p>While some sightings occurred near military installations like Picatinny Arsenal, there is no evidence of unauthorized surveillance. FAA-authorized research and commercial operations often occur in these areas.</p>
+                    <p>While some sightings occurred near military installations like Picatinny Arsenal, there is no
+                        evidence of unauthorized surveillance. FAA-authorized research and commercial operations often
+                        occur in these areas.</p>
                 </div>
             </div>
         </section>
@@ -816,7 +895,10 @@
             </h2>
 
             <p class="prose-text">
-                The New Jersey drone panic illustrates how social media can amplify and distort minor events into perceived crises. Aerospace expert <strong>Jamey Jacob</strong> stated that social media "largely drove the wave of reports," creating a feedback loop where initial sightings triggered mass attention, leading to more misidentifications being reported as "drones."
+                The New Jersey drone panic illustrates how social media can amplify and distort minor events into
+                perceived crises. Aerospace expert <strong>Jamey Jacob</strong> stated that social media "largely drove
+                the wave of reports," creating a feedback loop where initial sightings triggered mass attention, leading
+                to more misidentifications being reported as "drones."
             </p>
 
             <div class="insight-card info">
@@ -825,12 +907,19 @@
                     <h4 class="insight-title">Viral Amplification Pattern</h4>
                 </div>
                 <div class="insight-content">
-                    <p>The Facebook group "New Jersey Mystery Drones - let's solve it" surged to <strong>73,000+ members</strong> in weeks, becoming a hub for speculation. Users shared videos of ordinary aircraft, misidentifying them as mysterious drones. This created a classic case of <a href="https://www.popularmechanics.com/flight/drones/a63324150/new-jersey-drone-theories/" target="_blank">mass misidentification</a> amplified by algorithmic promotion of sensational content.</p>
+                    <p>The Facebook group "New Jersey Mystery Drones - let's solve it" surged to <strong>73,000+
+                            members</strong> in weeks, becoming a hub for speculation. Users shared videos of ordinary
+                        aircraft, misidentifying them as mysterious drones. This created a classic case of <a
+                            href="https://www.popularmechanics.com/flight/drones/a63324150/new-jersey-drone-theories/"
+                            target="_blank">mass misidentification</a> amplified by algorithmic promotion of sensational
+                        content.</p>
                 </div>
             </div>
 
             <p class="prose-text">
-                Governor Murphy acknowledged that the sightings "prompted the spread of conspiracy theories across social media." The pattern follows classic misinformation dynamics: initial ambiguity, government communication delay, and social media speculation filling the information vacuum.
+                Governor Murphy acknowledged that the sightings "prompted the spread of conspiracy theories across
+                social media." The pattern follows classic misinformation dynamics: initial ambiguity, government
+                communication delay, and social media speculation filling the information vacuum.
             </p>
         </section>
 
@@ -848,11 +937,16 @@
                 </div>
                 <div class="insight-content">
                     <ul style="margin-left: 20px; margin-top: 12px;">
-                        <li><strong>FAA Authorization:</strong> White House confirmed most drones were legally authorized for research and commercial purposes</li>
-                        <li><strong>No Security Threat:</strong> FBI and DHS joint statement found "no evidence of national security or public safety threat"</li>
-                        <li><strong>No Foreign Nexus:</strong> No evidence of foreign state involvement despite viral claims</li>
-                        <li><strong>Misidentification:</strong> TSA analysis showed many "drones" were actually normal aircraft</li>
-                        <li><strong>Regulatory Gap:</strong> Officials acknowledged need for better UAS regulations, not evidence of threat</li>
+                        <li><strong>FAA Authorization:</strong> White House confirmed most drones were legally
+                            authorized for research and commercial purposes</li>
+                        <li><strong>No Security Threat:</strong> FBI and DHS joint statement found "no evidence of
+                            national security or public safety threat"</li>
+                        <li><strong>No Foreign Nexus:</strong> No evidence of foreign state involvement despite viral
+                            claims</li>
+                        <li><strong>Misidentification:</strong> TSA analysis showed many "drones" were actually normal
+                            aircraft</li>
+                        <li><strong>Regulatory Gap:</strong> Officials acknowledged need for better UAS regulations, not
+                            evidence of threat</li>
                     </ul>
                 </div>
             </div>
@@ -867,17 +961,24 @@
             <div class="verdict-box">
                 <span class="verdict-label">MOSTLY FALSE</span>
                 <p class="verdict-explanation">
-                    The viral conspiracy theories about New Jersey drones are <strong>not supported by evidence</strong>. Claims of Iranian involvement, Project Blue Beam, and alien spacecraft are <strong>completely false</strong>. The <a href="https://www.nbcnews.com/news/us-news/white-house-says-new-jersey-drones-authorized-faa-was-not-enemy-rcna189646" target="_blank">White House confirmed</a> most sightings were FAA-authorized drones, and <a href="https://www.dhs.gov/" target="_blank">FBI/DHS</a> found no security threat. While some genuine confusion existed due to poor government communication, the "drone panic" was largely a social media-driven phenomenon of misidentification and speculation.
+                    The viral conspiracy theories about New Jersey drones are <strong>not supported by
+                        evidence</strong>. Claims of Iranian involvement, Project Blue Beam, and alien spacecraft are
+                    <strong>completely false</strong>. The <a
+                        href="https://www.nbcnews.com/news/us-news/white-house-says-new-jersey-drones-authorized-faa-was-not-enemy-rcna189646"
+                        target="_blank">White House confirmed</a> most sightings were FAA-authorized drones, and <a
+                        href="https://www.dhs.gov/" target="_blank">FBI/DHS</a> found no security threat. While some
+                    genuine confusion existed due to poor government communication, the "drone panic" was largely a
+                    social media-driven phenomenon of misidentification and speculation.
                 </p>
             </div>
         </section>
 
         <!-- Footer -->
-        
-    <!-- Footer -->
-    
-    <!-- Shared Footer Placeholder -->
-    <div id="footer-placeholder"></div>
+
+        <!-- Footer -->
+
+        <!-- Shared Footer Placeholder -->
+        <div id="footer-placeholder"></div>
 
 
     </main>
@@ -900,4 +1001,5 @@
         }
     </script>
 </body>
+
 </html>

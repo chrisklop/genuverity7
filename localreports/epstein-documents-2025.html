@@ -1,63 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer-when-downgrade">
     <title>Epstein Files: What December 2025 Release Actually Shows | GenuVerity</title>
-    <meta name="description" content="Analyzing the DOJ's December 19, 2025 release of Jeffrey Epstein case files. What's in them, what's missing, and separating facts from speculation.">
+    <meta name="description"
+        content="Analyzing the DOJ's December 19, 2025 release of Jeffrey Epstein case files. What's in them, what's missing, and separating facts from speculation.">
 
-    <!-- Fonts -->
+    <!-- Fonts (2-Font System: Crimson Pro + Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
 
-    <!-- Chart.js -->
+    <!-- Dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
-
-    <!-- GenuVerity Chart.js Watermark Plugin -->
-    <script>
-        const genuVerityWatermark = {
-            id: 'genuVerityWatermark',
-            afterDraw: (chart) => {
-                const ctx = chart.ctx;
-                const { width } = chart;
-
-                ctx.save();
-                const x = width - 8;
-                const y = 16;
-
-                ctx.textAlign = 'right';
-                ctx.textBaseline = 'top';
-                ctx.font = 'bold 10px Inter, sans-serif';
-
-                ctx.fillStyle = '#ffffff';
-                const genuText = 'Genu';
-                const verityText = 'Verity';
-                const verityWidth = ctx.measureText(verityText).width;
-
-                ctx.fillText(genuText, x - verityWidth, y);
-                ctx.fillStyle = '#3b82f6';
-                ctx.fillText(verityText, x, y);
-
-                ctx.restore();
-            }
-        };
-
-        Chart.register(genuVerityWatermark);
-    </script>
-
-    <!-- Lucide Icons -->
+    <script src="../js/chart-watermark.js"></script>
+    <script src="../js/chart-defaults.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="../js/shared-components.js" defer></script>
-    <link rel="stylesheet" href="../css/shared-components.css?v=3.0">
+    <script src="../js/shared-components.js?v=4.0" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js?v=4.0" defer></script>
 
-
-    <!-- html2canvas for copyable sections -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <!-- GenuVerity Copyable Sections (auto-adds copy buttons) -->
-    <script src="../js/copyable-sections.js"></script>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/shared-components.css?v=4.0">
+    <link rel="stylesheet" href="../css/reports.css?v=4.0">
 
     <style>
         /* ============================================
@@ -96,7 +67,11 @@
             --glow-red: 0 0 20px rgba(239, 68, 68, 0.3);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -109,27 +84,30 @@
         /* ============================================
            NAVBAR
            ============================================ */
-        
 
-        
 
-        
-        .logo-genu { color: #ffffff; }
-        .logo-verity { color: var(--accent-blue); }
 
-        
 
-        
 
-        
-
-        
-
-        
-
-        @media (max-width: 768px) {
-            
+        .logo-genu {
+            color: #ffffff;
         }
+
+        .logo-verity {
+            color: var(--accent-blue);
+        }
+
+
+
+
+
+
+
+
+
+
+
+        @media (max-width: 768px) {}
 
         /* ============================================
            REPORT HEADER
@@ -213,8 +191,11 @@
             border: 2px solid var(--accent-cyan);
             box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
         }
+
         .verdict-badge.badge-developing span,
-        .verdict-badge.badge-developing i { color: var(--accent-cyan); }
+        .verdict-badge.badge-developing i {
+            color: var(--accent-cyan);
+        }
 
         /* ============================================
            MAIN CONTAINER
@@ -315,9 +296,20 @@
             text-transform: uppercase;
         }
 
-        .source-icon.gov { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
-        .source-icon.org { background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); }
-        .source-icon.news { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); }
+        .source-icon.gov {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
+
+        .source-icon.org {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+        }
+
+        .source-icon.news {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-amber);
+        }
 
         .source-info h4 {
             font-size: 0.9rem;
@@ -338,7 +330,10 @@
             font-weight: 600;
         }
 
-        .source-score.high { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+        .source-score.high {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
 
         /* ============================================
            CONTENT SECTIONS
@@ -358,7 +353,9 @@
             gap: 12px;
         }
 
-        .prose-h2 i { color: var(--accent-blue); }
+        .prose-h2 i {
+            color: var(--accent-blue);
+        }
 
         .prose-text {
             font-size: 1.05rem;
@@ -407,7 +404,9 @@
         }
 
         @media (max-width: 768px) {
-            .summary-grid { grid-template-columns: 1fr; }
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .summary-card {
@@ -417,8 +416,13 @@
             padding: 24px;
         }
 
-        .summary-card.claim { border-left: 4px solid var(--accent-cyan); }
-        .summary-card.reality { border-left: 4px solid var(--accent-amber); }
+        .summary-card.claim {
+            border-left: 4px solid var(--accent-cyan);
+        }
+
+        .summary-card.reality {
+            border-left: 4px solid var(--accent-amber);
+        }
 
         .card-label {
             font-size: 0.75rem;
@@ -544,7 +548,9 @@
             letter-spacing: 0.05em;
         }
 
-        .verdict-label.label-developing { background: var(--accent-cyan); }
+        .verdict-label.label-developing {
+            background: var(--accent-cyan);
+        }
 
         .verdict-explanation {
             font-size: 1.1rem;
@@ -569,8 +575,13 @@
             margin-bottom: 12px;
         }
 
-        .genuverity-brand .genu { color: var(--text-primary); }
-        .genuverity-brand .verity { color: var(--accent-blue); }
+        .genuverity-brand .genu {
+            color: var(--text-primary);
+        }
+
+        .genuverity-brand .verity {
+            color: var(--accent-blue);
+        }
 
         .report-footer p {
             color: var(--text-muted);
@@ -613,7 +624,9 @@
             z-index: 100;
         }
 
-        .copyable-section:hover .copy-overlay { opacity: 1; }
+        .copyable-section:hover .copy-overlay {
+            opacity: 1;
+        }
 
         .copy-btn {
             display: flex;
@@ -645,7 +658,10 @@
             color: white;
         }
 
-        .copy-btn svg { width: 14px; height: 14px; }
+        .copy-btn svg {
+            width: 14px;
+            height: 14px;
+        }
 
         .capture-watermark {
             position: absolute;
@@ -660,33 +676,48 @@
             z-index: 1000;
         }
 
-        .capture-watermark .genu { color: #ffffff; }
-        .capture-watermark .verity { color: var(--accent-blue); }
-    
-        /* Footer Logo Wrapper (Scaled Down) */
-        
-
-        
-
-        
-        
-        /* Global Logo Colors */
-        .logo-genu { color: #ffffff !important; }
-        .logo-verity { color: #3b82f6 !important; }
-
-        @keyframes sweep-30 {
-            from { transform: rotate(-20deg); }
-            to { transform: rotate(20deg); }
+        .capture-watermark .genu {
+            color: #ffffff;
         }
 
+        .capture-watermark .verity {
+            color: var(--accent-blue);
+        }
+
+        /* Footer Logo Wrapper (Scaled Down) */
+
+
+
+
+
+
+        /* Global Logo Colors */
+        .logo-genu {
+            color: #ffffff !important;
+        }
+
+        .logo-verity {
+            color: #3b82f6 !important;
+        }
+
+        @keyframes sweep-30 {
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <!-- Navbar -->
-    
+
     <!-- STANDARD NAVBAR -->
-    
+
     <!-- Shared Navbar Placeholder -->
     <div id="navbar-placeholder" data-page-type="report"></div>
 
@@ -696,7 +727,8 @@
     <header class="report-header verdict-developing">
         <span class="report-tag">Breaking Analysis</span>
         <h1 class="report-title">Epstein Files: What December 2025 Release Actually Shows</h1>
-        <p class="report-subtitle">DOJ released 300,000+ pages on Dec 19. Here's what's verified, what's missing, and what viral claims get wrong.</p>
+        <p class="report-subtitle">DOJ released 300,000+ pages on Dec 19. Here's what's verified, what's missing, and
+            what viral claims get wrong.</p>
         <div class="report-meta">
             <span><i data-lucide="calendar" style="width:16px;height:16px;"></i> Dec 20, 2025</span>
             <span><i data-lucide="clock" style="width:16px;height:16px;"></i> 12 min read</span>
@@ -718,125 +750,178 @@
                     <span>Sources First</span>
                     <span class="sources-badge">18</span>
                 </div>
-                <i data-lucide="chevron-down" style="width:20px;height:20px;transition:transform 0.2s;" id="sourcesChevron"></i>
+                <i data-lucide="chevron-down" style="width:20px;height:20px;transition:transform 0.2s;"
+                    id="sourcesChevron"></i>
             </div>
             <div class="sources-content" id="sourcesContent">
                 <div class="source-card">
-                    <a href="https://www.cnn.com/politics/live-news/jeffrey-epstein-files-released" target="_blank" rel="noopener">
+                    <a href="https://www.cnn.com/politics/live-news/jeffrey-epstein-files-released" target="_blank"
+                        rel="noopener">
                         <div class="source-icon news">CNN</div>
-                        <div class="source-info"><h4>CNN Live Updates: Epstein Files</h4><span class="source-domain">cnn.com</span></div>
+                        <div class="source-info">
+                            <h4>CNN Live Updates: Epstein Files</h4><span class="source-domain">cnn.com</span>
+                        </div>
                         <span class="source-score high">92</span>
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.npr.org/2025/12/19/nx-s1-5615152/epstein-files-release-trump-pam-bondi-democrats" target="_blank" rel="noopener">
+                    <a href="https://www.npr.org/2025/12/19/nx-s1-5615152/epstein-files-release-trump-pam-bondi-democrats"
+                        target="_blank" rel="noopener">
                         <div class="source-icon news">NPR</div>
-                        <div class="source-info"><h4>NPR: Many Documents Already Public</h4><span class="source-domain">npr.org</span></div>
+                        <div class="source-info">
+                            <h4>NPR: Many Documents Already Public</h4><span class="source-domain">npr.org</span>
+                        </div>
                         <span class="source-score high">95</span>
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.washingtonpost.com/nation/2025/12/19/epstein-files-trump-administration-doj/" target="_blank" rel="noopener">
+                    <a href="https://www.washingtonpost.com/nation/2025/12/19/epstein-files-trump-administration-doj/"
+                        target="_blank" rel="noopener">
                         <div class="source-icon news">WP</div>
-                        <div class="source-info"><h4>Washington Post: DOJ Releases Trove</h4><span class="source-domain">washingtonpost.com</span></div>
+                        <div class="source-info">
+                            <h4>Washington Post: DOJ Releases Trove</h4><span
+                                class="source-domain">washingtonpost.com</span>
+                        </div>
                         <span class="source-score high">92</span>
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://abcnews.go.com/US/after-years-speculation-doj-faces-friday-deadline-release/story?id=128461125" target="_blank" rel="noopener">
+                    <a href="https://abcnews.go.com/US/after-years-speculation-doj-faces-friday-deadline-release/story?id=128461125"
+                        target="_blank" rel="noopener">
                         <div class="source-icon news">ABC</div>
-                        <div class="source-info"><h4>ABC: Little Evidence of Unknown Accomplices</h4><span class="source-domain">abcnews.go.com</span></div>
+                        <div class="source-info">
+                            <h4>ABC: Little Evidence of Unknown Accomplices</h4><span
+                                class="source-domain">abcnews.go.com</span>
+                        </div>
                         <span class="source-score high">92</span>
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.cbsnews.com/live-updates/epstein-files-released-2025/" target="_blank" rel="noopener">
+                    <a href="https://www.cbsnews.com/live-updates/epstein-files-released-2025/" target="_blank"
+                        rel="noopener">
                         <div class="source-icon news">CBS</div>
-                        <div class="source-info"><h4>CBS News Live Updates</h4><span class="source-domain">cbsnews.com</span></div>
+                        <div class="source-info">
+                            <h4>CBS News Live Updates</h4><span class="source-domain">cbsnews.com</span>
+                        </div>
                         <span class="source-score high">92</span>
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.fox13seattle.com/news/epstein-files-released-whats-in-them" target="_blank" rel="noopener">
+                    <a href="https://www.fox13seattle.com/news/epstein-files-released-whats-in-them" target="_blank"
+                        rel="noopener">
                         <div class="source-icon news">FOX</div>
-                        <div class="source-info"><h4>FOX 13: What's In Them</h4><span class="source-domain">fox13seattle.com</span></div>
+                        <div class="source-info">
+                            <h4>FOX 13: What's In Them</h4><span class="source-domain">fox13seattle.com</span>
+                        </div>
                         <span class="source-score high">85</span>
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.bloomberg.com/news/articles/2025-12-19/epstein-files-released-after-years-of-political-legal-acrimony" target="_blank" rel="noopener">
+                    <a href="https://www.bloomberg.com/news/articles/2025-12-19/epstein-files-released-after-years-of-political-legal-acrimony"
+                        target="_blank" rel="noopener">
                         <div class="source-icon news">BBG</div>
-                        <div class="source-info"><h4>Bloomberg: Years of Acrimony</h4><span class="source-domain">bloomberg.com</span></div>
+                        <div class="source-info">
+                            <h4>Bloomberg: Years of Acrimony</h4><span class="source-domain">bloomberg.com</span>
+                        </div>
                         <span class="source-score high">92</span>
                     </a>
                 </div>
                 <div class="source-card">
                     <a href="https://www.justice.gov/" target="_blank" rel="noopener">
                         <div class="source-icon gov">DOJ</div>
-                        <div class="source-info"><h4>U.S. Department of Justice</h4><span class="source-domain">justice.gov</span></div>
+                        <div class="source-info">
+                            <h4>U.S. Department of Justice</h4><span class="source-domain">justice.gov</span>
+                        </div>
                         <span class="source-score high">100</span>
                     </a>
                 </div>
                 <div class="source-card">
                     <a href="https://www.congress.gov/" target="_blank" rel="noopener">
                         <div class="source-icon gov">GOV</div>
-                        <div class="source-info"><h4>Congress.gov: Epstein Files Transparency Act</h4><span class="source-domain">congress.gov</span></div>
+                        <div class="source-info">
+                            <h4>Congress.gov: Epstein Files Transparency Act</h4><span
+                                class="source-domain">congress.gov</span>
+                        </div>
                         <span class="source-score high">100</span>
                     </a>
                 </div>
                 <div class="source-card">
                     <a href="https://www.fbi.gov/" target="_blank" rel="noopener">
                         <div class="source-icon gov">FBI</div>
-                        <div class="source-info"><h4>FBI Records Vault</h4><span class="source-domain">fbi.gov</span></div>
+                        <div class="source-info">
+                            <h4>FBI Records Vault</h4><span class="source-domain">fbi.gov</span>
+                        </div>
                         <span class="source-score high">100</span>
                     </a>
                 </div>
                 <div class="source-card">
                     <a href="https://www.politifact.com/" target="_blank" rel="noopener">
                         <div class="source-icon org">PF</div>
-                        <div class="source-info"><h4>PolitiFact</h4><span class="source-domain">politifact.com</span></div>
+                        <div class="source-info">
+                            <h4>PolitiFact</h4><span class="source-domain">politifact.com</span>
+                        </div>
                         <span class="source-score high">90</span>
                     </a>
                 </div>
                 <div class="source-card">
                     <a href="https://www.snopes.com/" target="_blank" rel="noopener">
                         <div class="source-icon org">SN</div>
-                        <div class="source-info"><h4>Snopes</h4><span class="source-domain">snopes.com</span></div>
+                        <div class="source-info">
+                            <h4>Snopes</h4><span class="source-domain">snopes.com</span>
+                        </div>
                         <span class="source-score high">88</span>
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.pbs.org/newshour/politics/at-least-16-files-disappear-from-doj-site-for-epstein-documents-including-trump-photo" target="_blank" rel="noopener">
+                    <a href="https://www.pbs.org/newshour/politics/at-least-16-files-disappear-from-doj-site-for-epstein-documents-including-trump-photo"
+                        target="_blank" rel="noopener">
                         <div class="source-icon news">PBS</div>
-                        <div class="source-info"><h4>PBS: 16 Files Disappear from DOJ Site</h4><span class="source-domain">pbs.org</span></div>
+                        <div class="source-info">
+                            <h4>PBS: 16 Files Disappear from DOJ Site</h4><span class="source-domain">pbs.org</span>
+                        </div>
                         <span class="source-score high">95</span>
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.cnbc.com/2025/12/20/trump-epstein-files-doj-photo.html" target="_blank" rel="noopener">
+                    <a href="https://www.cnbc.com/2025/12/20/trump-epstein-files-doj-photo.html" target="_blank"
+                        rel="noopener">
                         <div class="source-icon news">CNBC</div>
-                        <div class="source-info"><h4>CNBC: Trump Photo Removed from DOJ Release</h4><span class="source-domain">cnbc.com</span></div>
+                        <div class="source-info">
+                            <h4>CNBC: Trump Photo Removed from DOJ Release</h4><span
+                                class="source-domain">cnbc.com</span>
+                        </div>
                         <span class="source-score high">90</span>
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://www.aljazeera.com/news/2025/12/21/slap-in-the-face-epstein-victims-slam-release-of-heavily-redacted-files" target="_blank" rel="noopener">
+                    <a href="https://www.aljazeera.com/news/2025/12/21/slap-in-the-face-epstein-victims-slam-release-of-heavily-redacted-files"
+                        target="_blank" rel="noopener">
                         <div class="source-icon news">AJ</div>
-                        <div class="source-info"><h4>Al Jazeera: Victims Slam Redacted Files</h4><span class="source-domain">aljazeera.com</span></div>
+                        <div class="source-info">
+                            <h4>Al Jazeera: Victims Slam Redacted Files</h4><span
+                                class="source-domain">aljazeera.com</span>
+                        </div>
                         <span class="source-score high">88</span>
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://abcnews.go.com/Politics/top-doj-official-denies-effort-redact-mentions-president/story?id=128574448" target="_blank" rel="noopener">
+                    <a href="https://abcnews.go.com/Politics/top-doj-official-denies-effort-redact-mentions-president/story?id=128574448"
+                        target="_blank" rel="noopener">
                         <div class="source-icon news">ABC</div>
-                        <div class="source-info"><h4>ABC: DOJ Denies Effort to Redact Trump</h4><span class="source-domain">abcnews.go.com</span></div>
+                        <div class="source-info">
+                            <h4>ABC: DOJ Denies Effort to Redact Trump</h4><span
+                                class="source-domain">abcnews.go.com</span>
+                        </div>
                         <span class="source-score high">92</span>
                     </a>
                 </div>
                 <div class="source-card">
-                    <a href="https://thehill.com/homenews/administration/5658618-doj-redactions-epstein-files/" target="_blank" rel="noopener">
+                    <a href="https://thehill.com/homenews/administration/5658618-doj-redactions-epstein-files/"
+                        target="_blank" rel="noopener">
                         <div class="source-icon news">HILL</div>
-                        <div class="source-info"><h4>The Hill: 16 Files Disappear</h4><span class="source-domain">thehill.com</span></div>
+                        <div class="source-info">
+                            <h4>The Hill: 16 Files Disappear</h4><span class="source-domain">thehill.com</span>
+                        </div>
                         <span class="source-score high">88</span>
                     </a>
                 </div>
@@ -850,16 +935,25 @@
                 Executive Summary
             </h2>
             <p class="prose-text">
-                On <strong>December 19, 2025</strong>, the <a href="https://www.justice.gov/" target="_blank" rel="noopener">Department of Justice</a> released over <strong>300,000 pages</strong> of Jeffrey Epstein case files, complying with the <a href="https://www.congress.gov/" target="_blank" rel="noopener">Epstein Files Transparency Act</a> signed by President Trump. The release includes photographs, FBI documents, and court records spanning decades.
+                On <strong>December 19, 2025</strong>, the <a href="https://www.justice.gov/" target="_blank"
+                    rel="noopener">Department of Justice</a> released over <strong>300,000 pages</strong> of Jeffrey
+                Epstein case files, complying with the <a href="https://www.congress.gov/" target="_blank"
+                    rel="noopener">Epstein Files Transparency Act</a> signed by President Trump. The release includes
+                photographs, FBI documents, and court records spanning decades.
             </p>
             <p class="prose-text">
-                <strong>Key findings so far:</strong> According to <a href="https://abcnews.go.com/US/after-years-speculation-doj-faces-friday-deadline-release/story?id=128461125" target="_blank" rel="noopener">ABC News</a>, the released materials <em>"show little to support allegations of previously unknown accomplices"</em>—contrary to widespread speculation. Many documents were already public, and critical materials remain redacted or withheld.
+                <strong>Key findings so far:</strong> According to <a
+                    href="https://abcnews.go.com/US/after-years-speculation-doj-faces-friday-deadline-release/story?id=128461125"
+                    target="_blank" rel="noopener">ABC News</a>, the released materials <em>"show little to support
+                    allegations of previously unknown accomplices"</em>—contrary to widespread speculation. Many
+                documents were already public, and critical materials remain redacted or withheld.
             </p>
         </section>
 
         <!-- What Was Released -->
         <section class="content-section copyable-section">
-            <h2 class="prose-h2"><i data-lucide="file-text" style="width: 28px; height: 28px;"></i> What Was Actually Released</h2>
+            <h2 class="prose-h2"><i data-lucide="file-text" style="width: 28px; height: 28px;"></i> What Was Actually
+                Released</h2>
 
             <div class="summary-grid">
                 <div class="summary-card claim">
@@ -891,30 +985,45 @@
 
         <!-- UPDATE: Post-Release Developments -->
         <section class="content-section copyable-section">
-            <h2 class="prose-h2"><i data-lucide="alert-octagon" style="width: 28px; height: 28px;"></i> UPDATE: Files Removed After Release (Dec 20-21)</h2>
+            <h2 class="prose-h2"><i data-lucide="alert-octagon" style="width: 28px; height: 28px;"></i> UPDATE: Files
+                Removed After Release (Dec 20-21)</h2>
 
             <div class="info-box" style="border-left-color: var(--accent-red); background: rgba(239, 68, 68, 0.05);">
-                <h4 style="color: var(--accent-red);"><i data-lucide="alert-triangle" style="width: 20px; height: 20px;"></i> Breaking Development</h4>
-                <p>Less than 24 hours after the December 19 release, <a href="https://www.pbs.org/newshour/politics/at-least-16-files-disappear-from-doj-site-for-epstein-documents-including-trump-photo" target="_blank" rel="noopener">at least 16 files disappeared</a> from the DOJ's public "Epstein Library" website—with no explanation or public notification.</p>
+                <h4 style="color: var(--accent-red);"><i data-lucide="alert-triangle"
+                        style="width: 20px; height: 20px;"></i> Breaking Development</h4>
+                <p>Less than 24 hours after the December 19 release, <a
+                        href="https://www.pbs.org/newshour/politics/at-least-16-files-disappear-from-doj-site-for-epstein-documents-including-trump-photo"
+                        target="_blank" rel="noopener">at least 16 files disappeared</a> from the DOJ's public "Epstein
+                    Library" website—with no explanation or public notification.</p>
             </div>
 
             <p class="prose-text">
-                According to <a href="https://www.npr.org/2025/12/20/nx-s1-5650758/epstein-files-doj-trump-photo" target="_blank" rel="noopener">NPR</a> and <a href="https://www.pbs.org/newshour/politics/at-least-16-files-disappear-from-doj-site-for-epstein-documents-including-trump-photo" target="_blank" rel="noopener">PBS News</a>, files that were available Friday afternoon were no longer accessible by Saturday. The removed materials included:
+                According to <a href="https://www.npr.org/2025/12/20/nx-s1-5650758/epstein-files-doj-trump-photo"
+                    target="_blank" rel="noopener">NPR</a> and <a
+                    href="https://www.pbs.org/newshour/politics/at-least-16-files-disappear-from-doj-site-for-epstein-documents-including-trump-photo"
+                    target="_blank" rel="noopener">PBS News</a>, files that were available Friday afternoon were no
+                longer accessible by Saturday. The removed materials included:
             </p>
 
             <div class="claim-card" style="border-left: 4px solid var(--accent-red);">
-                <p class="prose-text" style="margin-bottom: 0.5rem;"><strong>The Removed Trump Photo (File 468)</strong></p>
+                <p class="prose-text" style="margin-bottom: 0.5rem;"><strong>The Removed Trump Photo (File 468)</strong>
+                </p>
                 <p class="prose-text" style="margin-bottom: 0;">
-                    One of the removed files showed a photograph of a desk/credenza with framed pictures of Epstein with famous people. In an <strong>open drawer below the tabletop</strong>, two printed pictures of <strong>President Donald Trump</strong> were visible:
+                    One of the removed files showed a photograph of a desk/credenza with framed pictures of Epstein with
+                    famous people. In an <strong>open drawer below the tabletop</strong>, two printed pictures of
+                    <strong>President Donald Trump</strong> were visible:
                 </p>
                 <ul style="color: var(--text-secondary); margin: 12px 0 0 20px;">
                     <li>One photo showed Trump surrounded by women in bathing suits</li>
-                    <li>Another showed Trump with First Lady Melania Trump, Epstein, and Ghislaine Maxwell (circa 2000)</li>
+                    <li>Another showed Trump with First Lady Melania Trump, Epstein, and Ghislaine Maxwell (circa 2000)
+                    </li>
                 </ul>
             </div>
 
             <p class="prose-text">
-                <a href="https://www.cnbc.com/2025/12/20/trump-epstein-files-doj-photo.html" target="_blank" rel="noopener">CNBC reported</a> that the unexplained removal sparked immediate speculation online about what was being concealed and why the public wasn't notified.
+                <a href="https://www.cnbc.com/2025/12/20/trump-epstein-files-doj-photo.html" target="_blank"
+                    rel="noopener">CNBC reported</a> that the unexplained removal sparked immediate speculation online
+                about what was being concealed and why the public wasn't notified.
             </p>
 
             <div class="summary-grid">
@@ -922,17 +1031,25 @@
                     <div class="card-label">DOJ Response</div>
                     <div class="card-content">
                         <p style="margin-bottom: 8px;">Deputy AG <strong>Todd Blanche</strong> stated:</p>
-                        <p><em>"The only redactions being applied to the documents are those required by law—full stop. We are not redacting the names of individuals or politicians unless they are a victim."</em></p>
-                        <p style="margin-top: 12px; font-size: 0.9rem;"><a href="https://abcnews.go.com/Politics/top-doj-official-denies-effort-redact-mentions-president/story?id=128574448" target="_blank" rel="noopener">He denied</a> any effort to hide Trump's name from the files.</p>
+                        <p><em>"The only redactions being applied to the documents are those required by law—full stop.
+                                We are not redacting the names of individuals or politicians unless they are a
+                                victim."</em></p>
+                        <p style="margin-top: 12px; font-size: 0.9rem;"><a
+                                href="https://abcnews.go.com/Politics/top-doj-official-denies-effort-redact-mentions-president/story?id=128574448"
+                                target="_blank" rel="noopener">He denied</a> any effort to hide Trump's name from the
+                            files.</p>
                     </div>
                 </div>
                 <div class="summary-card reality">
                     <div class="card-label">Bipartisan Criticism</div>
                     <div class="card-content">
                         <ul>
-                            <li><strong>Rep. Thomas Massie (R-KY)</strong>: Release <em>"grossly fails to comply with both the spirit and the letter of the law"</em></li>
-                            <li><strong>Rep. Ro Khanna (D-CA)</strong>: <em>"Exploring all options"</em> including impeachment referrals</li>
-                            <li><strong>Sen. Chuck Schumer (D-NY)</strong>: Called it potentially <em>"one of the biggest cover-ups in American history"</em></li>
+                            <li><strong>Rep. Thomas Massie (R-KY)</strong>: Release <em>"grossly fails to comply with
+                                    both the spirit and the letter of the law"</em></li>
+                            <li><strong>Rep. Ro Khanna (D-CA)</strong>: <em>"Exploring all options"</em> including
+                                impeachment referrals</li>
+                            <li><strong>Sen. Chuck Schumer (D-NY)</strong>: Called it potentially <em>"one of the
+                                    biggest cover-ups in American history"</em></li>
                         </ul>
                     </div>
                 </div>
@@ -955,7 +1072,10 @@
 
             <div class="info-box">
                 <h4><i data-lucide="info" style="width: 20px; height: 20px;"></i> DOJ Acknowledged Errors</h4>
-                <p>The DOJ later acknowledged that the <em>"size and scope"</em> of the redaction process made results <em>"vulnerable to machine error"</em> and <em>"instances of human error."</em> The department directed users to report problematic files via a dedicated email address, but did not explain why specific files—including the Trump photo—were removed.</p>
+                <p>The DOJ later acknowledged that the <em>"size and scope"</em> of the redaction process made results
+                    <em>"vulnerable to machine error"</em> and <em>"instances of human error."</em> The department
+                    directed users to report problematic files via a dedicated email address, but did not explain why
+                    specific files—including the Trump photo—were removed.</p>
             </div>
         </section>
 
@@ -964,34 +1084,46 @@
             <h2 class="prose-h2"><i data-lucide="users" style="width: 28px; height: 28px;"></i> Victim Reactions</h2>
 
             <p class="prose-text">
-                According to <a href="https://www.aljazeera.com/news/2025/12/21/slap-in-the-face-epstein-victims-slam-release-of-heavily-redacted-files" target="_blank" rel="noopener">Al Jazeera</a>, multiple Epstein survivors expressed anger over the heavily redacted disclosure:
+                According to <a
+                    href="https://www.aljazeera.com/news/2025/12/21/slap-in-the-face-epstein-victims-slam-release-of-heavily-redacted-files"
+                    target="_blank" rel="noopener">Al Jazeera</a>, multiple Epstein survivors expressed anger over the
+                heavily redacted disclosure:
             </p>
 
             <div class="claim-card">
-                <p class="prose-text"><strong>Marina Lacerda</strong> (abused at age 14): <em>"All of us are infuriated by this. It's another slap in the face."</em></p>
+                <p class="prose-text"><strong>Marina Lacerda</strong> (abused at age 14): <em>"All of us are infuriated
+                        by this. It's another slap in the face."</em></p>
             </div>
 
             <div class="claim-card">
-                <p class="prose-text"><strong>Jess Michaels</strong> spent hours searching for her victim statement and FBI tipline records but found neither, questioning whether <em>"the government can do"</em> better.</p>
+                <p class="prose-text"><strong>Jess Michaels</strong> spent hours searching for her victim statement and
+                    FBI tipline records but found neither, questioning whether <em>"the government can do"</em> better.
+                </p>
             </div>
 
             <div class="claim-card">
-                <p class="prose-text"><strong>Marijke Chartouni</strong> (abused at age 20): <em>"If everything is redacted, where is the transparency?"</em></p>
+                <p class="prose-text"><strong>Marijke Chartouni</strong> (abused at age 20): <em>"If everything is
+                        redacted, where is the transparency?"</em></p>
             </div>
         </section>
 
         <!-- Key Photographs -->
         <section class="content-section copyable-section">
-            <h2 class="prose-h2"><i data-lucide="camera" style="width: 28px; height: 28px;"></i> Key Photographs Released</h2>
+            <h2 class="prose-h2"><i data-lucide="camera" style="width: 28px; height: 28px;"></i> Key Photographs
+                Released</h2>
 
             <p class="prose-text">
-                According to <a href="https://www.cnn.com/politics/live-news/jeffrey-epstein-files-released" target="_blank" rel="noopener">CNN</a> and <a href="https://www.npr.org/2025/12/19/nx-s1-5615152/epstein-files-release-trump-pam-bondi-democrats" target="_blank" rel="noopener">NPR</a>, the release included several previously unseen photographs:
+                According to <a href="https://www.cnn.com/politics/live-news/jeffrey-epstein-files-released"
+                    target="_blank" rel="noopener">CNN</a> and <a
+                    href="https://www.npr.org/2025/12/19/nx-s1-5615152/epstein-files-release-trump-pam-bondi-democrats"
+                    target="_blank" rel="noopener">NPR</a>, the release included several previously unseen photographs:
             </p>
 
             <div class="bio-stats">
                 <div class="bio-stat">
                     <div class="number" style="font-size: 1rem;">Bill Clinton</div>
-                    <div class="label">Photos in hot tub (victim's face redacted), with Kevin Spacey in London, on airplane with Michael Jackson</div>
+                    <div class="label">Photos in hot tub (victim's face redacted), with Kevin Spacey in London, on
+                        airplane with Michael Jackson</div>
                 </div>
                 <div class="bio-stat">
                     <div class="number" style="font-size: 1rem;">FBI Raid Evidence</div>
@@ -999,74 +1131,114 @@
                 </div>
                 <div class="bio-stat">
                     <div class="number" style="font-size: 1rem;">1996 FBI Complaint</div>
-                    <div class="label">First known report accusing Epstein of "child pornography" - 8 years before investigation</div>
+                    <div class="label">First known report accusing Epstein of "child pornography" - 8 years before
+                        investigation</div>
                 </div>
             </div>
 
             <div class="info-box" style="border-left-color: var(--accent-red);">
-                <h4 style="color: var(--accent-red);"><i data-lucide="alert-triangle" style="width: 20px; height: 20px;"></i> DOJ Clarification on Clinton Photo</h4>
-                <p>A DOJ spokesperson confirmed the redacted person in Clinton's hot tub photo is <strong>"a victim"</strong> of Epstein's abuse—not a co-conspirator. The redaction protects victim identity, not the powerful.</p>
+                <h4 style="color: var(--accent-red);"><i data-lucide="alert-triangle"
+                        style="width: 20px; height: 20px;"></i> DOJ Clarification on Clinton Photo</h4>
+                <p>A DOJ spokesperson confirmed the redacted person in Clinton's hot tub photo is <strong>"a
+                        victim"</strong> of Epstein's abuse—not a co-conspirator. The redaction protects victim
+                    identity, not the powerful.</p>
             </div>
         </section>
 
         <!-- Notable Names -->
         <section class="content-section copyable-section">
-            <h2 class="prose-h2"><i data-lucide="users" style="width: 28px; height: 28px;"></i> Notable Names in the Documents</h2>
+            <h2 class="prose-h2"><i data-lucide="users" style="width: 28px; height: 28px;"></i> Notable Names in the
+                Documents</h2>
 
             <p class="prose-text">
-                According to <a href="https://www.npr.org/2025/12/19/nx-s1-5615152/epstein-files-release-trump-pam-bondi-democrats" target="_blank" rel="noopener">NPR's analysis</a>, the documents contain references to numerous public figures:
+                According to <a
+                    href="https://www.npr.org/2025/12/19/nx-s1-5615152/epstein-files-release-trump-pam-bondi-democrats"
+                    target="_blank" rel="noopener">NPR's analysis</a>, the documents contain references to numerous
+                public figures:
             </p>
 
             <div class="claim-card">
                 <p class="prose-text" style="margin-bottom: 0.5rem;"><strong>Names appearing in documents:</strong></p>
                 <p class="prose-text" style="margin-bottom: 0;">
-                    <strong>Bill Clinton</strong> (flight logs, photos) · <strong>Donald Trump</strong> (mentioned 1,000+ times, primarily re: Epstein's interest in his presidency) · <strong>Kevin Spacey</strong> (photos) · <strong>Noam Chomsky</strong> · <strong>Steve Bannon</strong> · <strong>Larry Summers</strong> · <strong>Kathryn Ruemmler</strong> · <strong>Michael Wolff</strong>
+                    <strong>Bill Clinton</strong> (flight logs, photos) · <strong>Donald Trump</strong> (mentioned
+                    1,000+ times, primarily re: Epstein's interest in his presidency) · <strong>Kevin Spacey</strong>
+                    (photos) · <strong>Noam Chomsky</strong> · <strong>Steve Bannon</strong> · <strong>Larry
+                        Summers</strong> · <strong>Kathryn Ruemmler</strong> · <strong>Michael Wolff</strong>
                 </p>
             </div>
 
             <div class="info-box">
                 <h4><i data-lucide="info" style="width: 20px; height: 20px;"></i> Important Context</h4>
-                <p>Appearing in Epstein's documents does <em>not</em> imply criminal wrongdoing. Many names appear in contact lists, flight logs, or investigative notes without any allegation of illegal activity. <a href="https://abcnews.go.com/US/after-years-speculation-doj-faces-friday-deadline-release/story?id=128461125" target="_blank" rel="noopener">ABC News reports</a> the files "show little to support allegations of previously unknown accomplices."</p>
+                <p>Appearing in Epstein's documents does <em>not</em> imply criminal wrongdoing. Many names appear in
+                    contact lists, flight logs, or investigative notes without any allegation of illegal activity. <a
+                        href="https://abcnews.go.com/US/after-years-speculation-doj-faces-friday-deadline-release/story?id=128461125"
+                        target="_blank" rel="noopener">ABC News reports</a> the files "show little to support
+                    allegations of previously unknown accomplices."</p>
             </div>
         </section>
 
         <!-- Missing Documents -->
         <section class="content-section copyable-section">
-            <h2 class="prose-h2"><i data-lucide="file-x" style="width: 28px; height: 28px;"></i> Critical Documents Still Missing</h2>
+            <h2 class="prose-h2"><i data-lucide="file-x" style="width: 28px; height: 28px;"></i> Critical Documents
+                Still Missing</h2>
 
             <p class="prose-text">
-                Attorney <strong>Brad Edwards</strong>, who has represented Epstein victims, <a href="https://abcnews.go.com/US/after-years-speculation-doj-faces-friday-deadline-release/story?id=128461125" target="_blank" rel="noopener">told ABC News</a> that crucial documents are absent from the release:
+                Attorney <strong>Brad Edwards</strong>, who has represented Epstein victims, <a
+                    href="https://abcnews.go.com/US/after-years-speculation-doj-faces-friday-deadline-release/story?id=128461125"
+                    target="_blank" rel="noopener">told ABC News</a> that crucial documents are absent from the release:
             </p>
 
             <div class="claim-card" style="border-left: 4px solid var(--accent-red);">
-                <p class="prose-text" style="margin-bottom: 0.5rem;"><strong>Missing: The 2007 "Prosecution Memo"</strong></p>
+                <p class="prose-text" style="margin-bottom: 0.5rem;"><strong>Missing: The 2007 "Prosecution
+                        Memo"</strong></p>
                 <p class="prose-text" style="margin-bottom: 0;">
-                    Prosecutor <strong>Marie Villafana</strong> prepared an <strong>83-page prosecution memo</strong> and <strong>60-count draft indictment</strong> in 2007 that reportedly <em>"implicates other rich and powerful men who knew about the abuse or participated in it."</em> This document could explain why Epstein received his controversial 2008 plea deal instead of federal prosecution. <strong>It was not included in the December 19 release.</strong>
+                    Prosecutor <strong>Marie Villafana</strong> prepared an <strong>83-page prosecution memo</strong>
+                    and <strong>60-count draft indictment</strong> in 2007 that reportedly <em>"implicates other rich
+                        and powerful men who knew about the abuse or participated in it."</em> This document could
+                    explain why Epstein received his controversial 2008 plea deal instead of federal prosecution.
+                    <strong>It was not included in the December 19 release.</strong>
                 </p>
             </div>
 
             <p class="prose-text">
-                <a href="https://www.npr.org/2025/12/19/nx-s1-5647638/epstein-files-release-law-deadline-trump" target="_blank" rel="noopener">Rep. Ro Khanna</a>, who co-sponsored the Epstein Files Transparency Act, expressed disappointment: <em>"This seems at very best incomplete."</em>
+                <a href="https://www.npr.org/2025/12/19/nx-s1-5647638/epstein-files-release-law-deadline-trump"
+                    target="_blank" rel="noopener">Rep. Ro Khanna</a>, who co-sponsored the Epstein Files Transparency
+                Act, expressed disappointment: <em>"This seems at very best incomplete."</em>
             </p>
         </section>
 
         <!-- Viral Claims vs Reality -->
         <section class="content-section copyable-section">
-            <h2 class="prose-h2"><i data-lucide="alert-triangle" style="width: 28px; height: 28px;"></i> Viral Claims vs. Reality</h2>
+            <h2 class="prose-h2"><i data-lucide="alert-triangle" style="width: 28px; height: 28px;"></i> Viral Claims
+                vs. Reality</h2>
 
             <div class="claim-card" style="border-left: 4px solid var(--accent-red);">
-                <p class="prose-text"><strong>CLAIM:</strong> <em>"The files expose a massive pedophile ring involving dozens of celebrities"</em></p>
-                <p class="prose-text" style="margin-bottom: 0;"><strong>REALITY:</strong> <a href="https://abcnews.go.com/US/after-years-speculation-doj-faces-friday-deadline-release/story?id=128461125" target="_blank" rel="noopener">ABC News reports</a> the documents "show little to support allegations of previously unknown accomplices." Many names appear in non-criminal contexts (contact lists, calendars, flight logs).</p>
+                <p class="prose-text"><strong>CLAIM:</strong> <em>"The files expose a massive pedophile ring involving
+                        dozens of celebrities"</em></p>
+                <p class="prose-text" style="margin-bottom: 0;"><strong>REALITY:</strong> <a
+                        href="https://abcnews.go.com/US/after-years-speculation-doj-faces-friday-deadline-release/story?id=128461125"
+                        target="_blank" rel="noopener">ABC News reports</a> the documents "show little to support
+                    allegations of previously unknown accomplices." Many names appear in non-criminal contexts (contact
+                    lists, calendars, flight logs).</p>
             </div>
 
             <div class="claim-card" style="border-left: 4px solid var(--accent-amber);">
-                <p class="prose-text"><strong>CLAIM:</strong> <em>"Trump allegedly signed a birthday book with lewd drawing"</em></p>
-                <p class="prose-text" style="margin-bottom: 0;"><strong>REALITY:</strong> A page from a "birthday book" with Trump's name and a crude drawing was released. <a href="https://www.npr.org/2025/12/19/nx-s1-5615152/epstein-files-release-trump-pam-bondi-democrats" target="_blank" rel="noopener">Trump called it "fake"</a> through his team. The document's authenticity and author remain unverified.</p>
+                <p class="prose-text"><strong>CLAIM:</strong> <em>"Trump allegedly signed a birthday book with lewd
+                        drawing"</em></p>
+                <p class="prose-text" style="margin-bottom: 0;"><strong>REALITY:</strong> A page from a "birthday book"
+                    with Trump's name and a crude drawing was released. <a
+                        href="https://www.npr.org/2025/12/19/nx-s1-5615152/epstein-files-release-trump-pam-bondi-democrats"
+                        target="_blank" rel="noopener">Trump called it "fake"</a> through his team. The document's
+                    authenticity and author remain unverified.</p>
             </div>
 
             <div class="claim-card" style="border-left: 4px solid var(--accent-green);">
-                <p class="prose-text"><strong>CLAIM:</strong> <em>"The Clinton hot tub photo shows him with a minor"</em></p>
-                <p class="prose-text" style="margin-bottom: 0;"><strong>REALITY:</strong> <a href="https://www.cnn.com/politics/live-news/jeffrey-epstein-files-released" target="_blank" rel="noopener">DOJ confirmed</a> the redacted person is "a victim"—the redaction protects victim identity, not Clinton. The photo does not establish illegal activity by Clinton.</p>
+                <p class="prose-text"><strong>CLAIM:</strong> <em>"The Clinton hot tub photo shows him with a
+                        minor"</em></p>
+                <p class="prose-text" style="margin-bottom: 0;"><strong>REALITY:</strong> <a
+                        href="https://www.cnn.com/politics/live-news/jeffrey-epstein-files-released" target="_blank"
+                        rel="noopener">DOJ confirmed</a> the redacted person is "a victim"—the redaction protects victim
+                    identity, not Clinton. The photo does not establish illegal activity by Clinton.</p>
             </div>
         </section>
 
@@ -1075,7 +1247,10 @@
             <h2 class="prose-h2"><i data-lucide="clock" style="width: 28px; height: 28px;"></i> What Happens Next</h2>
 
             <p class="prose-text">
-                Deputy Attorney General <strong>Todd Blanche</strong> <a href="https://www.npr.org/2025/12/19/nx-s1-5647638/epstein-files-release-law-deadline-trump" target="_blank" rel="noopener">told reporters</a> that <strong>"several hundred thousand"</strong> more documents will be released in coming weeks as the vetting process continues.
+                Deputy Attorney General <strong>Todd Blanche</strong> <a
+                    href="https://www.npr.org/2025/12/19/nx-s1-5647638/epstein-files-release-law-deadline-trump"
+                    target="_blank" rel="noopener">told reporters</a> that <strong>"several hundred thousand"</strong>
+                more documents will be released in coming weeks as the vetting process continues.
             </p>
 
             <div class="bio-stats">
@@ -1094,7 +1269,10 @@
             </div>
 
             <p class="prose-text">
-                Democrats have <a href="https://www.bloomberg.com/news/articles/2025-12-19/epstein-files-released-after-years-of-political-legal-acrimony" target="_blank" rel="noopener">threatened legal action</a> over the incomplete release, arguing the Dec. 19 deadline mandated full disclosure.
+                Democrats have <a
+                    href="https://www.bloomberg.com/news/articles/2025-12-19/epstein-files-released-after-years-of-political-legal-acrimony"
+                    target="_blank" rel="noopener">threatened legal action</a> over the incomplete release, arguing the
+                Dec. 19 deadline mandated full disclosure.
             </p>
         </section>
 
@@ -1107,25 +1285,34 @@
             <div class="verdict-box box-developing">
                 <span class="verdict-label label-developing">DEVELOPING</span>
                 <p class="verdict-explanation">
-                    The December 19, 2025 Epstein file release is <strong>significant but incomplete—and increasingly controversial</strong>. Within 24 hours, at least 16 files were removed from the DOJ website without explanation, including a photograph showing Trump's image in Epstein's possession. DOJ officials deny any effort to protect politicians, but bipartisan lawmakers are threatening legal action.
+                    The December 19, 2025 Epstein file release is <strong>significant but incomplete—and increasingly
+                        controversial</strong>. Within 24 hours, at least 16 files were removed from the DOJ website
+                    without explanation, including a photograph showing Trump's image in Epstein's possession. DOJ
+                    officials deny any effort to protect politicians, but bipartisan lawmakers are threatening legal
+                    action.
                     <br><br>
-                    <strong>What we know:</strong> Photos and documents confirm Epstein's connections to powerful figures. Over 680 pages were entirely redacted. The 2007 draft indictment remains hidden.
+                    <strong>What we know:</strong> Photos and documents confirm Epstein's connections to powerful
+                    figures. Over 680 pages were entirely redacted. The 2007 draft indictment remains hidden.
                     <br><br>
-                    <strong>What remains unresolved:</strong> Why specific files—including those featuring Trump—were removed post-release. Whether the removals were intentional or "machine error" as DOJ claims. Whether victims will ever see full disclosure.
+                    <strong>What remains unresolved:</strong> Why specific files—including those featuring Trump—were
+                    removed post-release. Whether the removals were intentional or "machine error" as DOJ claims.
+                    Whether victims will ever see full disclosure.
                     <br><br>
-                    <strong>Trump has not been accused of wrongdoing</strong> in connection with Epstein's crimes. Appearing in photographs or documents does not imply illegal activity.
+                    <strong>Trump has not been accused of wrongdoing</strong> in connection with Epstein's crimes.
+                    Appearing in photographs or documents does not imply illegal activity.
                     <br><br>
-                    <em>Last updated: December 21, 2025. GenuVerity will continue updating this report as developments unfold.</em>
+                    <em>Last updated: December 21, 2025. GenuVerity will continue updating this report as developments
+                        unfold.</em>
                 </p>
             </div>
         </section>
 
         <!-- Footer -->
-        
-    <!-- Footer -->
-    
-    <!-- Shared Footer Placeholder -->
-    <div id="footer-placeholder"></div>
+
+        <!-- Footer -->
+
+        <!-- Shared Footer Placeholder -->
+        <div id="footer-placeholder"></div>
 
 
     </main>
@@ -1222,4 +1409,5 @@
         }
     </script>
 </body>
+
 </html>
