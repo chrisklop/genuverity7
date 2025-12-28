@@ -238,6 +238,8 @@ function injectSharedComponents() {
         }
     });
 
+    // Ensure report layout structure (retroactive fix for legacy reports)
+    ensureReportLayout();
 
     // Final Lucide pass
     if (typeof lucide !== 'undefined') {
@@ -249,9 +251,63 @@ function injectSharedComponents() {
     window.dispatchEvent(new CustomEvent('gv:componentsReady'));
 }
 
+/**
+ * Ensures reports have correct layout structure
+ * Fixes legacy reports missing content-grid wrapper
+ * This enables "one change fixes all" architecture
+ */
+function ensureReportLayout() {
+    // Only run on report pages
+    const isReportPage = document.querySelector('[data-page-type="report"]');
+    if (!isReportPage) return;
+
+    const container = document.querySelector('.container');
+    if (!container) return;
+
+    const sidebar = container.querySelector('.sources-sidebar');
+    const article = container.querySelector('.article-content') || container.querySelector('article');
+
+    // Skip if already wrapped correctly
+    if (container.querySelector('.content-grid')) {
+        console.log('[GV Layout] content-grid already present');
+        return;
+    }
+
+    // Skip if missing critical elements
+    if (!sidebar || !article) {
+        console.warn('[GV Layout] Missing sidebar or article - skipping layout fix');
+        return;
+    }
+
+    // Create content-grid wrapper
+    const grid = document.createElement('div');
+    grid.className = 'content-grid';
+
+    // Clone positions - must move elements carefully
+    // First, remove from current parent
+    sidebar.parentNode.removeChild(sidebar);
+    article.parentNode.removeChild(article);
+
+    // Add to grid
+    grid.appendChild(sidebar);
+    grid.appendChild(article);
+
+    // Insert grid at start of container (after any scripts that might be there)
+    container.insertBefore(grid, container.firstChild);
+
+    // Ensure article has correct class
+    if (article.classList.contains('article-main')) {
+        article.classList.remove('article-main');
+        article.classList.add('article-content');
+    }
+
+    console.log('[GV Layout] ✅ Applied content-grid wrapper (retroactive fix)');
+}
+
 // Boot
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', injectSharedComponents);
 } else {
     injectSharedComponents();
 }
+
