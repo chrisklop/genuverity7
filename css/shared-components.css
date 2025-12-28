@@ -64,8 +64,8 @@
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    /* The searchlight gradient */
-    background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+    /* The searchlight gradient - reduced opacity to prevent visible blur */
+    background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.08) 30deg, transparent 60deg);
     /* Slower, alternating animation */
     animation: sweep-30 4s ease-in-out infinite alternate;
 }
