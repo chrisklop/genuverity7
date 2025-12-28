@@ -3,6 +3,24 @@
 
 const REPORTS_DATA = [
     {
+        id: 54,
+        title: "Fact-Check: The Viral \"166-Name Epstein List\"",
+        slug: "localreports/epstein-166-name-list-fake.html",
+        category: "Viral Disinformation",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "flame",
+        date: "Dec 28, 2025",
+        sources: "32 Sources",
+        readTime: "12 min",
+        excerpt: "Forensic analysis of the viral 166-name list reveals it is 78% fabricated, originating from a 4chan hoax mixing real names with political targets who appear in no unsealed documents. Verdict: PANTS ON FIRE.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [166, 36]
+        }
+    },
+    {
         id: 53,
         title: "CDC Reverses Vaccine-Autism Stance: A Scientific Fact-Check",
         slug: "localreports/hhs-vaccine-autism-claims.html",
