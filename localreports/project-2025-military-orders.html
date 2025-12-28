@@ -30,7 +30,7 @@
 <body>
     <div id="navbar-placeholder"></div>
 
-    <main class="report-container">
+    <main class="container">
         <!-- Header Section -->
         <header class="report-header">
             <div class="report-meta">
@@ -208,7 +208,7 @@
         function highlightSource(id) {
             // Remove 'highlight' from all source items
             document.querySelectorAll('.source-item').forEach(el => el.classList.remove('highlight'));
-            
+
             // Add to clicked item
             const element = document.getElementById('source-' + id);
             if (element) {
