@@ -157,13 +157,27 @@ grid: { color: '#1e293b' },        // Subtle grid lines
 
 ---
 
-## 🔧 MCP Integrations
+## 🔧 MCP Integrations & Tools
 
-| Server | Purpose |
-|--------|---------|
-| `datacommons` | Google Data Commons for economic/demographic data |
+| Tool | Purpose | Status |
+|------|---------|--------|
+| `tools/dc-query.py` | Query Data Commons (V1 Public API) | ✅ Active (Fallback mode) |
+| `datacommons` | MCP Server | ⚠️ Auth Failed (Needs Key Fix) |
 
-*If MCP access fails, web search provides adequate sourcing.*
+### Using Data Commons Tool
+Use `run_command` to fetch economic/demographic data:
+```bash
+python3 tools/dc-query.py [Variable] [Entity]
+```
+
+**Examples:**
+```bash
+python3 tools/dc-query.py UnemploymentRate_Person country/USA
+python3 tools/dc-query.py Count_Person country/USA
+python3 tools/dc-query.py Count_Death country/USA
+```
+
+*Note: Currently uses V1 Public API because V2 API Key requires activation.*
 
 ---
 
