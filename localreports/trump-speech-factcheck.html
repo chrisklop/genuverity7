@@ -36,6 +36,9 @@
     </script>
 
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="../css/shared-components.css?v=2.0">
+
 
     <style>
         :root {
@@ -543,24 +546,10 @@
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="index.html" class="navbar-brand">
-            <div class="navbar-logo">
-                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
-            </div>
-            <span class="navbar-badge">Fact Check</span>
-        </a>
-        <div class="navbar-right">
-            <a href="reports.html" class="navbar-link">
-                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-                Reports
-            </a>
-            <a href="request-report.html" class="navbar-link">
-                <i data-lucide="plus-circle" style="width:16px;height:16px;"></i>
-                Request Report
-            </a>
-        </div>
-    </nav>
+    
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
 
     <header class="report-header">
         <span class="report-tag">Politics // Economy</span>
@@ -841,17 +830,14 @@
             </div>
         </section>
 
-        <footer class="report-footer">
-            <div class="genuverity-brand">
-                <span class="genu">Genu</span><span class="verity">Verity</span>
-            </div>
-            <p>Data-driven analysis backed by primary sources.</p>
-            <p style="margin-top: 8px;">Report generated December 19, 2025</p>
-        </footer>
+        
+    <!-- Shared Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
     </main>
 
     <script>
-        lucide.createIcons();
+        window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
 
         function toggleSources() {
             const content = document.getElementById('sourcesContent');

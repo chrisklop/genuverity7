@@ -15,6 +15,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="../css/shared-components.css?v=2.0">
+
     <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
     <style>
         /* === CORE VARIABLES (GenuVerity Dark Theme) === */
@@ -1275,24 +1278,10 @@
     <div class="bg-glow"></div>
 
     <!-- Navbar -->
-    <nav class="navbar">
-        <a href="/" class="navbar-brand">
-            <span class="navbar-logo">
-                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
-            </span>
-            <span class="navbar-badge">COMING SOON</span>
-        </a>
-        <div class="navbar-right">
-            <a href="reports.html" class="navbar-link active">
-                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-                Custom Reports
-            </a>
-            <a href="/#notify" class="navbar-cta" id="navbar-cta">
-                <i data-lucide="bell" style="width:14px;height:14px;"></i>
-                Early Access
-            </a>
-        </div>
-    </nav>
+    
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
 
     <!-- Mobile Notice -->
     <div class="mobile-notice" id="mobile-notice">
@@ -2098,16 +2087,10 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <p><strong>GenuVerity</strong> - Independent Fact Verification</p>
-        <p>Report generated December 17, 2025 | Last updated December 17, 2025</p>
-        <p style="margin-top: 12px; font-size: 0.75rem;">This fact-check is provided for informational purposes. Sources are linked for reader verification.</p>
-        <div class="footer-links">
-            <a href="mailto:hello@genuverity.com" class="footer-link">Contact</a>
-            <a href="#" class="footer-link">Privacy</a>
-            <a href="#" class="footer-link">Terms</a>
-        </div>
-    </footer>
+    
+    <!-- Shared Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
 
     <!-- Floating CTA -->
     <a href="/#notify" class="floating-cta" id="floating-cta">
@@ -2137,7 +2120,7 @@
 
         // Initialize Lucide icons
         document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
+            window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
         });
 
         // Smooth scroll for citation links
@@ -2281,7 +2264,7 @@
                 console.error('Feedback error:', err);
                 btn.disabled = false;
                 btn.innerHTML = '<i data-lucide="send" style="width:18px;height:18px;"></i> Submit Feedback';
-                lucide.createIcons();
+                window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
                 alert('Failed to submit feedback. Please try again.');
             }
         });
@@ -2330,7 +2313,7 @@
                     actions.querySelector('.share-btn').addEventListener('click', (e) => { e.stopPropagation(); shareComponent(el); });
                 });
             });
-            lucide.createIcons();
+            window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
         }
         async function captureComponent(element) {
             element.classList.add('capturing');
@@ -2379,8 +2362,8 @@
                     await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
                     button.classList.add('success');
                     button.innerHTML = '<i data-lucide="check" style="width:16px;height:16px;"></i>';
-                    lucide.createIcons();
-                    setTimeout(() => { button.classList.remove('success'); button.innerHTML = '<i data-lucide="copy" style="width:16px;height:16px;"></i>'; lucide.createIcons(); }, 2000);
+                    window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
+                    setTimeout(() => { button.classList.remove('success'); button.innerHTML = '<i data-lucide="copy" style="width:16px;height:16px;"></i>'; window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); }); }, 2000);
                 } else { showShareModal(dataUrl, blob); }
             } catch (err) { console.error('Copy failed:', err); alert('Could not copy to clipboard. Try the share button instead.'); }
         }
@@ -2404,7 +2387,7 @@
             document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?text=${title}&url=${pageUrl}`;
             document.getElementById('shareLinkedIn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`;
             document.getElementById('shareModalOverlay').classList.add('active');
-            lucide.createIcons();
+            window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
         }
         function closeShareModal(event) {
             if (event && event.target !== event.currentTarget) return;

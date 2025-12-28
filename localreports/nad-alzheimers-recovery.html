@@ -68,6 +68,9 @@
 
     <!-- Dependencies -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="../css/shared-components.css?v=2.0">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/chart-watermark.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -649,30 +652,10 @@
 
 <body>
     <!-- STANDARD NAVBAR -->
-    <nav class="navbar">
-        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
-            <div class="navbar-logo">
-                <div class="navbar-logo-wrapper">
-                    <div class="ss-nav"></div>
-                    <div class="g-icon-nav">G</div>
-                </div>
-            </div>
-        </a>
+    
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
 
-        <!-- Persistent Search Bar -->
-        <div class="navbar-search-container" id="navSearchContainer">
-            <i data-lucide="search" style="width:16px; color:var(--accent-cyan);"></i>
-            <input type="text" class="navbar-search-input search-sync-input" placeholder="Search Intelligence..."
-                id="navSearchInput">
-        </div>
-
-        <div class="navbar-right">
-            <a href="../index.html" class="nav-back-link">
-                <i data-lucide="arrow-left" style="width:16px;"></i>
-                Back to Intelligence
-            </a>
-        </div>
-    </nav>
 
     <div class="container">
         <!-- REPORT HEADER -->
@@ -1608,7 +1591,7 @@
         });
 
         // Initialize Lucide Icons
-        lucide.createIcons();
+        window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
 
         // Interactive Citation Highlighting
         function highlightSource(event, id) {
@@ -1664,6 +1647,10 @@
         //     }
         // });
     </script>
+
+    <!-- Shared Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
 </body>
 
 </html>

@@ -41,6 +41,9 @@
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="../css/shared-components.css?v=2.0">
+
 
     <style>
         :root {
@@ -773,29 +776,10 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="/" class="navbar-brand">
-            <span class="navbar-logo">
-                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
-            </span>
-            <span class="navbar-badge">Needs Context</span>
-        </a>
-        <div class="navbar-right">
-            <a href="/" class="navbar-link">
-                <i data-lucide="home" style="width:16px;height:16px;"></i>
-                Home
-            </a>
-            <a href="/reports.html" class="navbar-link">
-                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-                Reports
-            </a>
-        </div>
-        <button class="hamburger-btn" onclick="toggleMobileMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </nav>
+    
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
 
     <div class="mobile-menu" id="mobileMenu">
         <a href="/"><i data-lucide="home" style="width:18px;height:18px;"></i> Home</a>
@@ -1112,18 +1096,15 @@
         </section>
 
         <!-- Footer -->
-        <footer class="report-footer">
-            <div class="genuverity-brand">
-                <span class="genu">Genu</span><span class="verity">Verity</span>
-            </div>
-            <p>Data-driven analysis backed by primary sources.</p>
-            <p style="margin-top: 8px;">Report generated December 19, 2025</p>
-        </footer>
+        
+    <!-- Shared Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
     </main>
 
     <script>
         // Initialize Lucide icons
-        lucide.createIcons();
+        window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
 
         // Toggle sources panel
         function toggleSources() {

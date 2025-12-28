@@ -41,6 +41,9 @@
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="../css/shared-components.css?v=2.0">
+
 
     <!-- html-to-image for copy/share feature -->
     <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
@@ -744,24 +747,10 @@
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="index.html" class="navbar-brand">
-            <div class="navbar-logo">
-                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
-            </div>
-            <span class="navbar-badge">Trial Analysis</span>
-        </a>
-        <div class="navbar-right">
-            <a href="reports.html" class="navbar-link">
-                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-                Reports
-            </a>
-            <a href="request-report.html" class="navbar-link">
-                <i data-lucide="plus-circle" style="width:16px;height:16px;"></i>
-                Request Report
-            </a>
-        </div>
-    </nav>
+    
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
 
     <header class="report-header">
         <span class="report-tag">Crime // Legal</span>
@@ -1092,17 +1081,14 @@
             </div>
         </section>
 
-        <footer class="report-footer">
-            <div class="genuverity-brand">
-                <span class="genu">Genu</span><span class="verity">Verity</span>
-            </div>
-            <p>Data-driven analysis backed by primary sources.</p>
-            <p style="margin-top: 8px;">Report generated December 19, 2025</p>
-        </footer>
+        
+    <!-- Shared Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
     </main>
 
     <script>
-        lucide.createIcons();
+        window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
 
         function toggleSources() {
             const content = document.getElementById('sourcesContent');
@@ -1239,7 +1225,7 @@
                     });
                 });
             });
-            lucide.createIcons();
+            window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
         }
 
         async function captureComponent(element) {
@@ -1303,11 +1289,11 @@
                     await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
                     button.classList.add('success');
                     button.innerHTML = '<i data-lucide="check" style="width:16px;height:16px;"></i>';
-                    lucide.createIcons();
+                    window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
                     setTimeout(() => {
                         button.classList.remove('success');
                         button.innerHTML = '<i data-lucide="copy" style="width:16px;height:16px;"></i>';
-                        lucide.createIcons();
+                        window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
                     }, 2000);
                 } else {
                     showShareModal(dataUrl, blob);
@@ -1346,7 +1332,7 @@
             document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?text=${title}&url=${pageUrl}`;
             document.getElementById('shareLinkedIn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`;
             document.getElementById('shareModalOverlay').classList.add('active');
-            lucide.createIcons();
+            window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
         }
 
         function closeShareModal(event) {

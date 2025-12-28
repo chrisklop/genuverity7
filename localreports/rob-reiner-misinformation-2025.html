@@ -49,6 +49,9 @@
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="../css/shared-components.css?v=2.0">
+
 
     <!-- html2canvas for copyable sections -->
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
@@ -798,22 +801,10 @@
     <!-- Navbar -->
     
     <!-- STANDARD NAVBAR -->
-    <nav class="navbar">
-        <a href="../index.html" class="navbar-brand" style="text-decoration: none; border: none;">
-            <div class="navbar-logo">
-                <div class="navbar-logo-wrapper">
-                    <div class="ss-nav"></div>
-                    <div class="g-icon-nav">G</div>
-                </div>
-            </div>
-        </a>
-        <div class="navbar-right">
-            <a href="../index.html" class="nav-back-link" style="text-decoration: none; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
-                <i data-lucide="arrow-left" style="width:16px;"></i>
-                Back to Intelligence
-            </a>
-        </div>
-    </nav>
+    
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
 
 
     <!-- Report Header -->
@@ -1264,25 +1255,16 @@
         <!-- Footer -->
         
     <!-- Footer -->
-    <footer class="footer" style="padding:40px 0; text-align:center; border-top:1px solid rgba(59,130,246,0.15); background:rgba(5,10,20,0.8); margin-top: 80px;">
-        <div class="footer-logo-wrapper">
-            <div class="ss-footer"></div>
-            <span class="logo-genu" style="font-size:1.5rem; font-weight:700;">Genu</span><span class="logo-verity" style="font-size:1.5rem; font-weight:700;">Verity</span>
-        </div>
-        <p style="color:#a0aec0; margin-bottom:20px;">AI-Powered Investigative Journalism</p>
-        <div class="footer-links" style="display:flex; justify-content:center; gap:20px;">
-            <a href="mailto:hello@genuverity.com" style="color:#64748b; text-decoration:none;">Contact</a>
-            <a href="../index.html" style="color:#64748b; text-decoration:none;">Home</a>
-            <a href="../methodology.html" style="color:#64748b; text-decoration:none;">Methodology</a>
-            <a href="../limitations.html" style="color:#64748b; text-decoration:none;">System Limitations</a>
-        </div>
-    </footer>
+    
+    <!-- Shared Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
 
     </main>
 
     <script>
         // Initialize Lucide icons
-        lucide.createIcons();
+        window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
 
         // Toggle sources panel
         function toggleSources() {

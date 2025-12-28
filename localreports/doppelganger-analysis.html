@@ -11,6 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="../css/shared-components.css?v=2.0">
+
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         /* === MIDNIGHT TECH CORE === */
@@ -1214,24 +1217,10 @@
     </div>
 
     <!-- Navbar -->
-    <nav class="navbar">
-        <a href="/" class="navbar-brand">
-            <span class="navbar-logo">
-                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
-            </span>
-            <span class="navbar-badge">Intelligence</span>
-        </a>
-        <div class="navbar-right">
-            <a href="reports.html" class="navbar-link active">
-                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-                Custom Reports
-            </a>
-            <a href="/" class="navbar-link">
-                <i data-lucide="home" style="width:16px;height:16px;"></i>
-                Home
-            </a>
-        </div>
-    </nav>
+    
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
 
     <!-- Mobile Notice -->
     <div class="mobile-notice" id="mobile-notice">
@@ -1904,13 +1893,10 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-brand">
-            <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
-            <span style="color: var(--accent-cyan); font-weight: 400;"> Intelligence</span>
-        </div>
-        <p>AI-Powered Threat Analysis &amp; Fact Verification</p>
-    </footer>
+    
+    <!-- Shared Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
 
     <script>
         // Mobile notice dismiss
@@ -1929,7 +1915,7 @@
 
         // Initialize Lucide icons
         document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
+            window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
             initNetwork();
             animateStats();
         });
@@ -2325,7 +2311,7 @@
                 console.error('Feedback error:', err);
                 btn.disabled = false;
                 btn.innerHTML = '<i data-lucide="send" style="width:18px;height:18px;"></i> Submit Feedback';
-                lucide.createIcons();
+                window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
                 alert('Failed to submit feedback. Please try again.');
             }
         });

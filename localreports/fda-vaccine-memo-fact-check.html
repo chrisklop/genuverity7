@@ -16,6 +16,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="../css/shared-components.css?v=2.0">
+
     
     <style>
         :root {
@@ -622,19 +625,10 @@
     <div class="bg-glow"></div>
 
     
-    <nav class="navbar">
-        <a href="/" class="navbar-brand">
-            <span class="navbar-logo">
-                <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
-            </span>
-            <span class="navbar-badge">COMING SOON</span>
-        </a>
-        <div style="display:flex;gap:12px;">
-            <a href="reports.html" style="color:var(--text-secondary);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:6px;">
-                <i data-lucide="file-text" style="width:16px;height:16px;"></i> Reports
-            </a>
-        </div>
-    </nav>
+    
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
     
 
     
@@ -977,19 +971,17 @@
     </main>
 
     
-    <footer class="footer">
-        <div class="footer-brand">
-            <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
-        </div>
-        <p>AI-Powered Investigative Journalism</p>
-    </footer>
+    
+    <!-- Shared Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
     
 
     
     <script>
         // Initialize Lucide icons
         document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
+            window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
             initCharts();
         });
 
