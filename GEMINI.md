@@ -92,12 +92,17 @@ This file provides guidance to Gemini when working with code in this repository.
 ### Workflow: Adding a New Report
 1. **Create HTML**: `localreports/your-report-slug.html` from `docs/report-template-2025.html` (NEVER copy old reports).
 2. **Update Metadata**: Add entry to `REPORTS_DATA` in `js/reports-data.js`.
-   - **ID Management**: Newest report gets `id: 0`. Increment ALL other IDs by +1 (MANUALLY, no automation).
+   - **ID Management (UPDATED Dec 2025)**: Reports display in DESCENDING order.
+     - First, find highest ID: `grep -o "id: [0-9]*" js/reports-data.js | sort -t: -k2 -n | tail -1`
+     - New report ID = **highest ID + 1** (NOT id: 0)
+     - Add new entry at TOP of the array
    - **Chart Object**: MUST include `chart` object for landing page preview.
    - **Validation**: Verify JSON syntax carefully with `node -c js/reports-data.js`.
 3. **Run Validation**: BOTH `./validate-report.sh` AND `./validate-standards.sh` MUST pass.
 4. **Visual Check**: Verify navbar, footer, and chart preview render correctly.
 5. **Deploy**: Only after ALL validations pass.
+
+> **See also:** `AGENT.md` for complete model-agnostic workflow instructions.
 
 ### Chart Object Structure (For `js/reports-data.js`)
 To generate a custom infographic preview for a report card, include the `chart` object in the report entry:
@@ -190,10 +195,11 @@ All visuals must be generated as code (Chart.js, D3, Mermaid) by the Claude agen
    - **NEVER** copy an old report (it may have legacy bugs).
    - Use the 2025 Golden Template.
 
-2. **CRITICAL ID MANAGEMENT:**
-   - New reports go at ID 0 (top of array) in `js/reports-data.js`
-   - Manually increment ALL existing IDs by +1
-   - **NEVER use automation** (perl/sed/regex) - causes duplicate `id:` keys
+2. **CRITICAL ID MANAGEMENT (UPDATED Dec 2025):**
+   - Reports display in **DESCENDING ID order** (highest ID = newest)
+   - Find highest ID: `grep -o "id: [0-9]*" js/reports-data.js | sort -t: -k2 -n | tail -1`
+   - New report ID = **highest existing ID + 1**
+   - Add new entry at **TOP of array** in `js/reports-data.js`
    - **ALWAYS verify** with: `node -c js/reports-data.js` before commit
 
 3. **Content Injection (THE MEGA-EXPANSION):**
