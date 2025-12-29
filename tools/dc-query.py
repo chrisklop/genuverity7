@@ -4,7 +4,8 @@ Data Commons Query Script for GenuVerity Reports
 Direct REST API integration when MCP is unavailable
 
 Usage:
-    python3 tools/dc-query.py "UnemploymentRate_Person" "country/USA"
+    Structured API: python3 tools/dc-query.py "UnemploymentRate_Person" "country/USA"
+    Natural Language: python3 tools/dc-query.py --nl "What is the unemployment rate in USA?"
 """
 
 import os
@@ -26,7 +27,7 @@ def load_env():
     return env_vars
 
 def query_datacommons(variable: str, entity: str, api_key: str) -> dict:
-    """Query Data Commons V2 Observation API"""
+    """Query Data Commons V2 Observation API (Structured)"""
     if not api_key:
         return {"error": "API Key required for V2 API"}
         
@@ -38,6 +39,36 @@ def query_datacommons(variable: str, entity: str, api_key: str) -> dict:
         "variable": {"dcids": [variable]},
         "entity": {"dcids": [entity]}
     }
+    
+    try:
+        req = Request(url, data=json.dumps(data).encode("utf-8"), method="POST")
+        req.add_header("X-API-Key", api_key)
+        req.add_header("Content-Type", "application/json")
+        
+        with urlopen(req) as resp:
+            return json.loads(resp.read().decode())
+    except Exception as e:
+        error_info = {"error": str(e), "url": url}
+        if hasattr(e, 'read'):
+            try:
+                error_body = e.read().decode()
+                error_info["body"] = error_body
+                try:
+                    error_info["json_body"] = json.loads(error_body)
+                except:
+                    pass
+            except:
+                pass
+        return error_info
+
+def query_nl(question: str, api_key: str) -> dict:
+    """Query Data Commons Natural Language API"""
+    if not api_key:
+        return {"error": "API Key required for NL API"}
+        
+    url = "https://api.datacommons.org/v2/nl"
+    
+    data = {"query": question}
     
     try:
         req = Request(url, data=json.dumps(data).encode("utf-8"), method="POST")
@@ -90,17 +121,6 @@ def main():
         print("\n⚠️ No observation data found in response structure")
 
 def main():
-    if len(sys.argv) < 3:
-        print("Usage: python3 dc-query.py <variable> <entity>")
-        print("Example: python3 dc-query.py UnemploymentRate_Person country/USA")
-        print("\nCommon variables:")
-        print("  - UnemploymentRate_Person")
-        print("  - Count_Person")
-        print("  - Median_Income_Person")
-        print("  - CumulativeCount_Vaccine_COVID_19_Administered")
-        print("  - Count_Death")
-        sys.exit(1)
-    
     env = load_env()
     api_key = env.get("DC_API_KEY")
     
@@ -108,10 +128,32 @@ def main():
         print("Error: DC_API_KEY not found in .env file")
         sys.exit(1)
     
+    # Check for Natural Language mode
+    if len(sys.argv) >= 3 and sys.argv[1] == "--nl":
+        question = " ".join(sys.argv[2:])
+        print(f"🔍 Natural Language Query: \"{question}\"")
+        result = query_nl(question, api_key)
+        print(json.dumps(result, indent=2))
+        return
+    
+    # Structured API mode
+    if len(sys.argv) < 3:
+        print("Usage:")
+        print("  Structured: python3 dc-query.py <variable> <entity>")
+        print("  Natural Language: python3 dc-query.py --nl \"Your question\"")
+        print("\nStructured Examples:")
+        print("  python3 dc-query.py UnemploymentRate_Person country/USA")
+        print("  python3 dc-query.py Count_Person country/USA")
+        print("  python3 dc-query.py Median_Income_Person country/USA")
+        print("\nNatural Language Examples:")
+        print("  python3 dc-query.py --nl \"What is the unemployment rate in USA?\"")
+        print("  python3 dc-query.py --nl \"Show me COVID deaths in California\"")
+        sys.exit(1)
+    
     variable = sys.argv[1]
     entity = sys.argv[2]
     
-    print(f"Querying Data Commons: {variable} for {entity}...")
+    print(f"📊 Structured Query: {variable} for {entity}...")
     result = query_datacommons(variable, entity, api_key)
     print(json.dumps(result, indent=2))
 

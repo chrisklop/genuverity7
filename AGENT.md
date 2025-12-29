@@ -29,8 +29,26 @@
 As proven in December 2025, a single capable model (e.g., Claude Opus 4.5 Thinking) can handle the entire workflow:
 
 ### Step 1: Research
+
+**FIRST: Data Commons Check**
+Ask yourself: "Could Data Commons provide verified statistics for this topic?"
+- Economic data (unemployment, inflation, GDP) → YES
+- Health data (COVID deaths, vaccination rates) → YES
+- Demographics (population, income, census) → YES
+- Political opinions, qualitative claims → NO
+
+**If YES, query Data Commons FIRST:**
+```bash
+# Structured API (specific variables)
+python3 tools/dc-query.py UnemploymentRate_Person country/USA
+
+# Natural Language API (exploratory)
+python3 tools/dc-query.py --nl "What is the unemployment rate in the United States?"
 ```
-Use web search to gather 30+ sources:
+
+**Then: Web Search for Context**
+```
+Gather 30+ additional sources:
 - Prioritize: .gov, peer-reviewed, institutional
 - NO Wikipedia - find primary sources it cites
 - Note dates for time-sensitive data
@@ -165,19 +183,37 @@ grid: { color: '#1e293b' },        // Subtle grid lines
 | `datacommons` | MCP Server | ⚠️ Auth Failed (Needs Key Fix) |
 
 ### Using Data Commons Tool
-Use `run_command` to fetch economic/demographic data:
+
+**Two APIs Available:**
+
+**1. Structured V2 API (Specific Variables)**
 ```bash
 python3 tools/dc-query.py [Variable] [Entity]
 ```
-
-**Examples:**
+Examples:
 ```bash
 python3 tools/dc-query.py UnemploymentRate_Person country/USA
 python3 tools/dc-query.py Count_Person country/USA
-python3 tools/dc-query.py Count_Death country/USA
+python3 tools/dc-query.py Median_Income_Person country/USA
+python3 tools/dc-query.py CumulativeCount_Vaccine_COVID_19_Administered country/USA
 ```
 
-*Note: Currently uses V1 Public API because V2 API Key requires activation.*
+**2. Natural Language API (Exploratory)**
+```bash
+python3 tools/dc-query.py --nl "Your question here"
+```
+Examples:
+```bash
+python3 tools/dc-query.py --nl "What is the unemployment rate in the United States?"
+python3 tools/dc-query.py --nl "Show me COVID-19 deaths in California"
+python3 tools/dc-query.py --nl "What is the median income in Texas?"
+```
+
+**When to Use Which:**
+- **Structured API**: When you know exact variable names, need time-series data for charts
+- **NL API**: When exploring available data, unsure of variable names, or comparing entities
+
+*Both APIs use the same `DC_API_KEY` from `.env`*
 
 ---
 
