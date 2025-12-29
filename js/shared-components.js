@@ -188,10 +188,23 @@ function injectSharedComponents() {
         navPlaceholder.innerHTML = SHARED_NAV_HTML;
 
         // === 2. NAVBAR LOGIC ===
-        // Persistent Search: Always Visible
         const navSearch = document.getElementById('navSearchContainer');
+        const pageType = navPlaceholder.getAttribute('data-page-type');
+
+        // On landing page (no page-type), hide search initially (hero has search)
+        // On other pages (reports, etc.), always show search
+        const isLandingPage = !pageType || pageType === 'landing';
+
         if (navSearch) {
-            navSearch.classList.add('visible');
+            if (isLandingPage) {
+                // Start hidden on landing page
+                navSearch.style.opacity = '0';
+                navSearch.style.pointerEvents = 'none';
+                navSearch.style.transition = 'opacity 0.3s ease';
+            } else {
+                // Always visible on other pages
+                navSearch.classList.add('visible');
+            }
         }
 
         // Initialize search if REPORTS_DATA already loaded
@@ -202,7 +215,6 @@ function injectSharedComponents() {
         // Dynamic Nav Links (Right Side)
         const navRight = navPlaceholder.querySelector('#shared-nav-right');
         const mobileLinks = navPlaceholder.querySelector('#mobileMenuLinks');
-        const pageType = navPlaceholder.getAttribute('data-page-type');
 
         // Standard "Get Early Access" button for ALL pages
         if (navRight) {
@@ -240,6 +252,23 @@ function injectSharedComponents() {
                 document.body.style.overflow = isActive ? 'hidden' : '';
             }
         };
+
+        // === SCROLL-BASED NAVBAR SEARCH VISIBILITY (Landing Page Only) ===
+        if (isLandingPage && navSearch) {
+            const SCROLL_THRESHOLD = 200; // Show search after scrolling 200px
+
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (scrollTop > SCROLL_THRESHOLD) {
+                    navSearch.style.opacity = '1';
+                    navSearch.style.pointerEvents = 'auto';
+                } else {
+                    navSearch.style.opacity = '0';
+                    navSearch.style.pointerEvents = 'none';
+                }
+            }, { passive: true });
+        }
     }
 
     if (footerPlaceholder) {
