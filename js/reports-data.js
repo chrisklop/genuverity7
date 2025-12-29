@@ -3,6 +3,24 @@
 
 const REPORTS_DATA = [
     {
+        id: 56,
+        title: "American Political Disinformation: Timeline, Key Cases, and Foreign Interference",
+        slug: "localreports/american-political-disinfo.html",
+        category: "Deep Dive Dossier",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "shield-alert",
+        date: "Dec 28, 2025",
+        sources: "35 Sources",
+        readTime: "32 min",
+        excerpt: "From the birther movement to Russian interference, Pizzagate violence, QAnon radicalization, and January 6—how disinformation evolved into a systematic threat to American democracy. Includes Mueller indictments, Fox News's $787M settlement, and foreign influence from Russia, China, and Iran.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [1, 5, 60, 95, 85, 100, 95]  // Disinformation volume growth 2015-2021
+        }
+    },
+    {
         id: 55,
         title: "Project 2025's \"Military Orders\": Rumors vs. Reality",
         slug: "localreports/project-2025-military-orders.html",
