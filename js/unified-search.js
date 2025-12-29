@@ -573,8 +573,8 @@ class UnifiedSearch {
             const cards = this.carouselContainer.querySelectorAll('.carousel-card');
             cards.forEach(c => c.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)');
 
-            // Snap logic
-            const threshold = this.getCardWidth() * 0.2; // 20% swipe to change
+            // Snap logic - require 40% swipe to change card (less sensitive)
+            const threshold = this.getCardWidth() * 0.4;
             if (this.dragOffset > threshold && this.currentCardIndex > 0) {
                 this.currentCardIndex--;
             } else if (this.dragOffset < -threshold && this.currentCardIndex < this.filteredReports.length - 1) {
