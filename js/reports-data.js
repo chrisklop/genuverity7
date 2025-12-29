@@ -11,13 +11,13 @@ const REPORTS_DATA = [
         catClass: "cat-disinfo",
         icon: "shield-alert",
         date: "Dec 28, 2025",
-        sources: "Verified Analysis",
-        readTime: "15 min",
+        sources: "10 Sources",
+        readTime: "22 min",
         excerpt: "Viral claims of 'secret military orders' are unproven, but the public plan to strip protections from 50,000 workers—30% of whom are veterans—is verified and specific.",
         chart: {
             type: "line",
             color: "#ef4444",
-            data: [0, 2, 5, 8, 10, 15, 60, 95]
+            data: [0, 0, 2, 5, 5, 8, 12, 10, 8, 15, 60, 95]  // Military Orders spike data from Chart 1
         }
     },
     {
