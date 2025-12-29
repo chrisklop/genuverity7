@@ -16,8 +16,9 @@
     left: 0;
     right: 0;
     height: var(--navbar-height);
-    background: rgba(5, 10, 20, var(--navbar-bg-opacity));
-    backdrop-filter: blur(var(--navbar-bg-blur));
+    background: rgba(5, 10, 20, var(--navbar-bg-opacity)) !important;
+    backdrop-filter: blur(var(--navbar-bg-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--navbar-bg-blur)) !important;
     border-bottom: 1px solid transparent;
     display: grid;
     grid-template-columns: 240px minmax(300px, 1fr) 240px;
