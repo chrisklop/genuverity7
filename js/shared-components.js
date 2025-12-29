@@ -191,9 +191,9 @@ function injectSharedComponents() {
         const navSearch = document.getElementById('navSearchContainer');
         const pageType = navPlaceholder.getAttribute('data-page-type');
 
-        // On landing page (no page-type), hide search initially (hero has search)
+        // On landing page (no page-type, or 'landing', or 'home'), hide search initially (hero has search)
         // On other pages (reports, etc.), always show search
-        const isLandingPage = !pageType || pageType === 'landing';
+        const isLandingPage = !pageType || pageType === 'landing' || pageType === 'home';
 
         if (navSearch) {
             if (!isLandingPage) {

@@ -1637,21 +1637,28 @@
         }
 
         /* === NAVBAR EXTENSIONS === */
-        /* Hide navbar search on landing page until scroll (desktop only) */
-        /* JS adds .scrolled class when user scrolls down */
         .navbar-center {
             display: flex;
             justify-content: center;
-            opacity: 0;
-            pointer-events: none;
             transition: opacity 0.3s ease;
         }
-        
-        /* Show when scrolled (JS adds this class) */
-        .navbar-center.scrolled {
-            opacity: 1;
-            pointer-events: auto;
+
+        /* DESKTOP ONLY: Hide navbar search initially (hero has search) */
+        /* JS adds .scrolled class when user scrolls down */
+        @media (min-width: 769px) {
+            .navbar-center {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            /* Show when scrolled (JS adds this class) */
+            .navbar-center.scrolled {
+                opacity: 1;
+                pointer-events: auto;
+            }
         }
+
+        /* MOBILE: Search always visible (handled by existing @media max-width: 768px with !important) */
 
         /* navbar-search-container styles moved to shared-components.css */
         .navbar-search-container {
