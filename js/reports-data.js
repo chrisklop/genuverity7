@@ -3,6 +3,24 @@
 
 const REPORTS_DATA = [
     {
+        id: 59,
+        title: "Grok AI: The Misinformation Machine",
+        slug: "localreports/grok-ai-misinformation-crisis.html",
+        category: "AI Safety Crisis",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "bot",
+        date: "Dec 29, 2025",
+        sources: "14 Sources",
+        readTime: "16 min",
+        excerpt: "Elon Musk's Grok AI chatbot has repeatedly spread dangerous misinformation during breaking news - fabricating heroes at Bondi Beach, praising Hitler, and falsely blaming a trans pilot for the DC crash. 12+ documented incidents analyzed.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [1, 2, 0, 0, 2, 0, 4, 0, 0, 0, 0, 3]
+        }
+    },
+    {
         id: 58,
         title: "Los Angeles Wildfire Misinformation: A Forensic Analysis",
         slug: "localreports/la-wildfire-misinformation-2025.html",
