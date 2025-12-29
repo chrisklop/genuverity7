@@ -3,6 +3,24 @@
 
 const REPORTS_DATA = [
     {
+        id: 57,
+        title: "Iran and the West: Nuclear Escalation, Proxy Warfare, and the Path Forward",
+        slug: "localreports/iran-nuclear-crisis.html",
+        category: "Deep Dive Dossier",
+        tagClass: "tag-red",
+        catClass: "cat-military",
+        icon: "radar",
+        date: "Dec 29, 2025",
+        sources: "18 Sources",
+        readTime: "28 min",
+        excerpt: "From the 2018 JCPOA withdrawal to threshold state: Iran's 60% uranium enrichment, proxy warfare from Hezbollah to Houthis, and why the non-proliferation regime is 'on the line.' Comprehensive analysis of the controlled crisis reshaping Middle East security.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [3.67, 3.67, 4.5, 4.5, 60, 60, 60]  // Enrichment % escalation 2015-2025
+        }
+    },
+    {
         id: 56,
         title: "American Political Disinformation: Timeline, Key Cases, and Foreign Interference",
         slug: "localreports/american-political-disinfo.html",
