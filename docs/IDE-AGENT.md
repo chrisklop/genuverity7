@@ -226,6 +226,7 @@ Check browser console for: `[GV Layout] ✅ Applied content-grid wrapper`
 [ ] NEVER write HTML from scratch - use template
 [ ] NEVER copy from existing reports (may have bugs)
 [ ] NEVER use Wikipedia as a source
+[ ] Run find_related.py to get Related Reports section (STEP 5.5)
 ```
 
 ---
@@ -363,6 +364,59 @@ Create Chart.js visualizations where data supports it:
    ```html
    <a href="#source-N" class="citation-link" onclick="highlightSource(event, 'source-N')">[N]</a>
    ```
+
+---
+
+## STEP 5.5: ADD RELATED REPORTS (RECOMMENDED)
+
+**Feature Branch:** `feature/vector-search` (merge when ready)
+
+Use the local vector search to find semantically related reports and add a "Related Deep Dives" section.
+
+### How to Use:
+
+```bash
+# Activate venv
+source scripts/.venv/bin/activate
+
+# Option A: Search by research file
+python scripts/find_related.py "/path/to/research.md"
+
+# Option B: Search by query
+python scripts/find_related.py --query "vaccine autism CDC"
+
+# Get CSS (first time only)
+python scripts/find_related.py --css
+```
+
+### Output:
+- **Console:** Shows top 5 related reports with similarity %
+- **HTML:** Ready-to-paste `<section class="related-reports">` block
+
+### Where to Add:
+Insert the generated HTML just before the closing `</article>` or `</main>` tag:
+
+```html
+<!-- End of main content sections -->
+
+<section class="related-reports">
+    <h2><i data-lucide="link"></i> Related Deep Dives</h2>
+    <div class="related-grid">
+        <!-- Generated cards here -->
+    </div>
+</section>
+
+</article>
+```
+
+### CSS Styles:
+The CSS for `.related-reports` should be added to `css/shared-components.css` once the feature branch is merged. Run `python scripts/find_related.py --css` to view the required styles.
+
+### Reindex After Publishing:
+After adding a new report, reindex to include it in future searches:
+```bash
+python scripts/index_reports.py
+```
 
 ---
 
