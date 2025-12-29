@@ -196,15 +196,11 @@ function injectSharedComponents() {
         const isLandingPage = !pageType || pageType === 'landing';
 
         if (navSearch) {
-            if (isLandingPage) {
-                // Start hidden on landing page
-                navSearch.style.opacity = '0';
-                navSearch.style.pointerEvents = 'none';
-                navSearch.style.transition = 'opacity 0.3s ease';
-            } else {
-                // Always visible on other pages
-                navSearch.classList.add('visible');
+            if (!isLandingPage) {
+                // Always visible on reports/other pages - add scrolled class immediately
+                navSearch.classList.add('scrolled');
             }
+            // Landing page: CSS keeps it hidden, scroll listener will add/remove 'scrolled' class
         }
 
         // Initialize search if REPORTS_DATA already loaded
@@ -261,11 +257,9 @@ function injectSharedComponents() {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
                 if (scrollTop > SCROLL_THRESHOLD) {
-                    navSearch.style.opacity = '1';
-                    navSearch.style.pointerEvents = 'auto';
+                    navSearch.classList.add('scrolled');
                 } else {
-                    navSearch.style.opacity = '0';
-                    navSearch.style.pointerEvents = 'none';
+                    navSearch.classList.remove('scrolled');
                 }
             }, { passive: true });
         }
