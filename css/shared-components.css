@@ -4,8 +4,8 @@
 
 :root {
     --navbar-height: 72px;
-    --navbar-bg-opacity: 0.85;
-    --navbar-bg-blur: 20px;
+    --navbar-bg-opacity: 0.4;
+    --navbar-bg-blur: 40px;
     --footer-bg-opacity: 0.8;
 }
 
