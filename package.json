@@ -4,12 +4,17 @@
     "description": "GenuVerity Fact-Checking Platform",
     "scripts": {
         "build": "chmod +x bust-cache.sh && ./bust-cache.sh",
-        "thumbnails": "node scripts/generate-thumbnails.js"
+        "thumbnails": "node scripts/generate-thumbnails.js",
+        "radar": "node scripts/radar.js"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
         "puppeteer": "^24.34.0"
+    },
+    "dependencies": {
+        "@google/generative-ai": "^0.24.1",
+        "dotenv": "^17.2.3"
     }
 }

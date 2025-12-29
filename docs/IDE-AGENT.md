@@ -146,21 +146,28 @@ Please perform Phase 3 (Audit & Deploy):
 1. **Validate Report:**
    ```bash
    ./validate-report.sh localreports/[SLUG].html
+   ./validate-report.sh localreports/[SLUG].html
    ./validate-standards.sh localreports/[SLUG].html
    ```
 
-2. **Update reports-data.js:**
+2. **Generate Thumbnails:**
+   ```bash
+   npm run thumbnails
+   # Verifies/Generates high-fidelity preview image
+   ```
+
+3. **Update reports-data.js:**
    - Add new entry with `id: 0`
    - Increment ALL existing IDs by +1
    - Include chart object for preview
 
-3. **Visual Verification:**
+4. **Visual Verification:**
    - Verify navbar renders
    - Verify footer renders
    - Verify chart preview on landing page
 
-4. **Deploy:**
-   - Commit only: `localreports/[SLUG].html` and `js/reports-data.js`
+5. **Deploy:**
+   - Commit: `localreports/[SLUG].html`, `js/reports-data.js`, and `images/thumbnails/[SLUG].webp`
    - Push to trigger auto-deploy
 
 Report details:
@@ -179,9 +186,10 @@ Report details:
 
 **Steps:**
 1. Run validation scripts
-2. Update `js/reports-data.js` (CRITICAL - manual ID increment)
-3. Visual verification in browser
-4. Commit and push
+2. Run thumbnail generator (`npm run thumbnails`)
+3. Update `js/reports-data.js` (CRITICAL - manual ID increment)
+4. Visual verification in browser
+5. Commit and push (including new thumbnail)
 
 ---
 
@@ -460,6 +468,7 @@ plane, cpu, eye, radar, shield-alert, scale, file-text, database, activity, glob
 **ONLY commit/push:**
 - `localreports/*`
 - `js/reports-data.js`
+- `images/thumbnails/*.webp`
 
 **NEVER commit/push:**
 - `api/*`
