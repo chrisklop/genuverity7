@@ -234,7 +234,8 @@
     border-radius: 12px;
     padding: 0 16px;
     height: 40px;
-    width: 300px !important;
+    width: 100%;
+    max-width: 300px;
     opacity: 1;
     pointer-events: all;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -509,8 +510,8 @@
     }
 
     .navbar-search-container {
-        width: auto !important;
-        max-width: 100%;
-        margin: 0 12px;
+        max-width: calc(100% - 48px);
+        min-width: 180px;
+        margin: 0 8px;
     }
 }

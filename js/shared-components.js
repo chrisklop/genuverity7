@@ -83,14 +83,104 @@ const SHARED_FOOTER_HTML = `
     </footer>
 `;
 
+/**
+ * Initialize search autocomplete functionality
+ * Separated to handle async REPORTS_DATA loading
+ */
+function initializeSearchAutocomplete() {
+    const navSearchInput = document.getElementById('navSearchInput');
+    const navSearchDropdown = document.getElementById('navSearchDropdown');
+
+    if (!navSearchInput || !navSearchDropdown) {
+        console.warn('[GV Search] Search elements not found');
+        return;
+    }
+
+    // Get reports data
+    const reports = typeof REPORTS_DATA !== 'undefined' ? REPORTS_DATA : [];
+
+    if (reports.length === 0) {
+        console.warn('[GV Search] No reports data available');
+        return;
+    }
+
+    console.log(`[GV Search] ✅ Initialized autocomplete with ${reports.length} reports`);
+
+    navSearchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+
+        if (!query) {
+            navSearchDropdown.classList.remove('open');
+            navSearchDropdown.innerHTML = '';
+            return;
+        }
+
+        // Filter reports
+        const filtered = reports.filter(r =>
+            r.title.toLowerCase().includes(query) ||
+            r.category.toLowerCase().includes(query) ||
+            r.excerpt.toLowerCase().includes(query)
+        ).slice(0, 5); // Limit to 5 results
+
+        if (filtered.length === 0) {
+            navSearchDropdown.innerHTML = '<div style="color:var(--text-secondary); text-align:center; padding:20px;">No reports found.</div>';
+            navSearchDropdown.classList.add('open');
+            return;
+        }
+
+        // Render results
+        navSearchDropdown.innerHTML = filtered.map(report => `
+            <div class="search-result-item" onclick="window.location.href='/${report.slug}'" style="
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                padding: 16px;
+                margin-bottom: 12px;
+                cursor: pointer;
+                transition: all 0.2s;
+            " onmouseenter="this.style.borderColor='var(--accent-cyan)'; this.style.background='var(--bg-tertiary)';" 
+               onmouseleave="this.style.borderColor='var(--border-color)'; this.style.background='var(--bg-card)';">
+                <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:8px;">
+                    <h4 style="color:var(--text-primary); margin:0; font-size:1rem; font-weight:600;">${report.title}</h4>
+                    <span style="font-size:0.75rem; color:var(--accent-cyan); background:rgba(6,182,212,0.1); padding:4px 8px; border-radius:6px; white-space:nowrap; margin-left:12px;">${report.date}</span>
+                </div>
+                <p style="color:var(--text-secondary); font-size:0.85rem; margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.5;">${report.excerpt}</p>
+                <div style="display:flex; gap:8px; margin-top:12px; font-size:0.75rem; color:var(--text-muted);">
+                    <span>${report.category}</span>
+                    <span style="color:var(--border-color);">|</span>
+                    <span>${report.readTime || '5 min'} read</span>
+                </div>
+            </div>
+        `).join('');
+
+        navSearchDropdown.classList.add('open');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navSearchInput.contains(e.target) && !navSearchDropdown.contains(e.target)) {
+            navSearchDropdown.classList.remove('open');
+        }
+    });
+
+    // Close on Escape
+    navSearchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            navSearchDropdown.classList.remove('open');
+            navSearchInput.blur();
+        }
+    });
+}
+
 function injectSharedComponents() {
     const navPlaceholder = document.getElementById('navbar-placeholder');
     const footerPlaceholder = document.getElementById('footer-placeholder');
 
     // Inject reports data script if not already loaded
-    if (typeof REPORTS_DATA === 'undefined' && !document.querySelector('script[src*="reports-data.js?v=1766960197"]')) {
+    if (typeof REPORTS_DATA === 'undefined' && !document.querySelector('script[src*="reports-data.js"]')) {
         const script = document.createElement('script');
-        script.src = '/js/reports-data.js?v=1766960197';
+        script.src = '../js/reports-data.js?v=' + Date.now();
+        script.onload = () => initializeSearchAutocomplete();
         document.head.appendChild(script);
     }
 
@@ -104,78 +194,9 @@ function injectSharedComponents() {
             navSearch.classList.add('visible');
         }
 
-        // Search Autocomplete
-        const navSearchInput = document.getElementById('navSearchInput');
-        const navSearchDropdown = document.getElementById('navSearchDropdown');
-
-        if (navSearchInput && navSearchDropdown) {
-            // Get reports data
-            const reports = typeof REPORTS_DATA !== 'undefined' ? REPORTS_DATA : [];
-
-            navSearchInput.addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase().trim();
-
-                if (!query) {
-                    navSearchDropdown.classList.remove('open');
-                    navSearchDropdown.innerHTML = '';
-                    return;
-                }
-
-                // Filter reports
-                const filtered = reports.filter(r =>
-                    r.title.toLowerCase().includes(query) ||
-                    r.category.toLowerCase().includes(query) ||
-                    r.excerpt.toLowerCase().includes(query)
-                ).slice(0, 5); // Limit to 5 results
-
-                if (filtered.length === 0) {
-                    navSearchDropdown.innerHTML = '<div style="color:var(--text-secondary); text-align:center; padding:20px;">No reports found.</div>';
-                    navSearchDropdown.classList.add('open');
-                    return;
-                }
-
-                // Render results
-                navSearchDropdown.innerHTML = filtered.map(report => `
-                    <div class="search-result-item" onclick="window.location.href='${report.slug}'" style="
-                        background: var(--bg-card);
-                        border: 1px solid var(--border-color);
-                        border-radius: 12px;
-                        padding: 16px;
-                        margin-bottom: 12px;
-                        cursor: pointer;
-                        transition: all 0.2s;
-                    " onmouseenter="this.style.borderColor='var(--accent-cyan)'; this.style.background='var(--bg-tertiary)';" 
-                       onmouseleave="this.style.borderColor='var(--border-color)'; this.style.background='var(--bg-card)';">
-                        <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:8px;">
-                            <h4 style="color:var(--text-primary); margin:0; font-size:1rem; font-weight:600;">${report.title}</h4>
-                            <span style="font-size:0.75rem; color:var(--accent-cyan); background:rgba(6,182,212,0.1); padding:4px 8px; border-radius:6px; white-space:nowrap; margin-left:12px;">${report.date}</span>
-                        </div>
-                        <p style="color:var(--text-secondary); font-size:0.85rem; margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.5;">${report.excerpt}</p>
-                        <div style="display:flex; gap:8px; margin-top:12px; font-size:0.75rem; color:var(--text-muted);">
-                            <span>${report.category}</span>
-                            <span style="color:var(--border-color);">|</span>
-                            <span>${report.readTime || '5 min'} read</span>
-                        </div>
-                    </div>
-                `).join('');
-
-                navSearchDropdown.classList.add('open');
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!navSearchInput.contains(e.target) && !navSearchDropdown.contains(e.target)) {
-                    navSearchDropdown.classList.remove('open');
-                }
-            });
-
-            // Close on Escape
-            navSearchInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    navSearchDropdown.classList.remove('open');
-                    navSearchInput.blur();
-                }
-            });
+        // Initialize search if REPORTS_DATA already loaded
+        if (typeof REPORTS_DATA !== 'undefined') {
+            initializeSearchAutocomplete();
         }
 
         // Dynamic Nav Links (Right Side)
