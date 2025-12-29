@@ -31,17 +31,25 @@ Applies to: `*.html` files (except index.html, reports.html, methods.html, compa
 
 After creating ANY report HTML file:
 
-1. **Add to reports.html**
-   - Open reports.html
-   - Find `const reports = [` array
-   - Add new report object at the BEGINNING
-   - Increment all existing report IDs by 1
+1. **Add to js/reports-data.js**
+   - Open `js/reports-data.js`
+   - Find the `reports` array
+   - Add new report object at ID 0 (top of array)
+   - Manually increment ALL existing IDs by +1
+   - **NEVER use automation** (perl/sed/regex) - causes duplicate `id:` keys
+   - Validate syntax: `node -c js/reports-data.js`
 
-2. **Deploy**
-   - Run `vercel --prod`
-   - Verify deployment success
+2. **Validate Report**
+   - Run `./validate-report.sh localreports/your-report.html`
+   - Fix any errors before proceeding
 
-3. **Confirm to User**
+3. **Commit and Push**
+   - `git add localreports/your-report.html js/reports-data.js`
+   - `git commit` with descriptive message
+   - `git push origin main`
+   - GitHub auto-deploys to Vercel (Reports Instance should NOT run `vercel --prod`)
+
+4. **Confirm to User**
    - Provide live URL
    - Summarize sources used
    - List visualizations included
@@ -50,7 +58,8 @@ After creating ANY report HTML file:
 
 | Mistake | Prevention |
 |---------|------------|
-| Report not on carousel | ALWAYS edit reports.html after creating report |
+| Report not on landing page | ALWAYS update js/reports-data.js after creating report |
+| ID syntax errors | NEVER use perl/sed - manually increment IDs |
 | Dead links | ALWAYS WebFetch URLs before including |
 | Wikipedia citations | Search for primary sources instead |
 | Purple colors | Use only approved color palette |

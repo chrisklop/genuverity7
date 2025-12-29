@@ -10,16 +10,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```
 □ READ docs/templates.md FIRST
-□ Infographics: gemini-3-pro-image-preview ONLY (never gemini-2.0-flash)
-□ Infographics: GenuVerity branding in bottom-right (Genu=white, Verity=blue)
+□ Standalone Infographics (social/embeds): gemini-3-pro-image-preview ONLY
+□ Standalone Infographics: GenuVerity branding in bottom-right (Genu=white, Verity=blue)
 □ Article text: Claude models only (never Gemini for text)
 □ Sources: NO Wikipedia - find primary sources
 □ Colors: NO purple (#8b5cf6) anywhere
 □ Text: NO GRADIENT TEXT - use solid colors only
 □ Data: Verify against live sources, add date context
-□ Charts (in-page): Chart.js with Midnight Tech colors
-□ Charts (in-page): Chart.js with Midnight Tech colors
-□ Visuals (Infographics/Diagrams): Chart.js/D3/Mermaid (NO Gemini image generation)
+□ In-Page Charts/Diagrams: Chart.js/D3/Mermaid (code-generated, NEVER AI images)
 ```
 
 **Shorthand triggers:**
@@ -227,6 +225,12 @@ Running `vercel --prod` deploys your entire working directory. If you have stale
 | `python server.py` | Local dev server (port 8000) - uses local file cache |
 | `vercel --prod` | Deploy to production |
 | `vercel logs genuverity7.vercel.app` | View production logs |
+| `npm run build` | Bust cache (runs bust-cache.sh) |
+| `npm run thumbnails` | Generate report thumbnails |
+| `npm run radar` | Run radar script |
+| `./validate-report.sh <file>` | Validate report HTML structure |
+| `./validate-standards.sh` | Validate against standards |
+| `node -c js/reports-data.js` | Validate JS syntax before commit |
 
 **Note**: `server.py` is a separate local development server with its own caching. Production (`api/index.py`) uses Vercel Blob Storage.
 
@@ -308,13 +312,21 @@ Single-page app with three views:
 - Divider lines that fade to transparent
 
 **Other Restrictions:**
-- Never use other Gemini models for infographics
+- For standalone infographics: ONLY use gemini-3-pro-image-preview (never gemini-2.0-flash)
 - Never use Claude for infographics
 - Never use Gemini for article text
 
-## Visual Elements Decision Tree
+## Visual Elements
 
-**FIRST: Decide which tool to use for any visual:**
+### Standalone Infographics (Social Media / Embeds)
+- **Use**: `gemini-3-pro-image-preview`
+- **Style**: Midnight Tech HUD aesthetic, GenuVerity branding bottom-right
+- **When**: Shareable images for social posts, email embeds, thumbnails
+- **Branding**: "Genu" = white (#FFFFFF), "Verity" = blue (#3B82F6)
+
+### In-Page Charts & Diagrams
+- **Use**: Chart.js, D3.js, or Mermaid (code-generated)
+- **NEVER** use AI image generation for in-page visuals
 
 | Visual Type | Tool | Why |
 |-------------|------|-----|
@@ -322,13 +334,9 @@ Single-page app with three views:
 | **Data comparisons** | Chart.js | In-page, responsive |
 | **Flowcharts/Diagrams** | Mermaid/D3.js | Maintainable code, consistent style |
 | **Process diagrams** | Mermaid/D3.js | Vector scalable |
-| **Infographics** | Chart.js/D3.js | No image generation hallucinations |
 | **Network graphs** | D3.js | Interactive, data-driven |
 
-**CRITICAL: DO NOT USE GEMINI IMAGE GENERATION.**
-All visuals must be generated as code (Chart.js, D3, Mermaid).
-
-### Chart.js (In-Page Charts)
+### Chart.js Setup (In-Page Charts)
 ```html
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../js/chart-watermark.js"></script>  <!-- Auto-adds GenuVerity branding -->
