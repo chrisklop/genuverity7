@@ -3,6 +3,24 @@
 
 const REPORTS_DATA = [
     {
+        id: 58,
+        title: "Los Angeles Wildfire Misinformation: A Forensic Analysis",
+        slug: "localreports/la-wildfire-misinformation-2025.html",
+        category: "Viral Disinformation",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "flame",
+        date: "Dec 29, 2025",
+        sources: "15 Sources",
+        readTime: "18 min",
+        excerpt: "AI-generated Hollywood sign fakes, DEI conspiracy theories, water policy lies, and FEMA funding misinformation - every major claim about the January 2025 LA wildfires debunked with 15 primary sources.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [10, 85, 95, 70, 55, 45, 35, 30]
+        }
+    },
+    {
         id: 57,
         title: "Iran and the West: Nuclear Escalation, Proxy Warfare, and the Path Forward",
         slug: "localreports/iran-nuclear-crisis.html",
