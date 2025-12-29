@@ -532,6 +532,10 @@ class UnifiedSearch {
         this.renderCarousel();
         if (!this.carouselContainer) return;
 
+        // Ghost event prevention: On mobile, touch events trigger ghost mouse events
+        // This flag blocks mouse handlers for 100ms after touch ends
+        let touchActive = false;
+
         // Unified Pointer Events (Mouse + Touch)
         const startDrag = (x) => {
             this.isDragging = true;
@@ -581,20 +585,36 @@ class UnifiedSearch {
             this.updateCarousel();
         };
 
-        // Touch Listeners
-        this.carouselContainer.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX), { passive: true });
-        this.carouselContainer.addEventListener('touchmove', (e) => moveDrag(e.touches[0].clientX), { passive: true });
-        this.carouselContainer.addEventListener('touchend', (e) => endDrag(e.changedTouches[0].clientX), { passive: true });
+        // Touch Listeners (set touchActive flag to block ghost mouse events)
+        this.carouselContainer.addEventListener('touchstart', (e) => {
+            touchActive = true;
+            startDrag(e.touches[0].clientX);
+        }, { passive: true });
 
-        // Mouse Listeners
-        this.carouselContainer.addEventListener('mousedown', (e) => startDrag(e.clientX));
+        this.carouselContainer.addEventListener('touchmove', (e) => {
+            moveDrag(e.touches[0].clientX);
+        }, { passive: true });
+
+        this.carouselContainer.addEventListener('touchend', (e) => {
+            endDrag(e.changedTouches[0].clientX);
+            // Keep touchActive true briefly to block ghost mouse events
+            setTimeout(() => { touchActive = false; }, 100);
+        }, { passive: true });
+
+        // Mouse Listeners (blocked if touch was just used)
+        this.carouselContainer.addEventListener('mousedown', (e) => {
+            if (touchActive) return; // Block ghost event
+            startDrag(e.clientX);
+        });
         window.addEventListener('mousemove', (e) => {
+            if (touchActive) return; // Block ghost event
             if (this.isDragging) {
                 e.preventDefault(); // Prevent selection
                 moveDrag(e.clientX);
             }
         });
         window.addEventListener('mouseup', (e) => {
+            if (touchActive) return; // Block ghost event
             if (this.isDragging) endDrag(e.clientX);
         });
     }
