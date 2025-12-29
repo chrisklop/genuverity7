@@ -7,24 +7,44 @@
     <title>Project 2025 "Military Orders": Rumors vs. Reality | GenuVerity</title>
     <meta name="description"
         content="Deep dive into viral claims about 'secret military orders' in Project 2025. Analysis of Schedule F impact on veterans and documented domestic deployment proposals.">
+    <meta name="keywords"
+        content="Project 2025, Schedule F, military orders, Insurrection Act, veterans, federal workforce, Heritage Foundation">
+    <meta name="author" content="GenuVerity Intelligence">
+    <meta name="robots" content="index, follow">
 
-    <!-- Standard Resources -->
-    <link rel="stylesheet" href="../css/shared-components.css">
-    <link rel="stylesheet" href="../css/reports.css">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://genuverity.org/localreports/project-2025-military-orders.html">
+    <meta property="og:title" content="Project 2025 'Military Orders': Rumors vs. Reality | GenuVerity">
+    <meta property="og:description"
+        content="Deep dive into viral claims about 'secret military orders' in Project 2025. Analysis of Schedule F impact on veterans.">
+    <meta property="og:image" content="https://genuverity.org/images/share-card-project-2025.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://genuverity.org/localreports/project-2025-military-orders.html">
+    <meta property="twitter:title" content="Project 2025 'Military Orders': Rumors vs. Reality">
+    <meta property="twitter:description"
+        content="Debunking secret orders while analyzing verified Schedule F purge plans.">
+    <meta property="twitter:image" content="https://genuverity.org/images/share-card-project-2025.jpg">
 
     <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/chart-watermark.js"></script>
+    <script src="../js/chart-defaults.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="../js/copyable-sections.js?v=4.0" defer></script>
+    <script src="../js/shared-components.js?v=4.0" defer></script>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect"
-        href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/shared-components.css?v=4.0">
+    <link rel="stylesheet" href="../css/reports.css?v=4.0">
 </head>
 
 <body>
@@ -181,7 +201,8 @@
                     <p>The viral rumors of "martial law" likely stem from Project 2025's robust defense of the
                         <strong>Insurrection Act</strong> of 1807. The Project argues that the President has "plenary
                         authority" to deploy active-duty troops domestically to suppress "lawlessness"—a term left
-                        intentionally broad.</p>
+                        intentionally broad.
+                    </p>
                     <p>Unlike the "Secret Orders" theory, this is not hidden. The Mandate argues against the Department
                         of Justice's current interpretation that limits domestic deployment. The proposal suggests
                         moving the Coast Guard (a domestic law enforcement agency) under the Department of Defense in
@@ -195,29 +216,22 @@
 
     <div id="footer-placeholder"></div>
 
-    <!-- Scripts -->
-    <script src="../js/shared-components.js"></script>
-    <script src="../js/copyable-sections.js"></script>
-    <script src="../js/chart-defaults.js"></script>
-
     <script>
         // Interactive Citation Highlighting
         function highlightSource(id) {
-            // Remove 'highlight' from all source items
-            document.querySelectorAll('.source-item').forEach(el => el.classList.remove('highlight'));
-
-            // Add to clicked item
             const element = document.getElementById('source-' + id);
             if (element) {
+                document.querySelectorAll('.source-item').forEach(el => el.classList.remove('highlight'));
                 element.classList.add('highlight');
             }
         }
 
         // Initialize Charts
-        const initCharts = () => {
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
             // Chart 1: Viral Volume (Line)
-            const ctx1 = document.getElementById('viralVolumeChart').getContext('2d');
-            new Chart(ctx1, {
+            new Chart(document.getElementById('viralVolumeChart'), {
                 type: 'line',
                 data: {
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -226,50 +240,67 @@
                             label: 'General "Project 2025" Search Interest',
                             data: [10, 15, 20, 40, 80, 100, 90, 70, 60, 50, 65, 85],
                             borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
                             borderWidth: 2,
-                            tension: 0.4
+                            tension: 0.4,
+                            fill: true
                         },
                         {
                             label: '"Military Orders" / "Leak" Terms',
                             data: [0, 0, 2, 5, 5, 8, 12, 10, 8, 15, 60, 95],
                             borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
                             borderWidth: 2,
                             borderDash: [5, 5],
-                            tension: 0.4
+                            tension: 0.4,
+                            fill: true
                         }
                     ]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
                     plugins: {
-                        title: { display: true, text: 'The Convergence: Policy vs. Rumor', color: '#fff' }
+                        title: { display: true, text: 'The Convergence: Policy vs. Rumor', color: '#fff' },
+                        legend: { labels: { color: '#94a3b8' } },
+                        watermark: { text: "GenuVerity" }
                     },
                     scales: {
-                        y: { beginAtZero: true, grid: { color: '#1e293b' } },
-                        x: { grid: { display: false } }
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#1e293b' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#94a3b8' }
+                        }
                     }
                 }
             });
 
-            // Chart 2: Veteran Impact (Donut)
-            const ctx2 = document.getElementById('veteranImpactChart').getContext('2d');
-            new Chart(ctx2, {
+            // Chart 2: Veteran Impact (Doughnut)
+            new Chart(document.getElementById('veteranImpactChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['Veteran Workforce (Protected)', 'Civilian Workforce', 'Schedule F Targeted (Total)'],
+                    labels: ['Veterans (30%)', 'Civilian Workforce (70%)'],
                     datasets: [{
                         data: [30, 70],
                         backgroundColor: ['#3b82f6', '#1e293b'],
-                        borderWidth: 0,
+                        borderColor: ['#60a5fa', '#334155'],
+                        borderWidth: 2,
                         hoverOffset: 4
                     }]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
                     plugins: {
                         title: {
                             display: true,
                             text: 'Federal Workforce Composition',
                             color: '#fff',
-                            font: { size: 16 }
+                            font: { size: 16, weight: 'bold' }
                         },
                         subtitle: {
                             display: true,
@@ -277,16 +308,15 @@
                             color: '#94a3b8',
                             padding: { bottom: 20 }
                         },
-                        legend: { position: 'bottom' }
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#94a3b8' }
+                        },
+                        watermark: { text: "GenuVerity" }
                     },
                     cutout: '60%'
                 }
             });
-        };
-
-        // Initialize components
-        document.addEventListener('DOMContentLoaded', () => {
-            initCharts();
         });
     </script>
 </body>
