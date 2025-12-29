@@ -3,6 +3,24 @@
 
 const REPORTS_DATA = [
     {
+        id: 57,
+        title: "The Cognitive Architecture of Epistemic Closure",
+        slug: "localreports/maga-epistemic-closure.html",
+        category: "Deep Dive Dossier",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "brain",
+        date: "Dec 29, 2025",
+        sources: "40 Sources",
+        readTime: "28 min",
+        excerpt: "Deep psychological analysis of the MAGA movement's resistance to contradictory evidence through identity-protective cognition, illusory truth effects, and algorithmic reinforcement. How 60+ lost court cases fail to penetrate a closed belief system.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [25, 70, 95]  // Real data from Chart 1: Epistemic Bubble, Echo Chamber, Full Closure
+        }
+    },
+    {
         id: 56,
         title: "American Political Disinformation: Timeline, Key Cases, and Foreign Interference",
         slug: "localreports/american-political-disinfo.html",

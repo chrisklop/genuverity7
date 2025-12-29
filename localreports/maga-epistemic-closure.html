@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cognitive Architecture of Epistemic Closure | GenuVerity</title>
+    <meta name="description"
+        content="Deep psychological analysis of the MAGA movement's resistance to contradictory evidence through identity-protective cognition, illusory truth effects, and algorithmic reinforcement.">
+    <meta name="keywords"
+        content="epistemic closure, MAGA psychology, cognitive dissonance, identity-protective cognition, echo chambers, political polarization, misinformation, illusory truth effect">
+    <meta name="author" content="GenuVerity Intelligence">
+    <meta name="robots" content="index, follow">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://genuverity.org/localreports/maga-epistemic-closure">
+    <meta property="og:title" content="The Cognitive Architecture of Epistemic Closure | GenuVerity">
+    <meta property="og:description"
+        content="Deep psychological analysis of the MAGA movement's resistance to contradictory evidence through identity-protective cognition, illusory truth effects, and algorithmic reinforcement.">
+    <meta property="og:image" content="https://genuverity.org/images/share-card-maga-epistemic-closure.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://genuverity.org/localreports/maga-epistemic-closure">
+    <meta property="twitter:title" content="The Cognitive Architecture of Epistemic Closure | GenuVerity">
+    <meta property="twitter:description"
+        content="Deep psychological analysis of the MAGA movement's resistance to contradictory evidence through identity-protective cognition, illusory truth effects, and algorithmic reinforcement.">
+    <meta property="twitter:image" content="https://genuverity.org/images/share-card-maga-epistemic-closure.jpg">
+
+    <!-- Structured Data (JSON-LD) for Fact Check -->
+    <!-- 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ClaimReview",
+      "datePublished": "{{PUBLISH_DATE}}",
+      "url": "https://genuverity.org/localreports/{{SLUG}}",
+      "imprint": {
+         "@type": "Organization",
+         "name": "GenuVerity"
+      },
+      "claimReviewed": "{{CLAIM_TEXT}}",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "{{RATING_VALUE}}",
+        "bestRating": "5",
+        "worstRating": "1",
+        "alternateName": "{{VERDICT_TEXT}}"
+      },
+      "itemReviewed": {
+        "@type": "Claim",
+        "author": {
+          "@type": "Person",
+          "name": "{{CLAIM_AUTHOR}}"
+        },
+        "datePublished": "{{CLAIM_DATE}}",
+        "appearance": {
+          "@type": "CreativeWork",
+          "url": "{{CLAIM_SOURCE_URL}}"
+        }
+      }
+    }
+    </script>
+    -->
+
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/chart-watermark.js"></script>
+    <script src="../js/chart-defaults.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js?v=4.0" defer></script>
+    <script src="../js/shared-components.js?v=4.0" defer></script>
+
+    <!-- Fonts (2-Font System: Crimson Pro + Inter) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/shared-components.css?v=4.0">
+    <link rel="stylesheet" href="../css/reports.css?v=4.0">
+</head>
+
+<body>
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
+    <div class="container">
+        <!-- REPORT HEADER -->
+        <div class="report-meta">
+            <span class="meta-tag">DEEP DIVE DOSSIER</span>
+            <span class="meta-tag red">PSYCHOLOGICAL ANALYSIS</span>
+            <span class="meta-tag"><i data-lucide="clock"
+                    style="width:12px; display:inline-block; vertical-align:middle;"></i> 28 MIN READ</span>
+        </div>
+
+        <h1 class="report-title">The Cognitive Architecture of Epistemic Closure</h1>
+        <h2 class="report-subtitle">How the MAGA Movement Maintains Belief Despite Contradictory Evidence</h2>
+
+        <!-- MAIN LAYOUT GRID -->
+        <div class="content-grid">
+            <!-- SIDEBAR: SOURCES FIRST -->
+            <aside class="sources-sidebar">
+                <div class="sources-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
+                    <span class="sources-count">40 Sources</span>
+                </div>
+                <div class="sources-list" id="sourcesList">
+                                        <a href="https://en.wikipedia.org/wiki/Epistemic_closure" target="_blank" class="source-card" id="source-1">
+                        <span class="source-ref">1</span>
+                        <div>
+                            <div>Epistemic closure - Wikipedia</div>
+                            <div style="font-size:0.7em; opacity:0.7;">en.wikipedia.org</div>
+                        </div>
+                    </a>
+                    <a href="https://sheilakennedy.net/2016/05/what-the-hell-is-epistemic-closure/" target="_blank" class="source-card" id="source-2">
+                        <span class="source-ref">2</span>
+                        <div>
+                            <div>What the Hell is Epistemic Closure? - Sheila Kennedy</div>
+                            <div style="font-size:0.7em; opacity:0.7;">sheilakennedy.net</div>
+                        </div>
+                    </a>
+                    <a href="https://newrepublic.com/article/74356/the-great-epistemic-closure-debate" target="_blank" class="source-card" id="source-3">
+                        <span class="source-ref">3</span>
+                        <div>
+                            <div>The Great Epistemic Closure Debate | The New Republic</div>
+                            <div style="font-size:0.7em; opacity:0.7;">newrepublic.com</div>
+                        </div>
+                    </a>
+                    <a href="https://en.wikipedia.org/wiki/Robert_Nozick" target="_blank" class="source-card" id="source-4">
+                        <span class="source-ref">4</span>
+                        <div>
+                            <div>Robert Nozick - Wikipedia</div>
+                            <div style="font-size:0.7em; opacity:0.7;">en.wikipedia.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.democratsabroad.org/341101/understanding_the_maddening_mind_of_donald_trump_-_part_2" target="_blank" class="source-card" id="source-5">
+                        <span class="source-ref">5</span>
+                        <div>
+                            <div>Understanding the Maddening Mind of Donald Trump - Part 2 - Democrats Abroad</div>
+                            <div style="font-size:0.7em; opacity:0.7;">democratsabroad.org</div>
+                        </div>
+                    </a>
+                    <a href="https://en.wikipedia.org/wiki/Echo_chamber_(media)" target="_blank" class="source-card" id="source-6">
+                        <span class="source-ref">6</span>
+                        <div>
+                            <div>Echo chamber (media) - Wikipedia</div>
+                            <div style="font-size:0.7em; opacity:0.7;">en.wikipedia.org</div>
+                        </div>
+                    </a>
+                    <a href="https://cssh.northeastern.edu/pandemic-teaching-initiative/wp-content/uploads/sites/43/2020/10/echo_chambers_and_epistemic_bubbles.pdf" target="_blank" class="source-card" id="source-7">
+                        <span class="source-ref">7</span>
+                        <div>
+                            <div>echo chambers and epistemic bubbles - Northeastern</div>
+                            <div style="font-size:0.7em; opacity:0.7;">cssh.northeastern.edu</div>
+                        </div>
+                    </a>
+                    <a href="https://informalscience.org/identity/dan-kahan/" target="_blank" class="source-card" id="source-8">
+                        <span class="source-ref">8</span>
+                        <div>
+                            <div>Identity | Dan Kahan – informalscience.org</div>
+                            <div style="font-size:0.7em; opacity:0.7;">informalscience.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.milwaukeeindependent.com/explainers/cult-goes-mainstream-inside-toxic-psychological-engine-trumps-maga-movement/" target="_blank" class="source-card" id="source-9">
+                        <span class="source-ref">9</span>
+                        <div>
+                            <div>When a cult goes mainstream: Inside the toxic psychological engine of Trump's MAGA movement | Milwaukee Independent</div>
+                            <div style="font-size:0.7em; opacity:0.7;">milwaukeeindependent.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.researchgate.net/publication/375712534_Online_Echo_Chambers_Online_Epistemic_Bubbles_and_Open-Mindedness" target="_blank" class="source-card" id="source-10">
+                        <span class="source-ref">10</span>
+                        <div>
+                            <div>Online Echo Chambers, Online Epistemic Bubbles, and Open-Mindedness - ResearchGate</div>
+                            <div style="font-size:0.7em; opacity:0.7;">researchgate.net</div>
+                        </div>
+                    </a>
+                    <a href="https://emergingtrends.stanford.edu/files/original/30633673076b5d9df7f8b1c16525d23c349f8dc1.pdf" target="_blank" class="source-card" id="source-11">
+                        <span class="source-ref">11</span>
+                        <div>
+                            <div>The Politically Motivated Reasoning Paradigm, Part 1 - Stanford</div>
+                            <div style="font-size:0.7em; opacity:0.7;">emergingtrends.stanford.edu</div>
+                        </div>
+                    </a>
+                    <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8923337/" target="_blank" class="source-card" id="source-12">
+                        <span class="source-ref">12</span>
+                        <div>
+                            <div>Through the Newsfeed Glass: Rethinking Filter Bubbles and Echo ...</div>
+                            <div style="font-size:0.7em; opacity:0.7;">pmc.ncbi.nlm.nih.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.fondationdescartes.org/en/2020/06/les-idees-fausses-les-fausses-informations-et-la-logique-du-raisonnement-pour-proteger-son-identite/" target="_blank" class="source-card" id="source-13">
+                        <span class="source-ref">13</span>
+                        <div>
+                            <div>False ideas, fake information, and the logic of identity-protective reasoning</div>
+                            <div style="font-size:0.7em; opacity:0.7;">fondationdescartes.org</div>
+                        </div>
+                    </a>
+                    <a href="https://scholarship.law.gwu.edu/faculty_publications/210/" target="_blank" class="source-card" id="source-14">
+                        <span class="source-ref">14</span>
+                        <div>
+                            <div>Culture and Identity-Protective Cognition: Explaining the White Male Effect in Risk Perception - Scholarly Commons</div>
+                            <div style="font-size:0.7em; opacity:0.7;">scholarship.law.gwu.edu</div>
+                        </div>
+                    </a>
+                    <a href="https://www.psychologytoday.com/us/basics/motivated-reasoning" target="_blank" class="source-card" id="source-15">
+                        <span class="source-ref">15</span>
+                        <div>
+                            <div>Motivated Reasoning | Psychology Today</div>
+                            <div style="font-size:0.7em; opacity:0.7;">psychologytoday.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.researchgate.net/publication/318008723_Cognitive_Dissonance_Motivated_Reasoning_and_Confirmation_Bias_Applications_in_Industrial_Organization" target="_blank" class="source-card" id="source-16">
+                        <span class="source-ref">16</span>
+                        <div>
+                            <div>Cognitive Dissonance, Motivated Reasoning, and Confirmation Bias: Applications in Industrial Organization - ResearchGate</div>
+                            <div style="font-size:0.7em; opacity:0.7;">researchgate.net</div>
+                        </div>
+                    </a>
+                    <a href="https://www.psychologytoday.com/us/blog/bias-fundamentals/202501/the-cognitive-dissonance-of-pardons-and-clemency" target="_blank" class="source-card" id="source-17">
+                        <span class="source-ref">17</span>
+                        <div>
+                            <div>The Cognitive Dissonance of January 6th Pardons - Psychology Today</div>
+                            <div style="font-size:0.7em; opacity:0.7;">psychologytoday.com</div>
+                        </div>
+                    </a>
+                    <a href="https://en.wikipedia.org/wiki/Motivated_reasoning" target="_blank" class="source-card" id="source-18">
+                        <span class="source-ref">18</span>
+                        <div>
+                            <div>Motivated reasoning - Wikipedia</div>
+                            <div style="font-size:0.7em; opacity:0.7;">en.wikipedia.org</div>
+                        </div>
+                    </a>
+                    <a href="https://oxfordre.com/politics/display/10.1093/acrefore/9780190228637.001.0001/acrefore-9780190228637-e-923" target="_blank" class="source-card" id="source-19">
+                        <span class="source-ref">19</span>
+                        <div>
+                            <div>Motivated Reasoning and Political Decision Making - Oxford Research Encyclopedias</div>
+                            <div style="font-size:0.7em; opacity:0.7;">oxfordre.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.pbs.org/newshour/politics/conspiracy-theories-paint-fraudulent-reality-of-jan-6-riot" target="_blank" class="source-card" id="source-20">
+                        <span class="source-ref">20</span>
+                        <div>
+                            <div>Conspiracy theories paint fraudulent reality of Jan. 6 riot | PBS News Weekend</div>
+                            <div style="font-size:0.7em; opacity:0.7;">pbs.org</div>
+                        </div>
+                    </a>
+                    <a href="https://thedecisionlab.com/reference-guide/psychology/the-misinformation-effect" target="_blank" class="source-card" id="source-21">
+                        <span class="source-ref">21</span>
+                        <div>
+                            <div>The Misinformation Effect - The Decision Lab</div>
+                            <div style="font-size:0.7em; opacity:0.7;">thedecisionlab.com</div>
+                        </div>
+                    </a>
+                    <a href="https://thedecisionlab.com/biases/illusory-truth-effect" target="_blank" class="source-card" id="source-22">
+                        <span class="source-ref">22</span>
+                        <div>
+                            <div>Illusory Truth Effect - The Decision Lab</div>
+                            <div style="font-size:0.7em; opacity:0.7;">thedecisionlab.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.researchgate.net/publication/369031522_The_illusory_truth_effect_leads_to_the_spread_of_misinformation" target="_blank" class="source-card" id="source-23">
+                        <span class="source-ref">23</span>
+                        <div>
+                            <div>The illusory truth effect leads to the spread of misinformation - ResearchGate</div>
+                            <div style="font-size:0.7em; opacity:0.7;">researchgate.net</div>
+                        </div>
+                    </a>
+                    <a href="https://www.psychologytoday.com/us/blog/psych-unseen/202001/illusory-truth-lies-and-political-propaganda" target="_blank" class="source-card" id="source-24">
+                        <span class="source-ref">24</span>
+                        <div>
+                            <div>Illusory Truth, Lies, and Political Propaganda | Psychology Today</div>
+                            <div style="font-size:0.7em; opacity:0.7;">psychologytoday.com</div>
+                        </div>
+                    </a>
+                    <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10636596/" target="_blank" class="source-card" id="source-25">
+                        <span class="source-ref">25</span>
+                        <div>
+                            <div>The illusory truth effect leads to the spread of misinformation - NIH</div>
+                            <div style="font-size:0.7em; opacity:0.7;">pmc.ncbi.nlm.nih.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.ajc.com/politics/5-georgia-fraud-claims-from-the-2020-election-separating-fact-from-fiction/VWFCVFL55VEEVEPZ5Q62COV4R4/" target="_blank" class="source-card" id="source-26">
+                        <span class="source-ref">26</span>
+                        <div>
+                            <div>Conspiracy vs. reality: 2020 election fraud claims persist, but most are debunked</div>
+                            <div style="font-size:0.7em; opacity:0.7;">ajc.com</div>
+                        </div>
+                    </a>
+                    <a href="https://sos.ga.gov/news/state-election-board-clears-fulton-county-ballot-suitcase-investigation-report-finds-no" target="_blank" class="source-card" id="source-27">
+                        <span class="source-ref">27</span>
+                        <div>
+                            <div>State Election Board Clears Fulton County Ballot Suitcase Investigation | Georgia Secretary of State</div>
+                            <div style="font-size:0.7em; opacity:0.7;">sos.ga.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=pjKXvqSNIkk" target="_blank" class="source-card" id="source-28">
+                        <span class="source-ref">28</span>
+                        <div>
+                            <div>Georgia election official refutes Trump's voter fraud claims - YouTube</div>
+                            <div style="font-size:0.7em; opacity:0.7;">youtube.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=9YHmiLFY9bI" target="_blank" class="source-card" id="source-29">
+                        <span class="source-ref">29</span>
+                        <div>
+                            <div>Giuliani's false claim of suitcase full of ballots debunked</div>
+                            <div style="font-size:0.7em; opacity:0.7;">youtube.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.psychologicalscience.org/news/2025-oct-election-fraud.html" target="_blank" class="source-card" id="source-30">
+                        <span class="source-ref">30</span>
+                        <div>
+                            <div>Unconscious Cognitive Processes May Fuel Election Fraud Beliefs</div>
+                            <div style="font-size:0.7em; opacity:0.7;">psychologicalscience.org</div>
+                        </div>
+                    </a>
+                    <a href="https://misinforeview.hks.harvard.edu/article/misinformation-in-action-fake-news-exposure-is-linked-to-lower-trust-in-media-higher-trust-in-government-when-your-side-is-in-power/" target="_blank" class="source-card" id="source-31">
+                        <span class="source-ref">31</span>
+                        <div>
+                            <div>Misinformation in action: Fake news exposure is linked to lower trust ...</div>
+                            <div style="font-size:0.7em; opacity:0.7;">misinforeview.hks.harvard.edu</div>
+                        </div>
+                    </a>
+                    <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12598269/" target="_blank" class="source-card" id="source-32">
+                        <span class="source-ref">32</span>
+                        <div>
+                            <div>Please reduce the gap! How psychological distance to politics fuels belief in conspiracy theories - NIH</div>
+                            <div style="font-size:0.7em; opacity:0.7;">pmc.ncbi.nlm.nih.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://news.northeastern.edu/2025/11/27/social-media-political-polarization-research/" target="_blank" class="source-card" id="source-33">
+                        <span class="source-ref">33</span>
+                        <div>
+                            <div>New research reveals algorithms' hidden political power - Northeastern Global News</div>
+                            <div style="font-size:0.7em; opacity:0.7;">news.northeastern.edu</div>
+                        </div>
+                    </a>
+                    <a href="https://news.stanford.edu/stories/2025/11/social-media-tool-polarization-user-control-research" target="_blank" class="source-card" id="source-34">
+                        <span class="source-ref">34</span>
+                        <div>
+                            <div>Social media research tool lowers the political temperature | Stanford Report</div>
+                            <div style="font-size:0.7em; opacity:0.7;">news.stanford.edu</div>
+                        </div>
+                    </a>
+                    <a href="https://www.sci.pitt.edu/news/social-media-toxic-discourse-sci-researchers-connections-new-study" target="_blank" class="source-card" id="source-35">
+                        <span class="source-ref">35</span>
+                        <div>
+                            <div>Social Media Algorithms and Toxic Discourse - School of Computing and Information</div>
+                            <div style="font-size:0.7em; opacity:0.7;">sci.pitt.edu</div>
+                        </div>
+                    </a>
+                    <a href="https://english.elpais.com/technology/2025-11-27/algorithms-do-widen-the-divide-social-media-feeds-shape-political-polarization.html" target="_blank" class="source-card" id="source-36">
+                        <span class="source-ref">36</span>
+                        <div>
+                            <div>Algorithms do widen the divide: Social media feeds shape political polarization | Technology</div>
+                            <div style="font-size:0.7em; opacity:0.7;">english.elpais.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.saklakov.com/blog/the-psychological-and-sociopolitical-roots-of-maga-support" target="_blank" class="source-card" id="source-37">
+                        <span class="source-ref">37</span>
+                        <div>
+                            <div>The Psychological and Sociopolitical Roots of MAGA Support - Saklakov</div>
+                            <div style="font-size:0.7em; opacity:0.7;">saklakov.com</div>
+                        </div>
+                    </a>
+                    <a href="https://gwhatchet.com/2025/11/13/professors-discuss-maga-movements-ideological-rise-internal-divisions/" target="_blank" class="source-card" id="source-38">
+                        <span class="source-ref">38</span>
+                        <div>
+                            <div>Professors discuss MAGA movement's ideological rise, internal divisions - The GW Hatchet</div>
+                            <div style="font-size:0.7em; opacity:0.7;">gwhatchet.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.bristol.ac.uk/media-library/sites/spais/documents/FINAL%20DISSERTATION_Fern%20Wilson.pdf" target="_blank" class="source-card" id="source-39">
+                        <span class="source-ref">39</span>
+                        <div>
+                            <div>Social Media Influencers and the 2024 United States Presidential Election - University of Bristol</div>
+                            <div style="font-size:0.7em; opacity:0.7;">bristol.ac.uk</div>
+                        </div>
+                    </a>
+                    <a href="https://www.researchgate.net/publication/397973637_From_America_First_to_the_MAGA_Mindset_The_Cognitive-Political_Roots_of_Mike_Ferguson's_Interpretive_Lens" target="_blank" class="source-card" id="source-40">
+                        <span class="source-ref">40</span>
+                        <div>
+                            <div>From America First to the MAGA Mindset - ResearchGate</div>
+                            <div style="font-size:0.7em; opacity:0.7;">researchgate.net</div>
+                        </div>
+                    </a>
+                    <!-- TEMPLATE FOR EACH SOURCE:
+                    <a href="{{SOURCE_URL}}" target="_blank" class="source-card" id="source-{{N}}">
+                        <span class="source-ref">{{N}}</span>
+                        <div>
+                            <div>{{SOURCE_TITLE}}</div>
+                            <div style="font-size:0.7em; opacity:0.7;">{{SOURCE_DOMAIN}}</div>
+                        </div>
+                    </a>
+                    -->
+                </div>
+            </aside>
+
+            <!-- MAIN ARTICLE CONTENT -->
+            <article class="article-content">
+
+                <!-- TL;DR VERDICT (Copyable) -->
+                <div class="info-box amber copyable-section" id="tldr">
+                    <div class="info-title"><i data-lucide="zap"></i>TL;DR</div>
+                    <p>Verdict: The MAGA movement exhibits full epistemic closure—a psychological state where contradictory evidence strengthens rather than weakens core beliefs. Through identity-protective cognition, illusory truth effects, and algorithmic amplification, supporters maintain belief in debunked narratives despite video evidence and 60+ court rulings. This is not ignorance but a sophisticated cognitive defense mechanism where group identity trumps factual accuracy.</p>
+                </div>
+
+                <!-- EXECUTIVE SUMMARY (Copyable) -->
+                <div class="info-box copyable-section" id="executive-summary">
+                    <div class="info-title"><i data-lucide="file-text"></i>Executive Summary</div>
+                    <p>The MAGA movement exemplifies epistemic closure—a sociopolitical phenomenon where a belief system operates as a closed loop, automatically discrediting any information from outside sources. This report analyzes the psychological mechanisms that allow supporters to maintain beliefs like "The Big Lie" despite overwhelming evidence. Key drivers include identity-protective cognition (where defending group identity outweighs accuracy), the illusory truth effect (repetition creates perceived truthfulness), cognitive dissonance resolution strategies, and technological reinforcement through social media algorithms. The research draws on peer-reviewed studies in psychology, political science, and cognitive neuroscience to explain how 60+ lost court cases and video evidence fail to penetrate this closed belief system.</p>
+                </div>
+
+                <section class="copyable-section">
+                    <h2>The Radicalization of the 'New Right'</h2>
+                    The MAGA movement has undergone intellectual evolution, departing from "old guard" conservatism (Reagan, Buckley) toward a "New Right" characterized by ideological radicalization<a href="#source-38" class="citation-link" onclick="highlightSource(event, 'source-38')">[38]</a>. This new wing includes "postliberal Catholic traditionalists," "tech bros with God complexes," and "Claremont scholars" seeking to "deconstruct the administrative state"<a href="#source-38" class="citation-link" onclick="highlightSource(event, 'source-38')">[38]</a>.
+
+This intellectual faction uses Straussianism—searching for "hidden" meanings in classic texts—to argue for return to a mythologized, "virtuous" Founding Fathers order<a href="#source-38" class="citation-link" onclick="highlightSource(event, 'source-38')">[38]</a>. By framing political goals as "highest good" or "religious morality," they moralize Trump allegiance and demonize opposition as existential threats to "American exceptionalism"<a href="#source-38" class="citation-link" onclick="highlightSource(event, 'source-38')">[38]</a><a href="#source-40" class="citation-link" onclick="highlightSource(event, 'source-40')">[40]</a>.
+
+This "moral absolutism" creates psychological barriers to analytical reasoning. The messenger's identity becomes more important than the message's truth<a href="#source-40" class="citation-link" onclick="highlightSource(event, 'source-40')">[40]</a>. When political goals are sacralized as religious duty, fact-checking becomes heresy.
+                </section>
+
+                <section class="copyable-section">
+                    <h2>The Resilience of the Closed Loop</h2>
+                    The epistemic closure of the MAGA movement is a remarkably robust psychological and structural phenomenon. It is not "stupid" people being tricked; it is a "psychopolitical apparatus" built on identity, nostalgia, and profound grievance<a href="#source-40" class="citation-link" onclick="highlightSource(event, 'source-40')">[40]</a>.
+
+The combination of identity-protective cognition, illusory truth effects, and an information environment specifically designed to discredit external authority creates a system nearly impenetrable to conventional facts. The 2020 election and January 6th case studies demonstrate that when evidence contradicts the narrative, the movement simply "rewrites events to conform to emotionally satisfying narratives"<a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a>.
+
+Video evidence is trivialized. Court losses are framed as conspiracies. Lies are repeated until they feel like "gut instinct" truths. With added power of social media algorithms and generative AI, the movement's ability to "flood the zone" with misinformation has reached unprecedented levels.
+
+For the MAGA supporter, the "Big Lie" is not falsehood but sacred truth defining their identity and worldview. As long as the movement provides a "vocabulary of blame" and shared belonging, epistemic closure will likely persist, regardless of what the "fake" world of facts may say<a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a>. The goal is not policy but "complete domination," and in that quest, truth is merely an obstacle to be remapped or ignored.
+                </section>
+
+                <section class="copyable-section">
+                    <h2>The Epistemological Foundation of Political Closure</h2>
+                    To understand how the MAGA movement achieves extraordinary belief persistence, we must first explore the formal logic behind epistemic closure. Traditional epistemology examines how knowledge systems expand through deduction<a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>. Robert Nozick's "truth tracking" theory suggests that a person knows a proposition if they believe it and would not believe it in scenarios where it were false<a href="#source-4" class="citation-link" onclick="highlightSource(event, 'source-4')">[4]</a>.
+
+In the political sphere, this deductive process becomes corrupted. When a movement adopts the fundamental premise that "mainstream institutions are inherently corrupt," any evidence from those institutions is automatically categorized as false through a corrupted modus ponens: if the media is "fake," and the media reports fact X, then fact X must be fabrication<a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>.
+
+Julian Sanchez, who popularized the modern political meaning in 2010, argues that the conservative movement created a "totalistic alternative information cocoon" that replaces rather than supplements mainstream sources<a href="#source-3" class="citation-link" onclick="highlightSource(event, 'source-3')">[3]</a>. This is not merely passive information avoidance—it's an active protective mechanism for the believer's internal worldview.
+                </section>
+
+                <!-- CHART 1: Information Environment Comparison -->
+<div class="chart-wrapper copyable-section" id="info-env-chart-wrapper" style="float: right; width: 450px; margin-left: 30px;">
+    <div class="chart-header">
+        <div class="chart-title">Resistance to Contradictory Evidence</div>
+    </div>
+    <canvas id="infoEnvChart" height="300"></canvas>
+</div>
+
+                
+
+                <section class="copyable-section">
+                    <h2>Three Distinct Information Environments</h2>
+                    Social epistemology identifies three primary information structures, each with escalating resistance to contrary evidence<a href="#source-6" class="citation-link" onclick="highlightSource(event, 'source-6')">[6]</a><a href="#source-7" class="citation-link" onclick="highlightSource(event, 'source-7')">[7]</a>:
+
+**Epistemic Bubbles** emerge from mere lack of exposure—an unintentional omission of diverse viewpoints. These are relatively fragile; exposure to new facts can "pop" the bubble<a href="#source-6" class="citation-link" onclick="highlightSource(event, 'source-6')">[6]</a>.
+
+**Echo Chambers** involve active exclusion and systematic discrediting of external voices. Trust is manipulated such that opposing views are framed as attacks by enemies rather than alternative perspectives<a href="#source-7" class="citation-link" onclick="highlightSource(event, 'source-7')">[7]</a>.
+
+**Full Epistemic Closure** represents the most extreme state—an ideological system functioning as a closed deductive loop where contradictory facts are reinterpreted as proof of conspiracy<a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>. The primary goal is protection of a sacred identity and cultural worldview<a href="#source-8" class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a>.
+
+The MAGA movement operates at this third level. It possesses a sophisticated framework for discrediting any threatening information through what researchers call "phenomenological indistinguishability"—to the individual within the system, their beliefs are indistinguishable from objective knowledge<a href="#source-12" class="citation-link" onclick="highlightSource(event, 'source-12')">[12]</a>.
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Identity-Protective Cognition: The Paradox of Intelligence</h2>
+                    The psychological resilience of the MAGA movement is explained through identity-protective cognition, a framework developed by Yale Law professor Dan Kahan. This theory posits that individuals unconsciously process information to align with the beliefs of their cultural affinity group<a href="#source-8" class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a>. Political identity functions as a "badge of membership" that must be protected to maintain social status within one's community<a href="#source-11" cl ass="citation-link" onclick="highlightSource(event, 'source-11')">[11]</a>.
+
+A profound and counterintuitive finding: individuals with higher cognitive proficiency and scientific literacy are often *more* polarized, not less<a href="#source-8" class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a>. Intelligent people possess greater "cognitive horsepower" to rationalize and defend their group's positions. When a topic becomes a symbol of group loyalty—like the 2020 election results—individuals deploy analytical reasoning not to seek truth but to identify flaws in contradictory evidence<a href="#source-8" class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a>.
+
+Kahan argues this behavior is "too rational" from the individual's perspective. For a MAGA supporter, the personal risk of ostracism from family and community for accepting that Biden won fairly far exceeds the abstract cost of being wrong about a national election<a href="#source-8" class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a>.
+
+Cultural worldviews measured along two axes—Individualism vs. Communitarianism and Hierarchy vs. Egalitarianism—show MAGA aligns strongly with hierarchical-individualistic positions<a href="#source-8" class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a>. This creates the "white male effect," where dominant in-group members perceive risks like gun control as less dangerous than the social changes those regulations imply<a href="#source-14" class="citation-link" onclick="highlightSource(event, 'source-14')">[14]</a>.
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Motivated Reasoning and Cognitive Dissonance Resolution</h2>
+                    When MAGA supporters confront undeniable evidence—video footage of January 6th violence, 60+ court rejections of fraud claims—they experience cognitive dissonance, a state of psychological discomfort<a href="#source-15" class="citation-link" onclick="highlightSource(event, 'source-15')">[15]</a>. This discomfort is resolved through "motivated reasoning" where the goal is identity protection rather than accuracy<a href="#source-11" class="citation-link" onclick="highlightSource(event, 'source-11')">[11]</a>.
+
+Based on behavioral observation and psychological research, several distinct strategies emerge for neutralizing contradictory evidence<a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a><a href="#source-17" class="citation-link" onclick="highlightSource(event, 'source-17')">[17]</a>:
+
+**Trivialization**: Downplaying event severity. The Capitol breach becomes a "normal tourist visit" despite five deaths and injuries to 140 officers<a href="#source-17" class="citation-link" onclick="highlightSource(event, 'source-17')">[17]</a>.
+
+**External Justification**: Reframing criminals as victims. Trump's frequent citation of "excessive" sentences for January 6th defendants transforms attackers into martyrs<a href="#source-17" class="citation-link" onclick="highlightSource(event, 'source-17')">[17]</a>.
+
+**Whataboutism**: Redirecting criticism by pointing to opposition behavior. Comparing January 6th to 2020 summer protests reduces feelings of hypocrisy<a href="#source-17" class="citation-link" onclick="highlightSource(event, 'source-17')">[17]</a>.
+
+**Selective Amnesia**: Misremembering events to fit preferred narratives. A "collective GOP amnesia" regarding January 6th violence has been documented<a href="#source-17" class="citation-link" onclick="highlightSource(event, 'source-17')">[17]</a>.
+
+**Attitude Bolstering**: Asserting related beliefs to compensate for inconsistencies. Supporters claim to "back the blue" while defending those who assaulted Capitol Police—by claiming those specific officers were "deep state agents"<a href="#source-17" class="citation-link" onclick="highlightSource(event, 'source-17')">[17]</a>.
+
+**Denial of Responsibility**: Attributing actions to higher authority or systemic corruption<a href="#source-17" class="citation-link" onclick="highlightSource(event, 'source-17')">[17]</a>.
+
+These mechanisms ensure the closed loop remains intact. When truth is too painful, denial becomes a core feature rather than a bug<a href=" #source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a>.
+                </section>
+
+                <section class="copyable-section">
+                    <h2>The Illusory Truth Effect and Rhetorical Repetition</h2>
+                    A key tactical advantage deployed by MAGA leadership is the "illusory truth effect"—a cognitive bias where repeated exposure to a statement increases perceived truthfulness regardless of factual accuracy<a href="#source-22" class="citation-link" onclick="highlightSource(event, 'source-22')">[22]</a>. This phenomenon is driven by "fluency": the brain processes familiar information more easily and mistakes this ease for veracity<a href="#source-24" class="citation-link" onclick="highlightSource(event, 'source-24')">[24]</a>.
+
+Donald Trump's rhetorical style uniquely exploits this bias. By repeating simple, high-impact lies—"the election was a fraud," "we're building a wall and Mexico is paying"—he creates a "gut instinct" that overrides critical faculties<a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a>.
+
+Troublingly, the illusory truth effect persists even when individuals are warned information is false and even when they possess prior contradictory knowledge<a href="#source-22" class="citation-link" onclick="highlightSource(event, 'source-22')">[22]</a><a href="#source-25" class="citation-link" onclick="highlightSource(event, 'source-25')">[25]</a>.
+
+The sheer volume of misinformation creates a "Gish Gallop" effect—the speed and quantity of lies make comprehensive correction impossible<a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a>. By the time one lie is debunked, three more have been repeated dozens of times, solidifying through the illusory truth effect.
+                </section>
+
+<div class="chart-wrapper copyable-section" id="illusory-truth-chart-wrapper" style="float: right; width: 450px; margin-left: 30px;">
+    <div class="chart-header">
+        <div class="chart-title">Illusory Truth Effect Over Repetitions</div>
+    </div>
+    <canvas id="illusoryTruthChart" height="300"></canvas>
+</div>
+
+                
+
+                <section class="copyable-section">
+                    <h2>Case Study: The Georgia 'Suitcases' and Judicial Failure</h2>
+                    The durability of MAGA epistemic closure is starkly evident in the persistence of the Georgia "suitcases of ballots" narrative. This allegation—that secret ballots were counted at State Farm Arena after poll watchers left—became one of the post-2020 election's most sensational claims<a href="#source-26" class="citation-link" onclick="highlightSource(event, 'source-26')">[26]</a>.
+
+Extensive investigations by the FBI, Georgia Bureau of Investigation, and Secretary of State's office reviewed *complete* unedited video footage. Their findings: the "suitcases" were standard ballot containers, and workers performed normal counting procedures in full security camera view<a href="#source-26" class="citation-link" onclick="highlightSource(event, 'source-26')">[26]</a><a href="#source-27" class="citation-link" onclick="highlightSource(event, 'source-27')">[27]</a>.
+
+Georgia Secretary of State Brad Raffensperger and U.S. Attorney B.J. Pak personally informed Donald Trump the allegations were false<a href="#source-27" class="citation-link" onclick="highlightSource(event, 'source-27')">[27]</a><a href="#source-28" class="citation-link" onclick="highlightSource(event, 'source-28')">[28]</a><a href="#source-29" class="citation-link" onclick="highlightSource(event, 'source-29')">[29]</a>. Yet the narrative persisted.
+
+This illustrates identity-protective cognition in action. When a trusted leader insists a video shows fraud, supporters view official "debunking" not as correction but as establishment cover-up<a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a>. The very act of providing contrary evidence is taken as proof of enemy malice<a href="#source-7" class="citation-link" onclick="highlightSource(event, 'source-7')">[7]</a>.
+
+Additionally, "cumulative redundancy bias" plays a role. Research shows that when a candidate leads early then loses—as occurred when Georgia counted mail-in ballots—observers are prone to believing the result was "rigged" even when given logical explanations<a href="#source-30" class="citation-link" onclick="highlightSource(event, 'source-30')">[30]</a>. The brain filters redundant "winning" information poorly, creating a persistent feeling of foul play.
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Institutional Deconstruction and the 'Fake News' Shield</h2>
+                    The MAGA movement's epistemic closure depends on systematic discrediting of mainstream institutions. By labeling press as "enemy of the people" and "Fake News," leadership creates an "epistemic shield" deflecting negative reporting<a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a>.
+
+Research indicates exposure to "fake news" rhetoric has dual effects on trust: it lowers trust in mainstream media across party lines while increasing trust in political institutions *when one's own side holds power*<a href="#source-31" class="citation-link" onclick="highlightSource(event, 'source-31')">[31]</a>. For conservatives during the Trump administration, pro-Trump misinformation bolstered government confidence because the misinformation was "pro-government"<a href="#source-31" class="citation-link" onclick="highlightSource(event, 'source-31')">[31]</a>. This creates a scenario where the only trusted information source is the leader himself and echoing hyperpartisan media<a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a>.
+
+This discrediting exploits "psychological distance"—when citizens feel disconnected from abstract political processes, they become more susceptible to conspiracy theories providing a "vocabulary of blame" for perceived grievances<a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a><a href="#source-32" class="citation-link" onclick="highlightSource(event, 'source-32')">[32]</a>. The leader bridges this distance by presenting himself as the only voice for "real Americans" against a "rigged" system<a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a>.
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Technological Reinforcement: Algorithms and AI in 2024-2025</h2>
+                    Digital architecture in the 2020s has significantly exacerbated epistemic closure. Recent 2025 studies published in *Science* confirm social media algorithms possess "hidden political power" to shift partisan animosity<a href="#source-33" class="citation-link" onclick="highlightSource(event, 'source-33')">[33]</a>.
+
+Researchers from Stanford, Northeastern, and the University of Washington used browser extensions to "rerank" users' X (Twitter) feeds. They found that in just one week, exposure to antidemocratic attitudes and partisan animosity could shift feelings toward opposing parties by an amount typically requiring three years<a href="#source-33" class="citation-link" onclick="highlightSource(event, 'source-33')">[33]</a><a href="#source-34" class="citation-link" onclick="highlightSource(event, 'source-34')">[34]</a>. The *order* and *frequency* of algorithm-controlled posts directly fuel "affective polarization"<a href="#source-35" class="citation-link" onclick="highlightSource(event, 'source-35')">[35]</a><a href="#source-36" class="citation-link" onclick="highlightSource(event, 'source-36')">[36]</a>.
+
+TikTok research analyzing 51,000+ political videos found toxic partisan content on topics like "election fraud" drives nearly twice the engagement of nonpartisan posts<a href="#source-35" class="citation-link" onclick="highlightSource(event, 'source-35')">[35]</a>. This creates feedback loops where algorithms promote divisive content because it's more "engaging."
+
+Artificial Intelligence introduces a new vector: "AIPasta"—Large Language Models generating non-verbatim repetitions of false narratives<a href="#source-23" class="citation-link" onclick="highlightSource(event, 'source-23')">[23]</a>. Unlike traditional copy-pasta spam, AIPasta creates illusory broad social consensus. Preregistered experiments show AIPasta increases perceptions of "social consensus" for false claims, particularly influencing those less familiar with narratives, and increases sharing intention among Republican participants<a href="#source-23" class="citation-link" onclick="highlightSource(event, 'source-23')">[23]</a><a href="#source-25" class="citation-link" onclick="highlightSource(event, 'source-25')">[25]</a>.
+
+This technological development allows creation of a "sea of noise" even more resistant to fact-checking, as AI-tailored lies feel like voices of vast believer communities<a href="#source-23" class="citation-link" onclick="highlightSource(event, 'source-23')">[23]</a>.
+                </section>
+
+<div class="chart-wrapper copyable-section" id="polarization-chart-wrapper" style="float: right; width: 450px; margin-left: 30px;">
+    <div class="chart-header">
+        <div class="chart-title">Social Media Polarization Acceleration (2025 Study)</div>
+    </div>
+    <canvas id="polarizationChart" height="300"></canvas>
+</div>
+
+                
+
+                <section class="copyable-section">
+                    <h2>Socio-Psychological Drivers: Status Loss and Precarious Manhood</h2>
+                    The "toxic psychological engine" of the MAGA movement is fueled not solely by misinformation but by deep cultural anxieties. Research suggests MAGA support correlates less with economic hardship and more with "perceived status loss"<a href="#source-37" class="citation-link" onclick="highlightSource(event, 'source-37')">[37]</a>. Adherents often feel "dispossessed," seeing rising power of women, immigrants, and racial minorities as direct threats to their social hierarchy position<a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a>.
+
+Several psychological theories explain this motivation:
+
+**Last-Place Aversion**: Individuals just above the social hierarchy bottom (e.g., lower-middle-class white men) resist policies helping those just below them, fearing descent to "last place"<a href="#source-37" class="citation-link" onclick="highlightSource(event, 'source-37')">[37]</a>.
+
+**Precarious Manhood Theory**: Men feeling traditional masculine status undermined by social changes often support aggressive authoritarian leaders to affirm their manhood<a href="#source-37" class="citation-link" onclick="highlightSource(event, 'source-37')">[37]</a>.
+
+**Partisan Schadenfreude**: Extremists derive literal pleasure from outgroup misfortune, leading to support for cruel policies simply to "own the libs"<a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a>.
+
+In this environment, a leader's "cruelty" is not a bug but a feature providing emotional reassurance to those feeling status-threatened<a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a>. The "gleeful menace" in MAGA culture—chants of "Lock her up," "Build the wall," civil war fantasies—serves as "affirmation of belonging" to a powerful, dominant group<a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a>.
+                </section>
+
+
+                <!-- TEMPLATE FOR EACH SECTION:
+                <section class="copyable-section">
+                    <h2>{{SECTION_TITLE}}</h2>
+                    <p>{{SECTION_CONTENT}} <a href="#source-N" class="citation-link" onclick="highlightSource(event, 'source-N')">[N]</a></p>
+                </section>
+                -->
+
+                <!-- TEMPLATE FOR CHART:
+                <div class="chart-wrapper copyable-section" id="{{CHART_ID}}-wrapper">
+                    <div class="chart-header">
+                        <div class="chart-title">{{CHART_TITLE}}</div>
+                    </div>
+                    <canvas id="{{CHART_ID}}" height="300"></canvas>
+                </div>
+                -->
+
+                <!-- TEMPLATE FOR TABLE:
+                <div class="data-table-container copyable-section">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>{{HEADER_1}}</th>
+                                <th>{{HEADER_2}}</th>
+                                <th>{{HEADER_3}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{CELL_1}}</td>
+                                <td>{{CELL_2}}</td>
+                                <td>{{CELL_3}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                -->
+
+                <!-- TEMPLATE FOR FIGURE:
+                <figure class="float-figure copyable-section" style="float: right; margin: 5px 0 20px 25px;">
+                    <img src="{{IMAGE_URL}}" alt="{{IMAGE_ALT}}">
+                    <figcaption>
+                        <strong style="color:var(--accent-red);">EXHIBIT {{LETTER}}:</strong>
+                        {{CAPTION_TEXT}} (Source: {{SOURCE_NAME}})
+                    </figcaption>
+                </figure>
+                -->
+
+                <!-- TEMPLATE FOR ALERT BOX:
+                <div class="info-box {{ALERT_COLOR}} copyable-section" style="clear: both;">
+                    <div class="info-title"><i data-lucide="{{ALERT_ICON}}"></i>{{ALERT_TITLE}}</div>
+                    <p>{{ALERT_CONTENT}}</p>
+                </div>
+                -->
+
+            </article>
+        </div>
+    </div>
+
+    <!-- Shared Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Scroll-progress is now handled by shared-components.js
+        // DO NOT add scroll listeners here - they will override shared components
+
+        // Initialize Lucide Icons
+        window.addEventListener('gv:componentsReady', () => {
+            lucide.createIcons();
+        });
+
+        // Interactive Citation Highlighting
+        function highlightSource(event, id) {
+            event.preventDefault();
+            const element = document.getElementById(id);
+
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                element.classList.remove('highlight');
+                void element.offsetWidth; // trigger reflow
+                element.classList.add('highlight');
+            }
+        }
+
+
+        
+        // CHART 1: Information Environment Comparison (Horizontal Bar)
+        new Chart(document.getElementById('infoEnvChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Epistemic Bubble', 'Echo Chamber', 'Full Closure (MAGA)'],
+                datasets: [{
+                    label: 'Resistance Level (1-100)',
+                    data: [25, 70, 95],
+                    backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                    borderColor: ['#10b981', '#f59e0b', '#ef4444'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: {
+                        display: false
+                    },
+                    watermark: { text: "GenuVerity" }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { color: '#cbd5e1' }
+                    }
+                }
+            }
+        });
+
+        // CHART 2: Illusory Truth Effect (Line Chart)
+        new Chart(document.getElementById('illusoryTruthChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['New Info', '1x Repeat', '3x Repeat', '10x Repeat', 'Hyper-Repetition'],
+                datasets: [{
+                    label: 'Perceived Accuracy',
+                    data: [35, 55, 68, 82, 92],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }, {
+                    label: 'Sharing Intention',
+                    data: [15, 35, 52, 71, 88],
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: { color: '#94a3b8' }
+                    },
+                    watermark: { text: "GenuVerity" }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#cbd5e1' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // CHART 3: Polarization Acceleration (Line with dramatic spike)
+        new Chart(document.getElementById('polarizationChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Baseline', 'Day 1', 'Day 3', 'Day 5', 'Day 7 (Algorithm)'],
+                datasets: [{
+                    label: 'Partisan Animosity Shift (Typical = 3 years)',
+                    data: [0, 0.3, 0.8, 1.5, 3.0],
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.2,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#ef4444'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: { color: '#94a3b8' }
+                    },
+                    watermark: { text: "GenuVerity" }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Years of Equivalent Polarization',
+                            color: '#cbd5e1'
+                        },
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#cbd5e1' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // TEMPLATE FOR CHART CONFIG:
+        // new Chart(document.getElementById('{{CHART_ID}}').getContext('2d'), {
+        //     type: '{{CHART_TYPE}}',
+        //     data: {
+        //         labels: [{{LABELS}}],
+        //         datasets: [{
+        //             label: '{{DATASET_LABEL}}',
+        //             data: [{{DATA_VALUES}}],
+        //             borderColor: '{{COLOR}}',
+        //             backgroundColor: '{{COLOR_ALPHA}}',
+        //             fill: true,
+        //             tension: 0.2
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         plugins: {
+        //             legend: {
+        //                 display: true,
+        //                 labels: { color: '#94a3b8' }
+        //             }
+        //         },
+        //         scales: {
+        //             y: {
+        //                 display: true,
+        //                 grid: { color: 'rgba(255,255,255,0.05)' },
+        //                 ticks: { color: '#64748b' }
+        //             },
+        //             x: {
+        //                 grid: { color: 'rgba(255,255,255,0.05)' },
+        //                 ticks: { color: '#94a3b8' }
+        //             }
+        //         }
+        //     }
+        // });
+    </script>
+</body>
+
+</html>
