@@ -381,10 +381,7 @@
                 width: 100% !important;
             }
 
-            .navbar-search-container {
-                opacity: 1 !important;
-                margin: 0 4px;
-            }
+            /* navbar-search-container styles now in shared-components.css */
 
             .navbar-right {
                 display: none;
@@ -512,21 +509,7 @@
             width: 100%;
         }
 
-        .navbar-search-container {
-            display: flex;
-            align-items: center;
-            background: rgba(17, 24, 39, 0.8);
-            /* More opaque */
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 0 16px;
-            height: 44px;
-            width: 500px;
-            opacity: 1;
-            overflow: visible;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
+        /* navbar-search-container styles moved to shared-components.css */
 
         .navbar-search-container.active {
             border-color: var(--accent-cyan);
@@ -1658,16 +1641,8 @@
             justify-content: center;
         }
 
+        /* navbar-search-container styles moved to shared-components.css */
         .navbar-search-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            height: 36px;
-            background: rgba(17, 24, 39, 0.8);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
             padding: 0 16px;
             gap: 10px;
             transition: all 0.3s ease;
