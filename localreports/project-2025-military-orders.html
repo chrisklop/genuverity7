@@ -96,49 +96,38 @@
         </div>
 
         <div class="content-grid">
-            <!-- Sidebar -->
+            <!-- SIDEBAR: SOURCES FIRST -->
             <aside class="sources-sidebar">
                 <div class="sources-header">
-                    <h3>Primary Sources</h3>
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
+                    <span class="sources-count">3</span>
                 </div>
-                <ul class="source-list-sidebar">
-                    <li id="source-1" class="source-item">
-                        <a href="https://www.project2025.org/policy/" target="_blank" class="source-link"
-                            onclick="highlightSource(1)">
-                            <span class="source-number">01</span>
-                            <span class="source-name">Heritage Foundation: Mandate for Leadership</span>
-                        </a>
-                    </li>
-                    <li id="source-2" class="source-item">
-                        <a href="https://www.opm.gov/fedscope/" target="_blank" class="source-link"
-                            onclick="highlightSource(2)">
-                            <span class="source-number">02</span>
-                            <span class="source-name">OPM: Federal Workforce Data</span>
-                        </a>
-                    </li>
-                    <li id="source-3" class="source-item">
-                        <a href="https://calendar.google.com/calendar" target="_blank" class="source-link"
-                            onclick="highlightSource(3)">
-                            <span class="source-number">03</span>
-                            <span class="source-name">Viral TikToK/Twitter Claims (Archive)</span>
-                        </a>
-                    </li>
-                </ul>
-
-                <div class="share-card">
-                    <h3>Share this Dossier</h3>
-                    <div class="share-buttons">
-                        <button class="share-btn twitter" onclick="shareReport('twitter')">
-                            <span class="material-symbols-outlined">share</span> X / Twitter
-                        </button>
-                        <button class="share-btn copy" onclick="copyLink()">
-                            <span class="material-symbols-outlined">link</span> Copy Link
-                        </button>
-                    </div>
+                <div class="sources-list" id="sourcesList">
+                    <a href="https://www.project2025.org/policy/" target="_blank" class="source-card" id="source-1">
+                        <span class="source-ref">1</span>
+                        <div>
+                            <div>Mandate for Leadership</div>
+                            <div style="font-size:0.7em; opacity:0.7;">project2025.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.opm.gov/fedscope/" target="_blank" class="source-card" id="source-2">
+                        <span class="source-ref">2</span>
+                        <div>
+                            <div>Federal Workforce Data</div>
+                            <div style="font-size:0.7em; opacity:0.7;">opm.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://trends.google.com/" target="_blank" class="source-card" id="source-3">
+                        <span class="source-ref">3</span>
+                        <div>
+                            <div>Search Trends Analysis</div>
+                            <div style="font-size:0.7em; opacity:0.7;">google.com</div>
+                        </div>
+                    </a>
                 </div>
             </aside>
 
-            <!-- Main Content -->
+            <!-- MAIN ARTICLE CONTENT -->
             <article class="article-content">
 
                 <section id="section-1" class="report-section copyable-section" data-section-id="1">
