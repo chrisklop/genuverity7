@@ -18,6 +18,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 □ Text: NO GRADIENT TEXT - use solid colors only
 □ Data: Verify against live sources, add date context
 □ In-Page Charts/Diagrams: Chart.js/D3/Mermaid (code-generated, NEVER AI images)
+□ Chart Layout: Wrap in <figure class="float-figure"> for magazine-style float-right
 ```
 
 **Shorthand triggers:**
@@ -643,6 +644,7 @@ Execute this pipeline FOR EACH report sequentially:
 | **Bold Emphasis** | Key terms, names, verdicts | `<strong>FALSE</strong>` |
 | **Italic Emphasis** | Quotes, claims being analyzed | `<em>"quoted claim text"</em>` |
 | **Chart.js + Watermark Plugin** | Every chart needs the plugin | See template.md |
+| **Chart Layout** | Magazine-style float-right | `<figure class="float-figure">` wrapping chart |
 | **Reading Progress Bar** | In nav header | `<div class="reading-progress"></div>` |
 | **Verdict Section** | Color-coded by result | Green=TRUE, Red=FALSE, Amber=MIXED |
 | **Executive Summary** | Claim vs Reality grid | See template.md |
