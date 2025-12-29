@@ -257,9 +257,14 @@ class UnifiedSearch {
         this.startX = 0;
         this.currentX = 0;
         this.wasDragging = false;    // Distinguish click vs drag
-        this.CARD_WIDTH = 280;       // Spacing between cards
 
         this.init();
+    }
+
+    // Dynamic CARD_WIDTH to match CSS widths
+    getCardWidth() {
+        // Matches CSS: Desktop = 360px, Mobile (<=768px) = 300px
+        return window.innerWidth <= 768 ? 300 : 360;
     }
 
     init() {
@@ -565,7 +570,7 @@ class UnifiedSearch {
             cards.forEach(c => c.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)');
 
             // Snap logic
-            const threshold = this.CARD_WIDTH * 0.2; // 20% swipe to change
+            const threshold = this.getCardWidth() * 0.2; // 20% swipe to change
             if (this.dragOffset > threshold && this.currentCardIndex > 0) {
                 this.currentCardIndex--;
             } else if (this.dragOffset < -threshold && this.currentCardIndex < this.filteredReports.length - 1) {
@@ -682,12 +687,12 @@ class UnifiedSearch {
             // Calculate distance including drag offset
             // Standard offset: index - currentIndex (e.g., -1, 0, 1)
             // Convert pixels to index-units for transform calculation
-            const dragIndexShift = dragShift / this.CARD_WIDTH;
+            const dragIndexShift = dragShift / this.getCardWidth();
             const offset = (index - this.currentCardIndex) + dragIndexShift;
 
             const absOffset = Math.abs(offset);
 
-            const translateX = offset * this.CARD_WIDTH;
+            const translateX = offset * this.getCardWidth();
             const translateZ = -150 - (absOffset * 50); // Base Z pushback
             const rotateY = offset * -25;
 
