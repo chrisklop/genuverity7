@@ -368,3 +368,67 @@ new Chart(document.getElementById('chartId'), {
 □ Test in browser before claiming "fixed"
 ```
 
+---
+
+## 📊 CHART SPACING FOR VISUAL BALANCE (CRITICAL)
+
+**Lesson Learned: December 2025 - Project 2025 Report**
+
+Long reports (5,000+ words, 8+ sections) need **multiple charts** distributed throughout to avoid "wall of text" fatigue.
+
+### **Chart Spacing Guidelines:**
+
+**For reports with 8 sections:**
+- **Minimum 3-5 charts** distributed every 1-2 sections
+- **NO long stretches** (3+ sections) without visual breaks
+- Charts should illustrate data mentioned in nearby text
+
+**Chart Placement Strategy:**
+1. Place first chart after opening sections (Section 1-2)
+2. Add charts after data-heavy sections (veteran stats, timelines, comparisons)
+3. Distribute evenly - check final output for balance
+
+**Chart Style Requirements:**
+- **ALWAYS** use: `style="float: right; width: 450px; margin-left: 30px;"`
+- This creates magazine-style text wrapping
+- Charts float right, text wraps around left side
+
+**Example Distribution (8-section report):**
+```
+Section 1: Intro + Chart 1 (line/bar)
+Section 2: Context
+Section 3: Data Analysis + Chart 2 (doughnut) + Chart 3 (bar)
+Section 4: Technical Details + Chart 4 (line/timeline)
+Section 5: Historical Context + Chart 5 (bar)
+Section 6: Legal Analysis
+Section 7: Projections
+Section 8: Conclusion
+```
+
+**Chart Type Selection:**
+- **Line charts**: Trends over time, search volume, timeline progression
+- **Bar charts**: Comparisons, percentages by category, rankings
+- **Doughnut charts**: Percentage splits (veterans vs civilians, etc.)
+- **Horizontal bar charts**: Rankings, comparative values
+
+### **Chart Code Template:**
+```html
+<div class="chart-wrapper copyable-section" id="chartId-wrapper" style="float: right; width: 450px; margin-left: 30px;">
+    <div class="chart-header">
+        <div class="chart-title">Chart Title</div>
+    </div>
+    <canvas id="chartId" height="300"></canvas>
+</div>
+```
+
+### **Chart.js Configuration Must Include:**
+- Explicit `borderWidth: 2` (for line/bar charts)
+- Tick colors: `ticks: { color: '#cbd5e1' }`
+- Watermark: `watermark: { text: "GenuVerity" }`
+- Proper contrast colors (see Color Contrast Requirements above)
+
+**CRITICAL: Plan charts BEFORE writing content**
+- Review research data for chart opportunities
+- Identify 3-5 key visualizations
+- Place chart HTML early, fill content around it
+
