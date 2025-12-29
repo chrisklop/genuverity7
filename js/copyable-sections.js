@@ -174,8 +174,11 @@
         const parentWrapper = btn.closest('.copy-wrapper');
         if (parentWrapper) parentWrapper.classList.remove('active');
 
-        const originalIcon = btn.innerHTML;
-        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-2 animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`;
+        const triggerBtn = parentWrapper ? parentWrapper.querySelector('.copy-trigger') : btn;
+        const originalIcon = triggerBtn.innerHTML;
+
+        // Show loading spinner
+        triggerBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-2" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`;
 
         try {
             // 1. Prepare DOM
@@ -188,7 +191,7 @@
             watermark.innerHTML = '<span class="genu">Genu</span><span class="verity">Verity</span>';
             element.appendChild(watermark);
 
-            // 2. Render
+            // 2. Render with html2canvas
             const canvas = await html2canvas(element, {
                 backgroundColor: '#050A14', // Theme Deep BG
                 scale: 2, // Retina quality
@@ -200,27 +203,53 @@
             // 3. Cleanup DOM
             watermark.remove();
             if (wrapper) wrapper.style.display = '';
-            btn.innerHTML = originalIcon;
 
-            // 4. Output
-            const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+            // 4. Convert to blob
+            const blob = await new Promise((resolve, reject) => {
+                canvas.toBlob((b) => {
+                    if (b) resolve(b);
+                    else reject(new Error('Failed to create blob'));
+                }, 'image/png');
+            });
 
-            // Try Clipboard
+            // 5. Try Clipboard API first
+            let clipboardSuccess = false;
             if (navigator.clipboard && typeof ClipboardItem !== 'undefined') {
-                await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-                showSuccess(parentWrapper ? parentWrapper.querySelector('.copy-trigger') : btn);
-            } else {
-                // Fallback Download
-                const link = document.createElement('a');
-                link.download = `genuverity-${new Date().getTime()}.png`;
-                link.href = canvas.toDataURL();
-                link.click();
-                showSuccess(parentWrapper ? parentWrapper.querySelector('.copy-trigger') : btn);
+                try {
+                    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                    clipboardSuccess = true;
+                    console.log('[GV Copy] Image copied to clipboard');
+                } catch (clipErr) {
+                    console.warn('[GV Copy] Clipboard API failed:', clipErr.message);
+                }
             }
 
+            // 6. Fallback: Download if clipboard failed
+            if (!clipboardSuccess) {
+                console.log('[GV Copy] Falling back to download');
+                const link = document.createElement('a');
+                link.download = `genuverity-${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            // Show success
+            triggerBtn.innerHTML = originalIcon;
+            showSuccess(triggerBtn);
+
         } catch (err) {
-            console.error('Capture Failed', err);
-            btn.innerHTML = originalIcon;
+            console.error('[GV Copy] Capture Failed:', err);
+            triggerBtn.innerHTML = originalIcon;
+
+            // Show error state
+            triggerBtn.style.borderColor = '#ef4444';
+            triggerBtn.style.color = '#ef4444';
+            setTimeout(() => {
+                triggerBtn.style.borderColor = '';
+                triggerBtn.style.color = '';
+            }, 1500);
         }
     }
 
@@ -274,10 +303,16 @@
             const wrapper = document.createElement('div');
             wrapper.className = 'copy-wrapper';
 
+            // Determine if this is a chart/visual element (should NOT show Copy Text)
+            const isChart = el.classList.contains('chart-wrapper') ||
+                el.classList.contains('chart-box') ||
+                el.querySelector('canvas') !== null ||
+                (el.querySelector('svg') !== null && el.innerText.trim().length < 100);
+
             // Buttons
             let menuItems = '';
 
-            // 1. Copy Image (Always available mainly)
+            // 1. Copy Image (Always available)
             menuItems += `
                 <button class="copy-item" data-action="image">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
@@ -285,8 +320,8 @@
                 </button>
             `;
 
-            // 2. Copy Text (If substantial text exists)
-            if (el.innerText.length > 20) {
+            // 2. Copy Text (Only if substantial text AND not a chart)
+            if (!isChart && el.innerText.trim().length > 50) {
                 menuItems += `
                 <button class="copy-item" data-action="text">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
