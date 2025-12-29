@@ -4,6 +4,9 @@
 
 :root {
     --navbar-height: 72px;
+    --navbar-bg-opacity: 0.85;
+    --navbar-bg-blur: 20px;
+    --footer-bg-opacity: 0.8;
 }
 
 /* Navbar Base */
@@ -13,7 +16,8 @@
     left: 0;
     right: 0;
     height: var(--navbar-height);
-    background: transparent;
+    background: rgba(5, 10, 20, var(--navbar-bg-opacity));
+    backdrop-filter: blur(var(--navbar-bg-blur));
     border-bottom: 1px solid transparent;
     display: grid;
     grid-template-columns: 240px minmax(300px, 1fr) 240px;
@@ -24,8 +28,8 @@
 }
 
 .navbar-scrolled {
-    background: rgba(5, 10, 20, 0.85);
-    backdrop-filter: blur(20px);
+    background: rgba(5, 10, 20, var(--navbar-bg-opacity));
+    backdrop-filter: blur(var(--navbar-bg-blur));
     border-bottom-color: var(--border-color);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
@@ -125,7 +129,7 @@
     padding: 60px 0;
     text-align: center;
     border-top: 1px solid var(--border-color);
-    background: rgba(5, 10, 20, 0.8);
+    background: rgba(5, 10, 20, var(--footer-bg-opacity));
     position: relative;
     z-index: 10;
 }
