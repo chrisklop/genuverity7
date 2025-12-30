@@ -35,6 +35,7 @@ After creating ANY report HTML file:
    - Open `js/reports-data.js`
    - Find the `reports` array
    - Add new report object at ID 0 (top of array)
+   - Use clean slug format: `slug: "your-slug-name"` (NOT `"localreports/your-slug.html"`)
    - Manually increment ALL existing IDs by +1
    - **NEVER use automation** (perl/sed/regex) - causes duplicate `id:` keys
    - Validate syntax: `node -c js/reports-data.js`
@@ -43,14 +44,18 @@ After creating ANY report HTML file:
    - Run `./validate-report.sh localreports/your-report.html`
    - Fix any errors before proceeding
 
-3. **Commit and Push**
-   - `git add localreports/your-report.html js/reports-data.js`
+3. **Regenerate Sitemaps**
+   - Run `node tools/generate-sitemaps.js`
+   - This updates sitemap.xml, sitemap-news.xml, and vercel.json with clean URL rewrites
+
+4. **Commit and Push**
+   - `git add localreports/your-report.html js/reports-data.js sitemap.xml sitemap-news.xml vercel.json`
    - `git commit` with descriptive message
    - `git push origin main`
    - GitHub auto-deploys to Vercel (Reports Instance should NOT run `vercel --prod`)
 
-4. **Confirm to User**
-   - Provide live URL
+5. **Confirm to User**
+   - Provide live URL: `https://www.genuverity.com/your-slug-name`
    - Summarize sources used
    - List visualizations included
 
