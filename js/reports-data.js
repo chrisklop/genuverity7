@@ -13,6 +13,7 @@ const REPORTS_DATA = [
         date: "Dec 29, 2025",
         sources: "14 Sources",
         readTime: "18 min",
+        verdict: "mixed",  // Analysis of evolving threat - not a true/false claim
         excerpt: "From Ireland's fabricated candidate withdrawal to Poland's €2B cyber umbrella—AI deepfakes targeted elections worldwide in 2025. $200M+ in fraud losses Q1 alone. Yet democracy adapts: Connolly won despite the deepfake, FCC issued $6M fine for Biden robocall.",
         chart: {
             type: "bar",
@@ -31,6 +32,7 @@ const REPORTS_DATA = [
         date: "Dec 29, 2025",
         sources: "14 Sources",
         readTime: "20 min",
+        verdict: "true",  // Verified factual reporting on Meta's policy change
         excerpt: "Meta dismantles its $100M global fact-checking network spanning 90+ organizations across 119 countries. Joel Kaplan appointed, $1M donated to Trump—then fact-checking ended 5 days later. Community Notes work when applied, but only 7.4% of election notes ever reach users.",
         chart: {
             type: "bar",
@@ -49,6 +51,7 @@ const REPORTS_DATA = [
         date: "Dec 29, 2025",
         sources: "15 Sources",
         readTime: "18 min",
+        verdict: "false",  // Debunks misinformation claims
         excerpt: "Bill Gates conspiracy theories, RFK Jr.'s $500M vaccine cuts based on false claims, 'Plandemic 2.0' narratives, and PCR test skepticism - how misinformation is undermining the H5N1 response as 66 human cases emerge.",
         chart: {
             type: "line",
@@ -67,6 +70,7 @@ const REPORTS_DATA = [
         date: "Dec 29, 2025",
         sources: "14 Sources",
         readTime: "16 min",
+        verdict: "false",  // Documents Grok spreading false information
         excerpt: "Elon Musk's Grok AI chatbot has repeatedly spread dangerous misinformation during breaking news - fabricating heroes at Bondi Beach, praising Hitler, and falsely blaming a trans pilot for the DC crash. 12+ documented incidents analyzed.",
         chart: {
             type: "bar",
@@ -85,6 +89,7 @@ const REPORTS_DATA = [
         date: "Dec 29, 2025",
         sources: "15 Sources",
         readTime: "18 min",
+        verdict: "false",  // Debunks viral wildfire misinformation
         excerpt: "AI-generated Hollywood sign fakes, DEI conspiracy theories, water policy lies, and FEMA funding misinformation - every major claim about the January 2025 LA wildfires debunked with 15 primary sources.",
         chart: {
             type: "line",
@@ -103,6 +108,7 @@ const REPORTS_DATA = [
         date: "Dec 29, 2025",
         sources: "18 Sources",
         readTime: "28 min",
+        verdict: "true",  // Factual geopolitical analysis
         excerpt: "From the 2018 JCPOA withdrawal to threshold state: Iran's 60% uranium enrichment, proxy warfare from Hezbollah to Houthis, and why the non-proliferation regime is 'on the line.' Comprehensive analysis of the controlled crisis reshaping Middle East security.",
         chart: {
             type: "line",
@@ -121,6 +127,7 @@ const REPORTS_DATA = [
         date: "Dec 28, 2025",
         sources: "35 Sources",
         readTime: "32 min",
+        verdict: "true",  // Verified factual historical analysis
         excerpt: "From the birther movement to Russian interference, Pizzagate violence, QAnon radicalization, and January 6—how disinformation evolved into a systematic threat to American democracy. Includes Mueller indictments, Fox News's $787M settlement, and foreign influence from Russia, China, and Iran.",
         chart: {
             type: "line",
@@ -139,6 +146,7 @@ const REPORTS_DATA = [
         date: "Dec 28, 2025",
         sources: "10 Sources",
         readTime: "22 min",
+        verdict: "mixed",  // Some claims unproven, some verified
         excerpt: "Viral claims of 'secret military orders' are unproven, but the public plan to strip protections from 50,000 workers—30% of whom are veterans—is verified and specific.",
         chart: {
             type: "line",
@@ -157,6 +165,7 @@ const REPORTS_DATA = [
         date: "Dec 28, 2025",
         sources: "32 Sources",
         readTime: "12 min",
+        verdict: "false",  // List is fabricated - PANTS ON FIRE
         excerpt: "Forensic analysis of the viral 166-name list reveals it is 78% fabricated, originating from a 4chan hoax mixing real names with political targets who appear in no unsealed documents. Verdict: PANTS ON FIRE.",
         chart: {
             type: "bar",
@@ -175,6 +184,7 @@ const REPORTS_DATA = [
         date: "Dec 28, 2025",
         sources: "35 Sources",
         readTime: "24 min",
+        verdict: "false",  // Vaccine-autism claim is FALSE
         excerpt: "HHS under RFK Jr. rewrote the CDC's vaccine-autism page. We analyze 35 peer-reviewed studies and institutional sources to fact-check the claim that vaccines cause autism. Verdict: FALSE.",
         chart: {
             type: "bar",

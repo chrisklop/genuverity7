@@ -35,6 +35,114 @@
     --font-body: 'Inter', system-ui, -apple-system, sans-serif;
     --line-height-body: 1.7;
     --line-height-heading: 1.2;
+
+    /* ══════════════════════════════════════════════════════════════════════
+       VERDICT CORNER GLOW - Subtlety Controls
+       Adjust these values to fine-tune the ambient verdict effect
+       ══════════════════════════════════════════════════════════════════════ */
+    --glow-size: 160px;
+    /* Size of corner glow (120-300px) */
+    --glow-blur: 60px;
+    /* Blur amount (30-80px) */
+    --glow-opacity-min: 0.25;
+    /* Min opacity in animation (0.1-0.4) */
+    --glow-opacity-max: 0.45;
+    /* Max opacity in animation (0.3-0.7) */
+    --glow-speed: 5s;
+    /* Animation speed (3-8s) */
+    --glow-scale: 1.08;
+    /* Pulse scale amount (1.0-1.2) */
+
+    /* Verdict colors (5-level scale) */
+    --verdict-glow-true: #10b981;
+    /* Green - TRUE/VERIFIED */
+    --verdict-glow-mostly-true: #3b82f6;
+    /* Blue - MOSTLY TRUE */
+    --verdict-glow-mixed: #f59e0b;
+    /* Amber - MIXED/UNVERIFIED */
+    --verdict-glow-mostly-false: #f97316;
+    /* Orange - MOSTLY FALSE */
+    --verdict-glow-false: #ef4444;
+    /* Red - FALSE */
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   VERDICT CORNER GLOW SYSTEM
+   Corner glows are injected by JS based on report's verdict field
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.verdict-glow {
+    position: fixed;
+    width: var(--glow-size);
+    height: var(--glow-size);
+    border-radius: 50%;
+    filter: blur(var(--glow-blur));
+    pointer-events: none;
+    z-index: 1;
+    /* Above background, below content */
+    animation: verdict-breathe var(--glow-speed) ease-in-out infinite;
+    display: none;
+    /* Hidden by default, shown when verdict class applied */
+}
+
+.verdict-glow.tl {
+    top: calc(var(--glow-size) / -2);
+    left: calc(var(--glow-size) / -2);
+}
+
+.verdict-glow.tr {
+    top: calc(var(--glow-size) / -2);
+    right: calc(var(--glow-size) / -2);
+}
+
+.verdict-glow.bl {
+    bottom: calc(var(--glow-size) / -2);
+    left: calc(var(--glow-size) / -2);
+}
+
+.verdict-glow.br {
+    bottom: calc(var(--glow-size) / -2);
+    right: calc(var(--glow-size) / -2);
+}
+
+@keyframes verdict-breathe {
+
+    0%,
+    100% {
+        opacity: var(--glow-opacity-min);
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: var(--glow-opacity-max);
+        transform: scale(var(--glow-scale));
+    }
+}
+
+/* Verdict color classes - applied to body */
+body.verdict-true .verdict-glow {
+    background: var(--verdict-glow-true);
+    display: block;
+}
+
+body.verdict-mostly-true .verdict-glow {
+    background: var(--verdict-glow-mostly-true);
+    display: block;
+}
+
+body.verdict-mixed .verdict-glow {
+    background: var(--verdict-glow-mixed);
+    display: block;
+}
+
+body.verdict-mostly-false .verdict-glow {
+    background: var(--verdict-glow-mostly-false);
+    display: block;
+}
+
+body.verdict-false .verdict-glow {
+    background: var(--verdict-glow-false);
+    display: block;
 }
 
 /* === RESET & BASE === */

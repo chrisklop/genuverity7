@@ -348,10 +348,90 @@ function ensureReportLayout() {
     console.log('[GV Layout] ✅ Applied content-grid wrapper (retroactive fix)');
 }
 
-// Boot
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', injectSharedComponents);
-} else {
-    injectSharedComponents();
+/**
+ * Initialize Verdict Corner Glow System
+ * Injects corner glow elements and applies verdict class based on report data
+ * 
+ * To tag a report with a verdict, add to reports-data.js:
+ *   verdict: "true" | "mostly-true" | "mixed" | "mostly-false" | "false"
+ */
+function initVerdictGlow() {
+    // Only run on report pages
+    const isReportPage = document.querySelector('[data-page-type="report"]');
+    if (!isReportPage) return;
+
+    // Helper function to apply the glow once data is available
+    function applyVerdictGlow() {
+        if (typeof REPORTS_DATA === 'undefined') {
+            console.warn('[GV Verdict] REPORTS_DATA still not available');
+            return;
+        }
+
+        // Get current report filename from URL
+        const path = window.location.pathname;
+        const filename = path.split('/').pop(); // Get just the filename (e.g., "project-2025-military-orders.html")
+
+        // Find report in REPORTS_DATA - match by slug ending
+        const report = REPORTS_DATA.find(r => r.slug && r.slug.endsWith(filename));
+
+        if (!report) {
+            console.log(`[GV Verdict] Report "${filename}" not found in data, no glow applied`);
+            return;
+        }
+
+        if (!report.verdict) {
+            console.log(`[GV Verdict] Report "${report.title}" has no verdict field, no glow applied`);
+            return;
+        }
+
+        // Inject corner glow elements (only if not already present)
+        if (!document.querySelector('.verdict-glow')) {
+            const glowHTML = `
+                <div class="verdict-glow tl"></div>
+                <div class="verdict-glow tr"></div>
+                <div class="verdict-glow bl"></div>
+                <div class="verdict-glow br"></div>
+            `;
+            document.body.insertAdjacentHTML('afterbegin', glowHTML);
+        }
+
+        // Apply verdict class to body
+        document.body.classList.add('verdict-' + report.verdict);
+
+        console.log(`[GV Verdict] ✅ Applied verdict glow: ${report.verdict} for "${report.title}"`);
+    }
+
+    // Check if REPORTS_DATA already loaded
+    if (typeof REPORTS_DATA !== 'undefined') {
+        applyVerdictGlow();
+        return;
+    }
+
+    // Dynamically load reports-data.js
+    console.log('[GV Verdict] Loading reports-data.js...');
+    const script = document.createElement('script');
+
+    // Determine correct path (from /localreports/ or root)
+    const isInLocalReports = window.location.pathname.includes('/localreports/');
+    script.src = isInLocalReports ? '../js/reports-data.js?v=' + Date.now() : '/js/reports-data.js?v=' + Date.now();
+
+    script.onload = () => {
+        console.log('[GV Verdict] reports-data.js loaded');
+        applyVerdictGlow();
+    };
+    script.onerror = () => {
+        console.warn('[GV Verdict] Failed to load reports-data.js');
+    };
+    document.head.appendChild(script);
 }
 
+// Boot
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        injectSharedComponents();
+        initVerdictGlow();
+    });
+} else {
+    injectSharedComponents();
+    initVerdictGlow();
+}
