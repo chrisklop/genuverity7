@@ -2449,16 +2449,26 @@
                 }
             });
 
-            // Chart generators
+            // Chart generators - normalize data to 0-100 range for proper display
+            function normalizeData(data, minHeight = 15, maxHeight = 95) {
+                if (!data || data.length === 0) return data;
+                const max = Math.max(...data);
+                const min = Math.min(...data);
+                if (max === min) return data.map(() => (minHeight + maxHeight) / 2);
+                return data.map(v => minHeight + ((v - min) / (max - min)) * (maxHeight - minHeight));
+            }
+
             function generateBarChart(color, data) {
-                const bars = data || Array.from({ length: 10 }, () => Math.random() * 80 + 20);
+                const rawBars = data || Array.from({ length: 10 }, () => Math.random() * 80 + 20);
+                const bars = normalizeData(rawBars, 20, 95);
                 return `<div class="chart-container"><div class="chart-bars">${bars.map(h =>
                     `<div class="bar" style="height: ${h}%; background: ${color};"></div>`
                 ).join('')}</div></div>`;
             }
 
             function generateLineChart(color, data) {
-                const pointsData = data || Array.from({ length: 8 }, (_, i) => 20 + Math.random() * 60);
+                const rawPoints = data || Array.from({ length: 8 }, (_, i) => 20 + Math.random() * 60);
+                const pointsData = normalizeData(rawPoints, 15, 85);
                 const step = 100 / (pointsData.length - 1);
                 const points = pointsData.map((y, i) => ({ x: i * step, y }));
 
