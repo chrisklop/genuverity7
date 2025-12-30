@@ -16,9 +16,9 @@ const REPORTS_DATA = [
         verdict: "mixed",  // Analysis of evolving threat - not a true/false claim
         excerpt: "From Ireland's fabricated candidate withdrawal to Poland's €2B cyber umbrella—AI deepfakes targeted elections worldwide in 2025. $200M+ in fraud losses Q1 alone. Yet democracy adapts: Connolly won despite the deepfake, FCC issued $6M fine for Biden robocall.",
         chart: {
-            type: "line",
+            type: "bar",
             color: "#f59e0b",
-            data: [45, 65, 95, 150, 200]  // Fraud losses $M: Q1'24 → Q1'25 (from impactChart)
+            data: [85, 95, 70, 75, 60, 50]  // Impact Score by event (from timelineChart)
         }
     },
     {
@@ -37,7 +37,7 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#3b82f6",
-            data: [46, 44, 22, 14]  // Community Notes effectiveness: % reduction in Reposts, Likes, Replies, Views (from effectivenessChart)
+            data: [80, 20, 20, 30, 40, 100]  // Policy Shift Intensity Jan 2-7 (from timelineChart)
         }
     },
     {
@@ -92,9 +92,9 @@ const REPORTS_DATA = [
         verdict: "false",  // Debunks viral wildfire misinformation
         excerpt: "AI-generated Hollywood sign fakes, DEI conspiracy theories, water policy lies, and FEMA funding misinformation - every major claim about the January 2025 LA wildfires debunked with 15 primary sources.",
         chart: {
-            type: "bar",
+            type: "line",
             color: "#ef4444",
-            data: [42, 28, 15, 8, 5, 2]  // Misinfo share by platform: X, TikTok, FB, Telegram, Truth, YT (from platformChart)
+            data: [10, 85, 95, 70, 55, 45, 35, 30]  // AI Fake Images spread Jan 7-14 (from timelineChart)
         }
     },
     {
