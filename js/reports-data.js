@@ -3,6 +3,24 @@
 
 const REPORTS_DATA = [
     {
+        id: 60,
+        title: "Bird Flu Misinformation: The H5N1 Panic Machine",
+        slug: "localreports/bird-flu-misinformation-2025.html",
+        category: "Public Health Disinfo",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "bug",
+        date: "Dec 29, 2025",
+        sources: "15 Sources",
+        readTime: "18 min",
+        excerpt: "Bill Gates conspiracy theories, RFK Jr.'s $500M vaccine cuts based on false claims, 'Plandemic 2.0' narratives, and PCR test skepticism - how misinformation is undermining the H5N1 response as 66 human cases emerge.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [5, 12, 18, 25, 35, 50, 66]
+        }
+    },
+    {
         id: 59,
         title: "Grok AI: The Misinformation Machine",
         slug: "localreports/grok-ai-misinformation-crisis.html",
