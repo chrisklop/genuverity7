@@ -1800,19 +1800,30 @@
             }
         });
 
-        // Chart generators
-        function generateBarChart(color) {
-            const bars = Array.from({ length: 10 }, () => Math.random() * 80 + 20);
+        // Chart generators - read from report.chart config in REPORTS_DATA
+        // Normalize data to ensure bars/lines are visible (scale to 20-95% range)
+        function normalizeChartData(data, minHeight = 20, maxHeight = 95) {
+            if (!data || data.length === 0) return data;
+            const max = Math.max(...data);
+            const min = Math.min(...data);
+            if (max === min) return data.map(() => (minHeight + maxHeight) / 2);
+            return data.map(v => minHeight + ((v - min) / (max - min)) * (maxHeight - minHeight));
+        }
+
+        function generateBarChart(color, rawData) {
+            // Use provided data or generate random fallback
+            const inputData = rawData || Array.from({ length: 10 }, () => Math.random() * 80 + 20);
+            const bars = normalizeChartData(inputData, 20, 95);
             return `<div class="chart-container"><div class="chart-bars">${bars.map(h =>
                 `<div class="bar" style="height: ${h}%; background: ${color};"></div>`
             ).join('')}</div></div>`;
         }
 
-        function generateLineChart(color) {
-            const points = Array.from({ length: 8 }, (_, i) => ({
-                x: i * 14.3,
-                y: 20 + Math.random() * 60
-            }));
+        function generateLineChart(color, rawData) {
+            const inputData = rawData || Array.from({ length: 8 }, () => 20 + Math.random() * 60);
+            const normalized = normalizeChartData(inputData, 15, 85);
+            const step = 100 / (normalized.length - 1);
+            const points = normalized.map((y, i) => ({ x: i * step, y }));
             const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${100 - p.y}`).join(' ');
             const areaD = pathD + ` L 100 100 L 0 100 Z`;
             return `<div class="chart-container"><div class="chart-line">
@@ -1838,8 +1849,9 @@
             </div>`;
         }
 
-        function generateNetworkChart(nodeColor, lineColor) {
-            const nodes = Array.from({ length: 12 }, () => ({
+        function generateNetworkChart(nodeColor, lineColor, data) {
+            const count = (data && data.nodes) ? data.nodes : 12;
+            const nodes = Array.from({ length: count }, () => ({
                 x: 10 + Math.random() * 80,
                 y: 10 + Math.random() * 80,
                 size: 6 + Math.random() * 10
@@ -1847,8 +1859,7 @@
             const nodesHTML = nodes.map((n, i) =>
                 `<div class="node" style="left: ${n.x}%; top: ${n.y}%; width: ${n.size}px; height: ${n.size}px; background: ${nodeColor}; animation-delay: ${i * 0.15}s;"></div>`
             ).join('');
-            // Connect some nodes
-            const linesHTML = nodes.slice(0, 6).map((n, i) => {
+            const linesHTML = nodes.slice(0, Math.floor(count / 2)).map((n, i) => {
                 const target = nodes[(i + 3) % nodes.length];
                 const dx = target.x - n.x;
                 const dy = target.y - n.y;
@@ -1876,22 +1887,47 @@
             </div></div>`;
         }
 
-        // Chart configs per report
-        const chartConfigs = [
-            () => generateHBarChart([{ label: 'VAERS', value: 90 }, { label: 'VSD', value: 45 }, { label: 'FDA', value: 70 }, { label: 'CDC', value: 60 }], ['#ef4444', '#f59e0b', '#3b82f6', '#10b981']),
-            () => generateTimelineChart([10, 30, 55, 75, 95], '#ef4444'),
-            () => generateBarChart('#f59e0b'),
-            () => generateDonutChart(72, '#ef4444'),
-            () => generateNetworkChart('#3b82f6', '#3b82f6'),
-            () => generateLineChart('#f59e0b'),
-            () => generateDonutChart(85, '#10b981'),
-            () => generateLineChart('#10b981'),
-            () => generateBarChart('#f59e0b'),
-            () => generateNetworkChart('#4a7dcc', '#4a7dcc'),
-            () => generateNetworkChart('#ef6b5b', '#ef6b5b'),
-            () => generateLineChart('#ef4444'),
-            () => generateHBarChart([{ label: 'True', value: 28 }, { label: 'Mixed', value: 22 }, { label: 'False', value: 72 }, { label: 'Mislead', value: 50 }], ['#10b981', '#f59e0b', '#ef4444', '#ef4444'])
-        ];
+        // Chart dispatcher - reads from report.chart config
+        function generateChartForReport(report) {
+            let config = report.chart;
+
+            // Deterministic fallback if no chart data
+            if (!config) {
+                let hash = 0;
+                const str = report.title || "default";
+                for (let i = 0; i < str.length; i++) {
+                    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                    hash |= 0;
+                }
+                const seed = Math.abs(hash);
+                const types = ['bar', 'line', 'donut', 'network', 'timeline'];
+                const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#06b6d4'];
+                config = {
+                    type: types[seed % types.length],
+                    color: colors[(seed >> 2) % colors.length],
+                    data: null
+                };
+                if (config.type === 'timeline') config.data = [10, 30, 50, 70, 90];
+                if (config.type === 'donut') config.data = 60 + (seed % 35);
+            }
+
+            switch (config.type) {
+                case 'line':
+                    return generateLineChart(config.color, config.data);
+                case 'bar':
+                    return generateBarChart(config.color, config.data);
+                case 'donut':
+                    return generateDonutChart(config.data || 75, config.color);
+                case 'network':
+                    return generateNetworkChart(config.color, config.color, config.data);
+                case 'hbar':
+                    return generateHBarChart(config.data || [{label:'A',value:80},{label:'B',value:60}], [config.color, '#64748b', '#475569']);
+                case 'timeline':
+                    return generateTimelineChart(config.data || [20, 40, 60, 80], config.color);
+                default:
+                    return generateBarChart(config.color, config.data);
+            }
+        }
 
         // Generate carousel cards
         function initCarousel() {
@@ -1904,8 +1940,8 @@
                 card.className = 'carousel-card';
                 card.dataset.index = index;
 
-                // Get chart for this card
-                const chartHTML = chartConfigs[index % chartConfigs.length]();
+                // Get chart for this card - uses report.chart from REPORTS_DATA
+                const chartHTML = generateChartForReport(report);
 
                 card.innerHTML = `
                     <div class="card-preview">
