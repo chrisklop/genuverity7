@@ -115,17 +115,46 @@ To generate a custom infographic preview for a report card, include the `chart` 
     chart: {
         type: "line",           // Options: "line", "bar", "donut", "network", "hbar", "timeline"
         color: "#f59e0b",       // Hex color (Amber=#f59e0b, Red=#ef4444, Blue=#3b82f6, Green=#10b981)
-        data: [20, 35, 45, 60]  // Array of numbers for line/bar/timeline, OR number for donut, OR object for network
+        data: [20, 35, 45, 60]  // MUST be real data from the report (see examples below)
     }
 }
 ```
 
+**⚠️ CRITICAL: Chart data must be MEANINGFUL, not placeholder values!**
+
+The chart preview is a "peek" at actual data from the report. Users expect clicking the card to see this data visualized in detail.
+
+**Good Examples (real data from reports):**
+```javascript
+// Bird flu cases over time (actual H5N1 progression)
+{ type: "line", color: "#ef4444", data: [5, 12, 18, 25, 35, 50, 66] }
+
+// Platform comparison (actual misinformation percentages)
+{ type: "hbar", color: "#ef4444", data: [
+    { label: "X/Twitter", value: 85 },
+    { label: "Facebook", value: 62 },
+    { label: "TikTok", value: 48 }
+]}
+
+// Uranium enrichment escalation (actual % levels by year)
+{ type: "line", color: "#ef4444", data: [3.67, 4.5, 20, 60, 60] }
+
+// Verdict breakdown (actual claim counts)
+{ type: "bar", color: "#ef4444", data: [28, 12, 8, 3] } // False, Mixed, True, Unverified
+```
+
+**Bad Examples (meaningless placeholders):**
+```javascript
+// DON'T DO THIS - random numbers mean nothing
+{ type: "bar", color: "#f59e0b", data: [85, 95, 70, 75, 60, 50] }
+```
+
 **Data Formats per Type:**
-- **line/bar**: Array of numbers (e.g., `[10, 20, 15, 40]`)
-- **donut**: Single number 0-100 (e.g., `72`)
-- **network**: Object with nodes/connections (e.g., `{ nodes: 15, connections: 25 }`) OR just color/data (chart generator handles randomness if data omitted)
-- **hbar**: Array of objects (e.g., `[{ label: 'TikTok', value: 85 }, { label: 'X', value: 70 }]`)
-- **timeline**: Array of numbers 0-100 representing % position (e.g., `[10, 50, 90]`)
+- **line/bar**: Array of numbers representing a trend or comparison from the report
+- **donut**: Single number 0-100 representing a key percentage from the report
+- **network**: Object with nodes/connections (e.g., `{ nodes: 15, connections: 25 }`)
+- **hbar**: Array of objects with labels from the report (e.g., platform names, categories)
+- **timeline**: Array of numbers 0-100 representing event positions on a timeline
 
 ### ⚠️ MANDATORY PRE-COMMIT VALIDATION (Reports Instance)
 **Before EVERY `git commit` of a new report, run these checks:**

@@ -16,9 +16,14 @@ const REPORTS_DATA = [
         verdict: "mixed",  // Analysis of evolving threat - not a true/false claim
         excerpt: "From Ireland's fabricated candidate withdrawal to Poland's €2B cyber umbrella—AI deepfakes targeted elections worldwide in 2025. $200M+ in fraud losses Q1 alone. Yet democracy adapts: Connolly won despite the deepfake, FCC issued $6M fine for Biden robocall.",
         chart: {
-            type: "bar",
+            type: "hbar",
             color: "#f59e0b",
-            data: [85, 95, 70, 75, 60, 50]
+            data: [
+                { label: "AI Concern", value: 85 },
+                { label: "Countries", value: 80 },
+                { label: "AI Content", value: 52 },
+                { label: "Connolly Win", value: 38 }
+            ]
         }
     },
     {
@@ -35,9 +40,14 @@ const REPORTS_DATA = [
         verdict: "true",  // Verified factual reporting on Meta's policy change
         excerpt: "Meta dismantles its $100M global fact-checking network spanning 90+ organizations across 119 countries. Joel Kaplan appointed, $1M donated to Trump—then fact-checking ended 5 days later. Community Notes work when applied, but only 7.4% of election notes ever reach users.",
         chart: {
-            type: "bar",
-            color: "#f59e0b",
-            data: [80, 20, 20, 30, 40, 100]
+            type: "hbar",
+            color: "#3b82f6",
+            data: [
+                { label: "↓Reposts", value: 46 },
+                { label: "↓Likes", value: 44 },
+                { label: "↓Replies", value: 22 },
+                { label: "Notes Shown", value: 7 }
+            ]
         }
     },
     {
@@ -73,9 +83,14 @@ const REPORTS_DATA = [
         verdict: "false",  // Documents Grok spreading false information
         excerpt: "Elon Musk's Grok AI chatbot has repeatedly spread dangerous misinformation during breaking news - fabricating heroes at Bondi Beach, praising Hitler, and falsely blaming a trans pilot for the DC crash. 12+ documented incidents analyzed.",
         chart: {
-            type: "bar",
+            type: "hbar",
             color: "#ef4444",
-            data: [1, 2, 0, 0, 2, 0, 4, 0, 0, 0, 0, 3]
+            data: [
+                { label: "Bondi False ID", value: 100 },
+                { label: "MechaHitler", value: 100 },
+                { label: "DC Crash", value: 100 },
+                { label: "Total: 12+", value: 100 }
+            ]
         }
     },
     {
@@ -92,9 +107,14 @@ const REPORTS_DATA = [
         verdict: "false",  // Debunks viral wildfire misinformation
         excerpt: "AI-generated Hollywood sign fakes, DEI conspiracy theories, water policy lies, and FEMA funding misinformation - every major claim about the January 2025 LA wildfires debunked with 15 primary sources.",
         chart: {
-            type: "line",
+            type: "hbar",
             color: "#ef4444",
-            data: [10, 85, 95, 70, 55, 45, 35, 30]
+            data: [
+                { label: "AI Fakes", value: 100 },
+                { label: "DEI Claims", value: 100 },
+                { label: "Water Lies", value: 100 },
+                { label: "FEMA Myths", value: 100 }
+            ]
         }
     },
     {
