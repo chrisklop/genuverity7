@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Network Variants | GenuVerity</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050A14;
+            --card: #0a1628;
+            --border: rgba(59, 130, 246, 0.15);
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --cyan: #06b6d4;
+            --text: #fff;
+            --muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            background-image: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.03) 0%, transparent 50%), linear-gradient(rgba(6, 182, 212, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #fff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 50px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card), rgba(10, 22, 40, 0.8));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: 0.5;
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meter-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .meter-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            width: 100px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .meter {
+            flex: 1;
+        }
+
+        /* 3A: Classic Neural */
+        .neural-classic {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .n-node {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .n-node.active {
+            animation: n-pulse 0.8s ease-out infinite;
+        }
+
+        .n-link {
+            width: 18px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .n-link.active {
+            animation: n-signal 0.6s ease-out infinite;
+        }
+
+        @keyframes n-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 currentColor;
+            }
+
+            50% {
+                box-shadow: 0 0 12px 4px currentColor;
+            }
+        }
+
+        @keyframes n-signal {
+            0% {
+                background: currentColor;
+                box-shadow: 0 0 8px currentColor;
+            }
+
+            100% {
+                background: rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        /* 3B: Branching Neural */
+        .neural-branch {
+            position: relative;
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .branch-main {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .branch-sub {
+            position: absolute;
+            display: flex;
+            gap: 2px;
+        }
+
+        .branch-sub.top {
+            top: 5px;
+        }
+
+        .branch-sub.bot {
+            bottom: 5px;
+        }
+
+        .b-node {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .b-node.active {
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        .b-link {
+            width: 12px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .b-link.active {
+            background: currentColor;
+        }
+
+        /* 3C: Pulsing Synapse */
+        .neural-synapse {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .syn-node {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .syn-node.active {
+            background: currentColor;
+            animation: syn-fire 1s ease-out infinite;
+        }
+
+        .syn-link {
+            width: 24px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 0 -4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .syn-link.active {
+            background: currentColor;
+            opacity: 0.5;
+        }
+
+        .syn-link.active::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 0;
+            bottom: 0;
+            width: 10px;
+            background: #fff;
+            animation: syn-travel 0.4s linear infinite;
+        }
+
+        @keyframes syn-fire {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        @keyframes syn-travel {
+            0% {
+                left: -10px;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* 3D: Hexagonal Network */
+        .neural-hex {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .hex-node {
+            width: 20px;
+            height: 22px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .hex-node.active {
+            animation: hex-glow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes hex-glow {
+
+            0%,
+            100% {
+                filter: brightness(1);
+                box-shadow: none;
+            }
+
+            50% {
+                filter: brightness(1.5);
+            }
+        }
+
+        /* 3E: Constellation */
+        .neural-const {
+            position: relative;
+            height: 50px;
+            width: 100%;
+        }
+
+        .const-node {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .const-node.active {
+            background: currentColor;
+            box-shadow: 0 0 10px currentColor;
+            animation: const-twinkle 2s ease-in-out infinite;
+        }
+
+        .const-line {
+            position: absolute;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            transform-origin: left center;
+        }
+
+        .const-line.active {
+            background: currentColor;
+            opacity: 0.5;
+        }
+
+        @keyframes const-twinkle {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧠 Neural Network Variants</h1>
+    <p class="subtitle">5 Creative Variations • Based on Design #3</p>
+
+    <div class="grid">
+        <!-- 3A: Classic -->
+        <div class="card">
+            <h3>3A // Classic Neural Chain</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter neural-classic" style="color:var(--red)">
+                    <div class="n-node active" style="background:var(--red)"></div>
+                    <div class="n-link"></div>
+                    <div class="n-node"></div>
+                    <div class="n-link"></div>
+                    <div class="n-node"></div>
+                    <div class="n-link"></div>
+                    <div class="n-node"></div>
+                    <div class="n-link"></div>
+                    <div class="n-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter neural-classic" style="color:var(--orange)">
+                    <div class="n-node active" style="background:var(--orange)"></div>
+                    <div class="n-link active"></div>
+                    <div class="n-node active" style="background:var(--orange)"></div>
+                    <div class="n-link"></div>
+                    <div class="n-node"></div>
+                    <div class="n-link"></div>
+                    <div class="n-node"></div>
+                    <div class="n-link"></div>
+                    <div class="n-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter neural-classic" style="color:var(--amber)">
+                    <div class="n-node active" style="background:var(--amber)"></div>
+                    <div class="n-link active"></div>
+                    <div class="n-node active" style="background:var(--amber)"></div>
+                    <div class="n-link active"></div>
+                    <div class="n-node active" style="background:var(--amber)"></div>
+                    <div class="n-link"></div>
+                    <div class="n-node"></div>
+                    <div class="n-link"></div>
+                    <div class="n-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter neural-classic" style="color:var(--green)">
+                    <div class="n-node active" style="background:var(--green)"></div>
+                    <div class="n-link active"></div>
+                    <div class="n-node active" style="background:var(--green)"></div>
+                    <div class="n-link active"></div>
+                    <div class="n-node active" style="background:var(--green)"></div>
+                    <div class="n-link active"></div>
+                    <div class="n-node active" style="background:var(--green)"></div>
+                    <div class="n-link"></div>
+                    <div class="n-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter neural-classic" style="color:var(--blue)">
+                    <div class="n-node active" style="background:var(--blue)"></div>
+                    <div class="n-link active"></div>
+                    <div class="n-node active" style="background:var(--blue)"></div>
+                    <div class="n-link active"></div>
+                    <div class="n-node active" style="background:var(--blue)"></div>
+                    <div class="n-link active"></div>
+                    <div class="n-node active" style="background:var(--blue)"></div>
+                    <div class="n-link active"></div>
+                    <div class="n-node active" style="background:var(--blue)"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3B: Synapse -->
+        <div class="card">
+            <h3>3B // Pulsing Synapse</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter neural-synapse" style="color:var(--red)">
+                    <div class="syn-node active" style="background:var(--red)"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter neural-synapse" style="color:var(--orange)">
+                    <div class="syn-node active" style="background:var(--orange)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--orange)"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter neural-synapse" style="color:var(--amber)">
+                    <div class="syn-node active" style="background:var(--amber)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--amber)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--amber)"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter neural-synapse" style="color:var(--green)">
+                    <div class="syn-node active" style="background:var(--green)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--green)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--green)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--green)"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter neural-synapse" style="color:var(--blue)">
+                    <div class="syn-node active" style="background:var(--blue)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--blue)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--blue)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--blue)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--blue)"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3C: Hexagonal -->
+        <div class="card">
+            <h3>3C // Hexagonal Nodes</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter neural-hex" style="color:var(--red)">
+                    <div class="hex-node active" style="background:var(--red)"></div>
+                    <div class="hex-node"></div>
+                    <div class="hex-node"></div>
+                    <div class="hex-node"></div>
+                    <div class="hex-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter neural-hex" style="color:var(--orange)">
+                    <div class="hex-node active" style="background:var(--orange)"></div>
+                    <div class="hex-node active" style="background:var(--orange)"></div>
+                    <div class="hex-node"></div>
+                    <div class="hex-node"></div>
+                    <div class="hex-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter neural-hex" style="color:var(--amber)">
+                    <div class="hex-node active" style="background:var(--amber)"></div>
+                    <div class="hex-node active" style="background:var(--amber)"></div>
+                    <div class="hex-node active" style="background:var(--amber)"></div>
+                    <div class="hex-node"></div>
+                    <div class="hex-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter neural-hex" style="color:var(--green)">
+                    <div class="hex-node active" style="background:var(--green)"></div>
+                    <div class="hex-node active" style="background:var(--green)"></div>
+                    <div class="hex-node active" style="background:var(--green)"></div>
+                    <div class="hex-node active" style="background:var(--green)"></div>
+                    <div class="hex-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter neural-hex" style="color:var(--blue)">
+                    <div class="hex-node active" style="background:var(--blue)"></div>
+                    <div class="hex-node active" style="background:var(--blue)"></div>
+                    <div class="hex-node active" style="background:var(--blue)"></div>
+                    <div class="hex-node active" style="background:var(--blue)"></div>
+                    <div class="hex-node active" style="background:var(--blue)"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3D: Large Nodes -->
+        <div class="card">
+            <h3>3D // Power Nodes</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter" style="display:flex;gap:8px;align-items:center">
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--red);box-shadow:0 0 15px var(--red);animation:n-pulse 1s infinite;color:var(--red)">
+                    </div>
+                    <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1)"></div>
+                    <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1)"></div>
+                    <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1)"></div>
+                    <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter" style="display:flex;gap:8px;align-items:center">
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--orange);box-shadow:0 0 15px var(--orange);animation:n-pulse 1s infinite;color:var(--orange)">
+                    </div>
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--orange);box-shadow:0 0 15px var(--orange);animation:n-pulse 1s infinite 0.2s;color:var(--orange)">
+                    </div>
+                    <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1)"></div>
+                    <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1)"></div>
+                    <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter" style="display:flex;gap:8px;align-items:center">
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--amber);box-shadow:0 0 15px var(--amber);animation:n-pulse 1s infinite;color:var(--amber)">
+                    </div>
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--amber);box-shadow:0 0 15px var(--amber);animation:n-pulse 1s infinite 0.15s;color:var(--amber)">
+                    </div>
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--amber);box-shadow:0 0 15px var(--amber);animation:n-pulse 1s infinite 0.3s;color:var(--amber)">
+                    </div>
+                    <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1)"></div>
+                    <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter" style="display:flex;gap:8px;align-items:center">
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--green);box-shadow:0 0 15px var(--green);animation:n-pulse 1s infinite;color:var(--green)">
+                    </div>
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--green);box-shadow:0 0 15px var(--green);animation:n-pulse 1s infinite 0.1s;color:var(--green)">
+                    </div>
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--green);box-shadow:0 0 15px var(--green);animation:n-pulse 1s infinite 0.2s;color:var(--green)">
+                    </div>
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--green);box-shadow:0 0 15px var(--green);animation:n-pulse 1s infinite 0.3s;color:var(--green)">
+                    </div>
+                    <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter" style="display:flex;gap:8px;align-items:center">
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--blue);box-shadow:0 0 15px var(--blue);animation:n-pulse 1s infinite;color:var(--blue)">
+                    </div>
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--blue);box-shadow:0 0 15px var(--blue);animation:n-pulse 1s infinite 0.1s;color:var(--blue)">
+                    </div>
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--blue);box-shadow:0 0 15px var(--blue);animation:n-pulse 1s infinite 0.2s;color:var(--blue)">
+                    </div>
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--blue);box-shadow:0 0 15px var(--blue);animation:n-pulse 1s infinite 0.3s;color:var(--blue)">
+                    </div>
+                    <div
+                        style="width:28px;height:28px;border-radius:50%;background:var(--blue);box-shadow:0 0 15px var(--blue);animation:n-pulse 1s infinite 0.4s;color:var(--blue)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3E: Diamond Chain -->
+        <div class="card">
+            <h3>3E // Diamond Chain</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter" style="display:flex;gap:6px;align-items:center">
+                    <div
+                        style="width:18px;height:18px;background:var(--red);transform:rotate(45deg);box-shadow:0 0 10px var(--red);animation:n-pulse 1s infinite;color:var(--red)">
+                    </div>
+                    <div style="width:18px;height:18px;background:rgba(255,255,255,0.1);transform:rotate(45deg)"></div>
+                    <div style="width:18px;height:18px;background:rgba(255,255,255,0.1);transform:rotate(45deg)"></div>
+                    <div style="width:18px;height:18px;background:rgba(255,255,255,0.1);transform:rotate(45deg)"></div>
+                    <div style="width:18px;height:18px;background:rgba(255,255,255,0.1);transform:rotate(45deg)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter" style="display:flex;gap:6px;align-items:center">
+                    <div
+                        style="width:18px;height:18px;background:var(--orange);transform:rotate(45deg);box-shadow:0 0 10px var(--orange)">
+                    </div>
+                    <div
+                        style="width:18px;height:18px;background:var(--orange);transform:rotate(45deg);box-shadow:0 0 10px var(--orange)">
+                    </div>
+                    <div style="width:18px;height:18px;background:rgba(255,255,255,0.1);transform:rotate(45deg)"></div>
+                    <div style="width:18px;height:18px;background:rgba(255,255,255,0.1);transform:rotate(45deg)"></div>
+                    <div style="width:18px;height:18px;background:rgba(255,255,255,0.1);transform:rotate(45deg)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter" style="display:flex;gap:6px;align-items:center">
+                    <div
+                        style="width:18px;height:18px;background:var(--amber);transform:rotate(45deg);box-shadow:0 0 10px var(--amber)">
+                    </div>
+                    <div
+                        style="width:18px;height:18px;background:var(--amber);transform:rotate(45deg);box-shadow:0 0 10px var(--amber)">
+                    </div>
+                    <div
+                        style="width:18px;height:18px;background:var(--amber);transform:rotate(45deg);box-shadow:0 0 10px var(--amber)">
+                    </div>
+                    <div style="width:18px;height:18px;background:rgba(255,255,255,0.1);transform:rotate(45deg)"></div>
+                    <div style="width:18px;height:18px;background:rgba(255,255,255,0.1);transform:rotate(45deg)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter" style="display:flex;gap:6px;align-items:center">
+                    <div
+                        style="width:18px;height:18px;background:var(--green);transform:rotate(45deg);box-shadow:0 0 10px var(--green)">
+                    </div>
+                    <div
+                        style="width:18px;height:18px;background:var(--green);transform:rotate(45deg);box-shadow:0 0 10px var(--green)">
+                    </div>
+                    <div
+                        style="width:18px;height:18px;background:var(--green);transform:rotate(45deg);box-shadow:0 0 10px var(--green)">
+                    </div>
+                    <div
+                        style="width:18px;height:18px;background:var(--green);transform:rotate(45deg);box-shadow:0 0 10px var(--green)">
+                    </div>
+                    <div style="width:18px;height:18px;background:rgba(255,255,255,0.1);transform:rotate(45deg)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter" style="display:flex;gap:6px;align-items:center">
+                    <div
+                        style="width:18px;height:18px;background:var(--blue);transform:rotate(45deg);box-shadow:0 0 10px var(--blue)">
+                    </div>
+                    <div
+                        style="width:18px;height:18px;background:var(--blue);transform:rotate(45deg);box-shadow:0 0 10px var(--blue)">
+                    </div>
+                    <div
+                        style="width:18px;height:18px;background:var(--blue);transform:rotate(45deg);box-shadow:0 0 10px var(--blue)">
+                    </div>
+                    <div
+                        style="width:18px;height:18px;background:var(--blue);transform:rotate(45deg);box-shadow:0 0 10px var(--blue)">
+                    </div>
+                    <div
+                        style="width:18px;height:18px;background:var(--blue);transform:rotate(45deg);box-shadow:0 0 10px var(--blue)">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

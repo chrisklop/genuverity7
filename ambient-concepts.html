@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambient Verdict Concepts | GenuVerity</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050A14;
+            --card: #0a1628;
+            --border: rgba(59, 130, 246, 0.15);
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --cyan: #06b6d4;
+            --text: #fff;
+            --muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #fff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 50px;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            max-width: 1600px;
+            margin: 0 auto 60px;
+        }
+
+        .concept {
+            height: 280px;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .concept:hover {
+            transform: scale(1.02);
+        }
+
+        .concept-label {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 12px 16px;
+            z-index: 10;
+        }
+
+        .concept-label h3 {
+            font-size: 0.85rem;
+            color: var(--cyan);
+            margin-bottom: 4px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .concept-label p {
+            font-size: 0.75rem;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        .concept-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 5;
+        }
+
+        .verdict-badge {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px currentColor;
+        }
+
+        /* 1. RADIAL VIGNETTE */
+        .vignette {
+            background: radial-gradient(ellipse at center, transparent 0%, transparent 30%, rgba(59, 130, 246, 0.15) 70%, rgba(59, 130, 246, 0.4) 100%), var(--bg);
+        }
+
+        .vignette.red {
+            background: radial-gradient(ellipse at center, transparent 0%, transparent 30%, rgba(239, 68, 68, 0.15) 70%, rgba(239, 68, 68, 0.4) 100%), var(--bg);
+        }
+
+        .vignette.amber {
+            background: radial-gradient(ellipse at center, transparent 0%, transparent 30%, rgba(245, 158, 11, 0.15) 70%, rgba(245, 158, 11, 0.4) 100%), var(--bg);
+        }
+
+        /* 2. PULSING BORDER GLOW */
+        .border-glow {
+            background: var(--bg);
+        }
+
+        .border-glow::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 3px solid var(--blue);
+            border-radius: 16px;
+            animation: border-pulse 2s ease-in-out infinite;
+        }
+
+        .border-glow.red::before {
+            border-color: var(--red);
+            box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.3);
+        }
+
+        .border-glow.amber::before {
+            border-color: var(--amber);
+            box-shadow: inset 0 0 30px rgba(245, 158, 11, 0.3);
+        }
+
+        .border-glow::before {
+            box-shadow: inset 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+
+        @keyframes border-pulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* 3. CORNER ENERGY */
+        .corner-energy {
+            background: var(--bg);
+        }
+
+        .corner-energy .corner {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+        }
+
+        .corner-energy .corner::before,
+        .corner-energy .corner::after {
+            content: '';
+            position: absolute;
+            background: var(--blue);
+        }
+
+        .corner-energy .corner.tl {
+            top: 0;
+            left: 0;
+        }
+
+        .corner-energy .corner.tl::before {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            animation: corner-h 1.5s ease-in-out infinite;
+        }
+
+        .corner-energy .corner.tl::after {
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            animation: corner-v 1.5s ease-in-out infinite;
+        }
+
+        .corner-energy .corner.tr {
+            top: 0;
+            right: 0;
+        }
+
+        .corner-energy .corner.tr::before {
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            animation: corner-h 1.5s ease-in-out infinite 0.3s;
+        }
+
+        .corner-energy .corner.tr::after {
+            top: 0;
+            right: 0;
+            width: 3px;
+            height: 100%;
+            animation: corner-v 1.5s ease-in-out infinite 0.3s;
+        }
+
+        .corner-energy .corner.bl {
+            bottom: 0;
+            left: 0;
+        }
+
+        .corner-energy .corner.bl::before {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            animation: corner-h 1.5s ease-in-out infinite 0.6s;
+        }
+
+        .corner-energy .corner.bl::after {
+            bottom: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            animation: corner-v 1.5s ease-in-out infinite 0.6s;
+        }
+
+        .corner-energy .corner.br {
+            bottom: 0;
+            right: 0;
+        }
+
+        .corner-energy .corner.br::before {
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            animation: corner-h 1.5s ease-in-out infinite 0.9s;
+        }
+
+        .corner-energy .corner.br::after {
+            bottom: 0;
+            right: 0;
+            width: 3px;
+            height: 100%;
+            animation: corner-v 1.5s ease-in-out infinite 0.9s;
+        }
+
+        .corner-energy.red .corner::before,
+        .corner-energy.red .corner::after {
+            background: var(--red);
+        }
+
+        .corner-energy.amber .corner::before,
+        .corner-energy.amber .corner::after {
+            background: var(--amber);
+        }
+
+        @keyframes corner-h {
+
+            0%,
+            100% {
+                transform: scaleX(0.3);
+                opacity: 0.4;
+            }
+
+            50% {
+                transform: scaleX(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes corner-v {
+
+            0%,
+            100% {
+                transform: scaleY(0.3);
+                opacity: 0.4;
+            }
+
+            50% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        /* 4. SCAN LINE */
+        .scan-line {
+            background: var(--bg);
+        }
+
+        .scan-line::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--blue), var(--blue), transparent);
+            animation: scan-move 3s linear infinite;
+            box-shadow: 0 0 20px var(--blue);
+        }
+
+        .scan-line.red::before {
+            background: linear-gradient(90deg, transparent, var(--red), var(--red), transparent);
+            box-shadow: 0 0 20px var(--red);
+        }
+
+        .scan-line.amber::before {
+            background: linear-gradient(90deg, transparent, var(--amber), var(--amber), transparent);
+            box-shadow: 0 0 20px var(--amber);
+        }
+
+        @keyframes scan-move {
+            0% {
+                top: -2px;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        /* 5. PARTICLE ATMOSPHERE */
+        .particles {
+            background: var(--bg);
+        }
+
+        .particle-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--blue);
+            animation: particle-float 8s ease-in-out infinite;
+        }
+
+        .particles.red .particle-dot {
+            background: var(--red);
+        }
+
+        .particles.amber .particle-dot {
+            background: var(--amber);
+        }
+
+        @keyframes particle-float {
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0.2;
+            }
+
+            25% {
+                transform: translateY(-20px) translateX(10px);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translateY(-10px) translateX(-5px);
+                opacity: 0.5;
+            }
+
+            75% {
+                transform: translateY(-30px) translateX(15px);
+                opacity: 0.9;
+            }
+        }
+
+        /* 6. WATERMARK STAMP */
+        .watermark {
+            background: var(--bg);
+        }
+
+        .watermark .stamp {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            font-size: 5rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            opacity: 0.08;
+            border: 8px solid currentColor;
+            padding: 20px 40px;
+            border-radius: 8px;
+        }
+
+        .watermark.red .stamp {
+            color: var(--red);
+        }
+
+        .watermark.amber .stamp {
+            color: var(--amber);
+        }
+
+        .watermark .stamp {
+            color: var(--blue);
+        }
+
+        /* 7. EDGE PULSE */
+        .edge-pulse {
+            background: var(--bg);
+        }
+
+        .edge-pulse::before,
+        .edge-pulse::after {
+            content: '';
+            position: absolute;
+        }
+
+        .edge-pulse::before {
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.3), transparent);
+            animation: edge-glow 2s ease-in-out infinite;
+        }
+
+        .edge-pulse::after {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(to top, rgba(59, 130, 246, 0.3), transparent);
+            animation: edge-glow 2s ease-in-out infinite 1s;
+        }
+
+        .edge-pulse.red::before {
+            background: linear-gradient(to bottom, rgba(239, 68, 68, 0.3), transparent);
+        }
+
+        .edge-pulse.red::after {
+            background: linear-gradient(to top, rgba(239, 68, 68, 0.3), transparent);
+        }
+
+        .edge-pulse.amber::before {
+            background: linear-gradient(to bottom, rgba(245, 158, 11, 0.3), transparent);
+        }
+
+        .edge-pulse.amber::after {
+            background: linear-gradient(to top, rgba(245, 158, 11, 0.3), transparent);
+        }
+
+        @keyframes edge-glow {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* 8. NEURAL BACKGROUND */
+        .neural-bg {
+            background: var(--bg);
+        }
+
+        .neural-bg .node {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--blue);
+            opacity: 0.3;
+            animation: node-pulse 3s ease-in-out infinite;
+        }
+
+        .neural-bg .line {
+            position: absolute;
+            height: 1px;
+            background: var(--blue);
+            opacity: 0.1;
+            transform-origin: left;
+        }
+
+        .neural-bg.red .node,
+        .neural-bg.red .line {
+            background: var(--red);
+        }
+
+        .neural-bg.amber .node,
+        .neural-bg.amber .line {
+            background: var(--amber);
+        }
+
+        @keyframes node-pulse {
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: scale(1.2);
+            }
+        }
+
+        /* 9. CIRCUIT TRACE */
+        .circuit {
+            background: var(--bg);
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: var(--blue);
+            opacity: 0.15;
+        }
+
+        .circuit-line.h {
+            height: 1px;
+            width: 100%;
+        }
+
+        .circuit-line.v {
+            width: 1px;
+            height: 100%;
+        }
+
+        .circuit-node {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 2px solid var(--blue);
+            background: transparent;
+            animation: circuit-flash 2s ease-in-out infinite;
+        }
+
+        .circuit.red .circuit-line,
+        .circuit.red .circuit-node {
+            background: var(--red);
+            border-color: var(--red);
+        }
+
+        .circuit.amber .circuit-line,
+        .circuit.amber .circuit-node {
+            background: var(--amber);
+            border-color: var(--amber);
+        }
+
+        @keyframes circuit-flash {
+
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.8;
+                background: currentColor;
+            }
+        }
+
+        /* 10. ENERGY FIELD */
+        .energy-field {
+            background: var(--bg);
+        }
+
+        .energy-field::before {
+            content: '';
+            position: absolute;
+            inset: 20px;
+            border: 1px solid var(--blue);
+            border-radius: 12px;
+            animation: field-pulse 2s ease-in-out infinite;
+        }
+
+        .energy-field::after {
+            content: '';
+            position: absolute;
+            inset: 40px;
+            border: 1px solid var(--blue);
+            border-radius: 8px;
+            animation: field-pulse 2s ease-in-out infinite 0.5s;
+            opacity: 0.5;
+        }
+
+        .energy-field.red::before,
+        .energy-field.red::after {
+            border-color: var(--red);
+        }
+
+        .energy-field.amber::before,
+        .energy-field.amber::after {
+            border-color: var(--amber);
+        }
+
+        @keyframes field-pulse {
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: scale(1.02);
+            }
+        }
+
+        /* 11. HOLOGRAPHIC GRID */
+        .holo-grid {
+            background: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px), var(--bg);
+            background-size: 30px 30px;
+            animation: grid-shift 4s linear infinite;
+        }
+
+        .holo-grid.red {
+            background: linear-gradient(rgba(239, 68, 68, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(239, 68, 68, 0.05) 1px, transparent 1px), var(--bg);
+            background-size: 30px 30px;
+        }
+
+        .holo-grid.amber {
+            background: linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px), var(--bg);
+            background-size: 30px 30px;
+        }
+
+        @keyframes grid-shift {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 30px 30px;
+            }
+        }
+
+        /* 12. GLOW ORBS */
+        .glow-orbs {
+            background: var(--bg);
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(30px);
+            animation: orb-float 6s ease-in-out infinite;
+        }
+
+        .glow-orbs .orb:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            background: var(--blue);
+            top: 20%;
+            left: 10%;
+        }
+
+        .glow-orbs .orb:nth-child(2) {
+            width: 80px;
+            height: 80px;
+            background: var(--cyan);
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .glow-orbs .orb:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            background: var(--blue);
+            bottom: 10%;
+            left: 40%;
+            animation-delay: 4s;
+        }
+
+        .glow-orbs.red .orb {
+            background: var(--red) !important;
+        }
+
+        .glow-orbs.amber .orb {
+            background: var(--amber) !important;
+        }
+
+        @keyframes orb-float {
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: translateY(0);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: translateY(-20px);
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 60px 0 30px;
+            color: var(--cyan);
+            font-size: 1.1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🌐 Ambient Page Verdict Concepts</h1>
+    <p class="subtitle">Full-Page Effects • Atmosphere • Framing • Glows</p>
+
+    <p class="section-title">— VERIFIED (Blue) Examples —</p>
+    <div class="concept-grid">
+        <div class="concept vignette">
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--blue)">VERIFIED</span></div>
+            <div class="concept-label">
+                <h3>1. Radial Vignette</h3>
+                <p>Subtle color gradient emanates from center, tinting page edges with verdict color</p>
+            </div>
+        </div>
+        <div class="concept border-glow">
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--blue)">VERIFIED</span></div>
+            <div class="concept-label">
+                <h3>2. Pulsing Border</h3>
+                <p>Animated border glow that pulses with breathing effect in verdict color</p>
+            </div>
+        </div>
+        <div class="concept corner-energy">
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--blue)">VERIFIED</span></div>
+            <div class="concept-label">
+                <h3>3. Corner Energy</h3>
+                <p>Animated corner accents with pulsing energy beams in L-shapes</p>
+            </div>
+        </div>
+        <div class="concept scan-line">
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--blue)">VERIFIED</span></div>
+            <div class="concept-label">
+                <h3>4. Scan Line</h3>
+                <p>Continuous horizontal line sweeps down the page with glow trail</p>
+            </div>
+        </div>
+        <div class="concept particles">
+            <div class="particle-dot" style="top:20%;left:15%"></div>
+            <div class="particle-dot" style="top:40%;left:45%;animation-delay:1s"></div>
+            <div class="particle-dot" style="top:60%;left:75%;animation-delay:2s"></div>
+            <div class="particle-dot" style="top:30%;left:85%;animation-delay:3s"></div>
+            <div class="particle-dot" style="top:70%;left:25%;animation-delay:4s"></div>
+            <div class="particle-dot" style="top:50%;left:60%;animation-delay:5s"></div>
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--blue)">VERIFIED</span></div>
+            <div class="concept-label">
+                <h3>5. Particle Atmosphere</h3>
+                <p>Floating particles drift across page in verdict color</p>
+            </div>
+        </div>
+        <div class="concept watermark">
+            <div class="stamp">VERIFIED</div>
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--blue)">VERIFIED</span></div>
+            <div class="concept-label">
+                <h3>6. Watermark Stamp</h3>
+                <p>Large semi-transparent verdict stamp as subtle background element</p>
+            </div>
+        </div>
+        <div class="concept edge-pulse">
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--blue)">VERIFIED</span></div>
+            <div class="concept-label">
+                <h3>7. Edge Pulse</h3>
+                <p>Top and bottom edges pulse with gradient glow effect</p>
+            </div>
+        </div>
+        <div class="concept energy-field">
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--blue)">VERIFIED</span></div>
+            <div class="concept-label">
+                <h3>8. Energy Field</h3>
+                <p>Nested border rectangles pulse outward like containment field</p>
+            </div>
+        </div>
+        <div class="concept holo-grid">
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--blue)">VERIFIED</span></div>
+            <div class="concept-label">
+                <h3>9. Holographic Grid</h3>
+                <p>Animated grid pattern shifts diagonally in verdict color</p>
+            </div>
+        </div>
+        <div class="concept glow-orbs">
+            <div class="orb"></div>
+            <div class="orb"></div>
+            <div class="orb"></div>
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--blue)">VERIFIED</span></div>
+            <div class="concept-label">
+                <h3>10. Ambient Orbs</h3>
+                <p>Soft glowing orbs float in background creating atmosphere</p>
+            </div>
+        </div>
+    </div>
+
+    <p class="section-title">— FALSE (Red) Examples —</p>
+    <div class="concept-grid">
+        <div class="concept vignette red">
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--red)">FALSE</span></div>
+            <div class="concept-label">
+                <h3>1. Radial Vignette</h3>
+                <p>Warning red emanates from edges - feels alarming</p>
+            </div>
+        </div>
+        <div class="concept border-glow red">
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--red)">FALSE</span></div>
+            <div class="concept-label">
+                <h3>2. Pulsing Border</h3>
+                <p>Red border pulses like warning/alert state</p>
+            </div>
+        </div>
+        <div class="concept corner-energy red">
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--red)">FALSE</span></div>
+            <div class="concept-label">
+                <h3>3. Corner Energy</h3>
+                <p>Red corner accents feel like danger/warning brackets</p>
+            </div>
+        </div>
+        <div class="concept scan-line red">
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--red)">FALSE</span></div>
+            <div class="concept-label">
+                <h3>4. Scan Line</h3>
+                <p>Red scan line feels like security breach detection</p>
+            </div>
+        </div>
+        <div class="concept glow-orbs red">
+            <div class="orb"></div>
+            <div class="orb"></div>
+            <div class="orb"></div>
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--red)">FALSE</span></div>
+            <div class="concept-label">
+                <h3>5. Ambient Orbs</h3>
+                <p>Red orbs create ominous, danger-zone atmosphere</p>
+            </div>
+        </div>
+    </div>
+
+    <p class="section-title">— MIXED (Amber) Examples —</p>
+    <div class="concept-grid">
+        <div class="concept vignette amber">
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--amber)">MIXED</span></div>
+            <div class="concept-label">
+                <h3>1. Radial Vignette</h3>
+                <p>Amber tint suggests caution/uncertainty</p>
+            </div>
+        </div>
+        <div class="concept border-glow amber">
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--amber)">MIXED</span></div>
+            <div class="concept-label">
+                <h3>2. Pulsing Border</h3>
+                <p>Amber pulse like pending/processing state</p>
+            </div>
+        </div>
+        <div class="concept corner-energy amber">
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--amber)">MIXED</span></div>
+            <div class="concept-label">
+                <h3>3. Corner Energy</h3>
+                <p>Amber corners suggest "proceed with caution"</p>
+            </div>
+        </div>
+        <div class="concept holo-grid amber">
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--amber)">MIXED</span></div>
+            <div class="concept-label">
+                <h3>4. Holographic Grid</h3>
+                <p>Amber grid feels analytical, still processing</p>
+            </div>
+        </div>
+        <div class="concept edge-pulse amber">
+            <div class="concept-content"><span class="verdict-badge" style="color:var(--amber)">MIXED</span></div>
+            <div class="concept-label">
+                <h3>5. Edge Pulse</h3>
+                <p>Amber edges pulse like caution lights</p>
+            </div>
+        </div>
+    </div>
+
+    <div
+        style="text-align:center;margin:60px 0 30px;padding:40px;background:rgba(59,130,246,0.05);border-radius:16px;max-width:900px;margin-left:auto;margin-right:auto">
+        <h2 style="color:var(--cyan);margin-bottom:16px;font-size:1.2rem">💡 Implementation Ideas</h2>
+        <div style="color:var(--muted);font-size:0.85rem;line-height:1.8;text-align:left;max-width:700px;margin:0 auto">
+            <p><strong>1. Radial Vignette</strong> — Subtle and elegant. Applied to `body` or main content wrapper.
+                Non-intrusive.</p>
+            <p><strong>2. Pulsing Border</strong> — Works great on article containers or hero sections. High visibility.
+            </p>
+            <p><strong>3. Corner Energy</strong> — Perfect for "frame" effect. Feels like HUD targeting brackets.</p>
+            <p><strong>4. Scan Line</strong> — Continuous movement adds dynamism. Good for tech/cyber aesthetic.</p>
+            <p><strong>5. Particles</strong> — Atmospheric but not distracting. Adds depth to page.</p>
+            <p><strong>6. Watermark</strong> — Bold statement. Could be toned down significantly for production.</p>
+            <p><strong>7. Edge Pulse</strong> — Top/bottom emphasis. Works with reading flow.</p>
+            <p><strong>8. Energy Field</strong> — Containment feel. Good for "sealed verdict" concept.</p>
+            <p><strong>9. Holographic Grid</strong> — Subtle tech texture. Reinforces data/analysis theme.</p>
+            <p><strong>10. Glow Orbs</strong> — Soft ambient lighting. Creates mood without distraction.</p>
+        </div>
+    </div>
+
+    <div
+        style="text-align:center;margin:40px 0;padding:30px;background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(59,130,246,0.1));border-radius:16px;max-width:800px;margin-left:auto;margin-right:auto">
+        <h3 style="color:var(--green);margin-bottom:12px">🎨 Recommended Combinations</h3>
+        <p style="color:var(--muted);font-size:0.8rem;line-height:1.6">
+            <strong>Subtle:</strong> Radial Vignette + Holographic Grid<br>
+            <strong>Medium:</strong> Corner Energy + Edge Pulse<br>
+            <strong>Bold:</strong> Pulsing Border + Scan Line + Particles<br>
+            <strong>Premium:</strong> Corner Energy + Ambient Orbs + Radial Vignette
+        </p>
+    </div>
+</body>
+
+</html>

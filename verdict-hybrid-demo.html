@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hybrid Verdict System Demo | GenuVerity</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/shared-components.css?v=4.0">
+    <link rel="stylesheet" href="css/reports.css?v=4.0">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* ═══════════════════════════════════════════════════════════════════════
+           THIS CSS WOULD GO IN: css/reports.css
+           ═══════════════════════════════════════════════════════════════════════ */
+
+        /* Verdict Corner Glow System - Subtlety Controls */
+        :root {
+            --glow-size: 160px;
+            --glow-blur: 60px;
+            --glow-opacity-min: 0.25;
+            --glow-opacity-max: 0.45;
+            --glow-speed: 5s;
+            --glow-scale: 1.08;
+
+            /* Verdict colors */
+            --verdict-green: #10b981;
+            --verdict-blue: #3b82f6;
+            --verdict-amber: #f59e0b;
+            --verdict-orange: #f97316;
+            --verdict-red: #ef4444;
+        }
+
+        /* Corner glow elements - injected by JS */
+        .verdict-glow {
+            position: fixed;
+            width: var(--glow-size);
+            height: var(--glow-size);
+            border-radius: 50%;
+            filter: blur(var(--glow-blur));
+            pointer-events: none;
+            z-index: 0;
+            animation: verdict-breathe var(--glow-speed) ease-in-out infinite;
+        }
+
+        .verdict-glow.tl {
+            top: calc(var(--glow-size) / -2);
+            left: calc(var(--glow-size) / -2);
+        }
+
+        .verdict-glow.tr {
+            top: calc(var(--glow-size) / -2);
+            right: calc(var(--glow-size) / -2);
+        }
+
+        .verdict-glow.bl {
+            bottom: calc(var(--glow-size) / -2);
+            left: calc(var(--glow-size) / -2);
+        }
+
+        .verdict-glow.br {
+            bottom: calc(var(--glow-size) / -2);
+            right: calc(var(--glow-size) / -2);
+        }
+
+        @keyframes verdict-breathe {
+
+            0%,
+            100% {
+                opacity: var(--glow-opacity-min);
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: var(--glow-opacity-max);
+                transform: scale(var(--glow-scale));
+            }
+        }
+
+        /* Color classes applied to body */
+        body.verdict-true .verdict-glow {
+            background: var(--verdict-green);
+        }
+
+        body.verdict-mostly-true .verdict-glow {
+            background: var(--verdict-blue);
+        }
+
+        body.verdict-mixed .verdict-glow {
+            background: var(--verdict-amber);
+        }
+
+        body.verdict-mostly-false .verdict-glow {
+            background: var(--verdict-orange);
+        }
+
+        body.verdict-false .verdict-glow {
+            background: var(--verdict-red);
+        }
+
+        /* Demo-specific styling */
+        .demo-panel {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            width: 220px;
+        }
+
+        .demo-panel h4 {
+            font-size: 0.7rem;
+            color: #06b6d4;
+            margin-bottom: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+        }
+
+        .demo-panel .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: #94a3b8;
+            margin-bottom: 12px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .demo-panel .code-block .key {
+            color: #06b6d4;
+        }
+
+        .demo-panel .code-block .value {
+            color: #10b981;
+        }
+
+        .demo-panel button {
+            display: block;
+            width: 100%;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .demo-panel button:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .demo-panel button.active {
+            border-color: #06b6d4;
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .demo-panel button.true {
+            border-left: 3px solid var(--verdict-green);
+        }
+
+        .demo-panel button.mostly-true {
+            border-left: 3px solid var(--verdict-blue);
+        }
+
+        .demo-panel button.mixed {
+            border-left: 3px solid var(--verdict-amber);
+        }
+
+        .demo-panel button.mostly-false {
+            border-left: 3px solid var(--verdict-orange);
+        }
+
+        .demo-panel button.false {
+            border-left: 3px solid var(--verdict-red);
+        }
+
+        .demo-panel button.none {
+            border-left: 3px solid #64748b;
+        }
+
+        .demo-info {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.05));
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 30px;
+        }
+
+        .demo-info h2 {
+            color: #06b6d4;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .demo-info p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin: 0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<!-- Body class set by JS based on verdict in reports-data.js -->
+
+<body class="verdict-true">
+    <!-- Corner glows injected by JS -->
+    <div class="verdict-glow tl"></div>
+    <div class="verdict-glow tr"></div>
+    <div class="verdict-glow bl"></div>
+    <div class="verdict-glow br"></div>
+
+    <!-- Demo control panel -->
+    <div class="demo-panel">
+        <h4>REPORTS-DATA.JS ENTRY</h4>
+        <div class="code-block" id="codePreview">{
+            <span class="key">id</span>: 67,
+            <span class="key">slug</span>: "iran-nuclear",
+            <span class="key">verdict</span>: "<span class="value">true</span>"
+            }
+        </div>
+        <h4>SIMULATE VERDICT</h4>
+        <button class="true active" onclick="setVerdict('true')">🟢 true</button>
+        <button class="mostly-true" onclick="setVerdict('mostly-true')">🔵 mostly-true</button>
+        <button class="mixed" onclick="setVerdict('mixed')">🟡 mixed</button>
+        <button class="mostly-false" onclick="setVerdict('mostly-false')">🟠 mostly-false</button>
+        <button class="false" onclick="setVerdict('false')">🔴 false</button>
+        <button class="none" onclick="setVerdict(null)">○ (no verdict)</button>
+    </div>
+
+    <!-- Navbar -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
+    <div class="container">
+        <div class="demo-info">
+            <h2>🔧 HYBRID VERDICT SYSTEM DEMO</h2>
+            <p>This shows how the corner glow system would work. The verdict is stored in <code>reports-data.js</code>,
+                and the JS automatically applies the right color class to the body. Reports without a verdict field show
+                no glow.</p>
+        </div>
+
+        <!-- Report header -->
+        <div class="report-meta">
+            <span class="meta-tag">DEEP DIVE DOSSIER</span>
+            <span class="meta-tag cyan">NUCLEAR PROLIFERATION</span>
+            <span class="meta-tag"><i data-lucide="clock"
+                    style="width:12px; display:inline-block; vertical-align:middle;"></i> 28 MIN READ</span>
+        </div>
+
+        <h1 class="report-title">Iran and the West: Nuclear Escalation, Proxy Warfare, and the Path Forward</h1>
+        <h2 class="report-subtitle">From Deal to Threshold State: How the JCPOA Collapse Reshaped Middle East Security
+            (2018–2025)</h2>
+
+        <!-- Main content grid -->
+        <div class="content-grid">
+            <aside class="sources-sidebar">
+                <div class="sources-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
+                    <span class="sources-count">18</span>
+                </div>
+                <div class="sources-list">
+                    <a href="#" class="source-card"><span class="source-ref">1</span>
+                        <div>
+                            <div>CFR Iran Timeline</div>
+                            <div style="font-size:0.7em;opacity:0.7">cfr.org</div>
+                        </div>
+                    </a>
+                    <a href="#" class="source-card"><span class="source-ref">2</span>
+                        <div>
+                            <div>IAEA Reports</div>
+                            <div style="font-size:0.7em;opacity:0.7">iaea.org</div>
+                        </div>
+                    </a>
+                    <a href="#" class="source-card"><span class="source-ref">3</span>
+                        <div>
+                            <div>State Dept Policy</div>
+                            <div style="font-size:0.7em;opacity:0.7">state.gov</div>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+
+            <main class="report-content">
+                <div class="tldr-box">
+                    <div class="tldr-title"><i data-lucide="zap" style="width:18px;"></i>TL;DR</div>
+                    <p>Iran has accelerated uranium enrichment to 60% purity—just below weapons-grade—following the 2018
+                        JCPOA withdrawal. Western intelligence agencies assess that Iran could produce enough fissile
+                        material for a nuclear device within weeks.</p>
+                </div>
+
+                <section>
+                    <h3>Executive Summary</h3>
+                    <p>Since the United States withdrew from the Joint Comprehensive Plan of Action (JCPOA) in May 2018,
+                        Iran has systematically expanded its nuclear program beyond the limits established under the
+                        agreement. This deep dive examines the current state of Iran's enrichment capabilities, the
+                        effectiveness of "maximum pressure" sanctions, and the evolving threat matrix in the Persian
+                        Gulf region.</p>
+                    <p>Key findings include: Iran's stockpile of enriched uranium has grown to over 4,500 kg (as of late
+                        2024), far exceeding the 300 kg limit under the JCPOA. The International Atomic Energy Agency
+                        (IAEA) has repeatedly expressed concern about "unexplained nuclear material" at undeclared
+                        sites.</p>
+                </section>
+
+                <section>
+                    <h3>Historical Context</h3>
+                    <p>Iran's nuclear program dates back to the 1950s, when the United States provided the country with
+                        its first research reactor under the Atoms for Peace program. Following the 1979 Islamic
+                        Revolution, international concerns about potential weapons development grew.</p>
+                    <p>The 2015 JCPOA represented a landmark diplomatic achievement, offering sanctions relief in
+                        exchange for strict limits on enrichment activities. The Trump administration's 2018 withdrawal
+                        and reimposition of sanctions fundamentally altered the strategic calculus.</p>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+    <script src="js/shared-components.js?v=4.0" defer></script>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════════
+        // THIS JS LOGIC WOULD GO IN: js/shared-components.js
+        // ═══════════════════════════════════════════════════════════════════════
+
+        // Simulated reports-data.js entry
+        const SAMPLE_REPORT = {
+            id: 67,
+            slug: "iran-nuclear-crisis",
+            title: "Iran and the West",
+            verdict: "true"  // <-- NEW FIELD: "true", "mostly-true", "mixed", "mostly-false", "false", or null/undefined
+        };
+
+        // Function that would run on page load
+        function applyVerdictGlow(verdict) {
+            const body = document.body;
+
+            // Remove any existing verdict class
+            body.classList.remove('verdict-true', 'verdict-mostly-true', 'verdict-mixed', 'verdict-mostly-false', 'verdict-false');
+
+            // Hide/show corner glows
+            const glows = document.querySelectorAll('.verdict-glow');
+
+            if (!verdict) {
+                // No verdict = no glow
+                glows.forEach(g => g.style.display = 'none');
+                return;
+            }
+
+            // Show glows and apply color class
+            glows.forEach(g => g.style.display = 'block');
+            body.classList.add('verdict-' + verdict);
+        }
+
+        // Demo: Switch verdict for testing
+        function setVerdict(verdict) {
+            applyVerdictGlow(verdict);
+
+            // Update button states
+            document.querySelectorAll('.demo-panel button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update code preview
+            const preview = document.getElementById('codePreview');
+            if (verdict) {
+                preview.innerHTML = `{
+  <span class="key">id</span>: 67,
+  <span class="key">slug</span>: "iran-nuclear",
+  <span class="key">verdict</span>: "<span class="value">${verdict}</span>"
+}`;
+            } else {
+                preview.innerHTML = `{
+  <span class="key">id</span>: 67,
+  <span class="key">slug</span>: "iran-nuclear"
+  <span style="color:#64748b">// no verdict field</span>
+}`;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            applyVerdictGlow(SAMPLE_REPORT.verdict);
+        });
+    </script>
+</body>
+
+</html>

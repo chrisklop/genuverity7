@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambient Verdict Demo | GenuVerity</title>
+    <meta name="description" content="Ultra-subtle ambient page effects that communicate verdict through atmosphere.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/chart-watermark.js"></script>
+    <script src="js/chart-defaults.js"></script>
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/shared-components.css?v=4.0">
+    <link rel="stylesheet" href="css/reports.css?v=4.0">
+
+    <style>
+        :root {
+            --verdict-blue: #3b82f6;
+            --verdict-cyan: #06b6d4;
+            --verdict-red: #ef4444;
+            --verdict-amber: #f59e0b;
+            --verdict-green: #10b981;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           AMBIENT VERDICT SYSTEM - Noticeable but Atmospheric
+           Apply one of these classes to <body>: verdict-true, verdict-false, verdict-mixed
+           ═══════════════════════════════════════════════════════════════════════ */
+
+        /* BASE: Radial vignette from edges - VISIBLE */
+        body.verdict-true::before,
+        body.verdict-false::before,
+        body.verdict-mixed::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ─────────────────────────────────────────────────────────────────────
+           VERIFIED (BLUE) - Trustworthy atmosphere
+           ───────────────────────────────────────────────────────────────────── */
+        body.verdict-true::before {
+            background: radial-gradient(ellipse at center,
+                    transparent 0%,
+                    transparent 30%,
+                    rgba(59, 130, 246, 0.06) 60%,
+                    rgba(59, 130, 246, 0.18) 100%);
+        }
+
+        body.verdict-true::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, transparent 20%),
+                linear-gradient(225deg, rgba(6, 182, 212, 0.10) 0%, transparent 20%),
+                linear-gradient(315deg, rgba(59, 130, 246, 0.12) 0%, transparent 20%),
+                linear-gradient(45deg, rgba(6, 182, 212, 0.10) 0%, transparent 20%);
+        }
+
+        /* ─────────────────────────────────────────────────────────────────────
+           FALSE (RED) - Warning atmosphere - MORE VISIBLE
+           ───────────────────────────────────────────────────────────────────── */
+        body.verdict-false::before {
+            background: radial-gradient(ellipse at center,
+                    transparent 0%,
+                    transparent 25%,
+                    rgba(239, 68, 68, 0.08) 55%,
+                    rgba(239, 68, 68, 0.22) 100%);
+        }
+
+        body.verdict-false::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, transparent 18%),
+                linear-gradient(225deg, rgba(239, 68, 68, 0.12) 0%, transparent 18%),
+                linear-gradient(315deg, rgba(239, 68, 68, 0.15) 0%, transparent 18%),
+                linear-gradient(45deg, rgba(239, 68, 68, 0.12) 0%, transparent 18%);
+        }
+
+        /* ─────────────────────────────────────────────────────────────────────
+           MIXED (AMBER) - Caution atmosphere
+           ───────────────────────────────────────────────────────────────────── */
+        body.verdict-mixed::before {
+            background: radial-gradient(ellipse at center,
+                    transparent 0%,
+                    transparent 30%,
+                    rgba(245, 158, 11, 0.06) 60%,
+                    rgba(245, 158, 11, 0.18) 100%);
+        }
+
+        body.verdict-mixed::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, transparent 18%),
+                linear-gradient(225deg, rgba(245, 158, 11, 0.10) 0%, transparent 18%),
+                linear-gradient(315deg, rgba(245, 158, 11, 0.12) 0%, transparent 18%),
+                linear-gradient(45deg, rgba(245, 158, 11, 0.10) 0%, transparent 18%);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           CORNER GLOWS - More Prominent
+           ═══════════════════════════════════════════════════════════════════════ */
+
+        .ambient-corners .corner-glow {
+            position: fixed;
+            width: 280px;
+            height: 280px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.7;
+            animation: corner-breathe 4s ease-in-out infinite;
+        }
+
+        .ambient-corners .corner-glow.tl {
+            top: -140px;
+            left: -140px;
+        }
+
+        .ambient-corners .corner-glow.tr {
+            top: -140px;
+            right: -140px;
+        }
+
+        .ambient-corners .corner-glow.bl {
+            bottom: -140px;
+            left: -140px;
+        }
+
+        .ambient-corners .corner-glow.br {
+            bottom: -140px;
+            right: -140px;
+        }
+
+        body.verdict-true .corner-glow {
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.35), transparent 65%);
+        }
+
+        body.verdict-false .corner-glow {
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.4), transparent 65%);
+        }
+
+        body.verdict-mixed .corner-glow {
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.35), transparent 65%);
+        }
+
+        @keyframes corner-breathe {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1.15);
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           CORNER BRACKETS - Visible Frame Lines
+           ═══════════════════════════════════════════════════════════════════════ */
+
+        .corner-bracket {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .corner-bracket::before,
+        .corner-bracket::after {
+            content: '';
+            position: absolute;
+            animation: bracket-pulse 2.5s ease-in-out infinite;
+        }
+
+        .corner-bracket.tl {
+            top: 12px;
+            left: 12px;
+        }
+
+        .corner-bracket.tl::before {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+        }
+
+        .corner-bracket.tl::after {
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 100%;
+        }
+
+        .corner-bracket.tr {
+            top: 12px;
+            right: 12px;
+        }
+
+        .corner-bracket.tr::before {
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 2px;
+        }
+
+        .corner-bracket.tr::after {
+            top: 0;
+            right: 0;
+            width: 2px;
+            height: 100%;
+        }
+
+        .corner-bracket.bl {
+            bottom: 12px;
+            left: 12px;
+        }
+
+        .corner-bracket.bl::before {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+        }
+
+        .corner-bracket.bl::after {
+            bottom: 0;
+            left: 0;
+            width: 2px;
+            height: 100%;
+        }
+
+        .corner-bracket.br {
+            bottom: 12px;
+            right: 12px;
+        }
+
+        .corner-bracket.br::before {
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 2px;
+        }
+
+        .corner-bracket.br::after {
+            bottom: 0;
+            right: 0;
+            width: 2px;
+            height: 100%;
+        }
+
+        body.verdict-true .corner-bracket::before,
+        body.verdict-true .corner-bracket::after {
+            background: var(--verdict-blue);
+        }
+
+        body.verdict-false .corner-bracket::before,
+        body.verdict-false .corner-bracket::after {
+            background: var(--verdict-red);
+        }
+
+        body.verdict-mixed .corner-bracket::before,
+        body.verdict-mixed .corner-bracket::after {
+            background: var(--verdict-amber);
+        }
+
+        @keyframes bracket-pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.9;
+                box-shadow: 0 0 8px currentColor;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           SCAN LINE - More Visible
+           ═══════════════════════════════════════════════════════════════════════ */
+
+        .ambient-scan .scan-line-el {
+            position: fixed;
+            left: 0;
+            right: 0;
+            height: 2px;
+            z-index: 50;
+            pointer-events: none;
+            animation: scan-move 6s linear infinite;
+            opacity: 0.6;
+        }
+
+        body.verdict-true.ambient-scan .scan-line-el {
+            background: linear-gradient(90deg, transparent 5%, var(--verdict-blue) 50%, transparent 95%);
+            box-shadow: 0 0 12px var(--verdict-blue);
+        }
+
+        body.verdict-false.ambient-scan .scan-line-el {
+            background: linear-gradient(90deg, transparent 5%, var(--verdict-red) 50%, transparent 95%);
+            box-shadow: 0 0 12px var(--verdict-red);
+        }
+
+        body.verdict-mixed.ambient-scan .scan-line-el {
+            background: linear-gradient(90deg, transparent 5%, var(--verdict-amber) 50%, transparent 95%);
+            box-shadow: 0 0 12px var(--verdict-amber);
+        }
+
+        @keyframes scan-move {
+            0% {
+                top: 0;
+            }
+
+            100% {
+                top: 100vh;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           DEMO CONTROLS
+           ═══════════════════════════════════════════════════════════════════════ */
+
+        .demo-controls {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            min-width: 180px;
+        }
+
+        .demo-controls h4 {
+            font-size: 0.7rem;
+            color: var(--verdict-cyan);
+            margin-bottom: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .demo-controls button {
+            display: block;
+            width: 100%;
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .demo-controls button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .demo-controls button.active {
+            border-color: var(--verdict-cyan);
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .demo-controls button.true {
+            border-left: 3px solid var(--verdict-blue);
+        }
+
+        .demo-controls button.false {
+            border-left: 3px solid var(--verdict-red);
+        }
+
+        .demo-controls button.mixed {
+            border-left: 3px solid var(--verdict-amber);
+        }
+
+        .demo-controls button.none {
+            border-left: 3px solid #64748b;
+        }
+
+        .demo-controls .toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 8px;
+        }
+
+        .demo-controls .toggle-row label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+            flex: 1;
+        }
+
+        .demo-controls input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        /* Demo info box */
+        .demo-info {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.05));
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 30px;
+        }
+
+        .demo-info h2 {
+            color: var(--verdict-cyan);
+            font-size: 1rem;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .demo-info p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin: 0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<!-- Default to VERIFIED state, use demo controls to change -->
+
+<body class="verdict-true ambient-corners">
+    <!-- Ambient corner glows -->
+    <div class="corner-glow tl"></div>
+    <div class="corner-glow tr"></div>
+    <div class="corner-glow bl"></div>
+    <div class="corner-glow br"></div>
+
+    <!-- Visible corner brackets -->
+    <div class="corner-bracket tl"></div>
+    <div class="corner-bracket tr"></div>
+    <div class="corner-bracket bl"></div>
+    <div class="corner-bracket br"></div>
+
+    <!-- Scan line (toggled) -->
+    <div class="scan-line-el"></div>
+
+    <!-- Demo Controls Panel -->
+    <div class="demo-controls">
+        <h4>Verdict Atmosphere</h4>
+        <button class="true active" onclick="setVerdict('true')">✓ Verified (Blue)</button>
+        <button class="false" onclick="setVerdict('false')">✗ False (Red)</button>
+        <button class="mixed" onclick="setVerdict('mixed')">⚠ Mixed (Amber)</button>
+        <button class="none" onclick="setVerdict('none')">○ None (Neutral)</button>
+
+        <div class="toggle-row">
+            <input type="checkbox" id="toggleCorners" checked onchange="toggleCorners()">
+            <label for="toggleCorners">Corner glows</label>
+        </div>
+        <div class="toggle-row">
+            <input type="checkbox" id="toggleScan" onchange="toggleScan()">
+            <label for="toggleScan">Scan line</label>
+        </div>
+    </div>
+
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
+    <div class="container">
+        <!-- DEMO INFO -->
+        <div class="demo-info">
+            <h2>🌫️ ULTRA-SUBTLE AMBIENT VERDICT</h2>
+            <p>This demo shows how the page atmosphere itself can communicate the verdict without any explicit badge or
+                widget. Use the controls on the right to switch between verdict states and see how the subtle vignette
+                and corner glows shift the "feel" of the page.</p>
+        </div>
+
+        <!-- REPORT HEADER (from Iran Nuclear Crisis) -->
+        <div class="report-meta">
+            <span class="meta-tag">DEEP DIVE DOSSIER</span>
+            <span class="meta-tag cyan">NUCLEAR PROLIFERATION</span>
+            <span class="meta-tag"><i data-lucide="clock"
+                    style="width:12px; display:inline-block; vertical-align:middle;"></i> 28 MIN READ</span>
+        </div>
+
+        <h1 class="report-title">Iran and the West: Nuclear Escalation, Proxy Warfare, and the Path Forward</h1>
+        <h2 class="report-subtitle">From Deal to Threshold State: How the JCPOA Collapse Reshaped Middle East Security
+            (2018–2025)</h2>
+
+        <!-- MAIN LAYOUT GRID -->
+        <div class="content-grid">
+            <!-- SIDEBAR: SOURCES FIRST -->
+            <aside class="sources-sidebar">
+                <div class="sources-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
+                    <span class="sources-count">18</span>
+                </div>
+                <div class="sources-list" id="sourcesList">
+                    <a href="https://www.cfr.org/timeline/us-relations-iran-1953-2024" target="_blank"
+                        class="source-card" id="source-1">
+                        <span class="source-ref">1</span>
+                        <div>
+                            <div>U.S.–Iran Relations Timeline</div>
+                            <div style="font-size:0.7em; opacity:0.7;">cfr.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.cfr.org/backgrounder/what-iran-nuclear-deal" target="_blank"
+                        class="source-card" id="source-2">
+                        <span class="source-ref">2</span>
+                        <div>
+                            <div>What Is the Iran Nuclear Deal?</div>
+                            <div style="font-size:0.7em; opacity:0.7;">cfr.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.iaea.org/topics/iran" target="_blank" class="source-card" id="source-3">
+                        <span class="source-ref">3</span>
+                        <div>
+                            <div>IAEA and Iran</div>
+                            <div style="font-size:0.7em; opacity:0.7;">iaea.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.state.gov/iran/" target="_blank" class="source-card" id="source-4">
+                        <span class="source-ref">4</span>
+                        <div>
+                            <div>U.S. Policy on Iran</div>
+                            <div style="font-size:0.7em; opacity:0.7;">state.gov</div>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- MAIN CONTENT -->
+            <main class="report-content">
+                <!-- TL;DR -->
+                <div class="tldr-box">
+                    <div class="tldr-title"><i data-lucide="zap" style="width:18px;"></i>TL;DR</div>
+                    <p>Iran has accelerated uranium enrichment to 60% purity—just below weapons-grade—following the 2018
+                        JCPOA withdrawal. Western intelligence agencies assess that Iran could produce enough fissile
+                        material for a nuclear device within weeks if it chose to do so. The report analyzes diplomatic
+                        options, sanctions effectiveness, and regional proxy dynamics.</p>
+                </div>
+
+                <!-- SAMPLE CONTENT SECTIONS -->
+                <section id="overview">
+                    <h3>Executive Summary</h3>
+                    <p>Since the United States withdrew from the Joint Comprehensive Plan of Action (JCPOA) in May 2018,
+                        Iran has systematically expanded its nuclear program beyond the limits established under the
+                        agreement. This deep dive examines the current state of Iran's enrichment capabilities, the
+                        effectiveness of "maximum pressure" sanctions, and the evolving threat matrix in the Persian
+                        Gulf region.</p>
+
+                    <p>Key findings include: Iran's stockpile of enriched uranium has grown to over 4,500 kg (as of late
+                        2024), far exceeding the 300 kg limit under the JCPOA. The International Atomic Energy Agency
+                        (IAEA) has repeatedly expressed concern about "unexplained nuclear material" at undeclared
+                        sites. Regional proxy networks—including Hezbollah, the Houthis, and Iraqi militias—have
+                        increased in operational tempo and strategic reach.</p>
+                </section>
+
+                <section id="background">
+                    <h3>Historical Context</h3>
+                    <p>Iran's nuclear program dates back to the 1950s, when the United States provided the country with
+                        its first research reactor under the Atoms for Peace program. Following the 1979 Islamic
+                        Revolution, international concerns about potential weapons development grew. The 2015 JCPOA
+                        represented a landmark diplomatic achievement, offering sanctions relief in exchange for strict
+                        limits on enrichment activities.</p>
+
+                    <p>The Trump administration's 2018 withdrawal and reimposition of sanctions fundamentally altered
+                        the strategic calculus. Iran responded by incrementally breaching JCPOA limits—first exceeding
+                        stockpile caps, then enriching to higher purity levels, and finally limiting IAEA access to
+                        monitoring equipment. By 2024, the deal existed in name only, with neither side adhering to its
+                        core provisions.</p>
+                </section>
+
+                <section id="analysis">
+                    <h3>Current Technical Assessment</h3>
+                    <p>The IAEA's November 2024 report confirmed that Iran possesses approximately 164.7 kg of uranium
+                        enriched to 60% purity—more than three times the amount needed, with further enrichment, to
+                        produce a single nuclear weapon. This material is stored at the Fordow Fuel Enrichment Plant
+                        (FFEP), a facility buried deep inside a mountain near Qom.</p>
+
+                    <p>Director General Rafael Grossi has characterized Iran's cooperation with the Agency as "seriously
+                        affecting our ability to independently verify the peaceful nature of Iran's nuclear program."
+                        Multiple verification indicators suggest that breakout time—the period needed to produce
+                        weapons-grade highly enriched uranium—has shrunk to as little as one to two weeks.</p>
+                </section>
+
+                <section id="implications">
+                    <h3>Regional Security Implications</h3>
+                    <p>Iran's expanding nuclear capabilities have triggered significant regional responses. Saudi Arabia
+                        has publicly stated its intention to develop nuclear weapons if Iran does. The UAE and Egypt
+                        have expressed similar contingency positions. Israel has repeatedly signaled willingness to
+                        conduct military strikes to prevent Iranian weaponization.</p>
+
+                    <p>Meanwhile, Iran's proxy network has demonstrated increasing sophistication. Hezbollah's precision
+                        missile arsenal threatens critical Israeli infrastructure. Houthi attacks on Red Sea shipping
+                        have disrupted global commerce. Iraqi militias have targeted U.S. forces across the region. This
+                        "forward defense" strategy provides Iran with significant deterrent capabilities below the
+                        nuclear threshold.</p>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Shared Components JS -->
+    <script src="js/shared-components.js?v=4.0" defer></script>
+
+    <script>
+        // Demo control functions
+        function setVerdict(verdict) {
+            const body = document.body;
+            body.classList.remove('verdict-true', 'verdict-false', 'verdict-mixed');
+
+            // Update button states
+            document.querySelectorAll('.demo-controls button').forEach(btn => btn.classList.remove('active'));
+
+            if (verdict !== 'none') {
+                body.classList.add('verdict-' + verdict);
+            }
+
+            event.target.classList.add('active');
+        }
+
+        function toggleCorners() {
+            document.body.classList.toggle('ambient-corners');
+            document.querySelectorAll('.corner-glow').forEach(el => {
+                el.style.display = document.getElementById('toggleCorners').checked ? 'block' : 'none';
+            });
+        }
+
+        function toggleScan() {
+            document.body.classList.toggle('ambient-scan');
+        }
+
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+
+</html>

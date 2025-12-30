@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truth Meter Designs Part 4 | GenuVerity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050A14;
+            --card: #111827;
+            --border: rgba(59, 130, 246, 0.2);
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --cyan: #06b6d4;
+            --text: #fff;
+            --muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: var(--muted);
+        }
+
+        .levels {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .level {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .level-label {
+            width: 120px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* DESIGN 19: Pulse Ring */
+        .pulse-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pulse-ring {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .pulse-ring.active {
+            animation: ring-pulse 1.5s ease-out infinite;
+        }
+
+        @keyframes ring-pulse {
+            0% {
+                box-shadow: 0 0 0 0 currentColor;
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px transparent;
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 transparent;
+            }
+        }
+
+        .pulse-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .pulse-dot.active {
+            box-shadow: 0 0 12px currentColor;
+        }
+
+        /* DESIGN 20: Shield Badge */
+        .shield-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .shield-badge {
+            width: 50px;
+            height: 58px;
+            position: relative;
+        }
+
+        .shield-path {
+            transition: all 0.5s;
+        }
+
+        /* DESIGN 21: Circuit Board */
+        .circuit-meter {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            align-items: center;
+        }
+
+        .circuit-node {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .circuit-node.active {
+            border-color: currentColor;
+            background: currentColor;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        .circuit-line {
+            width: 20px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .circuit-line.active {
+            background: currentColor;
+            box-shadow: 0 0 4px currentColor;
+        }
+
+        /* DESIGN 22: Waveform */
+        .wave-meter {
+            flex: 1;
+            height: 40px;
+            position: relative;
+        }
+
+        .wave-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .wave-path {
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+
+        /* DESIGN 23: Battery */
+        .battery {
+            width: 60px;
+            height: 28px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 3px;
+        }
+
+        .battery::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .battery-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.5s;
+        }
+
+        /* DESIGN 24: Token Counter */
+        .token-meter {
+            display: flex;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .token {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .token.active {
+            border-color: currentColor;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        /* DESIGN 25: Glitch Text */
+        .glitch-meter {
+            flex: 1;
+            font-family: monospace;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .glitch-meter::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 2px;
+            text-shadow: -2px 0 #ef4444;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim 2s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(31px, 9999px, 94px, 0)
+            }
+
+            10% {
+                clip: rect(70px, 9999px, 71px, 0)
+            }
+
+            20% {
+                clip: rect(29px, 9999px, 24px, 0)
+            }
+
+            30% {
+                clip: rect(38px, 9999px, 16px, 0)
+            }
+
+            40% {
+                clip: rect(63px, 9999px, 27px, 0)
+            }
+
+            50% {
+                clip: rect(99px, 9999px, 4px, 0)
+            }
+
+            60% {
+                clip: rect(13px, 9999px, 63px, 0)
+            }
+
+            70% {
+                clip: rect(46px, 9999px, 80px, 0)
+            }
+
+            80% {
+                clip: rect(40px, 9999px, 45px, 0)
+            }
+
+            90% {
+                clip: rect(66px, 9999px, 98px, 0)
+            }
+
+            100% {
+                clip: rect(56px, 9999px, 89px, 0)
+            }
+        }
+
+        /* DESIGN 26: Neon Tube */
+        .neon-meter {
+            flex: 1;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .neon-fill {
+            height: 100%;
+            border-radius: 6px;
+            position: relative;
+        }
+
+        .neon-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(rgba(255, 255, 255, 0.3), transparent);
+            border-radius: 6px 6px 0 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🎯 Truth Meter Designs - Part 4</h1>
+    <p class="subtitle">Pulse Ring, Shield, Circuit, Wave, Battery, Token, Glitch, Neon variants</p>
+
+    <div class="grid">
+        <!-- DESIGN 19: Animated Pulse Ring -->
+        <div class="card">
+            <h3>19. Animated Pulse Ring</h3>
+            <div class="levels">
+                <div class="level pulse-container"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="pulse-ring active" style="color:var(--red);border-color:var(--red)">
+                        <div class="pulse-dot active" style="background:var(--red);color:var(--red)"></div>
+                    </div><span style="font-weight:600;color:var(--red)">REJECTED</span>
+                </div>
+                <div class="level pulse-container"><span class="level-label" style="color:var(--orange)">MOSTLY
+                        FALSE</span>
+                    <div class="pulse-ring active" style="color:var(--orange);border-color:var(--orange)">
+                        <div class="pulse-dot active" style="background:var(--orange);color:var(--orange)"></div>
+                    </div><span style="font-weight:600;color:var(--orange)">WEAK</span>
+                </div>
+                <div class="level pulse-container"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="pulse-ring active" style="color:var(--amber);border-color:var(--amber)">
+                        <div class="pulse-dot active" style="background:var(--amber);color:var(--amber)"></div>
+                    </div><span style="font-weight:600;color:var(--amber)">PARTIAL</span>
+                </div>
+                <div class="level pulse-container"><span class="level-label" style="color:var(--green)">MOSTLY
+                        TRUE</span>
+                    <div class="pulse-ring active" style="color:var(--green);border-color:var(--green)">
+                        <div class="pulse-dot active" style="background:var(--green);color:var(--green)"></div>
+                    </div><span style="font-weight:600;color:var(--green)">VALID</span>
+                </div>
+                <div class="level pulse-container"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="pulse-ring active" style="color:var(--blue);border-color:var(--blue)">
+                        <div class="pulse-dot active" style="background:var(--blue);color:var(--blue)"></div>
+                    </div><span style="font-weight:600;color:var(--blue)">VERIFIED</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 20: Shield Badge -->
+        <div class="card">
+            <h3>20. Shield Verification Badge</h3>
+            <div class="levels">
+                <div class="level shield-container"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <svg class="shield-badge" viewBox="0 0 50 60">
+                        <path d="M25 3 L47 12 L47 30 C47 45 25 57 25 57 C25 57 3 45 3 30 L3 12 Z"
+                            fill="rgba(239,68,68,0.2)" stroke="var(--red)" stroke-width="2" /><text x="25" y="36"
+                            text-anchor="middle" fill="var(--red)" font-size="18" font-weight="bold">✗</text>
+                    </svg>
+                    <span style="font-weight:600;color:var(--red)">REJECTED</span>
+                </div>
+                <div class="level shield-container"><span class="level-label" style="color:var(--orange)">MOSTLY
+                        FALSE</span>
+                    <svg class="shield-badge" viewBox="0 0 50 60">
+                        <path d="M25 3 L47 12 L47 30 C47 45 25 57 25 57 C25 57 3 45 3 30 L3 12 Z"
+                            fill="rgba(249,115,22,0.2)" stroke="var(--orange)" stroke-width="2" /><text x="25" y="36"
+                            text-anchor="middle" fill="var(--orange)" font-size="18" font-weight="bold">!</text>
+                    </svg>
+                    <span style="font-weight:600;color:var(--orange)">WEAK</span>
+                </div>
+                <div class="level shield-container"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <svg class="shield-badge" viewBox="0 0 50 60">
+                        <path d="M25 3 L47 12 L47 30 C47 45 25 57 25 57 C25 57 3 45 3 30 L3 12 Z"
+                            fill="rgba(245,158,11,0.2)" stroke="var(--amber)" stroke-width="2" /><text x="25" y="36"
+                            text-anchor="middle" fill="var(--amber)" font-size="18" font-weight="bold">?</text>
+                    </svg>
+                    <span style="font-weight:600;color:var(--amber)">PARTIAL</span>
+                </div>
+                <div class="level shield-container"><span class="level-label" style="color:var(--green)">MOSTLY
+                        TRUE</span>
+                    <svg class="shield-badge" viewBox="0 0 50 60">
+                        <path d="M25 3 L47 12 L47 30 C47 45 25 57 25 57 C25 57 3 45 3 30 L3 12 Z"
+                            fill="rgba(16,185,129,0.2)" stroke="var(--green)" stroke-width="2" /><text x="25" y="36"
+                            text-anchor="middle" fill="var(--green)" font-size="18" font-weight="bold">✓</text>
+                    </svg>
+                    <span style="font-weight:600;color:var(--green)">VALID</span>
+                </div>
+                <div class="level shield-container"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <svg class="shield-badge" viewBox="0 0 50 60">
+                        <path d="M25 3 L47 12 L47 30 C47 45 25 57 25 57 C25 57 3 45 3 30 L3 12 Z"
+                            fill="rgba(59,130,246,0.3)" stroke="var(--blue)" stroke-width="2" /><text x="25" y="36"
+                            text-anchor="middle" fill="var(--blue)" font-size="18" font-weight="bold">✓✓</text>
+                    </svg>
+                    <span style="font-weight:600;color:var(--blue)">VERIFIED</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 21: Circuit Board -->
+        <div class="card">
+            <h3>21. Circuit Board Nodes</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="circuit-meter">
+                        <div class="circuit-node active" style="color:var(--red)"></div>
+                        <div class="circuit-line"></div>
+                        <div class="circuit-node"></div>
+                        <div class="circuit-line"></div>
+                        <div class="circuit-node"></div>
+                        <div class="circuit-line"></div>
+                        <div class="circuit-node"></div>
+                        <div class="circuit-line"></div>
+                        <div class="circuit-node"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="circuit-meter">
+                        <div class="circuit-node active" style="color:var(--orange)"></div>
+                        <div class="circuit-line active" style="color:var(--orange)"></div>
+                        <div class="circuit-node active" style="color:var(--orange)"></div>
+                        <div class="circuit-line"></div>
+                        <div class="circuit-node"></div>
+                        <div class="circuit-line"></div>
+                        <div class="circuit-node"></div>
+                        <div class="circuit-line"></div>
+                        <div class="circuit-node"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="circuit-meter">
+                        <div class="circuit-node active" style="color:var(--amber)"></div>
+                        <div class="circuit-line active" style="color:var(--amber)"></div>
+                        <div class="circuit-node active" style="color:var(--amber)"></div>
+                        <div class="circuit-line active" style="color:var(--amber)"></div>
+                        <div class="circuit-node active" style="color:var(--amber)"></div>
+                        <div class="circuit-line"></div>
+                        <div class="circuit-node"></div>
+                        <div class="circuit-line"></div>
+                        <div class="circuit-node"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="circuit-meter">
+                        <div class="circuit-node active" style="color:var(--green)"></div>
+                        <div class="circuit-line active" style="color:var(--green)"></div>
+                        <div class="circuit-node active" style="color:var(--green)"></div>
+                        <div class="circuit-line active" style="color:var(--green)"></div>
+                        <div class="circuit-node active" style="color:var(--green)"></div>
+                        <div class="circuit-line active" style="color:var(--green)"></div>
+                        <div class="circuit-node active" style="color:var(--green)"></div>
+                        <div class="circuit-line"></div>
+                        <div class="circuit-node"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="circuit-meter">
+                        <div class="circuit-node active" style="color:var(--blue)"></div>
+                        <div class="circuit-line active" style="color:var(--blue)"></div>
+                        <div class="circuit-node active" style="color:var(--blue)"></div>
+                        <div class="circuit-line active" style="color:var(--blue)"></div>
+                        <div class="circuit-node active" style="color:var(--blue)"></div>
+                        <div class="circuit-line active" style="color:var(--blue)"></div>
+                        <div class="circuit-node active" style="color:var(--blue)"></div>
+                        <div class="circuit-line active" style="color:var(--blue)"></div>
+                        <div class="circuit-node active" style="color:var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 22: Battery -->
+        <div class="card">
+            <h3>22. Battery Charge Level</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="battery">
+                        <div class="battery-fill" style="width:10%;background:var(--red)"></div>
+                    </div><span style="margin-left:8px;font-size:0.8rem;color:var(--red)">10%</span>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="battery">
+                        <div class="battery-fill" style="width:30%;background:var(--orange)"></div>
+                    </div><span style="margin-left:8px;font-size:0.8rem;color:var(--orange)">30%</span>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="battery">
+                        <div class="battery-fill" style="width:50%;background:var(--amber)"></div>
+                    </div><span style="margin-left:8px;font-size:0.8rem;color:var(--amber)">50%</span>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="battery">
+                        <div class="battery-fill" style="width:75%;background:var(--green)"></div>
+                    </div><span style="margin-left:8px;font-size:0.8rem;color:var(--green)">75%</span>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="battery">
+                        <div class="battery-fill" style="width:100%;background:var(--blue)"></div>
+                    </div><span style="margin-left:8px;font-size:0.8rem;color:var(--blue)">100%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 23: Token Counter -->
+        <div class="card">
+            <h3>23. Token Counter</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="token-meter">
+                        <div class="token active" style="color:var(--red);background:rgba(239,68,68,0.2)">1</div>
+                        <div class="token">2</div>
+                        <div class="token">3</div>
+                        <div class="token">4</div>
+                        <div class="token">5</div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="token-meter">
+                        <div class="token active" style="color:var(--orange);background:rgba(249,115,22,0.2)">1</div>
+                        <div class="token active" style="color:var(--orange);background:rgba(249,115,22,0.2)">2</div>
+                        <div class="token">3</div>
+                        <div class="token">4</div>
+                        <div class="token">5</div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="token-meter">
+                        <div class="token active" style="color:var(--amber);background:rgba(245,158,11,0.2)">1</div>
+                        <div class="token active" style="color:var(--amber);background:rgba(245,158,11,0.2)">2</div>
+                        <div class="token active" style="color:var(--amber);background:rgba(245,158,11,0.2)">3</div>
+                        <div class="token">4</div>
+                        <div class="token">5</div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="token-meter">
+                        <div class="token active" style="color:var(--green);background:rgba(16,185,129,0.2)">1</div>
+                        <div class="token active" style="color:var(--green);background:rgba(16,185,129,0.2)">2</div>
+                        <div class="token active" style="color:var(--green);background:rgba(16,185,129,0.2)">3</div>
+                        <div class="token active" style="color:var(--green);background:rgba(16,185,129,0.2)">4</div>
+                        <div class="token">5</div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="token-meter">
+                        <div class="token active" style="color:var(--blue);background:rgba(59,130,246,0.2)">1</div>
+                        <div class="token active" style="color:var(--blue);background:rgba(59,130,246,0.2)">2</div>
+                        <div class="token active" style="color:var(--blue);background:rgba(59,130,246,0.2)">3</div>
+                        <div class="token active" style="color:var(--blue);background:rgba(59,130,246,0.2)">4</div>
+                        <div class="token active" style="color:var(--blue);background:rgba(59,130,246,0.2)">5</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 24: Neon Tube -->
+        <div class="card">
+            <h3>24. Neon Tube Fill</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="neon-meter">
+                        <div class="neon-fill" style="width:10%;background:var(--red);box-shadow:0 0 10px var(--red)">
+                        </div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="neon-meter">
+                        <div class="neon-fill"
+                            style="width:30%;background:var(--orange);box-shadow:0 0 10px var(--orange)"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="neon-meter">
+                        <div class="neon-fill"
+                            style="width:50%;background:var(--amber);box-shadow:0 0 10px var(--amber)"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="neon-meter">
+                        <div class="neon-fill"
+                            style="width:75%;background:var(--green);box-shadow:0 0 10px var(--green)"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="neon-meter">
+                        <div class="neon-fill"
+                            style="width:100%;background:var(--blue);box-shadow:0 0 15px var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p style="text-align:center;margin-top:40px;color:var(--muted)">Part 4 of 4 - Complete collection: 24 unique meter
+        designs</p>
+    <p style="text-align:center;margin-top:10px;color:var(--muted);font-size:0.8rem">Files: truth-meter-mockups.html,
+        truth-meter-mockups-2.html, truth-meter-mockups-3.html, truth-meter-mockups-4.html</p>
+</body>
+
+</html>

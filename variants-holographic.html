@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holographic Scan Variants | GenuVerity</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050A14;
+            --card: #0a1628;
+            --border: rgba(59, 130, 246, 0.15);
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --cyan: #06b6d4;
+            --text: #fff;
+            --muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            background-image: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.03) 0%, transparent 50%), linear-gradient(rgba(6, 182, 212, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #fff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 50px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card), rgba(10, 22, 40, 0.8));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: 0.5;
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meter-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .meter-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            width: 100px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .meter {
+            flex: 1;
+        }
+
+        /* VARIANT 1A: Classic Holographic Scan */
+        .holo-classic {
+            height: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .holo-classic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            animation: holo-sweep 2s ease-in-out infinite;
+        }
+
+        .holo-classic .fill {
+            height: 100%;
+            position: relative;
+        }
+
+        .holo-classic .fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.05) 2px, rgba(255, 255, 255, 0.05) 4px);
+        }
+
+        @keyframes holo-sweep {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* VARIANT 1B: Double Scan */
+        .holo-double {
+            height: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holo-double::before,
+        .holo-double::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: currentColor;
+            opacity: 0.5;
+            filter: blur(2px);
+        }
+
+        .holo-double::before {
+            animation: scan-left 1.5s ease-in-out infinite;
+        }
+
+        .holo-double::after {
+            animation: scan-right 1.5s ease-in-out infinite;
+        }
+
+        @keyframes scan-left {
+
+            0%,
+            100% {
+                left: 0;
+            }
+
+            50% {
+                left: 50%;
+            }
+        }
+
+        @keyframes scan-right {
+
+            0%,
+            100% {
+                right: 0;
+            }
+
+            50% {
+                right: 50%;
+            }
+        }
+
+        /* VARIANT 1C: Glitch Scan */
+        .holo-glitch {
+            height: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holo-glitch .fill {
+            height: 100%;
+            position: relative;
+        }
+
+        .holo-glitch .glitch-line {
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background: currentColor;
+            animation: glitch-jitter 0.1s steps(2) infinite;
+        }
+
+        .holo-glitch .glitch-line:nth-child(1) {
+            top: 20%;
+        }
+
+        .holo-glitch .glitch-line:nth-child(2) {
+            top: 50%;
+            animation-delay: 0.05s;
+        }
+
+        .holo-glitch .glitch-line:nth-child(3) {
+            top: 80%;
+            animation-delay: 0.02s;
+        }
+
+        @keyframes glitch-jitter {
+            0% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateX(2px);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translateX(-1px);
+                opacity: 0.8;
+            }
+        }
+
+        /* VARIANT 1D: Particle Scan */
+        .holo-particle {
+            height: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holo-particle .fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .holo-particle .particle {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            margin: 0 3px;
+            animation: particle-float 1.5s ease-in-out infinite;
+        }
+
+        @keyframes particle-float {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translateY(-10px) scale(1.3);
+                opacity: 1;
+            }
+        }
+
+        /* VARIANT 1E: Prismatic Scan */
+        .holo-prism {
+            height: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holo-prism::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -60px;
+            width: 60px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--red), var(--orange), var(--amber), var(--green), var(--blue), transparent);
+            animation: prism-sweep 3s linear infinite;
+            opacity: 0.6;
+            filter: blur(3px);
+        }
+
+        .holo-prism .fill {
+            height: 100%;
+        }
+
+        @keyframes prism-sweep {
+            0% {
+                left: -60px;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔬 Holographic Scan Variants</h1>
+    <p class="subtitle">5 Creative Variations • Based on Design #1</p>
+
+    <div class="grid">
+        <!-- 1A: Classic -->
+        <div class="card">
+            <h3>1A // Classic Holographic</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter holo-classic" style="color:var(--red)">
+                    <div class="fill"
+                        style="width:10%;background:linear-gradient(90deg,var(--red),rgba(239,68,68,0.3))"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter holo-classic" style="color:var(--orange)">
+                    <div class="fill"
+                        style="width:30%;background:linear-gradient(90deg,var(--orange),rgba(249,115,22,0.3))"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter holo-classic" style="color:var(--amber)">
+                    <div class="fill"
+                        style="width:50%;background:linear-gradient(90deg,var(--amber),rgba(245,158,11,0.3))"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter holo-classic" style="color:var(--green)">
+                    <div class="fill"
+                        style="width:75%;background:linear-gradient(90deg,var(--green),rgba(16,185,129,0.3))"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter holo-classic" style="color:var(--blue)">
+                    <div class="fill"
+                        style="width:100%;background:linear-gradient(90deg,var(--blue),rgba(59,130,246,0.3))"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1B: Double Scan -->
+        <div class="card">
+            <h3>1B // Double Beam Scan</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter holo-double" style="color:var(--red)">
+                    <div class="fill" style="width:10%;background:rgba(239,68,68,0.3)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter holo-double" style="color:var(--orange)">
+                    <div class="fill" style="width:30%;background:rgba(249,115,22,0.3)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter holo-double" style="color:var(--amber)">
+                    <div class="fill" style="width:50%;background:rgba(245,158,11,0.3)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter holo-double" style="color:var(--green)">
+                    <div class="fill" style="width:75%;background:rgba(16,185,129,0.3)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter holo-double" style="color:var(--blue)">
+                    <div class="fill" style="width:100%;background:rgba(59,130,246,0.3)"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1C: Glitch -->
+        <div class="card">
+            <h3>1C // Glitch Interference</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter holo-glitch" style="color:var(--red)">
+                    <div class="fill" style="width:10%;background:rgba(239,68,68,0.4)">
+                        <div class="glitch-line" style="background:var(--red)"></div>
+                        <div class="glitch-line" style="background:var(--red)"></div>
+                        <div class="glitch-line" style="background:var(--red)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter holo-glitch" style="color:var(--orange)">
+                    <div class="fill" style="width:30%;background:rgba(249,115,22,0.4)">
+                        <div class="glitch-line" style="background:var(--orange)"></div>
+                        <div class="glitch-line" style="background:var(--orange)"></div>
+                        <div class="glitch-line" style="background:var(--orange)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter holo-glitch" style="color:var(--amber)">
+                    <div class="fill" style="width:50%;background:rgba(245,158,11,0.4)">
+                        <div class="glitch-line" style="background:var(--amber)"></div>
+                        <div class="glitch-line" style="background:var(--amber)"></div>
+                        <div class="glitch-line" style="background:var(--amber)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter holo-glitch" style="color:var(--green)">
+                    <div class="fill" style="width:75%;background:rgba(16,185,129,0.4)">
+                        <div class="glitch-line" style="background:var(--green)"></div>
+                        <div class="glitch-line" style="background:var(--green)"></div>
+                        <div class="glitch-line" style="background:var(--green)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter holo-glitch" style="color:var(--blue)">
+                    <div class="fill" style="width:100%;background:rgba(59,130,246,0.4)">
+                        <div class="glitch-line" style="background:var(--blue)"></div>
+                        <div class="glitch-line" style="background:var(--blue)"></div>
+                        <div class="glitch-line" style="background:var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1D: Particle -->
+        <div class="card">
+            <h3>1D // Particle Field</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter holo-particle" style="color:var(--red)">
+                    <div class="fill" style="width:10%;background:rgba(239,68,68,0.2)">
+                        <div class="particle" style="background:var(--red);box-shadow:0 0 8px var(--red)"></div>
+                        <div class="particle"
+                            style="background:var(--red);box-shadow:0 0 8px var(--red);animation-delay:0.3s"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter holo-particle" style="color:var(--orange)">
+                    <div class="fill" style="width:30%;background:rgba(249,115,22,0.2)">
+                        <div class="particle" style="background:var(--orange);box-shadow:0 0 8px var(--orange)"></div>
+                        <div class="particle"
+                            style="background:var(--orange);box-shadow:0 0 8px var(--orange);animation-delay:0.2s">
+                        </div>
+                        <div class="particle"
+                            style="background:var(--orange);box-shadow:0 0 8px var(--orange);animation-delay:0.4s">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter holo-particle" style="color:var(--amber)">
+                    <div class="fill" style="width:50%;background:rgba(245,158,11,0.2)">
+                        <div class="particle" style="background:var(--amber);box-shadow:0 0 8px var(--amber)"></div>
+                        <div class="particle"
+                            style="background:var(--amber);box-shadow:0 0 8px var(--amber);animation-delay:0.15s"></div>
+                        <div class="particle"
+                            style="background:var(--amber);box-shadow:0 0 8px var(--amber);animation-delay:0.3s"></div>
+                        <div class="particle"
+                            style="background:var(--amber);box-shadow:0 0 8px var(--amber);animation-delay:0.45s"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter holo-particle" style="color:var(--green)">
+                    <div class="fill" style="width:75%;background:rgba(16,185,129,0.2)">
+                        <div class="particle" style="background:var(--green);box-shadow:0 0 8px var(--green)"></div>
+                        <div class="particle"
+                            style="background:var(--green);box-shadow:0 0 8px var(--green);animation-delay:0.1s"></div>
+                        <div class="particle"
+                            style="background:var(--green);box-shadow:0 0 8px var(--green);animation-delay:0.2s"></div>
+                        <div class="particle"
+                            style="background:var(--green);box-shadow:0 0 8px var(--green);animation-delay:0.3s"></div>
+                        <div class="particle"
+                            style="background:var(--green);box-shadow:0 0 8px var(--green);animation-delay:0.4s"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter holo-particle" style="color:var(--blue)">
+                    <div class="fill" style="width:100%;background:rgba(59,130,246,0.2)">
+                        <div class="particle" style="background:var(--blue);box-shadow:0 0 8px var(--blue)"></div>
+                        <div class="particle"
+                            style="background:var(--blue);box-shadow:0 0 8px var(--blue);animation-delay:0.1s"></div>
+                        <div class="particle"
+                            style="background:var(--blue);box-shadow:0 0 8px var(--blue);animation-delay:0.2s"></div>
+                        <div class="particle"
+                            style="background:var(--blue);box-shadow:0 0 8px var(--blue);animation-delay:0.3s"></div>
+                        <div class="particle"
+                            style="background:var(--blue);box-shadow:0 0 8px var(--blue);animation-delay:0.4s"></div>
+                        <div class="particle"
+                            style="background:var(--blue);box-shadow:0 0 8px var(--blue);animation-delay:0.5s"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1E: Prismatic -->
+        <div class="card">
+            <h3>1E // Prismatic Rainbow</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter holo-prism" style="color:var(--red)">
+                    <div class="fill" style="width:10%;background:var(--red);opacity:0.4"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter holo-prism" style="color:var(--orange)">
+                    <div class="fill" style="width:30%;background:var(--orange);opacity:0.4"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter holo-prism" style="color:var(--amber)">
+                    <div class="fill" style="width:50%;background:var(--amber);opacity:0.4"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter holo-prism" style="color:var(--green)">
+                    <div class="fill" style="width:75%;background:var(--green);opacity:0.4"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter holo-prism" style="color:var(--blue)">
+                    <div class="fill" style="width:100%;background:var(--blue);opacity:0.4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p style="text-align:center;margin:50px 0;color:var(--muted)">Next: variants-neural.html, variants-reactor.html,
+        variants-radar.html, variants-dna.html, variants-orbital.html, variants-polygraph.html</p>
+</body>
+
+</html>

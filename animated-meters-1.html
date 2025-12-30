@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Truth Meters - Midnight Tech | GenuVerity</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050A14;
+            --card: #0a1628;
+            --border: rgba(59, 130, 246, 0.15);
+            --glow: rgba(59, 130, 246, 0.4);
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --cyan: #06b6d4;
+            --text: #fff;
+            --muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            background-image:
+                radial-gradient(ellipse at top, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
+                linear-gradient(rgba(6, 182, 212, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 2rem;
+            background: linear-gradient(135deg, #fff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 50px;
+            font-size: 0.9rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card), rgba(10, 22, 40, 0.8));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: 0.5;
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meter-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .meter-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            width: 100px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .meter {
+            flex: 1;
+        }
+
+        /* ============================================
+           ANIMATED METER STYLES
+           ============================================ */
+
+        /* 1. HOLOGRAPHIC SCAN */
+        .holo-scan {
+            height: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .holo-scan::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: holo-sweep 2s ease-in-out infinite;
+        }
+
+        .holo-fill {
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holo-fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px);
+        }
+
+        @keyframes holo-sweep {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* 2. PLASMA CORE */
+        .plasma-core {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .plasma-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid;
+            animation: plasma-spin 3s linear infinite;
+        }
+
+        .plasma-ring:nth-child(2) {
+            inset: 4px;
+            animation-direction: reverse;
+            animation-duration: 2s;
+            opacity: 0.7;
+        }
+
+        .plasma-center {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: plasma-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes plasma-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes plasma-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* 3. NEURAL NETWORK */
+        .neural-net {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .neural-node {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .neural-node.active {
+            animation: neural-fire 0.8s ease-out infinite;
+        }
+
+        .neural-link {
+            width: 16px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .neural-link.active {
+            animation: neural-signal 0.6s ease-out infinite;
+        }
+
+        @keyframes neural-fire {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 currentColor;
+            }
+
+            50% {
+                box-shadow: 0 0 12px 4px currentColor;
+            }
+        }
+
+        @keyframes neural-signal {
+            0% {
+                background: currentColor;
+                box-shadow: 0 0 8px currentColor;
+            }
+
+            100% {
+                background: rgba(255, 255, 255, 0.05);
+                box-shadow: none;
+            }
+        }
+
+        /* 4. QUANTUM FLUX */
+        .quantum-flux {
+            height: 50px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .quantum-wave {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, currentColor 25%, transparent 50%);
+            opacity: 0.3;
+            animation: quantum-flow 2s linear infinite;
+        }
+
+        .quantum-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: quantum-float 3s ease-in-out infinite;
+        }
+
+        @keyframes quantum-flow {
+            0% {
+                transform: translateX(-50%);
+            }
+
+            100% {
+                transform: translateX(0%);
+            }
+        }
+
+        @keyframes quantum-float {
+
+            0%,
+            100% {
+                transform: translateY(50%) scale(0.8);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translateY(-50%) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* 5. CYBERPUNK GLITCH */
+        .cyber-glitch {
+            height: 36px;
+            position: relative;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border-left: 3px solid;
+        }
+
+        .cyber-glitch::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: currentColor;
+            opacity: 0;
+            animation: glitch-flash 4s ease-in-out infinite;
+        }
+
+        @keyframes glitch-flash {
+
+            0%,
+            95%,
+            100% {
+                opacity: 0;
+            }
+
+            96%,
+            98% {
+                opacity: 0.1;
+            }
+
+            97% {
+                opacity: 0.05;
+                transform: translateX(2px);
+            }
+        }
+
+        /* 6. BIOMETRIC WAVE */
+        .bio-wave {
+            height: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bio-wave svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .bio-path {
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            animation: bio-draw 2s ease-in-out infinite;
+        }
+
+        @keyframes bio-draw {
+            0% {
+                stroke-dashoffset: 200;
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 0.3;
+            }
+        }
+
+        /* 7. MATRIX RAIN */
+        .matrix-rain {
+            height: 50px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            display: flex;
+        }
+
+        .matrix-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: matrix-fall 1.5s linear infinite;
+            opacity: 0.7;
+        }
+
+        .matrix-col:nth-child(odd) {
+            animation-delay: -0.5s;
+        }
+
+        @keyframes matrix-fall {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        /* 8. REACTOR CORE */
+        .reactor {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reactor-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
+            animation: reactor-spin 1s linear infinite;
+        }
+
+        .reactor-ring:nth-child(1) {
+            inset: 0;
+        }
+
+        .reactor-ring:nth-child(2) {
+            inset: 6px;
+            animation-direction: reverse;
+            animation-duration: 1.5s;
+        }
+
+        .reactor-ring:nth-child(3) {
+            inset: 12px;
+            animation-duration: 2s;
+        }
+
+        .reactor-core {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            animation: reactor-glow 1s ease-in-out infinite;
+        }
+
+        @keyframes reactor-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes reactor-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px currentColor, inset 0 0 5px rgba(255, 255, 255, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 20px currentColor, inset 0 0 10px rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        /* 9. DATA STREAM */
+        .data-stream {
+            height: 30px;
+            display: flex;
+            gap: 2px;
+            align-items: flex-end;
+        }
+
+        .stream-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px 2px 0 0;
+            animation: stream-pulse 0.5s ease-in-out infinite alternate;
+        }
+
+        .stream-bar.active {
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        @keyframes stream-pulse {
+            0% {
+                transform: scaleY(0.3);
+            }
+
+            100% {
+                transform: scaleY(1);
+            }
+        }
+
+        /* 10. HEXTECH */
+        .hextech {
+            display: flex;
+            gap: 3px;
+        }
+
+        .hex-cell {
+            width: 24px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.05);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            transition: all 0.3s;
+        }
+
+        .hex-cell.active {
+            animation: hex-glow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes hex-glow {
+
+            0%,
+            100% {
+                filter: brightness(1);
+            }
+
+            50% {
+                filter: brightness(1.3);
+            }
+        }
+
+        /* 11. LASER GRID */
+        .laser-grid {
+            height: 40px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .laser-h,
+        .laser-v {
+            position: absolute;
+            background: currentColor;
+            opacity: 0.3;
+        }
+
+        .laser-h {
+            height: 1px;
+            width: 100%;
+            animation: laser-scan-h 2s ease-in-out infinite;
+        }
+
+        .laser-v {
+            width: 1px;
+            height: 100%;
+            animation: laser-scan-v 1.5s ease-in-out infinite;
+        }
+
+        .laser-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            transition: height 0.5s;
+            opacity: 0.2;
+        }
+
+        @keyframes laser-scan-h {
+
+            0%,
+            100% {
+                top: 0;
+                opacity: 0.1;
+            }
+
+            50% {
+                top: 100%;
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes laser-scan-v {
+
+            0%,
+            100% {
+                left: 0;
+                opacity: 0.1;
+            }
+
+            50% {
+                left: 100%;
+                opacity: 0.5;
+            }
+        }
+
+        /* 12. WARP TUNNEL */
+        .warp-tunnel {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            perspective: 100px;
+        }
+
+        .warp-ring {
+            position: absolute;
+            inset: 0;
+            border: 2px solid;
+            border-radius: 50%;
+            animation: warp-zoom 2s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .warp-ring:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .warp-ring:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .warp-ring:nth-child(4) {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes warp-zoom {
+            0% {
+                transform: scale(0.1) translateZ(-50px);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.5) translateZ(0);
+                opacity: 0;
+            }
+        }
+
+        /* 13. VOLTAGE METER */
+        .voltage {
+            height: 36px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .voltage-bar {
+            flex: 1;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .voltage-fill {
+            height: 100%;
+            position: relative;
+        }
+
+        .voltage-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #fff;
+            animation: voltage-flicker 0.1s ease-in-out infinite;
+        }
+
+        .voltage-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            width: 50px;
+            text-align: right;
+        }
+
+        @keyframes voltage-flicker {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* 14. ORBITAL SYSTEM */
+        .orbital {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+
+        .orbit-path {
+            position: absolute;
+            inset: 0;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .orbit-planet {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            margin: -4px;
+            animation: orbit-rotate 3s linear infinite;
+        }
+
+        .orbit-planet::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        @keyframes orbit-rotate {
+            0% {
+                transform: rotate(0deg) translateX(24px);
+            }
+
+            100% {
+                transform: rotate(360deg) translateX(24px);
+            }
+        }
+
+        /* 15. FREQUENCY BARS */
+        .freq-bars {
+            display: flex;
+            gap: 3px;
+            height: 40px;
+            align-items: center;
+        }
+
+        .freq-bar {
+            width: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            animation: freq-bounce 0.6s ease-in-out infinite alternate;
+        }
+
+        .freq-bar.active {
+            box-shadow: 0 0 6px currentColor;
+        }
+
+        @keyframes freq-bounce {
+            0% {
+                height: 20%;
+            }
+
+            100% {
+                height: 100%;
+            }
+        }
+
+        /* 16. HOLOGRAM BADGE */
+        .holo-badge {
+            width: 70px;
+            height: 70px;
+            position: relative;
+        }
+
+        .holo-badge svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .holo-outer {
+            fill: none;
+            stroke-width: 2;
+            stroke-dasharray: 5 3;
+            animation: holo-rotate 10s linear infinite;
+        }
+
+        .holo-inner {
+            fill: currentColor;
+            opacity: 0.2;
+            animation: holo-breathe 2s ease-in-out infinite;
+        }
+
+        .holo-icon {
+            fill: currentColor;
+        }
+
+        @keyframes holo-rotate {
+            0% {
+                transform: rotate(0deg);
+                transform-origin: center;
+            }
+
+            100% {
+                transform: rotate(360deg);
+                transform-origin: center;
+            }
+        }
+
+        @keyframes holo-breathe {
+
+            0%,
+            100% {
+                opacity: 0.1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        /* 17. CIPHER CODE */
+        .cipher {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .cipher-char {
+            padding: 4px 6px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 2px;
+            animation: cipher-flip 0.3s ease-out;
+        }
+
+        .cipher-char.decoding {
+            animation: cipher-decode 0.5s ease-out infinite;
+        }
+
+        @keyframes cipher-decode {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+                content: '█';
+            }
+        }
+
+        /* 18. PRISM REFRACT */
+        .prism {
+            height: 40px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+            border-radius: 8px;
+        }
+
+        .prism-beam {
+            position: absolute;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(180deg, var(--red), var(--orange), var(--amber), var(--green), var(--blue));
+            animation: prism-sweep 3s ease-in-out infinite;
+            filter: blur(1px);
+        }
+
+        .prism-fill {
+            height: 100%;
+            opacity: 0.4;
+        }
+
+        @keyframes prism-sweep {
+
+            0%,
+            100% {
+                left: -10px;
+            }
+
+            50% {
+                left: calc(100% + 10px);
+            }
+        }
+
+        /* 19. DIGITAL DNA */
+        .dna-helix {
+            height: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dna-strand {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: dna-wave 2s ease-in-out infinite;
+        }
+
+        @keyframes dna-wave {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translateY(-20px) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* 20. PULSE RADAR */
+        .pulse-radar {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .radar-sweep {
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(from 0deg, transparent 0deg, currentColor 30deg, transparent 60deg);
+            animation: radar-sweep 2s linear infinite;
+            opacity: 0.5;
+        }
+
+        .radar-blip {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: radar-blip 2s ease-out infinite;
+        }
+
+        @keyframes radar-sweep {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes radar-blip {
+
+            0%,
+            70% {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            80% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1);
+            }
+        }
+
+        /* 21. SYNTH WAVE */
+        .synth-wave {
+            height: 40px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .synth-line {
+            position: absolute;
+            bottom: 50%;
+            width: 100%;
+            height: 2px;
+            background: currentColor;
+            animation: synth-morph 1.5s ease-in-out infinite;
+            box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+        }
+
+        @keyframes synth-morph {
+
+            0%,
+            100% {
+                transform: scaleY(1) translateY(0);
+            }
+
+            25% {
+                transform: scaleY(3) translateY(-5px);
+            }
+
+            50% {
+                transform: scaleY(1) translateY(0);
+            }
+
+            75% {
+                transform: scaleY(2) translateY(3px);
+            }
+        }
+
+        /* 22. CRYPTO HASH */
+        .crypto-hash {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 12px;
+            border-radius: 4px;
+            border-left: 3px solid;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .crypto-hash::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 30px;
+            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.8));
+        }
+
+        .hash-scroll {
+            animation: hash-scroll 5s linear infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes hash-scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* 23. NEON CIRCUIT */
+        .neon-circuit {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .neon-node {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        .neon-node.active {
+            background: currentColor;
+            box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+        }
+
+        .neon-wire {
+            width: 20px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 0 -2px;
+            position: relative;
+        }
+
+        .neon-wire.active {
+            background: currentColor;
+            box-shadow: 0 0 6px currentColor;
+        }
+
+        .neon-wire.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: #fff;
+            animation: wire-pulse 0.5s ease-out infinite;
+        }
+
+        @keyframes wire-pulse {
+            0% {
+                left: -6px;
+                opacity: 1;
+            }
+
+            100% {
+                left: 100%;
+                opacity: 0;
+            }
+        }
+
+        /* 24. FORCE FIELD */
+        .force-field {
+            width: 60px;
+            height: 40px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .field-hex {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid;
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+            animation: field-pulse 1.5s ease-in-out infinite;
+            opacity: 0.3;
+        }
+
+        .field-hex:nth-child(2) {
+            transform: scale(0.7);
+            animation-delay: 0.3s;
+        }
+
+        .field-hex:nth-child(3) {
+            transform: scale(0.4);
+            animation-delay: 0.6s;
+            opacity: 0.6;
+        }
+
+        @keyframes field-pulse {
+
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* 25. TERMINAL VERIFY */
+        .terminal {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .term-line {
+            display: flex;
+            gap: 8px;
+        }
+
+        .term-prompt {
+            opacity: 0.5;
+        }
+
+        .term-cursor {
+            animation: blink 1s step-end infinite;
+        }
+
+        .term-status {
+            animation: type-in 0.5s ease-out;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes type-in {
+            0% {
+                width: 0;
+                overflow: hidden;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>⚡ Animated Truth Meters</h1>
+    <p class="subtitle">25 Futuristic Designs • Midnight Tech Aesthetic • GenuVerity</p>
+
+    <div class="grid">
+        <!-- 1. HOLOGRAPHIC SCAN -->
+        <div class="card">
+            <h3>01 // Holographic Scan</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter holo-scan">
+                    <div class="holo-fill"
+                        style="width:10%;background:linear-gradient(90deg,var(--red),rgba(239,68,68,0.3))"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter holo-scan">
+                    <div class="holo-fill"
+                        style="width:30%;background:linear-gradient(90deg,var(--orange),rgba(249,115,22,0.3))"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter holo-scan">
+                    <div class="holo-fill"
+                        style="width:50%;background:linear-gradient(90deg,var(--amber),rgba(245,158,11,0.3))"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter holo-scan">
+                    <div class="holo-fill"
+                        style="width:75%;background:linear-gradient(90deg,var(--green),rgba(16,185,129,0.3))"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter holo-scan">
+                    <div class="holo-fill"
+                        style="width:100%;background:linear-gradient(90deg,var(--blue),rgba(59,130,246,0.3))"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. PLASMA CORE -->
+        <div class="card">
+            <h3>02 // Plasma Core</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:12px">
+                    <div class="plasma-core" style="color:var(--red)">
+                        <div class="plasma-ring" style="border-color:var(--red)"></div>
+                        <div class="plasma-ring" style="border-color:var(--red)"></div>
+                        <div class="plasma-center" style="background:var(--red);box-shadow:0 0 15px var(--red)"></div>
+                    </div><span style="font-weight:600;color:var(--red)">REJECTED</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:12px">
+                    <div class="plasma-core" style="color:var(--orange)">
+                        <div class="plasma-ring" style="border-color:var(--orange)"></div>
+                        <div class="plasma-ring" style="border-color:var(--orange)"></div>
+                        <div class="plasma-center" style="background:var(--orange);box-shadow:0 0 15px var(--orange)">
+                        </div>
+                    </div><span style="font-weight:600;color:var(--orange)">WEAK</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter" style="display:flex;align-items:center;gap:12px">
+                    <div class="plasma-core" style="color:var(--amber)">
+                        <div class="plasma-ring" style="border-color:var(--amber)"></div>
+                        <div class="plasma-ring" style="border-color:var(--amber)"></div>
+                        <div class="plasma-center" style="background:var(--amber);box-shadow:0 0 15px var(--amber)">
+                        </div>
+                    </div><span style="font-weight:600;color:var(--amber)">PARTIAL</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:12px">
+                    <div class="plasma-core" style="color:var(--green)">
+                        <div class="plasma-ring" style="border-color:var(--green)"></div>
+                        <div class="plasma-ring" style="border-color:var(--green)"></div>
+                        <div class="plasma-center" style="background:var(--green);box-shadow:0 0 15px var(--green)">
+                        </div>
+                    </div><span style="font-weight:600;color:var(--green)">VALID</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter" style="display:flex;align-items:center;gap:12px">
+                    <div class="plasma-core" style="color:var(--blue)">
+                        <div class="plasma-ring" style="border-color:var(--blue)"></div>
+                        <div class="plasma-ring" style="border-color:var(--blue)"></div>
+                        <div class="plasma-center" style="background:var(--blue);box-shadow:0 0 15px var(--blue)"></div>
+                    </div><span style="font-weight:600;color:var(--blue)">VERIFIED</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. NEURAL NETWORK -->
+        <div class="card">
+            <h3>03 // Neural Network</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter neural-net" style="color:var(--red)">
+                    <div class="neural-node active" style="background:var(--red)"></div>
+                    <div class="neural-link"></div>
+                    <div class="neural-node"></div>
+                    <div class="neural-link"></div>
+                    <div class="neural-node"></div>
+                    <div class="neural-link"></div>
+                    <div class="neural-node"></div>
+                    <div class="neural-link"></div>
+                    <div class="neural-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter neural-net" style="color:var(--orange)">
+                    <div class="neural-node active" style="background:var(--orange)"></div>
+                    <div class="neural-link active"></div>
+                    <div class="neural-node active" style="background:var(--orange)"></div>
+                    <div class="neural-link"></div>
+                    <div class="neural-node"></div>
+                    <div class="neural-link"></div>
+                    <div class="neural-node"></div>
+                    <div class="neural-link"></div>
+                    <div class="neural-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter neural-net" style="color:var(--amber)">
+                    <div class="neural-node active" style="background:var(--amber)"></div>
+                    <div class="neural-link active"></div>
+                    <div class="neural-node active" style="background:var(--amber)"></div>
+                    <div class="neural-link active"></div>
+                    <div class="neural-node active" style="background:var(--amber)"></div>
+                    <div class="neural-link"></div>
+                    <div class="neural-node"></div>
+                    <div class="neural-link"></div>
+                    <div class="neural-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter neural-net" style="color:var(--green)">
+                    <div class="neural-node active" style="background:var(--green)"></div>
+                    <div class="neural-link active"></div>
+                    <div class="neural-node active" style="background:var(--green)"></div>
+                    <div class="neural-link active"></div>
+                    <div class="neural-node active" style="background:var(--green)"></div>
+                    <div class="neural-link active"></div>
+                    <div class="neural-node active" style="background:var(--green)"></div>
+                    <div class="neural-link"></div>
+                    <div class="neural-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter neural-net" style="color:var(--blue)">
+                    <div class="neural-node active" style="background:var(--blue)"></div>
+                    <div class="neural-link active"></div>
+                    <div class="neural-node active" style="background:var(--blue)"></div>
+                    <div class="neural-link active"></div>
+                    <div class="neural-node active" style="background:var(--blue)"></div>
+                    <div class="neural-link active"></div>
+                    <div class="neural-node active" style="background:var(--blue)"></div>
+                    <div class="neural-link active"></div>
+                    <div class="neural-node active" style="background:var(--blue)"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. CYBERPUNK GLITCH -->
+        <div class="card">
+            <h3>04 // Cyberpunk Glitch</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter cyber-glitch" style="color:var(--red);border-color:var(--red)">▌ SIGNAL_REJECTED ▌
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter cyber-glitch" style="color:var(--orange);border-color:var(--orange)">▌ WEAK_VALIDITY ▌
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter cyber-glitch" style="color:var(--amber);border-color:var(--amber)">▌ PARTIAL_MATCH ▌
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter cyber-glitch" style="color:var(--green);border-color:var(--green)">▌ STRONG_SIGNAL ▌
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter cyber-glitch" style="color:var(--blue);border-color:var(--blue)">▌ FULLY_VERIFIED ▌
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. REACTOR CORE -->
+        <div class="card">
+            <h3>05 // Reactor Core</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:12px">
+                    <div class="reactor" style="color:var(--red)">
+                        <div class="reactor-ring" style="border-top-color:var(--red)"></div>
+                        <div class="reactor-ring" style="border-top-color:var(--red)"></div>
+                        <div class="reactor-ring" style="border-top-color:var(--red)"></div>
+                        <div class="reactor-core" style="background:var(--red);color:var(--red)"></div>
+                    </div><span style="font-size:0.75rem;color:var(--red)">CORE UNSTABLE</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:12px">
+                    <div class="reactor" style="color:var(--orange)">
+                        <div class="reactor-ring" style="border-top-color:var(--orange)"></div>
+                        <div class="reactor-ring" style="border-top-color:var(--orange)"></div>
+                        <div class="reactor-ring" style="border-top-color:var(--orange)"></div>
+                        <div class="reactor-core" style="background:var(--orange);color:var(--orange)"></div>
+                    </div><span style="font-size:0.75rem;color:var(--orange)">LOW POWER</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter" style="display:flex;align-items:center;gap:12px">
+                    <div class="reactor" style="color:var(--amber)">
+                        <div class="reactor-ring" style="border-top-color:var(--amber)"></div>
+                        <div class="reactor-ring" style="border-top-color:var(--amber)"></div>
+                        <div class="reactor-ring" style="border-top-color:var(--amber)"></div>
+                        <div class="reactor-core" style="background:var(--amber);color:var(--amber)"></div>
+                    </div><span style="font-size:0.75rem;color:var(--amber)">PARTIAL</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:12px">
+                    <div class="reactor" style="color:var(--green)">
+                        <div class="reactor-ring" style="border-top-color:var(--green)"></div>
+                        <div class="reactor-ring" style="border-top-color:var(--green)"></div>
+                        <div class="reactor-ring" style="border-top-color:var(--green)"></div>
+                        <div class="reactor-core" style="background:var(--green);color:var(--green)"></div>
+                    </div><span style="font-size:0.75rem;color:var(--green)">HIGH OUTPUT</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter" style="display:flex;align-items:center;gap:12px">
+                    <div class="reactor" style="color:var(--blue)">
+                        <div class="reactor-ring" style="border-top-color:var(--blue)"></div>
+                        <div class="reactor-ring" style="border-top-color:var(--blue)"></div>
+                        <div class="reactor-ring" style="border-top-color:var(--blue)"></div>
+                        <div class="reactor-core" style="background:var(--blue);color:var(--blue)"></div>
+                    </div><span style="font-size:0.75rem;color:var(--blue)">OPTIMAL</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. HEXTECH -->
+        <div class="card">
+            <h3>06 // Hextech Array</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter hextech">
+                    <div class="hex-cell active" style="background:var(--red);color:var(--red)"></div>
+                    <div class="hex-cell"></div>
+                    <div class="hex-cell"></div>
+                    <div class="hex-cell"></div>
+                    <div class="hex-cell"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter hextech">
+                    <div class="hex-cell active" style="background:var(--orange)"></div>
+                    <div class="hex-cell active" style="background:var(--orange)"></div>
+                    <div class="hex-cell"></div>
+                    <div class="hex-cell"></div>
+                    <div class="hex-cell"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter hextech">
+                    <div class="hex-cell active" style="background:var(--amber)"></div>
+                    <div class="hex-cell active" style="background:var(--amber)"></div>
+                    <div class="hex-cell active" style="background:var(--amber)"></div>
+                    <div class="hex-cell"></div>
+                    <div class="hex-cell"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter hextech">
+                    <div class="hex-cell active" style="background:var(--green)"></div>
+                    <div class="hex-cell active" style="background:var(--green)"></div>
+                    <div class="hex-cell active" style="background:var(--green)"></div>
+                    <div class="hex-cell active" style="background:var(--green)"></div>
+                    <div class="hex-cell"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter hextech">
+                    <div class="hex-cell active" style="background:var(--blue)"></div>
+                    <div class="hex-cell active" style="background:var(--blue)"></div>
+                    <div class="hex-cell active" style="background:var(--blue)"></div>
+                    <div class="hex-cell active" style="background:var(--blue)"></div>
+                    <div class="hex-cell active" style="background:var(--blue)"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. TERMINAL VERIFY (clean version) -->
+        <div class="card">
+            <h3>07 // Terminal Verify</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter terminal" style="border-left-color:var(--red)">
+                    <div class="term-line"><span class="term-prompt">$</span><span style="color:var(--red)">verify
+                            --result</span><span class="term-cursor">_</span></div>
+                    <div style="color:var(--red);margin-top:4px">▸ STATUS: REJECTED</div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter terminal" style="border-left-color:var(--orange)">
+                    <div class="term-line"><span class="term-prompt">$</span><span style="color:var(--orange)">verify
+                            --result</span></div>
+                    <div style="color:var(--orange);margin-top:4px">▸ STATUS: WEAK</div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter terminal" style="border-left-color:var(--amber)">
+                    <div class="term-line"><span class="term-prompt">$</span><span style="color:var(--amber)">verify
+                            --result</span></div>
+                    <div style="color:var(--amber);margin-top:4px">▸ STATUS: PARTIAL</div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter terminal" style="border-left-color:var(--green)">
+                    <div class="term-line"><span class="term-prompt">$</span><span style="color:var(--green)">verify
+                            --result</span></div>
+                    <div style="color:var(--green);margin-top:4px">▸ STATUS: VALID</div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter terminal" style="border-left-color:var(--blue)">
+                    <div class="term-line"><span class="term-prompt">$</span><span style="color:var(--blue)">verify
+                            --result</span></div>
+                    <div style="color:var(--blue);margin-top:4px">▸ STATUS: VERIFIED ✓</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. VOLTAGE METER -->
+        <div class="card">
+            <h3>08 // Voltage Meter</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter voltage">
+                    <div class="voltage-bar">
+                        <div class="voltage-fill" style="width:10%;background:var(--red)"></div>
+                    </div><span class="voltage-num" style="color:var(--red)">10V</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter voltage">
+                    <div class="voltage-bar">
+                        <div class="voltage-fill" style="width:30%;background:var(--orange)"></div>
+                    </div><span class="voltage-num" style="color:var(--orange)">30V</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter voltage">
+                    <div class="voltage-bar">
+                        <div class="voltage-fill" style="width:50%;background:var(--amber)"></div>
+                    </div><span class="voltage-num" style="color:var(--amber)">50V</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter voltage">
+                    <div class="voltage-bar">
+                        <div class="voltage-fill" style="width:75%;background:var(--green)"></div>
+                    </div><span class="voltage-num" style="color:var(--green)">75V</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter voltage">
+                    <div class="voltage-bar">
+                        <div class="voltage-fill" style="width:100%;background:var(--blue)"></div>
+                    </div><span class="voltage-num" style="color:var(--blue)">100V</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p style="text-align:center;margin:50px 0 20px;color:var(--muted);font-size:0.85rem">Part 1 of 3 • 25 Animated
+        Variants Total</p>
+</body>
+
+</html>

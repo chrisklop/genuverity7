@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Dive Dossier with Verdict Frame DEMO | GenuVerity</title>
+    <meta name="description" content="Demo of premium glassmorphism verdict frame integrated with a fact-check report.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/chart-watermark.js"></script>
+    <script src="js/chart-defaults.js"></script>
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/shared-components.css?v=4.0">
+    <link rel="stylesheet" href="css/reports.css?v=4.0">
+
+    <style>
+        /* ═══════════════════════════════════════════════════════════════════════
+           PREMIUM VERDICT FRAME - GLASSMORPHISM + RADAR + SEAL
+           ═══════════════════════════════════════════════════════════════════════ */
+
+        :root {
+            --verdict-blue: #3b82f6;
+            --verdict-cyan: #06b6d4;
+            --verdict-red: #ef4444;
+            --verdict-amber: #f59e0b;
+            --verdict-green: #10b981;
+        }
+
+        /* Page-level ambient effect - subtle vignette */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(ellipse at center,
+                    transparent 0%,
+                    transparent 40%,
+                    rgba(59, 130, 246, 0.03) 70%,
+                    rgba(59, 130, 246, 0.08) 100%);
+        }
+
+        /* Corner brackets for page framing */
+        .corner-frame {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .corner-frame::before,
+        .corner-frame::after {
+            content: '';
+            position: absolute;
+            background: var(--verdict-blue);
+            animation: corner-pulse 3s ease-in-out infinite;
+        }
+
+        .corner-frame.tl {
+            top: 15px;
+            left: 15px;
+        }
+
+        .corner-frame.tl::before {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+        }
+
+        .corner-frame.tl::after {
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 100%;
+        }
+
+        .corner-frame.tr {
+            top: 15px;
+            right: 15px;
+        }
+
+        .corner-frame.tr::before {
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 2px;
+        }
+
+        .corner-frame.tr::after {
+            top: 0;
+            right: 0;
+            width: 2px;
+            height: 100%;
+        }
+
+        .corner-frame.bl {
+            bottom: 15px;
+            left: 15px;
+        }
+
+        .corner-frame.bl::before {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+        }
+
+        .corner-frame.bl::after {
+            bottom: 0;
+            left: 0;
+            width: 2px;
+            height: 100%;
+        }
+
+        .corner-frame.br {
+            bottom: 15px;
+            right: 15px;
+        }
+
+        .corner-frame.br::before {
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 2px;
+        }
+
+        .corner-frame.br::after {
+            bottom: 0;
+            right: 0;
+            width: 2px;
+            height: 100%;
+        }
+
+        @keyframes corner-pulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 0.7;
+                box-shadow: 0 0 10px var(--verdict-blue);
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           VERDICT SEAL WIDGET - Glassmorphism + Radar
+           ═══════════════════════════════════════════════════════════════════════ */
+
+        .verdict-frame {
+            position: relative;
+            width: 100%;
+            min-height: 280px;
+            margin: 30px 0 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(6, 182, 212, 0.05), rgba(59, 130, 246, 0.02));
+        }
+
+        /* Radial vignette behind */
+        .verdict-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center,
+                    transparent 20%,
+                    rgba(59, 130, 246, 0.08) 60%,
+                    rgba(59, 130, 246, 0.18) 100%);
+        }
+
+        /* FALSE state colors */
+        .verdict-frame.false {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.03), rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.02));
+        }
+
+        .verdict-frame.false::before {
+            background: radial-gradient(ellipse at center, transparent 20%, rgba(239, 68, 68, 0.08) 60%, rgba(239, 68, 68, 0.18) 100%);
+        }
+
+        /* MIXED state colors */
+        .verdict-frame.mixed {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.03), rgba(245, 158, 11, 0.05), rgba(245, 158, 11, 0.02));
+        }
+
+        .verdict-frame.mixed::before {
+            background: radial-gradient(ellipse at center, transparent 20%, rgba(245, 158, 11, 0.08) 60%, rgba(245, 158, 11, 0.18) 100%);
+        }
+
+        /* Radar layer */
+        .radar-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 220px;
+            height: 220px;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        .radar-sweep {
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(from 0deg, transparent, rgba(59, 130, 246, 0.35) 20deg, transparent 40deg);
+            border-radius: 50%;
+            animation: radar-spin 5s linear infinite;
+        }
+
+        .radar-ring {
+            position: absolute;
+            border: 1px solid rgba(59, 130, 246, 0.12);
+            border-radius: 50%;
+        }
+
+        .radar-ring:nth-child(2) {
+            inset: 15%;
+        }
+
+        .radar-ring:nth-child(3) {
+            inset: 30%;
+        }
+
+        .radar-ring:nth-child(4) {
+            inset: 45%;
+        }
+
+        .verdict-frame.false .radar-sweep {
+            background: conic-gradient(from 0deg, transparent, rgba(239, 68, 68, 0.35) 20deg, transparent 40deg);
+        }
+
+        .verdict-frame.false .radar-ring {
+            border-color: rgba(239, 68, 68, 0.12);
+        }
+
+        .verdict-frame.mixed .radar-sweep {
+            background: conic-gradient(from 0deg, transparent, rgba(245, 158, 11, 0.35) 20deg, transparent 40deg);
+        }
+
+        .verdict-frame.mixed .radar-ring {
+            border-color: rgba(245, 158, 11, 0.12);
+        }
+
+        @keyframes radar-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Outer rotating rings */
+        .seal-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 2px solid rgba(59, 130, 246, 0.25);
+            border-radius: 50%;
+            animation: ring-rotate linear infinite;
+        }
+
+        .seal-ring:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            animation-duration: 25s;
+        }
+
+        .seal-ring:nth-child(2) {
+            width: 230px;
+            height: 230px;
+            border-style: dashed;
+            animation-duration: 20s;
+            animation-direction: reverse;
+        }
+
+        .seal-ring:nth-child(3) {
+            width: 260px;
+            height: 260px;
+            animation-duration: 30s;
+            border-color: rgba(6, 182, 212, 0.15);
+        }
+
+        .verdict-frame.false .seal-ring {
+            border-color: rgba(239, 68, 68, 0.25);
+        }
+
+        .verdict-frame.false .seal-ring:nth-child(3) {
+            border-color: rgba(239, 68, 68, 0.15);
+        }
+
+        .verdict-frame.mixed .seal-ring {
+            border-color: rgba(245, 158, 11, 0.25);
+        }
+
+        @keyframes ring-rotate {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* Glass panel with seal icon */
+        .glass-panel {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 160px;
+            height: 160px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow:
+                0 0 50px rgba(59, 130, 246, 0.15),
+                inset 0 0 40px rgba(59, 130, 246, 0.05);
+        }
+
+        .verdict-frame.false .glass-panel {
+            box-shadow: 0 0 50px rgba(239, 68, 68, 0.15), inset 0 0 40px rgba(239, 68, 68, 0.05);
+        }
+
+        .verdict-frame.mixed .glass-panel {
+            box-shadow: 0 0 50px rgba(245, 158, 11, 0.15), inset 0 0 40px rgba(245, 158, 11, 0.05);
+        }
+
+        .seal-icon {
+            font-size: 4rem;
+            color: var(--verdict-blue);
+            text-shadow: 0 0 30px var(--verdict-blue), 0 0 60px rgba(6, 182, 212, 0.4);
+            animation: seal-breathe 3s ease-in-out infinite;
+            line-height: 1;
+        }
+
+        .verdict-frame.false .seal-icon {
+            color: var(--verdict-red);
+            text-shadow: 0 0 30px var(--verdict-red), 0 0 60px rgba(239, 68, 68, 0.4);
+        }
+
+        .verdict-frame.mixed .seal-icon {
+            color: var(--verdict-amber);
+            text-shadow: 0 0 30px var(--verdict-amber), 0 0 60px rgba(245, 158, 11, 0.4);
+        }
+
+        @keyframes seal-breathe {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+        }
+
+        /* Verdict label beneath icon */
+        .verdict-label {
+            margin-top: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--verdict-blue);
+            opacity: 0.8;
+        }
+
+        .verdict-frame.false .verdict-label {
+            color: var(--verdict-red);
+        }
+
+        .verdict-frame.mixed .verdict-label {
+            color: var(--verdict-amber);
+        }
+
+        /* Scan line overlay */
+        .verdict-frame::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 10%, var(--verdict-blue) 50%, transparent 90%);
+            animation: scan-down 5s linear infinite;
+            box-shadow: 0 0 15px var(--verdict-blue);
+            z-index: 15;
+            opacity: 0.5;
+        }
+
+        .verdict-frame.false::after {
+            background: linear-gradient(90deg, transparent 10%, var(--verdict-red) 50%, transparent 90%);
+            box-shadow: 0 0 15px var(--verdict-red);
+        }
+
+        .verdict-frame.mixed::after {
+            background: linear-gradient(90deg, transparent 10%, var(--verdict-amber) 50%, transparent 90%);
+            box-shadow: 0 0 15px var(--verdict-amber);
+        }
+
+        @keyframes scan-down {
+            0% {
+                top: -2px;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        /* HUD data readouts */
+        .hud-data {
+            position: absolute;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: rgba(6, 182, 212, 0.6);
+            letter-spacing: 1px;
+            z-index: 5;
+        }
+
+        .hud-data.top-left {
+            top: 20px;
+            left: 20px;
+        }
+
+        .hud-data.top-right {
+            top: 20px;
+            right: 20px;
+            text-align: right;
+        }
+
+        .hud-data.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            text-align: right;
+        }
+
+        .verdict-frame.false .hud-data {
+            color: rgba(239, 68, 68, 0.6);
+        }
+
+        .verdict-frame.mixed .hud-data {
+            color: rgba(245, 158, 11, 0.6);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           MINI VERDICT BADGE (for inline use)
+           ═══════════════════════════════════════════════════════════════════════ */
+
+        .verdict-badge-inline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--verdict-blue);
+            letter-spacing: 1px;
+        }
+
+        .verdict-badge-inline .icon {
+            font-size: 1rem;
+        }
+
+        .verdict-badge-inline.false {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: var(--verdict-red);
+        }
+
+        .verdict-badge-inline.mixed {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.2);
+            color: var(--verdict-amber);
+        }
+
+        /* Demo header styling */
+        .demo-header {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.05));
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 30px;
+        }
+
+        .demo-header h2 {
+            color: var(--verdict-cyan);
+            font-size: 1rem;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .demo-header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* Section dividers for demo */
+        .demo-section {
+            margin: 50px 0;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .demo-section h3 {
+            color: var(--verdict-cyan);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Corner Frame Effects -->
+    <div class="corner-frame tl"></div>
+    <div class="corner-frame tr"></div>
+    <div class="corner-frame bl"></div>
+    <div class="corner-frame br"></div>
+
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
+    <div class="container">
+        <!-- DEMO HEADER -->
+        <div class="demo-header">
+            <h2>🎨 VERDICT FRAME INTEGRATION DEMO</h2>
+            <p>This is a demonstration of the premium glassmorphism verdict frame integrated with a fact-check report
+                structure.</p>
+        </div>
+
+        <!-- REPORT HEADER -->
+        <div class="report-meta">
+            <span class="meta-tag">DEEP DIVE DOSSIER</span>
+            <span class="meta-tag cyan">NUCLEAR PROLIFERATION</span>
+            <span class="meta-tag"><i data-lucide="clock"
+                    style="width:12px; display:inline-block; vertical-align:middle;"></i> 28 MIN READ</span>
+        </div>
+
+        <h1 class="report-title">Iran and the West: Nuclear Escalation, Proxy Warfare, and the Path Forward</h1>
+        <h2 class="report-subtitle">From Deal to Threshold State: How the JCPOA Collapse Reshaped Middle East Security
+            (2018–2025)</h2>
+
+        <!-- ═══════════════════════════════════════════════════════════════════════
+             VERDICT FRAME - VERIFIED (BLUE)
+             ═══════════════════════════════════════════════════════════════════════ -->
+        <div class="verdict-frame verified">
+            <!-- Radar layer -->
+            <div class="radar-layer">
+                <div class="radar-sweep"></div>
+                <div class="radar-ring" style="inset:0"></div>
+                <div class="radar-ring"></div>
+                <div class="radar-ring"></div>
+                <div class="radar-ring"></div>
+            </div>
+
+            <!-- Rotating outer rings -->
+            <div class="seal-ring"></div>
+            <div class="seal-ring"></div>
+            <div class="seal-ring"></div>
+
+            <!-- Glassmorphism panel with checkmark -->
+            <div class="glass-panel">
+                <span class="seal-icon">✓</span>
+                <span class="verdict-label">VERIFIED</span>
+            </div>
+
+            <!-- HUD data readouts -->
+            <div class="hud-data top-left">SOURCES: 18 VERIFIED<br>CONFIDENCE: 94.2%</div>
+            <div class="hud-data top-right">REPORT ID: GV-2025-0847<br>STATUS: LOCKED</div>
+            <div class="hud-data bottom-right">SCAN COMPLETE</div>
+        </div>
+
+        <!-- MAIN LAYOUT GRID -->
+        <div class="content-grid">
+            <!-- SIDEBAR: SOURCES FIRST -->
+            <aside class="sources-sidebar">
+                <div class="sources-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
+                    <span class="sources-count">18</span>
+                </div>
+                <div class="sources-list" id="sourcesList">
+                    <a href="https://www.cfr.org/timeline/us-relations-iran-1953-2024" target="_blank"
+                        class="source-card" id="source-1">
+                        <span class="source-ref">1</span>
+                        <div>
+                            <div>U.S.–Iran Relations Timeline</div>
+                            <div style="font-size:0.7em; opacity:0.7;">cfr.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.cfr.org/backgrounder/what-iran-nuclear-deal" target="_blank"
+                        class="source-card" id="source-2">
+                        <span class="source-ref">2</span>
+                        <div>
+                            <div>What Is the Iran Nuclear Deal?</div>
+                            <div style="font-size:0.7em; opacity:0.7;">cfr.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.iaea.org/topics/iran" target="_blank" class="source-card" id="source-3">
+                        <span class="source-ref">3</span>
+                        <div>
+                            <div>IAEA and Iran</div>
+                            <div style="font-size:0.7em; opacity:0.7;">iaea.org</div>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- MAIN CONTENT -->
+            <main class="report-content">
+                <!-- TL;DR -->
+                <div class="tldr-box">
+                    <div class="tldr-title"><i data-lucide="zap" style="width:18px;"></i>TL;DR</div>
+                    <p>Iran has accelerated uranium enrichment to 60% purity—just below weapons-grade—following the 2018
+                        JCPOA withdrawal. Western intelligence agencies assess that Iran could produce enough fissile
+                        material for a nuclear device within weeks if it chose to do so. The report analyzes diplomatic
+                        options, sanctions effectiveness, and regional proxy dynamics.</p>
+                </div>
+
+                <!-- SAMPLE CONTENT SECTION -->
+                <section id="overview">
+                    <h3>Executive Summary</h3>
+                    <p>Since the United States withdrew from the Joint Comprehensive Plan of Action (JCPOA) in May 2018,
+                        Iran has systematically expanded its nuclear program beyond the limits established under the
+                        agreement. This deep dive examines the current state of Iran's enrichment capabilities, the
+                        effectiveness of "maximum pressure" sanctions, and the evolving threat matrix in the Persian
+                        Gulf region.</p>
+
+                    <p>Key findings include: Iran's stockpile of enriched uranium has grown to over 4,500 kg (as of late
+                        2024), far exceeding the 300 kg limit under the JCPOA. The International Atomic Energy Agency
+                        (IAEA) has repeatedly expressed concern about "unexplained nuclear material" at undeclared
+                        sites. Regional proxy networks—including Hezbollah, the Houthis, and Iraqi militias—have
+                        increased in operational tempo and strategic reach.</p>
+                </section>
+
+                <!-- DEMO SECTION: Different Verdict States -->
+                <div class="demo-section">
+                    <h3>📊 Verdict Frame Variants Demo</h3>
+                    <p style="color:rgba(255,255,255,0.6);margin-bottom:30px;">Below are examples of the verdict frame
+                        in different states:</p>
+                </div>
+
+                <!-- FALSE VERDICT -->
+                <h4
+                    style="color:var(--verdict-red);margin:20px 0 10px;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+                    FALSE VERDICT:</h4>
+                <div class="verdict-frame false">
+                    <div class="radar-layer">
+                        <div class="radar-sweep"></div>
+                        <div class="radar-ring" style="inset:0"></div>
+                        <div class="radar-ring"></div>
+                        <div class="radar-ring"></div>
+                    </div>
+                    <div class="seal-ring"></div>
+                    <div class="seal-ring"></div>
+                    <div class="seal-ring"></div>
+                    <div class="glass-panel">
+                        <span class="seal-icon">✗</span>
+                        <span class="verdict-label">FALSE</span>
+                    </div>
+                    <div class="hud-data top-left">SOURCES: 2 FAILED<br>CONFIDENCE: 8.3%</div>
+                    <div class="hud-data top-right">REPORT ID: GV-2025-0848<br>STATUS: REJECTED</div>
+                    <div class="hud-data bottom-right">CLAIM DEBUNKED</div>
+                </div>
+
+                <!-- MIXED/UNVERIFIED VERDICT -->
+                <h4
+                    style="color:var(--verdict-amber);margin:40px 0 10px;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+                    MIXED / UNVERIFIED:</h4>
+                <div class="verdict-frame mixed">
+                    <div class="radar-layer">
+                        <div class="radar-sweep"></div>
+                        <div class="radar-ring" style="inset:0"></div>
+                        <div class="radar-ring"></div>
+                        <div class="radar-ring"></div>
+                    </div>
+                    <div class="seal-ring"></div>
+                    <div class="seal-ring"></div>
+                    <div class="seal-ring"></div>
+                    <div class="glass-panel">
+                        <span class="seal-icon">⚠</span>
+                        <span class="verdict-label">MIXED</span>
+                    </div>
+                    <div class="hud-data top-left">SOURCES: 12 PARTIAL<br>CONFIDENCE: 54.7%</div>
+                    <div class="hud-data top-right">REPORT ID: GV-2025-0849<br>STATUS: PENDING</div>
+                    <div class="hud-data bottom-right">ANALYSIS ONGOING</div>
+                </div>
+
+                <!-- INLINE BADGE VARIANTS -->
+                <div class="demo-section">
+                    <h3>🏷️ Inline Verdict Badges</h3>
+                    <p style="color:rgba(255,255,255,0.6);margin-bottom:20px;">For use within text or section headers:
+                    </p>
+
+                    <div style="display:flex;gap:16px;flex-wrap:wrap;margin:20px 0;">
+                        <span class="verdict-badge-inline"><span class="icon">✓</span> VERIFIED</span>
+                        <span class="verdict-badge-inline false"><span class="icon">✗</span> FALSE</span>
+                        <span class="verdict-badge-inline mixed"><span class="icon">⚠</span> MIXED</span>
+                    </div>
+                </div>
+
+                <!-- MORE SAMPLE CONTENT -->
+                <section id="analysis">
+                    <h3>Technical Analysis</h3>
+                    <p>The IAEA's November 2024 report confirmed that Iran possesses approximately 164.7 kg of uranium
+                        enriched to 60% purity—more than three times the amount needed, with further enrichment, to
+                        produce a single nuclear weapon. This material is stored at the Fordow Fuel Enrichment Plant
+                        (FFEP), a facility buried deep inside a mountain near Qom.</p>
+
+                    <p>Director General Rafael Grossi has characterized Iran's cooperation with the Agency as "seriously
+                        affecting our ability to independently verify the peaceful nature of Iran's nuclear program."
+                        Multiple verification indicators suggest that breakout time—the period needed to produce
+                        weapons-grade highly enriched uranium—has shrunk to as little as one to two weeks.</p>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Shared Components JS -->
+    <script src="js/shared-components.js?v=4.0" defer></script>
+
+    <script>
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+
+</html>

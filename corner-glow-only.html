@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corner Glow Only | GenuVerity</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════════════════════
+           SUBTLETY CONTROLS - Adjust these to fine-tune
+           ═══════════════════════════════════════════════════════════════════════ */
+        :root {
+            --bg: #050A14;
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --cyan: #06b6d4;
+
+            /* ──────────────────────────────────────────
+               GLOW SIZE: How large the corner glow is
+               Smaller = more subtle, larger = more dramatic
+               Try: 120px (subtle) → 200px (medium) → 300px (bold)
+               ────────────────────────────────────────── */
+            --glow-size: 160px;
+
+            /* ──────────────────────────────────────────
+               BLUR AMOUNT: How soft/diffuse the glow is
+               More blur = softer edges, less defined
+               Try: 30px (defined) → 50px (medium) → 80px (very soft)
+               ────────────────────────────────────────── */
+            --glow-blur: 60px;
+
+            /* ──────────────────────────────────────────
+               OPACITY MIN: Opacity at dimmest point of animation
+               Lower = more subtle at rest
+               Try: 0.15 (barely visible) → 0.3 (subtle) → 0.5 (visible)
+               ────────────────────────────────────────── */
+            --glow-opacity-min: 0.25;
+
+            /* ──────────────────────────────────────────
+               OPACITY MAX: Opacity at brightest point of animation
+               Lower = never gets too bright
+               Try: 0.3 (subtle) → 0.5 (medium) → 0.8 (bright)
+               ────────────────────────────────────────── */
+            --glow-opacity-max: 0.45;
+
+            /* ──────────────────────────────────────────
+               ANIMATION SPEED: How fast the breathing animation is
+               Slower = more relaxed, faster = more active
+               Try: 6s (slow/calm) → 4s (medium) → 2s (fast)
+               ────────────────────────────────────────── */
+            --glow-speed: 5s;
+
+            /* ──────────────────────────────────────────
+               SCALE PULSE: How much the glow grows on pulse
+               1.0 = no growth, 1.2 = 20% larger at peak
+               Try: 1.0 (static) → 1.05 (subtle) → 1.15 (noticeable)
+               ────────────────────────────────────────── */
+            --glow-scale: 1.08;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.6rem;
+            color: var(--cyan);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 50px;
+            font-size: 0.9rem;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .demo-card {
+            position: relative;
+            height: 320px;
+            background: var(--bg);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .demo-card .label {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            z-index: 10;
+        }
+
+        /* Corner glows - using CSS variables for fine-tuning */
+        .corner-glow {
+            position: absolute;
+            width: var(--glow-size);
+            height: var(--glow-size);
+            border-radius: 50%;
+            filter: blur(var(--glow-blur));
+            animation: glow-breathe var(--glow-speed) ease-in-out infinite;
+        }
+
+        .corner-glow.tl {
+            top: calc(var(--glow-size) / -2);
+            left: calc(var(--glow-size) / -2);
+        }
+
+        .corner-glow.tr {
+            top: calc(var(--glow-size) / -2);
+            right: calc(var(--glow-size) / -2);
+        }
+
+        .corner-glow.bl {
+            bottom: calc(var(--glow-size) / -2);
+            left: calc(var(--glow-size) / -2);
+        }
+
+        .corner-glow.br {
+            bottom: calc(var(--glow-size) / -2);
+            right: calc(var(--glow-size) / -2);
+        }
+
+        @keyframes glow-breathe {
+
+            0%,
+            100% {
+                opacity: var(--glow-opacity-min);
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: var(--glow-opacity-max);
+                transform: scale(var(--glow-scale));
+            }
+        }
+
+        /* Color variants */
+        .demo-card.blue .corner-glow {
+            background: var(--blue);
+        }
+
+        .demo-card.blue .label {
+            color: var(--blue);
+        }
+
+        .demo-card.green .corner-glow {
+            background: var(--green);
+        }
+
+        .demo-card.green .label {
+            color: var(--green);
+        }
+
+        .demo-card.amber .corner-glow {
+            background: var(--amber);
+        }
+
+        .demo-card.amber .label {
+            color: var(--amber);
+        }
+
+        .demo-card.orange .corner-glow {
+            background: var(--orange);
+        }
+
+        .demo-card.orange .label {
+            color: var(--orange);
+        }
+
+        .demo-card.red .corner-glow {
+            background: var(--red);
+        }
+
+        .demo-card.red .label {
+            color: var(--red);
+        }
+
+        /* Sample content to show context */
+        .sample-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 5;
+        }
+
+        .sample-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .sample-content p {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Corner Glow Only</h1>
+    <p class="subtitle">All 5 verdict colors • No vignette, no brackets, no scan — just corner glows</p>
+
+    <div class="demo-grid">
+        <!-- TRUE / VERIFIED (Green) -->
+        <div class="demo-card green">
+            <div class="corner-glow tl"></div>
+            <div class="corner-glow tr"></div>
+            <div class="corner-glow bl"></div>
+            <div class="corner-glow br"></div>
+            <div class="sample-content">
+                <h3>Sample Report Content</h3>
+                <p>This is how the page would look with green corner glows.</p>
+            </div>
+            <div class="label">TRUE / VERIFIED</div>
+        </div>
+
+        <!-- MOSTLY TRUE (Blue) -->
+        <div class="demo-card blue">
+            <div class="corner-glow tl"></div>
+            <div class="corner-glow tr"></div>
+            <div class="corner-glow bl"></div>
+            <div class="corner-glow br"></div>
+            <div class="sample-content">
+                <h3>Sample Report Content</h3>
+                <p>This is how the page would look with blue corner glows.</p>
+            </div>
+            <div class="label">MOSTLY TRUE</div>
+        </div>
+
+        <!-- MIXED (Amber) -->
+        <div class="demo-card amber">
+            <div class="corner-glow tl"></div>
+            <div class="corner-glow tr"></div>
+            <div class="corner-glow bl"></div>
+            <div class="corner-glow br"></div>
+            <div class="sample-content">
+                <h3>Sample Report Content</h3>
+                <p>This is how the page would look with amber corner glows.</p>
+            </div>
+            <div class="label">MIXED / UNVERIFIED</div>
+        </div>
+
+        <!-- MOSTLY FALSE (Orange) -->
+        <div class="demo-card orange">
+            <div class="corner-glow tl"></div>
+            <div class="corner-glow tr"></div>
+            <div class="corner-glow bl"></div>
+            <div class="corner-glow br"></div>
+            <div class="sample-content">
+                <h3>Sample Report Content</h3>
+                <p>This is how the page would look with orange corner glows.</p>
+            </div>
+            <div class="label">MOSTLY FALSE</div>
+        </div>
+
+        <!-- FALSE (Red) -->
+        <div class="demo-card red">
+            <div class="corner-glow tl"></div>
+            <div class="corner-glow tr"></div>
+            <div class="corner-glow bl"></div>
+            <div class="corner-glow br"></div>
+            <div class="sample-content">
+                <h3>Sample Report Content</h3>
+                <p>This is how the page would look with red corner glows.</p>
+            </div>
+            <div class="label">FALSE / PANTS ON FIRE</div>
+        </div>
+    </div>
+</body>
+
+</html>

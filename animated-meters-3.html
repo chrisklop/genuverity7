@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Truth Meters Part 3 | GenuVerity</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050A14;
+            --card: #0a1628;
+            --border: rgba(59, 130, 246, 0.15);
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --cyan: #06b6d4;
+            --text: #fff;
+            --muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            background-image: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.03) 0%, transparent 50%), linear-gradient(rgba(6, 182, 212, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 2rem;
+            background: linear-gradient(135deg, #fff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 50px;
+            font-size: 0.9rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card), rgba(10, 22, 40, 0.8));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: 0.5;
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meter-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .meter-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            width: 100px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .meter {
+            flex: 1;
+        }
+
+        /* 18. QUANTUM GATE */
+        .quantum {
+            height: 50px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantum-grid {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 49%, rgba(255, 255, 255, 0.03) 50%, transparent 51%), linear-gradient(transparent 49%, rgba(255, 255, 255, 0.03) 50%, transparent 51%);
+            background-size: 20px 20px;
+        }
+
+        .quantum-pulse {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: q-pulse 1.5s ease-in-out infinite;
+            box-shadow: 0 0 30px currentColor;
+        }
+
+        .quantum-ring {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            animation: q-expand 2s ease-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes q-pulse {
+
+            0%,
+            100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        @keyframes q-expand {
+            0% {
+                transform: scale(0.5);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* 19. ENERGY CASCADE */
+        .cascade {
+            height: 40px;
+            position: relative;
+            display: flex;
+            gap: 4px;
+            align-items: flex-end;
+        }
+
+        .cascade-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px 3px 0 0;
+            animation: cascade-wave 1s ease-in-out infinite;
+        }
+
+        .cascade-bar:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .cascade-bar:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .cascade-bar:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .cascade-bar:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+
+        .cascade-bar:nth-child(6) {
+            animation-delay: 0.5s;
+        }
+
+        .cascade-bar.active {
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        @keyframes cascade-wave {
+
+            0%,
+            100% {
+                height: 30%;
+            }
+
+            50% {
+                height: 100%;
+            }
+        }
+
+        /* 20. MATRIX DECODE */
+        .matrix {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .matrix-chars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .matrix-char {
+            animation: matrix-flicker 0.3s step-end infinite;
+        }
+
+        .matrix-glow {
+            position: absolute;
+            right: 0;
+            height: 100%;
+            width: 40px;
+            background: linear-gradient(90deg, transparent, currentColor);
+            opacity: 0.2;
+            animation: matrix-scan 1.5s ease-in-out infinite;
+        }
+
+        @keyframes matrix-flicker {
+
+            0%,
+            45% {
+                opacity: 1;
+            }
+
+            50%,
+            100% {
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes matrix-scan {
+            0% {
+                right: 100%;
+            }
+
+            100% {
+                right: -40px;
+            }
+        }
+
+        /* 21. GRAVITON FIELD */
+        .graviton {
+            width: 70px;
+            height: 70px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grav-ring {
+            position: absolute;
+            border: 1px solid;
+            border-radius: 50%;
+            animation: grav-orbit 4s linear infinite;
+        }
+
+        .grav-ring:nth-child(1) {
+            width: 100%;
+            height: 100%;
+        }
+
+        .grav-ring:nth-child(2) {
+            width: 70%;
+            height: 70%;
+            animation-direction: reverse;
+            animation-duration: 3s;
+        }
+
+        .grav-ring:nth-child(3) {
+            width: 40%;
+            height: 40%;
+            animation-duration: 2s;
+        }
+
+        .grav-core {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            animation: grav-pulse 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes grav-orbit {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes grav-pulse {
+            0% {
+                box-shadow: 0 0 10px currentColor;
+            }
+
+            100% {
+                box-shadow: 0 0 25px currentColor, 0 0 40px currentColor;
+            }
+        }
+
+        /* 22. PHOTON STREAM */
+        .photon {
+            height: 30px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .photon-beam {
+            position: absolute;
+            height: 100%;
+            width: 60px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            animation: photon-streak 1s linear infinite;
+            filter: blur(2px);
+        }
+
+        .photon-fill {
+            height: 100%;
+            opacity: 0.4;
+        }
+
+        @keyframes photon-streak {
+            0% {
+                left: -60px;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* 23. DIMENSIONAL RIFT */
+        .rift {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+
+        .rift-layer {
+            position: absolute;
+            inset: 0;
+            border: 2px solid;
+            border-radius: 8px;
+            animation: rift-shift 3s ease-in-out infinite;
+        }
+
+        .rift-layer:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .rift-layer:nth-child(2) {
+            inset: 5px;
+            animation-delay: 0.5s;
+            opacity: 0.7;
+        }
+
+        .rift-layer:nth-child(3) {
+            inset: 10px;
+            animation-delay: 1s;
+            opacity: 0.4;
+        }
+
+        .rift-center {
+            position: absolute;
+            inset: 15px;
+            border-radius: 4px;
+            animation: rift-glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes rift-shift {
+
+            0%,
+            100% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(5deg) scale(1.05);
+            }
+        }
+
+        @keyframes rift-glow {
+            0% {
+                box-shadow: inset 0 0 10px currentColor;
+            }
+
+            100% {
+                box-shadow: inset 0 0 20px currentColor, 0 0 15px currentColor;
+            }
+        }
+
+        /* 24. SIGNAL INTERCEPT */
+        .intercept {
+            height: 45px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .intercept-wave {
+            flex: 1;
+            height: 30px;
+            position: relative;
+        }
+
+        .intercept-wave svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .wave-path {
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-dasharray: 200;
+            animation: wave-draw 2s linear infinite;
+        }
+
+        @keyframes wave-draw {
+            0% {
+                stroke-dashoffset: 200;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .intercept-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            width: 80px;
+        }
+
+        /* 25. CYBER SHIELD */
+        .shield {
+            width: 65px;
+            height: 75px;
+            position: relative;
+        }
+
+        .shield svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .shield-outer {
+            fill: none;
+            stroke-width: 2;
+            animation: shield-pulse 2s ease-in-out infinite;
+        }
+
+        .shield-inner {
+            opacity: 0.2;
+            animation: shield-fill 2s ease-in-out infinite alternate;
+        }
+
+        .shield-icon {
+            font-size: 1.2rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: icon-glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes shield-pulse {
+
+            0%,
+            100% {
+                stroke-opacity: 0.5;
+            }
+
+            50% {
+                stroke-opacity: 1;
+            }
+        }
+
+        @keyframes shield-fill {
+            0% {
+                opacity: 0.1;
+            }
+
+            100% {
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes icon-glow {
+            0% {
+                text-shadow: 0 0 5px currentColor;
+            }
+
+            100% {
+                text-shadow: 0 0 15px currentColor, 0 0 25px currentColor;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>⚡ Animated Truth Meters</h1>
+    <p class="subtitle">Part 3 • Designs 18-25 • Final Collection</p>
+
+    <div class="grid">
+        <!-- 18. QUANTUM GATE -->
+        <div class="card">
+            <h3>18 // Quantum Gate</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter quantum" style="color:var(--red)">
+                    <div class="quantum-grid"></div>
+                    <div class="quantum-ring" style="border-color:var(--red)"></div>
+                    <div class="quantum-pulse" style="background:var(--red)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter quantum" style="color:var(--orange)">
+                    <div class="quantum-grid"></div>
+                    <div class="quantum-ring" style="border-color:var(--orange)"></div>
+                    <div class="quantum-pulse" style="background:var(--orange)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter quantum" style="color:var(--amber)">
+                    <div class="quantum-grid"></div>
+                    <div class="quantum-ring" style="border-color:var(--amber)"></div>
+                    <div class="quantum-pulse" style="background:var(--amber)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter quantum" style="color:var(--green)">
+                    <div class="quantum-grid"></div>
+                    <div class="quantum-ring" style="border-color:var(--green)"></div>
+                    <div class="quantum-pulse" style="background:var(--green)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter quantum" style="color:var(--blue)">
+                    <div class="quantum-grid"></div>
+                    <div class="quantum-ring" style="border-color:var(--blue)"></div>
+                    <div class="quantum-pulse" style="background:var(--blue)"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 19. ENERGY CASCADE -->
+        <div class="card">
+            <h3>19 // Energy Cascade</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter cascade" style="color:var(--red)">
+                    <div class="cascade-bar active" style="background:var(--red)"></div>
+                    <div class="cascade-bar"></div>
+                    <div class="cascade-bar"></div>
+                    <div class="cascade-bar"></div>
+                    <div class="cascade-bar"></div>
+                    <div class="cascade-bar"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter cascade" style="color:var(--orange)">
+                    <div class="cascade-bar active" style="background:var(--orange)"></div>
+                    <div class="cascade-bar active" style="background:var(--orange)"></div>
+                    <div class="cascade-bar"></div>
+                    <div class="cascade-bar"></div>
+                    <div class="cascade-bar"></div>
+                    <div class="cascade-bar"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter cascade" style="color:var(--amber)">
+                    <div class="cascade-bar active" style="background:var(--amber)"></div>
+                    <div class="cascade-bar active" style="background:var(--amber)"></div>
+                    <div class="cascade-bar active" style="background:var(--amber)"></div>
+                    <div class="cascade-bar"></div>
+                    <div class="cascade-bar"></div>
+                    <div class="cascade-bar"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter cascade" style="color:var(--green)">
+                    <div class="cascade-bar active" style="background:var(--green)"></div>
+                    <div class="cascade-bar active" style="background:var(--green)"></div>
+                    <div class="cascade-bar active" style="background:var(--green)"></div>
+                    <div class="cascade-bar active" style="background:var(--green)"></div>
+                    <div class="cascade-bar active" style="background:var(--green)"></div>
+                    <div class="cascade-bar"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter cascade" style="color:var(--blue)">
+                    <div class="cascade-bar active" style="background:var(--blue)"></div>
+                    <div class="cascade-bar active" style="background:var(--blue)"></div>
+                    <div class="cascade-bar active" style="background:var(--blue)"></div>
+                    <div class="cascade-bar active" style="background:var(--blue)"></div>
+                    <div class="cascade-bar active" style="background:var(--blue)"></div>
+                    <div class="cascade-bar active" style="background:var(--blue)"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 20. MATRIX DECODE -->
+        <div class="card">
+            <h3>20 // Matrix Decode</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter matrix" style="color:var(--red)">
+                    <div class="matrix-chars"><span class="matrix-char">0</span><span class="matrix-char">1</span><span
+                            class="matrix-char">0</span><span class="matrix-char">0</span><span class="matrix-char"
+                            style="color:var(--red)">F</span><span class="matrix-char"
+                            style="color:var(--red)">A</span><span class="matrix-char"
+                            style="color:var(--red)">L</span><span class="matrix-char"
+                            style="color:var(--red)">S</span><span class="matrix-char" style="color:var(--red)">E</span>
+                    </div>
+                    <div class="matrix-glow"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter matrix" style="color:var(--orange)">
+                    <div class="matrix-chars"><span class="matrix-char">0</span><span class="matrix-char">1</span><span
+                            class="matrix-char">1</span><span class="matrix-char">0</span><span class="matrix-char"
+                            style="color:var(--orange)">W</span><span class="matrix-char"
+                            style="color:var(--orange)">E</span><span class="matrix-char"
+                            style="color:var(--orange)">A</span><span class="matrix-char"
+                            style="color:var(--orange)">K</span></div>
+                    <div class="matrix-glow"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter matrix" style="color:var(--amber)">
+                    <div class="matrix-chars"><span class="matrix-char">0</span><span class="matrix-char">1</span><span
+                            class="matrix-char">1</span><span class="matrix-char">1</span><span class="matrix-char"
+                            style="color:var(--amber)">M</span><span class="matrix-char"
+                            style="color:var(--amber)">I</span><span class="matrix-char"
+                            style="color:var(--amber)">X</span><span class="matrix-char"
+                            style="color:var(--amber)">E</span><span class="matrix-char"
+                            style="color:var(--amber)">D</span></div>
+                    <div class="matrix-glow"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter matrix" style="color:var(--green)">
+                    <div class="matrix-chars"><span class="matrix-char">1</span><span class="matrix-char">1</span><span
+                            class="matrix-char">1</span><span class="matrix-char">0</span><span class="matrix-char"
+                            style="color:var(--green)">V</span><span class="matrix-char"
+                            style="color:var(--green)">A</span><span class="matrix-char"
+                            style="color:var(--green)">L</span><span class="matrix-char"
+                            style="color:var(--green)">I</span><span class="matrix-char"
+                            style="color:var(--green)">D</span></div>
+                    <div class="matrix-glow"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter matrix" style="color:var(--blue)">
+                    <div class="matrix-chars"><span class="matrix-char">1</span><span class="matrix-char">1</span><span
+                            class="matrix-char">1</span><span class="matrix-char">1</span><span class="matrix-char"
+                            style="color:var(--blue)">V</span><span class="matrix-char"
+                            style="color:var(--blue)">E</span><span class="matrix-char"
+                            style="color:var(--blue)">R</span><span class="matrix-char"
+                            style="color:var(--blue)">I</span><span class="matrix-char"
+                            style="color:var(--blue)">F</span><span class="matrix-char"
+                            style="color:var(--blue)">Y</span></div>
+                    <div class="matrix-glow"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 21. GRAVITON FIELD -->
+        <div class="card">
+            <h3>21 // Graviton Field</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="graviton" style="color:var(--red)">
+                        <div class="grav-ring" style="border-color:var(--red);opacity:0.3"></div>
+                        <div class="grav-ring" style="border-color:var(--red);opacity:0.2"></div>
+                        <div class="grav-ring" style="border-color:var(--red);opacity:0.1"></div>
+                        <div class="grav-core" style="background:var(--red);color:var(--red)"></div>
+                    </div><span style="color:var(--red);font-weight:600">UNSTABLE</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="graviton" style="color:var(--orange)">
+                        <div class="grav-ring" style="border-color:var(--orange);opacity:0.3"></div>
+                        <div class="grav-ring" style="border-color:var(--orange);opacity:0.2"></div>
+                        <div class="grav-ring" style="border-color:var(--orange);opacity:0.1"></div>
+                        <div class="grav-core" style="background:var(--orange);color:var(--orange)"></div>
+                    </div><span style="color:var(--orange);font-weight:600">WEAK</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="graviton" style="color:var(--amber)">
+                        <div class="grav-ring" style="border-color:var(--amber);opacity:0.3"></div>
+                        <div class="grav-ring" style="border-color:var(--amber);opacity:0.2"></div>
+                        <div class="grav-ring" style="border-color:var(--amber);opacity:0.1"></div>
+                        <div class="grav-core" style="background:var(--amber);color:var(--amber)"></div>
+                    </div><span style="color:var(--amber);font-weight:600">PARTIAL</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="graviton" style="color:var(--green)">
+                        <div class="grav-ring" style="border-color:var(--green);opacity:0.3"></div>
+                        <div class="grav-ring" style="border-color:var(--green);opacity:0.2"></div>
+                        <div class="grav-ring" style="border-color:var(--green);opacity:0.1"></div>
+                        <div class="grav-core" style="background:var(--green);color:var(--green)"></div>
+                    </div><span style="color:var(--green);font-weight:600">STABLE</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="graviton" style="color:var(--blue)">
+                        <div class="grav-ring" style="border-color:var(--blue);opacity:0.3"></div>
+                        <div class="grav-ring" style="border-color:var(--blue);opacity:0.2"></div>
+                        <div class="grav-ring" style="border-color:var(--blue);opacity:0.1"></div>
+                        <div class="grav-core" style="background:var(--blue);color:var(--blue)"></div>
+                    </div><span style="color:var(--blue);font-weight:600">LOCKED</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 22. PHOTON STREAM -->
+        <div class="card">
+            <h3>22 // Photon Stream</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter photon" style="color:var(--red)">
+                    <div class="photon-fill" style="width:10%;background:var(--red)"></div>
+                    <div class="photon-beam"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter photon" style="color:var(--orange)">
+                    <div class="photon-fill" style="width:30%;background:var(--orange)"></div>
+                    <div class="photon-beam"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter photon" style="color:var(--amber)">
+                    <div class="photon-fill" style="width:50%;background:var(--amber)"></div>
+                    <div class="photon-beam"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter photon" style="color:var(--green)">
+                    <div class="photon-fill" style="width:75%;background:var(--green)"></div>
+                    <div class="photon-beam"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter photon" style="color:var(--blue)">
+                    <div class="photon-fill" style="width:100%;background:var(--blue)"></div>
+                    <div class="photon-beam"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 23. DIMENSIONAL RIFT -->
+        <div class="card">
+            <h3>23 // Dimensional Rift</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="rift" style="color:var(--red)">
+                        <div class="rift-layer" style="border-color:var(--red)"></div>
+                        <div class="rift-layer" style="border-color:var(--red)"></div>
+                        <div class="rift-layer" style="border-color:var(--red)"></div>
+                        <div class="rift-center" style="background:var(--red);color:var(--red)"></div>
+                    </div><span style="color:var(--red);font-weight:600">RIFT UNSTABLE</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="rift" style="color:var(--orange)">
+                        <div class="rift-layer" style="border-color:var(--orange)"></div>
+                        <div class="rift-layer" style="border-color:var(--orange)"></div>
+                        <div class="rift-layer" style="border-color:var(--orange)"></div>
+                        <div class="rift-center" style="background:var(--orange);color:var(--orange)"></div>
+                    </div><span style="color:var(--orange);font-weight:600">WEAK SIGNAL</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="rift" style="color:var(--amber)">
+                        <div class="rift-layer" style="border-color:var(--amber)"></div>
+                        <div class="rift-layer" style="border-color:var(--amber)"></div>
+                        <div class="rift-layer" style="border-color:var(--amber)"></div>
+                        <div class="rift-center" style="background:var(--amber);color:var(--amber)"></div>
+                    </div><span style="color:var(--amber);font-weight:600">PARTIAL</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="rift" style="color:var(--green)">
+                        <div class="rift-layer" style="border-color:var(--green)"></div>
+                        <div class="rift-layer" style="border-color:var(--green)"></div>
+                        <div class="rift-layer" style="border-color:var(--green)"></div>
+                        <div class="rift-center" style="background:var(--green);color:var(--green)"></div>
+                    </div><span style="color:var(--green);font-weight:600">STABILIZING</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="rift" style="color:var(--blue)">
+                        <div class="rift-layer" style="border-color:var(--blue)"></div>
+                        <div class="rift-layer" style="border-color:var(--blue)"></div>
+                        <div class="rift-layer" style="border-color:var(--blue)"></div>
+                        <div class="rift-center" style="background:var(--blue);color:var(--blue)"></div>
+                    </div><span style="color:var(--blue);font-weight:600">STABLE LOCK</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 24. SIGNAL INTERCEPT -->
+        <div class="card">
+            <h3>24 // Signal Intercept</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter intercept">
+                    <div class="intercept-wave"><svg viewBox="0 0 200 30">
+                            <path class="wave-path" stroke="var(--red)" d="M0,15 Q25,5 50,15 T100,15 T150,15 T200,15" />
+                        </svg></div><span class="intercept-status" style="color:var(--red)">NO SIGNAL</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter intercept">
+                    <div class="intercept-wave"><svg viewBox="0 0 200 30">
+                            <path class="wave-path" stroke="var(--orange)"
+                                d="M0,15 Q25,0 50,15 T100,15 T150,15 T200,15" />
+                        </svg></div><span class="intercept-status" style="color:var(--orange)">WEAK</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter intercept">
+                    <div class="intercept-wave"><svg viewBox="0 0 200 30">
+                            <path class="wave-path" stroke="var(--amber)"
+                                d="M0,15 Q25,0 50,15 T100,15 T150,15 T200,15" />
+                        </svg></div><span class="intercept-status" style="color:var(--amber)">PARTIAL</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter intercept">
+                    <div class="intercept-wave"><svg viewBox="0 0 200 30">
+                            <path class="wave-path" stroke="var(--green)"
+                                d="M0,15 Q25,0 50,15 T100,15 T150,15 T200,15" />
+                        </svg></div><span class="intercept-status" style="color:var(--green)">STRONG</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter intercept">
+                    <div class="intercept-wave"><svg viewBox="0 0 200 30">
+                            <path class="wave-path" stroke="var(--blue)"
+                                d="M0,15 Q25,0 50,15 T100,15 T150,15 T200,15" />
+                        </svg></div><span class="intercept-status" style="color:var(--blue)">LOCKED</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 25. CYBER SHIELD -->
+        <div class="card">
+            <h3>25 // Cyber Shield</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="shield" style="color:var(--red)"><svg viewBox="0 0 65 75">
+                            <path class="shield-outer" stroke="var(--red)"
+                                d="M32.5 5 L60 15 L60 40 C60 55 32.5 70 32.5 70 C32.5 70 5 55 5 40 L5 15 Z" />
+                            <path class="shield-inner" fill="var(--red)"
+                                d="M32.5 10 L55 18 L55 40 C55 52 32.5 65 32.5 65 C32.5 65 10 52 10 40 L10 18 Z" />
+                        </svg><span class="shield-icon">✗</span></div><span
+                        style="color:var(--red);font-weight:600">REJECTED</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="shield" style="color:var(--orange)"><svg viewBox="0 0 65 75">
+                            <path class="shield-outer" stroke="var(--orange)"
+                                d="M32.5 5 L60 15 L60 40 C60 55 32.5 70 32.5 70 C32.5 70 5 55 5 40 L5 15 Z" />
+                            <path class="shield-inner" fill="var(--orange)"
+                                d="M32.5 10 L55 18 L55 40 C55 52 32.5 65 32.5 65 C32.5 65 10 52 10 40 L10 18 Z" />
+                        </svg><span class="shield-icon">!</span></div><span
+                        style="color:var(--orange);font-weight:600">WEAK</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="shield" style="color:var(--amber)"><svg viewBox="0 0 65 75">
+                            <path class="shield-outer" stroke="var(--amber)"
+                                d="M32.5 5 L60 15 L60 40 C60 55 32.5 70 32.5 70 C32.5 70 5 55 5 40 L5 15 Z" />
+                            <path class="shield-inner" fill="var(--amber)"
+                                d="M32.5 10 L55 18 L55 40 C55 52 32.5 65 32.5 65 C32.5 65 10 52 10 40 L10 18 Z" />
+                        </svg><span class="shield-icon">?</span></div><span
+                        style="color:var(--amber);font-weight:600">PARTIAL</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="shield" style="color:var(--green)"><svg viewBox="0 0 65 75">
+                            <path class="shield-outer" stroke="var(--green)"
+                                d="M32.5 5 L60 15 L60 40 C60 55 32.5 70 32.5 70 C32.5 70 5 55 5 40 L5 15 Z" />
+                            <path class="shield-inner" fill="var(--green)"
+                                d="M32.5 10 L55 18 L55 40 C55 52 32.5 65 32.5 65 C32.5 65 10 52 10 40 L10 18 Z" />
+                        </svg><span class="shield-icon">✓</span></div><span
+                        style="color:var(--green);font-weight:600">VALID</span>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter" style="display:flex;align-items:center;gap:14px">
+                    <div class="shield" style="color:var(--blue)"><svg viewBox="0 0 65 75">
+                            <path class="shield-outer" stroke="var(--blue)"
+                                d="M32.5 5 L60 15 L60 40 C60 55 32.5 70 32.5 70 C32.5 70 5 55 5 40 L5 15 Z" />
+                            <path class="shield-inner" fill="var(--blue)"
+                                d="M32.5 10 L55 18 L55 40 C55 52 32.5 65 32.5 65 C32.5 65 10 52 10 40 L10 18 Z" />
+                        </svg><span class="shield-icon">✓✓</span></div><span
+                        style="color:var(--blue);font-weight:600">VERIFIED</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        style="text-align:center;margin:60px 0 30px;padding:30px;background:rgba(59,130,246,0.05);border-radius:16px;max-width:800px;margin-left:auto;margin-right:auto">
+        <h2 style="color:var(--cyan);margin-bottom:12px;font-size:1.2rem">🎯 Complete Collection</h2>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:16px">25 Animated Truth Meters • Midnight Tech
+            Aesthetic</p>
+        <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;font-size:0.8rem">
+            <span style="color:var(--cyan)">animated-meters-1.html</span>
+            <span style="color:var(--muted)">•</span>
+            <span style="color:var(--cyan)">animated-meters-2.html</span>
+            <span style="color:var(--muted)">•</span>
+            <span style="color:var(--cyan)">animated-meters-3.html</span>
+        </div>
+    </div>
+</body>
+
+</html>

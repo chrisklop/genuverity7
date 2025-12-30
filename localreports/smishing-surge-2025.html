@@ -488,6 +488,23 @@
                     <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">Dossier Status: VERIFIED |
                         Last Updated: Dec 27, 2025</p>
                 </div>
+            
+                <!-- Social Sharing Buttons -->
+                <div class="share-section">
+                    <h4 class="share-heading">Share this report</h4>
+                    <div class="share-buttons">
+                        <button onclick="shareToTwitter()" class="share-btn share-twitter">
+                            <i data-lucide="twitter"></i> Share on X
+                        </button>
+                        <button onclick="shareToLinkedIn()" class="share-btn share-linkedin">
+                            <i data-lucide="linkedin"></i> LinkedIn
+                        </button>
+                        <button onclick="copyShareLink()" class="share-btn share-copy" id="copyLinkBtn">
+                            <i data-lucide="link"></i> Copy Link
+                        </button>
+                    </div>
+                </div>
+
             </article>
         </div>
     </div>

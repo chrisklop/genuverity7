@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Verdict Frames | GenuVerity</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050A14;
+            --card: #0a1628;
+            --border: rgba(59, 130, 246, 0.15);
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --cyan: #06b6d4;
+            --text: #fff;
+            --muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 2rem;
+            background: linear-gradient(135deg, #fff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 60px;
+            font-size: 0.9rem;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--cyan);
+            font-size: 1rem;
+            margin: 60px 0 30px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 2px;
+        }
+
+        /* Premium Mockup Grid */
+        .premium-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            max-width: 1700px;
+            margin: 0 auto;
+        }
+
+        .frame {
+            height: 420px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .frame-label {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            z-index: 20;
+        }
+
+        .frame-label h3 {
+            font-size: 0.9rem;
+            color: #fff;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .frame-label p {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* GLASSMORPHISM SEAL + RADAR COMBO                                */
+        /* ═══════════════════════════════════════════════════════════════ */
+
+        .glass-seal {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(6, 182, 212, 0.08), rgba(59, 130, 246, 0.03));
+        }
+
+        .glass-seal::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 20%, rgba(59, 130, 246, 0.1) 60%, rgba(59, 130, 246, 0.25) 100%);
+        }
+
+        /* Glassmorphism panel */
+        .glass-panel {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 220px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 0 60px rgba(59, 130, 246, 0.2),
+                inset 0 0 60px rgba(59, 130, 246, 0.05);
+        }
+
+        /* Rotating radar behind glass */
+        .radar-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+
+        .radar-sweep {
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(from 0deg, transparent, rgba(59, 130, 246, 0.4) 20deg, transparent 40deg);
+            border-radius: 50%;
+            animation: radar-spin 4s linear infinite;
+        }
+
+        .radar-ring {
+            position: absolute;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            border-radius: 50%;
+        }
+
+        .radar-ring:nth-child(2) {
+            inset: 15%;
+        }
+
+        .radar-ring:nth-child(3) {
+            inset: 30%;
+        }
+
+        .radar-ring:nth-child(4) {
+            inset: 45%;
+        }
+
+        /* Seal icon */
+        .seal-icon {
+            font-size: 5rem;
+            color: var(--blue);
+            text-shadow: 0 0 40px var(--blue), 0 0 80px var(--blue);
+            animation: seal-breathe 3s ease-in-out infinite;
+            z-index: 15;
+        }
+
+        /* Rotating outer rings */
+        .seal-ring {
+            position: absolute;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            animation: ring-rotate linear infinite;
+        }
+
+        .seal-ring:nth-child(1) {
+            width: 260px;
+            height: 260px;
+            animation-duration: 20s;
+        }
+
+        .seal-ring:nth-child(2) {
+            width: 290px;
+            height: 290px;
+            border-style: dashed;
+            animation-duration: 15s;
+            animation-direction: reverse;
+        }
+
+        .seal-ring:nth-child(3) {
+            width: 320px;
+            height: 320px;
+            animation-duration: 25s;
+            border-color: rgba(6, 182, 212, 0.2);
+        }
+
+        @keyframes radar-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes seal-breathe {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+        }
+
+        @keyframes ring-rotate {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* RED VERSION */
+        .glass-seal.red::before {
+            background: radial-gradient(ellipse at center, transparent 20%, rgba(239, 68, 68, 0.1) 60%, rgba(239, 68, 68, 0.25) 100%);
+        }
+
+        .glass-seal.red .glass-panel {
+            box-shadow: 0 0 60px rgba(239, 68, 68, 0.2), inset 0 0 60px rgba(239, 68, 68, 0.05);
+        }
+
+        .glass-seal.red .radar-sweep {
+            background: conic-gradient(from 0deg, transparent, rgba(239, 68, 68, 0.4) 20deg, transparent 40deg);
+        }
+
+        .glass-seal.red .radar-ring {
+            border-color: rgba(239, 68, 68, 0.15);
+        }
+
+        .glass-seal.red .seal-icon {
+            color: var(--red);
+            text-shadow: 0 0 40px var(--red), 0 0 80px var(--red);
+        }
+
+        .glass-seal.red .seal-ring {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .glass-seal.red .seal-ring:nth-child(3) {
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        /* AMBER VERSION */
+        .glass-seal.amber::before {
+            background: radial-gradient(ellipse at center, transparent 20%, rgba(245, 158, 11, 0.1) 60%, rgba(245, 158, 11, 0.25) 100%);
+        }
+
+        .glass-seal.amber .glass-panel {
+            box-shadow: 0 0 60px rgba(245, 158, 11, 0.2), inset 0 0 60px rgba(245, 158, 11, 0.05);
+        }
+
+        .glass-seal.amber .radar-sweep {
+            background: conic-gradient(from 0deg, transparent, rgba(245, 158, 11, 0.4) 20deg, transparent 40deg);
+        }
+
+        .glass-seal.amber .radar-ring {
+            border-color: rgba(245, 158, 11, 0.15);
+        }
+
+        .glass-seal.amber .seal-icon {
+            color: var(--amber);
+            text-shadow: 0 0 40px var(--amber), 0 0 80px var(--amber);
+        }
+
+        .glass-seal.amber .seal-ring {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* FUSE + PRISM GLASSMORPHISM                                      */
+        /* ═══════════════════════════════════════════════════════════════ */
+
+        .glass-fuse {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.03), rgba(59, 130, 246, 0.06), rgba(6, 182, 212, 0.02));
+        }
+
+        .glass-fuse::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+        }
+
+        /* Glassmorphism diamond center */
+        .prism-glass {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140px;
+            height: 140px;
+            transform: translate(-50%, -50%) rotate(45deg);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 0 80px rgba(6, 182, 212, 0.3),
+                inset 0 0 40px rgba(6, 182, 212, 0.1);
+            animation: prism-pulse 4s ease-in-out infinite;
+        }
+
+        .prism-glass .icon {
+            transform: rotate(-45deg);
+            font-size: 3.5rem;
+            color: var(--cyan);
+            text-shadow: 0 0 30px var(--cyan);
+        }
+
+        /* Rotating prism frames */
+        .prism-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 2px solid rgba(6, 182, 212, 0.2);
+            transform: translate(-50%, -50%) rotate(45deg);
+            animation: prism-rotate linear infinite;
+        }
+
+        .prism-frame:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            animation-duration: 12s;
+        }
+
+        .prism-frame:nth-child(2) {
+            width: 260px;
+            height: 260px;
+            animation-duration: 18s;
+            animation-direction: reverse;
+            border-style: dashed;
+        }
+
+        .prism-frame:nth-child(3) {
+            width: 320px;
+            height: 320px;
+            animation-duration: 24s;
+            border-color: rgba(59, 130, 246, 0.15);
+        }
+
+        /* Fuse beams */
+        .fuse-beam {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--cyan), var(--cyan), transparent);
+            animation: fuse-converge 3s ease-in-out infinite;
+            filter: blur(1px);
+            z-index: 8;
+        }
+
+        .fuse-beam.h {
+            height: 3px;
+            width: 50%;
+            top: 50%;
+        }
+
+        .fuse-beam.h.left {
+            left: 0;
+            transform-origin: right;
+        }
+
+        .fuse-beam.h.right {
+            right: 0;
+            transform-origin: left;
+        }
+
+        .fuse-beam.v {
+            width: 3px;
+            height: 50%;
+            left: 50%;
+            background: linear-gradient(transparent, var(--cyan), var(--cyan), transparent);
+        }
+
+        .fuse-beam.v.top {
+            top: 0;
+            transform-origin: bottom;
+        }
+
+        .fuse-beam.v.bottom {
+            bottom: 0;
+            transform-origin: top;
+        }
+
+        @keyframes prism-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 60px rgba(6, 182, 212, 0.2), inset 0 0 40px rgba(6, 182, 212, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 0 100px rgba(6, 182, 212, 0.4), inset 0 0 60px rgba(6, 182, 212, 0.2);
+            }
+        }
+
+        @keyframes prism-rotate {
+            0% {
+                transform: translate(-50%, -50%) rotate(45deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(405deg);
+            }
+        }
+
+        @keyframes fuse-converge {
+
+            0%,
+            100% {
+                transform: scaleX(0);
+                opacity: 0;
+            }
+
+            40%,
+            60% {
+                transform: scaleX(1);
+                opacity: 1;
+            }
+        }
+
+        /* RED VERSION */
+        .glass-fuse.red::before {
+            background: radial-gradient(ellipse at center, rgba(239, 68, 68, 0.08) 0%, transparent 50%);
+        }
+
+        .glass-fuse.red .prism-glass {
+            box-shadow: 0 0 80px rgba(239, 68, 68, 0.3), inset 0 0 40px rgba(239, 68, 68, 0.1);
+        }
+
+        .glass-fuse.red .prism-glass .icon {
+            color: var(--red);
+            text-shadow: 0 0 30px var(--red);
+        }
+
+        .glass-fuse.red .prism-frame {
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .glass-fuse.red .fuse-beam {
+            background: linear-gradient(90deg, transparent, var(--red), var(--red), transparent);
+        }
+
+        .glass-fuse.red .fuse-beam.v {
+            background: linear-gradient(transparent, var(--red), var(--red), transparent);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* PREMIUM COMBO: CORNER ENERGY + VIGNETTE + SEAL                  */
+        /* ═══════════════════════════════════════════════════════════════ */
+
+        .combo-premium {
+            background: radial-gradient(ellipse at center, transparent 0%, transparent 30%, rgba(59, 130, 246, 0.08) 70%, rgba(59, 130, 246, 0.2) 100%), var(--bg);
+        }
+
+        /* Corner brackets */
+        .corner-bracket {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+        }
+
+        .corner-bracket::before,
+        .corner-bracket::after {
+            content: '';
+            position: absolute;
+            background: var(--blue);
+            animation: corner-pulse 2s ease-in-out infinite;
+        }
+
+        .corner-bracket.tl {
+            top: 20px;
+            left: 20px;
+        }
+
+        .corner-bracket.tl::before {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+        }
+
+        .corner-bracket.tl::after {
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+        }
+
+        .corner-bracket.tr {
+            top: 20px;
+            right: 20px;
+        }
+
+        .corner-bracket.tr::before {
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+        }
+
+        .corner-bracket.tr::after {
+            top: 0;
+            right: 0;
+            width: 3px;
+            height: 100%;
+        }
+
+        .corner-bracket.bl {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        .corner-bracket.bl::before {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+        }
+
+        .corner-bracket.bl::after {
+            bottom: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+        }
+
+        .corner-bracket.br {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .corner-bracket.br::before {
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+        }
+
+        .corner-bracket.br::after {
+            bottom: 0;
+            right: 0;
+            width: 3px;
+            height: 100%;
+        }
+
+        @keyframes corner-pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 1;
+                box-shadow: 0 0 15px var(--blue);
+            }
+        }
+
+        /* Central glass badge */
+        .combo-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 160px;
+            height: 160px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow: 0 0 60px rgba(59, 130, 246, 0.15);
+        }
+
+        .combo-badge .icon {
+            font-size: 4rem;
+            color: var(--blue);
+            text-shadow: 0 0 30px var(--blue);
+            animation: badge-glow 2s ease-in-out infinite;
+        }
+
+        /* Orbiting dot */
+        .combo-orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            margin: -100px;
+            animation: orbit-spin 6s linear infinite;
+        }
+
+        .combo-orbit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            margin-left: -5px;
+            background: var(--blue);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--blue);
+        }
+
+        @keyframes badge-glow {
+
+            0%,
+            100% {
+                text-shadow: 0 0 20px var(--blue);
+            }
+
+            50% {
+                text-shadow: 0 0 40px var(--blue), 0 0 60px var(--blue);
+            }
+        }
+
+        @keyframes orbit-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* RED VERSION */
+        .combo-premium.red {
+            background: radial-gradient(ellipse at center, transparent 0%, transparent 30%, rgba(239, 68, 68, 0.08) 70%, rgba(239, 68, 68, 0.2) 100%), var(--bg);
+        }
+
+        .combo-premium.red .corner-bracket::before,
+        .combo-premium.red .corner-bracket::after {
+            background: var(--red);
+        }
+
+        .combo-premium.red .combo-badge {
+            box-shadow: 0 0 60px rgba(239, 68, 68, 0.15);
+        }
+
+        .combo-premium.red .combo-badge .icon {
+            color: var(--red);
+            text-shadow: 0 0 30px var(--red);
+        }
+
+        .combo-premium.red .combo-orbit::before {
+            background: var(--red);
+            box-shadow: 0 0 15px var(--red);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* ULTIMATE COMBO: CONTAINMENT + ORBS + HUD                        */
+        /* ═══════════════════════════════════════════════════════════════ */
+
+        .combo-ultimate {
+            background: var(--bg);
+            overflow: hidden;
+        }
+
+        /* Ambient orbs */
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: orb-float 8s ease-in-out infinite;
+            opacity: 0.3;
+        }
+
+        .ambient-orb:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            background: var(--blue);
+            top: 10%;
+            left: 5%;
+        }
+
+        .ambient-orb:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            background: var(--cyan);
+            bottom: 20%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .ambient-orb:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            background: var(--blue);
+            top: 60%;
+            left: 70%;
+            animation-delay: 4s;
+        }
+
+        @keyframes orb-float {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.2;
+            }
+
+            50% {
+                transform: translateY(-20px) scale(1.1);
+                opacity: 0.4;
+            }
+        }
+
+        /* Containment fields */
+        .contain-field {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 16px;
+            animation: contain-breathe 3s ease-in-out infinite;
+        }
+
+        .contain-field:nth-child(4) {
+            width: 280px;
+            height: 280px;
+        }
+
+        .contain-field:nth-child(5) {
+            width: 320px;
+            height: 320px;
+            animation-delay: 0.5s;
+            opacity: 0.6;
+        }
+
+        .contain-field:nth-child(6) {
+            width: 360px;
+            height: 360px;
+            animation-delay: 1s;
+            opacity: 0.3;
+        }
+
+        @keyframes contain-breathe {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        /* HUD data displays */
+        .hud-display {
+            position: absolute;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--cyan);
+            opacity: 0.6;
+            letter-spacing: 1px;
+        }
+
+        .hud-display.top-left {
+            top: 25px;
+            left: 25px;
+        }
+
+        .hud-display.top-right {
+            top: 25px;
+            right: 25px;
+            text-align: right;
+        }
+
+        .hud-display.bottom-left {
+            bottom: 80px;
+            left: 25px;
+        }
+
+        /* Central glass seal */
+        .ultimate-seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow:
+                0 0 80px rgba(59, 130, 246, 0.15),
+                0 0 120px rgba(6, 182, 212, 0.1);
+        }
+
+        .ultimate-seal .icon {
+            font-size: 5rem;
+            color: var(--blue);
+            text-shadow: 0 0 40px var(--blue), 0 0 80px rgba(6, 182, 212, 0.5);
+            animation: ultimate-glow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes ultimate-glow {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        /* RED VERSION */
+        .combo-ultimate.red .ambient-orb {
+            background: var(--red) !important;
+        }
+
+        .combo-ultimate.red .contain-field {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .combo-ultimate.red .hud-display {
+            color: var(--red);
+        }
+
+        .combo-ultimate.red .ultimate-seal {
+            box-shadow: 0 0 80px rgba(239, 68, 68, 0.15), 0 0 120px rgba(239, 68, 68, 0.1);
+        }
+
+        .combo-ultimate.red .ultimate-seal .icon {
+            color: var(--red);
+            text-shadow: 0 0 40px var(--red), 0 0 80px rgba(239, 68, 68, 0.5);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* HORIZONTAL SCAN LINE OVERLAY (works on any)                     */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .scan-overlay::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 10%, var(--blue) 50%, transparent 90%);
+            animation: scan-down 4s linear infinite;
+            box-shadow: 0 0 20px var(--blue);
+            z-index: 15;
+            opacity: 0.6;
+        }
+
+        @keyframes scan-down {
+            0% {
+                top: -2px;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        .scan-overlay.red::after {
+            background: linear-gradient(90deg, transparent 10%, var(--red) 50%, transparent 90%);
+            box-shadow: 0 0 20px var(--red);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>✨ Premium Verdict Frames</h1>
+    <p class="subtitle">Glassmorphism • Combined Effects • Production-Ready Concepts</p>
+
+    <p class="section-title">— VERIFIED (Blue) —</p>
+    <div class="premium-grid">
+        <!-- Glass Seal + Radar -->
+        <div class="frame glass-seal scan-overlay">
+            <div class="radar-layer">
+                <div class="radar-sweep"></div>
+                <div class="radar-ring" style="inset:0"></div>
+                <div class="radar-ring"></div>
+                <div class="radar-ring"></div>
+                <div class="radar-ring"></div>
+            </div>
+            <div class="seal-ring" style="top:50%;left:50%"></div>
+            <div class="seal-ring" style="top:50%;left:50%"></div>
+            <div class="seal-ring" style="top:50%;left:50%"></div>
+            <div class="glass-panel">
+                <span class="seal-icon">✓</span>
+            </div>
+            <div class="frame-label">
+                <h3>Glassmorphism Seal + Radar</h3>
+                <p>Frosted glass center with rotating radar sweep behind. Outer rings orbit. Scan line sweeps down.</p>
+            </div>
+        </div>
+
+        <!-- Fuse + Prism -->
+        <div class="frame glass-fuse">
+            <div class="prism-frame"></div>
+            <div class="prism-frame"></div>
+            <div class="prism-frame"></div>
+            <div class="fuse-beam h left"></div>
+            <div class="fuse-beam h right"></div>
+            <div class="fuse-beam v top"></div>
+            <div class="fuse-beam v bottom"></div>
+            <div class="prism-glass">
+                <span class="icon">✓</span>
+            </div>
+            <div class="frame-label">
+                <h3>Prism Fuse Convergence</h3>
+                <p>Energy beams converge into glassmorphism diamond. Rotating prism frames add depth. Central icon
+                    pulses.</p>
+            </div>
+        </div>
+
+        <!-- Premium Combo: Vignette + Corners + Seal -->
+        <div class="frame combo-premium">
+            <div class="corner-bracket tl"></div>
+            <div class="corner-bracket tr"></div>
+            <div class="corner-bracket bl"></div>
+            <div class="corner-bracket br"></div>
+            <div class="combo-orbit"></div>
+            <div class="combo-badge">
+                <span class="icon">✓</span>
+            </div>
+            <div class="frame-label">
+                <h3>Premium Combo</h3>
+                <p>Radial vignette + animated corner brackets + glassmorphism badge + orbiting dot. Balanced and
+                    professional.</p>
+            </div>
+        </div>
+
+        <!-- Ultimate: Containment + Orbs + HUD -->
+        <div class="frame combo-ultimate scan-overlay">
+            <div class="ambient-orb"></div>
+            <div class="ambient-orb"></div>
+            <div class="ambient-orb"></div>
+            <div class="contain-field"></div>
+            <div class="contain-field"></div>
+            <div class="contain-field"></div>
+            <div class="hud-display top-left">SOURCES: 47 VERIFIED<br>CONFIDENCE: 98.7%</div>
+            <div class="hud-display top-right">REPORT ID: GV-2024-0847<br>STATUS: LOCKED</div>
+            <div class="hud-display bottom-left">SCAN: COMPLETE</div>
+            <div class="ultimate-seal">
+                <span class="icon">✓</span>
+            </div>
+            <div class="frame-label">
+                <h3>Ultimate Combo</h3>
+                <p>Ambient orbs + containment fields + HUD data + glassmorphism seal + scan line. Maximum impact.</p>
+            </div>
+        </div>
+    </div>
+
+    <p class="section-title">— FALSE (Red) —</p>
+    <div class="premium-grid">
+        <div class="frame glass-seal red scan-overlay red">
+            <div class="radar-layer">
+                <div class="radar-sweep"></div>
+                <div class="radar-ring" style="inset:0"></div>
+                <div class="radar-ring"></div>
+                <div class="radar-ring"></div>
+                <div class="radar-ring"></div>
+            </div>
+            <div class="seal-ring" style="top:50%;left:50%"></div>
+            <div class="seal-ring" style="top:50%;left:50%"></div>
+            <div class="seal-ring" style="top:50%;left:50%"></div>
+            <div class="glass-panel">
+                <span class="seal-icon">✗</span>
+            </div>
+            <div class="frame-label">
+                <h3>Glassmorphism Seal + Radar (Alert)</h3>
+                <p>Red version creates urgent "breach detected" atmosphere. All elements shift to warning state.</p>
+            </div>
+        </div>
+
+        <div class="frame glass-fuse red">
+            <div class="prism-frame"></div>
+            <div class="prism-frame"></div>
+            <div class="prism-frame"></div>
+            <div class="fuse-beam h left"></div>
+            <div class="fuse-beam h right"></div>
+            <div class="fuse-beam v top"></div>
+            <div class="fuse-beam v bottom"></div>
+            <div class="prism-glass">
+                <span class="icon">✗</span>
+            </div>
+            <div class="frame-label">
+                <h3>Prism Fuse (Rejection)</h3>
+                <p>Red energy converges to mark falsehood. Diamond becomes warning indicator.</p>
+            </div>
+        </div>
+
+        <div class="frame combo-premium red">
+            <div class="corner-bracket tl"></div>
+            <div class="corner-bracket tr"></div>
+            <div class="corner-bracket bl"></div>
+            <div class="corner-bracket br"></div>
+            <div class="combo-orbit"></div>
+            <div class="combo-badge">
+                <span class="icon">✗</span>
+            </div>
+            <div class="frame-label">
+                <h3>Premium Combo (Alert)</h3>
+                <p>Red vignette and brackets create warning frame. Corner pulses feel more urgent.</p>
+            </div>
+        </div>
+
+        <div class="frame combo-ultimate red scan-overlay red">
+            <div class="ambient-orb"></div>
+            <div class="ambient-orb"></div>
+            <div class="ambient-orb"></div>
+            <div class="contain-field"></div>
+            <div class="contain-field"></div>
+            <div class="contain-field"></div>
+            <div class="hud-display top-left">SOURCES: 2 FAILED<br>CONFIDENCE: 8.3%</div>
+            <div class="hud-display top-right">REPORT ID: GV-2024-0848<br>STATUS: REJECTED</div>
+            <div class="hud-display bottom-left">SCAN: FAILED</div>
+            <div class="ultimate-seal">
+                <span class="icon">✗</span>
+            </div>
+            <div class="frame-label">
+                <h3>Ultimate Combo (Alert)</h3>
+                <p>Full red atmosphere with updated HUD data showing failed verification metrics.</p>
+            </div>
+        </div>
+    </div>
+
+    <p class="section-title">— MIXED (Amber) —</p>
+    <div class="premium-grid">
+        <div class="frame glass-seal amber">
+            <div class="radar-layer">
+                <div class="radar-sweep"></div>
+                <div class="radar-ring" style="inset:0"></div>
+                <div class="radar-ring"></div>
+                <div class="radar-ring"></div>
+            </div>
+            <div class="glass-panel">
+                <span class="seal-icon" style="font-size:3.5rem">⚠</span>
+            </div>
+            <div class="frame-label">
+                <h3>Mixed/Unverified</h3>
+                <p>Amber indicates caution - claim has mixed evidence or is still being analyzed.</p>
+            </div>
+        </div>
+    </div>
+
+    <div
+        style="text-align:center;margin:80px 0 40px;padding:50px;background:linear-gradient(135deg,rgba(59,130,246,0.05),rgba(6,182,212,0.08));border-radius:20px;max-width:1000px;margin-left:auto;margin-right:auto;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.05)">
+        <h2 style="color:var(--cyan);margin-bottom:20px;font-size:1.3rem">🏆 Top Recommendations</h2>
+        <div
+            style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;text-align:left;margin-top:30px">
+            <div style="background:rgba(0,0,0,0.4);padding:20px;border-radius:12px;border-left:4px solid var(--blue)">
+                <h4 style="color:var(--blue);margin-bottom:10px">🥇 Glassmorphism Seal + Radar</h4>
+                <p style="color:var(--muted);font-size:0.8rem;line-height:1.6">Best overall. Frosted glass is modern,
+                    radar adds dynamism, simple ✓/✗ icon is instantly recognizable.</p>
+            </div>
+            <div style="background:rgba(0,0,0,0.4);padding:20px;border-radius:12px;border-left:4px solid var(--cyan)">
+                <h4 style="color:var(--cyan);margin-bottom:10px">🥈 Premium Combo</h4>
+                <p style="color:var(--muted);font-size:0.8rem;line-height:1.6">Balanced and professional. Corner
+                    brackets frame content, orbiting dot adds life, not too busy.</p>
+            </div>
+            <div style="background:rgba(0,0,0,0.4);padding:20px;border-radius:12px;border-left:4px solid var(--green)">
+                <h4 style="color:var(--green);margin-bottom:10px">🥉 Ultimate (for headlines)</h4>
+                <p style="color:var(--muted);font-size:0.8rem;line-height:1.6">Maximum impact for major verdicts. HUD
+                    data adds credibility metrics. Use sparingly for emphasis.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selected Favorites - Refined Variants | GenuVerity</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050A14;
+            --card: #0a1628;
+            --border: rgba(59, 130, 246, 0.15);
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --cyan: #06b6d4;
+            --text: #fff;
+            --muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #fff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            color: var(--cyan);
+            font-size: 1.1rem;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card), rgba(10, 22, 40, 0.8));
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .card h3 {
+            margin-bottom: 16px;
+            font-size: 0.8rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meter-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .meter-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            width: 90px;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .meter {
+            flex: 1;
+        }
+
+        /* 1A VARIANTS: Classic Holographic */
+        .holo-a1 {
+            height: 36px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holo-a1::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: sweep 2s ease-in-out infinite;
+        }
+
+        .holo-a1 .fill {
+            height: 100%;
+            background: linear-gradient(90deg, currentColor, rgba(255, 255, 255, 0.1));
+        }
+
+        .holo-a1 .fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(255, 255, 255, 0.05) 2px, rgba(255, 255, 255, 0.05) 4px);
+        }
+
+        @keyframes sweep {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* 1A-v2: Gradient Fill */
+        .holo-a2 {
+            height: 36px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holo-a2::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .holo-a2 .fill {
+            height: 100%;
+            position: relative;
+        }
+
+        @keyframes shimmer {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        /* 1A-v3: Multi-layer */
+        .holo-a3 {
+            height: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 4px 0;
+        }
+
+        .holo-a3 .layer {
+            height: 8px;
+            border-radius: 4px;
+            margin: 0 8px;
+            opacity: 0.6;
+            animation: layer-pulse 1.5s ease-in-out infinite;
+        }
+
+        .holo-a3 .layer:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .holo-a3 .layer:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes layer-pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.9;
+            }
+        }
+
+        /* 1B VARIANTS: Double Scan */
+        .holo-b1 {
+            height: 36px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holo-b1 .scan1,
+        .holo-b1 .scan2 {
+            position: absolute;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: currentColor;
+            filter: blur(1px);
+        }
+
+        .holo-b1 .scan1 {
+            animation: scan-l 1.5s ease-in-out infinite;
+        }
+
+        .holo-b1 .scan2 {
+            animation: scan-r 1.5s ease-in-out infinite;
+        }
+
+        @keyframes scan-l {
+
+            0%,
+            100% {
+                left: 0;
+            }
+
+            50% {
+                left: calc(50% - 3px);
+            }
+        }
+
+        @keyframes scan-r {
+
+            0%,
+            100% {
+                right: 0;
+            }
+
+            50% {
+                right: calc(50% - 3px);
+            }
+        }
+
+        /* 1B-v2: Triple Scan */
+        .holo-b2 {
+            height: 36px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holo-b2 .scan {
+            position: absolute;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: currentColor;
+            animation: triple-scan 2s linear infinite;
+        }
+
+        .holo-b2 .scan:nth-child(2) {
+            animation-delay: 0.66s;
+        }
+
+        .holo-b2 .scan:nth-child(3) {
+            animation-delay: 1.33s;
+        }
+
+        @keyframes triple-scan {
+            0% {
+                left: -2px;
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                left: 100%;
+                opacity: 0;
+            }
+        }
+
+        /* 1D VARIANTS: Particle */
+        .holo-d1 {
+            height: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+        }
+
+        .particle {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin: 0 4px;
+            animation: float 1.5s ease-in-out infinite;
+        }
+
+        .particle:nth-child(odd) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0.4;
+            }
+
+            50% {
+                transform: translateY(-8px) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* 1D-v2: Orbiting Particles */
+        .holo-d2 {
+            height: 44px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .orbit-container {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            animation: orbit-drift 4s linear infinite;
+        }
+
+        .orbit-p {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            margin: 0 6px;
+            animation: orbit-pulse 0.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes orbit-drift {
+            0% {
+                left: -50px;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        @keyframes orbit-pulse {
+            0% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* 3B: Synapse */
+        .synapse {
+            display: flex;
+            align-items: center;
+        }
+
+        .syn-node {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .syn-node.active {
+            animation: syn-glow 1s ease-out infinite;
+        }
+
+        .syn-link {
+            width: 20px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 0 -3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .syn-link.active {
+            background: currentColor;
+            opacity: 0.5;
+        }
+
+        .syn-link.active::after {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            background: #fff;
+            animation: syn-travel 0.5s linear infinite;
+        }
+
+        @keyframes syn-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 currentColor;
+            }
+
+            50% {
+                box-shadow: 0 0 12px 4px currentColor;
+            }
+        }
+
+        @keyframes syn-travel {
+            0% {
+                left: -8px;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* 3B-v2: Branching Synapse */
+        .synapse-v2 {
+            height: 50px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .branch-node {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .branch-node.active {
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .branch-line {
+            width: 16px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .branch-line.active {
+            background: currentColor;
+        }
+
+        /* REACTOR VARIANTS */
+        .reactor {
+            width: 55px;
+            height: 55px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .r-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
+        }
+
+        .r-ring:nth-child(1) {
+            inset: 0;
+            animation: r-spin 1s linear infinite;
+        }
+
+        .r-ring:nth-child(2) {
+            inset: 7px;
+            animation: r-spin 1.5s linear infinite reverse;
+        }
+
+        .r-ring:nth-child(3) {
+            inset: 14px;
+            animation: r-spin 2s linear infinite;
+        }
+
+        .r-core {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            animation: r-pulse 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes r-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes r-pulse {
+            0% {
+                box-shadow: 0 0 8px currentColor;
+            }
+
+            100% {
+                box-shadow: 0 0 20px currentColor, 0 0 35px currentColor;
+            }
+        }
+
+        /* DNA */
+        .dna {
+            height: 42px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            padding: 0 6px;
+        }
+
+        .dna-pair {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .dna-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            animation: dna-wave 1.5s ease-in-out infinite;
+        }
+
+        .dna-dot:nth-child(3) {
+            animation-delay: 0.75s;
+            animation-direction: reverse;
+        }
+
+        .dna-line {
+            width: 2px;
+            height: 8px;
+            opacity: 0.3;
+        }
+
+        @keyframes dna-wave {
+
+            0%,
+            100% {
+                transform: translateY(-5px) scale(0.8);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translateY(5px) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* ORBITAL */
+        .orbital {
+            width: 55px;
+            height: 55px;
+            position: relative;
+        }
+
+        .orb-ring {
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+        }
+
+        .orb-ring:nth-child(2) {
+            inset: 8px;
+            transform: rotate(45deg);
+        }
+
+        .orb-ring:nth-child(3) {
+            inset: 16px;
+            transform: rotate(-45deg);
+        }
+
+        .orb-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            top: 50%;
+            left: 50%;
+            margin: -4px;
+            border-radius: 50%;
+            animation: orb-move 3s linear infinite;
+        }
+
+        @keyframes orb-move {
+            0% {
+                transform: rotate(0deg) translateX(22px);
+            }
+
+            100% {
+                transform: rotate(360deg) translateX(22px);
+            }
+        }
+
+        /* GYROSCOPE */
+        .gyro {
+            width: 55px;
+            height: 55px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gyro-ring {
+            position: absolute;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+        }
+
+        .gyro-ring:nth-child(1) {
+            width: 100%;
+            height: 100%;
+            animation: gyro-spin 3s linear infinite;
+        }
+
+        .gyro-ring:nth-child(2) {
+            width: 75%;
+            height: 75%;
+            animation: gyro-spin 2s linear infinite reverse;
+        }
+
+        .gyro-ring:nth-child(3) {
+            width: 50%;
+            height: 50%;
+            animation: gyro-spin 4s linear infinite;
+        }
+
+        .gyro-core {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        @keyframes gyro-spin {
+            0% {
+                transform: rotateX(70deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(70deg) rotateZ(360deg);
+            }
+        }
+
+        /* PULSAR */
+        .pulsar {
+            width: 55px;
+            height: 55px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pulsar-beam {
+            position: absolute;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to top, transparent, currentColor, transparent);
+            animation: pulsar-rotate 1s linear infinite;
+            opacity: 0.6;
+        }
+
+        .pulsar-core {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            z-index: 1;
+            animation: pulsar-flash 0.5s ease-in-out infinite alternate;
+        }
+
+        .pulsar-ring {
+            position: absolute;
+            border: 1px dashed currentColor;
+            border-radius: 50%;
+            opacity: 0.2;
+        }
+
+        @keyframes pulsar-rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulsar-flash {
+            0% {
+                box-shadow: 0 0 10px currentColor;
+            }
+
+            100% {
+                box-shadow: 0 0 25px currentColor, 0 0 40px currentColor;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🎯 Selected Favorites - Refined</h1>
+    <p class="subtitle">Your 13 Picks with Fresh Variants</p>
+
+    <h2>1A // Holographic Classic Variants</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>1A-v1 // Scan Line</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter holo-a1" style="color:var(--red)">
+                    <div class="fill" style="width:10%;background:linear-gradient(90deg,var(--red),transparent)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter holo-a1" style="color:var(--amber)">
+                    <div class="fill" style="width:50%;background:linear-gradient(90deg,var(--amber),transparent)">
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter holo-a1" style="color:var(--blue)">
+                    <div class="fill" style="width:100%;background:linear-gradient(90deg,var(--blue),transparent)">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <h3>1A-v2 // Shimmer</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter holo-a2" style="color:var(--red)">
+                    <div class="fill" style="width:10%;background:var(--red)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter holo-a2" style="color:var(--amber)">
+                    <div class="fill" style="width:50%;background:var(--amber)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter holo-a2" style="color:var(--blue)">
+                    <div class="fill" style="width:100%;background:var(--blue)"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <h3>1A-v3 // Multi-Layer</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter holo-a3">
+                    <div class="layer" style="width:15%;background:var(--red)"></div>
+                    <div class="layer" style="width:10%;background:var(--red)"></div>
+                    <div class="layer" style="width:12%;background:var(--red)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter holo-a3">
+                    <div class="layer" style="width:55%;background:var(--amber)"></div>
+                    <div class="layer" style="width:45%;background:var(--amber)"></div>
+                    <div class="layer" style="width:50%;background:var(--amber)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter holo-a3">
+                    <div class="layer" style="width:100%;background:var(--blue)"></div>
+                    <div class="layer" style="width:95%;background:var(--blue)"></div>
+                    <div class="layer" style="width:100%;background:var(--blue)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>1B // Double Scan Variants</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>1B-v1 // Converging Beams</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter holo-b1" style="color:var(--red)">
+                    <div class="scan1"></div>
+                    <div class="scan2"></div>
+                    <div class="fill" style="width:10%;background:rgba(239,68,68,0.2)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter holo-b1" style="color:var(--amber)">
+                    <div class="scan1"></div>
+                    <div class="scan2"></div>
+                    <div class="fill" style="width:50%;background:rgba(245,158,11,0.2)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter holo-b1" style="color:var(--blue)">
+                    <div class="scan1"></div>
+                    <div class="scan2"></div>
+                    <div class="fill" style="width:100%;background:rgba(59,130,246,0.2)"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <h3>1B-v2 // Triple Beam</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter holo-b2" style="color:var(--red);box-shadow:inset 0 0 10px rgba(239,68,68,0.2)">
+                    <div class="scan"></div>
+                    <div class="scan"></div>
+                    <div class="scan"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter holo-b2" style="color:var(--amber);box-shadow:inset 0 0 10px rgba(245,158,11,0.2)">
+                    <div class="scan"></div>
+                    <div class="scan"></div>
+                    <div class="scan"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter holo-b2" style="color:var(--blue);box-shadow:inset 0 0 10px rgba(59,130,246,0.2)">
+                    <div class="scan"></div>
+                    <div class="scan"></div>
+                    <div class="scan"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>1D // Particle Variants</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>1D-v1 // Floating Particles</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter holo-d1">
+                    <div class="particle" style="background:var(--red);box-shadow:0 0 6px var(--red)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter holo-d1">
+                    <div class="particle" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div>
+                    <div class="particle" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div>
+                    <div class="particle" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter holo-d1">
+                    <div class="particle" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                    <div class="particle" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                    <div class="particle" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                    <div class="particle" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                    <div class="particle" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <h3>1D-v2 // Drifting Trail</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter holo-d2" style="background:rgba(239,68,68,0.1)">
+                    <div class="orbit-container">
+                        <div class="orbit-p" style="background:var(--red);box-shadow:0 0 8px var(--red)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter holo-d2" style="background:rgba(245,158,11,0.1)">
+                    <div class="orbit-container">
+                        <div class="orbit-p" style="background:var(--amber);box-shadow:0 0 8px var(--amber)"></div>
+                        <div class="orbit-p" style="background:var(--amber);box-shadow:0 0 8px var(--amber)"></div>
+                        <div class="orbit-p" style="background:var(--amber);box-shadow:0 0 8px var(--amber)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter holo-d2" style="background:rgba(59,130,246,0.1)">
+                    <div class="orbit-container">
+                        <div class="orbit-p" style="background:var(--blue);box-shadow:0 0 8px var(--blue)"></div>
+                        <div class="orbit-p" style="background:var(--blue);box-shadow:0 0 8px var(--blue)"></div>
+                        <div class="orbit-p" style="background:var(--blue);box-shadow:0 0 8px var(--blue)"></div>
+                        <div class="orbit-p" style="background:var(--blue);box-shadow:0 0 8px var(--blue)"></div>
+                        <div class="orbit-p" style="background:var(--blue);box-shadow:0 0 8px var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>3B // Synapse Variants</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>3B-v1 // Signal Chain</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter synapse" style="color:var(--red)">
+                    <div class="syn-node active" style="background:var(--red)"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter synapse" style="color:var(--amber)">
+                    <div class="syn-node active" style="background:var(--amber)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--amber)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--amber)"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                    <div class="syn-link"></div>
+                    <div class="syn-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter synapse" style="color:var(--blue)">
+                    <div class="syn-node active" style="background:var(--blue)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--blue)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--blue)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--blue)"></div>
+                    <div class="syn-link active"></div>
+                    <div class="syn-node active" style="background:var(--blue)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>5A-E // Reactor Variants (All 5)</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>5A-5E // All Reactor Styles</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="reactor" style="color:var(--red)">
+                    <div class="r-ring"></div>
+                    <div class="r-ring"></div>
+                    <div class="r-ring"></div>
+                    <div class="r-core" style="background:var(--red)"></div>
+                </div><span style="font-size:0.7rem;color:var(--red);margin-left:10px">CRITICAL</span>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="reactor" style="color:var(--amber)">
+                    <div class="r-ring"></div>
+                    <div class="r-ring"></div>
+                    <div class="r-ring"></div>
+                    <div class="r-core" style="background:var(--amber)"></div>
+                </div><span style="font-size:0.7rem;color:var(--amber);margin-left:10px">PARTIAL</span>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="reactor" style="color:var(--blue)">
+                    <div class="r-ring"></div>
+                    <div class="r-ring"></div>
+                    <div class="r-ring"></div>
+                    <div class="r-core" style="background:var(--blue)"></div>
+                </div><span style="font-size:0.7rem;color:var(--blue);margin-left:10px">OPTIMAL</span>
+            </div>
+        </div>
+    </div>
+
+    <h2>15A // DNA Helix</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>15A // Double Helix</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter dna" style="color:var(--red)">
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--red);box-shadow:0 0 5px var(--red)"></div>
+                        <div class="dna-line" style="background:var(--red)"></div>
+                        <div class="dna-dot" style="background:var(--red);box-shadow:0 0 5px var(--red)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                        <div class="dna-line" style="background:var(--red)"></div>
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                        <div class="dna-line" style="background:var(--red)"></div>
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                        <div class="dna-line" style="background:var(--red)"></div>
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                        <div class="dna-line" style="background:var(--red)"></div>
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter dna" style="color:var(--amber)">
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--amber);box-shadow:0 0 5px var(--amber)"></div>
+                        <div class="dna-line" style="background:var(--amber)"></div>
+                        <div class="dna-dot" style="background:var(--amber);box-shadow:0 0 5px var(--amber)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--amber);box-shadow:0 0 5px var(--amber)"></div>
+                        <div class="dna-line" style="background:var(--amber)"></div>
+                        <div class="dna-dot" style="background:var(--amber);box-shadow:0 0 5px var(--amber)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--amber);box-shadow:0 0 5px var(--amber)"></div>
+                        <div class="dna-line" style="background:var(--amber)"></div>
+                        <div class="dna-dot" style="background:var(--amber);box-shadow:0 0 5px var(--amber)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--amber)"></div>
+                        <div class="dna-line" style="background:var(--amber)"></div>
+                        <div class="dna-dot" style="background:var(--amber)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--amber)"></div>
+                        <div class="dna-line" style="background:var(--amber)"></div>
+                        <div class="dna-dot" style="background:var(--amber)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter dna" style="color:var(--blue)">
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 5px var(--blue)"></div>
+                        <div class="dna-line" style="background:var(--blue)"></div>
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 5px var(--blue)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 5px var(--blue)"></div>
+                        <div class="dna-line" style="background:var(--blue)"></div>
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 5px var(--blue)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 5px var(--blue)"></div>
+                        <div class="dna-line" style="background:var(--blue)"></div>
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 5px var(--blue)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 5px var(--blue)"></div>
+                        <div class="dna-line" style="background:var(--blue)"></div>
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 5px var(--blue)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 5px var(--blue)"></div>
+                        <div class="dna-line" style="background:var(--blue)"></div>
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 5px var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>17A, 17C, 17E // Orbital, Gyro, Pulsar</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>17A // Classic Orbital</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="orbital" style="color:var(--red)">
+                    <div class="orb-ring"></div>
+                    <div class="orb-ring"></div>
+                    <div class="orb-ring"></div>
+                    <div class="orb-dot" style="background:var(--red);box-shadow:0 0 8px var(--red)"></div>
+                </div><span style="font-size:0.7rem;color:var(--red);margin-left:10px">UNSTABLE</span>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="orbital" style="color:var(--amber)">
+                    <div class="orb-ring"></div>
+                    <div class="orb-ring"></div>
+                    <div class="orb-ring"></div>
+                    <div class="orb-dot" style="background:var(--amber);box-shadow:0 0 8px var(--amber)"></div>
+                </div><span style="font-size:0.7rem;color:var(--amber);margin-left:10px">PARTIAL</span>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="orbital" style="color:var(--blue)">
+                    <div class="orb-ring"></div>
+                    <div class="orb-ring"></div>
+                    <div class="orb-ring"></div>
+                    <div class="orb-dot" style="background:var(--blue);box-shadow:0 0 8px var(--blue)"></div>
+                </div><span style="font-size:0.7rem;color:var(--blue);margin-left:10px">LOCKED</span>
+            </div>
+        </div>
+        <div class="card">
+            <h3>17C // Gyroscope</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="gyro" style="color:var(--red)">
+                    <div class="gyro-ring" style="opacity:0.4"></div>
+                    <div class="gyro-ring" style="opacity:0.5"></div>
+                    <div class="gyro-ring" style="opacity:0.6"></div>
+                    <div class="gyro-core" style="background:var(--red);box-shadow:0 0 10px var(--red)"></div>
+                </div><span style="font-size:0.7rem;color:var(--red);margin-left:10px">UNSTABLE</span>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="gyro" style="color:var(--amber)">
+                    <div class="gyro-ring" style="opacity:0.4"></div>
+                    <div class="gyro-ring" style="opacity:0.5"></div>
+                    <div class="gyro-ring" style="opacity:0.6"></div>
+                    <div class="gyro-core" style="background:var(--amber);box-shadow:0 0 10px var(--amber)"></div>
+                </div><span style="font-size:0.7rem;color:var(--amber);margin-left:10px">BALANCING</span>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="gyro" style="color:var(--blue)">
+                    <div class="gyro-ring" style="opacity:0.4"></div>
+                    <div class="gyro-ring" style="opacity:0.5"></div>
+                    <div class="gyro-ring" style="opacity:0.6"></div>
+                    <div class="gyro-core" style="background:var(--blue);box-shadow:0 0 10px var(--blue)"></div>
+                </div><span style="font-size:0.7rem;color:var(--blue);margin-left:10px">LOCKED</span>
+            </div>
+        </div>
+        <div class="card">
+            <h3>17E // Pulsar Beacon</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="pulsar" style="color:var(--red)">
+                    <div class="pulsar-beam"></div>
+                    <div class="pulsar-core" style="background:var(--red)"></div>
+                    <div class="pulsar-ring" style="width:75%;height:75%"></div>
+                    <div class="pulsar-ring" style="width:100%;height:100%"></div>
+                </div><span style="font-size:0.7rem;color:var(--red);margin-left:10px">NO SIGNAL</span>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="pulsar" style="color:var(--amber)">
+                    <div class="pulsar-beam"></div>
+                    <div class="pulsar-core" style="background:var(--amber)"></div>
+                    <div class="pulsar-ring" style="width:75%;height:75%"></div>
+                    <div class="pulsar-ring" style="width:100%;height:100%"></div>
+                </div><span style="font-size:0.7rem;color:var(--amber);margin-left:10px">PARTIAL</span>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="pulsar" style="color:var(--blue)">
+                    <div class="pulsar-beam"></div>
+                    <div class="pulsar-core" style="background:var(--blue)"></div>
+                    <div class="pulsar-ring" style="width:75%;height:75%"></div>
+                    <div class="pulsar-ring" style="width:100%;height:100%"></div>
+                </div><span style="font-size:0.7rem;color:var(--blue);margin-left:10px">LOCKED</span>
+            </div>
+        </div>
+    </div>
+
+    <p style="text-align:center;margin:50px 0;color:var(--muted)">See also: ambient-concepts.html for full-page verdict
+        effects</p>
+</body>
+
+</html>

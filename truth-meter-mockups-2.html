@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truth Meter Designs Part 2 | GenuVerity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050A14;
+            --card: #111827;
+            --border: rgba(59, 130, 246, 0.2);
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --text: #fff;
+            --muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: var(--muted);
+        }
+
+        .levels {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .level {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .level-label {
+            width: 120px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* DESIGN 7: Circular Ring */
+        .ring-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .ring-svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .ring-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 5;
+        }
+
+        .ring-fill {
+            fill: none;
+            stroke-width: 5;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: center;
+        }
+
+        /* DESIGN 8: Hexagon Grid */
+        .hex-meter {
+            display: flex;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .hex {
+            width: 20px;
+            height: 22px;
+            background: rgba(255, 255, 255, 0.1);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .hex.active {
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        /* DESIGN 9: Binary Display */
+        .binary-meter {
+            font-family: monospace;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            flex: 1;
+        }
+
+        /* DESIGN 10: Shield Icon */
+        .shield-meter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .shield {
+            width: 40px;
+            height: 48px;
+            position: relative;
+        }
+
+        .shield-bg {
+            fill: rgba(255, 255, 255, 0.1);
+        }
+
+        .shield-fill {
+            transition: all 0.5s;
+        }
+
+        /* DESIGN 11: Power Meter */
+        .power-meter {
+            display: flex;
+            gap: 2px;
+            flex: 1;
+            height: 30px;
+            align-items: flex-end;
+        }
+
+        .power-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px 2px 0 0;
+        }
+
+        .power-bar.active {
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        /* DESIGN 12: EKG Line */
+        .ekg-meter {
+            height: 40px;
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ekg-line {
+            position: absolute;
+            bottom: 0;
+            height: 100%;
+            border-right: 2px solid;
+        }
+
+        /* DESIGN 13: Concentric Arcs */
+        .arc-svg {
+            width: 100px;
+            height: 50px;
+        }
+
+        .arc {
+            fill: none;
+            stroke-width: 4;
+            stroke-linecap: round;
+            opacity: 0.2;
+        }
+
+        .arc.active {
+            opacity: 1;
+            filter: drop-shadow(0 0 4px currentColor);
+        }
+
+        /* DESIGN 14: Radar Dots */
+        .radar-meter {
+            display: flex;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .radar-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+        }
+
+        .radar-dot.active {
+            background: currentColor;
+            border-color: currentColor;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        /* DESIGN 15: Hash Marks */
+        .hash-meter {
+            display: flex;
+            gap: 3px;
+            flex: 1;
+            height: 24px;
+        }
+
+        .hash {
+            width: 4px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .hash.active {
+            animation: hash-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes hash-pulse {
+
+            0%,
+            100% {
+                opacity: 0.7;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* DESIGN 16: Text Labels */
+        .text-meter {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+        }
+
+        .text-chip {
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .text-chip.active {
+            font-weight: 700;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🎯 Truth Meter Designs - Part 2</h1>
+    <p class="subtitle">Ring, Hexagon, Binary, Shield, Power, EKG, Arc, Radar, Hash, Text variants</p>
+
+    <div class="grid">
+        <!-- DESIGN 7: Circular Ring -->
+        <div class="card">
+            <h3>7. Circular Ring Progress</h3>
+            <div class="levels">
+                <div class="level ring-container"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <svg class="ring-svg" viewBox="0 0 50 50">
+                        <circle class="ring-bg" cx="25" cy="25" r="20" />
+                        <circle class="ring-fill" cx="25" cy="25" r="20" stroke="var(--red)" stroke-dasharray="125.6"
+                            stroke-dashoffset="113" />
+                    </svg>
+                    <span style="color:var(--red);font-weight:600">10%</span>
+                </div>
+                <div class="level ring-container"><span class="level-label" style="color:var(--orange)">MOSTLY
+                        FALSE</span>
+                    <svg class="ring-svg" viewBox="0 0 50 50">
+                        <circle class="ring-bg" cx="25" cy="25" r="20" />
+                        <circle class="ring-fill" cx="25" cy="25" r="20" stroke="var(--orange)" stroke-dasharray="125.6"
+                            stroke-dashoffset="88" />
+                    </svg>
+                    <span style="color:var(--orange);font-weight:600">30%</span>
+                </div>
+                <div class="level ring-container"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <svg class="ring-svg" viewBox="0 0 50 50">
+                        <circle class="ring-bg" cx="25" cy="25" r="20" />
+                        <circle class="ring-fill" cx="25" cy="25" r="20" stroke="var(--amber)" stroke-dasharray="125.6"
+                            stroke-dashoffset="63" />
+                    </svg>
+                    <span style="color:var(--amber);font-weight:600">50%</span>
+                </div>
+                <div class="level ring-container"><span class="level-label" style="color:var(--green)">MOSTLY
+                        TRUE</span>
+                    <svg class="ring-svg" viewBox="0 0 50 50">
+                        <circle class="ring-bg" cx="25" cy="25" r="20" />
+                        <circle class="ring-fill" cx="25" cy="25" r="20" stroke="var(--green)" stroke-dasharray="125.6"
+                            stroke-dashoffset="31" />
+                    </svg>
+                    <span style="color:var(--green);font-weight:600">75%</span>
+                </div>
+                <div class="level ring-container"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <svg class="ring-svg" viewBox="0 0 50 50">
+                        <circle class="ring-bg" cx="25" cy="25" r="20" />
+                        <circle class="ring-fill" cx="25" cy="25" r="20" stroke="var(--blue)" stroke-dasharray="125.6"
+                            stroke-dashoffset="0" />
+                    </svg>
+                    <span style="color:var(--blue);font-weight:600">100%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 8: Hexagon Grid -->
+        <div class="card">
+            <h3>8. Hexagon Grid</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="hex-meter">
+                        <div class="hex active" style="background:var(--red);color:var(--red)"></div>
+                        <div class="hex"></div>
+                        <div class="hex"></div>
+                        <div class="hex"></div>
+                        <div class="hex"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="hex-meter">
+                        <div class="hex active" style="background:var(--orange)"></div>
+                        <div class="hex active" style="background:var(--orange)"></div>
+                        <div class="hex"></div>
+                        <div class="hex"></div>
+                        <div class="hex"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="hex-meter">
+                        <div class="hex active" style="background:var(--amber)"></div>
+                        <div class="hex active" style="background:var(--amber)"></div>
+                        <div class="hex active" style="background:var(--amber)"></div>
+                        <div class="hex"></div>
+                        <div class="hex"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="hex-meter">
+                        <div class="hex active" style="background:var(--green)"></div>
+                        <div class="hex active" style="background:var(--green)"></div>
+                        <div class="hex active" style="background:var(--green)"></div>
+                        <div class="hex active" style="background:var(--green)"></div>
+                        <div class="hex"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="hex-meter">
+                        <div class="hex active" style="background:var(--blue)"></div>
+                        <div class="hex active" style="background:var(--blue)"></div>
+                        <div class="hex active" style="background:var(--blue)"></div>
+                        <div class="hex active" style="background:var(--blue)"></div>
+                        <div class="hex active" style="background:var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 9: Binary Display -->
+        <div class="card">
+            <h3>9. Binary Verification Code</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="binary-meter" style="color:var(--red)">00001 ▌ REJECT</div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="binary-meter" style="color:var(--orange)">00011 ▌ WEAK</div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="binary-meter" style="color:var(--amber)">00111 ▌ PARTIAL</div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="binary-meter" style="color:var(--green)">01111 ▌ VALID</div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="binary-meter" style="color:var(--blue)">11111 ▌ VERIFIED</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 10: Power Meter -->
+        <div class="card">
+            <h3>10. Power Level Bars</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="power-meter">
+                        <div class="power-bar active" style="height:15%;background:var(--red);color:var(--red)"></div>
+                        <div class="power-bar" style="height:30%"></div>
+                        <div class="power-bar" style="height:50%"></div>
+                        <div class="power-bar" style="height:70%"></div>
+                        <div class="power-bar" style="height:90%"></div>
+                        <div class="power-bar" style="height:100%"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="power-meter">
+                        <div class="power-bar active" style="height:15%;background:var(--orange);color:var(--orange)">
+                        </div>
+                        <div class="power-bar active" style="height:30%;background:var(--orange);color:var(--orange)">
+                        </div>
+                        <div class="power-bar" style="height:50%"></div>
+                        <div class="power-bar" style="height:70%"></div>
+                        <div class="power-bar" style="height:90%"></div>
+                        <div class="power-bar" style="height:100%"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="power-meter">
+                        <div class="power-bar active" style="height:15%;background:var(--amber)"></div>
+                        <div class="power-bar active" style="height:30%;background:var(--amber)"></div>
+                        <div class="power-bar active" style="height:50%;background:var(--amber)"></div>
+                        <div class="power-bar" style="height:70%"></div>
+                        <div class="power-bar" style="height:90%"></div>
+                        <div class="power-bar" style="height:100%"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="power-meter">
+                        <div class="power-bar active" style="height:15%;background:var(--green)"></div>
+                        <div class="power-bar active" style="height:30%;background:var(--green)"></div>
+                        <div class="power-bar active" style="height:50%;background:var(--green)"></div>
+                        <div class="power-bar active" style="height:70%;background:var(--green)"></div>
+                        <div class="power-bar active" style="height:90%;background:var(--green)"></div>
+                        <div class="power-bar" style="height:100%"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="power-meter">
+                        <div class="power-bar active" style="height:15%;background:var(--blue)"></div>
+                        <div class="power-bar active" style="height:30%;background:var(--blue)"></div>
+                        <div class="power-bar active" style="height:50%;background:var(--blue)"></div>
+                        <div class="power-bar active" style="height:70%;background:var(--blue)"></div>
+                        <div class="power-bar active" style="height:90%;background:var(--blue)"></div>
+                        <div class="power-bar active" style="height:100%;background:var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 11: Radar Dots -->
+        <div class="card">
+            <h3>11. Radar Ping Dots</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="radar-meter">
+                        <div class="radar-dot active" style="color:var(--red)"></div>
+                        <div class="radar-dot"></div>
+                        <div class="radar-dot"></div>
+                        <div class="radar-dot"></div>
+                        <div class="radar-dot"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="radar-meter">
+                        <div class="radar-dot active" style="color:var(--orange)"></div>
+                        <div class="radar-dot active" style="color:var(--orange)"></div>
+                        <div class="radar-dot"></div>
+                        <div class="radar-dot"></div>
+                        <div class="radar-dot"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="radar-meter">
+                        <div class="radar-dot active" style="color:var(--amber)"></div>
+                        <div class="radar-dot active" style="color:var(--amber)"></div>
+                        <div class="radar-dot active" style="color:var(--amber)"></div>
+                        <div class="radar-dot"></div>
+                        <div class="radar-dot"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="radar-meter">
+                        <div class="radar-dot active" style="color:var(--green)"></div>
+                        <div class="radar-dot active" style="color:var(--green)"></div>
+                        <div class="radar-dot active" style="color:var(--green)"></div>
+                        <div class="radar-dot active" style="color:var(--green)"></div>
+                        <div class="radar-dot"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="radar-meter">
+                        <div class="radar-dot active" style="color:var(--blue)"></div>
+                        <div class="radar-dot active" style="color:var(--blue)"></div>
+                        <div class="radar-dot active" style="color:var(--blue)"></div>
+                        <div class="radar-dot active" style="color:var(--blue)"></div>
+                        <div class="radar-dot active" style="color:var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 12: Text Chips -->
+        <div class="card">
+            <h3>12. Interactive Text Chips</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="text-meter"><span class="text-chip active"
+                            style="background:var(--red);color:#fff">FALSE</span><span class="text-chip">MOSTLY
+                            FALSE</span><span class="text-chip">MIXED</span><span class="text-chip">MOSTLY
+                            TRUE</span><span class="text-chip">TRUE</span></div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="text-meter"><span class="text-chip">FALSE</span><span class="text-chip active"
+                            style="background:var(--orange);color:#fff">MOSTLY FALSE</span><span
+                            class="text-chip">MIXED</span><span class="text-chip">MOSTLY TRUE</span><span
+                            class="text-chip">TRUE</span></div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="text-meter"><span class="text-chip">FALSE</span><span class="text-chip">MOSTLY
+                            FALSE</span><span class="text-chip active"
+                            style="background:var(--amber);color:#000">MIXED</span><span class="text-chip">MOSTLY
+                            TRUE</span><span class="text-chip">TRUE</span></div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="text-meter"><span class="text-chip">FALSE</span><span class="text-chip">MOSTLY
+                            FALSE</span><span class="text-chip">MIXED</span><span class="text-chip active"
+                            style="background:var(--green);color:#fff">MOSTLY TRUE</span><span
+                            class="text-chip">TRUE</span></div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="text-meter"><span class="text-chip">FALSE</span><span class="text-chip">MOSTLY
+                            FALSE</span><span class="text-chip">MIXED</span><span class="text-chip">MOSTLY
+                            TRUE</span><span class="text-chip active"
+                            style="background:var(--blue);color:#fff">TRUE</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p style="text-align:center;margin-top:40px;color:var(--muted)">Part 2 of 4 - View Part 1: truth-meter-mockups.html
+    </p>
+</body>
+
+</html>

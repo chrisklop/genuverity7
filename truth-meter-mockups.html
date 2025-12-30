@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truth Meter Design Mockups | GenuVerity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050A14;
+            --card: #111827;
+            --border: rgba(59, 130, 246, 0.2);
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --text: #fff;
+            --muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: var(--muted);
+        }
+
+        .levels {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .level {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .level-label {
+            width: 120px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* DESIGN 1: Horizontal Bar */
+        .bar-meter {
+            height: 12px;
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1s ease;
+        }
+
+        /* DESIGN 2: Segmented Bar */
+        .seg-meter {
+            display: flex;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .seg {
+            height: 20px;
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .seg.active {
+            transform: scaleY(1.2);
+        }
+
+        /* DESIGN 3: Signal Bars */
+        .signal-meter {
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+            height: 40px;
+            flex: 1;
+        }
+
+        .signal-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .signal-bar.active {
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        /* DESIGN 4: Orbital Ring */
+        .ring-meter {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+
+        .ring-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 6;
+        }
+
+        .ring-fill {
+            fill: none;
+            stroke-width: 6;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: center;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        /* DESIGN 5: Dot Indicator */
+        .dot-meter {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            box-shadow: 0 0 12px currentColor;
+            transform: scale(1.2);
+        }
+
+        /* DESIGN 6: Arrow Gauge */
+        .gauge-meter {
+            position: relative;
+            width: 120px;
+            height: 60px;
+        }
+
+        .gauge-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 60px 60px 0 0;
+            background: conic-gradient(from 180deg, var(--red), var(--orange), var(--amber), var(--green), var(--blue));
+            opacity: 0.3;
+        }
+
+        .gauge-needle {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            height: 50px;
+            background: #fff;
+            transform-origin: bottom center;
+            border-radius: 2px;
+            transition: transform 0.8s ease;
+        }
+
+        /* DESIGN 7: LED Strip */
+        .led-meter {
+            display: flex;
+            gap: 3px;
+            flex: 1;
+        }
+
+        .led {
+            width: 8px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+        }
+
+        .led.active {
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        /* DESIGN 8: Pulse Wave */
+        .pulse-meter {
+            height: 40px;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .pulse-line {
+            position: absolute;
+            height: 100%;
+            width: 4px;
+            background: currentColor;
+            box-shadow: 0 0 20px currentColor;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* DESIGN 9: Thermometer */
+        .thermo-meter {
+            width: 24px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px 12px 50% 50%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thermo-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            border-radius: 0 0 50% 50%;
+            transition: height 1s ease;
+        }
+
+        .thermo-bulb {
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        /* DESIGN 10: Binary Code */
+        .binary-meter {
+            font-family: monospace;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🎯 Truth Meter Design Variants</h1>
+    <p class="subtitle">20+ design concepts showing all 5 verdict levels</p>
+
+    <div class="grid">
+        <!-- DESIGN 1: Smooth Bar -->
+        <div class="card">
+            <h3>1. Smooth Progress Bar</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="bar-meter">
+                        <div class="bar-fill" style="width:10%;background:var(--red)"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="bar-meter">
+                        <div class="bar-fill" style="width:30%;background:var(--orange)"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="bar-meter">
+                        <div class="bar-fill" style="width:50%;background:var(--amber)"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="bar-meter">
+                        <div class="bar-fill" style="width:75%;background:var(--green)"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="bar-meter">
+                        <div class="bar-fill" style="width:100%;background:var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 2: Segmented -->
+        <div class="card">
+            <h3>2. Segmented Blocks</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="seg-meter">
+                        <div class="seg active" style="background:var(--red)"></div>
+                        <div class="seg"></div>
+                        <div class="seg"></div>
+                        <div class="seg"></div>
+                        <div class="seg"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="seg-meter">
+                        <div class="seg active" style="background:var(--orange)"></div>
+                        <div class="seg active" style="background:var(--orange)"></div>
+                        <div class="seg"></div>
+                        <div class="seg"></div>
+                        <div class="seg"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="seg-meter">
+                        <div class="seg active" style="background:var(--amber)"></div>
+                        <div class="seg active" style="background:var(--amber)"></div>
+                        <div class="seg active" style="background:var(--amber)"></div>
+                        <div class="seg"></div>
+                        <div class="seg"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="seg-meter">
+                        <div class="seg active" style="background:var(--green)"></div>
+                        <div class="seg active" style="background:var(--green)"></div>
+                        <div class="seg active" style="background:var(--green)"></div>
+                        <div class="seg active" style="background:var(--green)"></div>
+                        <div class="seg"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="seg-meter">
+                        <div class="seg active" style="background:var(--blue)"></div>
+                        <div class="seg active" style="background:var(--blue)"></div>
+                        <div class="seg active" style="background:var(--blue)"></div>
+                        <div class="seg active" style="background:var(--blue)"></div>
+                        <div class="seg active" style="background:var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 3: Signal Bars -->
+        <div class="card">
+            <h3>3. Signal Strength Bars</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="signal-meter">
+                        <div class="signal-bar active" style="height:20%;background:var(--red);color:var(--red)"></div>
+                        <div class="signal-bar" style="height:40%"></div>
+                        <div class="signal-bar" style="height:60%"></div>
+                        <div class="signal-bar" style="height:80%"></div>
+                        <div class="signal-bar" style="height:100%"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="signal-meter">
+                        <div class="signal-bar active" style="height:20%;background:var(--orange);color:var(--orange)">
+                        </div>
+                        <div class="signal-bar active" style="height:40%;background:var(--orange);color:var(--orange)">
+                        </div>
+                        <div class="signal-bar" style="height:60%"></div>
+                        <div class="signal-bar" style="height:80%"></div>
+                        <div class="signal-bar" style="height:100%"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="signal-meter">
+                        <div class="signal-bar active" style="height:20%;background:var(--amber);color:var(--amber)">
+                        </div>
+                        <div class="signal-bar active" style="height:40%;background:var(--amber);color:var(--amber)">
+                        </div>
+                        <div class="signal-bar active" style="height:60%;background:var(--amber);color:var(--amber)">
+                        </div>
+                        <div class="signal-bar" style="height:80%"></div>
+                        <div class="signal-bar" style="height:100%"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="signal-meter">
+                        <div class="signal-bar active" style="height:20%;background:var(--green);color:var(--green)">
+                        </div>
+                        <div class="signal-bar active" style="height:40%;background:var(--green);color:var(--green)">
+                        </div>
+                        <div class="signal-bar active" style="height:60%;background:var(--green);color:var(--green)">
+                        </div>
+                        <div class="signal-bar active" style="height:80%;background:var(--green);color:var(--green)">
+                        </div>
+                        <div class="signal-bar" style="height:100%"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="signal-meter">
+                        <div class="signal-bar active" style="height:20%;background:var(--blue);color:var(--blue)">
+                        </div>
+                        <div class="signal-bar active" style="height:40%;background:var(--blue);color:var(--blue)">
+                        </div>
+                        <div class="signal-bar active" style="height:60%;background:var(--blue);color:var(--blue)">
+                        </div>
+                        <div class="signal-bar active" style="height:80%;background:var(--blue);color:var(--blue)">
+                        </div>
+                        <div class="signal-bar active" style="height:100%;background:var(--blue);color:var(--blue)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 4: Dots -->
+        <div class="card">
+            <h3>4. Dot Indicators</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="dot-meter">
+                        <div class="dot active" style="background:var(--red);color:var(--red)"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="dot-meter">
+                        <div class="dot active" style="background:var(--orange);color:var(--orange)"></div>
+                        <div class="dot active" style="background:var(--orange);color:var(--orange)"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="dot-meter">
+                        <div class="dot active" style="background:var(--amber);color:var(--amber)"></div>
+                        <div class="dot active" style="background:var(--amber);color:var(--amber)"></div>
+                        <div class="dot active" style="background:var(--amber);color:var(--amber)"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="dot-meter">
+                        <div class="dot active" style="background:var(--green);color:var(--green)"></div>
+                        <div class="dot active" style="background:var(--green);color:var(--green)"></div>
+                        <div class="dot active" style="background:var(--green);color:var(--green)"></div>
+                        <div class="dot active" style="background:var(--green);color:var(--green)"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="dot-meter">
+                        <div class="dot active" style="background:var(--blue);color:var(--blue)"></div>
+                        <div class="dot active" style="background:var(--blue);color:var(--blue)"></div>
+                        <div class="dot active" style="background:var(--blue);color:var(--blue)"></div>
+                        <div class="dot active" style="background:var(--blue);color:var(--blue)"></div>
+                        <div class="dot active" style="background:var(--blue);color:var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 5: Gradient Bar -->
+        <div class="card">
+            <h3>5. Gradient Spectrum Bar</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="bar-meter"
+                        style="background:linear-gradient(90deg,var(--red),var(--orange),var(--amber),var(--green),var(--blue));opacity:0.2">
+                        <div style="width:10%;height:100%;background:#fff;mix-blend-mode:overlay"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="bar-meter"
+                        style="background:linear-gradient(90deg,var(--red),var(--orange),var(--amber),var(--green),var(--blue));opacity:0.2">
+                        <div style="width:30%;height:100%;background:#fff;mix-blend-mode:overlay"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="bar-meter"
+                        style="background:linear-gradient(90deg,var(--red),var(--orange),var(--amber),var(--green),var(--blue));opacity:0.2">
+                        <div style="width:50%;height:100%;background:#fff;mix-blend-mode:overlay"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="bar-meter"
+                        style="background:linear-gradient(90deg,var(--red),var(--orange),var(--amber),var(--green),var(--blue));opacity:0.2">
+                        <div style="width:75%;height:100%;background:#fff;mix-blend-mode:overlay"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="bar-meter"
+                        style="background:linear-gradient(90deg,var(--red),var(--orange),var(--amber),var(--green),var(--blue))">
+                        <div style="width:100%;height:100%;background:#fff;mix-blend-mode:overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 6: LED Strip -->
+        <div class="card">
+            <h3>6. LED Strip Display</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="led-meter">
+                        <div class="led active" style="background:var(--red);color:var(--red)"></div>
+                        <div class="led active" style="background:var(--red);color:var(--red)"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="led-meter">
+                        <div class="led active" style="background:var(--orange);color:var(--orange)"></div>
+                        <div class="led active" style="background:var(--orange);color:var(--orange)"></div>
+                        <div class="led active" style="background:var(--orange);color:var(--orange)"></div>
+                        <div class="led active" style="background:var(--orange);color:var(--orange)"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="led-meter">
+                        <div class="led active" style="background:var(--amber);color:var(--amber)"></div>
+                        <div class="led active" style="background:var(--amber);color:var(--amber)"></div>
+                        <div class="led active" style="background:var(--amber);color:var(--amber)"></div>
+                        <div class="led active" style="background:var(--amber);color:var(--amber)"></div>
+                        <div class="led active" style="background:var(--amber);color:var(--amber)"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="led-meter">
+                        <div class="led active" style="background:var(--green);color:var(--green)"></div>
+                        <div class="led active" style="background:var(--green);color:var(--green)"></div>
+                        <div class="led active" style="background:var(--green);color:var(--green)"></div>
+                        <div class="led active" style="background:var(--green);color:var(--green)"></div>
+                        <div class="led active" style="background:var(--green);color:var(--green)"></div>
+                        <div class="led active" style="background:var(--green);color:var(--green)"></div>
+                        <div class="led active" style="background:var(--green);color:var(--green)"></div>
+                        <div class="led active" style="background:var(--green);color:var(--green)"></div>
+                        <div class="led"></div>
+                        <div class="led"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="led-meter">
+                        <div class="led active" style="background:var(--blue);color:var(--blue)"></div>
+                        <div class="led active" style="background:var(--blue);color:var(--blue)"></div>
+                        <div class="led active" style="background:var(--blue);color:var(--blue)"></div>
+                        <div class="led active" style="background:var(--blue);color:var(--blue)"></div>
+                        <div class="led active" style="background:var(--blue);color:var(--blue)"></div>
+                        <div class="led active" style="background:var(--blue);color:var(--blue)"></div>
+                        <div class="led active" style="background:var(--blue);color:var(--blue)"></div>
+                        <div class="led active" style="background:var(--blue);color:var(--blue)"></div>
+                        <div class="led active" style="background:var(--blue);color:var(--blue)"></div>
+                        <div class="led active" style="background:var(--blue);color:var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p style="text-align:center;margin-top:40px;color:var(--muted)">Part 1 of 4 - More designs loading...</p>
+</body>
+
+</html>

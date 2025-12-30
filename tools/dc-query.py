@@ -66,13 +66,13 @@ def query_nl(question: str, api_key: str) -> dict:
     if not api_key:
         return {"error": "API Key required for NL API"}
         
-    url = "https://api.datacommons.org/v2/nl"
+    # NL API uses key as query parameter, not header
+    url = f"https://api.datacommons.org/v2/nl?key={api_key}"
     
     data = {"query": question}
     
     try:
         req = Request(url, data=json.dumps(data).encode("utf-8"), method="POST")
-        req.add_header("X-API-Key", api_key)
         req.add_header("Content-Type", "application/json")
         
         with urlopen(req) as resp:

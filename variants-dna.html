@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA Helix Variants | GenuVerity</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050A14;
+            --card: #0a1628;
+            --border: rgba(59, 130, 246, 0.15);
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --cyan: #06b6d4;
+            --text: #fff;
+            --muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #fff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 50px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card), rgba(10, 22, 40, 0.8));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meter-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .label {
+            width: 100px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .meter {
+            flex: 1;
+        }
+
+        /* 15A: Classic Helix */
+        .dna {
+            height: 45px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 0 8px;
+        }
+
+        .dna-pair {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .dna-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: dna-wave 1.5s ease-in-out infinite;
+        }
+
+        .dna-dot:nth-child(3) {
+            animation-delay: 0.75s;
+            animation-direction: reverse;
+        }
+
+        .dna-line {
+            width: 2px;
+            height: 10px;
+            opacity: 0.3;
+        }
+
+        @keyframes dna-wave {
+
+            0%,
+            100% {
+                transform: translateY(-6px) scale(0.8);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translateY(6px) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* 15B: Double Helix Strand */
+        .strand {
+            height: 50px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .strand-top,
+        .strand-bot {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .strand-top {
+            top: 20%;
+            animation: strand-wave 2s ease-in-out infinite;
+        }
+
+        .strand-bot {
+            bottom: 20%;
+            animation: strand-wave 2s ease-in-out infinite reverse;
+        }
+
+        @keyframes strand-wave {
+
+            0%,
+            100% {
+                transform: translateY(-5px);
+            }
+
+            50% {
+                transform: translateY(5px);
+            }
+        }
+
+        /* 15C: Chromosome Bars */
+        .chromo {
+            display: flex;
+            gap: 4px;
+            height: 40px;
+            align-items: center;
+        }
+
+        .chromo-bar {
+            width: 8px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .chromo-bar.active {
+            animation: chromo-pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes chromo-pulse {
+
+            0%,
+            100% {
+                opacity: 0.7;
+                transform: scaleY(0.9);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scaleY(1.1);
+            }
+        }
+
+        /* 15D: Molecular Chain */
+        .molecular {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .mol-node {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .mol-node.active {
+            background: currentColor;
+            animation: mol-glow 1.5s ease-in-out infinite;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .mol-bond {
+            width: 12px;
+            height: 3px;
+            background: currentColor;
+            margin: 0 -3px;
+            opacity: 0.3;
+        }
+
+        .mol-bond.active {
+            opacity: 0.8;
+        }
+
+        @keyframes mol-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px currentColor;
+            }
+
+            50% {
+                box-shadow: 0 0 15px currentColor;
+            }
+        }
+
+        /* 15E: Gene Sequence */
+        .gene {
+            display: flex;
+            gap: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+        }
+
+        .gene-char {
+            padding: 6px 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .gene-char.active {
+            animation: gene-flash 0.5s ease-out;
+        }
+
+        @keyframes gene-flash {
+            0% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧬 DNA Helix Variants</h1>
+    <p class="subtitle">5 Creative Variations • Based on Design #15</p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>15A // Classic Double Helix</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter dna" style="color:var(--red)">
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--red);box-shadow:0 0 6px var(--red)"></div>
+                        <div class="dna-line" style="background:var(--red)"></div>
+                        <div class="dna-dot" style="background:var(--red);box-shadow:0 0 6px var(--red)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                        <div class="dna-line" style="background:var(--red)"></div>
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                        <div class="dna-line" style="background:var(--red)"></div>
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                        <div class="dna-line" style="background:var(--red)"></div>
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                        <div class="dna-line" style="background:var(--red)"></div>
+                        <div class="dna-dot" style="background:var(--red)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter dna" style="color:var(--orange)">
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--orange);box-shadow:0 0 6px var(--orange)"></div>
+                        <div class="dna-line" style="background:var(--orange)"></div>
+                        <div class="dna-dot" style="background:var(--orange);box-shadow:0 0 6px var(--orange)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--orange);box-shadow:0 0 6px var(--orange)"></div>
+                        <div class="dna-line" style="background:var(--orange)"></div>
+                        <div class="dna-dot" style="background:var(--orange);box-shadow:0 0 6px var(--orange)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--orange)"></div>
+                        <div class="dna-line" style="background:var(--orange)"></div>
+                        <div class="dna-dot" style="background:var(--orange)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--orange)"></div>
+                        <div class="dna-line" style="background:var(--orange)"></div>
+                        <div class="dna-dot" style="background:var(--orange)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--orange)"></div>
+                        <div class="dna-line" style="background:var(--orange)"></div>
+                        <div class="dna-dot" style="background:var(--orange)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter dna" style="color:var(--amber)">
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div>
+                        <div class="dna-line" style="background:var(--amber)"></div>
+                        <div class="dna-dot" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div>
+                        <div class="dna-line" style="background:var(--amber)"></div>
+                        <div class="dna-dot" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div>
+                        <div class="dna-line" style="background:var(--amber)"></div>
+                        <div class="dna-dot" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--amber)"></div>
+                        <div class="dna-line" style="background:var(--amber)"></div>
+                        <div class="dna-dot" style="background:var(--amber)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--amber)"></div>
+                        <div class="dna-line" style="background:var(--amber)"></div>
+                        <div class="dna-dot" style="background:var(--amber)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter dna" style="color:var(--green)">
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--green);box-shadow:0 0 6px var(--green)"></div>
+                        <div class="dna-line" style="background:var(--green)"></div>
+                        <div class="dna-dot" style="background:var(--green);box-shadow:0 0 6px var(--green)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--green);box-shadow:0 0 6px var(--green)"></div>
+                        <div class="dna-line" style="background:var(--green)"></div>
+                        <div class="dna-dot" style="background:var(--green);box-shadow:0 0 6px var(--green)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--green);box-shadow:0 0 6px var(--green)"></div>
+                        <div class="dna-line" style="background:var(--green)"></div>
+                        <div class="dna-dot" style="background:var(--green);box-shadow:0 0 6px var(--green)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--green);box-shadow:0 0 6px var(--green)"></div>
+                        <div class="dna-line" style="background:var(--green)"></div>
+                        <div class="dna-dot" style="background:var(--green);box-shadow:0 0 6px var(--green)"></div>
+                    </div>
+                    <div class="dna-pair" style="opacity:0.2">
+                        <div class="dna-dot" style="background:var(--green)"></div>
+                        <div class="dna-line" style="background:var(--green)"></div>
+                        <div class="dna-dot" style="background:var(--green)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter dna" style="color:var(--blue)">
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                        <div class="dna-line" style="background:var(--blue)"></div>
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                        <div class="dna-line" style="background:var(--blue)"></div>
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                        <div class="dna-line" style="background:var(--blue)"></div>
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                        <div class="dna-line" style="background:var(--blue)"></div>
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                    </div>
+                    <div class="dna-pair">
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                        <div class="dna-line" style="background:var(--blue)"></div>
+                        <div class="dna-dot" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>15B // Chromosome Bars</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter chromo">
+                    <div class="chromo-bar active"
+                        style="height:100%;background:var(--red);box-shadow:0 0 8px var(--red)"></div>
+                    <div class="chromo-bar" style="height:60%;background:rgba(255,255,255,0.1)"></div>
+                    <div class="chromo-bar" style="height:80%;background:rgba(255,255,255,0.1)"></div>
+                    <div class="chromo-bar" style="height:40%;background:rgba(255,255,255,0.1)"></div>
+                    <div class="chromo-bar" style="height:70%;background:rgba(255,255,255,0.1)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter chromo">
+                    <div class="chromo-bar active"
+                        style="height:100%;background:var(--orange);box-shadow:0 0 8px var(--orange)"></div>
+                    <div class="chromo-bar active"
+                        style="height:60%;background:var(--orange);box-shadow:0 0 8px var(--orange)"></div>
+                    <div class="chromo-bar" style="height:80%;background:rgba(255,255,255,0.1)"></div>
+                    <div class="chromo-bar" style="height:40%;background:rgba(255,255,255,0.1)"></div>
+                    <div class="chromo-bar" style="height:70%;background:rgba(255,255,255,0.1)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter chromo">
+                    <div class="chromo-bar active"
+                        style="height:100%;background:var(--amber);box-shadow:0 0 8px var(--amber)"></div>
+                    <div class="chromo-bar active"
+                        style="height:60%;background:var(--amber);box-shadow:0 0 8px var(--amber)"></div>
+                    <div class="chromo-bar active"
+                        style="height:80%;background:var(--amber);box-shadow:0 0 8px var(--amber)"></div>
+                    <div class="chromo-bar" style="height:40%;background:rgba(255,255,255,0.1)"></div>
+                    <div class="chromo-bar" style="height:70%;background:rgba(255,255,255,0.1)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter chromo">
+                    <div class="chromo-bar active"
+                        style="height:100%;background:var(--green);box-shadow:0 0 8px var(--green)"></div>
+                    <div class="chromo-bar active"
+                        style="height:60%;background:var(--green);box-shadow:0 0 8px var(--green)"></div>
+                    <div class="chromo-bar active"
+                        style="height:80%;background:var(--green);box-shadow:0 0 8px var(--green)"></div>
+                    <div class="chromo-bar active"
+                        style="height:40%;background:var(--green);box-shadow:0 0 8px var(--green)"></div>
+                    <div class="chromo-bar" style="height:70%;background:rgba(255,255,255,0.1)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter chromo">
+                    <div class="chromo-bar active"
+                        style="height:100%;background:var(--blue);box-shadow:0 0 8px var(--blue)"></div>
+                    <div class="chromo-bar active"
+                        style="height:60%;background:var(--blue);box-shadow:0 0 8px var(--blue)"></div>
+                    <div class="chromo-bar active"
+                        style="height:80%;background:var(--blue);box-shadow:0 0 8px var(--blue)"></div>
+                    <div class="chromo-bar active"
+                        style="height:40%;background:var(--blue);box-shadow:0 0 8px var(--blue)"></div>
+                    <div class="chromo-bar active"
+                        style="height:70%;background:var(--blue);box-shadow:0 0 8px var(--blue)"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>15C // Molecular Chain</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter molecular" style="color:var(--red)">
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond"></div>
+                    <div class="mol-node"></div>
+                    <div class="mol-bond"></div>
+                    <div class="mol-node"></div>
+                    <div class="mol-bond"></div>
+                    <div class="mol-node"></div>
+                    <div class="mol-bond"></div>
+                    <div class="mol-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter molecular" style="color:var(--orange)">
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond active"></div>
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond"></div>
+                    <div class="mol-node"></div>
+                    <div class="mol-bond"></div>
+                    <div class="mol-node"></div>
+                    <div class="mol-bond"></div>
+                    <div class="mol-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter molecular" style="color:var(--amber)">
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond active"></div>
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond active"></div>
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond"></div>
+                    <div class="mol-node"></div>
+                    <div class="mol-bond"></div>
+                    <div class="mol-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter molecular" style="color:var(--green)">
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond active"></div>
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond active"></div>
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond active"></div>
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond"></div>
+                    <div class="mol-node"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter molecular" style="color:var(--blue)">
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond active"></div>
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond active"></div>
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond active"></div>
+                    <div class="mol-node active"></div>
+                    <div class="mol-bond active"></div>
+                    <div class="mol-node active"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>15D // Gene Sequence</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter gene"><span class="gene-char active"
+                        style="background:var(--red);color:#fff">A</span><span class="gene-char">T</span><span
+                        class="gene-char">C</span><span class="gene-char">G</span><span class="gene-char">A</span></div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter gene"><span class="gene-char active"
+                        style="background:var(--orange);color:#fff">A</span><span class="gene-char active"
+                        style="background:var(--orange);color:#fff">T</span><span class="gene-char">C</span><span
+                        class="gene-char">G</span><span class="gene-char">A</span></div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter gene"><span class="gene-char active"
+                        style="background:var(--amber);color:#fff">A</span><span class="gene-char active"
+                        style="background:var(--amber);color:#fff">T</span><span class="gene-char active"
+                        style="background:var(--amber);color:#fff">C</span><span class="gene-char">G</span><span
+                        class="gene-char">A</span></div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter gene"><span class="gene-char active"
+                        style="background:var(--green);color:#fff">A</span><span class="gene-char active"
+                        style="background:var(--green);color:#fff">T</span><span class="gene-char active"
+                        style="background:var(--green);color:#fff">C</span><span class="gene-char active"
+                        style="background:var(--green);color:#fff">G</span><span class="gene-char">A</span></div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter gene"><span class="gene-char active"
+                        style="background:var(--blue);color:#fff">A</span><span class="gene-char active"
+                        style="background:var(--blue);color:#fff">T</span><span class="gene-char active"
+                        style="background:var(--blue);color:#fff">C</span><span class="gene-char active"
+                        style="background:var(--blue);color:#fff">G</span><span class="gene-char active"
+                        style="background:var(--blue);color:#fff">A</span></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>15E // Base Pair Matrix</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter" style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px">
+                    <div style="height:20px;border-radius:3px;background:var(--red);box-shadow:0 0 8px var(--red)">
+                    </div>
+                    <div style="height:20px;border-radius:3px;background:rgba(255,255,255,0.1)"></div>
+                    <div style="height:20px;border-radius:3px;background:rgba(255,255,255,0.1)"></div>
+                    <div style="height:20px;border-radius:3px;background:rgba(255,255,255,0.1)"></div>
+                    <div style="height:20px;border-radius:3px;background:rgba(255,255,255,0.1)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter" style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px">
+                    <div
+                        style="height:20px;border-radius:3px;background:var(--orange);box-shadow:0 0 8px var(--orange)">
+                    </div>
+                    <div
+                        style="height:20px;border-radius:3px;background:var(--orange);box-shadow:0 0 8px var(--orange)">
+                    </div>
+                    <div style="height:20px;border-radius:3px;background:rgba(255,255,255,0.1)"></div>
+                    <div style="height:20px;border-radius:3px;background:rgba(255,255,255,0.1)"></div>
+                    <div style="height:20px;border-radius:3px;background:rgba(255,255,255,0.1)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter" style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px">
+                    <div style="height:20px;border-radius:3px;background:var(--amber);box-shadow:0 0 8px var(--amber)">
+                    </div>
+                    <div style="height:20px;border-radius:3px;background:var(--amber);box-shadow:0 0 8px var(--amber)">
+                    </div>
+                    <div style="height:20px;border-radius:3px;background:var(--amber);box-shadow:0 0 8px var(--amber)">
+                    </div>
+                    <div style="height:20px;border-radius:3px;background:rgba(255,255,255,0.1)"></div>
+                    <div style="height:20px;border-radius:3px;background:rgba(255,255,255,0.1)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter" style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px">
+                    <div style="height:20px;border-radius:3px;background:var(--green);box-shadow:0 0 8px var(--green)">
+                    </div>
+                    <div style="height:20px;border-radius:3px;background:var(--green);box-shadow:0 0 8px var(--green)">
+                    </div>
+                    <div style="height:20px;border-radius:3px;background:var(--green);box-shadow:0 0 8px var(--green)">
+                    </div>
+                    <div style="height:20px;border-radius:3px;background:var(--green);box-shadow:0 0 8px var(--green)">
+                    </div>
+                    <div style="height:20px;border-radius:3px;background:rgba(255,255,255,0.1)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter" style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px">
+                    <div style="height:20px;border-radius:3px;background:var(--blue);box-shadow:0 0 8px var(--blue)">
+                    </div>
+                    <div style="height:20px;border-radius:3px;background:var(--blue);box-shadow:0 0 8px var(--blue)">
+                    </div>
+                    <div style="height:20px;border-radius:3px;background:var(--blue);box-shadow:0 0 8px var(--blue)">
+                    </div>
+                    <div style="height:20px;border-radius:3px;background:var(--blue);box-shadow:0 0 8px var(--blue)">
+                    </div>
+                    <div style="height:20px;border-radius:3px;background:var(--blue);box-shadow:0 0 8px var(--blue)">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

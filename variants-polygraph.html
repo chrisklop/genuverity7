@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polygraph Signal Variants | GenuVerity</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050A14;
+            --card: #0a1628;
+            --border: rgba(59, 130, 246, 0.15);
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --cyan: #06b6d4;
+            --text: #fff;
+            --muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #fff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 50px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card), rgba(10, 22, 40, 0.8));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meter-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .label {
+            width: 100px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .meter {
+            flex: 1;
+        }
+
+        /* 24A: Classic Polygraph - Erratic for False, Calm for True */
+        .poly {
+            height: 50px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .poly-grid {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 10px;
+        }
+
+        .poly svg {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .poly-line {
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-dasharray: 400;
+            animation: poly-draw 3s linear infinite;
+        }
+
+        @keyframes poly-draw {
+            0% {
+                stroke-dashoffset: 400;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* 24B: EKG Style */
+        .ekg {
+            height: 50px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .ekg-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: currentColor;
+            opacity: 0.2;
+            top: 50%;
+        }
+
+        .ekg svg {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ekg-path {
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+        }
+
+        .ekg-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: ekg-trace 2s linear infinite;
+            top: 50%;
+            margin-top: -4px;
+        }
+
+        @keyframes ekg-trace {
+            0% {
+                left: 0;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* 24C: Seismograph */
+        .seismo {
+            height: 55px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .seismo-tape {
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 10px);
+            animation: tape-scroll 2s linear infinite;
+        }
+
+        .seismo svg {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes tape-scroll {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: -20px 0;
+            }
+        }
+
+        /* 24D: Heartbeat */
+        .heartbeat {
+            height: 50px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .hb-glow {
+            position: absolute;
+            width: 30px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            animation: hb-scan 2s linear infinite;
+            opacity: 0.2;
+        }
+
+        .heartbeat svg {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes hb-scan {
+            0% {
+                left: -30px;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* 24E: Lie Detector */
+        .lie-detect {
+            height: 55px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            overflow: hidden;
+            border-left: 3px solid currentColor;
+        }
+
+        .ld-channels {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 4px 8px;
+        }
+
+        .ld-channel {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .ld-channel::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            bottom: 0;
+        }
+
+        .ld-wave {
+            flex: 1;
+            height: 100%;
+            position: relative;
+        }
+
+        .ld-wave svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ld-label {
+            font-size: 0.5rem;
+            width: 20px;
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>📈 Polygraph Signal Variants</h1>
+    <p class="subtitle">5 Lie-Detector Inspired Variations • Based on Design #24</p>
+
+    <div class="grid">
+        <!-- 24A: Classic Polygraph -->
+        <div class="card">
+            <h3>24A // Classic Polygraph</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter poly" style="color:var(--red)">
+                    <div class="poly-grid"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path class="poly-line" stroke="var(--red)"
+                            d="M0,25 L10,25 L15,5 L20,45 L25,10 L30,40 L35,15 L40,35 L45,20 L50,30 L55,22 L60,28 L65,24 L70,26 L75,25 L80,5 L85,45 L90,8 L95,42 L100,12 L105,38 L110,18 L115,32 L120,22 L125,28 L130,10 L135,40 L140,15 L145,35 L150,20 L155,30 L160,8 L165,42 L170,25 L175,25 L180,5 L185,45 L190,25 L200,25" />
+                    </svg>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter poly" style="color:var(--orange)">
+                    <div class="poly-grid"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path class="poly-line" stroke="var(--orange)"
+                            d="M0,25 L20,25 L25,10 L30,40 L35,15 L40,35 L50,25 L60,25 L65,12 L70,38 L75,18 L80,32 L90,25 L100,25 L105,8 L110,42 L115,15 L120,35 L140,25 L150,25 L155,12 L160,38 L170,25 L200,25" />
+                    </svg>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter poly" style="color:var(--amber)">
+                    <div class="poly-grid"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path class="poly-line" stroke="var(--amber)"
+                            d="M0,25 L30,25 L35,15 L40,35 L45,20 L50,30 L60,25 L90,25 L95,18 L100,32 L105,22 L110,28 L120,25 L150,25 L155,15 L160,35 L165,20 L170,30 L180,25 L200,25" />
+                    </svg>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter poly" style="color:var(--green)">
+                    <div class="poly-grid"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path class="poly-line" stroke="var(--green)"
+                            d="M0,25 L50,25 L55,20 L60,30 L65,22 L70,28 L80,25 L130,25 L135,22 L140,28 L145,24 L150,26 L160,25 L200,25" />
+                    </svg>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter poly" style="color:var(--blue)">
+                    <div class="poly-grid"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path class="poly-line" stroke="var(--blue)"
+                            d="M0,25 L80,25 L85,23 L90,27 L95,24 L100,26 L110,25 L200,25" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- 24B: EKG Style -->
+        <div class="card">
+            <h3>24B // EKG Heartbeat</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter ekg" style="color:var(--red)">
+                    <div class="ekg-line"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path class="ekg-path" stroke="var(--red)"
+                            d="M0,25 L20,25 L25,25 L27,5 L30,45 L33,5 L36,25 L50,25 L55,25 L57,5 L60,45 L63,5 L66,25 L80,25 L85,25 L87,5 L90,45 L93,5 L96,25 L110,25 L115,25 L117,5 L120,45 L123,5 L126,25 L140,25 L145,25 L147,5 L150,45 L153,5 L156,25 L170,25 L175,25 L177,5 L180,45 L183,5 L186,25 L200,25" />
+                    </svg>
+                    <div class="ekg-dot" style="background:var(--red);box-shadow:0 0 10px var(--red)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter ekg" style="color:var(--orange)">
+                    <div class="ekg-line"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path class="ekg-path" stroke="var(--orange)"
+                            d="M0,25 L30,25 L35,25 L37,8 L40,42 L43,8 L46,25 L80,25 L85,25 L87,8 L90,42 L93,8 L96,25 L130,25 L135,25 L137,8 L140,42 L143,8 L146,25 L200,25" />
+                    </svg>
+                    <div class="ekg-dot" style="background:var(--orange);box-shadow:0 0 10px var(--orange)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter ekg" style="color:var(--amber)">
+                    <div class="ekg-line"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path class="ekg-path" stroke="var(--amber)"
+                            d="M0,25 L45,25 L50,25 L52,10 L55,40 L58,10 L61,25 L110,25 L115,25 L117,10 L120,40 L123,10 L126,25 L200,25" />
+                    </svg>
+                    <div class="ekg-dot" style="background:var(--amber);box-shadow:0 0 10px var(--amber)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter ekg" style="color:var(--green)">
+                    <div class="ekg-line"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path class="ekg-path" stroke="var(--green)"
+                            d="M0,25 L70,25 L75,25 L77,12 L80,38 L83,12 L86,25 L150,25 L155,25 L157,12 L160,38 L163,12 L166,25 L200,25" />
+                    </svg>
+                    <div class="ekg-dot" style="background:var(--green);box-shadow:0 0 10px var(--green)"></div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter ekg" style="color:var(--blue)">
+                    <div class="ekg-line"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path class="ekg-path" stroke="var(--blue)"
+                            d="M0,25 L90,25 L95,25 L97,15 L100,35 L103,15 L106,25 L200,25" />
+                    </svg>
+                    <div class="ekg-dot" style="background:var(--blue);box-shadow:0 0 10px var(--blue)"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 24C: Seismograph -->
+        <div class="card">
+            <h3>24C // Seismograph</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter seismo" style="color:var(--red)">
+                    <div class="seismo-tape"></div><svg viewBox="0 0 200 55" preserveAspectRatio="none">
+                        <path fill="none" stroke="var(--red)" stroke-width="2"
+                            d="M0,27 Q5,5 10,27 T20,27 Q25,50 30,27 T40,27 Q45,5 50,27 T60,27 Q65,48 70,27 T80,27 Q85,8 90,27 T100,27 Q105,45 110,27 T120,27 Q125,10 130,27 T140,27 Q145,42 150,27 T160,27 Q165,12 170,27 T180,27 Q185,40 190,27 T200,27" />
+                    </svg>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter seismo" style="color:var(--orange)">
+                    <div class="seismo-tape"></div><svg viewBox="0 0 200 55" preserveAspectRatio="none">
+                        <path fill="none" stroke="var(--orange)" stroke-width="2"
+                            d="M0,27 L20,27 Q25,10 30,27 T40,27 Q45,44 50,27 T60,27 L90,27 Q95,12 100,27 T110,27 Q115,42 120,27 T130,27 L160,27 Q165,15 170,27 T180,27 L200,27" />
+                    </svg>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter seismo" style="color:var(--amber)">
+                    <div class="seismo-tape"></div><svg viewBox="0 0 200 55" preserveAspectRatio="none">
+                        <path fill="none" stroke="var(--amber)" stroke-width="2"
+                            d="M0,27 L40,27 Q45,15 50,27 T60,27 Q65,39 70,27 T80,27 L120,27 Q125,18 130,27 T140,27 Q145,36 150,27 T160,27 L200,27" />
+                    </svg>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter seismo" style="color:var(--green)">
+                    <div class="seismo-tape"></div><svg viewBox="0 0 200 55" preserveAspectRatio="none">
+                        <path fill="none" stroke="var(--green)" stroke-width="2"
+                            d="M0,27 L70,27 Q75,20 80,27 T90,27 Q95,34 100,27 T110,27 L200,27" />
+                    </svg>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter seismo" style="color:var(--blue)">
+                    <div class="seismo-tape"></div><svg viewBox="0 0 200 55" preserveAspectRatio="none">
+                        <path fill="none" stroke="var(--blue)" stroke-width="2"
+                            d="M0,27 L90,27 Q95,23 100,27 T110,27 L200,27" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- 24D: Heartbeat Monitor -->
+        <div class="card">
+            <h3>24D // Vital Signs</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter heartbeat" style="color:var(--red)">
+                    <div class="hb-glow"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linecap="round"
+                            d="M0,25 L10,25 L15,25 L18,5 L22,45 L26,5 L30,25 L35,25 L38,8 L42,42 L46,8 L50,25 L55,25 L58,5 L62,45 L66,5 L70,25 L75,25 L78,8 L82,42 L86,8 L90,25 L95,25 L98,5 L102,45 L106,5 L110,25 L115,25 L118,8 L122,42 L126,8 L130,25 L135,25 L138,5 L142,45 L146,5 L150,25 L155,25 L158,8 L162,42 L166,8 L170,25 L200,25" />
+                    </svg>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter heartbeat" style="color:var(--orange)">
+                    <div class="hb-glow"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round"
+                            d="M0,25 L20,25 L25,25 L28,8 L32,42 L36,8 L40,25 L60,25 L65,25 L68,8 L72,42 L76,8 L80,25 L100,25 L105,25 L108,8 L112,42 L116,8 L120,25 L140,25 L145,25 L148,8 L152,42 L156,8 L160,25 L200,25" />
+                    </svg>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter heartbeat" style="color:var(--amber)">
+                    <div class="hb-glow"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path fill="none" stroke="var(--amber)" stroke-width="2.5" stroke-linecap="round"
+                            d="M0,25 L35,25 L40,25 L43,10 L47,40 L51,10 L55,25 L90,25 L95,25 L98,10 L102,40 L106,10 L110,25 L145,25 L150,25 L153,10 L157,40 L161,10 L165,25 L200,25" />
+                    </svg>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter heartbeat" style="color:var(--green)">
+                    <div class="hb-glow"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"
+                            d="M0,25 L60,25 L65,25 L68,12 L72,38 L76,12 L80,25 L140,25 L145,25 L148,12 L152,38 L156,12 L160,25 L200,25" />
+                    </svg>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter heartbeat" style="color:var(--blue)">
+                    <div class="hb-glow"></div><svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                        <path fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round"
+                            d="M0,25 L85,25 L90,25 L93,15 L97,35 L101,15 L105,25 L200,25" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- 24E: Multi-Channel Lie Detector -->
+        <div class="card">
+            <h3>24E // Multi-Channel Detector</h3>
+            <div class="meter-row"><span class="label" style="color:var(--red)">FALSE</span>
+                <div class="meter lie-detect" style="color:var(--red)">
+                    <div class="ld-channels">
+                        <div class="ld-channel"><span class="ld-label">GSR</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--red)" stroke-width="1.5"
+                                        d="M0,6 Q10,0 20,6 T40,6 Q50,12 60,6 T80,6 Q90,0 100,6 T120,6 Q130,12 140,6 T160,6 Q170,0 180,6" />
+                                </svg></div>
+                        </div>
+                        <div class="ld-channel"><span class="ld-label">BP</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--red)" stroke-width="1.5"
+                                        d="M0,6 L10,6 L12,0 L14,12 L16,6 L26,6 L28,0 L30,12 L32,6 L42,6 L44,0 L46,12 L48,6 L58,6 L60,0 L62,12 L64,6 L74,6 L76,0 L78,12 L80,6 L90,6 L92,0 L94,12 L96,6 L106,6 L108,0 L110,12 L112,6 L122,6 L124,0 L126,12 L128,6 L180,6" />
+                                </svg></div>
+                        </div>
+                        <div class="ld-channel"><span class="ld-label">RSP</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--red)" stroke-width="1.5"
+                                        d="M0,6 Q15,0 30,6 T60,6 Q75,12 90,6 T120,6 Q135,0 150,6 T180,6" />
+                                </svg></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--orange)">MOSTLY FALSE</span>
+                <div class="meter lie-detect" style="color:var(--orange)">
+                    <div class="ld-channels">
+                        <div class="ld-channel"><span class="ld-label">GSR</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--orange)" stroke-width="1.5"
+                                        d="M0,6 L30,6 Q40,2 50,6 T70,6 Q80,10 90,6 T110,6 L180,6" />
+                                </svg></div>
+                        </div>
+                        <div class="ld-channel"><span class="ld-label">BP</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--orange)" stroke-width="1.5"
+                                        d="M0,6 L25,6 L27,1 L29,11 L31,6 L55,6 L57,1 L59,11 L61,6 L85,6 L87,1 L89,11 L91,6 L180,6" />
+                                </svg></div>
+                        </div>
+                        <div class="ld-channel"><span class="ld-label">RSP</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--orange)" stroke-width="1.5"
+                                        d="M0,6 Q30,3 60,6 T120,6 L180,6" />
+                                </svg></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--amber)">MIXED</span>
+                <div class="meter lie-detect" style="color:var(--amber)">
+                    <div class="ld-channels">
+                        <div class="ld-channel"><span class="ld-label">GSR</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--amber)" stroke-width="1.5"
+                                        d="M0,6 L60,6 Q70,4 80,6 T100,6 L180,6" />
+                                </svg></div>
+                        </div>
+                        <div class="ld-channel"><span class="ld-label">BP</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--amber)" stroke-width="1.5"
+                                        d="M0,6 L50,6 L52,2 L54,10 L56,6 L100,6 L102,2 L104,10 L106,6 L180,6" />
+                                </svg></div>
+                        </div>
+                        <div class="ld-channel"><span class="ld-label">RSP</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--amber)" stroke-width="1.5"
+                                        d="M0,6 Q45,4 90,6 T180,6" />
+                                </svg></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--green)">MOSTLY TRUE</span>
+                <div class="meter lie-detect" style="color:var(--green)">
+                    <div class="ld-channels">
+                        <div class="ld-channel"><span class="ld-label">GSR</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--green)" stroke-width="1.5"
+                                        d="M0,6 L90,6 Q100,5 110,6 T130,6 L180,6" />
+                                </svg></div>
+                        </div>
+                        <div class="ld-channel"><span class="ld-label">BP</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--green)" stroke-width="1.5"
+                                        d="M0,6 L70,6 L72,3 L74,9 L76,6 L130,6 L132,3 L134,9 L136,6 L180,6" />
+                                </svg></div>
+                        </div>
+                        <div class="ld-channel"><span class="ld-label">RSP</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--green)" stroke-width="1.5"
+                                        d="M0,6 Q60,5 120,6 L180,6" />
+                                </svg></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="meter-row"><span class="label" style="color:var(--blue)">VERIFIED</span>
+                <div class="meter lie-detect" style="color:var(--blue)">
+                    <div class="ld-channels">
+                        <div class="ld-channel"><span class="ld-label">GSR</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--blue)" stroke-width="1.5" d="M0,6 L180,6" />
+                                </svg></div>
+                        </div>
+                        <div class="ld-channel"><span class="ld-label">BP</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--blue)" stroke-width="1.5"
+                                        d="M0,6 L80,6 L82,4 L84,8 L86,6 L180,6" />
+                                </svg></div>
+                        </div>
+                        <div class="ld-channel"><span class="ld-label">RSP</span>
+                            <div class="ld-wave"><svg viewBox="0 0 180 12" preserveAspectRatio="none">
+                                    <path fill="none" stroke="var(--blue)" stroke-width="1.5" d="M0,6 L180,6" />
+                                </svg></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        style="text-align:center;margin:60px 0 30px;padding:30px;background:rgba(59,130,246,0.05);border-radius:16px;max-width:800px;margin-left:auto;margin-right:auto">
+        <h2 style="color:var(--cyan);margin-bottom:12px;font-size:1.1rem">🎯 Polygraph Concept</h2>
+        <p style="color:var(--muted);font-size:0.85rem;line-height:1.6">Erratic, chaotic waveforms indicate <span
+                style="color:var(--red)">FALSE</span> claims with high stress signals.<br>Calm, steady baselines
+            indicate <span style="color:var(--blue)">VERIFIED</span> truth with minimal disturbance.</p>
+    </div>
+</body>
+
+</html>

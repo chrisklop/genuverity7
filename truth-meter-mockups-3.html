@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truth Meter Designs Part 3 | GenuVerity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050A14;
+            --card: #111827;
+            --border: rgba(59, 130, 246, 0.2);
+            --red: #ef4444;
+            --orange: #f97316;
+            --amber: #f59e0b;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --cyan: #06b6d4;
+            --text: #fff;
+            --muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: var(--muted);
+        }
+
+        .levels {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .level {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .level-label {
+            width: 120px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* DESIGN 13: Semi-Circle Gauge */
+        .gauge-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .gauge-svg {
+            width: 100px;
+            height: 55px;
+        }
+
+        .gauge-arc-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 8;
+            stroke-linecap: round;
+        }
+
+        .gauge-arc {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.8s ease;
+        }
+
+        .gauge-label {
+            font-size: 0.7rem;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        /* DESIGN 14: Thermometer */
+        .thermo {
+            width: 22px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 11px 11px 50% 50%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thermo-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            border-radius: 0 0 50% 50%;
+            transition: height 0.5s;
+        }
+
+        /* DESIGN 15: Star Rating */
+        .star-meter {
+            display: flex;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .star {
+            width: 20px;
+            height: 20px;
+            opacity: 0.2;
+        }
+
+        .star.active {
+            opacity: 1;
+            filter: drop-shadow(0 0 4px currentColor);
+        }
+
+        /* DESIGN 16: Diamond Chain */
+        .diamond-meter {
+            display: flex;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .diamond {
+            width: 16px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+        }
+
+        .diamond.active {
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        /* DESIGN 17: Stacked Bars */
+        .stack-meter {
+            display: flex;
+            flex: 1;
+            height: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .stack-fill {
+            transition: width 0.5s;
+        }
+
+        /* DESIGN 18: Pulse Ring */
+        .pulse-ring {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+            animation: pulse-anim 1.5s ease-out infinite;
+            opacity: 0;
+        }
+
+        .pulse-ring.active::before {
+            opacity: 1;
+        }
+
+        @keyframes pulse-anim {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .pulse-core {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .pulse-core.active {
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        /* DESIGN 19: Gradient Orb */
+        .orb {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .orb.active {
+            box-shadow: 0 0 20px currentColor, inset 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        /* DESIGN 20: Scan Line */
+        .scan-meter {
+            flex: 1;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .scan-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            animation: scan 2s ease-in-out infinite;
+        }
+
+        .scan-bg {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            transition: width 0.5s;
+            opacity: 0.3;
+        }
+
+        @keyframes scan {
+
+            0%,
+            100% {
+                left: 0;
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            95% {
+                left: calc(100% - 4px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🎯 Truth Meter Designs - Part 3</h1>
+    <p class="subtitle">Gauge, Thermometer, Star, Diamond, Stack, Pulse, Orb, Scan variants</p>
+
+    <div class="grid">
+        <!-- DESIGN 13: Semi-Circle Gauge -->
+        <div class="card">
+            <h3>13. Semi-Circle Gauge</h3>
+            <div class="levels">
+                <div class="level gauge-container"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <svg class="gauge-svg" viewBox="0 0 100 55">
+                        <path class="gauge-arc-bg" d="M10,50 A40,40 0 0,1 90,50" />
+                        <path class="gauge-arc" d="M10,50 A40,40 0 0,1 90,50" stroke="var(--red)" stroke-dasharray="126"
+                            stroke-dashoffset="113" />
+                    </svg>
+                    <span class="gauge-label" style="color:var(--red)">10%</span>
+                </div>
+                <div class="level gauge-container"><span class="level-label" style="color:var(--orange)">MOSTLY
+                        FALSE</span>
+                    <svg class="gauge-svg" viewBox="0 0 100 55">
+                        <path class="gauge-arc-bg" d="M10,50 A40,40 0 0,1 90,50" />
+                        <path class="gauge-arc" d="M10,50 A40,40 0 0,1 90,50" stroke="var(--orange)"
+                            stroke-dasharray="126" stroke-dashoffset="88" />
+                    </svg>
+                    <span class="gauge-label" style="color:var(--orange)">30%</span>
+                </div>
+                <div class="level gauge-container"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <svg class="gauge-svg" viewBox="0 0 100 55">
+                        <path class="gauge-arc-bg" d="M10,50 A40,40 0 0,1 90,50" />
+                        <path class="gauge-arc" d="M10,50 A40,40 0 0,1 90,50" stroke="var(--amber)"
+                            stroke-dasharray="126" stroke-dashoffset="63" />
+                    </svg>
+                    <span class="gauge-label" style="color:var(--amber)">50%</span>
+                </div>
+                <div class="level gauge-container"><span class="level-label" style="color:var(--green)">MOSTLY
+                        TRUE</span>
+                    <svg class="gauge-svg" viewBox="0 0 100 55">
+                        <path class="gauge-arc-bg" d="M10,50 A40,40 0 0,1 90,50" />
+                        <path class="gauge-arc" d="M10,50 A40,40 0 0,1 90,50" stroke="var(--green)"
+                            stroke-dasharray="126" stroke-dashoffset="31" />
+                    </svg>
+                    <span class="gauge-label" style="color:var(--green)">75%</span>
+                </div>
+                <div class="level gauge-container"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <svg class="gauge-svg" viewBox="0 0 100 55">
+                        <path class="gauge-arc-bg" d="M10,50 A40,40 0 0,1 90,50" />
+                        <path class="gauge-arc" d="M10,50 A40,40 0 0,1 90,50" stroke="var(--blue)"
+                            stroke-dasharray="126" stroke-dashoffset="0" />
+                    </svg>
+                    <span class="gauge-label" style="color:var(--blue)">100%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 14: Thermometer -->
+        <div class="card">
+            <h3>14. Thermometer Fill</h3>
+            <div class="levels" style="flex-direction:row; justify-content:space-around;">
+                <div style="text-align:center">
+                    <div class="thermo">
+                        <div class="thermo-fill" style="height:10%;background:var(--red)"></div>
+                    </div>
+                    <div style="margin-top:8px;font-size:0.65rem;color:var(--red)">FALSE</div>
+                </div>
+                <div style="text-align:center">
+                    <div class="thermo">
+                        <div class="thermo-fill" style="height:30%;background:var(--orange)"></div>
+                    </div>
+                    <div style="margin-top:8px;font-size:0.65rem;color:var(--orange)">MOSTLY<br>FALSE</div>
+                </div>
+                <div style="text-align:center">
+                    <div class="thermo">
+                        <div class="thermo-fill" style="height:50%;background:var(--amber)"></div>
+                    </div>
+                    <div style="margin-top:8px;font-size:0.65rem;color:var(--amber)">MIXED</div>
+                </div>
+                <div style="text-align:center">
+                    <div class="thermo">
+                        <div class="thermo-fill" style="height:75%;background:var(--green)"></div>
+                    </div>
+                    <div style="margin-top:8px;font-size:0.65rem;color:var(--green)">MOSTLY<br>TRUE</div>
+                </div>
+                <div style="text-align:center">
+                    <div class="thermo">
+                        <div class="thermo-fill" style="height:100%;background:var(--blue)"></div>
+                    </div>
+                    <div style="margin-top:8px;font-size:0.65rem;color:var(--blue)">TRUE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 15: Star Rating -->
+        <div class="card">
+            <h3>15. Star Rating</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="star-meter"><svg class="star active" viewBox="0 0 24 24" fill="var(--red)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star" viewBox="0 0 24 24" fill="#333">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star" viewBox="0 0 24 24" fill="#333">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star" viewBox="0 0 24 24" fill="#333">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star" viewBox="0 0 24 24" fill="#333">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg></div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="star-meter"><svg class="star active" viewBox="0 0 24 24" fill="var(--orange)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star active" viewBox="0 0 24 24" fill="var(--orange)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star" viewBox="0 0 24 24" fill="#333">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star" viewBox="0 0 24 24" fill="#333">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star" viewBox="0 0 24 24" fill="#333">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg></div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="star-meter"><svg class="star active" viewBox="0 0 24 24" fill="var(--amber)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star active" viewBox="0 0 24 24" fill="var(--amber)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star active" viewBox="0 0 24 24" fill="var(--amber)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star" viewBox="0 0 24 24" fill="#333">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star" viewBox="0 0 24 24" fill="#333">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg></div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="star-meter"><svg class="star active" viewBox="0 0 24 24" fill="var(--green)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star active" viewBox="0 0 24 24" fill="var(--green)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star active" viewBox="0 0 24 24" fill="var(--green)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star active" viewBox="0 0 24 24" fill="var(--green)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star" viewBox="0 0 24 24" fill="#333">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg></div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="star-meter"><svg class="star active" viewBox="0 0 24 24" fill="var(--blue)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star active" viewBox="0 0 24 24" fill="var(--blue)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star active" viewBox="0 0 24 24" fill="var(--blue)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star active" viewBox="0 0 24 24" fill="var(--blue)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg><svg class="star active" viewBox="0 0 24 24" fill="var(--blue)">
+                            <polygon points="12 2 15 8.5 22 9.3 17 14 18 21 12 17.5 6 21 7 14 2 9.3 9 8.5" />
+                        </svg></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 16: Diamond Chain -->
+        <div class="card">
+            <h3>16. Diamond Chain</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="diamond-meter">
+                        <div class="diamond active" style="background:var(--red);color:var(--red)"></div>
+                        <div class="diamond"></div>
+                        <div class="diamond"></div>
+                        <div class="diamond"></div>
+                        <div class="diamond"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="diamond-meter">
+                        <div class="diamond active" style="background:var(--orange)"></div>
+                        <div class="diamond active" style="background:var(--orange)"></div>
+                        <div class="diamond"></div>
+                        <div class="diamond"></div>
+                        <div class="diamond"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="diamond-meter">
+                        <div class="diamond active" style="background:var(--amber)"></div>
+                        <div class="diamond active" style="background:var(--amber)"></div>
+                        <div class="diamond active" style="background:var(--amber)"></div>
+                        <div class="diamond"></div>
+                        <div class="diamond"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="diamond-meter">
+                        <div class="diamond active" style="background:var(--green)"></div>
+                        <div class="diamond active" style="background:var(--green)"></div>
+                        <div class="diamond active" style="background:var(--green)"></div>
+                        <div class="diamond active" style="background:var(--green)"></div>
+                        <div class="diamond"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="diamond-meter">
+                        <div class="diamond active" style="background:var(--blue)"></div>
+                        <div class="diamond active" style="background:var(--blue)"></div>
+                        <div class="diamond active" style="background:var(--blue)"></div>
+                        <div class="diamond active" style="background:var(--blue)"></div>
+                        <div class="diamond active" style="background:var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 17: Stacked Bar -->
+        <div class="card">
+            <h3>17. Stacked Progress Bar</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="stack-meter">
+                        <div class="stack-fill" style="width:10%;background:var(--red)"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="stack-meter">
+                        <div class="stack-fill" style="width:30%;background:var(--orange)"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="stack-meter">
+                        <div class="stack-fill" style="width:50%;background:var(--amber)"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="stack-meter">
+                        <div class="stack-fill" style="width:75%;background:var(--green)"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="stack-meter">
+                        <div class="stack-fill" style="width:100%;background:var(--blue)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN 18: Scan Line -->
+        <div class="card">
+            <h3>18. Scanning Verification Bar</h3>
+            <div class="levels">
+                <div class="level"><span class="level-label" style="color:var(--red)">FALSE</span>
+                    <div class="scan-meter" style="color:var(--red)">
+                        <div class="scan-bg" style="width:10%;background:var(--red)"></div>
+                        <div class="scan-line"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--orange)">MOSTLY FALSE</span>
+                    <div class="scan-meter" style="color:var(--orange)">
+                        <div class="scan-bg" style="width:30%;background:var(--orange)"></div>
+                        <div class="scan-line"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--amber)">MIXED</span>
+                    <div class="scan-meter" style="color:var(--amber)">
+                        <div class="scan-bg" style="width:50%;background:var(--amber)"></div>
+                        <div class="scan-line"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--green)">MOSTLY TRUE</span>
+                    <div class="scan-meter" style="color:var(--green)">
+                        <div class="scan-bg" style="width:75%;background:var(--green)"></div>
+                        <div class="scan-line"></div>
+                    </div>
+                </div>
+                <div class="level"><span class="level-label" style="color:var(--blue)">TRUE</span>
+                    <div class="scan-meter" style="color:var(--blue)">
+                        <div class="scan-bg" style="width:100%;background:var(--blue)"></div>
+                        <div class="scan-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p style="text-align:center;margin-top:40px;color:var(--muted)">Part 3 of 4</p>
+</body>
+
+</html>
