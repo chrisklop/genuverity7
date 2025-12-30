@@ -120,9 +120,15 @@ To generate a custom infographic preview for a report card, include the `chart` 
 }
 ```
 
-**⚠️ CRITICAL: Chart data must be MEANINGFUL, not placeholder values!**
+**⚠️ CRITICAL: Chart preview MUST match the FIRST chart in the report!**
 
-The chart preview is a "peek" at actual data from the report. Users expect clicking the card to see this data visualized in detail.
+The chart preview is a "peek" at the actual first chart inside the report. When users click the card, they expect to see this exact same data visualized in detail.
+
+**Workflow:**
+1. Open the report HTML file (e.g., `localreports/election-deepfakes-2025.html`)
+2. Find the FIRST `<canvas>` chart and its JavaScript config
+3. Copy the exact `data: [...]` array from that chart
+4. Use the same chart type (line/bar) as the report uses
 
 **Good Examples (real data from reports):**
 ```javascript
@@ -886,12 +892,16 @@ Before saving the file, verify:
 
 ```
 □ 1. Add ALL new reports to js/reports-data.js (use clean slug format: "slug-name" not "localreports/slug.html")
-□ 2. Increment IDs sequentially (newest = lowest ID)
-□ 3. Run: node tools/generate-sitemaps.js (regenerates sitemaps + vercel.json rewrites)
-□ 4. git add localreports/*.html js/reports-data.js sitemap.xml sitemap-news.xml vercel.json
-□ 5. git commit with descriptive message
-□ 6. git push origin main
-□ 7. STOP - Do NOT run vercel --prod
+□ 2. Extract chart preview data from FIRST chart in each report:
+     - Open localreports/slug.html
+     - Find first <canvas> chart config
+     - Copy exact data array to reports-data.js chart.data
+□ 3. Increment IDs sequentially (newest = lowest ID)
+□ 4. Run: node tools/generate-sitemaps.js (regenerates sitemaps + vercel.json rewrites)
+□ 5. git add localreports/*.html js/reports-data.js sitemap.xml sitemap-news.xml vercel.json
+□ 6. git commit with descriptive message
+□ 7. git push origin main
+□ 8. STOP - Do NOT run vercel --prod
 ```
 
 ---
@@ -906,6 +916,7 @@ Before saving the file, verify:
 | Missing reading progress | Include CSS + JS from template |
 | Rushing for volume | Quality > quantity. Stop and fix issues. |
 | Not reading templates | FIRST action is always Read docs/templates.md |
+| Chart preview mismatch | Extract EXACT data from FIRST chart in report HTML |
 
 ---
 
