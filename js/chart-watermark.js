@@ -22,15 +22,15 @@
 
     const genuVerityWatermark = {
         id: 'genuVerityWatermark',
-        afterDraw: (chart) => {
+        beforeDraw: (chart) => {
             const ctx = chart.ctx;
             const { width } = chart;
 
             ctx.save();
 
-            // Position: top-right corner
+            // Position: absolute top-right corner (above chart content)
             const x = width - 8;
-            const y = 16;
+            const y = 8;
 
             ctx.textAlign = 'right';
             ctx.textBaseline = 'top';
