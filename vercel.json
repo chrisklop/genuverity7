@@ -8,68 +8,673 @@
   },
   "redirects": [
     {
-      "source": "/warrior-dividend-analysis.html",
-      "destination": "/localreports/warrior-dividend-analysis.html",
+      "source": "/localreports/ai-deepfakes-2025.html",
+      "destination": "/ai-deepfakes-2025",
       "permanent": true
     },
     {
-      "source": "/fda-vaccine-memo-fact-check.html",
-      "destination": "/localreports/fda-vaccine-memo-fact-check.html",
+      "source": "/ai-deepfakes-2025.html",
+      "destination": "/ai-deepfakes-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/ai-deportation-videos.html",
+      "destination": "/ai-deportation-videos",
+      "permanent": true
+    },
+    {
+      "source": "/ai-deportation-videos.html",
+      "destination": "/ai-deportation-videos",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/ai-slop-fake-local-news.html",
+      "destination": "/ai-slop-fake-local-news",
+      "permanent": true
+    },
+    {
+      "source": "/ai-slop-fake-local-news.html",
+      "destination": "/ai-slop-fake-local-news",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/american-political-disinfo.html",
+      "destination": "/american-political-disinfo",
+      "permanent": true
+    },
+    {
+      "source": "/american-political-disinfo.html",
+      "destination": "/american-political-disinfo",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/bird-flu-misinformation-2025.html",
+      "destination": "/bird-flu-misinformation-2025",
+      "permanent": true
+    },
+    {
+      "source": "/bird-flu-misinformation-2025.html",
+      "destination": "/bird-flu-misinformation-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/blueanon-starlink.html",
+      "destination": "/blueanon-starlink",
+      "permanent": true
+    },
+    {
+      "source": "/blueanon-starlink.html",
+      "destination": "/blueanon-starlink",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/boat-strike-investigation.html",
+      "destination": "/boat-strike-investigation",
       "permanent": true
     },
     {
       "source": "/boat-strike-investigation.html",
-      "destination": "/localreports/boat-strike-investigation.html",
+      "destination": "/boat-strike-investigation",
       "permanent": true
     },
     {
-      "source": "/trump-speech-factcheck.html",
-      "destination": "/localreports/trump-speech-factcheck.html",
+      "source": "/localreports/bondi-beach-misinfo.html",
+      "destination": "/bondi-beach-misinfo",
       "permanent": true
     },
     {
-      "source": "/mangione-trial-analysis.html",
-      "destination": "/localreports/mangione-trial-analysis.html",
+      "source": "/bondi-beach-misinfo.html",
+      "destination": "/bondi-beach-misinfo",
       "permanent": true
     },
     {
-      "source": "/tiktok-sale-analysis.html",
-      "destination": "/localreports/tiktok-sale-analysis.html",
+      "source": "/localreports/cdc-hepatitis-b-vaccine-2025.html",
+      "destination": "/cdc-hepatitis-b-vaccine-2025",
+      "permanent": true
+    },
+    {
+      "source": "/cdc-hepatitis-b-vaccine-2025.html",
+      "destination": "/cdc-hepatitis-b-vaccine-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/cdc-vaccine-autism.html",
+      "destination": "/cdc-vaccine-autism",
       "permanent": true
     },
     {
       "source": "/cdc-vaccine-autism.html",
-      "destination": "/localreports/cdc-vaccine-autism.html",
+      "destination": "/cdc-vaccine-autism",
       "permanent": true
     },
     {
-      "source": "/marijuana-rescheduling.html",
-      "destination": "/localreports/marijuana-rescheduling.html",
+      "source": "/localreports/chemtrails-2025.html",
+      "destination": "/chemtrails-2025",
       "permanent": true
     },
     {
-      "source": "/treasury-leverage.html",
-      "destination": "/localreports/treasury-leverage.html",
+      "source": "/chemtrails-2025.html",
+      "destination": "/chemtrails-2025",
       "permanent": true
     },
     {
-      "source": "/inflation-methodology.html",
-      "destination": "/localreports/inflation-methodology.html",
+      "source": "/localreports/climate-ice-age-study.html",
+      "destination": "/climate-ice-age-study",
+      "permanent": true
+    },
+    {
+      "source": "/climate-ice-age-study.html",
+      "destination": "/climate-ice-age-study",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/doge-savings-claims.html",
+      "destination": "/doge-savings-claims",
+      "permanent": true
+    },
+    {
+      "source": "/doge-savings-claims.html",
+      "destination": "/doge-savings-claims",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/dominion-voting-claims-2020.html",
+      "destination": "/dominion-voting-claims-2020",
+      "permanent": true
+    },
+    {
+      "source": "/dominion-voting-claims-2020.html",
+      "destination": "/dominion-voting-claims-2020",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/doppelganger-analysis.html",
+      "destination": "/doppelganger-analysis",
       "permanent": true
     },
     {
       "source": "/doppelganger-analysis.html",
-      "destination": "/localreports/doppelganger-analysis.html",
+      "destination": "/doppelganger-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/election-deepfakes-2025.html",
+      "destination": "/election-deepfakes-2025",
+      "permanent": true
+    },
+    {
+      "source": "/election-deepfakes-2025.html",
+      "destination": "/election-deepfakes-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/epstein-166-name-list-fake.html",
+      "destination": "/epstein-166-name-list-fake",
+      "permanent": true
+    },
+    {
+      "source": "/epstein-166-name-list-fake.html",
+      "destination": "/epstein-166-name-list-fake",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/epstein-air-logistics.html",
+      "destination": "/epstein-air-logistics",
+      "permanent": true
+    },
+    {
+      "source": "/epstein-air-logistics.html",
+      "destination": "/epstein-air-logistics",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/epstein-documents-2025.html",
+      "destination": "/epstein-documents-2025",
+      "permanent": true
+    },
+    {
+      "source": "/epstein-documents-2025.html",
+      "destination": "/epstein-documents-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/fda-vaccine-memo-fact-check.html",
+      "destination": "/fda-vaccine-memo-fact-check",
+      "permanent": true
+    },
+    {
+      "source": "/fda-vaccine-memo-fact-check.html",
+      "destination": "/fda-vaccine-memo-fact-check",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/fednow-freeze.html",
+      "destination": "/fednow-freeze",
+      "permanent": true
+    },
+    {
+      "source": "/fednow-freeze.html",
+      "destination": "/fednow-freeze",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/german-christmas-market-disinfo.html",
+      "destination": "/german-christmas-market-disinfo",
+      "permanent": true
+    },
+    {
+      "source": "/german-christmas-market-disinfo.html",
+      "destination": "/german-christmas-market-disinfo",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/golden-fleet-analysis.html",
+      "destination": "/golden-fleet-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/golden-fleet-analysis.html",
+      "destination": "/golden-fleet-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/great-reset-wef.html",
+      "destination": "/great-reset-wef",
+      "permanent": true
+    },
+    {
+      "source": "/great-reset-wef.html",
+      "destination": "/great-reset-wef",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/grocery-prices-claim.html",
+      "destination": "/grocery-prices-claim",
+      "permanent": true
+    },
+    {
+      "source": "/grocery-prices-claim.html",
+      "destination": "/grocery-prices-claim",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/grok-ai-misinformation-crisis.html",
+      "destination": "/grok-ai-misinformation-crisis",
+      "permanent": true
+    },
+    {
+      "source": "/grok-ai-misinformation-crisis.html",
+      "destination": "/grok-ai-misinformation-crisis",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/haarp-weather-control.html",
+      "destination": "/haarp-weather-control",
+      "permanent": true
+    },
+    {
+      "source": "/haarp-weather-control.html",
+      "destination": "/haarp-weather-control",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/hamas-youth-support.html",
+      "destination": "/hamas-youth-support",
+      "permanent": true
+    },
+    {
+      "source": "/hamas-youth-support.html",
+      "destination": "/hamas-youth-support",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/hegseth-boat-strike.html",
+      "destination": "/hegseth-boat-strike",
+      "permanent": true
+    },
+    {
+      "source": "/hegseth-boat-strike.html",
+      "destination": "/hegseth-boat-strike",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/hhs-vaccine-autism-claims.html",
+      "destination": "/hhs-vaccine-autism-claims",
+      "permanent": true
+    },
+    {
+      "source": "/hhs-vaccine-autism-claims.html",
+      "destination": "/hhs-vaccine-autism-claims",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/immigration-crime-claims.html",
+      "destination": "/immigration-crime-claims",
+      "permanent": true
+    },
+    {
+      "source": "/immigration-crime-claims.html",
+      "destination": "/immigration-crime-claims",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/inflation-methodology.html",
+      "destination": "/inflation-methodology",
+      "permanent": true
+    },
+    {
+      "source": "/inflation-methodology.html",
+      "destination": "/inflation-methodology",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/iran-nuclear-crisis.html",
+      "destination": "/iran-nuclear-crisis",
+      "permanent": true
+    },
+    {
+      "source": "/iran-nuclear-crisis.html",
+      "destination": "/iran-nuclear-crisis",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/irs-social-security-payment-hoax-2025.html",
+      "destination": "/irs-social-security-payment-hoax-2025",
+      "permanent": true
+    },
+    {
+      "source": "/irs-social-security-payment-hoax-2025.html",
+      "destination": "/irs-social-security-payment-hoax-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/irs-stimulus-hoax.html",
+      "destination": "/irs-stimulus-hoax",
+      "permanent": true
+    },
+    {
+      "source": "/irs-stimulus-hoax.html",
+      "destination": "/irs-stimulus-hoax",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/la-wildfire-misinformation-2025.html",
+      "destination": "/la-wildfire-misinformation-2025",
+      "permanent": true
+    },
+    {
+      "source": "/la-wildfire-misinformation-2025.html",
+      "destination": "/la-wildfire-misinformation-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/laptop-farms.backup.html",
+      "destination": "/laptop-farms.backup",
+      "permanent": true
+    },
+    {
+      "source": "/laptop-farms.backup.html",
+      "destination": "/laptop-farms.backup",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/laptop-farms.html",
+      "destination": "/laptop-farms",
+      "permanent": true
+    },
+    {
+      "source": "/laptop-farms.html",
+      "destination": "/laptop-farms",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/maga-accounts-foreign.html",
+      "destination": "/maga-accounts-foreign",
+      "permanent": true
+    },
+    {
+      "source": "/maga-accounts-foreign.html",
+      "destination": "/maga-accounts-foreign",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/mangione-trial-analysis.html",
+      "destination": "/mangione-trial-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/mangione-trial-analysis.html",
+      "destination": "/mangione-trial-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/marijuana-rescheduling.html",
+      "destination": "/marijuana-rescheduling",
+      "permanent": true
+    },
+    {
+      "source": "/marijuana-rescheduling.html",
+      "destination": "/marijuana-rescheduling",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/meta-ends-fact-checking-2025.html",
+      "destination": "/meta-ends-fact-checking-2025",
+      "permanent": true
+    },
+    {
+      "source": "/meta-ends-fact-checking-2025.html",
+      "destination": "/meta-ends-fact-checking-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/musk-eu-claims.html",
+      "destination": "/musk-eu-claims",
+      "permanent": true
+    },
+    {
+      "source": "/musk-eu-claims.html",
+      "destination": "/musk-eu-claims",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/nad-alzheimers-recovery.html",
+      "destination": "/nad-alzheimers-recovery",
+      "permanent": true
+    },
+    {
+      "source": "/nad-alzheimers-recovery.html",
+      "destination": "/nad-alzheimers-recovery",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/network-analysis.html",
+      "destination": "/network-analysis",
       "permanent": true
     },
     {
       "source": "/network-analysis.html",
-      "destination": "/localreports/network-analysis.html",
+      "destination": "/network-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/nj-drone-conspiracy.html",
+      "destination": "/nj-drone-conspiracy",
+      "permanent": true
+    },
+    {
+      "source": "/nj-drone-conspiracy.html",
+      "destination": "/nj-drone-conspiracy",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/paid-protesters-hoax.html",
+      "destination": "/paid-protesters-hoax",
+      "permanent": true
+    },
+    {
+      "source": "/paid-protesters-hoax.html",
+      "destination": "/paid-protesters-hoax",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/palantir-panopticon.html",
+      "destination": "/palantir-panopticon",
+      "permanent": true
+    },
+    {
+      "source": "/palantir-panopticon.html",
+      "destination": "/palantir-panopticon",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/plaque-fact-check.html",
+      "destination": "/plaque-fact-check",
       "permanent": true
     },
     {
       "source": "/plaque-fact-check.html",
-      "destination": "/localreports/plaque-fact-check.html",
+      "destination": "/plaque-fact-check",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/project-2025-military-orders.html",
+      "destination": "/project-2025-military-orders",
+      "permanent": true
+    },
+    {
+      "source": "/project-2025-military-orders.html",
+      "destination": "/project-2025-military-orders",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/rob-reiner-misinformation-2025.html",
+      "destination": "/rob-reiner-misinformation-2025",
+      "permanent": true
+    },
+    {
+      "source": "/rob-reiner-misinformation-2025.html",
+      "destination": "/rob-reiner-misinformation-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/ruby-bradley-quote.html",
+      "destination": "/ruby-bradley-quote",
+      "permanent": true
+    },
+    {
+      "source": "/ruby-bradley-quote.html",
+      "destination": "/ruby-bradley-quote",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/smishing-surge-2025.html",
+      "destination": "/smishing-surge-2025",
+      "permanent": true
+    },
+    {
+      "source": "/smishing-surge-2025.html",
+      "destination": "/smishing-surge-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/syria-disinformation-2024.html",
+      "destination": "/syria-disinformation-2024",
+      "permanent": true
+    },
+    {
+      "source": "/syria-disinformation-2024.html",
+      "destination": "/syria-disinformation-2024",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/tesla-pi-phone-fake.html",
+      "destination": "/tesla-pi-phone-fake",
+      "permanent": true
+    },
+    {
+      "source": "/tesla-pi-phone-fake.html",
+      "destination": "/tesla-pi-phone-fake",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/tiktok-sale-analysis.html",
+      "destination": "/tiktok-sale-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/tiktok-sale-analysis.html",
+      "destination": "/tiktok-sale-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/tommy-robinson-guadeloupe.html",
+      "destination": "/tommy-robinson-guadeloupe",
+      "permanent": true
+    },
+    {
+      "source": "/tommy-robinson-guadeloupe.html",
+      "destination": "/tommy-robinson-guadeloupe",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/treasury-leverage.html",
+      "destination": "/treasury-leverage",
+      "permanent": true
+    },
+    {
+      "source": "/treasury-leverage.html",
+      "destination": "/treasury-leverage",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/trump-25m-migrants.html",
+      "destination": "/trump-25m-migrants",
+      "permanent": true
+    },
+    {
+      "source": "/trump-25m-migrants.html",
+      "destination": "/trump-25m-migrants",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/trump-admin-financial-conflicts.html",
+      "destination": "/trump-admin-financial-conflicts",
+      "permanent": true
+    },
+    {
+      "source": "/trump-admin-financial-conflicts.html",
+      "destination": "/trump-admin-financial-conflicts",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/trump-allegations-epstein.html",
+      "destination": "/trump-allegations-epstein",
+      "permanent": true
+    },
+    {
+      "source": "/trump-allegations-epstein.html",
+      "destination": "/trump-allegations-epstein",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/trump-speech-factcheck.html",
+      "destination": "/trump-speech-factcheck",
+      "permanent": true
+    },
+    {
+      "source": "/trump-speech-factcheck.html",
+      "destination": "/trump-speech-factcheck",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/us-argentina-farm-crisis-2025.html",
+      "destination": "/us-argentina-farm-crisis-2025",
+      "permanent": true
+    },
+    {
+      "source": "/us-argentina-farm-crisis-2025.html",
+      "destination": "/us-argentina-farm-crisis-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/us-gas-price-decline.html",
+      "destination": "/us-gas-price-decline",
+      "permanent": true
+    },
+    {
+      "source": "/us-gas-price-decline.html",
+      "destination": "/us-gas-price-decline",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/us-inflation-10-year-analysis.html",
+      "destination": "/us-inflation-10-year-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/us-inflation-10-year-analysis.html",
+      "destination": "/us-inflation-10-year-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/us-recession-analysis-2025.html",
+      "destination": "/us-recession-analysis-2025",
+      "permanent": true
+    },
+    {
+      "source": "/us-recession-analysis-2025.html",
+      "destination": "/us-recession-analysis-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/warrior-dividend-analysis.html",
+      "destination": "/warrior-dividend-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/warrior-dividend-analysis.html",
+      "destination": "/warrior-dividend-analysis",
       "permanent": true
     }
   ],
@@ -123,18 +728,290 @@
   "rewrites": [
     {
       "source": "/sitemap.xml",
-      "destination": "/api/index.py"
+      "destination": "/sitemap.xml"
+    },
+    {
+      "source": "/sitemap-news.xml",
+      "destination": "/sitemap-news.xml"
     },
     {
       "source": "/robots.txt",
+      "destination": "/robots.txt"
+    },
+    {
+      "source": "/api/:path*",
       "destination": "/api/index.py"
     },
     {
-      "source": "/api/(.*)",
-      "destination": "/api/index.py"
+      "source": "/ai-deepfakes-2025",
+      "destination": "/localreports/ai-deepfakes-2025.html"
     },
     {
-      "source": "/(.*)",
+      "source": "/ai-deportation-videos",
+      "destination": "/localreports/ai-deportation-videos.html"
+    },
+    {
+      "source": "/ai-slop-fake-local-news",
+      "destination": "/localreports/ai-slop-fake-local-news.html"
+    },
+    {
+      "source": "/american-political-disinfo",
+      "destination": "/localreports/american-political-disinfo.html"
+    },
+    {
+      "source": "/bird-flu-misinformation-2025",
+      "destination": "/localreports/bird-flu-misinformation-2025.html"
+    },
+    {
+      "source": "/blueanon-starlink",
+      "destination": "/localreports/blueanon-starlink.html"
+    },
+    {
+      "source": "/boat-strike-investigation",
+      "destination": "/localreports/boat-strike-investigation.html"
+    },
+    {
+      "source": "/bondi-beach-misinfo",
+      "destination": "/localreports/bondi-beach-misinfo.html"
+    },
+    {
+      "source": "/cdc-hepatitis-b-vaccine-2025",
+      "destination": "/localreports/cdc-hepatitis-b-vaccine-2025.html"
+    },
+    {
+      "source": "/cdc-vaccine-autism",
+      "destination": "/localreports/cdc-vaccine-autism.html"
+    },
+    {
+      "source": "/chemtrails-2025",
+      "destination": "/localreports/chemtrails-2025.html"
+    },
+    {
+      "source": "/climate-ice-age-study",
+      "destination": "/localreports/climate-ice-age-study.html"
+    },
+    {
+      "source": "/doge-savings-claims",
+      "destination": "/localreports/doge-savings-claims.html"
+    },
+    {
+      "source": "/dominion-voting-claims-2020",
+      "destination": "/localreports/dominion-voting-claims-2020.html"
+    },
+    {
+      "source": "/doppelganger-analysis",
+      "destination": "/localreports/doppelganger-analysis.html"
+    },
+    {
+      "source": "/election-deepfakes-2025",
+      "destination": "/localreports/election-deepfakes-2025.html"
+    },
+    {
+      "source": "/epstein-166-name-list-fake",
+      "destination": "/localreports/epstein-166-name-list-fake.html"
+    },
+    {
+      "source": "/epstein-air-logistics",
+      "destination": "/localreports/epstein-air-logistics.html"
+    },
+    {
+      "source": "/epstein-documents-2025",
+      "destination": "/localreports/epstein-documents-2025.html"
+    },
+    {
+      "source": "/fda-vaccine-memo-fact-check",
+      "destination": "/localreports/fda-vaccine-memo-fact-check.html"
+    },
+    {
+      "source": "/fednow-freeze",
+      "destination": "/localreports/fednow-freeze.html"
+    },
+    {
+      "source": "/german-christmas-market-disinfo",
+      "destination": "/localreports/german-christmas-market-disinfo.html"
+    },
+    {
+      "source": "/golden-fleet-analysis",
+      "destination": "/localreports/golden-fleet-analysis.html"
+    },
+    {
+      "source": "/great-reset-wef",
+      "destination": "/localreports/great-reset-wef.html"
+    },
+    {
+      "source": "/grocery-prices-claim",
+      "destination": "/localreports/grocery-prices-claim.html"
+    },
+    {
+      "source": "/grok-ai-misinformation-crisis",
+      "destination": "/localreports/grok-ai-misinformation-crisis.html"
+    },
+    {
+      "source": "/haarp-weather-control",
+      "destination": "/localreports/haarp-weather-control.html"
+    },
+    {
+      "source": "/hamas-youth-support",
+      "destination": "/localreports/hamas-youth-support.html"
+    },
+    {
+      "source": "/hegseth-boat-strike",
+      "destination": "/localreports/hegseth-boat-strike.html"
+    },
+    {
+      "source": "/hhs-vaccine-autism-claims",
+      "destination": "/localreports/hhs-vaccine-autism-claims.html"
+    },
+    {
+      "source": "/immigration-crime-claims",
+      "destination": "/localreports/immigration-crime-claims.html"
+    },
+    {
+      "source": "/inflation-methodology",
+      "destination": "/localreports/inflation-methodology.html"
+    },
+    {
+      "source": "/iran-nuclear-crisis",
+      "destination": "/localreports/iran-nuclear-crisis.html"
+    },
+    {
+      "source": "/irs-social-security-payment-hoax-2025",
+      "destination": "/localreports/irs-social-security-payment-hoax-2025.html"
+    },
+    {
+      "source": "/irs-stimulus-hoax",
+      "destination": "/localreports/irs-stimulus-hoax.html"
+    },
+    {
+      "source": "/la-wildfire-misinformation-2025",
+      "destination": "/localreports/la-wildfire-misinformation-2025.html"
+    },
+    {
+      "source": "/laptop-farms.backup",
+      "destination": "/localreports/laptop-farms.backup.html"
+    },
+    {
+      "source": "/laptop-farms",
+      "destination": "/localreports/laptop-farms.html"
+    },
+    {
+      "source": "/maga-accounts-foreign",
+      "destination": "/localreports/maga-accounts-foreign.html"
+    },
+    {
+      "source": "/mangione-trial-analysis",
+      "destination": "/localreports/mangione-trial-analysis.html"
+    },
+    {
+      "source": "/marijuana-rescheduling",
+      "destination": "/localreports/marijuana-rescheduling.html"
+    },
+    {
+      "source": "/meta-ends-fact-checking-2025",
+      "destination": "/localreports/meta-ends-fact-checking-2025.html"
+    },
+    {
+      "source": "/musk-eu-claims",
+      "destination": "/localreports/musk-eu-claims.html"
+    },
+    {
+      "source": "/nad-alzheimers-recovery",
+      "destination": "/localreports/nad-alzheimers-recovery.html"
+    },
+    {
+      "source": "/network-analysis",
+      "destination": "/localreports/network-analysis.html"
+    },
+    {
+      "source": "/nj-drone-conspiracy",
+      "destination": "/localreports/nj-drone-conspiracy.html"
+    },
+    {
+      "source": "/paid-protesters-hoax",
+      "destination": "/localreports/paid-protesters-hoax.html"
+    },
+    {
+      "source": "/palantir-panopticon",
+      "destination": "/localreports/palantir-panopticon.html"
+    },
+    {
+      "source": "/plaque-fact-check",
+      "destination": "/localreports/plaque-fact-check.html"
+    },
+    {
+      "source": "/project-2025-military-orders",
+      "destination": "/localreports/project-2025-military-orders.html"
+    },
+    {
+      "source": "/rob-reiner-misinformation-2025",
+      "destination": "/localreports/rob-reiner-misinformation-2025.html"
+    },
+    {
+      "source": "/ruby-bradley-quote",
+      "destination": "/localreports/ruby-bradley-quote.html"
+    },
+    {
+      "source": "/smishing-surge-2025",
+      "destination": "/localreports/smishing-surge-2025.html"
+    },
+    {
+      "source": "/syria-disinformation-2024",
+      "destination": "/localreports/syria-disinformation-2024.html"
+    },
+    {
+      "source": "/tesla-pi-phone-fake",
+      "destination": "/localreports/tesla-pi-phone-fake.html"
+    },
+    {
+      "source": "/tiktok-sale-analysis",
+      "destination": "/localreports/tiktok-sale-analysis.html"
+    },
+    {
+      "source": "/tommy-robinson-guadeloupe",
+      "destination": "/localreports/tommy-robinson-guadeloupe.html"
+    },
+    {
+      "source": "/treasury-leverage",
+      "destination": "/localreports/treasury-leverage.html"
+    },
+    {
+      "source": "/trump-25m-migrants",
+      "destination": "/localreports/trump-25m-migrants.html"
+    },
+    {
+      "source": "/trump-admin-financial-conflicts",
+      "destination": "/localreports/trump-admin-financial-conflicts.html"
+    },
+    {
+      "source": "/trump-allegations-epstein",
+      "destination": "/localreports/trump-allegations-epstein.html"
+    },
+    {
+      "source": "/trump-speech-factcheck",
+      "destination": "/localreports/trump-speech-factcheck.html"
+    },
+    {
+      "source": "/us-argentina-farm-crisis-2025",
+      "destination": "/localreports/us-argentina-farm-crisis-2025.html"
+    },
+    {
+      "source": "/us-gas-price-decline",
+      "destination": "/localreports/us-gas-price-decline.html"
+    },
+    {
+      "source": "/us-inflation-10-year-analysis",
+      "destination": "/localreports/us-inflation-10-year-analysis.html"
+    },
+    {
+      "source": "/us-recession-analysis-2025",
+      "destination": "/localreports/us-recession-analysis-2025.html"
+    },
+    {
+      "source": "/warrior-dividend-analysis",
+      "destination": "/localreports/warrior-dividend-analysis.html"
+    },
+    {
+      "source": "/:path*",
       "destination": "/index.html"
     }
   ]

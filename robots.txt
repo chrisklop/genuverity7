@@ -1,4 +1,12 @@
+# GenuVerity Robots.txt
+# Updated: 2025-12-30
+
 User-agent: *
 Allow: /
 
-Sitemap: https://genuverity.org/sitemap.xml
+# Sitemaps
+Sitemap: https://www.genuverity.com/sitemap.xml
+Sitemap: https://www.genuverity.com/sitemap-news.xml
+
+# Crawl-delay
+Crawl-delay: 1

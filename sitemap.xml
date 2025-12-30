@@ -1,314 +1,428 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://genuverity.org/</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/</loc>
+    <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/golden-fleet-analysis.html</loc>
+    <loc>https://www.genuverity.com/reports.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/methods.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/comparison.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/election-deepfakes-2025</loc>
+    <lastmod>2025-12-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/meta-ends-fact-checking-2025</loc>
+    <lastmod>2025-12-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/bird-flu-misinformation-2025</loc>
+    <lastmod>2025-12-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/grok-ai-misinformation-crisis</loc>
+    <lastmod>2025-12-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/la-wildfire-misinformation-2025</loc>
+    <lastmod>2025-12-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/iran-nuclear-crisis</loc>
+    <lastmod>2025-12-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/american-political-disinfo</loc>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/project-2025-military-orders</loc>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/epstein-166-name-list-fake</loc>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/hhs-vaccine-autism-claims</loc>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/us-recession-analysis-2025</loc>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/tesla-pi-phone-fake</loc>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/smishing-surge-2025</loc>
+    <lastmod>2025-12-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/trump-allegations-epstein</loc>
+    <lastmod>2025-12-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/us-gas-price-decline</loc>
     <lastmod>2025-12-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/laptop-farms.html</loc>
+    <loc>https://www.genuverity.com/nad-alzheimers-recovery</loc>
     <lastmod>2025-12-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/haarp-weather-control.html</loc>
+    <loc>https://www.genuverity.com/ai-slop-fake-local-news</loc>
     <lastmod>2025-12-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/grocery-prices-claim.html</loc>
+    <loc>https://www.genuverity.com/dominion-voting-claims-2020</loc>
     <lastmod>2025-12-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/ai-deportation-videos.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/trump-admin-financial-conflicts</loc>
+    <lastmod>2025-12-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/dominion-voting-claims-2020.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/laptop-farms</loc>
+    <lastmod>2025-12-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/chemtrails-2025.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/epstein-air-logistics</loc>
+    <lastmod>2025-12-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/hamas-youth-support.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/fednow-freeze</loc>
+    <lastmod>2025-12-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/marijuana-rescheduling.html</loc>
+    <loc>https://www.genuverity.com/palantir-panopticon</loc>
+    <lastmod>2025-12-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/golden-fleet-analysis</loc>
+    <lastmod>2025-12-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/irs-social-security-payment-hoax-2025</loc>
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/us-argentina-farm-crisis-2025</loc>
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/german-christmas-market-disinfo</loc>
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/rob-reiner-misinformation-2025</loc>
     <lastmod>2025-12-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/us-argentina-farm-crisis-2025.html</loc>
-    <lastmod>2025-12-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://genuverity.org/localreports/tiktok-sale-analysis.html</loc>
+    <loc>https://www.genuverity.com/syria-disinformation-2024</loc>
     <lastmod>2025-12-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/plaque-fact-check.html</loc>
+    <loc>https://www.genuverity.com/cdc-hepatitis-b-vaccine-2025</loc>
     <lastmod>2025-12-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/trump-speech-factcheck.html</loc>
+    <loc>https://www.genuverity.com/hegseth-boat-strike</loc>
     <lastmod>2025-12-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/inflation-methodology.html</loc>
+    <loc>https://www.genuverity.com/us-inflation-10-year-analysis</loc>
     <lastmod>2025-12-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/german-christmas-market-disinfo.html</loc>
-    <lastmod>2025-12-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://genuverity.org/localreports/bondi-beach-misinfo.html</loc>
-    <lastmod>2025-12-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://genuverity.org/localreports/musk-eu-claims.html</loc>
-    <lastmod>2025-12-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://genuverity.org/localreports/climate-ice-age-study.html</loc>
-    <lastmod>2025-12-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://genuverity.org/localreports/boat-strike-investigation.html</loc>
+    <loc>https://www.genuverity.com/epstein-documents-2025</loc>
     <lastmod>2025-12-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/treasury-leverage.html</loc>
-    <lastmod>2025-12-21</lastmod>
+    <loc>https://www.genuverity.com/ruby-bradley-quote</loc>
+    <lastmod>2025-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/mangione-trial-analysis.html</loc>
-    <lastmod>2025-12-21</lastmod>
+    <loc>https://www.genuverity.com/paid-protesters-hoax</loc>
+    <lastmod>2025-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/laptop-farms.backup.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/ai-deportation-videos</loc>
+    <lastmod>2025-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/ai-slop-fake-local-news.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/great-reset-wef</loc>
+    <lastmod>2025-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/paid-protesters-hoax.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/chemtrails-2025</loc>
+    <lastmod>2025-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/cdc-hepatitis-b-vaccine-2025.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/blueanon-starlink</loc>
+    <lastmod>2025-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/us-inflation-10-year-analysis.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/haarp-weather-control</loc>
+    <lastmod>2025-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/ruby-bradley-quote.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/tommy-robinson-guadeloupe</loc>
+    <lastmod>2025-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/rob-reiner-misinformation-2025.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/musk-eu-claims</loc>
+    <lastmod>2025-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/fda-vaccine-memo-fact-check.html</loc>
-    <lastmod>2025-12-21</lastmod>
+    <loc>https://www.genuverity.com/irs-stimulus-hoax</loc>
+    <lastmod>2025-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/syria-disinformation-2024.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/nj-drone-conspiracy</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/warrior-dividend-analysis.html</loc>
-    <lastmod>2025-12-21</lastmod>
+    <loc>https://www.genuverity.com/maga-accounts-foreign</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/tommy-robinson-guadeloupe.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/immigration-crime-claims</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/maga-accounts-foreign.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/hamas-youth-support</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/ai-deepfakes-2025.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/grocery-prices-claim</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/nj-drone-conspiracy.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/ai-deepfakes-2025</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/hegseth-boat-strike.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/climate-ice-age-study</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/doge-savings-claims.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/bondi-beach-misinfo</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/cdc-vaccine-autism.html</loc>
-    <lastmod>2025-12-21</lastmod>
+    <loc>https://www.genuverity.com/doge-savings-claims</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/network-analysis.html</loc>
-    <lastmod>2025-12-21</lastmod>
+    <loc>https://www.genuverity.com/trump-25m-migrants</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/epstein-documents-2025.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/warrior-dividend-analysis</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/trump-25m-migrants.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/fda-vaccine-memo-fact-check</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/great-reset-wef.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/boat-strike-investigation</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/palantir-panopticon.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/trump-speech-factcheck</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/doppelganger-analysis.html</loc>
-    <lastmod>2025-12-21</lastmod>
+    <loc>https://www.genuverity.com/mangione-trial-analysis</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/irs-social-security-payment-hoax-2025.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/tiktok-sale-analysis</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/immigration-crime-claims.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/cdc-vaccine-autism</loc>
+    <lastmod>2025-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/fednow-freeze.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/marijuana-rescheduling</loc>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/epstein-air-logistics.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/treasury-leverage</loc>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/irs-stimulus-hoax.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/inflation-methodology</loc>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/blueanon-starlink.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/doppelganger-analysis</loc>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://genuverity.org/localreports/trump-admin-financial-conflicts.html</loc>
-    <lastmod>2025-12-26</lastmod>
+    <loc>https://www.genuverity.com/network-analysis</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/plaque-fact-check</loc>
+    <lastmod>2025-12-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/fednow-freeze</loc>
+    <lastmod>2025-12-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
