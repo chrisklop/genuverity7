@@ -3,6 +3,24 @@
 
 const REPORTS_DATA = [
     {
+        id: 62,
+        title: "Election Deepfakes 2025: The Year Democracy Fought Back",
+        slug: "localreports/election-deepfakes-2025.html",
+        category: "Election Security",
+        tagClass: "tag-amber",
+        catClass: "cat-disinfo",
+        icon: "vote",
+        date: "Dec 29, 2025",
+        sources: "14 Sources",
+        readTime: "18 min",
+        excerpt: "From Ireland's fabricated candidate withdrawal to Poland's €2B cyber umbrella—AI deepfakes targeted elections worldwide in 2025. $200M+ in fraud losses Q1 alone. Yet democracy adapts: Connolly won despite the deepfake, FCC issued $6M fine for Biden robocall.",
+        chart: {
+            type: "bar",
+            color: "#f59e0b",
+            data: [85, 95, 70, 75, 60, 50]
+        }
+    },
+    {
         id: 61,
         title: "Meta Ends Fact-Checking: The $100 Million Retreat",
         slug: "localreports/meta-ends-fact-checking-2025.html",
