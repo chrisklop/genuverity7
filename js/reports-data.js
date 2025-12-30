@@ -3,6 +3,24 @@
 
 const REPORTS_DATA = [
     {
+        id: 61,
+        title: "Meta Ends Fact-Checking: The $100 Million Retreat",
+        slug: "localreports/meta-ends-fact-checking-2025.html",
+        category: "Platform Policy",
+        tagClass: "tag-amber",
+        catClass: "cat-disinfo",
+        icon: "shield-off",
+        date: "Dec 29, 2025",
+        sources: "14 Sources",
+        readTime: "20 min",
+        excerpt: "Meta dismantles its $100M global fact-checking network spanning 90+ organizations across 119 countries. Joel Kaplan appointed, $1M donated to Trump—then fact-checking ended 5 days later. Community Notes work when applied, but only 7.4% of election notes ever reach users.",
+        chart: {
+            type: "bar",
+            color: "#f59e0b",
+            data: [80, 20, 20, 30, 40, 100]
+        }
+    },
+    {
         id: 60,
         title: "Bird Flu Misinformation: The H5N1 Panic Machine",
         slug: "localreports/bird-flu-misinformation-2025.html",
