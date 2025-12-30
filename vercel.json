@@ -428,6 +428,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/minnesota-fraud-investigation-2025.html",
+      "destination": "/minnesota-fraud-investigation-2025",
+      "permanent": true
+    },
+    {
+      "source": "/minnesota-fraud-investigation-2025.html",
+      "destination": "/minnesota-fraud-investigation-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/musk-eu-claims.html",
       "destination": "/musk-eu-claims",
       "permanent": true
@@ -909,6 +919,10 @@
     {
       "source": "/meta-ends-fact-checking-2025",
       "destination": "/localreports/meta-ends-fact-checking-2025.html"
+    },
+    {
+      "source": "/minnesota-fraud-investigation-2025",
+      "destination": "/localreports/minnesota-fraud-investigation-2025.html"
     },
     {
       "source": "/musk-eu-claims",

@@ -3,6 +3,25 @@
 
 const REPORTS_DATA = [
     {
+        id: 63,
+        title: "Minnesota Fraud Investigation: The $250 Million Scandal and Beyond",
+        slug: "minnesota-fraud-investigation-2025",
+        category: "Investigation",
+        tagClass: "tag-amber",
+        catClass: "cat-investigation",
+        icon: "search",
+        date: "Dec 30, 2025",
+        sources: "22 Sources",
+        readTime: "18 min",
+        verdict: "context",  // Documented fraud + contested $9B estimate requires context
+        excerpt: "The largest pandemic relief fraud in U.S. history—$250M stolen via Feeding Our Future. Federal prosecutors estimate $9B in broader Medicaid fraud; state officials say that's speculation. 82 of 92 defendants are Somali American, but mastermind Aimee Bock is white.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [3.4, 42, 197]  // FOF federal funding 2019-2021 in millions (from fundingChart)
+        }
+    },
+    {
         id: 62,
         title: "Election Deepfakes 2025: The Year Democracy Fought Back",
         slug: "election-deepfakes-2025",
