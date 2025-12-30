@@ -659,9 +659,9 @@ section::after {
     align-items: center;
     gap: 8px;
     padding: 10px 18px;
-    border: 1px solid var(--border-color);
+    border: none;
     border-radius: 8px;
-    background: var(--bg-card);
+    background: rgba(255, 255, 255, 0.05);
     color: var(--text-primary);
     font-family: var(--font-body);
     font-size: 0.875rem;
@@ -671,8 +671,7 @@ section::after {
 }
 
 .share-btn:hover {
-    border-color: var(--accent-blue);
-    background: rgba(59, 130, 246, 0.1);
+    background: rgba(59, 130, 246, 0.15);
 }
 
 .share-btn svg {
@@ -681,29 +680,28 @@ section::after {
 }
 
 .share-btn.share-twitter:hover {
-    border-color: #1DA1F2;
+    background: rgba(29, 161, 242, 0.15);
     color: #1DA1F2;
 }
 
 .share-btn.share-facebook:hover {
-    border-color: #1877F2;
+    background: rgba(24, 119, 242, 0.15);
     color: #1877F2;
 }
 
 .share-btn.share-linkedin:hover {
-    border-color: #0A66C2;
+    background: rgba(10, 102, 194, 0.15);
     color: #0A66C2;
 }
 
 .share-btn.share-copy:hover {
-    border-color: var(--accent-cyan);
+    background: rgba(6, 182, 212, 0.15);
     color: var(--accent-cyan);
 }
 
 .share-btn.copied {
-    border-color: var(--accent-green);
     color: var(--accent-green);
-    background: rgba(16, 185, 129, 0.1);
+    background: rgba(16, 185, 129, 0.15);
 }
 
 @media (max-width: 480px) {
