@@ -595,6 +595,45 @@ section::after {
     }
 
     .sources-sidebar {
+        position: relative;
+        top: 0;
+        order: -1;
+        margin-bottom: 24px;
+    }
+
+    /* Collapse sources list by default on mobile */
+    .sources-sidebar .sources-list {
+        display: none;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .sources-sidebar.expanded .sources-list {
+        display: block;
+    }
+
+    /* Make header clickable */
+    .sources-sidebar .sources-header {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .sources-sidebar .sources-header::after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 6px solid var(--text-secondary);
+        transition: transform 0.2s ease;
+    }
+
+    .sources-sidebar.expanded .sources-header::after {
+        transform: rotate(180deg);
+    }
+
+    /* Hide share section on mobile (keep focus on sources) */
+    .sources-sidebar .share-section {
         display: none;
     }
 

@@ -425,13 +425,36 @@ function initVerdictGlow() {
     document.head.appendChild(script);
 }
 
+/**
+ * Mobile Sources Toggle
+ * Makes the sources sidebar collapsible on mobile devices
+ */
+function initMobileSourcesToggle() {
+    const sidebar = document.querySelector('.sources-sidebar');
+    const header = sidebar?.querySelector('.sources-header');
+
+    if (!sidebar || !header) return;
+
+    // Only apply on mobile (matches CSS media query)
+    const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+    if (!isMobile) return;
+
+    header.addEventListener('click', () => {
+        sidebar.classList.toggle('expanded');
+    });
+
+    console.log('[GV Mobile] ✅ Sources toggle initialized');
+}
+
 // Boot
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         injectSharedComponents();
         initVerdictGlow();
+        initMobileSourcesToggle();
     });
 } else {
     injectSharedComponents();
     initVerdictGlow();
+    initMobileSourcesToggle();
 }
