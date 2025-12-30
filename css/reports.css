@@ -630,9 +630,11 @@ section::after {
 }
 /* === SOCIAL SHARING === */
 .share-section {
-    margin-top: 48px;
-    padding-top: 32px;
-    border-top: 1px solid var(--border-color);
+    margin-bottom: 24px;
+    padding: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
 }
 
 .share-heading {
@@ -646,9 +648,10 @@ section::after {
 }
 
 .share-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    max-width: 320px;
 }
 
 .share-btn {

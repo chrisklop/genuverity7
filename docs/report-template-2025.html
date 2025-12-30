@@ -102,6 +102,25 @@
         <div class="content-grid">
             <!-- SIDEBAR: SOURCES FIRST -->
             <aside class="sources-sidebar">
+                <!-- Social Sharing Buttons -->
+                <div class="share-section">
+                    <h4 class="share-heading">Share this report</h4>
+                    <div class="share-buttons">
+                        <button onclick="shareToTwitter()" class="share-btn share-twitter">
+                            <i data-lucide="twitter"></i> X
+                        </button>
+                        <button onclick="shareToFacebook()" class="share-btn share-facebook">
+                            <i data-lucide="facebook"></i> Facebook
+                        </button>
+                        <button onclick="shareToLinkedIn()" class="share-btn share-linkedin">
+                            <i data-lucide="linkedin"></i> LinkedIn
+                        </button>
+                        <button onclick="copyShareLink()" class="share-btn share-copy" id="copyLinkBtn">
+                            <i data-lucide="link"></i> Copy Link
+                        </button>
+                    </div>
+                </div>
+
                 <div class="sources-header">
                     <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
                     <span class="sources-count">{{SOURCE_COUNT}}</span>
@@ -193,25 +212,6 @@
                     <p>{{ALERT_CONTENT}}</p>
                 </div>
                 -->
-
-                <!-- Social Sharing Buttons -->
-                <div class="share-section">
-                    <h4 class="share-heading">Share this report</h4>
-                    <div class="share-buttons">
-                        <button onclick="shareToTwitter()" class="share-btn share-twitter">
-                            <i data-lucide="twitter"></i> Share on X
-                        </button>
-                        <button onclick="shareToFacebook()" class="share-btn share-facebook">
-                            <i data-lucide="facebook"></i> Facebook
-                        </button>
-                        <button onclick="shareToLinkedIn()" class="share-btn share-linkedin">
-                            <i data-lucide="linkedin"></i> LinkedIn
-                        </button>
-                        <button onclick="copyShareLink()" class="share-btn share-copy" id="copyLinkBtn">
-                            <i data-lucide="link"></i> Copy Link
-                        </button>
-                    </div>
-                </div>
 
             </article>
         </div>
