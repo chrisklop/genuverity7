@@ -30,41 +30,38 @@
     <meta property="twitter:description" content="{{META_DESCRIPTION}}">
     <meta property="twitter:image" content="https://www.genuverity.com/images/share-card-{{SLUG}}.jpg">
 
-    <!-- Structured Data (JSON-LD) for Fact Check -->
-    <!-- 
+    <!-- Structured Data (JSON-LD) for NewsArticle -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "ClaimReview",
+      "@type": "NewsArticle",
+      "headline": "{{TITLE}}",
+      "description": "{{META_DESCRIPTION}}",
+      "image": "https://www.genuverity.com/images/share-card-{{SLUG}}.jpg",
       "datePublished": "{{PUBLISH_DATE}}",
-      "url": "https://www.genuverity.com/{{SLUG}}",
-      "imprint": {
-         "@type": "Organization",
-         "name": "GenuVerity"
+      "dateModified": "{{PUBLISH_DATE}}",
+      "author": {
+        "@type": "Organization",
+        "name": "GenuVerity",
+        "url": "https://www.genuverity.com"
       },
-      "claimReviewed": "{{CLAIM_TEXT}}",
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "{{RATING_VALUE}}",
-        "bestRating": "5",
-        "worstRating": "1",
-        "alternateName": "{{VERDICT_TEXT}}"
-      },
-      "itemReviewed": {
-        "@type": "Claim",
-        "author": {
-          "@type": "Person",
-          "name": "{{CLAIM_AUTHOR}}"
-        },
-        "datePublished": "{{CLAIM_DATE}}",
-        "appearance": {
-          "@type": "CreativeWork",
-          "url": "{{CLAIM_SOURCE_URL}}"
+      "publisher": {
+        "@type": "Organization",
+        "name": "GenuVerity",
+        "url": "https://www.genuverity.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.genuverity.com/favicon.png"
         }
-      }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.genuverity.com/{{SLUG}}"
+      },
+      "articleSection": "{{CATEGORY}}",
+      "keywords": "{{KEYWORDS}}"
     }
     </script>
-    -->
 
     <!-- Dependencies -->
     <script src="https://unpkg.com/lucide@latest"></script>

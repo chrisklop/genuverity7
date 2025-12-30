@@ -28,6 +28,7 @@ const NEWS_SITEMAP_PATH = path.join(__dirname, '..', 'sitemap-news.xml');
 const ROBOTS_PATH = path.join(__dirname, '..', 'robots.txt');
 const VERCEL_JSON_PATH = path.join(__dirname, '..', 'vercel.json');
 const LOCALREPORTS_DIR = path.join(__dirname, '..', 'localreports');
+const RSS_PATH = path.join(__dirname, '..', 'feed.xml');
 const INDEXNOW_KEY = process.env.INDEXNOW_API_KEY || '41a076898a6f49c9a0be10aebc9e4811';
 
 // Static pages to include in sitemap
@@ -163,6 +164,47 @@ function generateNewsSitemap(reports) {
     return xml;
 }
 
+// Generate RSS feed
+function generateRssFeed(reports) {
+    const recentReports = reports.slice(0, 30); // Latest 30
+    const buildDate = new Date().toUTCString();
+
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GenuVerity - Fact-Check Reports</title>
+    <link>${DOMAIN}</link>
+    <description>AI-powered fact-checking platform investigating misinformation, disinformation, and viral claims with source-first methodology.</description>
+    <language>en-us</language>
+    <lastBuildDate>${buildDate}</lastBuildDate>
+    <atom:link href="${DOMAIN}/feed.xml" rel="self" type="application/rss+xml"/>
+`;
+
+    for (const report of recentReports) {
+        const pubDate = new Date(report.date).toUTCString();
+        const safeTitle = report.title
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+
+        xml += `    <item>
+      <title>${safeTitle}</title>
+      <link>${DOMAIN}/${report.slug}</link>
+      <guid isPermaLink="true">${DOMAIN}/${report.slug}</guid>
+      <pubDate>${pubDate}</pubDate>
+      <description>${safeTitle}</description>
+    </item>
+`;
+    }
+
+    xml += `  </channel>
+</rss>
+`;
+
+    return xml;
+}
+
 // Generate robots.txt
 function generateRobotsTxt() {
     return `# GenuVerity Robots.txt
@@ -174,6 +216,12 @@ Allow: /
 # Sitemaps
 Sitemap: ${DOMAIN}/sitemap.xml
 Sitemap: ${DOMAIN}/sitemap-news.xml
+
+# RSS Feed
+# ${DOMAIN}/feed.xml
+
+# LLM Information
+# ${DOMAIN}/llms.txt
 
 # Crawl-delay
 Crawl-delay: 1
@@ -327,6 +375,12 @@ async function main() {
     fs.writeFileSync(NEWS_SITEMAP_PATH, newsSitemap);
     console.log(`   ✅ ${Math.min(30, reports.length)} recent articles\n`);
 
+    // Generate RSS feed
+    console.log('📡 Generating feed.xml (RSS)...');
+    const rssFeed = generateRssFeed(reports);
+    fs.writeFileSync(RSS_PATH, rssFeed);
+    console.log(`   ✅ ${Math.min(30, reports.length)} recent articles\n`);
+
     // Update robots.txt
     console.log('🤖 Generating robots.txt...');
     const robotsTxt = generateRobotsTxt();
@@ -367,10 +421,11 @@ async function main() {
     console.log('📋 Files updated:');
     console.log('   • sitemap.xml');
     console.log('   • sitemap-news.xml');
+    console.log('   • feed.xml (RSS)');
     console.log('   • robots.txt');
     console.log('   • vercel.json\n');
     console.log('🚀 Next steps:');
-    console.log('   1. git add sitemap.xml sitemap-news.xml robots.txt vercel.json');
+    console.log('   1. git add sitemap.xml sitemap-news.xml feed.xml robots.txt vercel.json');
     console.log('   2. git commit -m "SEO: Update sitemaps"');
     console.log('   3. git push (Vercel auto-deploys)');
     console.log('═══════════════════════════════════════════════════');

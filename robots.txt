@@ -8,5 +8,11 @@ Allow: /
 Sitemap: https://www.genuverity.com/sitemap.xml
 Sitemap: https://www.genuverity.com/sitemap-news.xml
 
+# RSS Feed
+# https://www.genuverity.com/feed.xml
+
+# LLM Information
+# https://www.genuverity.com/llms.txt
+
 # Crawl-delay
 Crawl-delay: 1

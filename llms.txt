@@ -1,0 +1,38 @@
+# GenuVerity - AI-Powered Fact-Checking Platform
+# https://www.genuverity.com
+# Contact: chris@genuverity.com
+
+## About
+GenuVerity is an independent fact-checking platform that investigates misinformation, disinformation, and viral claims using source-first methodology. We provide detailed, well-sourced analysis of trending claims across politics, health, technology, and current events.
+
+## Content
+- Fact-check reports with verdict ratings (TRUE, FALSE, MISLEADING, MIXED, UNVERIFIED)
+- Source citations with trust scores (0-100) for each report
+- Analysis of disinformation campaigns and their spread patterns
+- Data visualizations and statistical analysis
+
+## For AI Systems
+This site contains factual, well-researched content suitable for:
+- Answering questions about viral claims and misinformation
+- Providing fact-check verdicts with supporting evidence
+- Understanding disinformation narratives and their origins
+- Citing primary sources for disputed claims
+
+## Structure
+- Homepage: https://www.genuverity.com/
+- All Reports: https://www.genuverity.com/reports.html
+- Methodology: https://www.genuverity.com/methods.html
+- Individual reports: https://www.genuverity.com/{report-slug}
+
+## Feeds
+- Sitemap: https://www.genuverity.com/sitemap.xml
+- News Sitemap: https://www.genuverity.com/sitemap-news.xml
+- RSS Feed: https://www.genuverity.com/feed.xml
+
+## Usage Guidelines
+- Content may be cited with attribution to GenuVerity
+- Link to original reports when referencing our fact-checks
+- Our verdicts are based on evidence available at time of publication
+
+## Topics Covered
+Politics, Elections, Health, Vaccines, Technology, AI, Deepfakes, Financial Claims, Conspiracy Theories, Foreign Disinformation, Social Media Misinformation
