@@ -16,14 +16,9 @@ const REPORTS_DATA = [
         verdict: "mixed",  // Analysis of evolving threat - not a true/false claim
         excerpt: "From Ireland's fabricated candidate withdrawal to Poland's €2B cyber umbrella—AI deepfakes targeted elections worldwide in 2025. $200M+ in fraud losses Q1 alone. Yet democracy adapts: Connolly won despite the deepfake, FCC issued $6M fine for Biden robocall.",
         chart: {
-            type: "hbar",
+            type: "line",
             color: "#f59e0b",
-            data: [
-                { label: "AI Concern", value: 85 },
-                { label: "Countries", value: 80 },
-                { label: "AI Content", value: 52 },
-                { label: "Connolly Win", value: 38 }
-            ]
+            data: [45, 65, 95, 150, 200]  // Fraud losses $M: Q1'24 → Q1'25 (from impactChart)
         }
     },
     {
@@ -40,14 +35,9 @@ const REPORTS_DATA = [
         verdict: "true",  // Verified factual reporting on Meta's policy change
         excerpt: "Meta dismantles its $100M global fact-checking network spanning 90+ organizations across 119 countries. Joel Kaplan appointed, $1M donated to Trump—then fact-checking ended 5 days later. Community Notes work when applied, but only 7.4% of election notes ever reach users.",
         chart: {
-            type: "hbar",
+            type: "bar",
             color: "#3b82f6",
-            data: [
-                { label: "↓Reposts", value: 46 },
-                { label: "↓Likes", value: 44 },
-                { label: "↓Replies", value: 22 },
-                { label: "Notes Shown", value: 7 }
-            ]
+            data: [46, 44, 22, 14]  // Community Notes effectiveness: % reduction in Reposts, Likes, Replies, Views (from effectivenessChart)
         }
     },
     {
@@ -83,14 +73,9 @@ const REPORTS_DATA = [
         verdict: "false",  // Documents Grok spreading false information
         excerpt: "Elon Musk's Grok AI chatbot has repeatedly spread dangerous misinformation during breaking news - fabricating heroes at Bondi Beach, praising Hitler, and falsely blaming a trans pilot for the DC crash. 12+ documented incidents analyzed.",
         chart: {
-            type: "hbar",
+            type: "bar",
             color: "#ef4444",
-            data: [
-                { label: "Bondi False ID", value: 100 },
-                { label: "MechaHitler", value: 100 },
-                { label: "DC Crash", value: 100 },
-                { label: "Total: 12+", value: 100 }
-            ]
+            data: [1, 2, 0, 0, 2, 0, 4, 0, 0, 0, 0, 3]  // Incidents by month Jan-Dec 2025 (from timelineChart)
         }
     },
     {
@@ -107,14 +92,9 @@ const REPORTS_DATA = [
         verdict: "false",  // Debunks viral wildfire misinformation
         excerpt: "AI-generated Hollywood sign fakes, DEI conspiracy theories, water policy lies, and FEMA funding misinformation - every major claim about the January 2025 LA wildfires debunked with 15 primary sources.",
         chart: {
-            type: "hbar",
+            type: "bar",
             color: "#ef4444",
-            data: [
-                { label: "AI Fakes", value: 100 },
-                { label: "DEI Claims", value: 100 },
-                { label: "Water Lies", value: 100 },
-                { label: "FEMA Myths", value: 100 }
-            ]
+            data: [42, 28, 15, 8, 5, 2]  // Misinfo share by platform: X, TikTok, FB, Telegram, Truth, YT (from platformChart)
         }
     },
     {
