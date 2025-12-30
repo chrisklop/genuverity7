@@ -52,6 +52,9 @@ const SHARE_HTML = `
                         <button onclick="shareToTwitter()" class="share-btn share-twitter">
                             <i data-lucide="twitter"></i> Share on X
                         </button>
+                        <button onclick="shareToFacebook()" class="share-btn share-facebook">
+                            <i data-lucide="facebook"></i> Facebook
+                        </button>
                         <button onclick="shareToLinkedIn()" class="share-btn share-linkedin">
                             <i data-lucide="linkedin"></i> LinkedIn
                         </button>
@@ -69,6 +72,11 @@ const SHARE_JS = `
             const url = encodeURIComponent(window.location.href);
             const text = encodeURIComponent(document.title);
             window.open(\`https://twitter.com/intent/tweet?url=\${url}&text=\${text}\`, '_blank', 'width=600,height=400');
+        }
+
+        function shareToFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(\`https://www.facebook.com/sharer/sharer.php?u=\${url}\`, '_blank', 'width=600,height=400');
         }
 
         function shareToLinkedIn() {
@@ -113,6 +121,13 @@ function updateReport(filePath) {
             content = content.replace('</article>', SHARE_HTML + '\n            </article>');
             modified = true;
         }
+    } else if (!content.includes('share-facebook')) {
+        // Share section exists but no Facebook button - add it
+        content = content.replace(
+            /(<button onclick="shareToTwitter\(\)"[^>]*>[\s\S]*?<\/button>)\s*\n(\s*)(<button onclick="shareToLinkedIn)/,
+            `$1\n$2<button onclick="shareToFacebook()" class="share-btn share-facebook">\n$2    <i data-lucide="facebook"></i> Facebook\n$2</button>\n$2$3`
+        );
+        modified = true;
     }
 
     // Add share JS if not present
@@ -130,6 +145,13 @@ function updateReport(filePath) {
                 break;
             }
         }
+    } else if (!content.includes('shareToFacebook')) {
+        // Has share functions but no Facebook - add it
+        content = content.replace(
+            /(function shareToTwitter\(\)[^}]+})\s*\n\s*(function shareToLinkedIn)/,
+            `$1\n\n        function shareToFacebook() {\n            const url = encodeURIComponent(window.location.href);\n            window.open(\`https://www.facebook.com/sharer/sharer.php?u=\${url}\`, '_blank', 'width=600,height=400');\n        }\n\n        $2`
+        );
+        modified = true;
     }
 
     if (modified) {
