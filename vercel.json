@@ -118,6 +118,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/clickbait-propaganda-december-2025.html",
+      "destination": "/clickbait-propaganda-december-2025",
+      "permanent": true
+    },
+    {
+      "source": "/clickbait-propaganda-december-2025.html",
+      "destination": "/clickbait-propaganda-december-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/climate-ice-age-study.html",
       "destination": "/climate-ice-age-study",
       "permanent": true
@@ -795,6 +805,10 @@
     {
       "source": "/chemtrails-2025",
       "destination": "/localreports/chemtrails-2025.html"
+    },
+    {
+      "source": "/clickbait-propaganda-december-2025",
+      "destination": "/localreports/clickbait-propaganda-december-2025.html"
     },
     {
       "source": "/climate-ice-age-study",

@@ -5,8 +5,15 @@
     <link>https://www.genuverity.com</link>
     <description>AI-powered fact-checking platform investigating misinformation, disinformation, and viral claims with source-first methodology.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 19:06:01 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 21:04:43 GMT</lastBuildDate>
     <atom:link href="https://www.genuverity.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Clickbait Propaganda: 5 Case Studies in December 2025 Disinformation</title>
+      <link>https://www.genuverity.com/clickbait-propaganda-december-2025</link>
+      <guid isPermaLink="true">https://www.genuverity.com/clickbait-propaganda-december-2025</guid>
+      <pubDate>Tue, 30 Dec 2025 06:00:00 GMT</pubDate>
+      <description>Clickbait Propaganda: 5 Case Studies in December 2025 Disinformation</description>
+    </item>
     <item>
       <title>Minnesota Fraud Investigation: The $250 Million Scandal and Beyond</title>
       <link>https://www.genuverity.com/minnesota-fraud-investigation-2025</link>
@@ -209,13 +216,6 @@
       <guid isPermaLink="true">https://www.genuverity.com/rob-reiner-misinformation-2025</guid>
       <pubDate>Sun, 21 Dec 2025 06:00:00 GMT</pubDate>
       <description>Rob Reiner Death: Separating Fact from Fiction</description>
-    </item>
-    <item>
-      <title>Post-Assad Syria: The Disinformation War</title>
-      <link>https://www.genuverity.com/syria-disinformation-2024</link>
-      <guid isPermaLink="true">https://www.genuverity.com/syria-disinformation-2024</guid>
-      <pubDate>Sun, 21 Dec 2025 06:00:00 GMT</pubDate>
-      <description>Post-Assad Syria: The Disinformation War</description>
     </item>
   </channel>
 </rss>

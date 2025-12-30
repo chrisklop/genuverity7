@@ -3,6 +3,25 @@
 
 const REPORTS_DATA = [
     {
+        id: 64,
+        title: "Clickbait Propaganda: 5 Case Studies in December 2025 Disinformation",
+        slug: "clickbait-propaganda-december-2025",
+        category: "Disinformation Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "newspaper",
+        date: "Dec 30, 2025",
+        sources: "18 Sources",
+        readTime: "22 min",
+        verdict: "false",  // Debunking multiple false narratives
+        excerpt: "Five viral disinformation campaigns deconstructed: Infowars 'Deep State defeat' (still owes $1.5B), Epstein photo 'hoax' framing, Minnesota daycare 'audit' filmed outside operating hours, Kirk assassination conspiracies debunked by Alex Jones, and 2018 Trump footage recycled for Duterte arrest.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [1, 2, 3, 4, 5]  // 5 disinformation techniques (from typesChart - horizontal bar)
+        }
+    },
+    {
         id: 63,
         title: "Minnesota Fraud Investigation: The $250 Million Scandal and Beyond",
         slug: "minnesota-fraud-investigation-2025",
