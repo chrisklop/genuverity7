@@ -22,18 +22,19 @@
 
     const genuVerityWatermark = {
         id: 'genuVerityWatermark',
-        beforeDraw: (chart) => {
+        afterDraw: (chart) => {
             const ctx = chart.ctx;
-            const { width } = chart;
+            const { width, height } = chart;
 
             ctx.save();
 
-            // Position: absolute top-right corner (above chart content)
-            const x = width - 8;
-            const y = 8;
+            // Position: bottom-right corner (standard watermark placement)
+            // This avoids overlapping chart data which is typically in center/top
+            const x = width - 10;
+            const y = height - 10;
 
             ctx.textAlign = 'right';
-            ctx.textBaseline = 'top';
+            ctx.textBaseline = 'bottom';
             ctx.font = 'bold 10px Inter, -apple-system, sans-serif';
 
             // "Genu" in white
@@ -41,11 +42,11 @@
             const verityText = 'Verity';
             const verityWidth = ctx.measureText(verityText).width;
 
-            ctx.fillStyle = '#ffffff';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
             ctx.fillText(genuText, x - verityWidth, y);
 
             // "Verity" in blue
-            ctx.fillStyle = '#3b82f6';
+            ctx.fillStyle = 'rgba(59, 130, 246, 0.7)';
             ctx.fillText(verityText, x, y);
 
             ctx.restore();
