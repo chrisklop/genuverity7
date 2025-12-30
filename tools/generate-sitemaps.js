@@ -17,15 +17,18 @@
 
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 
 // Configuration
 const DOMAIN = 'https://www.genuverity.com';
+const HOST = 'www.genuverity.com';
 const REPORTS_DATA_PATH = path.join(__dirname, '..', 'js', 'reports-data.js');
 const SITEMAP_PATH = path.join(__dirname, '..', 'sitemap.xml');
 const NEWS_SITEMAP_PATH = path.join(__dirname, '..', 'sitemap-news.xml');
 const ROBOTS_PATH = path.join(__dirname, '..', 'robots.txt');
 const VERCEL_JSON_PATH = path.join(__dirname, '..', 'vercel.json');
 const LOCALREPORTS_DIR = path.join(__dirname, '..', 'localreports');
+const INDEXNOW_KEY = process.env.INDEXNOW_API_KEY || '41a076898a6f49c9a0be10aebc9e4811';
 
 // Static pages to include in sitemap
 const STATIC_PAGES = [
@@ -235,10 +238,72 @@ function updateVercelJson(allSlugs) {
     return JSON.stringify(vercelJson, null, 2);
 }
 
+// Get existing URLs from current sitemap (to detect new content)
+function getExistingSitemapUrls() {
+    try {
+        if (!fs.existsSync(SITEMAP_PATH)) return new Set();
+        const content = fs.readFileSync(SITEMAP_PATH, 'utf8');
+        const matches = content.matchAll(/<loc>([^<]+)<\/loc>/g);
+        return new Set([...matches].map(m => m[1]));
+    } catch {
+        return new Set();
+    }
+}
+
+// Ping IndexNow with new URLs
+function pingIndexNow(newUrls) {
+    return new Promise((resolve) => {
+        if (newUrls.length === 0) {
+            resolve({ success: true, message: 'No new URLs to submit' });
+            return;
+        }
+
+        const data = JSON.stringify({
+            host: HOST,
+            key: INDEXNOW_KEY,
+            keyLocation: `${DOMAIN}/${INDEXNOW_KEY}.txt`,
+            urlList: newUrls
+        });
+
+        const options = {
+            hostname: 'api.indexnow.org',
+            port: 443,
+            path: '/indexnow',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': data.length
+            }
+        };
+
+        const req = https.request(options, (res) => {
+            let body = '';
+            res.on('data', chunk => body += chunk);
+            res.on('end', () => {
+                if (res.statusCode === 200 || res.statusCode === 202) {
+                    resolve({ success: true, message: `Submitted ${newUrls.length} URLs` });
+                } else {
+                    resolve({ success: false, message: `HTTP ${res.statusCode}: ${body}` });
+                }
+            });
+        });
+
+        req.on('error', (e) => {
+            resolve({ success: false, message: e.message });
+        });
+
+        req.write(data);
+        req.end();
+    });
+}
+
 // Main execution
-function main() {
+async function main() {
     console.log('🗺️  GenuVerity SEO Generator\n');
     console.log('═══════════════════════════════════════════════════\n');
+
+    // Get existing URLs BEFORE regenerating (to detect new content)
+    const existingUrls = getExistingSitemapUrls();
 
     // Get all slugs from filesystem (authoritative source)
     console.log('📂 Scanning localreports directory...');
@@ -274,6 +339,25 @@ function main() {
     fs.writeFileSync(VERCEL_JSON_PATH, vercelJson);
     console.log(`   ✅ ${allSlugs.length} clean URL rewrites added\n`);
 
+    // Find new URLs and ping IndexNow
+    const newUrls = reports
+        .map(r => `${DOMAIN}/${r.slug}`)
+        .filter(url => !existingUrls.has(url));
+
+    if (newUrls.length > 0) {
+        console.log('🔔 Pinging IndexNow with new URLs...');
+        console.log(`   Found ${newUrls.length} new URL(s):`);
+        newUrls.forEach(url => console.log(`   • ${url}`));
+        const result = await pingIndexNow(newUrls);
+        if (result.success) {
+            console.log(`   ✅ ${result.message}\n`);
+        } else {
+            console.log(`   ⚠️  ${result.message}\n`);
+        }
+    } else {
+        console.log('🔔 IndexNow: No new URLs to submit\n');
+    }
+
     // Summary
     console.log('═══════════════════════════════════════════════════');
     console.log('✅ SEO configuration complete!\n');
@@ -287,9 +371,8 @@ function main() {
     console.log('   • vercel.json\n');
     console.log('🚀 Next steps:');
     console.log('   1. git add sitemap.xml sitemap-news.xml robots.txt vercel.json');
-    console.log('   2. git commit -m "SEO: Clean URLs and sitemaps"');
+    console.log('   2. git commit -m "SEO: Update sitemaps"');
     console.log('   3. git push (Vercel auto-deploys)');
-    console.log('   4. Submit sitemaps to Google Search Console');
     console.log('═══════════════════════════════════════════════════');
 }
 
