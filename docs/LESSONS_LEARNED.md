@@ -219,7 +219,36 @@ curl "https://api.stlouisfed.org/fred/series/observations?series_id=WALCL&api_ke
 | Electric border not showing | Z-index issue | Set z-index on pseudo-element |
 | Sources not expanding | Wrong class toggle | Use `.expanded` class, not style |
 | Carousel janky on mobile | Custom handlers | Use CSS scroll-snap |
+| Share buttons missing functions | Batch script regex failed | Check JS functions exist, not just HTML |
+| Mobile sources hidden | CSS `display: none` | Use collapsible pattern instead |
 
 ---
 
-*Last updated: December 18, 2025*
+## Social Sharing Buttons (December 2025)
+
+### Structure
+Share buttons go **inside** `.sources-sidebar`, **above** the Sources First header:
+```html
+<aside class="sources-sidebar">
+    <div class="share-section">
+        <div class="share-heading"><i data-lucide="share-2" style="width:18px;"></i>Share This Report</div>
+        <div class="share-buttons"><!-- 4 buttons --></div>
+    </div>
+    <div class="sources-header">...</div>
+</aside>
+```
+
+### Styling
+- Heading: Blue (`var(--accent-blue)`), 1.1rem, 700 weight - matches Executive Summary
+- Buttons: Transparent background, white icons, 2x2 grid
+- No borders on individual buttons
+
+### Mobile (≤1024px)
+- Sources sidebar appears at TOP of article (not hidden)
+- Sources list collapsed by default - tap header to expand
+- Share buttons hidden on mobile
+- `shared-components.js` handles toggle
+
+---
+
+*Last updated: December 30, 2025*

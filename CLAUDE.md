@@ -755,7 +755,38 @@ Execute this pipeline FOR EACH report sequentially:
 - **Data Tables:** MUST use `.data-table` class for any tabular data.
 - **Verdict:** MUST use standard verdict colors (Green/Red/Amber).
 
-### 4. Deployment Gatekeeping
+### 4. Social Sharing Buttons
+- **Location:** Inside `.sources-sidebar`, ABOVE the Sources First header
+- **Structure:**
+  ```html
+  <div class="share-section">
+      <div class="share-heading"><i data-lucide="share-2" style="width:18px;"></i>Share This Report</div>
+      <div class="share-buttons">
+          <button onclick="shareToTwitter()" class="share-btn share-twitter">
+              <i data-lucide="twitter"></i> X
+          </button>
+          <button onclick="shareToFacebook()" class="share-btn share-facebook">
+              <i data-lucide="facebook"></i> Facebook
+          </button>
+          <button onclick="shareToLinkedIn()" class="share-btn share-linkedin">
+              <i data-lucide="linkedin"></i> LinkedIn
+          </button>
+          <button onclick="copyShareLink()" class="share-btn share-copy" id="copyLinkBtn">
+              <i data-lucide="link"></i> Copy Link
+          </button>
+      </div>
+  </div>
+  ```
+- **Styling:** Buttons are transparent with white text/icons, 2x2 grid layout
+- **Heading:** Matches "Executive Summary" style (blue, 1.1rem, 700 weight, with share-2 icon)
+
+### 5. Mobile Responsiveness (≤1024px)
+- **Sources Sidebar:** Appears at TOP of article (not hidden)
+- **Sources List:** Collapsed by default, tap "Sources First" header to expand
+- **Share Buttons:** Hidden on mobile (focus on sources)
+- **Behavior:** `shared-components.js` handles toggle via `.expanded` class
+
+### 6. Deployment Gatekeeping
 **Before `git push`:**
 1. Run: `./validate-report.sh localreports/your-report.html`
 2. Run: `node -c js/reports-data.js`
