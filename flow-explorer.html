@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenuVerity - Disinformation Flow Explorer</title>
+    <meta name="description" content="Trace how disinformation flows from fringe sources to mainstream media and policy impact. Interactive visualization with deep-dive reports.">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-primary: #020408;
+            --bg-secondary: #080c14;
+            --bg-card: #0c1018;
+            --bg-panel: #0f1520;
+            --bg-overlay: rgba(2, 4, 8, 0.95);
+            --text-primary: #f0f4f8;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-red: #ef4444;
+            --accent-orange: #f97316;
+            --accent-amber: #f59e0b;
+            --accent-cyan: #06b6d4;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --border-color: rgba(255,255,255,0.06);
+            --border-hover: rgba(255,255,255,0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           HEADER
+           ═══════════════════════════════════════════════════════════════ */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: rgba(2, 4, 8, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.08);
+            color: var(--text-primary);
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span:first-child { color: #fff; }
+        .logo span:last-child { color: var(--accent-blue); }
+
+        .header-title {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding-left: 20px;
+            border-left: 1px solid var(--border-color);
+        }
+
+        .legend {
+            display: flex;
+            gap: 14px;
+            font-size: 0.7rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-muted);
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .legend-item:hover {
+            color: var(--text-primary);
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           MAIN VISUALIZATION
+           ═══════════════════════════════════════════════════════════════ */
+        .viz-container {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 15% 25%, rgba(239, 68, 68, 0.04) 0%, transparent 40%),
+                radial-gradient(ellipse at 40% 60%, rgba(249, 115, 22, 0.03) 0%, transparent 40%),
+                radial-gradient(ellipse at 65% 40%, rgba(6, 182, 212, 0.03) 0%, transparent 40%),
+                radial-gradient(ellipse at 85% 70%, rgba(59, 130, 246, 0.04) 0%, transparent 40%);
+        }
+
+        /* Stage columns */
+        .stage-columns {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .stage-column {
+            flex: 1;
+            border-right: 1px solid rgba(255,255,255,0.02);
+            position: relative;
+        }
+
+        .stage-column:last-child {
+            border-right: none;
+        }
+
+        .stage-label {
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        #flowSvg {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+            position: relative;
+            z-index: 2;
+        }
+
+        #flowSvg:active {
+            cursor: grabbing;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           DETAIL PANEL
+           ═══════════════════════════════════════════════════════════════ */
+        .detail-panel {
+            position: fixed;
+            top: 56px;
+            right: -440px;
+            width: 420px;
+            height: calc(100vh - 56px);
+            background: var(--bg-panel);
+            border-left: 1px solid var(--border-color);
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 90;
+            overflow-y: auto;
+            box-shadow: -20px 0 60px rgba(0,0,0,0.5);
+        }
+
+        .detail-panel.open {
+            right: 0;
+        }
+
+        .panel-header {
+            position: sticky;
+            top: 0;
+            padding: 20px;
+            background: linear-gradient(180deg, var(--bg-panel) 0%, var(--bg-panel) 80%, transparent 100%);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 10;
+        }
+
+        .panel-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .panel-close {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--border-color);
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+        }
+
+        .panel-close:hover {
+            background: rgba(255,255,255,0.08);
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+        }
+
+        .panel-stage {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .panel-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
+
+        .panel-type {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .panel-content {
+            padding: 20px;
+        }
+
+        .panel-section {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        /* Deep Dive Button */
+        .deep-dive-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .deep-dive-btn:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(6, 182, 212, 0.25) 100%);
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+        }
+
+        .deep-dive-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .deep-dive-icon {
+            font-size: 1.1rem;
+        }
+
+        /* Metrics */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .metric-card {
+            padding: 14px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .metric-card:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: var(--border-hover);
+        }
+
+        .metric-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .description-text {
+            font-size: 0.88rem;
+            line-height: 1.75;
+            color: var(--text-secondary);
+        }
+
+        /* Timeline */
+        .timeline-entry {
+            display: flex;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.2s;
+        }
+
+        .timeline-entry:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-entry:hover {
+            background: rgba(255,255,255,0.02);
+            margin: 0 -12px;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .timeline-date {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            min-width: 60px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timeline-event {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Connections */
+        .connection-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .connection-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .connection-item:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--border-hover);
+            transform: translateX(4px);
+        }
+
+        .connection-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 0 6px currentColor;
+        }
+
+        .connection-name {
+            font-size: 0.85rem;
+            flex: 1;
+        }
+
+        .connection-arrow {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           REPORT OVERLAY (IFRAME MODAL)
+           ═══════════════════════════════════════════════════════════════ */
+        .report-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-overlay);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s, visibility 0.4s;
+        }
+
+        .report-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .overlay-header {
+            height: 50px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            flex-shrink: 0;
+        }
+
+        .overlay-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .overlay-title strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .overlay-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .overlay-breadcrumb span {
+            padding: 3px 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+        }
+
+        .overlay-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .overlay-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .overlay-btn:hover {
+            background: rgba(255,255,255,0.08);
+            color: var(--text-primary);
+        }
+
+        .overlay-btn.close-btn {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: var(--accent-red);
+        }
+
+        .overlay-btn.close-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .overlay-frame-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .overlay-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: var(--bg-primary);
+        }
+
+        .overlay-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           UI CONTROLS
+           ═══════════════════════════════════════════════════════════════ */
+        .instructions {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background: rgba(15, 21, 32, 0.95);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            z-index: 80;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .instructions.hidden {
+            opacity: 0;
+            transform: translateX(-50%) translateY(20px);
+            pointer-events: none;
+        }
+
+        .instructions kbd {
+            display: inline-block;
+            padding: 2px 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 2px;
+        }
+
+        .zoom-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 80;
+        }
+
+        .zoom-btn {
+            width: 38px;
+            height: 38px;
+            border: 1px solid var(--border-color);
+            background: rgba(15, 21, 32, 0.95);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            backdrop-filter: blur(10px);
+        }
+
+        .zoom-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+        }
+
+        /* Mini-map */
+        .minimap {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 180px;
+            height: 100px;
+            background: rgba(15, 21, 32, 0.95);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 80;
+            backdrop-filter: blur(10px);
+        }
+
+        .minimap-viewport {
+            position: absolute;
+            border: 1px solid var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.1);
+            pointer-events: none;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SVG STYLES
+           ═══════════════════════════════════════════════════════════════ */
+        .flow-link {
+            fill: none;
+            stroke-linecap: round;
+            transition: stroke-opacity 0.3s, stroke-width 0.3s;
+        }
+
+        .flow-link.dimmed {
+            stroke-opacity: 0.03 !important;
+        }
+
+        .flow-link.highlighted {
+            stroke-opacity: 0.7 !important;
+        }
+
+        .node-group {
+            cursor: pointer;
+        }
+
+        .node-glow {
+            transition: opacity 0.3s, r 0.3s;
+        }
+
+        .node-circle {
+            transition: r 0.2s, stroke-width 0.2s;
+        }
+
+        .node-group:hover .node-circle {
+            stroke-width: 3px;
+        }
+
+        .node-group:hover .node-glow {
+            opacity: 0.5 !important;
+        }
+
+        .node-group.selected .node-circle {
+            stroke-width: 4px;
+        }
+
+        .node-group.selected .node-glow {
+            opacity: 0.6 !important;
+        }
+
+        .node-group.dimmed {
+            opacity: 0.15;
+        }
+
+        .node-group.dimmed .node-glow {
+            opacity: 0.1 !important;
+        }
+
+        .node-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 9px;
+            font-weight: 500;
+            fill: var(--text-muted);
+            pointer-events: none;
+            transition: fill 0.3s;
+        }
+
+        .node-group:hover .node-label,
+        .node-group.selected .node-label {
+            fill: var(--text-primary);
+        }
+
+        .node-report-indicator {
+            font-size: 8px;
+            fill: var(--accent-cyan);
+            pointer-events: none;
+        }
+
+        .flow-particle {
+            pointer-events: none;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════════════════════════ */
+        @media (max-width: 1200px) {
+            .legend { display: none; }
+            .minimap { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .detail-panel {
+                width: 100%;
+                right: -100%;
+            }
+            .header-title { display: none; }
+            .instructions { font-size: 0.7rem; padding: 8px 14px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <a href="index.html" class="back-btn">
+                <span>←</span>
+                <span>Home</span>
+            </a>
+            <div class="logo">
+                <span>Genu</span><span>Verity</span>
+            </div>
+            <div class="header-title">Disinformation Flow Explorer</div>
+        </div>
+        <div class="legend">
+            <div class="legend-item" onclick="filterByStage('origin')">
+                <div class="legend-dot" style="background: var(--accent-red); color: var(--accent-red);"></div>
+                <span>Origin</span>
+            </div>
+            <div class="legend-item" onclick="filterByStage('amplifier')">
+                <div class="legend-dot" style="background: var(--accent-orange); color: var(--accent-orange);"></div>
+                <span>Amplifier</span>
+            </div>
+            <div class="legend-item" onclick="filterByStage('mainstream')">
+                <div class="legend-dot" style="background: var(--accent-cyan); color: var(--accent-cyan);"></div>
+                <span>Mainstream</span>
+            </div>
+            <div class="legend-item" onclick="filterByStage('legitimized')">
+                <div class="legend-dot" style="background: var(--accent-blue); color: var(--accent-blue);"></div>
+                <span>Legitimized</span>
+            </div>
+            <div class="legend-item" onclick="filterByStage('policy')">
+                <div class="legend-dot" style="background: var(--accent-green); color: var(--accent-green);"></div>
+                <span>Policy</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="viz-container">
+        <div class="stage-columns">
+            <div class="stage-column">
+                <div class="stage-label" style="background: rgba(239,68,68,0.15); color: var(--accent-red);">Origin</div>
+            </div>
+            <div class="stage-column">
+                <div class="stage-label" style="background: rgba(249,115,22,0.15); color: var(--accent-orange);">Amplification</div>
+            </div>
+            <div class="stage-column">
+                <div class="stage-label" style="background: rgba(6,182,212,0.15); color: var(--accent-cyan);">Mainstream</div>
+            </div>
+            <div class="stage-column">
+                <div class="stage-label" style="background: rgba(59,130,246,0.15); color: var(--accent-blue);">Legitimized</div>
+            </div>
+            <div class="stage-column">
+                <div class="stage-label" style="background: rgba(16,185,129,0.15); color: var(--accent-green);">Policy Impact</div>
+            </div>
+        </div>
+        <svg id="flowSvg"></svg>
+    </div>
+
+    <!-- Detail Panel -->
+    <div class="detail-panel" id="detailPanel">
+        <div class="panel-header">
+            <div class="panel-header-top">
+                <div class="panel-stage" id="panelStage">ORIGIN</div>
+                <button class="panel-close" onclick="closePanel()" title="Close (Esc)">×</button>
+            </div>
+            <h2 class="panel-title" id="panelTitle">Source Name</h2>
+            <div class="panel-type" id="panelType">Source Type</div>
+        </div>
+        <div class="panel-content">
+            <!-- Deep Dive Button -->
+            <button class="deep-dive-btn" id="deepDiveBtn" onclick="openReport()">
+                <span class="deep-dive-icon">📊</span>
+                <span>Open Full Report</span>
+                <span style="opacity: 0.6; font-weight: 400;">→</span>
+            </button>
+
+            <div class="panel-section">
+                <div class="section-title">Impact Metrics</div>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="metricReach" style="color: var(--accent-cyan);">—</div>
+                        <div class="metric-label">Est. Reach</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="metricShares" style="color: var(--accent-amber);">—</div>
+                        <div class="metric-label">Shares</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="metricDuration" style="color: var(--accent-blue);">—</div>
+                        <div class="metric-label">Active Days</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="metricTrust">—</div>
+                        <div class="metric-label">Trust Score</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-title">Analysis</div>
+                <p class="description-text" id="panelDescription">
+                    Loading description...
+                </p>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-title">Timeline</div>
+                <div id="panelTimeline"></div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-title">Connected Sources</div>
+                <div class="connection-list" id="panelConnections"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Overlay -->
+    <div class="report-overlay" id="reportOverlay">
+        <div class="overlay-header">
+            <div class="overlay-title">
+                <span>📄</span>
+                <strong id="overlayTitle">Report Title</strong>
+            </div>
+            <div class="overlay-controls">
+                <button class="overlay-btn" onclick="openInNewTab()">
+                    <span>↗</span> Open in New Tab
+                </button>
+                <button class="overlay-btn close-btn" onclick="closeReport()">
+                    <span>✕</span> Close
+                </button>
+            </div>
+        </div>
+        <div class="overlay-frame-container">
+            <div class="overlay-loading" id="overlayLoading">
+                <div class="loading-spinner"></div>
+                <div>Loading report...</div>
+            </div>
+            <iframe class="overlay-frame" id="reportFrame" title="Report content"></iframe>
+        </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="instructions" id="instructions">
+        <span><kbd>Click</kbd> node to explore</span>
+        <span><kbd>Drag</kbd> to pan</span>
+        <span><kbd>Scroll</kbd> to zoom</span>
+        <span><kbd>Esc</kbd> to close</span>
+    </div>
+
+    <!-- Zoom Controls -->
+    <div class="zoom-controls">
+        <button class="zoom-btn" onclick="zoomIn()" title="Zoom in (+)">+</button>
+        <button class="zoom-btn" onclick="zoomOut()" title="Zoom out (-)">−</button>
+        <button class="zoom-btn" onclick="resetZoom()" title="Reset view (0)">⟲</button>
+    </div>
+
+    <!-- Mini-map -->
+    <div class="minimap" id="minimap">
+        <svg id="minimapSvg" width="180" height="100"></svg>
+        <div class="minimap-viewport" id="minimapViewport"></div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // CONFIGURATION & DATA
+        // ═══════════════════════════════════════════════════════════════
+
+        const stageColors = {
+            origin: { color: '#ef4444', glow: 'rgba(239, 68, 68, 0.4)', bg: 'rgba(239, 68, 68, 0.15)' },
+            amplifier: { color: '#f97316', glow: 'rgba(249, 115, 22, 0.4)', bg: 'rgba(249, 115, 22, 0.15)' },
+            mainstream: { color: '#06b6d4', glow: 'rgba(6, 182, 212, 0.4)', bg: 'rgba(6, 182, 212, 0.15)' },
+            legitimized: { color: '#3b82f6', glow: 'rgba(59, 130, 246, 0.4)', bg: 'rgba(59, 130, 246, 0.15)' },
+            policy: { color: '#10b981', glow: 'rgba(16, 185, 129, 0.4)', bg: 'rgba(16, 185, 129, 0.15)' }
+        };
+
+        const stageX = {
+            origin: 0.1,
+            amplifier: 0.3,
+            mainstream: 0.5,
+            legitimized: 0.7,
+            policy: 0.9
+        };
+
+        // Node data with report links
+        const nodes = [
+            // ═══ ORIGINS ═══
+            {
+                id: 'troll_farm',
+                label: 'Troll Farm Network',
+                stage: 'origin',
+                type: 'State-Linked Operation',
+                size: 28,
+                y: 0.2,
+                reach: '2.1M',
+                shares: '89K',
+                duration: '45',
+                trust: '3/100',
+                reportSlug: 'doppelganger-analysis',
+                description: 'Coordinated inauthentic behavior from accounts linked to foreign influence operations. Analysis revealed synchronized posting patterns, shared infrastructure, and narrative amplification across multiple platforms.',
+                timeline: [
+                    { date: 'Week 1', event: '340 accounts begin synchronized posting' },
+                    { date: 'Week 2', event: 'Bot network identified by researchers' },
+                    { date: 'Week 4', event: 'Platform removes 892 accounts' }
+                ]
+            },
+            {
+                id: 'fake_news_site',
+                label: 'Pink Slime Network',
+                stage: 'origin',
+                type: 'Fake Local News Sites',
+                size: 26,
+                y: 0.4,
+                reach: '12M',
+                shares: '156K',
+                duration: '365',
+                trust: '8/100',
+                reportSlug: 'ai-slop-fake-local-news',
+                description: 'A network of 1,200+ websites masquerading as local news outlets. These "pink slime" sites publish algorithmically-generated content mixed with partisan messaging, exploiting trust in local journalism.',
+                timeline: [
+                    { date: 'Jan 2024', event: 'Network identified operating 1,200+ sites' },
+                    { date: 'Mar 2024', event: 'AI-generated content detected at scale' },
+                    { date: 'Oct 2024', event: 'Sites targeting swing state voters' }
+                ]
+            },
+            {
+                id: 'deepfake_source',
+                label: 'AI Deepfake Factory',
+                stage: 'origin',
+                type: 'Synthetic Media Creation',
+                size: 24,
+                y: 0.6,
+                reach: '8.5M',
+                shares: '234K',
+                duration: '90',
+                trust: '2/100',
+                reportSlug: 'ai-deepfakes-2025',
+                description: 'Sophisticated AI-generated video and audio content designed to spread false narratives. Deepfakes of public figures making statements they never made circulate before verification is possible.',
+                timeline: [
+                    { date: 'Day 1', event: 'Deepfake video uploaded to multiple platforms' },
+                    { date: 'Day 2', event: '5M views before fact-check published' },
+                    { date: 'Day 7', event: 'Original debunked but clips still spreading' }
+                ]
+            },
+            {
+                id: 'conspiracy_forum',
+                label: 'QAnon Networks',
+                stage: 'origin',
+                type: 'Conspiracy Community',
+                size: 26,
+                y: 0.8,
+                reach: '15M',
+                shares: '890K',
+                duration: '1825',
+                trust: '5/100',
+                reportSlug: 'qanon-network-analysis',
+                description: 'Decentralized conspiracy theory ecosystem spanning multiple platforms. Claims originate from anonymous posts and mutate as they spread through dedicated communities and social media.',
+                timeline: [
+                    { date: '2017', event: 'First "Q drops" appear on 4chan' },
+                    { date: '2020', event: 'Migration to mainstream platforms' },
+                    { date: '2024', event: 'Narrative mutations continue spreading' }
+                ]
+            },
+
+            // ═══ AMPLIFIERS ═══
+            {
+                id: 'influencer_network',
+                label: 'Partisan Influencers',
+                stage: 'amplifier',
+                type: 'Social Media Network',
+                size: 30,
+                y: 0.25,
+                reach: '45M',
+                shares: '1.2M',
+                duration: '180',
+                trust: '22/100',
+                reportSlug: null,
+                description: 'Network of high-follower accounts that amplify narratives to mainstream audiences. These influencers add commentary and framing that makes fringe claims more palatable to general audiences.',
+                timeline: [
+                    { date: 'Day 3', event: 'First major influencer shares content' },
+                    { date: 'Day 5', event: 'Coordinated posting across network' },
+                    { date: 'Day 10', event: '10 influencers with 50M+ combined reach' }
+                ]
+            },
+            {
+                id: 'youtube_ecosystem',
+                label: 'YouTube Radicalization',
+                stage: 'amplifier',
+                type: 'Video Platform Pipeline',
+                size: 28,
+                y: 0.5,
+                reach: '78M',
+                shares: '2.3M',
+                duration: '365',
+                trust: '25/100',
+                reportSlug: null,
+                description: 'Algorithmic recommendation pipelines that gradually expose viewers to more extreme content. "Rabbit hole" dynamics amplify fringe narratives by suggesting increasingly radical videos.',
+                timeline: [
+                    { date: 'Month 1', event: 'Mild skepticism content enters recommendations' },
+                    { date: 'Month 3', event: 'Algorithm suggests more extreme creators' },
+                    { date: 'Month 6', event: 'Full exposure to conspiracy ecosystem' }
+                ]
+            },
+            {
+                id: 'hashtag_campaign',
+                label: '#StopTheSteal Campaign',
+                stage: 'amplifier',
+                type: 'Coordinated Hashtag',
+                size: 32,
+                y: 0.75,
+                reach: '120M',
+                shares: '4.5M',
+                duration: '60',
+                trust: '15/100',
+                reportSlug: 'dominion-voting-claims-2020',
+                description: 'Viral hashtag campaign that coordinated millions of posts spreading election fraud narratives. Artificial trending through bot activity brought fringe claims to mainstream attention.',
+                timeline: [
+                    { date: 'Nov 4', event: 'Hashtag begins trending' },
+                    { date: 'Nov 5', event: 'Peak: 500K tweets per hour' },
+                    { date: 'Jan 6', event: 'Campaign culminates in Capitol events' }
+                ]
+            },
+
+            // ═══ MAINSTREAM ═══
+            {
+                id: 'cable_coverage',
+                label: 'Cable News Coverage',
+                stage: 'mainstream',
+                type: 'Television Broadcast',
+                size: 30,
+                y: 0.3,
+                reach: '85M',
+                shares: '890K',
+                duration: '30',
+                trust: '58/100',
+                reportSlug: null,
+                description: 'Major cable networks cover the "controversy" using "some people say" framing. This launders fringe narratives into mainstream discourse without networks directly endorsing claims.',
+                timeline: [
+                    { date: 'Day 8', event: 'First mention on evening panel' },
+                    { date: 'Day 10', event: '"Both sides" debate segment airs' },
+                    { date: 'Day 15', event: 'Story becomes regular coverage topic' }
+                ]
+            },
+            {
+                id: 'wire_services',
+                label: 'Wire Service Pickup',
+                stage: 'mainstream',
+                type: 'News Distribution',
+                size: 26,
+                y: 0.55,
+                reach: '150M',
+                shares: '567K',
+                duration: '14',
+                trust: '72/100',
+                reportSlug: null,
+                description: 'Wire services run stories about "viral claims" that get syndicated to hundreds of local outlets. Coverage focuses on the spread rather than debunking, inadvertently amplifying reach.',
+                timeline: [
+                    { date: 'Day 10', event: 'AP/Reuters cover "viral controversy"' },
+                    { date: 'Day 11', event: 'Story appears in 500+ local papers' },
+                    { date: 'Day 14', event: 'Follow-up includes fact-check context' }
+                ]
+            },
+            {
+                id: 'opinion_columns',
+                label: 'Major Paper Op-Eds',
+                stage: 'mainstream',
+                type: 'Editorial Content',
+                size: 24,
+                y: 0.8,
+                reach: '25M',
+                shares: '234K',
+                duration: '21',
+                trust: '65/100',
+                reportSlug: 'clickbait-propaganda-december-2025',
+                description: 'Opinion columnists write about claims, criticizing "both sides" while repeating key points. Columns shared widely by those promoting narratives as "mainstream validation."',
+                timeline: [
+                    { date: 'Day 12', event: 'First major op-ed published' },
+                    { date: 'Day 14', event: 'Column goes viral on social media' },
+                    { date: 'Day 18', event: 'Editor\'s note adds corrections' }
+                ]
+            },
+
+            // ═══ LEGITIMIZED ═══
+            {
+                id: 'network_special',
+                label: 'Primetime Special',
+                stage: 'legitimized',
+                type: 'Broadcast Investigation',
+                size: 30,
+                y: 0.35,
+                reach: '22M',
+                shares: '456K',
+                duration: '7',
+                trust: '75/100',
+                reportSlug: null,
+                description: 'Major broadcast network airs primetime segment, interviewing claim supporters alongside fact-checkers. Equal-time format suggests false equivalence between facts and fabrication.',
+                timeline: [
+                    { date: 'Day 20', event: '15-minute primetime segment airs' },
+                    { date: 'Day 21', event: 'Segment becomes most-shared clip' },
+                    { date: 'Day 25', event: 'Journalism ethics groups criticize coverage' }
+                ]
+            },
+            {
+                id: 'congressional_hearing',
+                label: 'Congressional Hearings',
+                stage: 'legitimized',
+                type: 'Government Proceedings',
+                size: 32,
+                y: 0.7,
+                reach: '45M',
+                shares: '890K',
+                duration: '90',
+                trust: '82/100',
+                reportSlug: 'minnesota-fraud-investigation-2025',
+                description: 'Members of Congress cite claims during official hearings, demanding investigations. C-SPAN coverage legitimizes narrative by giving it official government attention and platform.',
+                timeline: [
+                    { date: 'Day 30', event: 'Claims cited in oversight hearing' },
+                    { date: 'Day 31', event: 'C-SPAN clips go viral' },
+                    { date: 'Day 60', event: 'Formal investigation requested' }
+                ]
+            },
+
+            // ═══ POLICY IMPACT ═══
+            {
+                id: 'policy_proposal',
+                label: 'Legislative Action',
+                stage: 'policy',
+                type: 'Bills & Regulations',
+                size: 34,
+                y: 0.5,
+                reach: '330M',
+                shares: '2.1M',
+                duration: '365',
+                trust: '70/100',
+                reportSlug: 'disinformation-architecture-2025',
+                description: 'Despite debunking, narrative influences actual legislation. Bills introduced citing claims, policy debates shaped by false premises. Disinformation achieves real-world policy outcomes.',
+                timeline: [
+                    { date: 'Day 90', event: 'Bill introduced citing debunked claims' },
+                    { date: 'Day 120', event: 'Committee hearings on proposal' },
+                    { date: 'Day 180', event: 'Modified version advances' }
+                ]
+            }
+        ];
+
+        // Links between nodes
+        const links = [
+            // Origin → Amplifier
+            { source: 'troll_farm', target: 'influencer_network', strength: 3 },
+            { source: 'troll_farm', target: 'hashtag_campaign', strength: 4 },
+            { source: 'fake_news_site', target: 'youtube_ecosystem', strength: 3 },
+            { source: 'fake_news_site', target: 'influencer_network', strength: 2 },
+            { source: 'deepfake_source', target: 'youtube_ecosystem', strength: 3 },
+            { source: 'deepfake_source', target: 'hashtag_campaign', strength: 2 },
+            { source: 'conspiracy_forum', target: 'influencer_network', strength: 3 },
+            { source: 'conspiracy_forum', target: 'youtube_ecosystem', strength: 4 },
+            { source: 'conspiracy_forum', target: 'hashtag_campaign', strength: 3 },
+
+            // Amplifier → Mainstream
+            { source: 'influencer_network', target: 'cable_coverage', strength: 3 },
+            { source: 'influencer_network', target: 'opinion_columns', strength: 2 },
+            { source: 'youtube_ecosystem', target: 'wire_services', strength: 2 },
+            { source: 'youtube_ecosystem', target: 'cable_coverage', strength: 3 },
+            { source: 'hashtag_campaign', target: 'wire_services', strength: 4 },
+            { source: 'hashtag_campaign', target: 'cable_coverage', strength: 4 },
+            { source: 'hashtag_campaign', target: 'opinion_columns', strength: 2 },
+
+            // Mainstream → Legitimized
+            { source: 'cable_coverage', target: 'network_special', strength: 4 },
+            { source: 'cable_coverage', target: 'congressional_hearing', strength: 3 },
+            { source: 'wire_services', target: 'network_special', strength: 3 },
+            { source: 'wire_services', target: 'congressional_hearing', strength: 3 },
+            { source: 'opinion_columns', target: 'congressional_hearing', strength: 2 },
+
+            // Legitimized → Policy
+            { source: 'network_special', target: 'policy_proposal', strength: 3 },
+            { source: 'congressional_hearing', target: 'policy_proposal', strength: 5 }
+        ];
+
+        // ═══════════════════════════════════════════════════════════════
+        // VISUALIZATION SETUP
+        // ═══════════════════════════════════════════════════════════════
+
+        const svg = d3.select('#flowSvg');
+        const container = document.querySelector('.viz-container');
+        let width = container.clientWidth;
+        let height = container.clientHeight;
+
+        svg.attr('viewBox', `0 0 ${width} ${height}`);
+
+        const g = svg.append('g');
+
+        // Zoom behavior
+        const zoom = d3.zoom()
+            .scaleExtent([0.4, 2.5])
+            .on('zoom', (event) => {
+                g.attr('transform', event.transform);
+                updateMinimap(event.transform);
+            });
+
+        svg.call(zoom);
+
+        // Defs for filters and gradients
+        const defs = svg.append('defs');
+
+        // Glow filter
+        const glowFilter = defs.append('filter')
+            .attr('id', 'nodeGlow')
+            .attr('x', '-100%')
+            .attr('y', '-100%')
+            .attr('width', '300%')
+            .attr('height', '300%');
+
+        glowFilter.append('feGaussianBlur')
+            .attr('stdDeviation', '6')
+            .attr('result', 'coloredBlur');
+
+        const glowMerge = glowFilter.append('feMerge');
+        glowMerge.append('feMergeNode').attr('in', 'coloredBlur');
+        glowMerge.append('feMergeNode').attr('in', 'SourceGraphic');
+
+        // Soft glow for particles
+        const particleGlow = defs.append('filter')
+            .attr('id', 'particleGlow')
+            .attr('x', '-50%')
+            .attr('y', '-50%')
+            .attr('width', '200%')
+            .attr('height', '200%');
+
+        particleGlow.append('feGaussianBlur')
+            .attr('stdDeviation', '2')
+            .attr('result', 'blur');
+
+        const particleMerge = particleGlow.append('feMerge');
+        particleMerge.append('feMergeNode').attr('in', 'blur');
+        particleMerge.append('feMergeNode').attr('in', 'SourceGraphic');
+
+        // Position nodes
+        nodes.forEach(node => {
+            node.x = width * stageX[node.stage];
+            node.y = height * node.y;
+        });
+
+        const nodeById = new Map(nodes.map(n => [n.id, n]));
+
+        links.forEach(link => {
+            link.source = nodeById.get(link.source);
+            link.target = nodeById.get(link.target);
+        });
+
+        // Draw links
+        const linkGroup = g.append('g').attr('class', 'links');
+
+        const linkPaths = linkGroup.selectAll('.flow-link')
+            .data(links)
+            .enter()
+            .append('path')
+            .attr('class', 'flow-link')
+            .attr('d', d => generateCurve(d))
+            .attr('stroke', d => stageColors[d.source.stage].color)
+            .attr('stroke-width', d => Math.max(1.5, d.strength * 1.2))
+            .attr('stroke-opacity', 0.2);
+
+        function generateCurve(d) {
+            const sx = d.source.x;
+            const sy = d.source.y;
+            const tx = d.target.x;
+            const ty = d.target.y;
+            const mx = (sx + tx) / 2;
+            const offset = (ty - sy) * 0.15;
+            return `M${sx},${sy} C${mx + offset},${sy} ${mx - offset},${ty} ${tx},${ty}`;
+        }
+
+        // Draw nodes
+        const nodeGroup = g.append('g').attr('class', 'nodes');
+
+        const nodeGroups = nodeGroup.selectAll('.node-group')
+            .data(nodes)
+            .enter()
+            .append('g')
+            .attr('class', 'node-group')
+            .attr('transform', d => `translate(${d.x}, ${d.y})`)
+            .on('click', (event, d) => openPanel(d))
+            .on('mouseenter', (event, d) => highlightConnections(d))
+            .on('mouseleave', () => resetHighlights());
+
+        // Outer glow
+        nodeGroups.append('circle')
+            .attr('class', 'node-glow')
+            .attr('r', d => d.size + 15)
+            .attr('fill', d => stageColors[d.stage].glow)
+            .attr('opacity', 0.25)
+            .attr('filter', 'url(#nodeGlow)');
+
+        // Main circle
+        nodeGroups.append('circle')
+            .attr('class', 'node-circle')
+            .attr('r', d => d.size)
+            .attr('fill', d => stageColors[d.stage].bg)
+            .attr('stroke', d => stageColors[d.stage].color)
+            .attr('stroke-width', 2);
+
+        // Inner core
+        nodeGroups.append('circle')
+            .attr('r', d => d.size * 0.35)
+            .attr('fill', d => stageColors[d.stage].color)
+            .attr('opacity', 0.8);
+
+        // Report indicator
+        nodeGroups.filter(d => d.reportSlug)
+            .append('text')
+            .attr('class', 'node-report-indicator')
+            .attr('y', d => -d.size - 8)
+            .attr('text-anchor', 'middle')
+            .text('📄');
+
+        // Labels
+        nodeGroups.append('text')
+            .attr('class', 'node-label')
+            .attr('dy', d => d.size + 16)
+            .attr('text-anchor', 'middle')
+            .text(d => d.label);
+
+        // ═══════════════════════════════════════════════════════════════
+        // PARTICLE ANIMATION
+        // ═══════════════════════════════════════════════════════════════
+
+        const particleGroup = g.append('g').attr('class', 'particles');
+
+        function animateParticles() {
+            links.forEach(link => {
+                if (Math.random() < 0.015) {
+                    createParticle(link);
+                }
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        function createParticle(link) {
+            const path = linkPaths.filter(d => d === link).node();
+            if (!path) return;
+
+            const pathLength = path.getTotalLength();
+            const particle = particleGroup.append('circle')
+                .attr('class', 'flow-particle')
+                .attr('r', 2.5)
+                .attr('fill', stageColors[link.source.stage].color)
+                .attr('filter', 'url(#particleGlow)')
+                .attr('opacity', 0.9);
+
+            const duration = 2500 + Math.random() * 1500;
+            let startTime = null;
+
+            function move(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const progress = (timestamp - startTime) / duration;
+
+                if (progress >= 1) {
+                    particle.remove();
+                    return;
+                }
+
+                const point = path.getPointAtLength(progress * pathLength);
+                particle
+                    .attr('cx', point.x)
+                    .attr('cy', point.y)
+                    .attr('opacity', Math.sin(progress * Math.PI) * 0.9);
+
+                requestAnimationFrame(move);
+            }
+            requestAnimationFrame(move);
+        }
+
+        setTimeout(animateParticles, 500);
+
+        // ═══════════════════════════════════════════════════════════════
+        // INTERACTION HANDLERS
+        // ═══════════════════════════════════════════════════════════════
+
+        let selectedNode = null;
+        let currentReportSlug = null;
+
+        function highlightConnections(node) {
+            const connectedIds = new Set([node.id]);
+
+            links.forEach(link => {
+                if (link.source.id === node.id) connectedIds.add(link.target.id);
+                if (link.target.id === node.id) connectedIds.add(link.source.id);
+            });
+
+            nodeGroups.classed('dimmed', d => !connectedIds.has(d.id));
+            linkPaths
+                .classed('dimmed', d => d.source.id !== node.id && d.target.id !== node.id)
+                .classed('highlighted', d => d.source.id === node.id || d.target.id === node.id);
+        }
+
+        function resetHighlights() {
+            if (selectedNode) return;
+            nodeGroups.classed('dimmed', false);
+            linkPaths.classed('dimmed', false).classed('highlighted', false);
+        }
+
+        function openPanel(node) {
+            selectedNode = node;
+            currentReportSlug = node.reportSlug;
+            nodeGroups.classed('selected', d => d.id === node.id);
+            highlightConnections(node);
+
+            document.getElementById('instructions').classList.add('hidden');
+
+            const stageLabel = document.getElementById('panelStage');
+            stageLabel.textContent = node.stage.toUpperCase();
+            stageLabel.style.background = stageColors[node.stage].bg;
+            stageLabel.style.color = stageColors[node.stage].color;
+
+            document.getElementById('panelTitle').textContent = node.label;
+            document.getElementById('panelType').textContent = node.type;
+
+            document.getElementById('metricReach').textContent = node.reach;
+            document.getElementById('metricShares').textContent = node.shares;
+            document.getElementById('metricDuration').textContent = node.duration;
+
+            const trustEl = document.getElementById('metricTrust');
+            trustEl.textContent = node.trust;
+            const trustValue = parseInt(node.trust);
+            if (trustValue <= 20) trustEl.style.color = '#ef4444';
+            else if (trustValue <= 50) trustEl.style.color = '#f59e0b';
+            else trustEl.style.color = '#10b981';
+
+            document.getElementById('panelDescription').textContent = node.description;
+
+            document.getElementById('panelTimeline').innerHTML = node.timeline.map(entry => `
+                <div class="timeline-entry">
+                    <div class="timeline-date">${entry.date}</div>
+                    <div class="timeline-event">${entry.event}</div>
+                </div>
+            `).join('');
+
+            const connections = links.filter(l => l.source.id === node.id || l.target.id === node.id);
+            document.getElementById('panelConnections').innerHTML = connections.map(link => {
+                const connected = link.source.id === node.id ? link.target : link.source;
+                const direction = link.source.id === node.id ? '→' : '←';
+                return `
+                    <div class="connection-item" onclick="navigateToNode('${connected.id}')">
+                        <div class="connection-dot" style="background: ${stageColors[connected.stage].color}; color: ${stageColors[connected.stage].color};"></div>
+                        <div class="connection-name">${connected.label}</div>
+                        <div class="connection-arrow">${direction}</div>
+                    </div>
+                `;
+            }).join('');
+
+            // Update deep dive button
+            const deepDiveBtn = document.getElementById('deepDiveBtn');
+            if (node.reportSlug) {
+                deepDiveBtn.classList.remove('disabled');
+                deepDiveBtn.innerHTML = `
+                    <span class="deep-dive-icon">📊</span>
+                    <span>Open Full Report</span>
+                    <span style="opacity: 0.6; font-weight: 400;">→</span>
+                `;
+            } else {
+                deepDiveBtn.classList.add('disabled');
+                deepDiveBtn.innerHTML = `
+                    <span class="deep-dive-icon">📊</span>
+                    <span>Report Coming Soon</span>
+                `;
+            }
+
+            document.getElementById('detailPanel').classList.add('open');
+        }
+
+        function closePanel() {
+            selectedNode = null;
+            currentReportSlug = null;
+            nodeGroups.classed('selected', false);
+            resetHighlights();
+            document.getElementById('detailPanel').classList.remove('open');
+        }
+
+        function navigateToNode(nodeId) {
+            const node = nodeById.get(nodeId);
+            if (node) {
+                openPanel(node);
+
+                const scale = 1.2;
+                const x = width / 2 - node.x * scale;
+                const y = height / 2 - node.y * scale;
+
+                svg.transition()
+                    .duration(600)
+                    .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+            }
+        }
+
+        function filterByStage(stage) {
+            const stageNodes = nodes.filter(n => n.stage === stage);
+            const stageIds = new Set(stageNodes.map(n => n.id));
+
+            nodeGroups.classed('dimmed', d => !stageIds.has(d.id));
+            linkPaths.classed('dimmed', d => !stageIds.has(d.source.id) && !stageIds.has(d.target.id));
+
+            setTimeout(() => {
+                nodeGroups.classed('dimmed', false);
+                linkPaths.classed('dimmed', false);
+            }, 2000);
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // REPORT OVERLAY
+        // ═══════════════════════════════════════════════════════════════
+
+        function openReport() {
+            if (!currentReportSlug) return;
+
+            const overlay = document.getElementById('reportOverlay');
+            const frame = document.getElementById('reportFrame');
+            const loading = document.getElementById('overlayLoading');
+
+            document.getElementById('overlayTitle').textContent = selectedNode.label + ' — Deep Dive';
+
+            loading.style.display = 'block';
+            frame.style.opacity = '0';
+
+            frame.onload = () => {
+                loading.style.display = 'none';
+                frame.style.opacity = '1';
+            };
+
+            frame.src = `localreports/${currentReportSlug}.html`;
+            overlay.classList.add('open');
+
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeReport() {
+            const overlay = document.getElementById('reportOverlay');
+            const frame = document.getElementById('reportFrame');
+
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+
+            setTimeout(() => {
+                frame.src = 'about:blank';
+            }, 400);
+        }
+
+        function openInNewTab() {
+            if (currentReportSlug) {
+                window.open(`localreports/${currentReportSlug}.html`, '_blank');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // MINIMAP
+        // ═══════════════════════════════════════════════════════════════
+
+        function initMinimap() {
+            const minimapSvg = d3.select('#minimapSvg');
+            const scale = 180 / width;
+
+            minimapSvg.selectAll('circle')
+                .data(nodes)
+                .enter()
+                .append('circle')
+                .attr('cx', d => d.x * scale)
+                .attr('cy', d => d.y * (100 / height))
+                .attr('r', 3)
+                .attr('fill', d => stageColors[d.stage].color)
+                .attr('opacity', 0.7);
+
+            minimapSvg.selectAll('line')
+                .data(links)
+                .enter()
+                .append('line')
+                .attr('x1', d => d.source.x * scale)
+                .attr('y1', d => d.source.y * (100 / height))
+                .attr('x2', d => d.target.x * scale)
+                .attr('y2', d => d.target.y * (100 / height))
+                .attr('stroke', 'rgba(255,255,255,0.15)')
+                .attr('stroke-width', 0.5);
+        }
+
+        function updateMinimap(transform) {
+            const viewport = document.getElementById('minimapViewport');
+            const scaleX = 180 / width;
+            const scaleY = 100 / height;
+
+            const vw = (width / transform.k) * scaleX;
+            const vh = (height / transform.k) * scaleY;
+            const vx = (-transform.x / transform.k) * scaleX;
+            const vy = (-transform.y / transform.k) * scaleY;
+
+            viewport.style.width = `${vw}px`;
+            viewport.style.height = `${vh}px`;
+            viewport.style.left = `${vx}px`;
+            viewport.style.top = `${vy}px`;
+        }
+
+        initMinimap();
+
+        // ═══════════════════════════════════════════════════════════════
+        // CONTROLS & KEYBOARD
+        // ═══════════════════════════════════════════════════════════════
+
+        function zoomIn() {
+            svg.transition().duration(300).call(zoom.scaleBy, 1.4);
+        }
+
+        function zoomOut() {
+            svg.transition().duration(300).call(zoom.scaleBy, 0.7);
+        }
+
+        function resetZoom() {
+            svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (document.getElementById('reportOverlay').classList.contains('open')) {
+                    closeReport();
+                } else {
+                    closePanel();
+                }
+            }
+            if (e.key === '+' || e.key === '=') zoomIn();
+            if (e.key === '-') zoomOut();
+            if (e.key === '0') resetZoom();
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // RESIZE HANDLER
+        // ═══════════════════════════════════════════════════════════════
+
+        window.addEventListener('resize', () => {
+            width = container.clientWidth;
+            height = container.clientHeight;
+            svg.attr('viewBox', `0 0 ${width} ${height}`);
+
+            nodes.forEach(node => {
+                node.x = width * stageX[node.stage];
+                node.y = height * node.y;
+            });
+
+            nodeGroups.attr('transform', d => `translate(${d.x}, ${d.y})`);
+            linkPaths.attr('d', d => generateCurve(d));
+
+            initMinimap();
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // AMBIENT ANIMATIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        // Gentle node pulse
+        function pulseNodes() {
+            nodeGroups.selectAll('.node-glow')
+                .transition()
+                .duration(3000)
+                .ease(d3.easeSinInOut)
+                .attr('opacity', 0.15)
+                .transition()
+                .duration(3000)
+                .ease(d3.easeSinInOut)
+                .attr('opacity', 0.3)
+                .on('end', function() {
+                    d3.select(this.parentNode).select('.node-glow').call(pulseNodes);
+                });
+        }
+
+        nodeGroups.each(function(d, i) {
+            setTimeout(() => {
+                d3.select(this).select('.node-glow').call(pulseNodes);
+            }, i * 200);
+        });
+
+    </script>
+</body>
+</html>

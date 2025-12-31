@@ -3,6 +3,27 @@
 
 const EXPERIENCES_DATA = [
     {
+        id: 1,
+        title: "Disinformation Flow Explorer",
+        subtitle: "Trace Narratives from Fringe to Policy",
+        slug: "flow-explorer.html",
+        category: "Interactive Network",
+        tagClass: "tag-red",
+        catClass: "cat-experience",
+        icon: "git-branch",
+        date: "Dec 2025",
+        events: "13 Sources",
+        duration: "5-15 min",
+        excerpt: "Follow how false narratives flow from troll farms and fake news sites through amplifiers to mainstream media and eventually shape real policy. Click any node to see the full GenuVerity report.",
+        features: ["5-Stage Flow", "Report Deep-Dives", "Animated Particles", "Connection Tracing"],
+        preview: {
+            type: "network",
+            color: "#ef4444",
+            nodeCount: 13
+        },
+        status: "live"
+    },
+    {
         id: 0,
         title: "The Architecture of Perception",
         subtitle: "130 Years of Manufactured Reality",

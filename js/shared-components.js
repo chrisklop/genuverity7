@@ -76,6 +76,7 @@ const SHARED_FOOTER_HTML = `
             <a href="/methodology.html" style="color:var(--text-muted); text-decoration:none; transition:color 0.2s;">Methodology</a>
             <a href="/limitations.html" style="color:var(--text-muted); text-decoration:none; transition:color 0.2s;">Limitations</a>
             <a href="/reports.html" style="color:var(--text-muted); text-decoration:none; transition:color 0.2s;">Reports</a>
+            <a href="/newsfeed.html" style="color:var(--text-muted); text-decoration:none; transition:color 0.2s;">News Feed</a>
             <a href="/labs.html" style="color:var(--text-muted); text-decoration:none; transition:color 0.2s;">Labs</a>
         </div>
         <p style="margin-top:40px; color:var(--text-muted); font-size:0.8rem; font-family:var(--font-mono);">
@@ -216,6 +217,10 @@ function injectSharedComponents() {
         // Navigation links for ALL pages
         if (navRight) {
             navRight.innerHTML = `
+                <a href="/newsfeed.html" class="navbar-link" style="color:var(--text-secondary); text-decoration:none; padding:6px 10px; border-radius:8px; font-size:0.8rem; display:flex; align-items:center; gap:4px; transition:all 0.2s; white-space:nowrap; flex-shrink:0;">
+                    <i data-lucide="newspaper" style="width:14px;height:14px;"></i>
+                    News Feed
+                </a>
                 <a href="/labs.html" class="navbar-link" style="color:var(--text-secondary); text-decoration:none; padding:6px 10px; border-radius:8px; font-size:0.8rem; display:flex; align-items:center; gap:4px; transition:all 0.2s; white-space:nowrap; flex-shrink:0;">
                     <i data-lucide="flask-conical" style="width:14px;height:14px;"></i>
                     Labs
@@ -229,6 +234,7 @@ function injectSharedComponents() {
 
         if (mobileLinks) {
             mobileLinks.innerHTML = `
+                <a href="/newsfeed.html"><i data-lucide="newspaper" style="width:20px;"></i> News Feed</a>
                 <a href="/labs.html"><i data-lucide="flask-conical" style="width:20px;"></i> Labs</a>
                 <a href="#"><i data-lucide="bell" style="width:20px;"></i> Get Early Access</a>
             `;
