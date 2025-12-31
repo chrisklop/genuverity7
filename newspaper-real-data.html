@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenuVerity Monitor - Real-Time Disinformation Intelligence</title>
+
+    <!-- Shared Components -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="css/shared-components.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #050A14;
+            --bg-card: #0a0f1a;
+            --bg-card-hover: #111827;
+            --border-color: #1e293b;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --accent-green: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Category Filter Tabs */
+        .filter-tabs {
+            background: rgba(10, 15, 26, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0;
+            position: sticky;
+            top: 64px;
+            z-index: 999;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .filter-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tabs-container {
+            display: flex;
+            gap: 0;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .filter-tab {
+            padding: 14px 20px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: transparent;
+            border-left: none;
+            border-right: none;
+            border-top: none;
+        }
+
+        .filter-tab:hover {
+            color: var(--text-primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .filter-tab.active {
+            color: var(--accent-blue);
+            border-bottom-color: var(--accent-blue);
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            background: rgba(10, 15, 26, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            max-width: 1600px;
+            margin: 0 auto;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            padding: 14px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-tab:hover {
+            color: var(--text-primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .nav-tab.active {
+            color: var(--accent-blue);
+            border-bottom-color: var(--accent-blue);
+        }
+
+        .nav-tab .icon {
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        /* Header Banner */
+        .header-banner {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px 20px;
+            text-align: center;
+        }
+
+        .brand-logo {
+            font-family: 'Crimson Pro', serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .brand-logo .genu {
+            color: var(--text-primary);
+        }
+
+        .brand-logo .verity {
+            color: var(--accent-blue);
+        }
+
+        .brand-tagline {
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: 320px 1fr 380px;
+            gap: 30px;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: -12px;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        /* Daily Briefing Sidebar */
+        .daily-briefing {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+
+        .briefing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .briefing-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        .briefing-content {
+            padding: 20px;
+        }
+
+        .briefing-category {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            padding: 4px 10px;
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 4px;
+        }
+
+        .briefing-title {
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .briefing-meta {
+            display: flex;
+            gap: 8px;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Hero Article */
+        .hero-article {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hero-article:hover {
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25);
+            border-color: var(--accent-blue);
+        }
+
+        .hero-content {
+            padding: 36px;
+        }
+
+        .verdict-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .verdict-false {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-red);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .verdict-true {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .verdict-mixed,
+        .verdict-context {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-amber);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .hero-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 38px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 18px;
+            color: var(--text-primary);
+        }
+
+        .hero-excerpt {
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* News Grid */
+        .news-section {
+            margin-bottom: 40px;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .news-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 20px;
+        }
+
+        .news-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        .news-category {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            padding: 4px 10px;
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 4px;
+        }
+
+        .news-title {
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .news-excerpt {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .news-footer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: var(--text-muted);
+            padding-top: 14px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .verdict-tag {
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Right Sidebar */
+        .right-sidebar {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+
+        .trending-section {
+            margin-bottom: 30px;
+        }
+
+        .trending-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .trending-card:hover {
+            transform: translateX(4px);
+            box-shadow: -4px 0 12px rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        .trending-content {
+            padding: 18px;
+        }
+
+        .trending-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .trending-title {
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .trending-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .trending-badge::before {
+            content: '●';
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .container {
+                grid-template-columns: 280px 1fr 340px;
+                gap: 24px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr 340px;
+                gap: 24px;
+            }
+
+            .daily-briefing {
+                display: none;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 20px 16px;
+            }
+
+            .right-sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            .hero-title {
+                font-size: 26px;
+            }
+
+            .brand-logo {
+                font-size: 32px;
+            }
+        }
+
+        /* Featured Experience Panel */
+        .featured-experience {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border: 2px solid var(--accent-blue);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 30px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-experience::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .featured-experience:hover::before {
+            left: 100%;
+        }
+
+        .featured-experience:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(59, 130, 246, 0.3);
+            border-color: var(--accent-cyan);
+        }
+
+        .experience-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid var(--accent-blue);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .experience-label::before {
+            content: '✨';
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .experience-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .experience-subtitle {
+            font-size: 16px;
+            color: var(--accent-cyan);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .experience-excerpt {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .experience-features {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .experience-feature {
+            padding: 6px 12px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .experience-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .experience-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .experience-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Loading state */
+        .loading {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Override navbar logo fonts to match project standard (Crimson Pro) */
+        .navbar-logo,
+        .navbar-logo-wrapper,
+        .navbar-logo-text,
+        .g-icon-nav,
+        .navbar-brand {
+            font-family: 'Crimson Pro', serif !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Shared Navbar -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
+    <!-- Category Filter Tabs -->
+    <div class="filter-tabs">
+        <div class="tabs-container">
+            <button class="filter-tab active" data-category="all">🔥 Latest</button>
+            <button class="filter-tab" data-category="deep-dives">📊 Deep Dives</button>
+            <button class="filter-tab" data-category="cat-factcheck">✓ Fact Checks</button>
+            <button class="filter-tab" data-category="experiences">🧪 Experiences</button>
+            <button class="filter-tab" data-category="investigations">🎯 Investigations</button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Daily Briefing Sidebar -->
+        <aside class="daily-briefing">
+            <h2 class="section-title">📊 Latest Updates</h2>
+            <p class="section-subtitle">Most recent publications</p>
+            <div id="sidebar-reports"></div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Featured Experience -->
+            <div id="featured-experience"></div>
+
+            <!-- Hero Article -->
+            <div id="hero-article"></div>
+
+            <!-- Top News Stories -->
+            <section class="news-section">
+                <h2 class="section-title">🔍 Breaking Analysis</h2>
+                <div class="news-grid" id="news-grid"></div>
+            </section>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="right-sidebar">
+            <!-- Trending Section -->
+            <div class="trending-section">
+                <h3 class="section-title">🔥 Trending</h3>
+                <p class="section-subtitle">High-impact reports</p>
+                <div id="trending-reports"></div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Shared Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="js/reports-data.js"></script>
+    <script src="js/experiences-data.js"></script>
+
+    <style>
+        /* Chart thumbnail styles */
+        .chart-thumbnail {
+            width: 100%;
+            height: 160px;
+            background: rgba(10, 15, 26, 0.6);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 100%;
+            padding: 16px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .chart-bars .bar {
+            flex: 1;
+            border-radius: 3px 3px 0 0;
+            transition: height 0.6s ease-out;
+        }
+
+        .chart-line {
+            width: 100%;
+            height: 100%;
+        }
+
+        .chart-line svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .chart-line path {
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+        }
+
+        .chart-line .area {
+            stroke: none;
+            opacity: 0.2;
+        }
+
+        .chart-donut {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        .chart-donut svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .chart-donut circle {
+            fill: none;
+            stroke-width: 10;
+        }
+
+        .chart-donut .donut-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .chart-network {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .chart-network .node {
+            position: absolute;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .chart-network .line {
+            position: absolute;
+            height: 1px;
+            transform-origin: left center;
+            opacity: 0.3;
+        }
+
+        .chart-hbars {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            padding: 8px 0;
+        }
+
+        .chart-hbars .hbar-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-hbars .hbar-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            width: 40px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .chart-hbars .hbar {
+            height: 14px;
+            border-radius: 3px;
+            transition: width 0.8s ease-out;
+        }
+
+        .chart-timeline {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .chart-timeline .timeline-line {
+            flex: 1;
+            height: 2px;
+            background: var(--border-color);
+            position: relative;
+        }
+
+        .chart-timeline .timeline-point {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 2px solid var(--bg-card);
+        }
+    </style>
+
+    <script>
+        // Chart generation functions with enhanced color variety
+        function normalizeData(data, minHeight = 15, maxHeight = 95) {
+            if (!data || data.length === 0) return data;
+            const max = Math.max(...data);
+            const min = Math.min(...data);
+            if (max === min) return data.map(() => (minHeight + maxHeight) / 2);
+            return data.map(v => minHeight + ((v - min) / (max - min)) * (maxHeight - minHeight));
+        }
+
+        // Color palettes for variety
+        const colorPalettes = {
+            primary: ['#3b82f6', '#60a5fa', '#93c5fd', '#2563eb', '#1d4ed8'],
+            warm: ['#ef4444', '#f59e0b', '#f97316', '#dc2626', '#ea580c'],
+            cool: ['#06b6d4', '#0ea5e9', '#14b8a6', '#0891b2', '#0284c7'],
+            success: ['#10b981', '#22c55e', '#34d399', '#059669', '#16a34a'],
+            mixed: ['#ef4444', '#f59e0b', '#3b82f6', '#10b981', '#8b5cf6']
+        };
+
+        function generateBarChart(color, data) {
+            const rawBars = data || Array.from({ length: 8 }, () => Math.random() * 80 + 20);
+            const bars = normalizeData(rawBars, 20, 95);
+
+            // Use color palette if single color provided
+            let colors;
+            if (Array.isArray(color)) {
+                colors = color;
+            } else {
+                // Create varied shades of the base color
+                const palette = color === '#ef4444' ? colorPalettes.warm :
+                    color === '#10b981' ? colorPalettes.success :
+                        color === '#06b6d4' ? colorPalettes.cool :
+                            colorPalettes.primary;
+                colors = palette;
+            }
+
+            return `<div class="chart-container"><div class="chart-bars">${bars.map((h, i) =>
+                `<div class="bar" style="height: ${h}%; background: ${colors[i % colors.length]};"></div>`
+            ).join('')}</div></div>`;
+        }
+
+        function generateLineChart(color, data) {
+            const rawPoints = data || Array.from({ length: 6 }, (_, i) => 20 + Math.random() * 60);
+            const pointsData = normalizeData(rawPoints, 15, 85);
+            const step = 100 / (pointsData.length - 1);
+            const points = pointsData.map((y, i) => ({ x: i * step, y }));
+            const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${100 - p.y}`).join(' ');
+            const areaD = pathD + ` L 100 100 L 0 100 Z`;
+
+            // Use gradient for area
+            const gradientId = `gradient-${Math.random().toString(36).substr(2, 9)}`;
+
+            return `<div class="chart-container"><div class="chart-line">
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="${gradientId}" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:${color};stop-opacity:0.4" />
+                            <stop offset="100%" style="stop-color:${color};stop-opacity:0.05" />
+                        </linearGradient>
+                    </defs>
+                    <path class="area" d="${areaD}" fill="url(#${gradientId})"/>
+                    <path d="${pathD}" stroke="${color}" stroke-width="3"/>
+                </svg>
+            </div></div>`;
+        }
+
+        function generateDonutChart(percent, color) {
+            const circumference = 2 * Math.PI * 40;
+            const offset = circumference * (1 - percent / 100);
+
+            // Add complementary color for remaining segment
+            const baseColor = color;
+            const bgColor = 'rgba(100, 116, 139, 0.2)';
+
+            return `<div class="chart-container" style="justify-content: center; align-items: center;">
+                <div class="chart-donut">
+                    <svg viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="40" stroke="${bgColor}" stroke-width="12"/>
+                        <circle cx="50" cy="50" r="40" stroke="${baseColor}"
+                            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" stroke-width="12"/>
+                    </svg>
+                    <span class="donut-label">${percent}%</span>
+                </div>
+            </div>`;
+        }
+
+        function generateNetworkChart(nodeColor, lineColor, data) {
+            const count = (data && data.nodes) ? data.nodes : 10;
+            const nodes = Array.from({ length: count }, () => ({
+                x: 10 + Math.random() * 80,
+                y: 10 + Math.random() * 80,
+                size: 5 + Math.random() * 8
+            }));
+
+            // Use varied node colors
+            const nodeColors = [nodeColor, `${nodeColor}cc`, `${nodeColor}99`, `${nodeColor}66`];
+
+            const nodesHTML = nodes.map((n, i) =>
+                `<div class="node" style="left: ${n.x}%; top: ${n.y}%; width: ${n.size}px; height: ${n.size}px; background: ${nodeColors[i % nodeColors.length]}; animation-delay: ${i * 0.15}s;"></div>`
+            ).join('');
+            const linesHTML = nodes.slice(0, Math.floor(count / 2)).map((n, i) => {
+                const target = nodes[(i + 3) % nodes.length];
+                const dx = target.x - n.x;
+                const dy = target.y - n.y;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                return `<div class="line" style="left: ${n.x}%; top: ${n.y}%; width: ${length}%; transform: rotate(${angle}deg); background: ${lineColor}; opacity: 0.2;"></div>`;
+            }).join('');
+            return `<div class="chart-container"><div class="chart-network">${linesHTML}${nodesHTML}</div></div>`;
+        }
+
+        function generateHBarChart(data, colors) {
+            // Ensure we have vibrant colors
+            const defaultColors = ['#ef4444', '#f59e0b', '#3b82f6', '#10b981', '#8b5cf6'];
+            const barColors = colors && colors.length > 0 ? colors : defaultColors;
+
+            return `<div class="chart-container" style="align-items: center;"><div class="chart-hbars">${data.map((d, i) =>
+                `<div class="hbar-row">
+                    <span class="hbar-label">${d.label}</span>
+                    <div class="hbar" style="width: ${d.value}%; background: ${barColors[i % barColors.length]};"></div>
+                </div>`
+            ).join('')}</div></div>`;
+        }
+
+        function generateTimelineChart(points, color) {
+            // Use gradient colors for timeline points
+            const colors = [color, `${color}dd`, `${color}bb`, `${color}99`, `${color}77`];
+
+            return `<div class="chart-container" style="align-items: center;"><div class="chart-timeline">
+                <div class="timeline-line" style="background: linear-gradient(90deg, ${color}22 0%, ${color} 50%, ${color}22 100%);">
+                    ${points.map((p, i) => `<div class="timeline-point" style="left: ${p}%; background: ${colors[i % colors.length]}; box-shadow: 0 0 8px ${colors[i % colors.length]};"></div>`).join('')}
+                </div>
+            </div></div>`;
+        }
+
+        function generateChart(report) {
+            if (!report.chart) return generateBarChart('#3b82f6');
+
+            const c = report.chart;
+            if (c.type === 'hbar') return generateHBarChart(c.data, Array.isArray(c.color) ? c.color : [c.color, '#f59e0b', '#3b82f6', '#10b981']);
+            if (c.type === 'timeline') return generateTimelineChart(c.data, c.color);
+            if (c.type === 'bar') return generateBarChart(c.color, c.data);
+            if (c.type === 'donut') return generateDonutChart(c.data, c.color);
+            if (c.type === 'network') return generateNetworkChart(c.color, c.color, c.data);
+            if (c.type === 'line') return generateLineChart(c.color, c.data);
+            return generateBarChart('#3b82f6');
+        }
+
+        // Helper functions
+        function getVerdictBadge(verdict) {
+            const verdictMap = {
+                'false': { text: '⚠️ False', class: 'verdict-false' },
+                'true': { text: '✓ Verified', class: 'verdict-true' },
+                'mixed': { text: '⚖️ Mixed', class: 'verdict-mixed' },
+                'context': { text: '📋 Context Needed', class: 'verdict-context' }
+            };
+            return verdictMap[verdict] || { text: '📋 Analysis', class: 'verdict-context' };
+        }
+
+        function truncateText(text, maxLength) {
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+
+        function navigateToReport(slug) {
+            window.location.href = `localreports/${slug}.html`;
+        }
+
+        function navigateToExperience(slug) {
+            window.location.href = slug;
+        }
+
+        // Render featured experience (most recent interactive experience)
+        function renderFeaturedExperience() {
+            if (!window.EXPERIENCES_DATA || EXPERIENCES_DATA.length === 0) {
+                return; // No experiences available
+            }
+
+            const experience = EXPERIENCES_DATA[0]; // Most recent experience
+
+            const featuresHTML = experience.features.map(feature =>
+                `<span class="experience-feature">${feature}</span>`
+            ).join('');
+
+            const experienceHTML = `
+                <article class="featured-experience animate-in" onclick="navigateToExperience('${experience.slug}')">
+                    <div class="experience-label">
+                        Interactive Experience
+                    </div>
+                    <h2 class="experience-title">${experience.title}</h2>
+                    <p class="experience-subtitle">${experience.subtitle}</p>
+                    <p class="experience-excerpt">${experience.excerpt}</p>
+                    <div class="experience-features">
+                        ${featuresHTML}
+                    </div>
+                    <div class="experience-meta">
+                        <span>🎯 ${experience.category}</span>
+                        <span>•</span>
+                        <span>📊 ${experience.events}</span>
+                        <span>•</span>
+                        <span>⏱️ ${experience.duration}</span>
+                        <span>•</span>
+                        <span>📅 ${experience.date}</span>
+                    </div>
+                    <button class="experience-cta">
+                        Launch Experience →
+                    </button>
+                </article>
+            `;
+
+            document.getElementById('featured-experience').innerHTML = experienceHTML;
+        }
+
+        // Render hero article (most recent report)
+        function renderHero() {
+            const heroReport = REPORTS_DATA[0]; // Most recent
+            const verdict = getVerdictBadge(heroReport.verdict);
+
+            const heroHTML = `
+                <article class="hero-article animate-in" onclick="navigateToReport('${heroReport.slug}')">
+                    <div class="hero-content">
+                        <div class="verdict-badge ${verdict.class}">
+                            ${verdict.text}
+                        </div>
+                        <h1 class="hero-title">${heroReport.title}</h1>
+                        <p class="hero-excerpt">${heroReport.excerpt}</p>
+                        <div class="hero-meta">
+                            <span>📅 ${heroReport.date}</span>
+                            <span>•</span>
+                            <span>📚 ${heroReport.sources}</span>
+                            <span>•</span>
+                            <span>⏱️ ${heroReport.readTime}</span>
+                            <span>•</span>
+                            <span>🏷️ ${heroReport.category}</span>
+                        </div>
+                    </div>
+                </article>
+            `;
+
+            document.getElementById('hero-article').innerHTML = heroHTML;
+        }
+
+        // Render news grid - filter ALL reports, then take first 12 matches
+        function renderNewsGrid(filterCategory = 'all') {
+            let reports;
+
+            if (filterCategory === 'all') {
+                // For "Latest", skip hero (index 0) and get next 12
+                reports = REPORTS_DATA.slice(1, 13);
+            } else if (filterCategory === 'deep-dives') {
+                // Deep Dives = Disinformation + Analysis
+                reports = REPORTS_DATA
+                    .filter(r => r.catClass === 'cat-disinfo' || r.catClass === 'cat-analysis')
+                    .slice(0, 12);
+            } else if (filterCategory === 'investigations') {
+                // Investigations = Health + Economy + Cyber + Defense
+                reports = REPORTS_DATA
+                    .filter(r => ['cat-health', 'cat-financial', 'cat-cyber', 'cat-military'].includes(r.catClass))
+                    .slice(0, 12);
+            } else if (filterCategory === 'experiences') {
+                // Render experiences from EXPERIENCES_DATA instead of reports
+                renderExperiences();
+                return;
+            } else {
+                // Single category filter (e.g., cat-factcheck)
+                reports = REPORTS_DATA
+                    .filter(r => r.catClass === filterCategory)
+                    .slice(0, 12);
+            }
+
+            const newsHTML = reports.map((report, index) => {
+                const verdict = getVerdictBadge(report.verdict);
+                const chartHTML = generateChart(report);
+                return `
+                    <article class="news-card animate-in" style="animation-delay: ${index * 0.05}s;" onclick="navigateToReport('${report.slug}')">
+                        <div class="chart-thumbnail">
+                            ${chartHTML}
+                        </div>
+                        <span class="news-category">${report.category}</span>
+                        <h3 class="news-title">${report.title}</h3>
+                        <p class="news-excerpt">${truncateText(report.excerpt, 140)}</p>
+                        <div class="news-footer">
+                            <span>📅 ${report.date}</span>
+                            <span>•</span>
+                            <span>${report.sources}</span>
+                            <span>•</span>
+                            <span class="verdict-tag ${verdict.class}">${verdict.text}</span>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            document.getElementById('news-grid').innerHTML = newsHTML || '<p style="color: var(--text-muted); text-align: center; grid-column: 1/-1;">No reports in this category yet.</p>';
+        }
+
+        // Render experiences grid
+        function renderExperiences() {
+            if (typeof EXPERIENCES_DATA === 'undefined' || EXPERIENCES_DATA.length === 0) {
+                document.getElementById('news-grid').innerHTML = '<p style="color: var(--text-muted); text-align: center; grid-column: 1/-1;">No experiences available yet.</p>';
+                return;
+            }
+
+            const experiencesHTML = EXPERIENCES_DATA.map((experience, index) => {
+                const featuresHTML = experience.features.slice(0, 3).map(feature =>
+                    `<span class="experience-feature" style="font-size: 11px; padding: 4px 8px;">${feature}</span>`
+                ).join('');
+
+                return `
+                    <article class="news-card animate-in" style="animation-delay: ${index * 0.05}s; cursor: pointer; background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%); border: 1px solid rgba(59, 130, 246, 0.3);" onclick="navigateToExperience('${experience.slug}')">
+                        <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(6, 182, 212, 0.1)); height: 160px; margin: -20px -20px 16px -20px; display: flex; align-items: center; justify-content: center; border-radius: 12px 12px 0 0;">
+                            <div style="text-align: center; padding: 20px;">
+                                <div style="font-size: 48px; margin-bottom: 8px;">✨</div>
+                                <div style="font-size: 11px; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Interactive Experience</div>
+                            </div>
+                        </div>
+                        <span class="news-category" style="color: var(--accent-blue);">🧪 ${experience.category}</span>
+                        <h3 class="news-title">${experience.title}</h3>
+                        <p class="news-excerpt">${truncateText(experience.excerpt, 140)}</p>
+                        <div class="experience-features" style="display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0;">
+                            ${featuresHTML}
+                        </div>
+                        <div class="news-footer">
+                            <span>📊 ${experience.events}</span>
+                            <span>•</span>
+                            <span>⏱️ ${experience.duration}</span>
+                            <span>•</span>
+                            <span>📅 ${experience.date}</span>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            document.getElementById('news-grid').innerHTML = experiencesHTML;
+        }
+
+        // Render sidebar latest updates (reports 2-6)
+        function renderSidebar() {
+            const sidebarReports = REPORTS_DATA.slice(1, 6);
+
+            const sidebarHTML = sidebarReports.map(report => {
+                const chartHTML = generateChart(report);
+                return `
+                <div class="briefing-card" onclick="navigateToReport('${report.slug}')">
+                    <div class="chart-thumbnail" style="height: 140px; margin-bottom: 0; border-radius: 12px 12px 0 0;">
+                        ${chartHTML}
+                    </div>
+                    <div class="briefing-content">
+                        <span class="briefing-category">${report.category}</span>
+                        <h3 class="briefing-title">${truncateText(report.title, 80)}</h3>
+                        <div class="briefing-meta">
+                            <span>${report.date}</span>
+                            <span>•</span>
+                            <span>${report.sources}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            }).join('');
+
+            document.getElementById('sidebar-reports').innerHTML = sidebarHTML;
+        }
+
+        // Render trending (high-engagement reports)
+        function renderTrending() {
+            // Select reports with particularly impactful topics
+            const trendingIndices = [3, 6, 9, 12]; // Mix different types
+            const trendingReports = trendingIndices.map(i => REPORTS_DATA[i]).filter(Boolean);
+
+            const trendingHTML = trendingReports.map(report => {
+                const verdict = getVerdictBadge(report.verdict);
+                const chartHTML = generateChart(report);
+                return `
+                    <div class="trending-card" onclick="navigateToReport('${report.slug}')">
+                        <div class="chart-thumbnail" style="height: 130px; margin-bottom: 0; border-radius: 12px 12px 0 0;">
+                            ${chartHTML}
+                        </div>
+                        <div class="trending-content">
+                            <span class="trending-badge">Breaking</span>
+                            <h4 class="trending-title">${truncateText(report.title, 75)}</h4>
+                            <div class="trending-meta">
+                                <span>${report.readTime} read</span>
+                                <span class="verdict-tag ${verdict.class}" style="font-size: 9px; padding: 2px 6px;">${verdict.text}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('trending-reports').innerHTML = trendingHTML;
+        }
+
+        // Category filtering
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const category = tab.dataset.category;
+                renderNewsGrid(category);
+            });
+        });
+
+        // Initialize page when shared components are ready
+        window.addEventListener('gv:componentsReady', () => {
+            renderFeaturedExperience();
+            renderHero();
+            renderNewsGrid();
+            renderSidebar();
+            renderTrending();
+
+            // Re-initialize lucide icons after all content is rendered
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+
+</html>
