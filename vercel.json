@@ -148,6 +148,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/disinformation-architecture-2025.html",
+      "destination": "/disinformation-architecture-2025",
+      "permanent": true
+    },
+    {
+      "source": "/disinformation-architecture-2025.html",
+      "destination": "/disinformation-architecture-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/dominion-voting-claims-2020.html",
       "destination": "/dominion-voting-claims-2020",
       "permanent": true
@@ -817,6 +827,10 @@
     {
       "source": "/doge-savings-claims",
       "destination": "/localreports/doge-savings-claims.html"
+    },
+    {
+      "source": "/disinformation-architecture-2025",
+      "destination": "/localreports/disinformation-architecture-2025.html"
     },
     {
       "source": "/dominion-voting-claims-2020",
