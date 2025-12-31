@@ -8,6 +8,8 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.min.css">
+    <script src="js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="css/shared-components.css?v=1735600000">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -45,70 +47,22 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
-           HEADER
+           FLOATING LEGEND (page-specific for viz)
            ═══════════════════════════════════════════════════════════════ */
-        .header {
+        .floating-legend {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 56px;
-            background: rgba(2, 4, 8, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            z-index: 100;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .back-btn {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-        }
-
-        .back-btn:hover {
-            background: rgba(255,255,255,0.08);
-            color: var(--text-primary);
-        }
-
-        .logo {
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .logo span:first-child { color: #fff; }
-        .logo span:last-child { color: var(--accent-blue); }
-
-        .header-title {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            padding-left: 20px;
-            border-left: 1px solid var(--border-color);
-        }
-
-        .legend {
+            top: 70px;
+            right: 20px;
             display: flex;
             gap: 14px;
             font-size: 0.7rem;
+            background: rgba(2, 4, 8, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            z-index: 50;
         }
 
         .legend-item {
@@ -777,40 +731,32 @@
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-left">
-            <a href="index.html" class="back-btn">
-                <span>←</span>
-                <span>Home</span>
-            </a>
-            <div class="logo">
-                <span>Genu</span><span>Verity</span>
-            </div>
-            <div class="header-title">Disinformation Flow Explorer</div>
+    <!-- Shared Navbar -->
+    <div id="navbar-placeholder" data-page-type="labs"></div>
+
+    <!-- Floating Legend (page-specific) -->
+    <div class="floating-legend">
+        <div class="legend-item" onclick="filterByStage('origin')">
+            <div class="legend-dot" style="background: var(--accent-red); color: var(--accent-red);"></div>
+            <span>Origin</span>
         </div>
-        <div class="legend">
-            <div class="legend-item" onclick="filterByStage('origin')">
-                <div class="legend-dot" style="background: var(--accent-red); color: var(--accent-red);"></div>
-                <span>Origin</span>
-            </div>
-            <div class="legend-item" onclick="filterByStage('amplifier')">
-                <div class="legend-dot" style="background: var(--accent-orange); color: var(--accent-orange);"></div>
-                <span>Amplifier</span>
-            </div>
-            <div class="legend-item" onclick="filterByStage('mainstream')">
-                <div class="legend-dot" style="background: var(--accent-cyan); color: var(--accent-cyan);"></div>
-                <span>Mainstream</span>
-            </div>
-            <div class="legend-item" onclick="filterByStage('legitimized')">
-                <div class="legend-dot" style="background: var(--accent-blue); color: var(--accent-blue);"></div>
-                <span>Legitimized</span>
-            </div>
-            <div class="legend-item" onclick="filterByStage('policy')">
-                <div class="legend-dot" style="background: var(--accent-green); color: var(--accent-green);"></div>
-                <span>Policy</span>
-            </div>
+        <div class="legend-item" onclick="filterByStage('amplifier')">
+            <div class="legend-dot" style="background: var(--accent-orange); color: var(--accent-orange);"></div>
+            <span>Amplifier</span>
         </div>
-    </header>
+        <div class="legend-item" onclick="filterByStage('mainstream')">
+            <div class="legend-dot" style="background: var(--accent-cyan); color: var(--accent-cyan);"></div>
+            <span>Mainstream</span>
+        </div>
+        <div class="legend-item" onclick="filterByStage('legitimized')">
+            <div class="legend-dot" style="background: var(--accent-blue); color: var(--accent-blue);"></div>
+            <span>Legitimized</span>
+        </div>
+        <div class="legend-item" onclick="filterByStage('policy')">
+            <div class="legend-dot" style="background: var(--accent-green); color: var(--accent-green);"></div>
+            <span>Policy</span>
+        </div>
+    </div>
 
     <div class="viz-container">
         <div class="stage-columns">
@@ -1750,5 +1696,8 @@
         });
 
     </script>
+
+    <!-- Shared Footer -->
+    <div id="footer-placeholder"></div>
 </body>
 </html>
