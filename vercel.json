@@ -38,6 +38,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/american-disinformation-timeline.html",
+      "destination": "/american-disinformation-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/american-disinformation-timeline.html",
+      "destination": "/american-disinformation-timeline",
+      "permanent": true
+    },
+    {
       "source": "/localreports/american-political-disinfo.html",
       "destination": "/american-political-disinfo",
       "permanent": true
@@ -783,6 +793,10 @@
     {
       "source": "/ai-slop-fake-local-news",
       "destination": "/localreports/ai-slop-fake-local-news.html"
+    },
+    {
+      "source": "/american-disinformation-timeline",
+      "destination": "/localreports/american-disinformation-timeline.html"
     },
     {
       "source": "/american-political-disinfo",

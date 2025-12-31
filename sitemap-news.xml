@@ -2,6 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://www.genuverity.com/american-disinformation-timeline</loc>
+    <news:news>
+      <news:publication>
+        <news:name>GenuVerity</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2025-12-30</news:publication_date>
+      <news:title>The Architecture of Perception: A History of American Media Disinformation</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://www.genuverity.com/disinformation-architecture-2025</loc>
     <news:news>
       <news:publication>
@@ -318,17 +329,6 @@
       </news:publication>
       <news:publication_date>2025-12-22</news:publication_date>
       <news:title>The 2025 Farm Crisis: Did Treasury Prioritize Argentina Over US Farmers?</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://www.genuverity.com/german-christmas-market-disinfo</loc>
-    <news:news>
-      <news:publication>
-        <news:name>GenuVerity</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-12-22</news:publication_date>
-      <news:title>German Christmas Markets: Flood of Far-Right Fake News</news:title>
     </news:news>
   </url>
 </urlset>

@@ -3,6 +3,25 @@
 
 const REPORTS_DATA = [
     {
+        id: 66,
+        title: "The Architecture of Perception: A History of American Media Disinformation",
+        slug: "american-disinformation-timeline",
+        category: "Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-analysis",
+        icon: "history",
+        date: "Dec 30, 2025",
+        sources: "77 Sources",
+        readTime: "45 min",
+        verdict: "context",
+        excerpt: "From Yellow Journalism to AI deepfakes: 130 years of manufactured reality. Tracing the evolution from the Creel Committee to Operation Mockingbird, the Fairness Doctrine to Section 230, and the rise of the 'Censorship Industrial Complex.'",
+        chart: {
+            type: "timeline",
+            color: "#f59e0b",
+            data: [10, 25, 40, 55, 70, 85]
+        }
+    },
+    {
         id: 65,
         title: "The Architecture of Deception: Global Disinformation Landscape 2024-2025",
         slug: "disinformation-architecture-2025",
