@@ -65,9 +65,14 @@ function generateBarChart(baseColor, rawData) {
 function generateLineChart(color, data) {
     let points;
     if (data && Array.isArray(data)) {
+        // Normalize data to fit within viewBox (15-85 range for Y)
+        const minVal = Math.min(...data);
+        const maxVal = Math.max(...data);
+        const range = maxVal - minVal || 1;
+
         points = data.map((val, i) => ({
             x: i * (180 / (data.length - 1)),
-            y: val
+            y: 15 + ((val - minVal) / range) * 70  // Normalize to 15-85 range
         }));
     } else {
         points = Array.from({ length: 8 }, (_, i) => ({
