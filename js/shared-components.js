@@ -216,17 +216,17 @@ function injectSharedComponents() {
         // Navigation links for ALL pages
         if (navRight) {
             navRight.innerHTML = `
-                <a href="/reports.html" class="navbar-link" style="color:var(--text-secondary); text-decoration:none; padding:8px 16px; border-radius:8px; font-size:0.875rem; display:flex; align-items:center; gap:6px; transition:all 0.2s;">
-                    <i data-lucide="file-text" style="width:16px;"></i>
+                <a href="/reports.html" class="navbar-link" style="color:var(--text-secondary); text-decoration:none; padding:6px 12px; border-radius:8px; font-size:0.8rem; display:flex; align-items:center; gap:5px; transition:all 0.2s;">
+                    <i data-lucide="file-text" style="width:14px;"></i>
                     Reports
                 </a>
-                <a href="/labs.html" class="navbar-link" style="color:var(--text-secondary); text-decoration:none; padding:8px 16px; border-radius:8px; font-size:0.875rem; display:flex; align-items:center; gap:6px; transition:all 0.2s;">
-                    <i data-lucide="flask-conical" style="width:16px;"></i>
+                <a href="/labs.html" class="navbar-link" style="color:var(--text-secondary); text-decoration:none; padding:6px 12px; border-radius:8px; font-size:0.8rem; display:flex; align-items:center; gap:5px; transition:all 0.2s;">
+                    <i data-lucide="flask-conical" style="width:14px;"></i>
                     Labs
                 </a>
-                <a href="#" class="btn-premium-glass pulsing-cta">
+                <a href="#" class="btn-premium-glass pulsing-cta" style="margin-left:8px;">
                     <i data-lucide="zap" style="width:16px;"></i>
-                    Get Early Access
+                    Early Access
                 </a>
             `;
         }

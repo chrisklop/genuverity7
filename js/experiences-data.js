@@ -22,27 +22,6 @@ const EXPERIENCES_DATA = [
             nodeCount: 18
         },
         status: "live"
-    },
-    {
-        id: 1,
-        title: "The Protocols: Anatomy of a Fabrication",
-        subtitle: "History's Most Destructive Forgery",
-        slug: "localreports/protocols-elders-zion.html",
-        category: "Deep Dive Report",
-        tagClass: "tag-red",
-        catClass: "cat-report",
-        icon: "book-x",
-        date: "Dec 2025",
-        events: "8 Key Moments",
-        duration: "35 min read",
-        excerpt: "From Tsarist Russia to TikTok—trace how a plagiarized 1903 forgery became infrastructure for genocide and continues to fuel antisemitism today.",
-        features: ["Timeline Charts", "Plagiarism Evidence", "Modern Spread Analysis"],
-        preview: {
-            type: "timeline",
-            color: "#ef4444",
-            data: [5, 15, 35, 65, 80, 95, 85, 75]
-        },
-        status: "live"
     }
 ];
 
