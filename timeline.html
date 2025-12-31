@@ -3185,6 +3185,7 @@
                     .linkDirectionalParticleColor(link => link.color)
                     // Interaction
                     .onNodeClick((node, event) => {
+                        playNodeClick(); // Sound effect
                         // Focus on node
                         const distance = 120;
                         const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
@@ -3215,6 +3216,7 @@
                                         <span class="connection-label">${connEvent.title} (${connEvent.year})</span>
                                     `;
                                     item.onclick = () => {
+                                        playConnectionSound(); // Sound effect
                                         const targetNode = nodes.find(n => n.id === connId);
                                         if (targetNode) {
                                             Graph.cameraPosition(
@@ -3236,6 +3238,7 @@
                     })
                     .onNodeHover(node => {
                         container.style.cursor = node ? 'pointer' : 'grab';
+                        if (node) playNodeHover(); // Sound effect
                     })
                     // Camera controls
                     .enableNodeDrag(true)
@@ -3452,207 +3455,232 @@
         }
 
         // ═══════════════════════════════════════════════════════════════
-        // SOUND SYSTEM - Web Audio API Ambient Generator
+        // SOUND SYSTEM - Musical Ambient Pads + Interaction Sounds
         // ═══════════════════════════════════════════════════════════════
         let soundEnabled = false;
         let audioContext = null;
         let masterGain = null;
+        let ambientGain = null;
+        let fxGain = null;
         let ambientNodes = [];
         let currentEraSound = null;
 
-        // Era-specific sound profiles (with aliases for different ID formats)
+        // Musical chord frequencies - actual notes, not low hums
+        // Using minor/diminished chords for atmosphere
         const ERA_SOUNDS = {
-            // Yellow Press Era (1890s-1910s) - warm, crackling newspaper feel
-            'yellow-journalism': { baseFreq: 55, color: 'warm', noise: 0.15, detune: -10 },
-            'Yellow Press': { baseFreq: 55, color: 'warm', noise: 0.15, detune: -10 },
-
-            // WWI Propaganda (1914-1920) - darker, more ominous
-            'wwi-propaganda': { baseFreq: 65, color: 'dark', noise: 0.2, detune: -5 },
-            'WWI Propaganda': { baseFreq: 65, color: 'dark', noise: 0.2, detune: -5 },
-
-            // Cold War (1947-1991) - tense, low rumble
-            'cold-war': { baseFreq: 45, color: 'cold', noise: 0.25, detune: -15 },
-            'Cold War': { baseFreq: 45, color: 'cold', noise: 0.25, detune: -15 },
-
-            // Deregulation/Cable Era (1980s-2000s) - transitional
-            'deregulation': { baseFreq: 73, color: 'digital', noise: 0.18, detune: 5 },
-            'Deregulation': { baseFreq: 73, color: 'digital', noise: 0.18, detune: 5 },
-
-            // Digital Age/Social Media (2000s-2020) - brighter, busier
-            'digital-age': { baseFreq: 98, color: 'digital', noise: 0.12, detune: 10 },
-            'Digital Age': { baseFreq: 98, color: 'digital', noise: 0.12, detune: 10 },
-
-            // Censorship Complex (2016-2023) - layered
-            'censorship-complex': { baseFreq: 82, color: 'digital', noise: 0.15, detune: 8 },
-            'Censorship Era': { baseFreq: 82, color: 'digital', noise: 0.15, detune: 8 },
-
-            // AI/Synthetic Era (2023+) - high, ethereal
-            'synthetic-future': { baseFreq: 110, color: 'synthetic', noise: 0.08, detune: 15 },
-            'AI Era': { baseFreq: 110, color: 'synthetic', noise: 0.08, detune: 15 }
+            'yellow-journalism': { notes: [196, 233, 294], filterFreq: 1200 }, // G minor
+            'Yellow Press': { notes: [196, 233, 294], filterFreq: 1200 },
+            'wwi-propaganda': { notes: [175, 208, 262], filterFreq: 900 }, // F minor
+            'WWI Propaganda': { notes: [175, 208, 262], filterFreq: 900 },
+            'cold-war': { notes: [147, 175, 220], filterFreq: 700 }, // D minor
+            'Cold War': { notes: [147, 175, 220], filterFreq: 700 },
+            'deregulation': { notes: [220, 262, 330], filterFreq: 1400 }, // A minor
+            'Deregulation': { notes: [220, 262, 330], filterFreq: 1400 },
+            'digital-age': { notes: [247, 294, 370], filterFreq: 1800 }, // B minor
+            'Digital Age': { notes: [247, 294, 370], filterFreq: 1800 },
+            'censorship-complex': { notes: [208, 247, 311], filterFreq: 1100 }, // Ab minor
+            'Censorship Era': { notes: [208, 247, 311], filterFreq: 1100 },
+            'synthetic-future': { notes: [330, 392, 494], filterFreq: 2200 }, // E minor high
+            'AI Era': { notes: [330, 392, 494], filterFreq: 2200 }
         };
 
         function initAudioContext() {
             if (audioContext) return;
-
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
             masterGain = audioContext.createGain();
-            masterGain.gain.value = 0;
+            masterGain.gain.value = 0.4;
             masterGain.connect(audioContext.destination);
+
+            ambientGain = audioContext.createGain();
+            ambientGain.gain.value = 0;
+            ambientGain.connect(masterGain);
+
+            fxGain = audioContext.createGain();
+            fxGain.gain.value = 0.5;
+            fxGain.connect(masterGain);
         }
 
-        function createAmbientLayer(freq, type = 'sine', gainVal = 0.1) {
-            const osc = audioContext.createOscillator();
+        function createPadVoice(freq, detuneCents = 0) {
+            const osc1 = audioContext.createOscillator();
+            const osc2 = audioContext.createOscillator();
             const gain = audioContext.createGain();
             const filter = audioContext.createBiquadFilter();
 
-            osc.type = type;
-            osc.frequency.value = freq;
+            osc1.type = 'sine';
+            osc1.frequency.value = freq;
+            osc1.detune.value = detuneCents - 8;
+
+            osc2.type = 'triangle';
+            osc2.frequency.value = freq;
+            osc2.detune.value = detuneCents + 8;
 
             filter.type = 'lowpass';
-            filter.frequency.value = 400;
-            filter.Q.value = 1;
+            filter.frequency.value = 1000;
+            filter.Q.value = 0.7;
 
-            gain.gain.value = gainVal;
+            gain.gain.value = 0.06;
 
-            osc.connect(filter);
+            osc1.connect(filter);
+            osc2.connect(filter);
             filter.connect(gain);
-            gain.connect(masterGain);
+            gain.connect(ambientGain);
 
-            osc.start();
+            osc1.start();
+            osc2.start();
 
-            return { osc, gain, filter };
-        }
-
-        function createNoiseLayer(amount = 0.1) {
-            const bufferSize = audioContext.sampleRate * 2;
-            const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
-            const data = buffer.getChannelData(0);
-
-            for (let i = 0; i < bufferSize; i++) {
-                data[i] = (Math.random() * 2 - 1) * 0.5;
-            }
-
-            const noise = audioContext.createBufferSource();
-            noise.buffer = buffer;
-            noise.loop = true;
-
-            const filter = audioContext.createBiquadFilter();
-            filter.type = 'lowpass';
-            filter.frequency.value = 200;
-
-            const gain = audioContext.createGain();
-            gain.gain.value = amount;
-
-            noise.connect(filter);
-            filter.connect(gain);
-            gain.connect(masterGain);
-
-            noise.start();
-
-            return { noise, gain, filter };
-        }
-
-        function createLFO(targetParam, rate = 0.1, depth = 5) {
-            const lfo = audioContext.createOscillator();
-            const lfoGain = audioContext.createGain();
-
-            lfo.type = 'sine';
-            lfo.frequency.value = rate;
-            lfoGain.gain.value = depth;
-
-            lfo.connect(lfoGain);
-            lfoGain.connect(targetParam);
-            lfo.start();
-
-            return { lfo, lfoGain };
+            return { osc1, osc2, gain, filter };
         }
 
         function startAmbient(eraId = 'cold-war') {
             if (!audioContext) initAudioContext();
             if (audioContext.state === 'suspended') audioContext.resume();
+            if (currentEraSound === eraId && ambientNodes.length > 0) return;
 
-            stopAmbient(false);
+            stopAmbientNodes();
 
             const profile = ERA_SOUNDS[eraId] || ERA_SOUNDS['cold-war'];
-            const baseFreq = profile.baseFreq;
 
-            // Create layered drones
-            const drone1 = createAmbientLayer(baseFreq, 'sine', 0.08);
-            const drone2 = createAmbientLayer(baseFreq * 1.5, 'sine', 0.04);
-            const drone3 = createAmbientLayer(baseFreq * 2, 'triangle', 0.02);
-            const sub = createAmbientLayer(baseFreq / 2, 'sine', 0.06);
+            // Create 3-note chord with subtle detuning
+            const voices = profile.notes.map((freq, i) => createPadVoice(freq, i * 5));
 
-            // Add subtle detuning for richness
-            drone1.osc.detune.value = profile.detune;
-            drone2.osc.detune.value = profile.detune + 3;
-            drone3.osc.detune.value = profile.detune - 2;
+            // Adjust filters for era character
+            voices.forEach(v => { v.filter.frequency.value = profile.filterFreq; });
 
-            // Add filtered noise layer
-            const noise = createNoiseLayer(profile.noise * 0.5);
+            // Slow filter modulation for movement
+            const lfo = audioContext.createOscillator();
+            const lfoGain = audioContext.createGain();
+            lfo.type = 'sine';
+            lfo.frequency.value = 0.04;
+            lfoGain.gain.value = profile.filterFreq * 0.15;
+            lfo.connect(lfoGain);
+            voices.forEach(v => lfoGain.connect(v.filter.frequency));
+            lfo.start();
 
-            // Color the sound based on era
-            if (profile.color === 'warm') {
-                drone1.filter.frequency.value = 600;
-                noise.filter.frequency.value = 300;
-            } else if (profile.color === 'cold') {
-                drone1.filter.frequency.value = 300;
-                noise.filter.frequency.value = 150;
-            } else if (profile.color === 'digital') {
-                drone1.filter.frequency.value = 800;
-                drone1.filter.Q.value = 2;
-                noise.filter.frequency.value = 400;
-            } else if (profile.color === 'synthetic') {
-                drone1.filter.frequency.value = 1000;
-                drone2.filter.frequency.value = 1200;
-                noise.filter.frequency.value = 500;
-            }
-
-            // Add slow modulation
-            const lfo1 = createLFO(drone1.osc.frequency, 0.05, 2);
-            const lfo2 = createLFO(drone1.filter.frequency, 0.08, 50);
-            const lfo3 = createLFO(noise.filter.frequency, 0.03, 30);
-
-            ambientNodes = [drone1, drone2, drone3, sub, noise, lfo1, lfo2, lfo3];
+            ambientNodes = [...voices, { lfo }];
             currentEraSound = eraId;
 
-            // Fade in
-            masterGain.gain.cancelScheduledValues(audioContext.currentTime);
-            masterGain.gain.setValueAtTime(masterGain.gain.value, audioContext.currentTime);
-            masterGain.gain.linearRampToValueAtTime(0.7, audioContext.currentTime + 2);
+            // Smooth fade in
+            ambientGain.gain.cancelScheduledValues(audioContext.currentTime);
+            ambientGain.gain.setValueAtTime(ambientGain.gain.value, audioContext.currentTime);
+            ambientGain.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 2.5);
+        }
 
-            console.log(`[Audio] Started ambient: ${eraId}`);
+        function stopAmbientNodes() {
+            ambientNodes.forEach(node => {
+                try {
+                    if (node.osc1) node.osc1.stop();
+                    if (node.osc2) node.osc2.stop();
+                    if (node.lfo) node.lfo.stop();
+                } catch(e) {}
+            });
+            ambientNodes = [];
         }
 
         function stopAmbient(fadeOut = true) {
-            if (!audioContext || ambientNodes.length === 0) return;
+            if (!audioContext) return;
+            const fadeTime = fadeOut ? 2 : 0.1;
 
-            const stopTime = fadeOut ? audioContext.currentTime + 1.5 : audioContext.currentTime + 0.1;
+            ambientGain.gain.cancelScheduledValues(audioContext.currentTime);
+            ambientGain.gain.setValueAtTime(ambientGain.gain.value, audioContext.currentTime);
+            ambientGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + fadeTime);
 
-            masterGain.gain.cancelScheduledValues(audioContext.currentTime);
-            masterGain.gain.setValueAtTime(masterGain.gain.value, audioContext.currentTime);
-            masterGain.gain.linearRampToValueAtTime(0, stopTime);
-
-            setTimeout(() => {
-                ambientNodes.forEach(node => {
-                    if (node.osc) node.osc.stop();
-                    if (node.noise) node.noise.stop();
-                    if (node.lfo) node.lfo.stop();
-                });
-                ambientNodes = [];
-            }, fadeOut ? 1600 : 150);
+            setTimeout(() => stopAmbientNodes(), fadeTime * 1000 + 100);
         }
 
         function transitionToEra(eraId) {
             if (!soundEnabled || !audioContext) return;
             if (currentEraSound === eraId) return;
 
-            // Crossfade to new era sound
-            const oldGain = masterGain.gain.value;
-            masterGain.gain.linearRampToValueAtTime(0.2, audioContext.currentTime + 0.8);
+            // Gentle crossfade - keep some volume
+            ambientGain.gain.cancelScheduledValues(audioContext.currentTime);
+            ambientGain.gain.setValueAtTime(ambientGain.gain.value, audioContext.currentTime);
+            ambientGain.gain.linearRampToValueAtTime(0.2, audioContext.currentTime + 0.8);
 
             setTimeout(() => {
+                stopAmbientNodes();
                 startAmbient(eraId);
-            }, 800);
+            }, 850);
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // INTERACTION SOUNDS - Network graph hover/click
+        // ═══════════════════════════════════════════════════════════════
+        function playNodeHover() {
+            if (!soundEnabled || !audioContext) return;
+            if (audioContext.state === 'suspended') audioContext.resume();
+
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.value = 500 + Math.random() * 300;
+
+            gain.gain.setValueAtTime(0, audioContext.currentTime);
+            gain.gain.linearRampToValueAtTime(0.06, audioContext.currentTime + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.2);
+
+            osc.connect(gain);
+            gain.connect(fxGain);
+            osc.start();
+            osc.stop(audioContext.currentTime + 0.25);
+        }
+
+        function playNodeClick() {
+            if (!soundEnabled || !audioContext) return;
+            if (audioContext.state === 'suspended') audioContext.resume();
+
+            // Harmonic click with multiple tones
+            [440, 550, 660].forEach((freq, i) => {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+
+                osc.type = i === 0 ? 'sine' : 'triangle';
+                osc.frequency.value = freq;
+
+                gain.gain.setValueAtTime(0, audioContext.currentTime);
+                gain.gain.linearRampToValueAtTime(0.1 - i * 0.025, audioContext.currentTime + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.35);
+
+                osc.connect(gain);
+                gain.connect(fxGain);
+                osc.start();
+                osc.stop(audioContext.currentTime + 0.4);
+            });
+        }
+
+        function playConnectionSound() {
+            if (!soundEnabled || !audioContext) return;
+            if (audioContext.state === 'suspended') audioContext.resume();
+
+            // Soft whoosh for connections
+            const bufferSize = audioContext.sampleRate * 0.2;
+            const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = (Math.random() * 2 - 1) * 0.2;
+            }
+
+            const noise = audioContext.createBufferSource();
+            noise.buffer = buffer;
+
+            const filter = audioContext.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.value = 800;
+            filter.Q.value = 1.5;
+
+            const gain = audioContext.createGain();
+            gain.gain.setValueAtTime(0, audioContext.currentTime);
+            gain.gain.linearRampToValueAtTime(0.04, audioContext.currentTime + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.18);
+
+            filter.frequency.setValueAtTime(600, audioContext.currentTime);
+            filter.frequency.linearRampToValueAtTime(1500, audioContext.currentTime + 0.15);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(fxGain);
+            noise.start();
         }
 
         function initSoundToggle() {
@@ -3665,9 +3693,7 @@
 
                 if (soundEnabled) {
                     icon.setAttribute('data-lucide', 'volume-2');
-                    // Start with current era or default
-                    const currentEra = getCurrentEraId();
-                    startAmbient(currentEra);
+                    startAmbient(getCurrentEraId());
                 } else {
                     icon.setAttribute('data-lucide', 'volume-x');
                     stopAmbient(true);
@@ -3677,12 +3703,8 @@
         }
 
         function getCurrentEraId() {
-            // Try to detect current era from active section or default
             const activeEra = document.querySelector('.era-section.active');
-            if (activeEra && activeEra.dataset.era) {
-                return activeEra.dataset.era;
-            }
-            return 'cold-war'; // Default
+            return (activeEra && activeEra.dataset.era) ? activeEra.dataset.era : 'cold-war';
         }
 
         // ═══════════════════════════════════════════════════════════════
