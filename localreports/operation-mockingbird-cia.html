@@ -142,6 +142,13 @@
                     <p>The CIA refused to provide names of all media assets, leading the Committee to conclude there were "many more" beyond the confirmed 50+.</p>
                 </section>
 
+                <div class="chart-wrapper copyable-section" style="margin: 2rem 0;">
+                    <h3 style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 1rem;"><i data-lucide="bar-chart-2" style="width:16px; display:inline-block; vertical-align:middle;"></i> Scale of CIA Media Operations</h3>
+                    <div style="height: 280px; position: relative;">
+                        <canvas id="scaleChart"></canvas>
+                    </div>
+                </div>
+
                 <section class="copyable-section">
                     <h2>Project Mockingbird: The Wiretapping Program</h2>
                     <p>Declassified documents reveal a specific operation called <strong>Project Mockingbird</strong> (distinct from the broader media program). In 1963, the CIA wiretapped two syndicated columnists&mdash;<strong>Robert Allen</strong> and <strong>Paul Scott</strong>&mdash;from March through June, authorized by CIA Director John McCone with Attorney General Robert Kennedy's approval. <a href="#source-7" class="citation-link" onclick="highlightSource(event, 'source-7')">[7]</a></p>
@@ -168,6 +175,13 @@
                     <p>What remains undisputed: the Church Committee confirmed that CIA cultivated relationships with hundreds of journalists, and these relationships compromised the independence of major American media institutions during the Cold War.</p>
                 </section>
 
+                <div class="chart-wrapper copyable-section" style="margin: 2rem 0;">
+                    <h3 style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 1rem;"><i data-lucide="pie-chart" style="width:16px; display:inline-block; vertical-align:middle;"></i> Media Outlets with CIA Ties</h3>
+                    <div style="height: 260px; position: relative;">
+                        <canvas id="outletsChart"></canvas>
+                    </div>
+                </div>
+
                 <div class="info-box green copyable-section">
                     <div class="info-title"><i data-lucide="check-circle"></i>Key Takeaways</div>
                     <ul style="margin: 0; padding-left: 20px;">
@@ -186,7 +200,61 @@
     <div id="footer-placeholder"></div>
 
     <script>
-        window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
+        window.addEventListener('gv:componentsReady', () => {
+            lucide.createIcons();
+            initCharts();
+        });
+
+        function initCharts() {
+            // Scale of CIA Media Operations
+            const scaleCtx = document.getElementById('scaleChart');
+            if (scaleCtx) {
+                new Chart(scaleCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Journalists\n(Bernstein est.)', 'Confirmed by\nChurch Committee', 'Books\nProduced', 'Propaganda\nEmployees'],
+                        datasets: [{
+                            label: 'Count',
+                            data: [400, 50, 1000, 3000],
+                            backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#10b981'],
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, title: { display: true, text: 'Number', color: '#94a3b8' }, ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                            x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { display: false } }
+                        }
+                    }
+                });
+            }
+
+            // Media Outlets Doughnut
+            const outletsCtx = document.getElementById('outletsChart');
+            if (outletsCtx) {
+                new Chart(outletsCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['NYT', 'CBS', 'Time/Life', 'WaPo', 'Newsweek', 'Wire Services'],
+                        datasets: [{
+                            data: [20, 18, 22, 15, 12, 13],
+                            backgroundColor: ['#ef4444', '#3b82f6', '#f59e0b', '#10b981', '#06b6d4', '#64748b']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'right', labels: { color: '#94a3b8', padding: 12, font: { size: 11 } } }
+                        }
+                    }
+                });
+            }
+        }
+
         function highlightSource(event, id) { event.preventDefault(); const element = document.getElementById(id); if (element) { element.scrollIntoView({ behavior: 'smooth', block: 'center' }); element.classList.remove('highlight'); void element.offsetWidth; element.classList.add('highlight'); } }
         function shareToTwitter() { window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank'); }
         function shareToFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank'); }

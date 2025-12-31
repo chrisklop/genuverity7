@@ -225,7 +225,7 @@ function injectSharedComponents() {
                     <i data-lucide="flask-conical" style="width:14px;height:14px;"></i>
                     Labs
                 </a>
-                <a href="#" class="btn-premium-glass pulsing-cta" style="margin-left:6px; white-space:nowrap; flex-shrink:0;">
+                <a href="/#notify" class="btn-premium-glass pulsing-cta" style="margin-left:6px; white-space:nowrap; flex-shrink:0;" onclick="if(window.location.pathname==='/' || window.location.pathname==='/index.html'){event.preventDefault();document.getElementById('notify')?.scrollIntoView({behavior:'smooth'});}">
                     <i data-lucide="zap" style="width:14px;height:14px;"></i>
                     Early Access
                 </a>
@@ -236,7 +236,7 @@ function injectSharedComponents() {
             mobileLinks.innerHTML = `
                 <a href="/newsfeed.html"><i data-lucide="newspaper" style="width:20px;"></i> News Feed</a>
                 <a href="/labs.html"><i data-lucide="flask-conical" style="width:20px;"></i> Labs</a>
-                <a href="#"><i data-lucide="bell" style="width:20px;"></i> Get Early Access</a>
+                <a href="/#notify" onclick="toggleMobileMenu();if(window.location.pathname==='/' || window.location.pathname==='/index.html'){event.preventDefault();document.getElementById('notify')?.scrollIntoView({behavior:'smooth'});}"><i data-lucide="bell" style="width:20px;"></i> Get Early Access</a>
             `;
         }
 
