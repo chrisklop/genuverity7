@@ -829,10 +829,6 @@
       "destination": "/robots.txt"
     },
     {
-      "source": "/api/:path*",
-      "destination": "/api/index.py"
-    },
-    {
       "source": "/ai-deepfakes-2025",
       "destination": "/localreports/ai-deepfakes-2025.html"
     },
