@@ -21,9 +21,10 @@
     -webkit-backdrop-filter: blur(var(--navbar-bg-blur)) !important;
     border-bottom: 1px solid transparent;
     display: grid;
-    grid-template-columns: 240px minmax(300px, 1fr) 240px;
+    grid-template-columns: 60px minmax(200px, 1fr) auto;
     align-items: center;
     padding: 0 40px;
+    gap: 24px;
     z-index: 1000;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -376,7 +377,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 24px;
+    gap: 8px;
 }
 
 .nav-link {
@@ -492,8 +493,13 @@
 /* Responsive */
 @media (max-width: 1024px) {
     .navbar {
-        grid-template-columns: auto 1fr auto;
-        padding: 0 24px;
+        grid-template-columns: 50px 1fr auto;
+        padding: 0 20px;
+        gap: 16px;
+    }
+
+    .navbar-right {
+        gap: 4px;
     }
 }
 
