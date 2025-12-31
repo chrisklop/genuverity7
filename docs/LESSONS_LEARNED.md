@@ -251,4 +251,37 @@ Share buttons go **inside** `.sources-sidebar`, **above** the Sources First head
 
 ---
 
+## Chart/Infographic Requirements (December 2025)
+
+### Minimum Charts Per Report
+| Report Length | Minimum Charts |
+|---------------|----------------|
+| 10-20 min read | 1-2 |
+| 20-35 min read | 2-4 |
+| 35+ min read | 4-6 |
+
+### When to Add Charts
+**Always visualize:**
+- Numerical comparisons (use horizontal bar)
+- Trends over time (use line chart)
+- Proportions/percentages (use doughnut)
+- Timelines/milestones (use bar chart)
+- Scale/magnitude differences (use log-scale horizontal bar)
+
+### Chart Placement
+- Place near the data being visualized, not all at the end
+- Use `float-figure` class for text wrap
+- Use `style="clear: both;"` for full-width charts
+- Every chart needs a `<figcaption>`
+
+### Example Chart Types Used
+| Data | Chart Type | Example Report |
+|------|-----------|----------------|
+| 126M vs 87M reach | Horizontal bar | american-disinformation-timeline |
+| Trust 1972-2024 | Line chart | american-disinformation-timeline |
+| Three eras | Doughnut | american-disinformation-timeline |
+| Legislative timeline | Bar chart | american-disinformation-timeline |
+
+---
+
 *Last updated: December 30, 2025*

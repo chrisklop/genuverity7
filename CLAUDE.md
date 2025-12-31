@@ -386,6 +386,36 @@ Single-page app with three views:
 | **Process diagrams** | Mermaid/D3.js | Vector scalable |
 | **Network graphs** | D3.js | Interactive, data-driven |
 
+### MANDATORY: Data Visualization Requirements
+
+**Every report MUST include charts/infographics when the content contains:**
+
+| Content Type | Required Visualization | Example |
+|--------------|----------------------|---------|
+| **Numerical comparisons** | Horizontal bar chart | "126M IRA reach vs 87M Cambridge Analytica" |
+| **Trends over time** | Line chart | "Trust in media 1972-2024" |
+| **Proportions/percentages** | Doughnut chart | "Three eras of disinformation" |
+| **Timelines/milestones** | Bar chart or timeline | "Key legislative dates 1948-2024" |
+| **Scale/magnitude** | Horizontal bar (log scale) | "75,000 Four Minute Men vs 400 journalists" |
+| **Categorical breakdowns** | Stacked bar or grouped bar | "Platform-specific disinformation reach" |
+
+**Minimum chart requirements per report length:**
+- **Short reports (10-20 min read):** 1-2 charts
+- **Medium reports (20-35 min read):** 2-4 charts
+- **Long reports (35+ min read):** 4-6 charts
+
+**Chart placement guidelines:**
+- Place charts near the data they visualize (not all at the end)
+- Use `float-figure` class for magazine-style text wrap
+- Add `style="clear: both;"` for full-width charts after floated content
+- Every chart needs a descriptive `<figcaption>`
+
+**Before finalizing any report, ask yourself:**
+1. Does any section contain numbers that could be visualized?
+2. Are there comparisons that would be clearer as a chart?
+3. Is there a timeline or progression that could be graphed?
+4. Would a doughnut chart help summarize key proportions?
+
 ### Chart.js Setup (In-Page Charts)
 ```html
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
