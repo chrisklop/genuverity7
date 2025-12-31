@@ -3,6 +3,27 @@
 
 const REPORTS_DATA = [
     {
+        id: 67,
+        title: "The Protocols of the Elders of Zion: Anatomy of a Fabrication",
+        slug: "protocols-elders-zion",
+        category: "Historical Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "book-x",
+        date: "Dec 30, 2025",
+        sources: "15 Sources",
+        readTime: "35 min",
+        verdict: "false",
+        excerpt: "The most destructive antisemitic forgery in history. First exposed as plagiarism in 1921, yet still circulating today. From Tsarist Russia to Henry Ford to Hamas—how a fabricated text became infrastructure for genocide.",
+        chart: {
+            type: "timeline",
+            color: "#ef4444",
+            data: [5, 15, 35, 65, 80, 95, 85, 75]
+        },
+        registryId: "protocols-elders-zion",
+        relatedIds: ["american-political-disinfo", "qanon-network-analysis"]
+    },
+    {
         id: 66,
         title: "The Architecture of Perception: A History of American Media Disinformation",
         slug: "american-disinformation-timeline",

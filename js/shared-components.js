@@ -76,6 +76,7 @@ const SHARED_FOOTER_HTML = `
             <a href="/methodology.html" style="color:var(--text-muted); text-decoration:none; transition:color 0.2s;">Methodology</a>
             <a href="/limitations.html" style="color:var(--text-muted); text-decoration:none; transition:color 0.2s;">Limitations</a>
             <a href="/reports.html" style="color:var(--text-muted); text-decoration:none; transition:color 0.2s;">Reports</a>
+            <a href="/labs.html" style="color:var(--text-muted); text-decoration:none; transition:color 0.2s;">Labs</a>
         </div>
         <p style="margin-top:40px; color:var(--text-muted); font-size:0.8rem; font-family:var(--font-mono);">
             &copy; 2025 GenuVerity. All Verification Traced to Primary Sources.
@@ -212,9 +213,17 @@ function injectSharedComponents() {
         const navRight = navPlaceholder.querySelector('#shared-nav-right');
         const mobileLinks = navPlaceholder.querySelector('#mobileMenuLinks');
 
-        // Standard "Get Early Access" button for ALL pages
+        // Navigation links for ALL pages
         if (navRight) {
             navRight.innerHTML = `
+                <a href="/reports.html" class="navbar-link" style="color:var(--text-secondary); text-decoration:none; padding:8px 16px; border-radius:8px; font-size:0.875rem; display:flex; align-items:center; gap:6px; transition:all 0.2s;">
+                    <i data-lucide="file-text" style="width:16px;"></i>
+                    Reports
+                </a>
+                <a href="/labs.html" class="navbar-link" style="color:var(--text-secondary); text-decoration:none; padding:8px 16px; border-radius:8px; font-size:0.875rem; display:flex; align-items:center; gap:6px; transition:all 0.2s;">
+                    <i data-lucide="flask-conical" style="width:16px;"></i>
+                    Labs
+                </a>
                 <a href="#" class="btn-premium-glass pulsing-cta">
                     <i data-lucide="zap" style="width:16px;"></i>
                     Get Early Access
@@ -225,6 +234,7 @@ function injectSharedComponents() {
         if (mobileLinks) {
             mobileLinks.innerHTML = `
                 <a href="/reports.html"><i data-lucide="file-text" style="width:20px;"></i> Reports</a>
+                <a href="/labs.html"><i data-lucide="flask-conical" style="width:20px;"></i> Labs</a>
                 <a href="#"><i data-lucide="bell" style="width:20px;"></i> Get Early Access</a>
             `;
         }

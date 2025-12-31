@@ -1,0 +1,3704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Architecture of Perception | GenuVerity</title>
+    <meta name="description" content="An immersive journey through 130 years of American media disinformation, from Yellow Journalism to AI deepfakes.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Architecture of Perception | GenuVerity">
+    <meta property="og:description" content="An immersive journey through 130 years of manufactured reality.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://www.genuverity.com/images/thumbnails/american-disinformation-timeline.webp">
+
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/3d-force-graph@1.73.0/dist/3d-force-graph.min.js"></script>
+    <!-- Bloom post-processing for glow effects -->
+    <script src="https://unpkg.com/three@0.160.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://unpkg.com/three@0.160.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://unpkg.com/three@0.160.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://unpkg.com/three@0.160.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://unpkg.com/three@0.160.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="js/timeline-data.js"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           CSS VARIABLES
+           ═══════════════════════════════════════════════════════════════ */
+        :root {
+            --bg-void: #000000;
+            --bg-primary: #050A14;
+            --bg-secondary: #0a0f1a;
+            --bg-card: #111827;
+            --text-primary: #f0f0f0;
+            --text-secondary: #a1a1aa;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --glow-blue: rgba(59, 130, 246, 0.5);
+            --glow-red: rgba(239, 68, 68, 0.5);
+            --glow-amber: rgba(245, 158, 11, 0.5);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --font-display: 'Inter', -apple-system, sans-serif;
+            --font-body: 'Crimson Pro', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           RESET & BASE
+           ═══════════════════════════════════════════════════════════════ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-blue) var(--bg-primary);
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-void);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           LOADING SCREEN
+           ═══════════════════════════════════════════════════════════════ */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: var(--bg-void);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loading-logo {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .loading-logo .genu { color: white; }
+        .loading-logo .verity { color: var(--accent-blue); }
+
+        .loading-bar {
+            width: 200px;
+            height: 2px;
+            background: var(--bg-card);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .loading-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .loading-text {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 16px;
+            letter-spacing: 1px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SOUND TOGGLE
+           ═══════════════════════════════════════════════════════════════ */
+        .sound-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(17, 24, 39, 0.9);
+            border: 1px solid var(--border-subtle);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .sound-toggle:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+            transform: scale(1.1);
+        }
+
+        .sound-toggle.active {
+            color: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           TIMELINE NAVIGATION
+           ═══════════════════════════════════════════════════════════════ */
+        .timeline-nav {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .timeline-nav.visible {
+            opacity: 1;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 2px solid var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-dot:hover {
+            border-color: var(--accent-blue);
+            transform: scale(1.3);
+        }
+
+        .nav-dot.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 15px var(--glow-blue);
+        }
+
+        .nav-dot::before {
+            content: attr(data-era);
+            position: absolute;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+        }
+
+        .nav-dot:hover::before,
+        .nav-dot.active::before {
+            opacity: 1;
+            color: var(--text-primary);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           PROGRESS BAR
+           ═══════════════════════════════════════════════════════════════ */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan), var(--accent-amber), var(--accent-red));
+            width: 0%;
+            z-index: 1001;
+            transition: width 0.1s ease-out;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           HERO SECTION - 3D TUNNEL
+           ═══════════════════════════════════════════════════════════════ */
+        .hero-section {
+            height: 300vh;
+            position: relative;
+        }
+
+        .hero-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 10;
+            padding: 40px;
+        }
+
+        .hero-overline {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-title .accent {
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-amber));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-body);
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-scroll-hint {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-scroll-hint span {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .scroll-arrow {
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--text-muted);
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .scroll-arrow::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 10px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+            animation: scroll-bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes scroll-bounce {
+            0%, 100% { top: 8px; opacity: 1; }
+            50% { top: 20px; opacity: 0.3; }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           ERA SECTIONS
+           ═══════════════════════════════════════════════════════════════ */
+        .era-section {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 100px 60px;
+            overflow: hidden;
+        }
+
+        .era-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .era-bg-gradient {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .era-section.active .era-bg-gradient {
+            opacity: 1;
+        }
+
+        /* Era-specific gradients */
+        .era-section[data-era="yellow-journalism"] .era-bg-gradient {
+            background: radial-gradient(ellipse at 30% 50%, rgba(239, 68, 68, 0.15) 0%, transparent 60%);
+        }
+
+        .era-section[data-era="wwi-propaganda"] .era-bg-gradient {
+            background: radial-gradient(ellipse at 70% 50%, rgba(245, 158, 11, 0.15) 0%, transparent 60%);
+        }
+
+        .era-section[data-era="cold-war"] .era-bg-gradient {
+            background: radial-gradient(ellipse at 30% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 60%);
+        }
+
+        .era-section[data-era="deregulation"] .era-bg-gradient {
+            background: radial-gradient(ellipse at 70% 50%, rgba(245, 158, 11, 0.12) 0%, transparent 60%);
+        }
+
+        .era-section[data-era="digital-age"] .era-bg-gradient {
+            background: radial-gradient(ellipse at 30% 50%, rgba(239, 68, 68, 0.15) 0%, transparent 60%);
+        }
+
+        .era-section[data-era="censorship-complex"] .era-bg-gradient {
+            background: radial-gradient(ellipse at 70% 50%, rgba(245, 158, 11, 0.12) 0%, transparent 60%);
+        }
+
+        .era-section[data-era="synthetic-future"] .era-bg-gradient {
+            background: radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.15) 0%, transparent 60%);
+        }
+
+        .era-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .era-section:nth-child(even) .era-container {
+            direction: rtl;
+        }
+
+        .era-section:nth-child(even) .era-container > * {
+            direction: ltr;
+        }
+
+        .era-content {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .era-section:nth-child(even) .era-content {
+            transform: translateX(50px);
+        }
+
+        .era-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-bottom: 24px;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .era-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .era-years {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .era-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .era-summary {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .era-quote {
+            font-family: var(--font-body);
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            padding-left: 24px;
+            border-left: 3px solid var(--accent-amber);
+            margin-bottom: 40px;
+        }
+
+        .era-stats {
+            display: flex;
+            gap: 40px;
+        }
+
+        .era-stat {
+            text-align: left;
+        }
+
+        .era-stat-value {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .era-stat-label {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Era Visual Panel */
+        .era-visual {
+            position: relative;
+            height: 500px;
+            opacity: 0;
+            transform: translateX(50px) scale(0.95);
+        }
+
+        .era-section:nth-child(even) .era-visual {
+            transform: translateX(-50px) scale(0.95);
+        }
+
+        .visual-frame {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%);
+        }
+
+        /* Event Cards inside visual */
+        .event-cards {
+            padding: 30px;
+            width: 100%;
+        }
+
+        .event-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .event-card-year {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+
+        .event-card-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .event-card-summary {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .event-card.highlight {
+            border-color: var(--accent-red);
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           TRANSITION SECTIONS
+           ═══════════════════════════════════════════════════════════════ */
+        .transition-section {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .transition-content {
+            max-width: 700px;
+            padding: 40px;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .transition-line {
+            width: 60px;
+            height: 2px;
+            background: var(--accent-blue);
+            margin: 0 auto 30px;
+        }
+
+        .transition-text {
+            font-family: var(--font-display);
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            font-weight: 500;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .transition-text strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           NETWORK GRAPH SECTION
+           ═══════════════════════════════════════════════════════════════ */
+        .network-section {
+            min-height: 100vh;
+            padding: 100px 40px;
+            position: relative;
+            background: var(--bg-primary);
+        }
+
+        .network-header {
+            text-align: center;
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .network-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .network-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .network-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 600px;
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        #network-graph {
+            width: 100%;
+            height: 100%;
+        }
+
+        #3d-graph {
+            width: 100%;
+            height: 100%;
+        }
+
+        #3d-graph canvas {
+            outline: none;
+        }
+
+        .network-legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           CONCLUSION SECTION
+           ═══════════════════════════════════════════════════════════════ */
+        .conclusion-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 40px;
+            position: relative;
+            background: linear-gradient(to bottom, var(--bg-primary), var(--bg-void));
+        }
+
+        .conclusion-content {
+            max-width: 800px;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .conclusion-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .conclusion-text {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 50px;
+        }
+
+        .conclusion-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 16px 36px;
+            background: var(--accent-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .conclusion-cta:hover {
+            background: #2563eb;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════════════════════════ */
+        .timeline-footer {
+            padding: 60px 40px;
+            text-align: center;
+            background: var(--bg-void);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-brand {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand .genu { color: white; }
+        .footer-brand .verity { color: var(--accent-blue); }
+
+        .footer-tagline {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════════════════════════ */
+        @media (max-width: 1024px) {
+            .era-container {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .era-section:nth-child(even) .era-container {
+                direction: ltr;
+            }
+
+            .era-content {
+                transform: translateY(30px) !important;
+            }
+
+            .era-visual {
+                height: 400px;
+                transform: translateY(30px) scale(0.95) !important;
+            }
+
+            .timeline-nav {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .era-section {
+                padding: 80px 24px;
+            }
+
+            .era-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .era-visual {
+                height: 350px;
+            }
+
+            .sound-toggle {
+                bottom: 20px;
+                right: 20px;
+                width: 44px;
+                height: 44px;
+            }
+
+            .network-container {
+                height: 450px;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           PARTICLE NODES (Floating decoration)
+           ═══════════════════════════════════════════════════════════════ */
+        .floating-node {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            opacity: 0.4;
+            pointer-events: none;
+            animation: float-particle 8s ease-in-out infinite;
+        }
+
+        .floating-node:nth-child(2) { animation-delay: 1s; background: var(--accent-red); }
+        .floating-node:nth-child(3) { animation-delay: 2s; background: var(--accent-amber); }
+        .floating-node:nth-child(4) { animation-delay: 3s; background: var(--accent-cyan); }
+        .floating-node:nth-child(5) { animation-delay: 4s; }
+
+        @keyframes float-particle {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(20px, -30px); }
+            50% { transform: translate(-10px, -50px); }
+            75% { transform: translate(30px, -20px); }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           HOVER CONTEXT OVERLAY
+           ═══════════════════════════════════════════════════════════════ */
+        .context-overlay {
+            position: fixed;
+            z-index: 2000;
+            max-width: 420px;
+            background: rgba(17, 24, 39, 0.98);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+
+        .context-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .context-overlay-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .context-overlay-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .context-overlay-meta {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .context-overlay-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .context-overlay-close:hover {
+            color: var(--text-primary);
+        }
+
+        .context-overlay-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .context-overlay-badge.person { background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); }
+        .context-overlay-badge.agency { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+        .context-overlay-badge.organization { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); }
+        .context-overlay-badge.law { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+        .context-overlay-badge.legal-case { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+        .context-overlay-badge.concept { background: rgba(6, 182, 212, 0.2); color: var(--accent-cyan); }
+        .context-overlay-badge.event { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+
+        .context-overlay-summary {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .context-overlay-significance {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            padding: 12px 16px;
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid var(--accent-blue);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 16px;
+        }
+
+        .context-overlay-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            text-decoration: none;
+            padding: 10px 16px;
+            background: rgba(59, 130, 246, 0.15);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .context-overlay-cta:hover {
+            background: rgba(59, 130, 246, 0.25);
+            transform: translateX(4px);
+        }
+
+        .context-overlay-cta.coming-soon {
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            cursor: default;
+        }
+
+        .context-overlay-cta.coming-soon:hover {
+            transform: none;
+        }
+
+        /* Hoverable terms in text */
+        .hoverable-term {
+            color: var(--accent-cyan);
+            cursor: help;
+            border-bottom: 1px dotted var(--accent-cyan);
+            transition: all 0.2s ease;
+        }
+
+        .hoverable-term:hover {
+            color: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           NETWORK GRAPH ENHANCEMENTS
+           ═══════════════════════════════════════════════════════════════ */
+        .network-sidebar {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 320px;
+            height: 100%;
+            background: rgba(5, 10, 20, 0.95);
+            border-left: 1px solid var(--border-subtle);
+            padding: 24px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            z-index: 10;
+        }
+
+        .network-sidebar.visible {
+            transform: translateX(0);
+        }
+
+        .network-sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .network-sidebar-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .network-sidebar-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .network-sidebar-year {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            margin-bottom: 16px;
+        }
+
+        .network-sidebar-summary {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .network-sidebar-connections {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .network-sidebar-connections h4 {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .connection-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .connection-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .connection-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .connection-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Connection type colors for network lines */
+        .link-technique-transfer { stroke: var(--accent-cyan) !important; stroke-opacity: 0.7; }
+        .link-personnel { stroke: var(--accent-amber) !important; stroke-opacity: 0.7; }
+        .link-exposure { stroke: var(--accent-red) !important; stroke-opacity: 0.7; }
+        .link-reaction { stroke: var(--accent-green) !important; stroke-opacity: 0.7; }
+        .link-enablement { stroke: var(--accent-blue) !important; stroke-opacity: 0.7; }
+        .link-ecosystem { stroke: #888 !important; stroke-opacity: 0.5; }
+
+        /* Network node hover state */
+        .network-node {
+            transition: all 0.2s ease;
+        }
+
+        .network-node:hover {
+            filter: brightness(1.3);
+        }
+
+        .network-node.selected {
+            stroke: white !important;
+            stroke-width: 3px !important;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        /* Network tooltip */
+        .network-tooltip {
+            position: absolute;
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 12px 16px;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            max-width: 250px;
+        }
+
+        .network-tooltip.visible {
+            opacity: 1;
+            pointer-events: auto; /* Allow hovering over tooltip */
+        }
+
+        .network-tooltip-title {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .network-tooltip-year {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+        }
+
+        .network-tooltip-hint {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* Enhanced network legend */
+        .network-legend-enhanced {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(5, 10, 20, 0.9);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .network-legend-title {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .legend-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-line {
+            width: 20px;
+            height: 2px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           GLOW EFFECTS & VISUAL POLISH
+           ═══════════════════════════════════════════════════════════════ */
+
+        /* Network node glow - enhanced for visibility */
+        .network-node {
+            filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 4px currentColor);
+            transition: all 0.3s ease;
+            animation: node-ambient-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes node-ambient-glow {
+            0%, 100% { filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 3px currentColor); }
+            50% { filter: drop-shadow(0 0 12px currentColor) drop-shadow(0 0 6px currentColor); }
+        }
+
+        .network-node:hover {
+            filter: drop-shadow(0 0 20px currentColor) drop-shadow(0 0 10px currentColor) brightness(1.3);
+            transform: scale(1.15);
+            animation: none;
+        }
+
+        .network-node.selected {
+            filter: drop-shadow(0 0 25px currentColor) drop-shadow(0 0 50px currentColor) brightness(1.4);
+            animation: node-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes node-pulse {
+            0%, 100% { filter: drop-shadow(0 0 25px currentColor) drop-shadow(0 0 15px currentColor) brightness(1.4); }
+            50% { filter: drop-shadow(0 0 40px currentColor) drop-shadow(0 0 60px currentColor) brightness(1.6); }
+        }
+
+        /* Highlighted event nodes get stronger constant pulse */
+        .network-node.highlight-node {
+            animation: highlight-pulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes highlight-pulse {
+            0%, 100% { filter: drop-shadow(0 0 10px currentColor) drop-shadow(0 0 5px currentColor); }
+            50% { filter: drop-shadow(0 0 20px currentColor) drop-shadow(0 0 10px currentColor); }
+        }
+
+        /* SVG glow filter for lines */
+        #network-graph {
+            overflow: visible;
+        }
+
+        /* Network container glow border */
+        .network-container {
+            position: relative;
+        }
+
+        .network-container::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan), var(--accent-blue));
+            opacity: 0.3;
+            z-index: -1;
+            filter: blur(8px);
+            animation: container-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes container-glow {
+            0%, 100% { opacity: 0.2; filter: blur(8px); }
+            50% { opacity: 0.4; filter: blur(12px); }
+        }
+
+        /* Context overlay glow */
+        .context-overlay {
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.8),
+                0 0 30px rgba(59, 130, 246, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            animation: overlay-entrance 0.3s ease-out;
+        }
+
+        .context-overlay.visible {
+            animation: overlay-entrance 0.3s ease-out;
+        }
+
+        @keyframes overlay-entrance {
+            from {
+                opacity: 0;
+                transform: translateY(15px) scale(0.95);
+                filter: blur(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        .context-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan), var(--accent-blue));
+            border-radius: 16px 16px 0 0;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .context-overlay-badge {
+            animation: badge-pop 0.4s ease-out 0.2s both;
+        }
+
+        @keyframes badge-pop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Sidebar glow and entrance */
+        .network-sidebar {
+            box-shadow:
+                -20px 0 40px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(59, 130, 246, 0.1);
+        }
+
+        .network-sidebar.visible {
+            animation: sidebar-slide 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes sidebar-slide {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .network-sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-blue), var(--accent-cyan), transparent);
+            animation: sidebar-line-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes sidebar-line-glow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Connection items glow on hover */
+        .connection-item {
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .connection-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+            transform: translateX(4px);
+        }
+
+        .connection-item:hover .connection-dot {
+            box-shadow: 0 0 10px currentColor;
+            animation: dot-pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes dot-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        /* Event card electric border */
+        .event-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            padding: 2px;
+            background: linear-gradient(135deg, transparent 40%, var(--accent-cyan) 50%, transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .event-card:hover::before {
+            opacity: 1;
+            animation: border-travel 2s linear infinite;
+        }
+
+        @keyframes border-travel {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 200%; }
+        }
+
+        .event-card:hover {
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(6, 182, 212, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Era stat glow */
+        .era-stat-value {
+            text-shadow: 0 0 20px currentColor;
+            animation: stat-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes stat-glow {
+            0%, 100% { text-shadow: 0 0 10px currentColor; }
+            50% { text-shadow: 0 0 25px currentColor, 0 0 40px currentColor; }
+        }
+
+        /* Hoverable term enhanced style */
+        .hoverable-term {
+            position: relative;
+            text-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        .hoverable-term::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            animation: term-underline 2s ease-in-out infinite;
+        }
+
+        @keyframes term-underline {
+            0%, 100% { opacity: 0.5; transform: scaleX(0.8); }
+            50% { opacity: 1; transform: scaleX(1); }
+        }
+
+        .hoverable-term:hover {
+            text-shadow: 0 0 15px var(--accent-blue), 0 0 30px var(--accent-blue);
+        }
+
+        /* Network tooltip glow */
+        .network-tooltip {
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(6, 182, 212, 0.2);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .network-tooltip.visible {
+            animation: tooltip-pop 0.2s ease-out;
+        }
+
+        @keyframes tooltip-pop {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Transition section enhanced glow */
+        .transition-content {
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .transition-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: ambient-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes ambient-glow {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* Progress bar glow */
+        .progress-bar {
+            box-shadow: 0 0 10px var(--accent-cyan), 0 0 20px var(--accent-blue);
+        }
+
+        /* Timeline nav dots glow when active */
+        .timeline-dot.active {
+            box-shadow: 0 0 10px var(--accent-blue), 0 0 20px var(--accent-blue);
+        }
+
+        /* Sound toggle glow when active */
+        .sound-toggle.active {
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+            border-color: var(--accent-cyan);
+        }
+
+        /* Enhanced legend lines with glow */
+        .legend-line {
+            box-shadow: 0 0 5px currentColor;
+        }
+
+        .network-legend-enhanced {
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Conclusion section glow */
+        .conclusion-content h2 {
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .conclusion-cta {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .conclusion-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .conclusion-cta:hover::before {
+            left: 100%;
+        }
+
+        .conclusion-cta:hover {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           ENHANCED MOBILE RESPONSIVE
+           ═══════════════════════════════════════════════════════════════ */
+        @media (max-width: 768px) {
+            /* Context overlay - full width on mobile */
+            .context-overlay {
+                position: fixed;
+                bottom: 0;
+                left: 0 !important;
+                right: 0;
+                top: auto !important;
+                max-width: 100%;
+                width: 100%;
+                border-radius: 20px 20px 0 0;
+                max-height: 70vh;
+                overflow-y: auto;
+                transform: translateY(100%);
+            }
+
+            .context-overlay.visible {
+                transform: translateY(0);
+                animation: overlay-slide-up 0.3s ease-out;
+            }
+
+            @keyframes overlay-slide-up {
+                from { transform: translateY(100%); }
+                to { transform: translateY(0); }
+            }
+
+            /* Network sidebar - full width on mobile */
+            .network-sidebar {
+                width: 100%;
+                max-width: 100%;
+                border-radius: 20px 20px 0 0;
+                max-height: 60vh;
+                overflow-y: auto;
+            }
+
+            /* Network legend - compact on mobile */
+            .network-legend-enhanced {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: 100%;
+                padding: 12px;
+                font-size: 0.7rem;
+            }
+
+            .network-legend-enhanced .legend-row {
+                flex: 1 0 45%;
+            }
+
+            /* Smaller nodes on mobile network */
+            .network-node {
+                r: 8 !important;
+            }
+
+            /* Hero title scaling */
+            .hero h1 {
+                font-size: clamp(2rem, 8vw, 4rem);
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            /* Era section mobile tweaks */
+            .era-title {
+                font-size: clamp(1.8rem, 6vw, 3rem);
+            }
+
+            .event-card {
+                padding: 16px;
+            }
+
+            .event-card h3 {
+                font-size: 1rem;
+            }
+
+            /* Hoverable terms - tap-friendly */
+            .hoverable-term {
+                padding: 2px 4px;
+                border-radius: 4px;
+            }
+
+            /* Network graph instruction */
+            .network-header p {
+                font-size: 0.85rem;
+            }
+
+            /* Conclusion section */
+            .conclusion-title {
+                font-size: clamp(1.5rem, 5vw, 2.5rem);
+            }
+
+            /* Hide complex glow animations on mobile for performance */
+            .era-stat-value {
+                animation: none;
+            }
+
+            .hoverable-term::after {
+                display: none;
+            }
+
+            /* Simplify network glow on mobile */
+            .network-node {
+                filter: none;
+            }
+
+            .network-node:hover,
+            .network-node.selected {
+                filter: drop-shadow(0 0 8px currentColor);
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Extra small screens */
+            .era-section {
+                padding: 60px 16px;
+            }
+
+            .era-container {
+                gap: 30px;
+            }
+
+            .era-visual {
+                height: 280px;
+            }
+
+            .network-container {
+                height: 350px;
+            }
+
+            .context-overlay {
+                padding: 20px;
+            }
+
+            .context-overlay-title {
+                font-size: 1.1rem;
+            }
+
+            .network-sidebar {
+                max-height: 50vh;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            /* Remove hover-only effects on touch devices */
+            .event-card:hover::before {
+                opacity: 0;
+            }
+
+            .event-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+
+            /* Add active state for touch */
+            .event-card:active {
+                transform: scale(0.98);
+                background: rgba(255, 255, 255, 0.03);
+            }
+
+            .hoverable-term:active {
+                background: rgba(6, 182, 212, 0.2);
+            }
+
+            /* Network nodes - add tap target padding */
+            .network-node {
+                cursor: pointer;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">
+            <span class="genu">Genu</span><span class="verity">Verity</span>
+        </div>
+        <div class="loading-bar">
+            <div class="loading-bar-fill" id="loadingFill"></div>
+        </div>
+        <div class="loading-text">INITIALIZING TIMELINE</div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Sound Toggle -->
+    <button class="sound-toggle" id="soundToggle" title="Toggle ambient sound">
+        <i data-lucide="volume-x" id="soundIcon"></i>
+    </button>
+
+    <!-- Timeline Navigation -->
+    <nav class="timeline-nav" id="timelineNav">
+        <div class="nav-dot" data-era="Yellow Press" data-target="era-yellow"></div>
+        <div class="nav-dot" data-era="WWI Propaganda" data-target="era-wwi"></div>
+        <div class="nav-dot" data-era="Cold War" data-target="era-coldwar"></div>
+        <div class="nav-dot" data-era="Deregulation" data-target="era-dereg"></div>
+        <div class="nav-dot" data-era="Digital Age" data-target="era-digital"></div>
+        <div class="nav-dot" data-era="Censorship Era" data-target="era-censorship"></div>
+        <div class="nav-dot" data-era="AI Era" data-target="era-synthetic"></div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         HERO SECTION
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="hero-section" id="hero">
+        <div class="hero-sticky">
+            <canvas id="hero-canvas"></canvas>
+            <div class="hero-content">
+                <div class="hero-overline">A GenuVerity Investigation</div>
+                <h1 class="hero-title">
+                    The Architecture of<br><span class="accent">Perception</span>
+                </h1>
+                <p class="hero-subtitle">
+                    An immersive journey through 130 years of manufactured reality
+                </p>
+                <div class="hero-scroll-hint">
+                    <span>Scroll to enter</span>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         ERA 1: YELLOW JOURNALISM
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="era-section" id="era-yellow" data-era="yellow-journalism">
+        <div class="era-bg-gradient"></div>
+        <div class="floating-node" style="top: 10%; left: 5%;"></div>
+        <div class="floating-node" style="top: 70%; left: 15%;"></div>
+        <div class="floating-node" style="top: 30%; right: 10%;"></div>
+
+        <div class="era-container">
+            <div class="era-content">
+                <div class="era-badge" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: var(--accent-red);">
+                    <div class="dot" style="background: var(--accent-red);"></div>
+                    <span>Era I</span>
+                </div>
+                <div class="era-years" style="color: var(--accent-red);">1890s – 1910s</div>
+                <h2 class="era-title">Yellow Journalism</h2>
+                <p class="era-summary">
+                    The modern history of American disinformation begins not in the halls of government,
+                    but in the circulation wars of New York City. Private media barons discovered that
+                    sensationalism sells—and can start wars.
+                </p>
+                <blockquote class="era-quote">
+                    "You furnish the pictures, I'll furnish the war."
+                    <cite>— William Randolph Hearst (attributed)</cite>
+                </blockquote>
+                <div class="era-stats">
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-red);">266</div>
+                        <div class="era-stat-label">Lives Lost (USS Maine)</div>
+                    </div>
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-red);">2</div>
+                        <div class="era-stat-label">Media Barons</div>
+                    </div>
+                </div>
+            </div>
+            <div class="era-visual">
+                <div class="visual-frame">
+                    <div class="event-cards">
+                        <div class="event-card highlight">
+                            <div class="event-card-year" style="color: var(--accent-red);">1898</div>
+                            <div class="event-card-title">USS Maine: Media Manufactures a War</div>
+                            <div class="event-card-summary">
+                                The Journal blamed Spain without evidence. Diagrams falsely depicted a Spanish mine.
+                                Within weeks, America was at war.
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-card-year" style="color: var(--accent-red);">1895</div>
+                            <div class="event-card-title">The Circulation Wars</div>
+                            <div class="event-card-summary">
+                                Hearst and Pulitzer compete for readers through sensationalism,
+                                establishing the template for profit-driven news.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transition 1 -->
+    <section class="transition-section">
+        <div class="transition-content">
+            <div class="transition-line"></div>
+            <p class="transition-text">
+                The techniques of <strong>private propaganda</strong> caught the government's attention.
+                When America entered World War I, the state would learn to <strong>manufacture consent</strong>.
+            </p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         ERA 2: WWI PROPAGANDA
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="era-section" id="era-wwi" data-era="wwi-propaganda">
+        <div class="era-bg-gradient"></div>
+        <div class="floating-node" style="top: 20%; right: 8%;"></div>
+        <div class="floating-node" style="bottom: 25%; left: 12%;"></div>
+
+        <div class="era-container">
+            <div class="era-content">
+                <div class="era-badge" style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: var(--accent-amber);">
+                    <div class="dot" style="background: var(--accent-amber);"></div>
+                    <span>Era II</span>
+                </div>
+                <div class="era-years" style="color: var(--accent-amber);">1917 – 1920s</div>
+                <h2 class="era-title">The State Enters the Fray</h2>
+                <p class="era-summary">
+                    World War I nationalized propaganda. The Creel Committee deployed 75,000 volunteers
+                    to deliver pro-war speeches. Edward Bernays then privatized these techniques into "public relations."
+                </p>
+                <div class="era-stats">
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-amber);">75,000</div>
+                        <div class="era-stat-label">Four Minute Men</div>
+                    </div>
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-amber);">1929</div>
+                        <div class="era-stat-label">Torches of Freedom</div>
+                    </div>
+                </div>
+            </div>
+            <div class="era-visual">
+                <div class="visual-frame">
+                    <div class="event-cards">
+                        <div class="event-card highlight">
+                            <div class="event-card-year" style="color: var(--accent-amber);">1917</div>
+                            <div class="event-card-title">Committee on Public Information</div>
+                            <div class="event-card-summary">
+                                Wilson creates the CPI. "Four Minute Men" deliver pro-war speeches in movie theaters nationwide.
+                                First systematic US government propaganda.
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-card-year" style="color: var(--accent-amber);">1929</div>
+                            <div class="event-card-title">Torches of Freedom</div>
+                            <div class="event-card-summary">
+                                Bernays stages women smoking as "freedom"—inventing modern PR
+                                and psychological manipulation in advertising.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transition 2 -->
+    <section class="transition-section">
+        <div class="transition-content">
+            <div class="transition-line"></div>
+            <p class="transition-text">
+                Post-war backlash led Congress to build a <strong>firewall</strong>:
+                propaganda for them, objective news for us. But the CIA would operate in shadows.
+            </p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         ERA 3: COLD WAR
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="era-section" id="era-coldwar" data-era="cold-war">
+        <div class="era-bg-gradient"></div>
+        <div class="floating-node" style="top: 15%; left: 10%;"></div>
+        <div class="floating-node" style="bottom: 20%; right: 15%;"></div>
+
+        <div class="era-container">
+            <div class="era-content">
+                <div class="era-badge" style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: var(--accent-blue);">
+                    <div class="dot" style="background: var(--accent-blue);"></div>
+                    <span>Era III</span>
+                </div>
+                <div class="era-years" style="color: var(--accent-blue);">1948 – 1980s</div>
+                <h2 class="era-title">The Cold War Consensus</h2>
+                <p class="era-summary">
+                    The Smith-Mundt Act built a legal wall: government propaganda for foreign audiences only.
+                    Meanwhile, Operation Mockingbird recruited 400+ journalists to shape domestic narratives covertly.
+                </p>
+                <div class="era-stats">
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-blue);">400+</div>
+                        <div class="era-stat-label">Journalists Recruited</div>
+                    </div>
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-blue);">1975</div>
+                        <div class="era-stat-label">Church Committee</div>
+                    </div>
+                </div>
+            </div>
+            <div class="era-visual">
+                <div class="visual-frame">
+                    <div class="event-cards">
+                        <div class="event-card highlight">
+                            <div class="event-card-year" style="color: var(--accent-blue);">1950s</div>
+                            <div class="event-card-title">Operation Mockingbird</div>
+                            <div class="event-card-summary">
+                                CIA recruits journalists from NYT, Time, CBS as intelligence assets.
+                                The "free press" becomes a covert tool of the state.
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-card-year" style="color: var(--accent-blue);">1948</div>
+                            <div class="event-card-title">Smith-Mundt Act</div>
+                            <div class="event-card-summary">
+                                Congress bans domestic dissemination of US propaganda.
+                                Two realities: one for them, one for us.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transition 3 -->
+    <section class="transition-section">
+        <div class="transition-content">
+            <div class="transition-line"></div>
+            <p class="transition-text">
+                The Church Committee exposed everything. Trust collapsed.
+                Then Reagan <strong>repealed the Fairness Doctrine</strong>—and talk radio exploded.
+            </p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         ERA 4: DEREGULATION
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="era-section" id="era-dereg" data-era="deregulation">
+        <div class="era-bg-gradient"></div>
+        <div class="floating-node" style="top: 25%; right: 5%;"></div>
+        <div class="floating-node" style="bottom: 15%; left: 8%;"></div>
+
+        <div class="era-container">
+            <div class="era-content">
+                <div class="era-badge" style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: var(--accent-amber);">
+                    <div class="dot" style="background: var(--accent-amber);"></div>
+                    <span>Era IV</span>
+                </div>
+                <div class="era-years" style="color: var(--accent-amber);">1987 – 2000s</div>
+                <h2 class="era-title">The Corporate Pivot</h2>
+                <p class="era-summary">
+                    The guardrails came off. The Fairness Doctrine died, Rush Limbaugh went national,
+                    and Fox News created a hermetically sealed information ecosystem. "Doubt" became a product.
+                </p>
+                <blockquote class="era-quote">
+                    "Doubt is our product."
+                    <cite>— Tobacco Industry Internal Memo</cite>
+                </blockquote>
+                <div class="era-stats">
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-amber);">1987</div>
+                        <div class="era-stat-label">Fairness Doctrine Dies</div>
+                    </div>
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-amber);">1996</div>
+                        <div class="era-stat-label">Fox News + Section 230</div>
+                    </div>
+                </div>
+            </div>
+            <div class="era-visual">
+                <div class="visual-frame">
+                    <div class="event-cards">
+                        <div class="event-card highlight">
+                            <div class="event-card-year" style="color: var(--accent-amber);">1996</div>
+                            <div class="event-card-title">Fox News & Section 230</div>
+                            <div class="event-card-summary">
+                                Roger Ailes launches Fox News. Same year, Section 230 grants platforms immunity.
+                                Partisan cable + unaccountable platforms emerge together.
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-card-year" style="color: var(--accent-amber);">1990s</div>
+                            <div class="event-card-title">Merchants of Doubt</div>
+                            <div class="event-card-summary">
+                                Tobacco industry perfects the art of manufactured uncertainty.
+                                The playbook transfers seamlessly to climate denial.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transition 4 -->
+    <section class="transition-section">
+        <div class="transition-content">
+            <div class="transition-line"></div>
+            <p class="transition-text">
+                Then came the internet. Then came <strong>psychographic targeting</strong>.
+                Then came foreign actors weaponizing American platforms against Americans.
+            </p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         ERA 5: DIGITAL AGE
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="era-section" id="era-digital" data-era="digital-age">
+        <div class="era-bg-gradient"></div>
+        <div class="floating-node" style="top: 10%; left: 12%;"></div>
+        <div class="floating-node" style="bottom: 30%; right: 8%;"></div>
+
+        <div class="era-container">
+            <div class="era-content">
+                <div class="era-badge" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: var(--accent-red);">
+                    <div class="dot" style="background: var(--accent-red);"></div>
+                    <span>Era V</span>
+                </div>
+                <div class="era-years" style="color: var(--accent-red);">2012 – 2020</div>
+                <h2 class="era-title">Digital Disinformation</h2>
+                <p class="era-summary">
+                    The Smith-Mundt firewall fell in 2012. Cambridge Analytica harvested 87 million profiles.
+                    The Internet Research Agency reached 126 million Americans. Micro-targeting made lies invisible.
+                </p>
+                <div class="era-stats">
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-red);">87M</div>
+                        <div class="era-stat-label">Profiles Harvested</div>
+                    </div>
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-red);">126M</div>
+                        <div class="era-stat-label">Americans Reached</div>
+                    </div>
+                </div>
+            </div>
+            <div class="era-visual">
+                <div class="visual-frame">
+                    <div class="event-cards">
+                        <div class="event-card highlight">
+                            <div class="event-card-year" style="color: var(--accent-red);">2016</div>
+                            <div class="event-card-title">Cambridge Analytica</div>
+                            <div class="event-card-summary">
+                                87 million Facebook profiles harvested. Psychographic micro-targeting delivers
+                                personalized disinformation invisible to fact-checkers.
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-card-year" style="color: var(--accent-red);">2016</div>
+                            <div class="event-card-title">Internet Research Agency</div>
+                            <div class="event-card-summary">
+                                Russian troll farm reaches 126 million Americans on Facebook.
+                                Fake accounts organize real protests on both sides.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transition 5 -->
+    <section class="transition-section">
+        <div class="transition-content">
+            <div class="transition-line"></div>
+            <p class="transition-text">
+                In response, a vast infrastructure emerged to combat "misinformation."
+                Critics called it the <strong>"Censorship Industrial Complex."</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         ERA 6: CENSORSHIP COMPLEX
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="era-section" id="era-censorship" data-era="censorship-complex">
+        <div class="era-bg-gradient"></div>
+        <div class="floating-node" style="top: 20%; right: 10%;"></div>
+        <div class="floating-node" style="bottom: 25%; left: 5%;"></div>
+
+        <div class="era-container">
+            <div class="era-content">
+                <div class="era-badge" style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: var(--accent-amber);">
+                    <div class="dot" style="background: var(--accent-amber);"></div>
+                    <span>Era VI</span>
+                </div>
+                <div class="era-years" style="color: var(--accent-amber);">2020 – 2024</div>
+                <h2 class="era-title">The Censorship Complex</h2>
+                <p class="era-summary">
+                    CISA expanded to "cognitive infrastructure." The Twitter Files revealed government-platform coordination.
+                    The cure proposed by the state may be as dangerous as the disease.
+                </p>
+                <div class="era-stats">
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-amber);">2022</div>
+                        <div class="era-stat-label">Twitter Files Released</div>
+                    </div>
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-amber);">2024</div>
+                        <div class="era-stat-label">Murthy v. Missouri</div>
+                    </div>
+                </div>
+            </div>
+            <div class="era-visual">
+                <div class="visual-frame">
+                    <div class="event-cards">
+                        <div class="event-card highlight">
+                            <div class="event-card-year" style="color: var(--accent-amber);">2022</div>
+                            <div class="event-card-title">The Twitter Files</div>
+                            <div class="event-card-summary">
+                                Internal documents reveal FBI sending account lists to Twitter,
+                                regular meetings with government officials, coordinated suppression.
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-card-year" style="color: var(--accent-amber);">2020</div>
+                            <div class="event-card-title">CISA & "Cognitive Infrastructure"</div>
+                            <div class="event-card-summary">
+                                CISA expands from cybersecurity to "mis/dis/malinformation."
+                                The American mind becomes infrastructure requiring protection.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transition 6 -->
+    <section class="transition-section">
+        <div class="transition-content">
+            <div class="transition-line"></div>
+            <p class="transition-text">
+                Now AI collapses the cost of deception. Deepfakes create the <strong>"liar's dividend."</strong>
+                The line between real and synthetic may vanish permanently.
+            </p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         ERA 7: SYNTHETIC FUTURE
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="era-section" id="era-synthetic" data-era="synthetic-future">
+        <div class="era-bg-gradient"></div>
+        <div class="floating-node" style="top: 15%; left: 8%;"></div>
+        <div class="floating-node" style="bottom: 20%; right: 12%;"></div>
+        <div class="floating-node" style="top: 50%; left: 3%;"></div>
+
+        <div class="era-container">
+            <div class="era-content">
+                <div class="era-badge" style="background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); color: var(--accent-cyan);">
+                    <div class="dot" style="background: var(--accent-cyan);"></div>
+                    <span>Era VII</span>
+                </div>
+                <div class="era-years" style="color: var(--accent-cyan);">2024 – Future</div>
+                <h2 class="era-title">Synthetic Reality</h2>
+                <p class="era-summary">
+                    AI deepfakes hit New Hampshire. Politicians can dismiss any recording as "AI-generated."
+                    Evidentiary truth itself is under threat. One era ended with accountability: Infowars sold for $1.5B in damages.
+                </p>
+                <div class="era-stats">
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-cyan);">$1.5B</div>
+                        <div class="era-stat-label">Infowars Judgment</div>
+                    </div>
+                    <div class="era-stat">
+                        <div class="era-stat-value" style="color: var(--accent-cyan);">∞</div>
+                        <div class="era-stat-label">Deepfake Potential</div>
+                    </div>
+                </div>
+            </div>
+            <div class="era-visual">
+                <div class="visual-frame">
+                    <div class="event-cards">
+                        <div class="event-card highlight">
+                            <div class="event-card-year" style="color: var(--accent-cyan);">2024</div>
+                            <div class="event-card-title">AI Deepfakes & Liar's Dividend</div>
+                            <div class="event-card-summary">
+                                Biden robocall deepfake hits New Hampshire. Politicians can now dismiss
+                                real footage as "AI-generated." Evidence itself becomes uncertain.
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-card-year" style="color: var(--accent-cyan);">2024</div>
+                            <div class="event-card-title">The End of Infowars</div>
+                            <div class="event-card-summary">
+                                Alex Jones's empire auctioned after $1.5B Sandy Hook judgment.
+                                The Onion buys it. Rare legal accountability for disinformation.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         NETWORK GRAPH SECTION
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="network-section" id="network">
+        <div class="network-header">
+            <h2>The Web of Influence</h2>
+            <p>130 years of connected manipulation. <strong>Drag to rotate. Scroll to zoom. Click any node.</strong></p>
+        </div>
+        <div class="network-container">
+            <!-- 3D Force Graph Container -->
+            <div id="3d-graph"></div>
+
+            <!-- Enhanced Legend -->
+            <div class="network-legend-enhanced">
+                <div class="network-legend-title">Connection Types</div>
+                <div class="legend-row">
+                    <div class="legend-line" style="background: var(--accent-cyan);"></div>
+                    <span>Technique Transfer</span>
+                </div>
+                <div class="legend-row">
+                    <div class="legend-line" style="background: var(--accent-amber);"></div>
+                    <span>Personnel Movement</span>
+                </div>
+                <div class="legend-row">
+                    <div class="legend-line" style="background: var(--accent-red);"></div>
+                    <span>Exposure/Revelation</span>
+                </div>
+                <div class="legend-row">
+                    <div class="legend-line" style="background: var(--accent-green);"></div>
+                    <span>Reaction/Backlash</span>
+                </div>
+                <div class="legend-row">
+                    <div class="legend-line" style="background: var(--accent-blue);"></div>
+                    <span>Legal Enablement</span>
+                </div>
+            </div>
+
+            <!-- Hover Tooltip -->
+            <div class="network-tooltip" id="networkTooltip">
+                <div class="network-tooltip-title" id="tooltipTitle">Event Title</div>
+                <div class="network-tooltip-year" id="tooltipYear">1898</div>
+                <div class="network-tooltip-hint">Click to explore details</div>
+            </div>
+
+            <!-- Detail Sidebar -->
+            <div class="network-sidebar" id="networkSidebar">
+                <div class="network-sidebar-header">
+                    <h3 class="network-sidebar-title" id="sidebarTitle">Event Title</h3>
+                    <button class="network-sidebar-close" onclick="closeNetworkSidebar()">
+                        <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+                    </button>
+                </div>
+                <div class="network-sidebar-year" id="sidebarYear">1898</div>
+                <p class="network-sidebar-summary" id="sidebarSummary">Summary text goes here...</p>
+                <div class="context-overlay-significance" id="sidebarSignificance">
+                    Significance text...
+                </div>
+                <div class="network-sidebar-connections" id="sidebarConnections">
+                    <h4>Connected Events</h4>
+                    <div id="connectionsList"></div>
+                </div>
+            </div>
+
+            <!-- Old legend for era colors (keep for context) -->
+            <div class="network-legend" style="position: absolute; bottom: 20px; left: 20px;">
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--accent-red);"></div>
+                    <span>Yellow Press / Digital</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--accent-amber);"></div>
+                    <span>WWI / Deregulation / Censorship</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--accent-blue);"></div>
+                    <span>Cold War</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--accent-cyan);"></div>
+                    <span>AI Era</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         CONCLUSION
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="conclusion-section" id="conclusion">
+        <div class="conclusion-content">
+            <h2 class="conclusion-title">The Architecture of Perception is Being Rebuilt</h2>
+            <p class="conclusion-text">
+                From ink-stained newspapers to synthetic voices, the battle for reality has never stopped.
+                The mechanisms for spreading disinformation are more powerful than ever—yet the institutions
+                designed to combat it suffer a historic crisis of legitimacy.
+            </p>
+            <a href="/american-disinformation-timeline" class="conclusion-cta">
+                Read the Full Report
+                <i data-lucide="arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════════════════════════ -->
+    <footer class="timeline-footer">
+        <div class="footer-brand">
+            <span class="genu">Genu</span><span class="verity">Verity</span>
+        </div>
+        <p class="footer-tagline">Fact-checking traced to primary sources</p>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/american-disinformation-timeline">Full Report</a>
+            <a href="/reports.html">All Reports</a>
+            <a href="/methodology.html">Methodology</a>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         CONTEXT OVERLAY (for term hover)
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="context-overlay" id="contextOverlay">
+        <div class="context-overlay-header">
+            <div>
+                <div class="context-overlay-title" id="overlayTitle">Term Title</div>
+                <div class="context-overlay-meta" id="overlayMeta">1891–1995 • WWI Era</div>
+            </div>
+            <button class="context-overlay-close" onclick="hideContextOverlay()">
+                <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+            </button>
+        </div>
+        <div class="context-overlay-badge" id="overlayBadge">
+            <i data-lucide="user" style="width: 12px; height: 12px;"></i>
+            <span id="overlayCategory">Person</span>
+        </div>
+        <p class="context-overlay-summary" id="overlaySummary">
+            Summary text goes here...
+        </p>
+        <div class="context-overlay-significance" id="overlaySignificance">
+            Significance text goes here...
+        </div>
+        <a href="#" class="context-overlay-cta" id="overlayCta">
+            <i data-lucide="book-open" style="width: 14px; height: 14px;"></i>
+            <span id="overlayCtaText">Read Deep Dive</span>
+        </a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         JAVASCRIPT
+         ═══════════════════════════════════════════════════════════════ -->
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // INITIALIZATION
+        // ═══════════════════════════════════════════════════════════════
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Lucide icons
+            lucide.createIcons();
+
+            // Register GSAP plugins
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Start loading sequence
+            initLoading();
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // LOADING SCREEN
+        // ═══════════════════════════════════════════════════════════════
+        function initLoading() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const loadingFill = document.getElementById('loadingFill');
+            let progress = 0;
+
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hidden');
+                        initAllAnimations();
+                    }, 500);
+                }
+                loadingFill.style.width = progress + '%';
+            }, 150);
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // MAIN ANIMATIONS INIT
+        // ═══════════════════════════════════════════════════════════════
+        function initAllAnimations() {
+            initHeroTunnel();
+            initHeroContent();
+            initProgressBar();
+            initTimelineNav();
+            initEraAnimations();
+            initTransitionAnimations();
+            initNetworkGraph();
+            initConclusionAnimation();
+            initSoundToggle();
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // 3D HERO TUNNEL
+        // ═══════════════════════════════════════════════════════════════
+        function initHeroTunnel() {
+            const canvas = document.getElementById('hero-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Create particle tunnel
+            const particleCount = 2000;
+            const particles = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const sizes = new Float32Array(particleCount);
+
+            const colorPalette = [
+                new THREE.Color(0x3b82f6),
+                new THREE.Color(0x06b6d4),
+                new THREE.Color(0xef4444),
+                new THREE.Color(0xf59e0b),
+            ];
+
+            for (let i = 0; i < particleCount; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const radius = 3 + Math.random() * 8;
+
+                positions[i * 3] = Math.cos(angle) * radius;
+                positions[i * 3 + 1] = Math.sin(angle) * radius;
+                positions[i * 3 + 2] = Math.random() * 200 - 100;
+
+                const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+                colors[i * 3] = color.r;
+                colors[i * 3 + 1] = color.g;
+                colors[i * 3 + 2] = color.b;
+
+                sizes[i] = Math.random() * 3 + 1;
+            }
+
+            particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            particles.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+            const material = new THREE.PointsMaterial({
+                size: 0.15,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8,
+                sizeAttenuation: true
+            });
+
+            const particleSystem = new THREE.Points(particles, material);
+            scene.add(particleSystem);
+
+            camera.position.z = 5;
+
+            // Scroll-driven camera movement
+            let scrollProgress = 0;
+
+            ScrollTrigger.create({
+                trigger: '.hero-section',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1,
+                onUpdate: (self) => {
+                    scrollProgress = self.progress;
+                }
+            });
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Move particles based on scroll
+                const positions = particleSystem.geometry.attributes.position.array;
+                const speed = 0.5 + scrollProgress * 2;
+
+                for (let i = 0; i < particleCount; i++) {
+                    positions[i * 3 + 2] += speed;
+                    if (positions[i * 3 + 2] > 100) {
+                        positions[i * 3 + 2] = -100;
+                    }
+                }
+                particleSystem.geometry.attributes.position.needsUpdate = true;
+
+                // Rotate based on scroll
+                particleSystem.rotation.z = scrollProgress * Math.PI * 0.5;
+
+                // Camera moves forward on scroll
+                camera.position.z = 5 - scrollProgress * 30;
+                camera.fov = 75 + scrollProgress * 20;
+                camera.updateProjectionMatrix();
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // HERO CONTENT ANIMATION
+        // ═══════════════════════════════════════════════════════════════
+        function initHeroContent() {
+            const tl = gsap.timeline({ delay: 0.5 });
+
+            tl.to('.hero-overline', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' })
+              .to('.hero-title', { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, '-=0.4')
+              .to('.hero-subtitle', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.5')
+              .to('.hero-scroll-hint', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3');
+
+            // Fade out hero content on scroll
+            gsap.to('.hero-content', {
+                scrollTrigger: {
+                    trigger: '.hero-section',
+                    start: '10% top',
+                    end: '40% top',
+                    scrub: true
+                },
+                opacity: 0,
+                y: -100
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // PROGRESS BAR
+        // ═══════════════════════════════════════════════════════════════
+        function initProgressBar() {
+            gsap.to('#progressBar', {
+                scrollTrigger: {
+                    trigger: 'body',
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 0.3
+                },
+                width: '100%'
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // TIMELINE NAVIGATION
+        // ═══════════════════════════════════════════════════════════════
+        function initTimelineNav() {
+            const nav = document.getElementById('timelineNav');
+            const dots = nav.querySelectorAll('.nav-dot');
+
+            // Show nav after hero
+            ScrollTrigger.create({
+                trigger: '#era-yellow',
+                start: 'top 80%',
+                onEnter: () => nav.classList.add('visible'),
+                onLeaveBack: () => nav.classList.remove('visible')
+            });
+
+            // Update active dot
+            document.querySelectorAll('.era-section').forEach((section, index) => {
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: 'top center',
+                    end: 'bottom center',
+                    onEnter: () => setActiveDot(index),
+                    onEnterBack: () => setActiveDot(index)
+                });
+            });
+
+            function setActiveDot(index) {
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+            }
+
+            // Click to navigate
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const targetId = dot.dataset.target;
+                    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // ERA SECTION ANIMATIONS
+        // ═══════════════════════════════════════════════════════════════
+        function initEraAnimations() {
+            document.querySelectorAll('.era-section').forEach(section => {
+                const content = section.querySelector('.era-content');
+                const visual = section.querySelector('.era-visual');
+                const cards = section.querySelectorAll('.event-card');
+
+                // Content animation
+                gsap.to(content, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 70%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    opacity: 1,
+                    x: 0,
+                    duration: 1,
+                    ease: 'power2.out'
+                });
+
+                // Visual animation
+                gsap.to(visual, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 60%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    opacity: 1,
+                    x: 0,
+                    scale: 1,
+                    duration: 1.2,
+                    ease: 'power2.out',
+                    delay: 0.2
+                });
+
+                // Event cards stagger
+                gsap.to(cards, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 50%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    stagger: 0.15,
+                    ease: 'power2.out',
+                    delay: 0.5
+                });
+
+                // Stat counter animation
+                const stats = section.querySelectorAll('.era-stat-value');
+                stats.forEach(stat => {
+                    const value = stat.textContent;
+                    if (!isNaN(parseFloat(value.replace(/[^0-9.]/g, '')))) {
+                        ScrollTrigger.create({
+                            trigger: stat,
+                            start: 'top 80%',
+                            onEnter: () => animateValue(stat, value)
+                        });
+                    }
+                });
+
+                // Activate era background
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: 'top 60%',
+                    end: 'bottom 40%',
+                    onEnter: () => section.classList.add('active'),
+                    onLeave: () => section.classList.remove('active'),
+                    onEnterBack: () => section.classList.add('active'),
+                    onLeaveBack: () => section.classList.remove('active')
+                });
+            });
+        }
+
+        function animateValue(element, finalValue) {
+            // Handle prefix ($) and suffix (B, M, K, +) separately
+            const prefix = finalValue.match(/^[^\d]*/)?.[0] || '';
+            const suffix = finalValue.match(/[^\d.,]*$/)?.[0] || '';
+            const numericValue = parseFloat(finalValue.replace(/[^0-9.]/g, ''));
+
+            // Check if original value had commas (like 75,000) - preserve formatting
+            const hasComma = finalValue.includes(',');
+
+            // Special case: non-numeric values like "∞" - don't animate
+            if (isNaN(numericValue)) {
+                element.textContent = finalValue;
+                return;
+            }
+
+            gsap.fromTo(element,
+                { textContent: 0 },
+                {
+                    textContent: numericValue,
+                    duration: 1.5,
+                    ease: 'power2.out',
+                    snap: { textContent: numericValue < 10 ? 0.1 : 1 }, // Allow decimals for small numbers
+                    onUpdate: function() {
+                        let val = this.targets()[0].textContent;
+                        // Format based on original value
+                        if (numericValue < 10 && finalValue.includes('.')) {
+                            val = parseFloat(val).toFixed(1); // Keep one decimal for values like 1.5
+                        } else {
+                            val = Math.round(val);
+                            if (hasComma) val = val.toLocaleString();
+                        }
+                        element.textContent = prefix + val + suffix;
+                    }
+                }
+            );
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // TRANSITION ANIMATIONS
+        // ═══════════════════════════════════════════════════════════════
+        function initTransitionAnimations() {
+            document.querySelectorAll('.transition-section').forEach(section => {
+                gsap.to(section.querySelector('.transition-content'), {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 70%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.8,
+                    ease: 'power2.out'
+                });
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // D3.JS NETWORK GRAPH
+        // ═══════════════════════════════════════════════════════════════
+        let networkRendered = false;
+
+        // Create high-resolution radial gradient glow texture
+        function createGlowTexture(colorHex) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+            const center = 256;
+
+            // Multi-layer gradient for ultra-smooth falloff
+            // Layer 1: Core white glow
+            const coreGradient = ctx.createRadialGradient(center, center, 0, center, center, 60);
+            coreGradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+            coreGradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.8)');
+            coreGradient.addColorStop(0.6, 'rgba(255, 255, 255, 0.3)');
+            coreGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = coreGradient;
+            ctx.fillRect(0, 0, 512, 512);
+
+            // Layer 2: Inner colored glow
+            const innerGradient = ctx.createRadialGradient(center, center, 20, center, center, 150);
+            innerGradient.addColorStop(0, colorHex + 'ff');
+            innerGradient.addColorStop(0.2, colorHex + 'cc');
+            innerGradient.addColorStop(0.4, colorHex + '88');
+            innerGradient.addColorStop(0.6, colorHex + '44');
+            innerGradient.addColorStop(0.8, colorHex + '18');
+            innerGradient.addColorStop(1, colorHex + '00');
+            ctx.globalCompositeOperation = 'screen';
+            ctx.fillStyle = innerGradient;
+            ctx.fillRect(0, 0, 512, 512);
+
+            // Layer 3: Outer soft haze
+            const outerGradient = ctx.createRadialGradient(center, center, 80, center, center, 256);
+            outerGradient.addColorStop(0, colorHex + '40');
+            outerGradient.addColorStop(0.3, colorHex + '25');
+            outerGradient.addColorStop(0.5, colorHex + '12');
+            outerGradient.addColorStop(0.7, colorHex + '08');
+            outerGradient.addColorStop(0.9, colorHex + '03');
+            outerGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = outerGradient;
+            ctx.fillRect(0, 0, 512, 512);
+
+            ctx.globalCompositeOperation = 'source-over';
+
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.needsUpdate = true;
+            return texture;
+        }
+
+        function initNetworkGraph() {
+            const container = document.querySelector('.network-container');
+
+            // Animate header in
+            gsap.to('.network-header', {
+                scrollTrigger: {
+                    trigger: '.network-section',
+                    start: 'top 70%',
+                    toggleActions: 'play none none reverse'
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8
+            });
+
+            // Animate container in
+            gsap.to(container, {
+                scrollTrigger: {
+                    trigger: '.network-section',
+                    start: 'top 60%',
+                    toggleActions: 'play none none reverse'
+                },
+                opacity: 1,
+                scale: 1,
+                duration: 1,
+                delay: 0.3
+            });
+
+            // Render network graph once when section enters viewport
+            ScrollTrigger.create({
+                trigger: '.network-section',
+                start: 'top 80%',
+                once: true,
+                onEnter: () => {
+                    if (!networkRendered) {
+                        networkRendered = true;
+                        // Small delay to ensure container is visible
+                        setTimeout(() => renderNetworkGraph(), 500);
+                    }
+                }
+            });
+        }
+
+        // Store full event data for sidebar
+        let networkEventData = {};
+        let selectedNode = null;
+
+        function renderNetworkGraph() {
+            try {
+                const container = document.getElementById('3d-graph');
+                const width = container.clientWidth || 1200;
+                const height = container.clientHeight || 600;
+
+                console.log('Rendering 3D network graph:', width, 'x', height);
+
+                // Era colors
+                const eraColors = {
+                    'yellow-journalism': '#ef4444',
+                    'wwi-propaganda': '#f59e0b',
+                    'cold-war': '#3b82f6',
+                    'deregulation': '#f59e0b',
+                    'digital-age': '#ef4444',
+                    'censorship-complex': '#f59e0b',
+                    'synthetic-future': '#06b6d4'
+                };
+
+                // Connection type colors
+                const connectionColors = {
+                    'technique-transfer': '#06b6d4',
+                    'personnel': '#f59e0b',
+                    'exposure': '#ef4444',
+                    'reaction': '#10b981',
+                    'enablement': '#3b82f6',
+                    'ecosystem': '#888888'
+                };
+
+                // Build connection type lookup
+                const connectionTypeMap = {};
+                TIMELINE_DATA.networkConnections?.forEach(conn => {
+                    connectionTypeMap[`${conn.from}-${conn.to}`] = conn.type;
+                    connectionTypeMap[`${conn.to}-${conn.from}`] = conn.type;
+                });
+
+                // Build nodes and links
+                const nodes = [];
+                const links = [];
+                const nodeIds = new Set();
+
+                TIMELINE_DATA.eras.forEach(era => {
+                    era.events.forEach(event => {
+                        nodeIds.add(event.id);
+                        networkEventData[event.id] = { ...event, eraName: era.name, eraColor: eraColors[era.id] };
+                        nodes.push({
+                            id: event.id,
+                            name: event.title,
+                            year: event.year,
+                            summary: event.summary,
+                            impact: event.impact,
+                            connections: event.connections || [],
+                            era: era.id,
+                            eraName: era.name,
+                            color: eraColors[era.id],
+                            highlight: event.highlight,
+                            val: event.highlight ? 3 : 1.5 // Node size
+                        });
+                    });
+                });
+
+                TIMELINE_DATA.eras.forEach(era => {
+                    era.events.forEach(event => {
+                        event.connections?.forEach(targetId => {
+                            if (nodeIds.has(targetId)) {
+                                const key = `${event.id}-${targetId}`;
+                                const type = connectionTypeMap[key] || 'ecosystem';
+                                links.push({
+                                    source: event.id,
+                                    target: targetId,
+                                    type: type,
+                                    color: connectionColors[type]
+                                });
+                            }
+                        });
+                    });
+                });
+
+                console.log('3D Network - nodes:', nodes.length, 'links:', links.length);
+
+                // Create 3D Force Graph with Unreal Engine-quality visuals
+                const Graph = ForceGraph3D()
+                    (container)
+                    .width(width)
+                    .height(height)
+                    .backgroundColor('#000008')
+                    .graphData({ nodes, links })
+
+                    // Custom glowing nodes - SMOOTH GRADIENT GLOW (24 layers)
+                    .nodeThreeObject(node => {
+                        const group = new THREE.Group();
+                        const baseSize = node.highlight ? 6 : 4;
+                        const color = new THREE.Color(node.color);
+                        const glowLayers = 24;
+                        const maxRadius = baseSize * 6;
+
+                        // Bright white-hot core
+                        const coreGeo = new THREE.SphereGeometry(baseSize * 0.3, 48, 48);
+                        const coreMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+                        group.add(new THREE.Mesh(coreGeo, coreMat));
+
+                        // Inner white glow (blends to color)
+                        for (let i = 0; i < 4; i++) {
+                            const t = i / 4;
+                            const radius = baseSize * (0.35 + t * 0.4);
+                            const geo = new THREE.SphereGeometry(radius, 32, 32);
+                            const mat = new THREE.MeshBasicMaterial({
+                                color: new THREE.Color().lerpColors(new THREE.Color(0xffffff), color, t),
+                                transparent: true,
+                                opacity: 0.6 - t * 0.3,
+                                side: THREE.BackSide
+                            });
+                            group.add(new THREE.Mesh(geo, mat));
+                        }
+
+                        // Main colored core
+                        const mainGeo = new THREE.SphereGeometry(baseSize * 0.8, 48, 48);
+                        const mainMat = new THREE.MeshBasicMaterial({
+                            color: node.color,
+                            transparent: true,
+                            opacity: 0.95
+                        });
+                        group.add(new THREE.Mesh(mainGeo, mainMat));
+
+                        // Smooth gradient glow - 24 layers with exponential falloff
+                        for (let i = 0; i < glowLayers; i++) {
+                            const t = i / glowLayers; // 0 to 1
+                            const radius = baseSize + (maxRadius - baseSize) * Math.pow(t, 0.7);
+                            // Exponential opacity falloff for smooth gradient
+                            const opacity = 0.35 * Math.exp(-3 * t);
+
+                            const geo = new THREE.SphereGeometry(radius, 24, 24);
+                            const mat = new THREE.MeshBasicMaterial({
+                                color: node.color,
+                                transparent: true,
+                                opacity: opacity,
+                                side: THREE.BackSide,
+                                depthWrite: false
+                            });
+                            group.add(new THREE.Mesh(geo, mat));
+                        }
+
+                        // Outer atmospheric haze - very subtle, very large
+                        for (let i = 0; i < 6; i++) {
+                            const t = i / 6;
+                            const radius = maxRadius + baseSize * 4 * t;
+                            const geo = new THREE.SphereGeometry(radius, 16, 16);
+                            const mat = new THREE.MeshBasicMaterial({
+                                color: node.color,
+                                transparent: true,
+                                opacity: 0.015 * (1 - t),
+                                side: THREE.BackSide,
+                                depthWrite: false
+                            });
+                            group.add(new THREE.Mesh(geo, mat));
+                        }
+
+                        // Point light for scene illumination
+                        const light = new THREE.PointLight(node.color, node.highlight ? 2.5 : 1.2, 200);
+                        group.add(light);
+
+                        // Soft glow sprite (additive blend for bloom effect)
+                        const spriteMat = new THREE.SpriteMaterial({
+                            map: createGlowTexture(node.color),
+                            color: node.color,
+                            transparent: true,
+                            opacity: 0.7,
+                            blending: THREE.AdditiveBlending,
+                            depthWrite: false
+                        });
+                        const sprite = new THREE.Sprite(spriteMat);
+                        sprite.scale.set(baseSize * 12, baseSize * 12, 1);
+                        group.add(sprite);
+
+                        return group;
+                    })
+                    .nodeThreeObjectExtend(false)
+
+                    // Cinematic tooltips
+                    .nodeLabel(node => `
+                        <div style="
+                            background: linear-gradient(145deg, rgba(5,5,10,0.95), rgba(15,15,25,0.9));
+                            padding: 14px 18px;
+                            border-radius: 10px;
+                            border: 1px solid ${node.color}80;
+                            box-shadow:
+                                0 0 30px ${node.color}50,
+                                0 0 60px ${node.color}20,
+                                inset 0 1px 0 rgba(255,255,255,0.1),
+                                0 8px 32px rgba(0,0,0,0.6);
+                            backdrop-filter: blur(16px);
+                        ">
+                            <div style="
+                                font-weight: 700;
+                                color: #fff;
+                                font-size: 15px;
+                                margin-bottom: 6px;
+                                text-shadow: 0 0 10px ${node.color};
+                            ">${node.name}</div>
+                            <div style="
+                                color: ${node.color};
+                                font-size: 12px;
+                                font-family: 'JetBrains Mono', monospace;
+                                letter-spacing: 0.5px;
+                            ">${node.year} • ${node.eraName}</div>
+                        </div>
+                    `)
+
+                    // Glowing link tubes
+                    .linkThreeObject(link => {
+                        const color = new THREE.Color(link.color);
+                        const material = new THREE.MeshBasicMaterial({
+                            color: link.color,
+                            transparent: true,
+                            opacity: 0.6
+                        });
+                        const geometry = new THREE.CylinderGeometry(0.8, 0.8, 1, 8);
+                        geometry.rotateX(Math.PI / 2);
+                        return new THREE.Mesh(geometry, material);
+                    })
+                    .linkPositionUpdate((obj, { start, end }) => {
+                        const mid = {
+                            x: (start.x + end.x) / 2,
+                            y: (start.y + end.y) / 2,
+                            z: (start.z + end.z) / 2
+                        };
+                        obj.position.set(mid.x, mid.y, mid.z);
+                        const len = Math.sqrt(
+                            Math.pow(end.x - start.x, 2) +
+                            Math.pow(end.y - start.y, 2) +
+                            Math.pow(end.z - start.z, 2)
+                        );
+                        obj.scale.z = len;
+                        obj.lookAt(end.x, end.y, end.z);
+                        return true;
+                    })
+                    .linkDirectionalParticles(4)
+                    .linkDirectionalParticleWidth(2.5)
+                    .linkDirectionalParticleSpeed(0.006)
+                    .linkDirectionalParticleColor(link => link.color)
+                    // Interaction
+                    .onNodeClick((node, event) => {
+                        // Focus on node
+                        const distance = 120;
+                        const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+                        Graph.cameraPosition(
+                            { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio },
+                            node,
+                            1500
+                        );
+
+                        // Open sidebar
+                        document.getElementById('sidebarTitle').textContent = node.name;
+                        document.getElementById('sidebarYear').textContent = node.year + ' • ' + node.eraName;
+                        document.getElementById('sidebarSummary').textContent = node.summary || 'No summary available.';
+                        document.getElementById('sidebarSignificance').textContent = node.impact || 'Significance data not available.';
+
+                        // Build connections list
+                        const connectionsList = document.getElementById('connectionsList');
+                        connectionsList.innerHTML = '';
+
+                        if (node.connections && node.connections.length > 0) {
+                            node.connections.forEach(connId => {
+                                const connEvent = networkEventData[connId];
+                                if (connEvent) {
+                                    const item = document.createElement('div');
+                                    item.className = 'connection-item';
+                                    item.innerHTML = `
+                                        <div class="connection-dot" style="background: ${connEvent.eraColor}"></div>
+                                        <span class="connection-label">${connEvent.title} (${connEvent.year})</span>
+                                    `;
+                                    item.onclick = () => {
+                                        const targetNode = nodes.find(n => n.id === connId);
+                                        if (targetNode) {
+                                            Graph.cameraPosition(
+                                                { x: targetNode.x * 1.5, y: targetNode.y * 1.5, z: targetNode.z * 1.5 },
+                                                targetNode,
+                                                1500
+                                            );
+                                        }
+                                    };
+                                    connectionsList.appendChild(item);
+                                }
+                            });
+                        } else {
+                            connectionsList.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">No direct connections</p>';
+                        }
+
+                        document.getElementById('networkSidebar').classList.add('visible');
+                        lucide.createIcons();
+                    })
+                    .onNodeHover(node => {
+                        container.style.cursor = node ? 'pointer' : 'grab';
+                    })
+                    // Camera controls
+                    .enableNodeDrag(true)
+                    .enableNavigationControls(true)
+                    .showNavInfo(false);
+
+                // Add cinematic scene enhancements after graph initializes
+                setTimeout(() => {
+                    const scene = Graph.scene();
+                    const renderer = Graph.renderer();
+
+                    // Enable HDR-like rendering
+                    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                    renderer.toneMappingExposure = 1.8;
+                    renderer.outputEncoding = THREE.sRGBEncoding;
+
+                    // === DENSE STARFIELD - layered for depth ===
+                    // Background stars - far, small, many
+                    const bgStarGeo = new THREE.BufferGeometry();
+                    const bgStarCount = 5000;
+                    const bgStarPos = new Float32Array(bgStarCount * 3);
+                    const bgStarColors = new Float32Array(bgStarCount * 3);
+
+                    for (let i = 0; i < bgStarCount * 3; i += 3) {
+                        const radius = 600 + Math.random() * 600;
+                        const theta = Math.random() * Math.PI * 2;
+                        const phi = Math.acos(2 * Math.random() - 1);
+                        bgStarPos[i] = radius * Math.sin(phi) * Math.cos(theta);
+                        bgStarPos[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
+                        bgStarPos[i + 2] = radius * Math.cos(phi);
+                        // Color variation
+                        const t = Math.random();
+                        if (t < 0.7) { // White/blue
+                            bgStarColors[i] = 0.8 + Math.random() * 0.2;
+                            bgStarColors[i + 1] = 0.85 + Math.random() * 0.15;
+                            bgStarColors[i + 2] = 1;
+                        } else if (t < 0.85) { // Orange
+                            bgStarColors[i] = 1;
+                            bgStarColors[i + 1] = 0.7 + Math.random() * 0.2;
+                            bgStarColors[i + 2] = 0.4;
+                        } else { // Cyan
+                            bgStarColors[i] = 0.2;
+                            bgStarColors[i + 1] = 0.8 + Math.random() * 0.2;
+                            bgStarColors[i + 2] = 1;
+                        }
+                    }
+                    bgStarGeo.setAttribute('position', new THREE.BufferAttribute(bgStarPos, 3));
+                    bgStarGeo.setAttribute('color', new THREE.BufferAttribute(bgStarColors, 3));
+                    const bgStars = new THREE.Points(bgStarGeo, new THREE.PointsMaterial({
+                        size: 1.2,
+                        vertexColors: true,
+                        transparent: true,
+                        opacity: 0.9,
+                        sizeAttenuation: true
+                    }));
+                    scene.add(bgStars);
+
+                    // Bright stars - fewer, larger, scattered
+                    const brightStarGeo = new THREE.BufferGeometry();
+                    const brightCount = 200;
+                    const brightPos = new Float32Array(brightCount * 3);
+                    const brightSizes = new Float32Array(brightCount);
+                    for (let i = 0; i < brightCount; i++) {
+                        const radius = 400 + Math.random() * 500;
+                        const theta = Math.random() * Math.PI * 2;
+                        const phi = Math.acos(2 * Math.random() - 1);
+                        brightPos[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+                        brightPos[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+                        brightPos[i * 3 + 2] = radius * Math.cos(phi);
+                        brightSizes[i] = 3 + Math.random() * 5;
+                    }
+                    brightStarGeo.setAttribute('position', new THREE.BufferAttribute(brightPos, 3));
+                    brightStarGeo.setAttribute('size', new THREE.BufferAttribute(brightSizes, 1));
+                    const brightStars = new THREE.Points(brightStarGeo, new THREE.PointsMaterial({
+                        size: 4,
+                        color: 0xffffff,
+                        transparent: true,
+                        opacity: 1,
+                        sizeAttenuation: true
+                    }));
+                    scene.add(brightStars);
+
+                    // === NEBULA CLOUDS ===
+                    const nebulaColors = [0x3b82f6, 0x06b6d4, 0xef4444, 0xf59e0b];
+                    for (let n = 0; n < 6; n++) {
+                        const nebulaGeo = new THREE.SphereGeometry(80 + Math.random() * 60, 32, 32);
+                        const nebulaMat = new THREE.MeshBasicMaterial({
+                            color: nebulaColors[n % nebulaColors.length],
+                            transparent: true,
+                            opacity: 0.03 + Math.random() * 0.02,
+                            side: THREE.BackSide
+                        });
+                        const nebula = new THREE.Mesh(nebulaGeo, nebulaMat);
+                        nebula.position.set(
+                            (Math.random() - 0.5) * 500,
+                            (Math.random() - 0.5) * 300,
+                            (Math.random() - 0.5) * 500
+                        );
+                        nebula.scale.set(1 + Math.random(), 0.5 + Math.random() * 0.5, 1 + Math.random());
+                        scene.add(nebula);
+                    }
+
+                    // === FLOATING PARTICLES ===
+                    const dustGeometry = new THREE.BufferGeometry();
+                    const dustCount = 1500;
+                    const dustPositions = new Float32Array(dustCount * 3);
+                    const dustColors = new Float32Array(dustCount * 3);
+                    const particleColors = [[0.23, 0.51, 0.96], [0.02, 0.71, 0.83], [0.06, 0.72, 0.51], [0.96, 0.62, 0.04]];
+
+                    for (let i = 0; i < dustCount; i++) {
+                        dustPositions[i * 3] = (Math.random() - 0.5) * 600;
+                        dustPositions[i * 3 + 1] = (Math.random() - 0.5) * 400;
+                        dustPositions[i * 3 + 2] = (Math.random() - 0.5) * 600;
+                        const c = particleColors[Math.floor(Math.random() * particleColors.length)];
+                        dustColors[i * 3] = c[0];
+                        dustColors[i * 3 + 1] = c[1];
+                        dustColors[i * 3 + 2] = c[2];
+                    }
+
+                    dustGeometry.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
+                    dustGeometry.setAttribute('color', new THREE.BufferAttribute(dustColors, 3));
+
+                    const dust = new THREE.Points(dustGeometry, new THREE.PointsMaterial({
+                        size: 2,
+                        vertexColors: true,
+                        transparent: true,
+                        opacity: 0.5,
+                        sizeAttenuation: true,
+                        blending: THREE.AdditiveBlending
+                    }));
+                    scene.add(dust);
+
+                    // Animate particles
+                    function animateParticles() {
+                        dust.rotation.y += 0.0003;
+                        dust.rotation.x += 0.00015;
+                        bgStars.rotation.y += 0.00003;
+                        brightStars.rotation.y += 0.00005;
+                        requestAnimationFrame(animateParticles);
+                    }
+                    animateParticles();
+
+                    // === ATMOSPHERIC FOG ===
+                    scene.fog = new THREE.FogExp2(0x000815, 0.001);
+
+                    // === DRAMATIC LIGHTING ===
+                    const ambientLight = new THREE.AmbientLight(0x101020, 0.4);
+                    scene.add(ambientLight);
+
+                    // Rim light from behind
+                    const rimLight = new THREE.DirectionalLight(0x3b82f6, 0.5);
+                    rimLight.position.set(0, 100, -300);
+                    scene.add(rimLight);
+
+                    // Key light from front
+                    const keyLight = new THREE.DirectionalLight(0xffffff, 0.3);
+                    keyLight.position.set(200, 100, 200);
+                    scene.add(keyLight);
+
+                }, 500);
+
+                // Auto-rotate slowly for cinematic effect
+                let angle = 0;
+                let isRotating = true;
+
+                function autoRotate() {
+                    if (!document.hidden && isRotating) {
+                        angle += 0.0015;
+                        Graph.cameraPosition({
+                            x: 400 * Math.sin(angle),
+                            y: 50 * Math.sin(angle * 0.5),
+                            z: 400 * Math.cos(angle)
+                        });
+                    }
+                    requestAnimationFrame(autoRotate);
+                }
+
+                // Start rotation after initial settle
+                setTimeout(autoRotate, 3000);
+
+                // Stop rotation on interaction
+                container.addEventListener('mousedown', () => { isRotating = false; });
+                container.addEventListener('wheel', () => { isRotating = false; });
+                container.addEventListener('touchstart', () => { isRotating = false; });
+
+            } catch (error) {
+                console.error('3D Network graph error:', error);
+            }
+        }
+
+        function closeNetworkSidebar() {
+            document.getElementById('networkSidebar').classList.remove('visible');
+            if (selectedNode) {
+                d3.select(selectedNode).classed('selected', false);
+                selectedNode = null;
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // CONCLUSION ANIMATION
+        // ═══════════════════════════════════════════════════════════════
+        function initConclusionAnimation() {
+            gsap.to('.conclusion-content', {
+                scrollTrigger: {
+                    trigger: '.conclusion-section',
+                    start: 'top 60%',
+                    toggleActions: 'play none none reverse'
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: 'power2.out'
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // SOUND SYSTEM
+        // ═══════════════════════════════════════════════════════════════
+        let soundEnabled = false;
+        let ambientAudio = null;
+
+        function initSoundToggle() {
+            const toggle = document.getElementById('soundToggle');
+            const icon = document.getElementById('soundIcon');
+
+            toggle.addEventListener('click', () => {
+                soundEnabled = !soundEnabled;
+                toggle.classList.toggle('active', soundEnabled);
+
+                if (soundEnabled) {
+                    icon.setAttribute('data-lucide', 'volume-2');
+                    // In production, we'd load actual audio here
+                    console.log('Sound enabled - ambient audio would play');
+                } else {
+                    icon.setAttribute('data-lucide', 'volume-x');
+                    if (ambientAudio) {
+                        ambientAudio.pause();
+                    }
+                    console.log('Sound disabled');
+                }
+                lucide.createIcons();
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // CONTEXT OVERLAY SYSTEM
+        // ═══════════════════════════════════════════════════════════════
+        let contextOverlayVisible = false;
+
+        function showContextOverlay(termKey, element) {
+            const glossary = TIMELINE_DATA.glossary;
+            const entry = glossary[termKey];
+
+            if (!entry) {
+                console.warn('No glossary entry for:', termKey);
+                return;
+            }
+
+            const overlay = document.getElementById('contextOverlay');
+
+            // Populate content
+            document.getElementById('overlayTitle').textContent = entry.term;
+
+            // Build meta line
+            let meta = '';
+            if (entry.years) meta += entry.years;
+            if (entry.year) meta += entry.year;
+            if (entry.founded) meta += 'Est. ' + entry.founded;
+            if (entry.era) {
+                const eraName = TIMELINE_DATA.eras.find(e => e.id === entry.era)?.name || entry.era;
+                meta += (meta ? ' • ' : '') + eraName;
+            }
+            document.getElementById('overlayMeta').textContent = meta;
+
+            // Badge
+            const badge = document.getElementById('overlayBadge');
+            badge.className = 'context-overlay-badge ' + entry.category;
+            const categoryLabels = {
+                'person': 'Person',
+                'agency': 'Government Agency',
+                'organization': 'Organization',
+                'law': 'Law / Policy',
+                'legal-case': 'Legal Case',
+                'concept': 'Concept',
+                'event': 'Historical Event'
+            };
+            document.getElementById('overlayCategory').textContent = categoryLabels[entry.category] || entry.category;
+
+            // Icon for badge - replace the icon element
+            const iconMap = {
+                'person': 'user',
+                'agency': 'landmark',
+                'organization': 'building-2',
+                'law': 'scale',
+                'legal-case': 'gavel',
+                'concept': 'lightbulb',
+                'event': 'calendar'
+            };
+            const iconName = iconMap[entry.category] || 'info';
+            // Lucide converts <i> to <svg>, so we need to handle both
+            const iconElement = badge.querySelector('i') || badge.querySelector('svg');
+            if (iconElement) {
+                // Replace with fresh icon element
+                const newIcon = document.createElement('i');
+                newIcon.setAttribute('data-lucide', iconName);
+                newIcon.style.width = '12px';
+                newIcon.style.height = '12px';
+                iconElement.replaceWith(newIcon);
+            }
+
+            // Summary and significance
+            document.getElementById('overlaySummary').textContent = entry.summary;
+            document.getElementById('overlaySignificance').textContent = entry.significance;
+
+            // CTA button
+            const cta = document.getElementById('overlayCta');
+            const ctaText = document.getElementById('overlayCtaText');
+
+            // Helper to replace icon (handles Lucide's i->svg conversion)
+            function replaceIcon(container, iconName, size = '14px') {
+                const existing = container.querySelector('i') || container.querySelector('svg');
+                if (existing) {
+                    const newIcon = document.createElement('i');
+                    newIcon.setAttribute('data-lucide', iconName);
+                    newIcon.style.width = size;
+                    newIcon.style.height = size;
+                    existing.replaceWith(newIcon);
+                }
+            }
+
+            if (entry.reportSlug) {
+                cta.href = '/' + entry.reportSlug;
+                cta.classList.remove('coming-soon');
+                ctaText.textContent = 'Read Deep Dive';
+                replaceIcon(cta, 'book-open');
+            } else {
+                cta.href = '#';
+                cta.classList.add('coming-soon');
+                ctaText.textContent = 'Deep Dive Coming Soon';
+                replaceIcon(cta, 'clock');
+            }
+
+            // Position overlay near the element
+            const rect = element.getBoundingClientRect();
+            const overlayWidth = 420;
+
+            let left = rect.left + rect.width / 2 - overlayWidth / 2;
+            let top = rect.bottom + 10;
+
+            // Keep in viewport
+            if (left < 20) left = 20;
+            if (left + overlayWidth > window.innerWidth - 20) {
+                left = window.innerWidth - overlayWidth - 20;
+            }
+            if (top + 400 > window.innerHeight) {
+                top = rect.top - 410; // Show above instead
+            }
+
+            overlay.style.left = left + 'px';
+            overlay.style.top = top + 'px';
+
+            // Show
+            overlay.classList.add('visible');
+            contextOverlayVisible = true;
+            lucide.createIcons();
+        }
+
+        function hideContextOverlay() {
+            document.getElementById('contextOverlay').classList.remove('visible');
+            contextOverlayVisible = false;
+        }
+
+        // Close overlay when clicking outside
+        document.addEventListener('click', (e) => {
+            if (contextOverlayVisible && !e.target.closest('.context-overlay') && !e.target.closest('.hoverable-term')) {
+                hideContextOverlay();
+            }
+        });
+
+        // Make terms in era sections hoverable
+        function initHoverableTerms() {
+            // Map of text patterns to glossary keys
+            const termMappings = {
+                'CISA': 'cisa',
+                'Cybersecurity and Infrastructure Security Agency': 'cisa',
+                'CIA': 'cia',
+                'FBI': 'fbi',
+                'FCC': 'fcc',
+                'CPI': 'cpi',
+                'Committee on Public Information': 'cpi',
+                'IRA': 'ira',
+                'Internet Research Agency': 'ira',
+                'Cambridge Analytica': 'cambridge-analytica',
+                'Smith-Mundt': 'smith-mundt-act',
+                'Fairness Doctrine': 'fairness-doctrine',
+                'Section 230': 'section-230',
+                'Operation Mockingbird': 'operation-mockingbird',
+                'Church Committee': 'church-committee',
+                'Twitter Files': 'twitter-files',
+                'Edward Bernays': 'edward-bernays',
+                'Bernays': 'edward-bernays',
+                'William Randolph Hearst': 'william-randolph-hearst',
+                'Hearst': 'william-randolph-hearst',
+                'Roger Ailes': 'roger-ailes',
+                'Fox News': 'fox-news',
+                'Rupert Murdoch': 'rupert-murdoch',
+                'Elon Musk': 'elon-musk',
+                'Alex Jones': 'alex-jones',
+                'Infowars': 'infowars',
+                'deepfake': 'deepfakes',
+                'deepfakes': 'deepfakes',
+                'Liar\'s Dividend': 'liars-dividend',
+                'liar\'s dividend': 'liars-dividend',
+                'psychographic': 'psychographic-targeting',
+                'Psychographic': 'psychographic-targeting',
+                'Yellow Journalism': 'yellow-journalism',
+                'Four Minute Men': 'four-minute-men',
+                'Merchants of Doubt': 'merchants-of-doubt',
+                'Torches of Freedom': 'torches-of-freedom',
+                'cognitive infrastructure': 'cognitive-infrastructure',
+                'jawboning': 'jawboning',
+                'MDM': 'mdm',
+                'mis-, dis-, and malinformation': 'mdm',
+                'Murthy v. Missouri': 'murthy-v-missouri',
+                'Sandy Hook': 'sandy-hook-judgment',
+                'USS Maine': 'uss-maine',
+                'First Amendment': 'first-amendment'
+            };
+
+            // Find and wrap matching text in event cards
+            document.querySelectorAll('.event-card p, .era-summary').forEach(container => {
+                let html = container.innerHTML;
+
+                // Sort by length descending to match longer phrases first
+                const sortedTerms = Object.keys(termMappings).sort((a, b) => b.length - a.length);
+
+                sortedTerms.forEach(term => {
+                    const key = termMappings[term];
+                    // Use word boundary regex, case-insensitive for some terms
+                    const regex = new RegExp(`\\b(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})\\b`, 'g');
+                    html = html.replace(regex, `<span class="hoverable-term" data-term="${key}">$1</span>`);
+                });
+
+                container.innerHTML = html;
+            });
+
+            // Attach click handlers
+            document.querySelectorAll('.hoverable-term').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const termKey = el.dataset.term;
+                    showContextOverlay(termKey, el);
+                });
+            });
+        }
+
+        // Initialize hoverable terms after DOM is ready
+        setTimeout(() => initHoverableTerms(), 1000);
+
+        // ═══════════════════════════════════════════════════════════════
+        // UTILITY: Smooth scroll for anchor links
+        // ═══════════════════════════════════════════════════════════════
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

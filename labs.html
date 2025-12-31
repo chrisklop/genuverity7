@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <title>Labs | GenuVerity</title>
+    <meta name="description"
+        content="Experimental immersive experiences exploring disinformation through interactive visualizations, timelines, and network graphs.">
+    <meta property="og:title" content="Labs | GenuVerity">
+    <meta property="og:description" content="Immersive experiences exploring the history and mechanics of disinformation.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#0a0a12">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/experiences-data.js?v=1735600000"></script>
+    <script src="js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="css/shared-components.css?v=1735600000">
+    <!-- Vercel Analytics -->
+    <script defer src="/_vercel/insights/script.js"></script>
+    <style>
+        /* === CORE VARIABLES === */
+        :root {
+            --bg-primary: #050A14;
+            --bg-secondary: #0a0f1a;
+            --bg-tertiary: #0d1424;
+            --bg-card: #111827;
+            --border-color: rgba(59, 130, 246, 0.15);
+            --border-glow: rgba(6, 182, 212, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* === BACKGROUND === */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(6, 182, 212, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: -300px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1200px;
+            height: 1200px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, rgba(59, 130, 246, 0.04) 30%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* === HERO === */
+        .hero-section {
+            position: relative;
+            z-index: 1;
+            padding: 120px 40px 40px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-section h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .hero-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* === EXPERIENCES GRID === */
+        .experiences-section {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .experiences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 32px;
+        }
+
+        /* === EXPERIENCE CARD === */
+        .experience-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .experience-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-4px);
+            box-shadow:
+                0 0 0 1px var(--accent-cyan),
+                0 0 60px rgba(6, 182, 212, 0.2),
+                0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Card Preview - Visualization Area */
+        .card-preview {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Network visualization */
+        .preview-network {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .preview-network .node {
+            position: absolute;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .preview-network .line {
+            position: absolute;
+            height: 1px;
+            transform-origin: left center;
+            opacity: 0.3;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.15);
+                opacity: 1;
+            }
+        }
+
+        /* Timeline visualization */
+        .preview-timeline {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+        }
+
+        .preview-timeline .timeline-track {
+            flex: 1;
+            height: 3px;
+            background: var(--border-color);
+            position: relative;
+            border-radius: 2px;
+        }
+
+        .preview-timeline .timeline-point {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 2px solid var(--bg-card);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Status badge */
+        .status-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-live {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-beta {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .status-coming {
+            background: rgba(100, 116, 139, 0.15);
+            color: #64748b;
+            border: 1px solid rgba(100, 116, 139, 0.3);
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .card-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            width: fit-content;
+        }
+
+        .tag-cyan {
+            background: rgba(6, 182, 212, 0.15);
+            color: #06b6d4;
+        }
+
+        .tag-red {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .tag-amber {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .tag-blue {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .card-subtitle {
+            font-size: 0.95rem;
+            color: var(--accent-cyan);
+            font-weight: 500;
+            margin-top: -8px;
+        }
+
+        .card-excerpt {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        /* Features list */
+        .card-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .feature-tag {
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--accent-cyan);
+            border-radius: 10px;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .card-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.4);
+        }
+
+        /* === COMING SOON SECTION === */
+        .coming-soon-section {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 60px auto 0;
+            padding: 0 40px 60px;
+        }
+
+        .coming-soon-banner {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .coming-soon-banner h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .coming-soon-banner p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .coming-soon-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .coming-soon-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .coming-soon-item i {
+            color: var(--accent-cyan);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 100px 20px 30px;
+            }
+
+            .hero-section h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero-section p {
+                font-size: 1rem;
+            }
+
+            .hero-stats {
+                gap: 24px;
+            }
+
+            .hero-stat-value {
+                font-size: 1.5rem;
+            }
+
+            .experiences-section {
+                padding: 20px;
+            }
+
+            .experiences-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .card-preview {
+                height: 180px;
+            }
+
+            .card-content {
+                padding: 20px;
+            }
+
+            .card-title {
+                font-size: 1.15rem;
+            }
+
+            .coming-soon-section {
+                padding: 0 20px 40px;
+            }
+
+            .coming-soon-banner {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <!-- Shared Navbar -->
+    <div id="navbar-placeholder" data-page-type="labs"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-badge">
+            <i data-lucide="flask-conical" style="width:16px;height:16px;"></i>
+            Experimental Experiences
+        </div>
+        <h1>GenuVerity Labs</h1>
+        <p>Immersive, interactive explorations of disinformation history and mechanics.
+           Go beyond articles into experiences that reveal how narratives spread and evolve.</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-value" id="experienceCount">--</div>
+                <div class="hero-stat-label">Experiences</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value" id="eventCount">--</div>
+                <div class="hero-stat-label">Events</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value" id="eraCount">--</div>
+                <div class="hero-stat-label">Eras Covered</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiences Grid -->
+    <section class="experiences-section">
+        <div class="experiences-grid" id="experiencesGrid">
+            <!-- Cards generated by JS -->
+        </div>
+    </section>
+
+    <!-- Coming Soon Section -->
+    <section class="coming-soon-section">
+        <div class="coming-soon-banner">
+            <h3>More Experiences Coming Soon</h3>
+            <p>We're developing new immersive explorations of disinformation patterns,
+               foreign influence operations, and information warfare techniques.</p>
+            <div class="coming-soon-list">
+                <div class="coming-soon-item">
+                    <i data-lucide="globe" style="width:16px;height:16px;"></i>
+                    Foreign Influence Networks
+                </div>
+                <div class="coming-soon-item">
+                    <i data-lucide="brain" style="width:16px;height:16px;"></i>
+                    Cognitive Manipulation Patterns
+                </div>
+                <div class="coming-soon-item">
+                    <i data-lucide="share-2" style="width:16px;height:16px;"></i>
+                    Viral Spread Simulations
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shared Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        const experiences = typeof EXPERIENCES_DATA !== 'undefined' ? EXPERIENCES_DATA : [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            updateHeroStats();
+            renderExperiences();
+        });
+
+        // Update hero stats
+        function updateHeroStats() {
+            const experienceCount = experiences.length;
+
+            // Count total events
+            let totalEvents = 0;
+            experiences.forEach(exp => {
+                const match = exp.events?.match(/(\d+)/);
+                if (match) totalEvents += parseInt(match[1], 10);
+            });
+
+            animateValue(document.getElementById('experienceCount'), 0, experienceCount, 1000, '');
+            animateValue(document.getElementById('eventCount'), 0, totalEvents, 1500, '+');
+            animateValue(document.getElementById('eraCount'), 0, 7, 1200, '');
+        }
+
+        // Number animation
+        function animateValue(element, start, end, duration, suffix = '') {
+            if (!element) return;
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const value = Math.floor(easeOut * (end - start) + start);
+                element.textContent = value.toLocaleString() + suffix;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Generate network preview
+        function generateNetworkPreview(color, nodeCount = 15) {
+            const nodes = Array.from({ length: nodeCount }, () => ({
+                x: 10 + Math.random() * 80,
+                y: 10 + Math.random() * 80,
+                size: 6 + Math.random() * 12
+            }));
+
+            const nodesHTML = nodes.map((n, i) =>
+                `<div class="node" style="left: ${n.x}%; top: ${n.y}%; width: ${n.size}px; height: ${n.size}px; background: ${color}; animation-delay: ${i * 0.1}s;"></div>`
+            ).join('');
+
+            const linesHTML = nodes.slice(0, Math.floor(nodeCount / 2)).map((n, i) => {
+                const target = nodes[(i + 3) % nodes.length];
+                const dx = target.x - n.x;
+                const dy = target.y - n.y;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                return `<div class="line" style="left: ${n.x}%; top: ${n.y}%; width: ${length}%; transform: rotate(${angle}deg); background: ${color};"></div>`;
+            }).join('');
+
+            return `<div class="preview-network">${linesHTML}${nodesHTML}</div>`;
+        }
+
+        // Generate timeline preview
+        function generateTimelinePreview(color, data = [10, 30, 50, 70, 90]) {
+            const points = data.map(p =>
+                `<div class="timeline-point" style="left: ${p}%; background: ${color}; animation-delay: ${p / 100}s;"></div>`
+            ).join('');
+
+            return `<div class="preview-timeline"><div class="timeline-track">${points}</div></div>`;
+        }
+
+        // Generate preview based on type
+        function generatePreview(preview) {
+            if (!preview) return generateNetworkPreview('#3b82f6');
+
+            switch (preview.type) {
+                case 'network':
+                    return generateNetworkPreview(preview.color, preview.nodeCount || 15);
+                case 'timeline':
+                    return generateTimelinePreview(preview.color, preview.data);
+                default:
+                    return generateNetworkPreview(preview.color);
+            }
+        }
+
+        // Render experience cards
+        function renderExperiences() {
+            const grid = document.getElementById('experiencesGrid');
+
+            experiences.forEach(exp => {
+                const card = document.createElement('a');
+                card.className = 'experience-card';
+                card.href = exp.slug;
+
+                const statusClass = exp.status === 'live' ? 'status-live' :
+                                   exp.status === 'beta' ? 'status-beta' : 'status-coming';
+                const statusText = exp.status === 'live' ? 'Live' :
+                                  exp.status === 'beta' ? 'Beta' : 'Coming Soon';
+
+                const featuresHTML = exp.features ? exp.features.map(f =>
+                    `<span class="feature-tag">${f}</span>`
+                ).join('') : '';
+
+                card.innerHTML = `
+                    <div class="card-preview">
+                        ${generatePreview(exp.preview)}
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-tag ${exp.tagClass}">
+                            <i data-lucide="${exp.icon}" style="width:12px;height:12px;"></i>
+                            ${exp.category}
+                        </span>
+                        <h3 class="card-title">${exp.title}</h3>
+                        ${exp.subtitle ? `<p class="card-subtitle">${exp.subtitle}</p>` : ''}
+                        <p class="card-excerpt">${exp.excerpt}</p>
+                        <div class="card-features">${featuresHTML}</div>
+                        <div class="card-footer">
+                            <div class="card-meta">
+                                <span><i data-lucide="calendar" style="width:12px;height:12px;"></i> ${exp.date}</span>
+                                <span><i data-lucide="clock" style="width:12px;height:12px;"></i> ${exp.duration}</span>
+                            </div>
+                            <span class="card-cta">
+                                Explore <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+
+            lucide.createIcons();
+        }
+    </script>
+</body>
+
+</html>
