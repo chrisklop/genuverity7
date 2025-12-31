@@ -2738,7 +2738,8 @@
                     delay: 0.2
                 });
 
-                // Event cards stagger
+                // Event cards stagger with piano plinks
+                let cardSoundIndex = 0;
                 gsap.to(cards, {
                     scrollTrigger: {
                         trigger: section,
@@ -2748,7 +2749,16 @@
                     opacity: 1,
                     y: 0,
                     duration: 0.6,
-                    stagger: 0.15,
+                    stagger: {
+                        each: 0.15,
+                        onStart: function() {
+                            // Play ascending piano note for each card
+                            if (typeof playPianoPlink === 'function') {
+                                playPianoPlink(cardSoundIndex % 5 + 3); // Notes F4-B4
+                                cardSoundIndex++;
+                            }
+                        }
+                    },
                     ease: 'power2.out',
                     delay: 0.5
                 });
@@ -3560,10 +3570,10 @@
             ambientNodes = [...voices, { lfo }];
             currentEraSound = eraId;
 
-            // Smooth fade in
+            // Smooth fade in - lower volume so piano plinks stand out
             ambientGain.gain.cancelScheduledValues(audioContext.currentTime);
             ambientGain.gain.setValueAtTime(ambientGain.gain.value, audioContext.currentTime);
-            ambientGain.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 2.5);
+            ambientGain.gain.linearRampToValueAtTime(0.25, audioContext.currentTime + 2.5);
         }
 
         function stopAmbientNodes() {
@@ -3592,6 +3602,9 @@
             if (!soundEnabled || !audioContext) return;
             if (currentEraSound === eraId) return;
 
+            // Play transition chime
+            playEraTransitionChime();
+
             // Gentle crossfade - keep some volume
             ambientGain.gain.cancelScheduledValues(audioContext.currentTime);
             ambientGain.gain.setValueAtTime(ambientGain.gain.value, audioContext.currentTime);
@@ -3604,101 +3617,181 @@
         }
 
         // ═══════════════════════════════════════════════════════════════
-        // INTERACTION SOUNDS - Network graph hover/click
+        // INTERACTION SOUNDS - Piano plinks and timely effects
         // ═══════════════════════════════════════════════════════════════
-        function playNodeHover() {
+
+        // Piano note frequencies (C4 to C6 range for pleasant plinks)
+        const PIANO_NOTES = [262, 294, 330, 349, 392, 440, 494, 523, 587, 659, 698, 784];
+
+        function playPianoPlink(noteIndex = null) {
             if (!soundEnabled || !audioContext) return;
             if (audioContext.state === 'suspended') audioContext.resume();
 
-            const osc = audioContext.createOscillator();
-            const gain = audioContext.createGain();
+            // Pick a random note if not specified
+            const freq = noteIndex !== null
+                ? PIANO_NOTES[noteIndex % PIANO_NOTES.length]
+                : PIANO_NOTES[Math.floor(Math.random() * PIANO_NOTES.length)];
 
-            osc.type = 'sine';
-            osc.frequency.value = 500 + Math.random() * 300;
+            // Create oscillators for richer piano-like tone
+            const fundamental = audioContext.createOscillator();
+            const harmonic2 = audioContext.createOscillator();
+            const harmonic3 = audioContext.createOscillator();
 
-            gain.gain.setValueAtTime(0, audioContext.currentTime);
-            gain.gain.linearRampToValueAtTime(0.06, audioContext.currentTime + 0.03);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.2);
+            fundamental.type = 'sine';
+            fundamental.frequency.value = freq;
 
-            osc.connect(gain);
-            gain.connect(fxGain);
-            osc.start();
-            osc.stop(audioContext.currentTime + 0.25);
+            harmonic2.type = 'sine';
+            harmonic2.frequency.value = freq * 2;
+
+            harmonic3.type = 'sine';
+            harmonic3.frequency.value = freq * 3;
+
+            // Gains for each harmonic (fundamental loudest)
+            const fundGain = audioContext.createGain();
+            const harm2Gain = audioContext.createGain();
+            const harm3Gain = audioContext.createGain();
+
+            // Piano envelope: quick attack, medium decay, sustain, release
+            const now = audioContext.currentTime;
+            const attackTime = 0.008;
+            const decayTime = 0.15;
+            const sustainLevel = 0.3;
+            const releaseTime = 0.6;
+
+            // Fundamental envelope
+            fundGain.gain.setValueAtTime(0, now);
+            fundGain.gain.linearRampToValueAtTime(0.12, now + attackTime);
+            fundGain.gain.exponentialRampToValueAtTime(0.12 * sustainLevel, now + attackTime + decayTime);
+            fundGain.gain.exponentialRampToValueAtTime(0.001, now + attackTime + decayTime + releaseTime);
+
+            // Harmonics decay faster (piano characteristic)
+            harm2Gain.gain.setValueAtTime(0, now);
+            harm2Gain.gain.linearRampToValueAtTime(0.04, now + attackTime);
+            harm2Gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+            harm3Gain.gain.setValueAtTime(0, now);
+            harm3Gain.gain.linearRampToValueAtTime(0.015, now + attackTime);
+            harm3Gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+            // Connect
+            fundamental.connect(fundGain);
+            harmonic2.connect(harm2Gain);
+            harmonic3.connect(harm3Gain);
+            fundGain.connect(fxGain);
+            harm2Gain.connect(fxGain);
+            harm3Gain.connect(fxGain);
+
+            // Start and stop
+            const duration = attackTime + decayTime + releaseTime + 0.1;
+            fundamental.start(now);
+            harmonic2.start(now);
+            harmonic3.start(now);
+            fundamental.stop(now + duration);
+            harmonic2.stop(now + duration);
+            harmonic3.stop(now + duration);
+        }
+
+        function playNodeHover() {
+            if (!soundEnabled || !audioContext) return;
+            // Soft high piano plink on hover
+            playPianoPlink(Math.floor(Math.random() * 4) + 6); // Higher notes (C5-E5)
         }
 
         function playNodeClick() {
             if (!soundEnabled || !audioContext) return;
             if (audioContext.state === 'suspended') audioContext.resume();
 
-            // Harmonic click with multiple tones
-            [440, 550, 660].forEach((freq, i) => {
-                const osc = audioContext.createOscillator();
-                const gain = audioContext.createGain();
-
-                osc.type = i === 0 ? 'sine' : 'triangle';
-                osc.frequency.value = freq;
-
-                gain.gain.setValueAtTime(0, audioContext.currentTime);
-                gain.gain.linearRampToValueAtTime(0.1 - i * 0.025, audioContext.currentTime + 0.02);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.35);
-
-                osc.connect(gain);
-                gain.connect(fxGain);
-                osc.start();
-                osc.stop(audioContext.currentTime + 0.4);
-            });
+            // Play a chord - 3 notes simultaneously for a rich click
+            const baseNote = Math.floor(Math.random() * 5) + 2; // C4-G4 range
+            playPianoPlink(baseNote);
+            setTimeout(() => playPianoPlink(baseNote + 4), 20); // Third
+            setTimeout(() => playPianoPlink(baseNote + 7), 40); // Fifth
         }
 
         function playConnectionSound() {
             if (!soundEnabled || !audioContext) return;
+            // Rising arpeggio for connections
+            playPianoPlink(3);
+            setTimeout(() => playPianoPlink(5), 80);
+            setTimeout(() => playPianoPlink(7), 160);
+        }
+
+        function playEraTransitionChime() {
+            if (!soundEnabled || !audioContext) return;
             if (audioContext.state === 'suspended') audioContext.resume();
 
-            // Soft whoosh for connections
-            const bufferSize = audioContext.sampleRate * 0.2;
-            const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
-            const data = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) {
-                data[i] = (Math.random() * 2 - 1) * 0.2;
-            }
+            // Chime/bell sound for era transitions
+            const freqs = [523, 659, 784, 1047]; // C5, E5, G5, C6 - major chord
+            const now = audioContext.currentTime;
 
-            const noise = audioContext.createBufferSource();
-            noise.buffer = buffer;
+            freqs.forEach((freq, i) => {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
 
-            const filter = audioContext.createBiquadFilter();
-            filter.type = 'bandpass';
-            filter.frequency.value = 800;
-            filter.Q.value = 1.5;
+                osc.type = 'sine';
+                osc.frequency.value = freq;
 
+                gain.gain.setValueAtTime(0, now + i * 0.12);
+                gain.gain.linearRampToValueAtTime(0.08 - i * 0.015, now + i * 0.12 + 0.01);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 1.2);
+
+                osc.connect(gain);
+                gain.connect(fxGain);
+                osc.start(now + i * 0.12);
+                osc.stop(now + i * 0.12 + 1.5);
+            });
+        }
+
+        function playScrollTick() {
+            if (!soundEnabled || !audioContext) return;
+            if (audioContext.state === 'suspended') audioContext.resume();
+
+            // Subtle tick sound as you scroll through timeline
+            const osc = audioContext.createOscillator();
             const gain = audioContext.createGain();
-            gain.gain.setValueAtTime(0, audioContext.currentTime);
-            gain.gain.linearRampToValueAtTime(0.04, audioContext.currentTime + 0.03);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.18);
 
-            filter.frequency.setValueAtTime(600, audioContext.currentTime);
-            filter.frequency.linearRampToValueAtTime(1500, audioContext.currentTime + 0.15);
+            osc.type = 'sine';
+            osc.frequency.value = 1200 + Math.random() * 400;
 
-            noise.connect(filter);
-            filter.connect(gain);
+            const now = audioContext.currentTime;
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(0.02, now + 0.005);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+            osc.connect(gain);
             gain.connect(fxGain);
-            noise.start();
+            osc.start(now);
+            osc.stop(now + 0.1);
+        }
+
+        // Icon update helper - fixes Lucide SVG replacement issue
+        function updateSoundIcon(isOn) {
+            const toggle = document.getElementById('soundToggle');
+            const existingIcon = toggle.querySelector('svg, i');
+            if (existingIcon) existingIcon.remove();
+
+            const newIcon = document.createElement('i');
+            newIcon.setAttribute('data-lucide', isOn ? 'volume-2' : 'volume-x');
+            newIcon.id = 'soundIcon';
+            toggle.appendChild(newIcon);
+            lucide.createIcons({ nodes: [newIcon] });
         }
 
         function initSoundToggle() {
             const toggle = document.getElementById('soundToggle');
-            const icon = document.getElementById('soundIcon');
 
             toggle.addEventListener('click', () => {
                 soundEnabled = !soundEnabled;
                 toggle.classList.toggle('active', soundEnabled);
+                updateSoundIcon(soundEnabled);
 
                 if (soundEnabled) {
-                    icon.setAttribute('data-lucide', 'volume-2');
                     startAmbient(getCurrentEraId());
+                    // Play a welcome chime when enabling sound
+                    setTimeout(() => playEraTransitionChime(), 200);
                 } else {
-                    icon.setAttribute('data-lucide', 'volume-x');
                     stopAmbient(true);
                 }
-                lucide.createIcons();
             });
         }
 
