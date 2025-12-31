@@ -216,16 +216,16 @@ function injectSharedComponents() {
         // Navigation links for ALL pages
         if (navRight) {
             navRight.innerHTML = `
-                <a href="/reports.html" class="navbar-link" style="color:var(--text-secondary); text-decoration:none; padding:6px 12px; border-radius:8px; font-size:0.8rem; display:flex; align-items:center; gap:5px; transition:all 0.2s;">
-                    <i data-lucide="file-text" style="width:14px;"></i>
+                <a href="/reports.html" class="navbar-link" style="color:var(--text-secondary); text-decoration:none; padding:6px 10px; border-radius:8px; font-size:0.8rem; display:flex; align-items:center; gap:4px; transition:all 0.2s; white-space:nowrap; flex-shrink:0;">
+                    <i data-lucide="file-text" style="width:14px;height:14px;"></i>
                     Reports
                 </a>
-                <a href="/labs.html" class="navbar-link" style="color:var(--text-secondary); text-decoration:none; padding:6px 12px; border-radius:8px; font-size:0.8rem; display:flex; align-items:center; gap:5px; transition:all 0.2s;">
-                    <i data-lucide="flask-conical" style="width:14px;"></i>
+                <a href="/labs.html" class="navbar-link" style="color:var(--text-secondary); text-decoration:none; padding:6px 10px; border-radius:8px; font-size:0.8rem; display:flex; align-items:center; gap:4px; transition:all 0.2s; white-space:nowrap; flex-shrink:0;">
+                    <i data-lucide="flask-conical" style="width:14px;height:14px;"></i>
                     Labs
                 </a>
-                <a href="#" class="btn-premium-glass pulsing-cta" style="margin-left:8px;">
-                    <i data-lucide="zap" style="width:16px;"></i>
+                <a href="#" class="btn-premium-glass pulsing-cta" style="margin-left:6px; white-space:nowrap; flex-shrink:0;">
+                    <i data-lucide="zap" style="width:14px;height:14px;"></i>
                     Early Access
                 </a>
             `;

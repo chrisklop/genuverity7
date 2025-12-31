@@ -377,7 +377,9 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    flex-shrink: 0;
+    overflow: visible;
 }
 
 .nav-link {
