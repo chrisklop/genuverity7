@@ -3,6 +3,25 @@
 
 const REPORTS_DATA = [
     {
+        id: 65,
+        title: "The Architecture of Deception: Global Disinformation Landscape 2024-2025",
+        slug: "disinformation-architecture-2025",
+        category: "Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "network",
+        date: "Dec 30, 2025",
+        sources: "55 Sources",
+        readTime: "35 min",
+        verdict: "context",
+        excerpt: "Forensic analysis of the industrial-grade disinformation complex: $2.6B ad revenue pipeline, 1,200+ pink slime sites, $10M Tenet Media Russian funding, and the asymmetric infrastructure between left and right-wing manipulation ecosystems.",
+        chart: {
+            type: "network",
+            color: "#ef4444",
+            data: { nodes: 15, connections: 25 }
+        }
+    },
+    {
         id: 64,
         title: "Clickbait Propaganda: 5 Case Studies in December 2025 Disinformation",
         slug: "clickbait-propaganda-december-2025",
