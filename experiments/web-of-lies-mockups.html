@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenuVerity - Experimental Visualizations</title>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/pts@0.10.12/dist/pts.min.js"></script>
+
+    <style>
+        :root {
+            --bg-primary: #050a14;
+            --bg-card: #0a1225;
+            --text-primary: #e4e4e7;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-red: #ef4444;
+            --accent-amber: #f59e0b;
+            --accent-green: #10b981;
+            --border-color: rgba(255,255,255,0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .header {
+            padding: 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .experiment {
+            min-height: 100vh;
+            padding: 60px 40px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .experiment-header {
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .experiment-number {
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .experiment-title {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .experiment-desc {
+            color: var(--text-secondary);
+        }
+
+        .experiment-tech {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .tech-tag {
+            padding: 4px 12px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--accent-blue);
+        }
+
+        .canvas-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 600px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            position: relative;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        .btn.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        /* Experiment 1: Viral Spread */
+        #viralSpread {
+            background: radial-gradient(circle at center, rgba(239, 68, 68, 0.05) 0%, transparent 70%);
+        }
+
+        /* Experiment 2: Narrative Mutation */
+        .tree-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .node circle {
+            fill: var(--bg-card);
+            stroke: var(--accent-blue);
+            stroke-width: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .node circle:hover {
+            fill: rgba(59, 130, 246, 0.2);
+            stroke-width: 3px;
+        }
+
+        .node text {
+            font-size: 11px;
+            fill: var(--text-secondary);
+        }
+
+        .link {
+            fill: none;
+            stroke: var(--border-color);
+            stroke-width: 1.5px;
+        }
+
+        .mutation-badge {
+            font-size: 9px;
+            fill: var(--accent-amber);
+        }
+
+        /* Experiment 3: Echo Chamber */
+        #echoChamber {
+            background: radial-gradient(circle at center, rgba(6, 182, 212, 0.03) 0%, transparent 60%);
+        }
+
+        /* Experiment 4: Bot Network */
+        .grid-cell {
+            fill: var(--bg-card);
+            stroke: var(--border-color);
+            stroke-width: 0.5px;
+            transition: fill 0.3s;
+        }
+
+        .grid-cell.active {
+            fill: var(--accent-red);
+        }
+
+        .grid-cell.bot {
+            fill: var(--accent-amber);
+        }
+
+        /* Experiment 5: Trust Erosion */
+        .trust-bar {
+            height: 40px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-amber), var(--accent-red));
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trust-indicator {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            transition: width 0.5s ease-out;
+        }
+
+        /* Experiment 6: Source Flow Sankey */
+        .sankey-link {
+            fill: none;
+            stroke-opacity: 0.4;
+        }
+
+        .sankey-link:hover {
+            stroke-opacity: 0.7;
+        }
+
+        .sankey-node rect {
+            cursor: pointer;
+        }
+
+        .sankey-node text {
+            font-size: 11px;
+            fill: var(--text-secondary);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            padding: 12px 16px;
+            background: rgba(10, 18, 37, 0.95);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            max-width: 300px;
+            z-index: 1000;
+        }
+
+        .tooltip.visible {
+            opacity: 1;
+        }
+
+        .tooltip-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .tooltip-content {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* Stats overlay */
+        .stats-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 16px;
+            background: rgba(10, 18, 37, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 0.85rem;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 8px;
+        }
+
+        .stat-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+        }
+
+        .stat-value {
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-value.red { color: var(--accent-red); }
+        .stat-value.amber { color: var(--accent-amber); }
+        .stat-value.green { color: var(--accent-green); }
+        .stat-value.blue { color: var(--accent-blue); }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Experimental Visualizations</h1>
+        <p>Exploring advanced animation techniques for visualizing disinformation patterns, viral spread, and media manipulation.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         EXPERIMENT 1: VIRAL SPREAD PARTICLE SYSTEM
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="experiment" id="exp1">
+        <div class="experiment-header">
+            <div class="experiment-number">Experiment 01</div>
+            <h2 class="experiment-title">Viral Spread: The Contagion Effect</h2>
+            <p class="experiment-desc">
+                Watch how a single piece of misinformation spreads exponentially through a network.
+                Each particle represents a share, repost, or mention. Red particles are the original
+                false claim; orange shows mutations; the glow intensity represents engagement.
+            </p>
+            <div class="experiment-tech">
+                <span class="tech-tag">Canvas 2D</span>
+                <span class="tech-tag">Particle System</span>
+                <span class="tech-tag">Exponential Growth</span>
+            </div>
+        </div>
+
+        <div class="canvas-container" id="viralSpread">
+            <canvas id="viralCanvas"></canvas>
+            <div class="stats-overlay">
+                <div class="stat-row">
+                    <span class="stat-label">Total Shares</span>
+                    <span class="stat-value red" id="totalShares">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Reach</span>
+                    <span class="stat-value amber" id="reach">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Mutations</span>
+                    <span class="stat-value blue" id="mutations">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="startViralSpread()">Start Spread</button>
+            <button class="btn" onclick="resetViralSpread()">Reset</button>
+            <button class="btn" onclick="toggleFactCheck()">Deploy Fact-Check</button>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         EXPERIMENT 2: NARRATIVE MUTATION TREE
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="experiment" id="exp2">
+        <div class="experiment-header">
+            <div class="experiment-number">Experiment 02</div>
+            <h2 class="experiment-title">Narrative Mutation: How Claims Evolve</h2>
+            <p class="experiment-desc">
+                A single claim mutates as it spreads, becoming more extreme or pivoting to
+                related conspiracies. This tree visualization shows how "5G causes COVID"
+                branched into dozens of variant claims.
+            </p>
+            <div class="experiment-tech">
+                <span class="tech-tag">D3.js</span>
+                <span class="tech-tag">Hierarchical Tree</span>
+                <span class="tech-tag">Semantic Analysis</span>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <div id="mutationTree" class="tree-container"></div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         EXPERIMENT 3: ECHO CHAMBER VISUALIZATION
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="experiment" id="exp3">
+        <div class="experiment-header">
+            <div class="experiment-number">Experiment 03</div>
+            <h2 class="experiment-title">Echo Chambers: Trapped Information</h2>
+            <p class="experiment-desc">
+                Information particles bounce within isolated bubbles, rarely crossing
+                into other communities. Watch how narratives become reinforced and
+                amplified within closed systems.
+            </p>
+            <div class="experiment-tech">
+                <span class="tech-tag">Pts.js</span>
+                <span class="tech-tag">Physics Simulation</span>
+                <span class="tech-tag">Collision Detection</span>
+            </div>
+        </div>
+
+        <div class="canvas-container" id="echoChamber">
+            <canvas id="echoCanvas"></canvas>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         EXPERIMENT 4: BOT NETWORK COORDINATION
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="experiment" id="exp4">
+        <div class="experiment-header">
+            <div class="experiment-number">Experiment 04</div>
+            <h2 class="experiment-title">Bot Network: Coordinated Inauthentic Behavior</h2>
+            <p class="experiment-desc">
+                A grid of accounts where bot networks light up in coordinated patterns,
+                revealing the artificial amplification of content. Watch for the telltale
+                synchronized waves of activity.
+            </p>
+            <div class="experiment-tech">
+                <span class="tech-tag">SVG Grid</span>
+                <span class="tech-tag">Wave Propagation</span>
+                <span class="tech-tag">Pattern Detection</span>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <svg id="botNetwork" width="100%" height="100%"></svg>
+            <div class="stats-overlay">
+                <div class="stat-row">
+                    <span class="stat-label">Active Accounts</span>
+                    <span class="stat-value blue" id="activeAccounts">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Bot Probability</span>
+                    <span class="stat-value amber" id="botProb">0%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Coordination Score</span>
+                    <span class="stat-value red" id="coordScore">0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="triggerBotWave()">Trigger Coordinated Campaign</button>
+            <button class="btn" onclick="showOrganicActivity()">Show Organic Activity</button>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         EXPERIMENT 5: TRUST EROSION OVER TIME
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="experiment" id="exp5">
+        <div class="experiment-header">
+            <div class="experiment-number">Experiment 05</div>
+            <h2 class="experiment-title">Trust Erosion: Death by a Thousand Cuts</h2>
+            <p class="experiment-desc">
+                Each false claim chips away at institutional trust. This visualization shows
+                how repeated exposure to misinformation gradually erodes confidence in
+                media, science, and government.
+            </p>
+            <div class="experiment-tech">
+                <span class="tech-tag">GSAP Timeline</span>
+                <span class="tech-tag">Degradation Effect</span>
+                <span class="tech-tag">Interactive Decay</span>
+            </div>
+        </div>
+
+        <div class="canvas-container" style="padding: 40px;">
+            <div id="trustErosion">
+                <div style="margin-bottom: 30px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Trust in Media</span>
+                        <span id="mediaTrust">87%</span>
+                    </div>
+                    <div class="trust-bar">
+                        <div class="trust-indicator" id="mediaIndicator" style="width: 13%;"></div>
+                    </div>
+                </div>
+                <div style="margin-bottom: 30px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Trust in Science</span>
+                        <span id="scienceTrust">92%</span>
+                    </div>
+                    <div class="trust-bar">
+                        <div class="trust-indicator" id="scienceIndicator" style="width: 8%;"></div>
+                    </div>
+                </div>
+                <div style="margin-bottom: 30px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Trust in Government</span>
+                        <span id="govTrust">45%</span>
+                    </div>
+                    <div class="trust-bar">
+                        <div class="trust-indicator" id="govIndicator" style="width: 55%;"></div>
+                    </div>
+                </div>
+                <div style="margin-bottom: 30px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Trust in Elections</span>
+                        <span id="electionTrust">72%</span>
+                    </div>
+                    <div class="trust-bar">
+                        <div class="trust-indicator" id="electionIndicator" style="width: 28%;"></div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; padding: 20px; background: rgba(239, 68, 68, 0.1); border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.3);">
+                    <div style="font-weight: 600; margin-bottom: 8px; color: var(--accent-red);">
+                        Disinformation Events
+                    </div>
+                    <div id="eventLog" style="font-size: 0.85rem; color: var(--text-secondary); max-height: 150px; overflow-y: auto;">
+                        <div style="padding: 4px 0; border-bottom: 1px solid var(--border-color);">
+                            Click "Inject Disinformation" to simulate false claim exposure
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="injectDisinfo()">Inject Disinformation</button>
+            <button class="btn" onclick="deployFactCheck5()">Deploy Fact-Check</button>
+            <button class="btn" onclick="resetTrust()">Reset Trust Levels</button>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         EXPERIMENT 6: SOURCE LAUNDERING FLOW
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="experiment" id="exp6">
+        <div class="experiment-header">
+            <div class="experiment-number">Experiment 06</div>
+            <h2 class="experiment-title">Source Laundering: From Fringe to Mainstream</h2>
+            <p class="experiment-desc">
+                A Sankey diagram showing how narratives originating from fringe sources
+                get picked up, repackaged, and eventually reported by mainstream outlets
+                as "some people say" stories.
+            </p>
+            <div class="experiment-tech">
+                <span class="tech-tag">D3.js Sankey</span>
+                <span class="tech-tag">Flow Visualization</span>
+                <span class="tech-tag">Source Tracking</span>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <svg id="sankeyDiagram" width="100%" height="100%"></svg>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         EXPERIMENT 7: WEB OF LIES - INTERCONNECTED CLAIMS
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="experiment" id="exp7">
+        <div class="experiment-header">
+            <div class="experiment-number">Experiment 07</div>
+            <h2 class="experiment-title">Web of Lies: The Conspiracy Ecosystem</h2>
+            <p class="experiment-desc">
+                An interconnected force-directed graph showing how conspiracy theories
+                link together. Pull on one thread and watch how it connects to seemingly
+                unrelated narratives.
+            </p>
+            <div class="experiment-tech">
+                <span class="tech-tag">D3.js Force</span>
+                <span class="tech-tag">Network Graph</span>
+                <span class="tech-tag">Semantic Links</span>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <svg id="webOfLies" width="100%" height="100%"></svg>
+        </div>
+    </section>
+
+    <div class="tooltip" id="tooltip">
+        <div class="tooltip-title"></div>
+        <div class="tooltip-content"></div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // EXPERIMENT 1: VIRAL SPREAD PARTICLE SYSTEM
+        // ═══════════════════════════════════════════════════════════════
+
+        const viralCanvas = document.getElementById('viralCanvas');
+        const viralCtx = viralCanvas.getContext('2d');
+        let viralParticles = [];
+        let viralAnimationId = null;
+        let factCheckActive = false;
+
+        function resizeViralCanvas() {
+            const container = document.getElementById('viralSpread');
+            viralCanvas.width = container.clientWidth;
+            viralCanvas.height = container.clientHeight;
+        }
+        resizeViralCanvas();
+        window.addEventListener('resize', resizeViralCanvas);
+
+        class ViralParticle {
+            constructor(x, y, generation = 0, isMutation = false) {
+                this.x = x;
+                this.y = y;
+                this.generation = generation;
+                this.isMutation = isMutation;
+                this.vx = (Math.random() - 0.5) * 4;
+                this.vy = (Math.random() - 0.5) * 4;
+                this.radius = Math.max(2, 8 - generation * 0.5);
+                this.alpha = 1;
+                this.spreadTimer = Math.random() * 60 + 30;
+                this.hasSpread = false;
+                this.factChecked = false;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vx *= 0.99;
+                this.vy *= 0.99;
+
+                // Bounce off walls
+                if (this.x < this.radius || this.x > viralCanvas.width - this.radius) this.vx *= -1;
+                if (this.y < this.radius || this.y > viralCanvas.height - this.radius) this.vy *= -1;
+
+                // Spread logic
+                this.spreadTimer--;
+                if (this.spreadTimer <= 0 && !this.hasSpread && !this.factChecked && this.generation < 6) {
+                    this.spread();
+                }
+
+                // Fade if fact-checked
+                if (this.factChecked) {
+                    this.alpha -= 0.02;
+                }
+            }
+
+            spread() {
+                this.hasSpread = true;
+                const numChildren = Math.floor(Math.random() * 3) + 1;
+                for (let i = 0; i < numChildren; i++) {
+                    const isMutation = Math.random() < 0.15;
+                    viralParticles.push(new ViralParticle(
+                        this.x + (Math.random() - 0.5) * 30,
+                        this.y + (Math.random() - 0.5) * 30,
+                        this.generation + 1,
+                        isMutation || this.isMutation
+                    ));
+                }
+            }
+
+            draw() {
+                viralCtx.beginPath();
+                viralCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+
+                const baseColor = this.isMutation ? '245, 158, 11' : '239, 68, 68';
+                const glowIntensity = Math.max(0.2, 1 - this.generation * 0.15);
+
+                // Glow effect
+                viralCtx.shadowBlur = 15 * glowIntensity;
+                viralCtx.shadowColor = `rgba(${baseColor}, ${this.alpha * 0.8})`;
+
+                viralCtx.fillStyle = `rgba(${baseColor}, ${this.alpha * glowIntensity})`;
+                viralCtx.fill();
+
+                // Inner core
+                viralCtx.beginPath();
+                viralCtx.arc(this.x, this.y, this.radius * 0.6, 0, Math.PI * 2);
+                viralCtx.fillStyle = `rgba(255, 255, 255, ${this.alpha * 0.5})`;
+                viralCtx.fill();
+
+                viralCtx.shadowBlur = 0;
+            }
+        }
+
+        function animateViral() {
+            viralCtx.fillStyle = 'rgba(5, 10, 20, 0.1)';
+            viralCtx.fillRect(0, 0, viralCanvas.width, viralCanvas.height);
+
+            // Apply fact-check effect
+            if (factCheckActive) {
+                viralParticles.forEach(p => {
+                    if (Math.random() < 0.05) p.factChecked = true;
+                });
+            }
+
+            viralParticles = viralParticles.filter(p => p.alpha > 0);
+
+            viralParticles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Update stats
+            document.getElementById('totalShares').textContent = viralParticles.length.toLocaleString();
+            document.getElementById('reach').textContent = (viralParticles.length * 847).toLocaleString();
+            document.getElementById('mutations').textContent = viralParticles.filter(p => p.isMutation).length;
+
+            viralAnimationId = requestAnimationFrame(animateViral);
+        }
+
+        function startViralSpread() {
+            resetViralSpread();
+            // Start with one particle in center
+            viralParticles.push(new ViralParticle(viralCanvas.width / 2, viralCanvas.height / 2, 0));
+            animateViral();
+        }
+
+        function resetViralSpread() {
+            cancelAnimationFrame(viralAnimationId);
+            viralParticles = [];
+            factCheckActive = false;
+            viralCtx.fillStyle = 'rgba(5, 10, 20, 1)';
+            viralCtx.fillRect(0, 0, viralCanvas.width, viralCanvas.height);
+            document.getElementById('totalShares').textContent = '0';
+            document.getElementById('reach').textContent = '0';
+            document.getElementById('mutations').textContent = '0';
+        }
+
+        function toggleFactCheck() {
+            factCheckActive = !factCheckActive;
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // EXPERIMENT 2: NARRATIVE MUTATION TREE
+        // ═══════════════════════════════════════════════════════════════
+
+        function initMutationTree() {
+            const container = document.getElementById('mutationTree');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            const treeData = {
+                name: "5G causes COVID-19",
+                mutationType: "origin",
+                children: [
+                    {
+                        name: "5G weakens immune system",
+                        mutationType: "causal shift",
+                        children: [
+                            { name: "5G makes vaccines ineffective", mutationType: "addition" },
+                            { name: "5G activates dormant viruses", mutationType: "escalation" }
+                        ]
+                    },
+                    {
+                        name: "COVID is cover for 5G rollout",
+                        mutationType: "inversion",
+                        children: [
+                            { name: "Lockdowns enabled secret 5G installation", mutationType: "elaboration" },
+                            { name: "COVID symptoms are actually 5G radiation", mutationType: "replacement" }
+                        ]
+                    },
+                    {
+                        name: "Bill Gates uses 5G for mind control",
+                        mutationType: "actor addition",
+                        children: [
+                            { name: "Vaccines contain 5G-activated nanobots", mutationType: "tech fantasy" },
+                            { name: "5G towers track vaccinated people", mutationType: "surveillance" },
+                            { name: "Gates profits from both 5G and vaccines", mutationType: "motive" }
+                        ]
+                    }
+                ]
+            };
+
+            const svg = d3.select('#mutationTree')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            const g = svg.append('g')
+                .attr('transform', `translate(80, ${height / 2})`);
+
+            const tree = d3.tree()
+                .size([height - 100, width - 200]);
+
+            const root = d3.hierarchy(treeData);
+            tree(root);
+
+            // Links
+            g.selectAll('.link')
+                .data(root.links())
+                .enter()
+                .append('path')
+                .attr('class', 'link')
+                .attr('d', d3.linkHorizontal()
+                    .x(d => d.y)
+                    .y(d => d.x));
+
+            // Nodes
+            const node = g.selectAll('.node')
+                .data(root.descendants())
+                .enter()
+                .append('g')
+                .attr('class', 'node')
+                .attr('transform', d => `translate(${d.y}, ${d.x})`);
+
+            node.append('circle')
+                .attr('r', 8);
+
+            node.append('text')
+                .attr('dy', -15)
+                .attr('x', d => d.children ? -10 : 10)
+                .style('text-anchor', d => d.children ? 'end' : 'start')
+                .text(d => d.data.name);
+
+            // Mutation type badges
+            node.filter(d => d.data.mutationType !== 'origin')
+                .append('text')
+                .attr('class', 'mutation-badge')
+                .attr('dy', 20)
+                .attr('x', d => d.children ? -10 : 10)
+                .style('text-anchor', d => d.children ? 'end' : 'start')
+                .text(d => `[${d.data.mutationType}]`);
+        }
+
+        initMutationTree();
+
+        // ═══════════════════════════════════════════════════════════════
+        // EXPERIMENT 3: ECHO CHAMBER (Pts.js)
+        // ═══════════════════════════════════════════════════════════════
+
+        function initEchoChamber() {
+            const container = document.getElementById('echoChamber');
+            const space = new Pts.CanvasSpace('#echoCanvas').setup({
+                bgcolor: 'transparent',
+                resize: true
+            });
+
+            const form = space.getForm();
+
+            // Define echo chamber bubbles
+            const chambers = [
+                { center: [200, 200], radius: 150, color: 'rgba(239, 68, 68, 0.1)', particles: [] },
+                { center: [500, 350], radius: 180, color: 'rgba(59, 130, 246, 0.1)', particles: [] },
+                { center: [850, 200], radius: 140, color: 'rgba(245, 158, 11, 0.1)', particles: [] },
+                { center: [700, 450], radius: 160, color: 'rgba(6, 182, 212, 0.1)', particles: [] }
+            ];
+
+            // Create particles for each chamber
+            chambers.forEach(chamber => {
+                for (let i = 0; i < 15; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = Math.random() * chamber.radius * 0.7;
+                    chamber.particles.push({
+                        pos: new Pts.Pt(
+                            chamber.center[0] + Math.cos(angle) * dist,
+                            chamber.center[1] + Math.sin(angle) * dist
+                        ),
+                        vel: new Pts.Pt(
+                            (Math.random() - 0.5) * 3,
+                            (Math.random() - 0.5) * 3
+                        ),
+                        radius: 4 + Math.random() * 4
+                    });
+                }
+            });
+
+            space.add({
+                animate: (time, ftime) => {
+                    // Draw chambers
+                    chambers.forEach(chamber => {
+                        // Chamber boundary
+                        form.fillOnly(chamber.color).circle([chamber.center, chamber.radius]);
+                        form.strokeOnly('rgba(255,255,255,0.1)', 1).circle([chamber.center, chamber.radius]);
+
+                        // Update and draw particles
+                        chamber.particles.forEach(p => {
+                            // Update position
+                            p.pos.add(p.vel);
+
+                            // Bounce off chamber walls
+                            const dist = p.pos.$subtract(chamber.center).magnitude();
+                            if (dist > chamber.radius - p.radius) {
+                                // Reflect velocity
+                                const normal = p.pos.$subtract(chamber.center).normalize();
+                                const dot = p.vel.dot(normal);
+                                p.vel.subtract(normal.$multiply(2 * dot));
+
+                                // Push back inside
+                                p.pos = new Pts.Pt(chamber.center).add(
+                                    normal.$multiply(chamber.radius - p.radius - 1)
+                                );
+                            }
+
+                            // Draw particle
+                            form.fillOnly('rgba(255,255,255,0.6)').circle([p.pos, p.radius]);
+                            form.fillOnly('rgba(255,255,255,0.9)').circle([p.pos, p.radius * 0.4]);
+                        });
+                    });
+
+                    // Draw connections within chambers
+                    chambers.forEach(chamber => {
+                        chamber.particles.forEach((p1, i) => {
+                            chamber.particles.slice(i + 1).forEach(p2 => {
+                                const dist = p1.pos.$subtract(p2.pos).magnitude();
+                                if (dist < 80) {
+                                    const alpha = (1 - dist / 80) * 0.3;
+                                    form.strokeOnly(`rgba(255,255,255,${alpha})`, 1).line([p1.pos, p2.pos]);
+                                }
+                            });
+                        });
+                    });
+                }
+            });
+
+            space.play();
+        }
+
+        initEchoChamber();
+
+        // ═══════════════════════════════════════════════════════════════
+        // EXPERIMENT 4: BOT NETWORK GRID
+        // ═══════════════════════════════════════════════════════════════
+
+        let botGrid = [];
+        const gridCols = 40;
+        const gridRows = 20;
+
+        function initBotNetwork() {
+            const svg = d3.select('#botNetwork');
+            const container = document.querySelector('#botNetwork').parentElement;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            svg.attr('viewBox', `0 0 ${width} ${height}`);
+
+            const cellWidth = width / gridCols;
+            const cellHeight = height / gridRows;
+
+            // Create grid
+            for (let row = 0; row < gridRows; row++) {
+                for (let col = 0; col < gridCols; col++) {
+                    const cell = svg.append('rect')
+                        .attr('class', 'grid-cell')
+                        .attr('x', col * cellWidth)
+                        .attr('y', row * cellHeight)
+                        .attr('width', cellWidth - 1)
+                        .attr('height', cellHeight - 1)
+                        .attr('rx', 2);
+
+                    botGrid.push({
+                        el: cell,
+                        row,
+                        col,
+                        isBot: Math.random() < 0.3,
+                        active: false
+                    });
+                }
+            }
+        }
+
+        function triggerBotWave() {
+            const startCol = Math.floor(gridCols / 2);
+
+            botGrid.forEach(cell => {
+                if (cell.isBot) {
+                    const delay = Math.abs(cell.col - startCol) * 50 + Math.random() * 100;
+
+                    setTimeout(() => {
+                        cell.el.classed('bot', true);
+                        cell.active = true;
+                        updateBotStats();
+
+                        setTimeout(() => {
+                            cell.el.classed('bot', false);
+                            cell.active = false;
+                            updateBotStats();
+                        }, 1500);
+                    }, delay);
+                }
+            });
+        }
+
+        function showOrganicActivity() {
+            // Random organic activity pattern
+            const iterations = 20;
+            for (let i = 0; i < iterations; i++) {
+                const randomCell = botGrid[Math.floor(Math.random() * botGrid.length)];
+
+                setTimeout(() => {
+                    randomCell.el.classed('active', true);
+                    updateBotStats();
+
+                    setTimeout(() => {
+                        randomCell.el.classed('active', false);
+                        updateBotStats();
+                    }, 500 + Math.random() * 1000);
+                }, i * 200 + Math.random() * 300);
+            }
+        }
+
+        function updateBotStats() {
+            const active = botGrid.filter(c => c.active || c.el.classed('active') || c.el.classed('bot')).length;
+            const bots = botGrid.filter(c => c.el.classed('bot')).length;
+
+            document.getElementById('activeAccounts').textContent = active;
+            document.getElementById('botProb').textContent = active > 0 ?
+                Math.round((bots / Math.max(active, 1)) * 100) + '%' : '0%';
+            document.getElementById('coordScore').textContent =
+                (bots / gridCols * 10).toFixed(2);
+        }
+
+        initBotNetwork();
+
+        // ═══════════════════════════════════════════════════════════════
+        // EXPERIMENT 5: TRUST EROSION
+        // ═══════════════════════════════════════════════════════════════
+
+        const trustLevels = {
+            media: 87,
+            science: 92,
+            gov: 45,
+            election: 72
+        };
+
+        const disinfoEvents = [
+            { text: "Viral post claims voting machines were 'hacked'", targets: ['election', 'gov'], damage: [8, 3] },
+            { text: "False claim about vaccine side effects spreads", targets: ['science', 'media'], damage: [5, 4] },
+            { text: "Doctored video of politician goes viral", targets: ['media', 'gov'], damage: [6, 5] },
+            { text: "Conspiracy about 'deep state' trends on social media", targets: ['gov', 'election'], damage: [7, 4] },
+            { text: "Fake news site mimics legitimate outlet", targets: ['media'], damage: [8] },
+            { text: "AI-generated audio of scientist surfaces", targets: ['science', 'media'], damage: [6, 5] },
+            { text: "False election fraud claims amplified by bots", targets: ['election', 'media'], damage: [9, 4] }
+        ];
+
+        function injectDisinfo() {
+            const event = disinfoEvents[Math.floor(Math.random() * disinfoEvents.length)];
+
+            // Apply damage
+            event.targets.forEach((target, i) => {
+                trustLevels[target] = Math.max(10, trustLevels[target] - event.damage[i]);
+            });
+
+            // Update UI
+            updateTrustDisplay();
+
+            // Log event
+            const log = document.getElementById('eventLog');
+            const entry = document.createElement('div');
+            entry.style.padding = '4px 0';
+            entry.style.borderBottom = '1px solid var(--border-color)';
+            entry.innerHTML = `<span style="color: var(--accent-red);">▼</span> ${event.text}`;
+            log.insertBefore(entry, log.firstChild);
+        }
+
+        function deployFactCheck5() {
+            // Restore some trust
+            Object.keys(trustLevels).forEach(key => {
+                trustLevels[key] = Math.min(100, trustLevels[key] + 3);
+            });
+            updateTrustDisplay();
+
+            const log = document.getElementById('eventLog');
+            const entry = document.createElement('div');
+            entry.style.padding = '4px 0';
+            entry.style.borderBottom = '1px solid var(--border-color)';
+            entry.innerHTML = `<span style="color: var(--accent-green);">▲</span> Fact-check deployed - trust partially restored`;
+            log.insertBefore(entry, log.firstChild);
+        }
+
+        function updateTrustDisplay() {
+            document.getElementById('mediaTrust').textContent = trustLevels.media + '%';
+            document.getElementById('scienceTrust').textContent = trustLevels.science + '%';
+            document.getElementById('govTrust').textContent = trustLevels.gov + '%';
+            document.getElementById('electionTrust').textContent = trustLevels.election + '%';
+
+            gsap.to('#mediaIndicator', { width: (100 - trustLevels.media) + '%', duration: 0.5 });
+            gsap.to('#scienceIndicator', { width: (100 - trustLevels.science) + '%', duration: 0.5 });
+            gsap.to('#govIndicator', { width: (100 - trustLevels.gov) + '%', duration: 0.5 });
+            gsap.to('#electionIndicator', { width: (100 - trustLevels.election) + '%', duration: 0.5 });
+        }
+
+        function resetTrust() {
+            trustLevels.media = 87;
+            trustLevels.science = 92;
+            trustLevels.gov = 45;
+            trustLevels.election = 72;
+            updateTrustDisplay();
+            document.getElementById('eventLog').innerHTML =
+                '<div style="padding: 4px 0; border-bottom: 1px solid var(--border-color);">Click "Inject Disinformation" to simulate false claim exposure</div>';
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // EXPERIMENT 6: SOURCE LAUNDERING SANKEY
+        // ═══════════════════════════════════════════════════════════════
+
+        function initSankey() {
+            const container = document.querySelector('#sankeyDiagram').parentElement;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            const svg = d3.select('#sankeyDiagram')
+                .attr('viewBox', `0 0 ${width} ${height}`);
+
+            // Simplified Sankey-like visualization using paths
+            const sources = [
+                { name: "Anonymous Forum", x: 50, y: 80, color: '#ef4444' },
+                { name: "Fake News Site", x: 50, y: 180, color: '#ef4444' },
+                { name: "Foreign State Media", x: 50, y: 280, color: '#f59e0b' },
+                { name: "Fringe Podcast", x: 50, y: 380, color: '#ef4444' },
+                { name: "Bot Network", x: 50, y: 480, color: '#f59e0b' }
+            ];
+
+            const amplifiers = [
+                { name: "Influencer A", x: 300, y: 120, color: '#f59e0b' },
+                { name: "Partisan Blog", x: 300, y: 220, color: '#f59e0b' },
+                { name: "YouTube Channel", x: 300, y: 320, color: '#f59e0b' },
+                { name: "Twitter Trending", x: 300, y: 420, color: '#06b6d4' }
+            ];
+
+            const mainstream = [
+                { name: "Cable News Panel", x: 550, y: 150, color: '#06b6d4' },
+                { name: "Print Article", x: 550, y: 270, color: '#3b82f6' },
+                { name: "Wire Service", x: 550, y: 390, color: '#3b82f6' }
+            ];
+
+            const legitimized = [
+                { name: "Major Network", x: 800, y: 200, color: '#3b82f6' },
+                { name: "Policy Debate", x: 800, y: 350, color: '#10b981' }
+            ];
+
+            // Draw connections
+            const connections = [
+                // Sources to Amplifiers
+                { from: sources[0], to: amplifiers[0], strength: 2 },
+                { from: sources[1], to: amplifiers[1], strength: 3 },
+                { from: sources[1], to: amplifiers[2], strength: 2 },
+                { from: sources[2], to: amplifiers[1], strength: 2 },
+                { from: sources[3], to: amplifiers[2], strength: 3 },
+                { from: sources[4], to: amplifiers[3], strength: 4 },
+                // Amplifiers to Mainstream
+                { from: amplifiers[0], to: mainstream[0], strength: 2 },
+                { from: amplifiers[1], to: mainstream[1], strength: 2 },
+                { from: amplifiers[2], to: mainstream[0], strength: 2 },
+                { from: amplifiers[3], to: mainstream[2], strength: 3 },
+                // Mainstream to Legitimized
+                { from: mainstream[0], to: legitimized[0], strength: 3 },
+                { from: mainstream[1], to: legitimized[0], strength: 2 },
+                { from: mainstream[2], to: legitimized[1], strength: 2 }
+            ];
+
+            // Draw curved paths
+            connections.forEach(conn => {
+                const path = svg.append('path')
+                    .attr('class', 'sankey-link')
+                    .attr('d', `M${conn.from.x + 120},${conn.from.y}
+                               C${(conn.from.x + conn.to.x) / 2},${conn.from.y}
+                                ${(conn.from.x + conn.to.x) / 2},${conn.to.y}
+                                ${conn.to.x},${conn.to.y}`)
+                    .attr('stroke', conn.from.color)
+                    .attr('stroke-width', conn.strength * 3);
+            });
+
+            // Draw source nodes
+            [...sources, ...amplifiers, ...mainstream, ...legitimized].forEach(node => {
+                const g = svg.append('g')
+                    .attr('class', 'sankey-node')
+                    .attr('transform', `translate(${node.x}, ${node.y - 15})`);
+
+                g.append('rect')
+                    .attr('width', 120)
+                    .attr('height', 30)
+                    .attr('fill', node.color)
+                    .attr('rx', 4);
+
+                g.append('text')
+                    .attr('x', 60)
+                    .attr('y', 20)
+                    .attr('text-anchor', 'middle')
+                    .attr('fill', '#fff')
+                    .attr('font-size', '10px')
+                    .text(node.name);
+            });
+
+            // Labels
+            svg.append('text').attr('x', 110).attr('y', 30).attr('fill', '#666').text('ORIGIN');
+            svg.append('text').attr('x', 320).attr('y', 30).attr('fill', '#666').text('AMPLIFICATION');
+            svg.append('text').attr('x', 560).attr('y', 30).attr('fill', '#666').text('MAINSTREAM');
+            svg.append('text').attr('x', 810).attr('y', 30).attr('fill', '#666').text('LEGITIMIZED');
+        }
+
+        initSankey();
+
+        // ═══════════════════════════════════════════════════════════════
+        // EXPERIMENT 7: WEB OF LIES FORCE GRAPH
+        // ═══════════════════════════════════════════════════════════════
+
+        function initWebOfLies() {
+            const container = document.querySelector('#webOfLies').parentElement;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            const svg = d3.select('#webOfLies')
+                .attr('viewBox', `0 0 ${width} ${height}`);
+
+            // Conspiracy theory nodes and connections
+            const nodes = [
+                { id: "qanon", label: "QAnon", group: 1, size: 30 },
+                { id: "deepstate", label: "Deep State", group: 1, size: 25 },
+                { id: "nwo", label: "New World Order", group: 2, size: 28 },
+                { id: "5g", label: "5G Dangers", group: 3, size: 22 },
+                { id: "covid-lab", label: "Lab Leak", group: 3, size: 24 },
+                { id: "vaccine", label: "Vaccine Microchips", group: 3, size: 26 },
+                { id: "election", label: "Stolen Election", group: 1, size: 28 },
+                { id: "chemtrails", label: "Chemtrails", group: 2, size: 18 },
+                { id: "flatearth", label: "Flat Earth", group: 4, size: 16 },
+                { id: "moonlanding", label: "Moon Landing Hoax", group: 4, size: 14 },
+                { id: "illuminati", label: "Illuminati", group: 2, size: 24 },
+                { id: "reptilian", label: "Reptilians", group: 2, size: 15 },
+                { id: "pizzagate", label: "Pizzagate", group: 1, size: 20 },
+                { id: "antivax", label: "Anti-Vax", group: 3, size: 26 },
+                { id: "climate", label: "Climate Hoax", group: 4, size: 22 },
+                { id: "soros", label: "Soros Conspiracy", group: 1, size: 20 },
+                { id: "bigpharma", label: "Big Pharma", group: 3, size: 22 },
+                { id: "911", label: "9/11 Inside Job", group: 2, size: 20 }
+            ];
+
+            const links = [
+                { source: "qanon", target: "deepstate" },
+                { source: "qanon", target: "pizzagate" },
+                { source: "qanon", target: "election" },
+                { source: "deepstate", target: "nwo" },
+                { source: "deepstate", target: "soros" },
+                { source: "nwo", target: "illuminati" },
+                { source: "nwo", target: "vaccine" },
+                { source: "5g", target: "covid-lab" },
+                { source: "5g", target: "vaccine" },
+                { source: "vaccine", target: "antivax" },
+                { source: "vaccine", target: "bigpharma" },
+                { source: "antivax", target: "bigpharma" },
+                { source: "illuminati", target: "reptilian" },
+                { source: "illuminati", target: "nwo" },
+                { source: "flatearth", target: "moonlanding" },
+                { source: "flatearth", target: "chemtrails" },
+                { source: "chemtrails", target: "climate" },
+                { source: "climate", target: "nwo" },
+                { source: "911", target: "deepstate" },
+                { source: "soros", target: "election" },
+                { source: "covid-lab", target: "bigpharma" },
+                { source: "election", target: "deepstate" }
+            ];
+
+            const colorScale = d3.scaleOrdinal()
+                .domain([1, 2, 3, 4])
+                .range(['#ef4444', '#f59e0b', '#06b6d4', '#10b981']);
+
+            const simulation = d3.forceSimulation(nodes)
+                .force('link', d3.forceLink(links).id(d => d.id).distance(100))
+                .force('charge', d3.forceManyBody().strength(-300))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(d => d.size + 10));
+
+            // Draw links
+            const link = svg.append('g')
+                .selectAll('line')
+                .data(links)
+                .enter()
+                .append('line')
+                .attr('stroke', 'rgba(255,255,255,0.15)')
+                .attr('stroke-width', 1);
+
+            // Draw nodes
+            const node = svg.append('g')
+                .selectAll('g')
+                .data(nodes)
+                .enter()
+                .append('g')
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended));
+
+            node.append('circle')
+                .attr('r', d => d.size)
+                .attr('fill', d => colorScale(d.group))
+                .attr('fill-opacity', 0.3)
+                .attr('stroke', d => colorScale(d.group))
+                .attr('stroke-width', 2);
+
+            node.append('text')
+                .text(d => d.label)
+                .attr('text-anchor', 'middle')
+                .attr('dy', 4)
+                .attr('fill', '#fff')
+                .attr('font-size', '10px');
+
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                node.attr('transform', d => `translate(${d.x}, ${d.y})`);
+            });
+
+            function dragstarted(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+
+            function dragended(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+        }
+
+        initWebOfLies();
+
+        // Start viral animation automatically
+        setTimeout(startViralSpread, 1000);
+    </script>
+</body>
+</html>
