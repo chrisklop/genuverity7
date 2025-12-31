@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QAnon Network Analysis: From 4chan to Congress | GenuVerity</title>
+    <meta name="description" content="Comprehensive analysis of how QAnon spread from anonymous 4chan posts to mainstream politics, including network amplification patterns, key influencers, and platform responses.">
+    <meta name="keywords" content="QAnon, disinformation, conspiracy theory, 4chan, 8chan, network analysis, social media amplification">
+    <meta name="author" content="GenuVerity Intelligence">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../favicon.png">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.genuverity.com/localreports/qanon-network-analysis.html">
+    <meta property="og:title" content="QAnon Network Analysis: From 4chan to Congress | GenuVerity">
+    <meta property="og:description" content="Comprehensive analysis of how QAnon spread from anonymous 4chan posts to mainstream politics.">
+    <meta property="og:image" content="https://www.genuverity.com/images/thumbnails/qanon-network-analysis.webp">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.genuverity.com/localreports/qanon-network-analysis.html">
+    <meta property="twitter:title" content="QAnon Network Analysis: From 4chan to Congress | GenuVerity">
+    <meta property="twitter:description" content="Comprehensive analysis of how QAnon spread from anonymous 4chan posts to mainstream politics.">
+    <meta property="twitter:image" content="https://www.genuverity.com/images/thumbnails/qanon-network-analysis.webp">
+
+    <!-- Structured Data (JSON-LD) for NewsArticle -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": "QAnon Network Analysis: From 4chan to Congress",
+      "description": "Comprehensive analysis of how QAnon spread from anonymous 4chan posts to mainstream politics, including network amplification patterns, key influencers, and platform responses.",
+      "image": ["https://www.genuverity.com/images/thumbnails/qanon-network-analysis.webp"],
+      "datePublished": "2025-12-31",
+      "dateModified": "2025-12-31",
+      "author": {
+        "@type": "Organization",
+        "name": "GenuVerity",
+        "url": "https://www.genuverity.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GenuVerity",
+        "url": "https://www.genuverity.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.genuverity.com/favicon.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.genuverity.com/localreports/qanon-network-analysis.html"
+      },
+      "articleSection": "Network Analysis",
+      "keywords": "QAnon, disinformation, conspiracy theory, 4chan, 8chan, network analysis"
+    }
+    </script>
+
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/chart-watermark.js"></script>
+    <script src="../js/chart-defaults.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js?v=4.0" defer></script>
+    <script src="../js/shared-components.js?v=4.0" defer></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/shared-components.css?v=4.0">
+    <link rel="stylesheet" href="../css/reports.css?v=4.0">
+</head>
+
+<body>
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
+    <div class="container">
+        <!-- REPORT HEADER -->
+        <div class="report-meta">
+            <span class="meta-tag">Network Analysis</span>
+            <span class="meta-tag red">Conspiracy Movement</span>
+            <span class="meta-tag"><i data-lucide="clock" style="width:12px; display:inline-block; vertical-align:middle;"></i> 18 MIN READ</span>
+        </div>
+
+        <h1 class="report-title">QAnon Network Analysis: From 4chan to Congress</h1>
+        <h2 class="report-subtitle">How Anonymous Posts Became a Political Force Through Coordinated Network Amplification</h2>
+
+        <!-- MAIN LAYOUT GRID -->
+        <div class="content-grid">
+            <!-- SIDEBAR: SOURCES FIRST -->
+            <aside class="sources-sidebar">
+                <!-- Social Sharing Buttons -->
+                <div class="share-section">
+                    <div class="share-heading"><i data-lucide="share-2" style="width:18px;"></i>Share This Report</div>
+                    <div class="share-buttons">
+                        <button onclick="shareToTwitter()" class="share-btn share-twitter">
+                            <i data-lucide="twitter"></i> X
+                        </button>
+                        <button onclick="shareToFacebook()" class="share-btn share-facebook">
+                            <i data-lucide="facebook"></i> Facebook
+                        </button>
+                        <button onclick="shareToLinkedIn()" class="share-btn share-linkedin">
+                            <i data-lucide="linkedin"></i> LinkedIn
+                        </button>
+                        <button onclick="copyShareLink()" class="share-btn share-copy" id="copyLinkBtn">
+                            <i data-lucide="link"></i> Copy Link
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sources header -->
+                <div class="sources-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
+                    <span class="sources-count">12</span>
+                </div>
+                <div class="sources-list" id="sourcesList">
+                    <a href="https://www.britannica.com/topic/QAnon" target="_blank" class="source-card" id="source-1">
+                        <span class="source-ref">1</span>
+                        <div>
+                            <div>QAnon - Encyclopedia Britannica</div>
+                            <div style="font-size:0.7em; opacity:0.7;">britannica.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.buffalo.edu/news/releases/2023/04/004.html" target="_blank" class="source-card" id="source-2">
+                        <span class="source-ref">2</span>
+                        <div>
+                            <div>QAnon on Twitter: Fringe to Mainstream Study</div>
+                            <div style="font-size:0.7em; opacity:0.7;">buffalo.edu</div>
+                        </div>
+                    </a>
+                    <a href="https://extremismterms.adl.org/resources/backgrounder/qanon" target="_blank" class="source-card" id="source-3">
+                        <span class="source-ref">3</span>
+                        <div>
+                            <div>QAnon Backgrounder - ADL</div>
+                            <div style="font-size:0.7em; opacity:0.7;">adl.org</div>
+                        </div>
+                    </a>
+                    <a href="https://transparency.meta.com/reports/integrity-reports-q4-2024/" target="_blank" class="source-card" id="source-4">
+                        <span class="source-ref">4</span>
+                        <div>
+                            <div>Meta Transparency Q4 2024 Report</div>
+                            <div style="font-size:0.7em; opacity:0.7;">transparency.meta.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.washingtonpost.com/politics/greene-qanon-house-republican-support/2021/01/30/321b4258-623c-11eb-ac8f-4ae05557196e_story.html" target="_blank" class="source-card" id="source-5">
+                        <span class="source-ref">5</span>
+                        <div>
+                            <div>Rep. Greene and QAnon - Washington Post</div>
+                            <div style="font-size:0.7em; opacity:0.7;">washingtonpost.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.cnn.com/2021/06/14/politics/fbi-qanon-threat-assessment/index.html" target="_blank" class="source-card" id="source-6">
+                        <span class="source-ref">6</span>
+                        <div>
+                            <div>FBI QAnon Threat Assessment - CNN</div>
+                            <div style="font-size:0.7em; opacity:0.7;">cnn.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.hsgac.senate.gov/media/dems/peters-report-finds-significant-intelligence-failures-by-fbi-and-dhs-in-lead-up-to-january-6th-capitol-attack" target="_blank" class="source-card" id="source-7">
+                        <span class="source-ref">7</span>
+                        <div>
+                            <div>Senate January 6 Intelligence Report</div>
+                            <div style="font-size:0.7em; opacity:0.7;">hsgac.senate.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.npr.org/2024/12/30/nx-s1-5230801/qanon-capitol-riot-social-media" target="_blank" class="source-card" id="source-8">
+                        <span class="source-ref">8</span>
+                        <div>
+                            <div>Why QAnon Hasn't Gone Away - NPR</div>
+                            <div style="font-size:0.7em; opacity:0.7;">npr.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.adl.org/resources/article/mis-and-disinformation-trends-and-tactics-watch-2025" target="_blank" class="source-card" id="source-9">
+                        <span class="source-ref">9</span>
+                        <div>
+                            <div>Disinformation Trends 2025 - ADL</div>
+                            <div style="font-size:0.7em; opacity:0.7;">adl.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.nbcnews.com/tech/tech-news/how-three-conspiracy-theorists-took-q-sparked-qanon-n900531" target="_blank" class="source-card" id="source-10">
+                        <span class="source-ref">10</span>
+                        <div>
+                            <div>Who Is Behind QAnon? - NBC News</div>
+                            <div style="font-size:0.7em; opacity:0.7;">nbcnews.com</div>
+                        </div>
+                    </a>
+                    <a href="https://arxiv.org/html/2302.01397v4" target="_blank" class="source-card" id="source-11">
+                        <span class="source-ref">11</span>
+                        <div>
+                            <div>QAnon Platform Migration Study - arXiv</div>
+                            <div style="font-size:0.7em; opacity:0.7;">arxiv.org</div>
+                        </div>
+                    </a>
+                    <a href="https://transparency.x.com/en" target="_blank" class="source-card" id="source-12">
+                        <span class="source-ref">12</span>
+                        <div>
+                            <div>X Transparency Center</div>
+                            <div style="font-size:0.7em; opacity:0.7;">transparency.x.com</div>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- MAIN ARTICLE CONTENT -->
+            <article class="article-content">
+
+                <!-- TL;DR VERDICT -->
+                <div class="info-box amber copyable-section" id="tldr">
+                    <div class="info-title"><i data-lucide="zap"></i>TL;DR</div>
+                    <p><strong>CONTEXT NEEDED</strong></p>
+                    <p>QAnon demonstrates how anonymous fringe content can achieve mainstream political influence through coordinated network amplification. What began as cryptic 4chan posts in October 2017 became a movement with <strong>congressional representation by 2020</strong> and contributed to <strong>21% of January 6 arrests</strong>. Despite platform crackdowns, the movement persists through mutations and alternative platforms.</p>
+                </div>
+
+                <!-- EXECUTIVE SUMMARY -->
+                <div class="info-box copyable-section" id="executive-summary">
+                    <div class="info-title"><i data-lucide="file-text"></i>Executive Summary</div>
+                    <p>This analysis traces QAnon's evolution from an anonymous 4chan LARP (live-action role-play) to a political force with elected representatives. Using network analysis data from academic studies, platform transparency reports, and government investigations, we document the amplification mechanisms that enabled this spread: early promoter coordination, astroturfing campaigns, symbiotic media amplification, and eventual political legitimization. The case study reveals structural vulnerabilities in social media ecosystems that enable fringe content to achieve mainstream adoption.</p>
+                </div>
+
+                <!-- CHART: QAnon Growth Timeline -->
+                <figure class="float-figure copyable-section" id="growth-chart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">QAnon Content Growth on Major Platforms</div>
+                        </div>
+                        <canvas id="growthChart" height="220"></canvas>
+                    </div>
+                    <figcaption>QAnon posts surged 175% on Facebook and 77% on Instagram during March-June 2020 (ADL data)</figcaption>
+                </figure>
+
+                <section class="copyable-section">
+                    <h2>Origins: The 4chan Genesis (October 2017)</h2>
+                    <p>QAnon originated on <strong>October 28, 2017</strong>, when an anonymous user posted on 4chan's /pol/ (Politically Incorrect) board claiming to have <em>"Q-level"</em> government security clearance. <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a> The posts, written in cryptic style with rhetorical questions and coded references, alleged a secret operation against a <em>"deep state"</em> cabal engaged in child trafficking and satanic rituals.</p>
+
+                    <p>Forensic analysis and linguistic research later identified three key early promoters who transformed these anonymous posts into a movement: <strong>Paul Furber</strong> (South African software developer posting as "BaruchtheScribe"), <strong>Coleman Rogers</strong> ("Pamphlet Anon"), and YouTuber <strong>Tracy Diaz</strong> ("TracyBeanz"). <a href="#source-10" class="citation-link" onclick="highlightSource(event, 'source-10')">[10]</a> These individuals created the infrastructure for Q content distribution, including dedicated YouTube channels, Discord servers, and aggregator websites.</p>
+
+                    <p>In early 2018, Q migrated from 4chan to <strong>8chan</strong> (later renamed 8kun), citing concerns about infiltration. This migration cemented the relationship between Q and the Watkins family, who owned the platform. <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a></p>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Network Amplification Mechanisms</h2>
+                    <p>A 2023 study published in <em>New Media & Society</em> by University at Buffalo researchers documented how QAnon achieved mainstream visibility through <strong>coordinated network amplification</strong>. <a href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a> The research found evidence of astroturfing&mdash;coordinated inauthentic behavior where multiple accounts amplify content in concert.</p>
+
+                    <p>The study identified a <strong>"feedback loop"</strong> between social media and partisan news outlets: extreme comments on platforms like Twitter became engagement-worthy content for partisan media, which then amplified the narratives back to broader audiences. Lead researcher <strong>Dr. Yini Zhang</strong> noted: <em>"The wildest and most extreme comments on social media are more engagement-worthy and more likely to be picked up by partisan media."</em></p>
+
+                    <p>Russian-backed Twitter accounts began amplifying QAnon hashtags as early as <strong>November 2017</strong>, just weeks after the first posts appeared. <a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a> This foreign amplification, combined with domestic coordination, created the appearance of organic grassroots momentum.</p>
+                </section>
+
+                <!-- DATA TABLE: Platform Growth -->
+                <div class="data-table-container copyable-section">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Platform</th>
+                                <th>Growth Rate (Mar-Jun 2020)</th>
+                                <th>Peak Engagement Period</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Facebook</td>
+                                <td><strong>+175%</strong></td>
+                                <td>COVID-19 lockdowns</td>
+                            </tr>
+                            <tr>
+                                <td>Instagram</td>
+                                <td><strong>+77.1%</strong></td>
+                                <td>Wellness community infiltration</td>
+                            </tr>
+                            <tr>
+                                <td>Twitter</td>
+                                <td><strong>+63.7%</strong></td>
+                                <td>2020 election cycle</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <section class="copyable-section">
+                    <h2>Key Amplifiers and Political Legitimization</h2>
+                    <p>The transition from fringe conspiracy to political movement accelerated when <strong>Marjorie Taylor Greene</strong> won Georgia's 14th Congressional District in November 2020, becoming the first U.S. congressperson to have explicitly endorsed QAnon. <a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a> Greene had called the anonymous Q <em>"a patriot"</em> and claimed 4chan/8chan posts were <em>"proven to be true."</em></p>
+
+                    <p>On Telegram, the account "GhostEzra"&mdash;later revealed to be spreading explicitly antisemitic content including Holocaust denial&mdash;became the largest QAnon influencer with hundreds of thousands of followers. <a href="#source-3" class="citation-link" onclick="highlightSource(event, 'source-3')">[3]</a> The ADL documented how QAnon's core narratives drew heavily from historical antisemitic tropes, including blood libel accusations repackaged as claims about elite pedophile networks.</p>
+
+                    <p>Early celebrity amplification, including <strong>Roseanne Barr's</strong> Twitter activity, helped bridge QAnon from anonymous imageboards to mainstream visibility. This "celebrity laundering" pattern would repeat across the movement's evolution.</p>
+                </section>
+
+                <!-- CHART: January 6 Involvement -->
+                <figure class="float-figure copyable-section" id="j6-chart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">January 6 Arrests by Affiliation</div>
+                        </div>
+                        <canvas id="j6Chart" height="220"></canvas>
+                    </div>
+                    <figcaption>155 of 727 arrested (21%) had documented ties to QAnon or extremist groups</figcaption>
+                </figure>
+
+                <section class="copyable-section">
+                    <h2>Platform Responses and Deplatforming</h2>
+                    <p>Following the January 6, 2021 Capitol breach, major platforms implemented aggressive enforcement against QAnon content. <strong>Meta</strong> (Facebook/Instagram) reported banning <em>"tens of thousands of QAnon pages, Groups and accounts"</em> and removing over a thousand <em>"militarized social movements."</em> <a href="#source-4" class="citation-link" onclick="highlightSource(event, 'source-4')">[4]</a></p>
+
+                    <p><strong>Twitter/X</strong> suspended approximately <strong>70,000 QAnon-related accounts</strong> in the aftermath of January 6. <a href="#source-12" class="citation-link" onclick="highlightSource(event, 'source-12')">[12]</a> The coordinated deplatforming disrupted the movement's centralized communication infrastructure, forcing migration to alternative platforms.</p>
+
+                    <p>However, Meta's Q4 2024 transparency report noted that policy changes&mdash;including the removal of third-party fact-checking in favor of Community Notes&mdash;have not resulted in <em>"meaningful increases"</em> in QAnon policy violations. <a href="#source-4" class="citation-link" onclick="highlightSource(event, 'source-4')">[4]</a> This suggests either effective prior enforcement or evolution of content to avoid detection.</p>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Government Threat Assessment</h2>
+                    <p>In June 2021, the <strong>FBI</strong> issued an intelligence bulletin warning lawmakers about potential violence from QAnon adherents frustrated by unfulfilled prophecies. <a href="#source-6" class="citation-link" onclick="highlightSource(event, 'source-6')">[6]</a> The assessment noted that January 6 participation had <em>"demonstrated the potential for violence"</em> and warned of <em>"lone actor or small cell violence"</em> risks.</p>
+
+                    <p>A Senate Committee investigation found <strong>significant intelligence failures</strong> by the FBI and DHS prior to January 6, despite awareness of online threats from QAnon communities. <a href="#source-7" class="citation-link" onclick="highlightSource(event, 'source-7')">[7]</a> The FBI had failed to issue a formal intelligence bulletin due to concerns about First Amendment implications&mdash;a structural challenge that persists in monitoring online extremism.</p>
+
+                    <p>Of the <strong>727 individuals arrested</strong> for January 6 participation, at least <strong>155 (21%)</strong> had documented ties to QAnon or related extremist groups. <a href="#source-3" class="citation-link" onclick="highlightSource(event, 'source-3')">[3]</a> More than 20 self-identified QAnon adherents were among those charged.</p>
+                </section>
+
+                <!-- ALERT BOX -->
+                <div class="info-box red copyable-section" style="clear: both;">
+                    <div class="info-title"><i data-lucide="alert-triangle"></i>Active Threat Assessment</div>
+                    <p>FBI assessment (2021): QAnon adherents present ongoing <em>"lone actor"</em> violence risk. The movement's decentralized structure and unfalsifiable core beliefs create persistent radicalization pathways even after organizational disruption.</p>
+                </div>
+
+                <section class="copyable-section">
+                    <h2>Current State: Mutations and Persistence (2024-2025)</h2>
+                    <p>Q stopped posting on <strong>December 8, 2020</strong>, but the movement has persisted through mutation and absorption into broader conspiracy ecosystems. <a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a> Rather than using explicit QAnon branding, adherents have shifted to vaccine skepticism, election fraud narratives, and Trump indictment theories.</p>
+
+                    <p>Academic research tracking platform migration found QAnon communities moved to <strong>Telegram, Rumble, and Truth Social</strong> following deplatforming. <a href="#source-11" class="citation-link" onclick="highlightSource(event, 'source-11')">[11]</a> These less-moderated environments created new amplification networks outside mainstream platform governance.</p>
+
+                    <p>NPR reporting from December 2024 documented that <strong>Kash Patel</strong>&mdash;now nominated as FBI Director&mdash;had recruited QAnon influencers to Truth Social while working for Trump. <a href="#source-8" class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a> Rep. Greene recently disavowed QAnon publicly, though the movement's core narratives remain integrated into her political messaging.</p>
+
+                    <p>The ADL's 2025 disinformation trends report identifies <strong>generative AI</strong> as an emerging tool for producing and amplifying QAnon-adjacent content, enabling rapid narrative production that outpaces fact-checking capacity. <a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a></p>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Network Analysis Findings</h2>
+                    <p>This case study reveals several structural vulnerabilities that enabled QAnon's spread:</p>
+                    <ul>
+                        <li><strong>Promoter Coordination:</strong> A small number of early promoters (3-5 individuals) created distribution infrastructure that enabled viral spread</li>
+                        <li><strong>Platform Symbiosis:</strong> Migration between platforms (4chan → 8chan → mainstream social media → Telegram) allowed the movement to evade enforcement while expanding reach</li>
+                        <li><strong>Media Feedback Loops:</strong> Partisan media amplification of social media content created legitimization pathways</li>
+                        <li><strong>Political Capture:</strong> Electoral success by QAnon-endorsing candidates provided official legitimacy</li>
+                        <li><strong>Mutation Resilience:</strong> The movement's core beliefs proved adaptable, persisting through rebranding and narrative evolution</li>
+                    </ul>
+                </section>
+
+                <div class="info-box green copyable-section">
+                    <div class="info-title"><i data-lucide="check-circle"></i>Key Takeaways</div>
+                    <p><strong>For researchers:</strong> QAnon provides a documented case study of fringe-to-mainstream amplification with available network data.</p>
+                    <p><strong>For platforms:</strong> Deplatforming disrupted but did not eliminate the movement; migration to alternative platforms enabled persistence.</p>
+                    <p><strong>For policymakers:</strong> The FBI's pre-January 6 intelligence failures highlight ongoing challenges in monitoring online extremism without First Amendment violations.</p>
+                </div>
+
+            </article>
+        </div>
+    </div>
+
+    <!-- Shared Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Initialize Lucide Icons
+        window.addEventListener('gv:componentsReady', () => {
+            lucide.createIcons();
+        });
+
+        // Interactive Citation Highlighting
+        function highlightSource(event, id) {
+            event.preventDefault();
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                element.classList.remove('highlight');
+                void element.offsetWidth;
+                element.classList.add('highlight');
+            }
+        }
+
+        // Social Sharing Functions
+        function shareToTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(document.title);
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
+        }
+
+        function shareToFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
+        }
+
+        function shareToLinkedIn() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank', 'width=600,height=600');
+        }
+
+        function copyShareLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const btn = document.getElementById('copyLinkBtn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i data-lucide="check"></i> Copied!';
+                btn.classList.add('copied');
+                lucide.createIcons({ nodes: [btn] });
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('copied');
+                    lucide.createIcons({ nodes: [btn] });
+                }, 2000);
+            });
+        }
+
+        // Chart.js Configurations
+        // QAnon Growth Chart
+        new Chart(document.getElementById('growthChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Facebook', 'Instagram', 'Twitter'],
+                datasets: [{
+                    label: 'Growth % (Mar-Jun 2020)',
+                    data: [175, 77.1, 63.7],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(6, 182, 212, 0.8)',
+                        'rgba(16, 185, 129, 0.8)'
+                    ],
+                    borderColor: [
+                        '#3b82f6',
+                        '#06b6d4',
+                        '#10b981'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: {
+                            color: '#64748b',
+                            callback: function(value) { return value + '%'; }
+                        }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // January 6 Chart
+        new Chart(document.getElementById('j6Chart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['QAnon/Extremist Ties', 'No Documented Affiliation'],
+                datasets: [{
+                    data: [21, 79],
+                    backgroundColor: [
+                        'rgba(239, 68, 68, 0.8)',
+                        'rgba(100, 116, 139, 0.4)'
+                    ],
+                    borderColor: [
+                        '#ef4444',
+                        '#64748b'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: { color: '#94a3b8', padding: 15 }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

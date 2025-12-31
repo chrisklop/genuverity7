@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wire Service Amplification: One Story, 600 Outlets | GenuVerity</title>
+    <meta name="description" content="Analysis of how wire services like AP, Reuters, and AFP can amplify misinformation to hundreds of outlets simultaneously, and the verification challenges of modern news syndication.">
+    <meta name="keywords" content="wire services, AP, Reuters, AFP, news syndication, amplification, misinformation, fact-checking">
+    <meta name="author" content="GenuVerity Intelligence">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../favicon.png">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.genuverity.com/localreports/wire-service-amplification.html">
+    <meta property="og:title" content="Wire Service Amplification: One Story, 600 Outlets | GenuVerity">
+    <meta property="og:description" content="Analysis of how wire services can amplify misinformation to hundreds of outlets simultaneously.">
+    <meta property="og:image" content="https://www.genuverity.com/images/thumbnails/wire-service-amplification.webp">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.genuverity.com/localreports/wire-service-amplification.html">
+    <meta property="twitter:title" content="Wire Service Amplification: One Story, 600 Outlets | GenuVerity">
+    <meta property="twitter:description" content="Analysis of wire service amplification dynamics and verification challenges.">
+    <meta property="twitter:image" content="https://www.genuverity.com/images/thumbnails/wire-service-amplification.webp">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": "Wire Service Amplification: One Story, 600 Outlets",
+      "description": "Analysis of how wire services can amplify misinformation to hundreds of outlets simultaneously.",
+      "image": ["https://www.genuverity.com/images/thumbnails/wire-service-amplification.webp"],
+      "datePublished": "2025-12-31",
+      "dateModified": "2025-12-31",
+      "author": {"@type": "Organization", "name": "GenuVerity", "url": "https://www.genuverity.com"},
+      "publisher": {"@type": "Organization", "name": "GenuVerity", "url": "https://www.genuverity.com", "logo": {"@type": "ImageObject", "url": "https://www.genuverity.com/favicon.png"}},
+      "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.genuverity.com/localreports/wire-service-amplification.html"},
+      "articleSection": "Media Analysis",
+      "keywords": "wire services, AP, Reuters, AFP, news syndication, amplification"
+    }
+    </script>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/chart-watermark.js"></script>
+    <script src="../js/chart-defaults.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js?v=4.0" defer></script>
+    <script src="../js/shared-components.js?v=4.0" defer></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/shared-components.css?v=4.0">
+    <link rel="stylesheet" href="../css/reports.css?v=4.0">
+</head>
+
+<body>
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
+    <div class="container">
+        <div class="report-meta">
+            <span class="meta-tag">Media Analysis</span>
+            <span class="meta-tag red">Syndication Effects</span>
+            <span class="meta-tag"><i data-lucide="clock" style="width:12px; display:inline-block; vertical-align:middle;"></i> 14 MIN READ</span>
+        </div>
+
+        <h1 class="report-title">Wire Service Amplification: One Story, 600 Outlets</h1>
+        <h2 class="report-subtitle">How Syndication Networks Multiply Both Truth and Misinformation</h2>
+
+        <div class="content-grid">
+            <aside class="sources-sidebar">
+                <div class="share-section">
+                    <div class="share-heading"><i data-lucide="share-2" style="width:18px;"></i>Share This Report</div>
+                    <div class="share-buttons">
+                        <button onclick="shareToTwitter()" class="share-btn share-twitter"><i data-lucide="twitter"></i> X</button>
+                        <button onclick="shareToFacebook()" class="share-btn share-facebook"><i data-lucide="facebook"></i> Facebook</button>
+                        <button onclick="shareToLinkedIn()" class="share-btn share-linkedin"><i data-lucide="linkedin"></i> LinkedIn</button>
+                        <button onclick="copyShareLink()" class="share-btn share-copy" id="copyLinkBtn"><i data-lucide="link"></i> Copy Link</button>
+                    </div>
+                </div>
+
+                <div class="sources-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
+                    <span class="sources-count">12</span>
+                </div>
+                <div class="sources-list" id="sourcesList">
+                    <a href="https://news.mit.edu/2018/study-twitter-false-news-travels-faster-true-stories-0308" target="_blank" class="source-card" id="source-1">
+                        <span class="source-ref">1</span>
+                        <div><div>False News Travels Faster - MIT Study</div><div style="font-size:0.7em; opacity:0.7;">news.mit.edu</div></div>
+                    </a>
+                    <a href="https://www.science.org/doi/10.1126/sciadv.adu7743" target="_blank" class="source-card" id="source-2">
+                        <span class="source-ref">2</span>
+                        <div><div>Media Competition Arms Race - Science Advances</div><div style="font-size:0.7em; opacity:0.7;">science.org</div></div>
+                    </a>
+                    <a href="https://members.newsleaders.org/resources-ethics-ap" target="_blank" class="source-card" id="source-3">
+                        <span class="source-ref">3</span>
+                        <div><div>AP Statement of News Values</div><div style="font-size:0.7em; opacity:0.7;">newsleaders.org</div></div>
+                    </a>
+                    <a href="https://ifcncodeofprinciples.poynter.org/application/public/ap-fact-check/661a8b0aba7689d481422adc" target="_blank" class="source-card" id="source-4">
+                        <span class="source-ref">4</span>
+                        <div><div>AP Fact Check - IFCN Certification</div><div style="font-size:0.7em; opacity:0.7;">poynter.org</div></div>
+                    </a>
+                    <a href="https://ifcncodeofprinciples.poynter.org/application/public/afp-fact-checking/661a8b04ba7689d481419130" target="_blank" class="source-card" id="source-5">
+                        <span class="source-ref">5</span>
+                        <div><div>AFP Fact Check Procedures - IFCN</div><div style="font-size:0.7em; opacity:0.7;">poynter.org</div></div>
+                    </a>
+                    <a href="https://www.poynter.org/fact-checking/2020/do-no-harm-debunking-without-amplification/" target="_blank" class="source-card" id="source-6">
+                        <span class="source-ref">6</span>
+                        <div><div>Debunking Without Amplification - Poynter</div><div style="font-size:0.7em; opacity:0.7;">poynter.org</div></div>
+                    </a>
+                    <a href="https://www.kff.org/health-information-trust/from-margins-to-mainstream-how-amplification-may-be-giving-misinformation-new-reach/" target="_blank" class="source-card" id="source-7">
+                        <span class="source-ref">7</span>
+                        <div><div>Amplification Giving Misinfo New Reach - KFF</div><div style="font-size:0.7em; opacity:0.7;">kff.org</div></div>
+                    </a>
+                    <a href="https://journalistsresource.org/politics-and-government/news-misinformation-superspreaders/" target="_blank" class="source-card" id="source-8">
+                        <span class="source-ref">8</span>
+                        <div><div>News Outlets as Superspreaders - Journalists Resource</div><div style="font-size:0.7em; opacity:0.7;">journalistsresource.org</div></div>
+                    </a>
+                    <a href="https://knightcolumbia.org/content/its-the-algorithm-a-large-scale-comparative-field-study-of-misinformation-interventions" target="_blank" class="source-card" id="source-9">
+                        <span class="source-ref">9</span>
+                        <div><div>Algorithmic Deamplification Study - Knight Institute</div><div style="font-size:0.7em; opacity:0.7;">knightcolumbia.org</div></div>
+                    </a>
+                    <a href="https://thedecisionlab.com/biases/illusory-truth-effect" target="_blank" class="source-card" id="source-10">
+                        <span class="source-ref">10</span>
+                        <div><div>Illusory Truth Effect - Decision Lab</div><div style="font-size:0.7em; opacity:0.7;">thedecisionlab.com</div></div>
+                    </a>
+                    <a href="https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2024/dnr-executive-summary" target="_blank" class="source-card" id="source-11">
+                        <span class="source-ref">11</span>
+                        <div><div>Digital News Report 2024 - Reuters Institute</div><div style="font-size:0.7em; opacity:0.7;">reutersinstitute.politics.ox.ac.uk</div></div>
+                    </a>
+                    <a href="https://www.npr.org/ethics" target="_blank" class="source-card" id="source-12">
+                        <span class="source-ref">12</span>
+                        <div><div>NPR Ethics Handbook</div><div style="font-size:0.7em; opacity:0.7;">npr.org</div></div>
+                    </a>
+                </div>
+            </aside>
+
+            <article class="article-content">
+
+                <div class="info-box amber copyable-section" id="tldr">
+                    <div class="info-title"><i data-lucide="zap"></i>TL;DR</div>
+                    <p><strong>CONTEXT NEEDED</strong></p>
+                    <p>Wire services like <strong>AP, Reuters, and AFP</strong> syndicate content to 500-600+ media outlets simultaneously. While these services maintain rigorous verification standards, errors that slip through achieve <strong>massive amplification</strong>. MIT research found false news reaches 1,500 people <strong>6x faster</strong> than true news and is <strong>70% more likely to be retweeted</strong>. The <em>illusory truth effect</em>&mdash;where repeated exposure increases perceived truthfulness&mdash;compounds syndication's amplification power.</p>
+                </div>
+
+                <div class="info-box copyable-section" id="executive-summary">
+                    <div class="info-title"><i data-lucide="file-text"></i>Executive Summary</div>
+                    <p>This report examines the double-edged nature of wire service syndication. News agencies serve as the "little-noticed backbone" of journalism, distributing verified information to hundreds of outlets. However, the same infrastructure that enables efficient truth distribution can amplify misinformation when verification fails. We analyze wire service standards, the psychology of repetition-based credibility, and the competitive dynamics that can compromise accuracy.</p>
+                </div>
+
+                <figure class="float-figure copyable-section" id="speed-chart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">Speed Advantage of False vs. True News</div>
+                        </div>
+                        <canvas id="speedChart" height="220"></canvas>
+                    </div>
+                    <figcaption>MIT study: False news reaches 1,500 people 6x faster than truth</figcaption>
+                </figure>
+
+                <section class="copyable-section">
+                    <h2>The Scale of Syndication</h2>
+                    <p>Wire services represent an enormous multiplier for news distribution. Commercial newswires syndicate content to <strong>500-600+ media outlets</strong>, including ABC, NBC, FOX, and CBS networks, financial portals, industry news aggregators, and local media. A single story can appear on hundreds of sites within hours.</p>
+
+                    <p>The <strong>Nieman Foundation</strong> describes wire services as <em>"the little-noticed backbone of much of the reporting seen across media."</em> Most local news outlets lack resources for original reporting on national or international stories, relying instead on wire content republished with minimal modification.</p>
+
+                    <p>This creates both efficiency and vulnerability: accurate reporting reaches audiences at scale, but errors&mdash;once syndicated&mdash;become nearly impossible to fully retract.</p>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Wire Service Verification Standards</h2>
+                    <p>Major wire services maintain rigorous verification standards. The <strong>Associated Press</strong> Statement of News Values insists on <em>"highest standards of integrity"</em> and states the organization will <em>"not knowingly introduce false information into material intended for publication."</em> <a href="#source-3" class="citation-link" onclick="highlightSource(event, 'source-3')">[3]</a></p>
+
+                    <p>AP Fact Check procedures require:</p>
+                    <ul>
+                        <li>Reporters rely on <strong>primary sources</strong> and contacts with firsthand knowledge</li>
+                        <li>All items edited for clarity, thoroughness, balance, and tone</li>
+                        <li>Review by <strong>at least one editor (usually two)</strong> before publication</li>
+                        <li>Findings based on original reporting and credible datasets</li>
+                    </ul>
+
+                    <p><strong>AFP Fact Check</strong> maintains over 100 fact-checking journalists in 24 languages with regional editors across five continents. <a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a> The service uses CrowdTangle Search to identify viral content and monitors an <em>"overperforming score"</em> to detect rapidly spreading misinformation.</p>
+                </section>
+
+                <div class="data-table-container copyable-section">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Wire Service</th>
+                                <th>Verification Process</th>
+                                <th>Fact-Check Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Associated Press</td>
+                                <td>Primary sources, dual editor review</td>
+                                <td>IFCN Certified</td>
+                            </tr>
+                            <tr>
+                                <td>AFP</td>
+                                <td>100+ journalists, 24 languages</td>
+                                <td>IFCN Certified</td>
+                            </tr>
+                            <tr>
+                                <td>Reuters</td>
+                                <td>Named sources preferred, fact-first</td>
+                                <td>Reuters Fact Check</td>
+                            </tr>
+                            <tr>
+                                <td>AAP (Australia)</td>
+                                <td>Daily conference, 2+ sources required</td>
+                                <td>IFCN Certified</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <section class="copyable-section">
+                    <h2>The Illusory Truth Effect</h2>
+                    <p>Syndication's amplification power intersects with a well-documented cognitive bias: the <strong>illusory truth effect</strong>. First identified in 1977, this phenomenon shows that <strong>repeated information is perceived as more truthful</strong>&mdash;regardless of actual accuracy. <a href="#source-10" class="citation-link" onclick="highlightSource(event, 'source-10')">[10]</a></p>
+
+                    <p>Key findings about illusory truth:</p>
+                    <ul>
+                        <li>Repetition increases <em>processing fluency</em>, creating a false sense of validity</li>
+                        <li>The effect does <strong>not depend on timing</strong> between repetitions</li>
+                        <li>False news headlines feature <strong>more repetition</strong> than true articles</li>
+                        <li>The effect persists even when people are explicitly warned about it</li>
+                    </ul>
+
+                    <p>When a single wire story appears across 500+ outlets, the repetition alone lends credibility. <strong>KFF research</strong> confirms: <em>"Repeated exposure to false claims increases perception of plausibility,"</em> and <em>"neither fact-checking nor media literacy fully mitigates repeated misinformation."</em> <a href="#source-7" class="citation-link" onclick="highlightSource(event, 'source-7')">[7]</a></p>
+                </section>
+
+                <figure class="float-figure copyable-section" id="amplification-chart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">Syndication Amplification Scale</div>
+                        </div>
+                        <canvas id="amplificationChart" height="220"></canvas>
+                    </div>
+                    <figcaption>Wire service reach across major news categories</figcaption>
+                </figure>
+
+                <section class="copyable-section">
+                    <h2>The Speed-Accuracy Tradeoff</h2>
+                    <p><strong>MIT Media Lab</strong> research analyzing 126,000 Twitter stories found false news reaches the first 1,500 people <strong>6x faster</strong> than true news. <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a> Falsehoods were <strong>70% more likely to be retweeted</strong>. Critically, humans&mdash;not bots&mdash;drove this spread.</p>
+
+                    <p>A <em>Science Advances</em> study used game-theoretic modeling to demonstrate that <strong>media competition creates an "arms race"</strong> dynamic. <a href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a> When one outlet increases sensational or inaccurate content, competitors respond similarly to maintain audience share. The equilibrium forces news sources toward more misinformation, not less.</p>
+
+                    <p>The <strong>Reuters Handbook</strong> explicitly addresses this tension: <em>"Accuracy is at the heart of what we do. It is our job to get it first but it is above all our job to get it right."</em> But competitive pressure can erode this priority, particularly when speed determines which outlet's version of a story gets syndicated first.</p>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>News Outlets as Superspreaders</h2>
+                    <p><strong>Journalists Resource</strong> (Shorenstein Center) documented how legitimate news outlets can become misinformation superspreaders. <a href="#source-8" class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a> Key findings:</p>
+
+                    <ul>
+                        <li>Fake news sites get <strong>little traction without mainstream outlet attention</strong></li>
+                        <li>Media faces a paradox: must repeat false claims to debunk them</li>
+                        <li><strong>"Junk news" gets 4x the shares</strong> of reputable news on Facebook</li>
+                        <li>Misinformation has competitive advantage&mdash;it's not constrained by truth</li>
+                    </ul>
+
+                    <p>The <strong>NPR Ethics Handbook</strong> warns: <em>"Too often incorrect information is passed down from one story to another."</em> <a href="#source-12" class="citation-link" onclick="highlightSource(event, 'source-12')">[12]</a> Wire syndication can accelerate this cascading error effect when outlets republish without independent verification.</p>
+                </section>
+
+                <div class="info-box cyan copyable-section" style="clear: both;">
+                    <div class="info-title"><i data-lucide="info"></i>Effective Interventions</div>
+                    <p>Research shows <strong>fact-checking reduces false news sharing by 25%</strong>. <a href="#source-6" class="citation-link" onclick="highlightSource(event, 'source-6')">[6]</a> People are nearly 2x less likely to share content flagged by fact-checkers. The <strong>Knight First Amendment Institute</strong> found algorithmic deamplification reduced engagement with misinformation by <strong>50%+</strong>. <a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a></p>
+                </div>
+
+                <section class="copyable-section">
+                    <h2>Platform Trust Challenges</h2>
+                    <p>The <strong>Reuters Institute Digital News Report 2024</strong> found that <strong>27% of TikTok users</strong> struggle to distinguish trustworthy from untrustworthy news. <a href="#source-11" class="citation-link" onclick="highlightSource(event, 'source-11')">[11]</a> TikTok and X generate the highest concerns about content verification among respondents.</p>
+
+                    <p>This trust deficit complicates wire service correction efforts. Even when services issue corrections, syndicated content may not be updated across all outlets. The original error persists in archives, search results, and social media shares&mdash;continuing to influence audiences through illusory truth effects.</p>
+
+                    <p>A <em>Science</em> study found <strong>misinformation exploits outrage to spread online</strong>&mdash;outrage is highly engaging regardless of accuracy. People more prone to share content with negative emotional tone are more likely to amplify false claims. <a href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a></p>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Recommendations for Syndication Integrity</h2>
+                    <p>Based on the research, several approaches can improve wire service accuracy:</p>
+                    <ul>
+                        <li><strong>Verification velocity:</strong> Invest in faster fact-checking to match misinformation's speed advantage</li>
+                        <li><strong>Correction propagation:</strong> Develop systems to push corrections to all outlets that republished original content</li>
+                        <li><strong>Repetition awareness:</strong> Limit repeated republication of unverified claims during debunking</li>
+                        <li><strong>Outlet responsibility:</strong> Receiving outlets should verify before republishing, not assume wire accuracy</li>
+                        <li><strong>Emotional framing:</strong> Reduce outrage-driven headlines that exploit engagement incentives</li>
+                    </ul>
+                </section>
+
+                <div class="info-box green copyable-section">
+                    <div class="info-title"><i data-lucide="check-circle"></i>Key Takeaways</div>
+                    <p><strong>For news consumers:</strong> Recognize that seeing the same story across multiple outlets doesn't confirm accuracy&mdash;it may reflect syndication from a single source.</p>
+                    <p><strong>For journalists:</strong> Verify wire content independently when possible; don't assume syndicated stories have been fact-checked for your specific context.</p>
+                    <p><strong>For platforms:</strong> Algorithmic deamplification of unverified content can reduce misinformation spread by 50%+.</p>
+                </div>
+
+            </article>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
+
+        function highlightSource(event, id) {
+            event.preventDefault();
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                element.classList.remove('highlight');
+                void element.offsetWidth;
+                element.classList.add('highlight');
+            }
+        }
+
+        function shareToTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(document.title);
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
+        }
+        function shareToFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
+        }
+        function shareToLinkedIn() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank', 'width=600,height=600');
+        }
+        function copyShareLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const btn = document.getElementById('copyLinkBtn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i data-lucide="check"></i> Copied!';
+                btn.classList.add('copied');
+                lucide.createIcons({ nodes: [btn] });
+                setTimeout(() => { btn.innerHTML = originalHTML; btn.classList.remove('copied'); lucide.createIcons({ nodes: [btn] }); }, 2000);
+            });
+        }
+
+        // Speed Chart
+        new Chart(document.getElementById('speedChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['False News', 'True News'],
+                datasets: [{
+                    label: 'Relative Speed to 1,500 People',
+                    data: [6, 1],
+                    backgroundColor: ['rgba(239, 68, 68, 0.8)', 'rgba(16, 185, 129, 0.8)'],
+                    borderColor: ['#ef4444', '#10b981'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#64748b', callback: v => v + 'x' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Amplification Chart
+        new Chart(document.getElementById('amplificationChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['TV Networks (ABC, NBC, CBS, FOX)', 'Local News Outlets', 'Digital News Sites', 'Financial Portals'],
+                datasets: [{
+                    data: [25, 35, 30, 10],
+                    backgroundColor: ['rgba(59, 130, 246, 0.8)', 'rgba(6, 182, 212, 0.8)', 'rgba(16, 185, 129, 0.8)', 'rgba(245, 158, 11, 0.8)'],
+                    borderColor: ['#3b82f6', '#06b6d4', '#10b981', '#f59e0b'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: true, position: 'bottom', labels: { color: '#94a3b8', padding: 10 } } }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -3,6 +3,120 @@
 
 const REPORTS_DATA = [
     {
+        id: 73,
+        title: "QAnon Network Analysis: From 4chan to Congress",
+        slug: "qanon-network-analysis",
+        category: "Network Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-analysis",
+        icon: "network",
+        date: "Dec 31, 2025",
+        sources: "12 Sources",
+        readTime: "18 min",
+        verdict: "context",
+        excerpt: "How anonymous 4chan posts became a political force with congressional representation. Tracing QAnon's spread through coordinated amplification, key influencers like MTG, and platform responses. 21% of January 6 arrests had QAnon ties.",
+        chart: {
+            type: "network",
+            color: "#f59e0b",
+            data: { nodes: 13, connections: 24 }
+        }
+    },
+    {
+        id: 72,
+        title: "Partisan Influencer Networks: The Amplification Machine",
+        slug: "partisan-influencer-networks",
+        category: "Network Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "users",
+        date: "Dec 31, 2025",
+        sources: "12 Sources",
+        readTime: "16 min",
+        verdict: "context",
+        excerpt: "False news spreads 70% more likely to be retweeted. 47% identify influencers as top misinformation threat. Analysis of parasocial trust, financial incentives, and state-sponsored influencer operations targeting democratic elections.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [47, 47, 38, 35]
+        }
+    },
+    {
+        id: 71,
+        title: "YouTube Radicalization Pipeline: Algorithmic Rabbit Holes Examined",
+        slug: "youtube-radicalization-pipeline",
+        category: "Platform Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-analysis",
+        icon: "play-circle",
+        date: "Dec 31, 2025",
+        sources: "12 Sources",
+        readTime: "20 min",
+        verdict: "mixed",
+        excerpt: "The 'rabbit hole' hypothesis is more contested than narratives suggest. 2025 PNAS study: algorithm has limited impact on beliefs. But off-platform viewing may drive more radicalization than YouTube's internal recommendations.",
+        chart: {
+            type: "donut",
+            color: "#f59e0b",
+            data: 61
+        }
+    },
+    {
+        id: 70,
+        title: "Cable News Narrative Laundering: How Fringe Becomes Mainstream",
+        slug: "cable-news-narrative-laundering",
+        category: "Media Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "tv",
+        date: "Dec 31, 2025",
+        sources: "10 Sources",
+        readTime: "15 min",
+        verdict: "context",
+        excerpt: "The 'attention backbone' pipeline: fringe → partisan → mainstream. Cable networks grew significantly more polarized over 10 years. Primetime is the most polarized time slot. 'Sanewashing' normalizes extreme rhetoric.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [45, 55, 68, 78, 82, 88]
+        }
+    },
+    {
+        id: 69,
+        title: "Wire Service Amplification: One Story, 600 Outlets",
+        slug: "wire-service-amplification",
+        category: "Media Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-analysis",
+        icon: "share-2",
+        date: "Dec 31, 2025",
+        sources: "12 Sources",
+        readTime: "14 min",
+        verdict: "context",
+        excerpt: "Wire services syndicate to 500-600+ outlets simultaneously. False news reaches 1,500 people 6x faster than truth. The illusory truth effect makes repeated exposure dangerous—and syndication maximizes repetition.",
+        chart: {
+            type: "bar",
+            color: "#3b82f6",
+            data: [6, 1]
+        }
+    },
+    {
+        id: 68,
+        title: "Primetime Special Legitimization: When Networks Give Platforms",
+        slug: "primetime-special-legitimization",
+        category: "Media Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "monitor",
+        date: "Dec 31, 2025",
+        sources: "10 Sources",
+        readTime: "12 min",
+        verdict: "context",
+        excerpt: "Networks have NO legal obligation for 'equal time'—Fairness Doctrine abolished 1987. Editorial discretion is an active choice. 94% of journalists see misinformation as major problem; only 8% think orgs handle it well.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [94, 8]
+        }
+    },
+    {
         id: 67,
         title: "The Protocols of the Elders of Zion: Anatomy of a Fabrication",
         slug: "protocols-elders-zion",
