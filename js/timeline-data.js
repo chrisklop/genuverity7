@@ -464,7 +464,7 @@ const TIMELINE_DATA = {
             years: "1891–1995",
             summary: "Sigmund Freud's nephew and the 'Father of Public Relations.' After working for the CPI in WWI, he privatized propaganda techniques into 'public relations.' His 1929 'Torches of Freedom' campaign convinced women that smoking was feminist liberation.",
             significance: "Invented modern PR and demonstrated how psychology could manipulate public behavior at scale.",
-            reportSlug: "edward-bernays-pr"
+            reportSlug: "edward-bernays-propaganda"
         },
         "woodrow-wilson": {
             term: "Woodrow Wilson",
@@ -482,7 +482,7 @@ const TIMELINE_DATA = {
             years: "1909–1965",
             summary: "CIA officer who directed the Office of Policy Coordination and ran Operation Mockingbird. Called his network of journalist assets his 'Mighty Wurlitzer'—an organ he could play to produce any propaganda tune needed.",
             significance: "Architect of CIA media infiltration that compromised major American news outlets.",
-            reportSlug: "operation-mockingbird"
+            reportSlug: "operation-mockingbird-cia"
         },
         "allen-dulles": {
             term: "Allen Dulles",
@@ -536,7 +536,7 @@ const TIMELINE_DATA = {
             years: "1975–present",
             summary: "Former CEO of Cambridge Analytica who oversaw the harvesting of 87 million Facebook profiles. Secretly recorded boasting about using honey traps, bribery, and 'beautiful Ukrainian girls' to entrap political opponents.",
             significance: "Face of the psychographic targeting scandal that revealed social media's vulnerability.",
-            reportSlug: "cambridge-analytica"
+            reportSlug: "cambridge-analytica-2016"
         },
         "yevgeny-prigozhin": {
             term: "Yevgeny Prigozhin",
@@ -545,7 +545,7 @@ const TIMELINE_DATA = {
             years: "1961–2023",
             summary: "Russian oligarch known as 'Putin's Chef' who funded the Internet Research Agency troll farm. The IRA reached 126 million Americans on Facebook during the 2016 election. Died in a suspicious plane crash in 2023.",
             significance: "Bankrolled the most successful foreign influence operation against American social media.",
-            reportSlug: "ira-troll-farm"
+            reportSlug: "internet-research-agency-2016"
         },
         "mark-zuckerberg": {
             term: "Mark Zuckerberg",
@@ -613,7 +613,7 @@ const TIMELINE_DATA = {
             founded: 1947,
             summary: "America's foreign intelligence service, created from the wartime OSS. During the Cold War, ran Operation Mockingbird to influence domestic media and numerous covert operations abroad. The Church Committee exposed many of its abuses in 1975.",
             significance: "The revelation that the CIA infiltrated American media created lasting distrust of institutions.",
-            reportSlug: "operation-mockingbird"
+            reportSlug: "operation-mockingbird-cia"
         },
         "fbi": {
             term: "FBI",
@@ -673,7 +673,7 @@ const TIMELINE_DATA = {
             founded: 2013,
             summary: "Russian 'troll farm' based in St. Petersburg, funded by Yevgeny Prigozhin. Employed hundreds of people to create fake American personas, organize real protests on both political sides, and spread divisive content. Reached 126 million Americans on Facebook alone.",
             significance: "Demonstrated that a small operation could weaponize American social media against itself.",
-            reportSlug: "ira-troll-farm"
+            reportSlug: "internet-research-agency-2016"
         },
         "cambridge-analytica": {
             term: "Cambridge Analytica",
@@ -683,7 +683,7 @@ const TIMELINE_DATA = {
             founded: 2013,
             summary: "British political consulting firm that harvested 87 million Facebook profiles through a personality quiz app. Used psychographic profiling to deliver micro-targeted political ads. Went bankrupt in 2018 after whistleblower exposé.",
             significance: "Revealed how personal data could be weaponized for invisible political manipulation.",
-            reportSlug: "cambridge-analytica"
+            reportSlug: "cambridge-analytica-2016"
         },
         "facebook": {
             term: "Facebook/Meta",
@@ -787,7 +787,7 @@ const TIMELINE_DATA = {
             year: 1949,
             summary: "FCC policy requiring broadcast licensees to present contrasting viewpoints on controversial issues of public importance. Created a centrist, 'both sides' media environment for 38 years until its repeal in 1987.",
             significance: "Its repeal enabled the rise of partisan talk radio and cable news.",
-            reportSlug: "fairness-doctrine"
+            reportSlug: "fairness-doctrine-history"
         },
         "section-230": {
             term: "Section 230",
@@ -873,7 +873,7 @@ const TIMELINE_DATA = {
             era: "cold-war",
             summary: "CIA program that recruited 400+ American journalists as intelligence assets during the Cold War. Major outlets including NYT, Time, CBS, and others provided cover and suppressed stories. Exposed by the Church Committee and Carl Bernstein.",
             significance: "Proved that the 'free press' was secretly coordinating with intelligence services.",
-            reportSlug: "operation-mockingbird"
+            reportSlug: "operation-mockingbird-cia"
         },
         "psychographic-targeting": {
             term: "Psychographic Targeting",
@@ -881,7 +881,7 @@ const TIMELINE_DATA = {
             era: "digital-age",
             summary: "Marketing technique that targets audiences based on psychological characteristics—personality, values, attitudes, interests—rather than just demographics. Cambridge Analytica used Facebook data to build psychographic profiles of 87 million Americans.",
             significance: "Enables invisible, personalized manipulation at unprecedented scale.",
-            reportSlug: "cambridge-analytica"
+            reportSlug: "cambridge-analytica-2016"
         },
         "narrowcasting": {
             term: "Narrowcasting",
@@ -954,7 +954,7 @@ const TIMELINE_DATA = {
             era: "wwi-propaganda",
             summary: "Edward Bernays' 1929 PR campaign for American Tobacco. Hired women to smoke cigarettes in the Easter Sunday Parade as an act of feminist liberation. Successfully rebranded a health hazard as empowerment.",
             significance: "Textbook case of manufacturing desire through psychological manipulation.",
-            reportSlug: "edward-bernays-pr"
+            reportSlug: "edward-bernays-propaganda"
         },
         "church-committee": {
             term: "Church Committee",

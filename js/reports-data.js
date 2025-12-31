@@ -3,6 +3,101 @@
 
 const REPORTS_DATA = [
     {
+        id: 78,
+        title: "The Fairness Doctrine: How America Lost Balance in Broadcasting",
+        slug: "fairness-doctrine-history",
+        category: "Historical Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-analysis",
+        icon: "scale",
+        date: "Dec 31, 2025",
+        sources: "10 Sources",
+        readTime: "12 min",
+        verdict: "context",
+        excerpt: "From 1949 to 1987, the FCC required broadcasters to present balanced viewpoints. Its repeal unleashed Rush Limbaugh, Fox News, and the partisan media landscape we know today. Talk radio stations exploded from 400 to 2,000+ within five years.",
+        chart: {
+            type: "line",
+            color: "#f59e0b",
+            data: [400, 600, 1000, 1400, 2000]
+        }
+    },
+    {
+        id: 77,
+        title: "Operation Mockingbird: When the CIA Controlled the Press",
+        slug: "operation-mockingbird-cia",
+        category: "Historical Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "radio",
+        date: "Dec 31, 2025",
+        sources: "10 Sources",
+        readTime: "15 min",
+        verdict: "context",
+        excerpt: "For decades, 400+ American journalists worked as CIA assets. Frank Wisner called his network the 'Mighty Wurlitzer.' The Church Committee exposed it all—but did the practice ever truly end?",
+        chart: {
+            type: "network",
+            color: "#ef4444",
+            data: { nodes: 12, connections: 20 }
+        }
+    },
+    {
+        id: 76,
+        title: "Edward Bernays: The Father of Spin",
+        slug: "edward-bernays-propaganda",
+        category: "Historical Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-analysis",
+        icon: "megaphone",
+        date: "Dec 31, 2025",
+        sources: "10 Sources",
+        readTime: "14 min",
+        verdict: "context",
+        excerpt: "Freud's nephew invented modern PR by privatizing WWI propaganda techniques. His 'Torches of Freedom' campaign convinced women smoking was feminist liberation. He later helped overthrow Guatemala's democracy for United Fruit Company.",
+        chart: {
+            type: "timeline",
+            color: "#f59e0b",
+            data: [10, 30, 50, 70, 90]
+        }
+    },
+    {
+        id: 75,
+        title: "Internet Research Agency: Russia's Troll Farm That Reached 126 Million Americans",
+        slug: "internet-research-agency-2016",
+        category: "Foreign Influence",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "globe",
+        date: "Dec 31, 2025",
+        sources: "12 Sources",
+        readTime: "16 min",
+        verdict: "context",
+        excerpt: "A St. Petersburg office building became the command center for the largest foreign influence operation in American history. 80,000 Facebook posts, 126 million Americans reached, real protests organized by fake accounts—all for under $100,000/month.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [126, 20, 1.4]
+        }
+    },
+    {
+        id: 74,
+        title: "Cambridge Analytica: The $5 Billion Data Scandal",
+        slug: "cambridge-analytica-2016",
+        category: "Data Privacy",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "database",
+        date: "Dec 31, 2025",
+        sources: "12 Sources",
+        readTime: "18 min",
+        verdict: "context",
+        excerpt: "A personality quiz harvested 87 million Facebook profiles. Psychographic targeting delivered personalized disinformation invisible to fact-checkers. The FTC's $5 billion fine was the largest privacy penalty in history—and Facebook's stock rose on the news.",
+        chart: {
+            type: "donut",
+            color: "#ef4444",
+            data: 87
+        }
+    },
+    {
         id: 73,
         title: "QAnon Network Analysis: From 4chan to Congress",
         slug: "qanon-network-analysis",
