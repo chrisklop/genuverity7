@@ -716,6 +716,56 @@
       "source": "/warrior-dividend-analysis.html",
       "destination": "/warrior-dividend-analysis",
       "permanent": true
+    },
+    {
+      "source": "/localreports/cambridge-analytica-2016.html",
+      "destination": "/cambridge-analytica-2016",
+      "permanent": true
+    },
+    {
+      "source": "/cambridge-analytica-2016.html",
+      "destination": "/cambridge-analytica-2016",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/internet-research-agency-2016.html",
+      "destination": "/internet-research-agency-2016",
+      "permanent": true
+    },
+    {
+      "source": "/internet-research-agency-2016.html",
+      "destination": "/internet-research-agency-2016",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/edward-bernays-propaganda.html",
+      "destination": "/edward-bernays-propaganda",
+      "permanent": true
+    },
+    {
+      "source": "/edward-bernays-propaganda.html",
+      "destination": "/edward-bernays-propaganda",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/operation-mockingbird-cia.html",
+      "destination": "/operation-mockingbird-cia",
+      "permanent": true
+    },
+    {
+      "source": "/operation-mockingbird-cia.html",
+      "destination": "/operation-mockingbird-cia",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/fairness-doctrine-history.html",
+      "destination": "/fairness-doctrine-history",
+      "permanent": true
+    },
+    {
+      "source": "/fairness-doctrine-history.html",
+      "destination": "/fairness-doctrine-history",
+      "permanent": true
     }
   ],
   "headers": [
@@ -1065,6 +1115,26 @@
     {
       "source": "/warrior-dividend-analysis",
       "destination": "/localreports/warrior-dividend-analysis.html"
+    },
+    {
+      "source": "/cambridge-analytica-2016",
+      "destination": "/localreports/cambridge-analytica-2016.html"
+    },
+    {
+      "source": "/internet-research-agency-2016",
+      "destination": "/localreports/internet-research-agency-2016.html"
+    },
+    {
+      "source": "/edward-bernays-propaganda",
+      "destination": "/localreports/edward-bernays-propaganda.html"
+    },
+    {
+      "source": "/operation-mockingbird-cia",
+      "destination": "/localreports/operation-mockingbird-cia.html"
+    },
+    {
+      "source": "/fairness-doctrine-history",
+      "destination": "/localreports/fairness-doctrine-history.html"
     },
     {
       "source": "/:path*",
