@@ -138,16 +138,6 @@
       "permanent": true
     },
     {
-      "source": "/localreports/doge-savings-claims.html",
-      "destination": "/doge-savings-claims",
-      "permanent": true
-    },
-    {
-      "source": "/doge-savings-claims.html",
-      "destination": "/doge-savings-claims",
-      "permanent": true
-    },
-    {
       "source": "/localreports/disinformation-architecture-2025.html",
       "destination": "/disinformation-architecture-2025",
       "permanent": true
@@ -155,6 +145,16 @@
     {
       "source": "/disinformation-architecture-2025.html",
       "destination": "/disinformation-architecture-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/doge-savings-claims.html",
+      "destination": "/doge-savings-claims",
+      "permanent": true
+    },
+    {
+      "source": "/doge-savings-claims.html",
+      "destination": "/doge-savings-claims",
       "permanent": true
     },
     {
@@ -825,12 +825,12 @@
       "destination": "/localreports/climate-ice-age-study.html"
     },
     {
-      "source": "/doge-savings-claims",
-      "destination": "/localreports/doge-savings-claims.html"
-    },
-    {
       "source": "/disinformation-architecture-2025",
       "destination": "/localreports/disinformation-architecture-2025.html"
+    },
+    {
+      "source": "/doge-savings-claims",
+      "destination": "/localreports/doge-savings-claims.html"
     },
     {
       "source": "/dominion-voting-claims-2020",

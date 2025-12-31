@@ -5,8 +5,15 @@
     <link>https://www.genuverity.com</link>
     <description>AI-powered fact-checking platform investigating misinformation, disinformation, and viral claims with source-first methodology.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 21:04:43 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 01:23:25 GMT</lastBuildDate>
     <atom:link href="https://www.genuverity.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>The Architecture of Deception: Global Disinformation Landscape 2024-2025</title>
+      <link>https://www.genuverity.com/disinformation-architecture-2025</link>
+      <guid isPermaLink="true">https://www.genuverity.com/disinformation-architecture-2025</guid>
+      <pubDate>Tue, 30 Dec 2025 06:00:00 GMT</pubDate>
+      <description>The Architecture of Deception: Global Disinformation Landscape 2024-2025</description>
+    </item>
     <item>
       <title>Clickbait Propaganda: 5 Case Studies in December 2025 Disinformation</title>
       <link>https://www.genuverity.com/clickbait-propaganda-december-2025</link>
@@ -209,13 +216,6 @@
       <guid isPermaLink="true">https://www.genuverity.com/german-christmas-market-disinfo</guid>
       <pubDate>Mon, 22 Dec 2025 06:00:00 GMT</pubDate>
       <description>German Christmas Markets: Flood of Far-Right Fake News</description>
-    </item>
-    <item>
-      <title>Rob Reiner Death: Separating Fact from Fiction</title>
-      <link>https://www.genuverity.com/rob-reiner-misinformation-2025</link>
-      <guid isPermaLink="true">https://www.genuverity.com/rob-reiner-misinformation-2025</guid>
-      <pubDate>Sun, 21 Dec 2025 06:00:00 GMT</pubDate>
-      <description>Rob Reiner Death: Separating Fact from Fiction</description>
     </item>
   </channel>
 </rss>

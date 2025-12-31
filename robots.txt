@@ -1,5 +1,5 @@
 # GenuVerity Robots.txt
-# Updated: 2025-12-30
+# Updated: 2025-12-31
 
 User-agent: *
 Allow: /
