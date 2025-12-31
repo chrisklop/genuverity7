@@ -3570,10 +3570,10 @@
             ambientNodes = [...voices, { lfo }];
             currentEraSound = eraId;
 
-            // Smooth fade in - lower volume so piano plinks stand out
+            // Smooth fade in - 50% volume
             ambientGain.gain.cancelScheduledValues(audioContext.currentTime);
             ambientGain.gain.setValueAtTime(ambientGain.gain.value, audioContext.currentTime);
-            ambientGain.gain.linearRampToValueAtTime(0.25, audioContext.currentTime + 2.5);
+            ambientGain.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 2.5);
         }
 
         function stopAmbientNodes() {
