@@ -507,6 +507,17 @@
                     <p>Following Watergate and revelations of CIA domestic spying, the Senate established the <strong>Church Committee</strong> in 1975. The Committee's final report confirmed that the CIA had maintained a network of several hundred individuals who provided intelligence and attempted to influence opinion through covert propaganda. <a href="#source-26" class="citation-link" onclick="highlightSource(event, 'source-26')">[26]</a></p>
 
                     <p>The Church Committee shattered trust between the public and the intelligence community, leading to reforms like the Foreign Intelligence Surveillance Act (FISA) of 1978—but it also planted seeds of suspicion about the "Deep State" that would be harvested by disinformation merchants in the 21st century. <a href="#source-28" class="citation-link" onclick="highlightSource(event, 'source-28')">[28]</a></p>
+
+                    <!-- Cold War Scale Chart -->
+                    <figure class="float-figure" id="coldwar-scale-wrapper" style="clear: both;">
+                        <div class="chart-wrapper">
+                            <div class="chart-header">
+                                <div class="chart-title">Cold War Propaganda Scale</div>
+                            </div>
+                            <canvas id="coldwarScaleChart" height="200"></canvas>
+                        </div>
+                        <figcaption>The scope of Cold War-era information operations, from CIA journalist assets to grassroots volunteer networks.</figcaption>
+                    </figure>
                 </section>
 
                 <!-- PART III: CORPORATE & PARTISAN PIVOT -->
@@ -555,6 +566,17 @@
                     <p>The Russian <strong>Internet Research Agency (IRA)</strong> launched a comprehensive information warfare campaign. The Senate Intelligence Committee found that the IRA's goal was to sow discord and erode trust in democratic institutions. They created fake accounts on both sides of controversial issues, organized real-world protests via Facebook, and heavily promoted Donald Trump while attacking Hillary Clinton. <a href="#source-50" class="citation-link" onclick="highlightSource(event, 'source-50')">[50]</a></p>
 
                     <p>The campaign reached an estimated <strong>126 million Americans</strong> on Facebook, utilizing the platform's own ad tools to target users in swing states. <a href="#source-52" class="citation-link" onclick="highlightSource(event, 'source-52')">[52]</a></p>
+
+                    <!-- Digital Reach Comparison Chart -->
+                    <figure class="float-figure" id="digital-reach-wrapper" style="clear: both;">
+                        <div class="chart-wrapper">
+                            <div class="chart-header">
+                                <div class="chart-title">Digital Disinformation Reach (Millions)</div>
+                            </div>
+                            <canvas id="digitalReachChart" height="220"></canvas>
+                        </div>
+                        <figcaption>Comparative reach of 2016 digital disinformation operations: Cambridge Analytica's data harvest vs. IRA's Facebook penetration.</figcaption>
+                    </figure>
                 </section>
 
                 <!-- PART V: CENSORSHIP INDUSTRIAL COMPLEX -->
@@ -603,6 +625,18 @@
                 <!-- CONCLUSION -->
                 <section>
                     <h2>Conclusion</h2>
+
+                    <!-- Three Eras Doughnut Chart -->
+                    <figure class="float-figure" id="eras-chart-wrapper">
+                        <div class="chart-wrapper">
+                            <div class="chart-header">
+                                <div class="chart-title">Three Eras of Disinformation</div>
+                            </div>
+                            <canvas id="erasChart" height="200"></canvas>
+                        </div>
+                        <figcaption>The evolution from mass fabrication to managed consensus to fragmented reality.</figcaption>
+                    </figure>
+
                     <p>The history of American media disinformation is a history of power seeking to define reality. It began with the ink-stained barons of Yellow Journalism, was nationalized by the Creel Committee, covertly managed by the CIA, monetized by partisan cable news, and finally algorithmically perfected by Silicon Valley.</p>
 
                     <p><strong>Three distinct eras define this trajectory:</strong></p>
@@ -613,6 +647,17 @@
                     </ol>
 
                     <p>Today, the United States faces a paradox. The mechanisms for spreading disinformation are more powerful than ever, yet the institutions designed to combat it—from the government to the press—are suffering from a historic crisis of legitimacy. The rise of the "Censorship Industrial Complex" suggests that the cure proposed by the state may be perceived by many as dangerous as the disease. As AI blurs the line between the real and the synthetic, the architecture of perception is being rebuilt once again, this time without a blueprint.</p>
+
+                    <!-- Media Trust Decline Chart -->
+                    <figure class="float-figure" id="trust-chart-wrapper" style="clear: both; width: 100%; max-width: 100%;">
+                        <div class="chart-wrapper">
+                            <div class="chart-header">
+                                <div class="chart-title">Trust in Mass Media (Gallup, 1972-2024)</div>
+                            </div>
+                            <canvas id="trustChart" height="200"></canvas>
+                        </div>
+                        <figcaption>Percentage of Americans who trust mass media "a great deal" or "fair amount" has declined from 72% (1976) to 31% (2024).</figcaption>
+                    </figure>
                 </section>
 
                 <!-- LEGISLATIVE TABLE -->
@@ -735,11 +780,12 @@
             });
         }
 
-        // Timeline Chart
+        // All Charts
         window.addEventListener('gv:componentsReady', () => {
-            const ctx = document.getElementById('timelineChart');
-            if (ctx) {
-                new Chart(ctx.getContext('2d'), {
+            // 1. Timeline Chart (existing)
+            const timelineCtx = document.getElementById('timelineChart');
+            if (timelineCtx) {
+                new Chart(timelineCtx.getContext('2d'), {
                     type: 'bar',
                     data: {
                         labels: ['1898\nUSS Maine', '1917\nCreel Comm.', '1948\nSmith-Mundt', '1949\nFairness Doc.', '1987\nDoc. Repeal', '1996\nSection 230', '2012\nS-M Modern.', '2016\nCambridge A.', '2020\nCISA/EIP', '2024\nAI Deepfakes'],
@@ -759,16 +805,8 @@
                                 'rgba(239, 68, 68, 0.7)'
                             ],
                             borderColor: [
-                                '#ef4444',
-                                '#ef4444',
-                                '#3b82f6',
-                                '#10b981',
-                                '#f59e0b',
-                                '#06b6d4',
-                                '#f59e0b',
-                                '#ef4444',
-                                '#f59e0b',
-                                '#ef4444'
+                                '#ef4444', '#ef4444', '#3b82f6', '#10b981', '#f59e0b',
+                                '#06b6d4', '#f59e0b', '#ef4444', '#f59e0b', '#ef4444'
                             ],
                             borderWidth: 2
                         }]
@@ -776,20 +814,171 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { display: false },
+                            x: {
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: '#94a3b8', font: { size: 9 }, maxRotation: 0 }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 2. Cold War Scale Chart (horizontal bar)
+            const coldwarCtx = document.getElementById('coldwarScaleChart');
+            if (coldwarCtx) {
+                new Chart(coldwarCtx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['Four Minute Men (1917)', 'Op. Mockingbird Journalists', 'VOA Languages Broadcast'],
+                        datasets: [{
+                            label: 'Scale',
+                            data: [75000, 400, 47],
+                            backgroundColor: ['rgba(59, 130, 246, 0.7)', 'rgba(239, 68, 68, 0.7)', 'rgba(6, 182, 212, 0.7)'],
+                            borderColor: ['#3b82f6', '#ef4444', '#06b6d4'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: {
+                                type: 'logarithmic',
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: '#94a3b8' }
+                            },
+                            y: {
+                                grid: { display: false },
+                                ticks: { color: '#e4e4e7', font: { size: 11 } }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 3. Digital Reach Chart (horizontal bar)
+            const digitalCtx = document.getElementById('digitalReachChart');
+            if (digitalCtx) {
+                new Chart(digitalCtx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['IRA Facebook Reach', 'Cambridge Analytica Harvest', 'Twitter IRA Accounts', 'Instagram IRA Reach'],
+                        datasets: [{
+                            label: 'Millions Affected',
+                            data: [126, 87, 1.4, 20],
+                            backgroundColor: [
+                                'rgba(239, 68, 68, 0.7)',
+                                'rgba(245, 158, 11, 0.7)',
+                                'rgba(6, 182, 212, 0.7)',
+                                'rgba(59, 130, 246, 0.7)'
+                            ],
+                            borderColor: ['#ef4444', '#f59e0b', '#06b6d4', '#3b82f6'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: {
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: '#94a3b8', callback: v => v + 'M' }
+                            },
+                            y: {
+                                grid: { display: false },
+                                ticks: { color: '#e4e4e7', font: { size: 11 } }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 4. Three Eras Doughnut Chart
+            const erasCtx = document.getElementById('erasChart');
+            if (erasCtx) {
+                new Chart(erasCtx.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Mass Fabrication (1890s-1940s)', 'Managed Consensus (1950s-1980s)', 'Fragmented Reality (1990s-Present)'],
+                        datasets: [{
+                            data: [50, 40, 35],
+                            backgroundColor: [
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(59, 130, 246, 0.8)',
+                                'rgba(245, 158, 11, 0.8)'
+                            ],
+                            borderColor: ['#ef4444', '#3b82f6', '#f59e0b'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        cutout: '55%',
                         plugins: {
-                            legend: { display: false }
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: '#94a3b8', font: { size: 10 }, padding: 12 }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 5. Media Trust Decline Chart (line)
+            const trustCtx = document.getElementById('trustChart');
+            if (trustCtx) {
+                new Chart(trustCtx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['1972', '1976', '1980', '1985', '1990', '1995', '2000', '2005', '2010', '2015', '2020', '2024'],
+                        datasets: [{
+                            label: 'Trust in Media %',
+                            data: [68, 72, 51, 55, 44, 45, 51, 44, 43, 40, 40, 31],
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#ef4444'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { display: false },
+                            annotation: {
+                                annotations: {
+                                    line1: {
+                                        type: 'line',
+                                        xMin: '1987',
+                                        xMax: '1987',
+                                        borderColor: '#f59e0b',
+                                        borderWidth: 2,
+                                        borderDash: [5, 5],
+                                        label: { content: 'Fairness Doctrine Repeal', enabled: true }
+                                    }
+                                }
+                            }
                         },
                         scales: {
                             y: {
-                                display: false
+                                min: 20,
+                                max: 80,
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: '#94a3b8', callback: v => v + '%' }
                             },
                             x: {
                                 grid: { color: 'rgba(255,255,255,0.05)' },
-                                ticks: {
-                                    color: '#94a3b8',
-                                    font: { size: 9 },
-                                    maxRotation: 0
-                                }
+                                ticks: { color: '#94a3b8' }
                             }
                         }
                     }
