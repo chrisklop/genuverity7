@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenuVerity Logo - Typewriter + Radar Sweep Combinations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0f;
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            color: #e4e4e7;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .subtitle {
+            color: #71717a;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-card {
+            background: #12121a;
+            border: 1px solid #27272a;
+            border-radius: 16px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .logo-card:hover {
+            border-color: #3b82f6;
+        }
+
+        .logo-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+            width: 100%;
+        }
+
+        .logo-text {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            display: flex;
+            position: relative;
+            z-index: 2;
+        }
+
+        .genu { color: #ffffff; }
+        .verity { color: #3b82f6; }
+
+        .variant-name {
+            color: #a1a1aa;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .variant-number {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        /* ========================================
+           VARIANT 1: Classic Combo
+           Typewriter reveal with radar behind
+        ======================================== */
+        .logo-1 .logo-text span {
+            opacity: 0;
+        }
+
+        .logo-1 .radar-ring {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+        }
+
+        .logo-1 .radar-sweep {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.25) 30deg, transparent 60deg);
+            animation: radarSweep 3s linear infinite;
+        }
+
+        .logo-1 .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: #3b82f6;
+            margin-left: 2px;
+            animation: blink 0.8s infinite;
+        }
+
+        /* ========================================
+           VARIANT 2: Radar Detection Mode
+           Radar completes, then typewriter reveals
+        ======================================== */
+        .logo-2 .logo-text span {
+            opacity: 0;
+        }
+
+        .logo-2 .radar-container {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+        }
+
+        .logo-2 .radar-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .logo-2 .radar-ring:nth-child(2) {
+            inset: 20%;
+        }
+
+        .logo-2 .radar-ring:nth-child(3) {
+            inset: 40%;
+        }
+
+        .logo-2 .radar-sweep {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.3) 20deg, transparent 40deg);
+            animation: radarSweep 2s linear infinite;
+        }
+
+        .logo-2 .detection-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #3b82f6;
+            border-radius: 50%;
+            opacity: 0;
+            box-shadow: 0 0 10px #3b82f6;
+        }
+
+        /* ========================================
+           VARIANT 3: Scan Line Typewriter
+           Horizontal scan line reveals letters
+        ======================================== */
+        .logo-3 .logo-text {
+            overflow: hidden;
+        }
+
+        .logo-3 .logo-text span {
+            opacity: 0;
+            transform: translateY(5px);
+        }
+
+        .logo-3 .scan-line {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 3px;
+            height: 60px;
+            background: linear-gradient(to bottom, transparent, #3b82f6, transparent);
+            transform: translateY(-50%);
+            box-shadow: 0 0 15px #3b82f6, 0 0 30px rgba(59, 130, 246, 0.5);
+        }
+
+        .logo-3 .radar-bg {
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: radarSweep 4s linear infinite;
+            opacity: 0.5;
+        }
+
+        /* ========================================
+           VARIANT 4: Ping Detection
+           Radar pings on each letter reveal
+        ======================================== */
+        .logo-4 .logo-text span {
+            opacity: 0;
+            position: relative;
+        }
+
+        .logo-4 .radar-pulse {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            opacity: 0;
+        }
+
+        .logo-4 .center-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #3b82f6;
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px #3b82f6;
+        }
+
+        /* ========================================
+           VARIANT 5: Sonar Wave Reveal
+           Expanding rings reveal text
+        ======================================== */
+        .logo-5 .logo-text span {
+            opacity: 0;
+            filter: blur(4px);
+        }
+
+        .logo-5 .sonar-origin {
+            position: absolute;
+            left: 10%;
+            top: 50%;
+            width: 4px;
+            height: 4px;
+            background: #3b82f6;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .logo-5 .sonar-wave {
+            position: absolute;
+            left: 10%;
+            top: 50%;
+            border-radius: 50%;
+            border: 2px solid #3b82f6;
+            opacity: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        /* ========================================
+           VARIANT 6: Rotating Scanner
+           Spinning radar with typewriter center
+        ======================================== */
+        .logo-6 .logo-text span {
+            opacity: 0;
+        }
+
+        .logo-6 .scanner-arm {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, #3b82f6, transparent);
+            transform-origin: left center;
+            left: 50%;
+            top: 50%;
+            animation: scanRotate 2s linear infinite;
+        }
+
+        .logo-6 .scanner-glow {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.15) 20deg, transparent 40deg);
+            animation: radarSweep 2s linear infinite;
+        }
+
+        .logo-6 .scanner-rings {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 1px dashed rgba(59, 130, 246, 0.2);
+        }
+
+        /* ========================================
+           VARIANT 7: Target Lock
+           Radar locks onto each letter
+        ======================================== */
+        .logo-7 .logo-text span {
+            opacity: 0;
+        }
+
+        .logo-7 .target-reticle {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 2px solid #3b82f6;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .logo-7 .target-reticle::before,
+        .logo-7 .target-reticle::after {
+            content: '';
+            position: absolute;
+            background: #3b82f6;
+        }
+
+        .logo-7 .target-reticle::before {
+            width: 100%;
+            height: 1px;
+            top: 50%;
+            left: 0;
+        }
+
+        .logo-7 .target-reticle::after {
+            width: 1px;
+            height: 100%;
+            left: 50%;
+            top: 0;
+        }
+
+        .logo-7 .bg-sweep {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: radarSweep 3s linear infinite;
+            opacity: 0.7;
+        }
+
+        /* ========================================
+           VARIANT 8: Echo Ping Typewriter
+           Each letter creates radar echo
+        ======================================== */
+        .logo-8 .logo-text span {
+            opacity: 0;
+            display: inline-block;
+        }
+
+        .logo-8 .echo-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid #3b82f6;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .logo-8 .persistent-sweep {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.08) 45deg, transparent 90deg);
+            animation: radarSweep 4s linear infinite;
+        }
+
+        /* ========================================
+           VARIANT 9: Holographic Scan
+           Futuristic holographic radar reveal
+        ======================================== */
+        .logo-9 .logo-text span {
+            opacity: 0;
+        }
+
+        .logo-9 .holo-grid {
+            position: absolute;
+            width: 250px;
+            height: 120px;
+            background:
+                linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+                linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.5;
+            transform: perspective(500px) rotateX(30deg);
+        }
+
+        .logo-9 .holo-sweep {
+            position: absolute;
+            width: 250px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #3b82f6, transparent);
+            top: 30%;
+            animation: holoScan 2s ease-in-out infinite;
+        }
+
+        .logo-9 .radar-corner {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            top: -20px;
+            right: -20px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.2) 30deg, transparent 60deg);
+            animation: radarSweep 2s linear infinite;
+        }
+
+        /* ========================================
+           VARIANT 10: Truth Seeker Radar
+           Radar finds and reveals truth
+        ======================================== */
+        .logo-10 .logo-text span {
+            opacity: 0;
+        }
+
+        .logo-10 .truth-radar {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+        }
+
+        .logo-10 .truth-radar-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+        }
+
+        .logo-10 .truth-radar-ring:nth-child(2) { inset: 15%; }
+        .logo-10 .truth-radar-ring:nth-child(3) { inset: 30%; }
+        .logo-10 .truth-radar-ring:nth-child(4) { inset: 45%; }
+
+        .logo-10 .truth-beam {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(16, 185, 129, 0.3) 15deg, rgba(59, 130, 246, 0.2) 30deg, transparent 45deg);
+            animation: radarSweep 2.5s linear infinite;
+        }
+
+        .logo-10 .found-marker {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #10b981;
+            border-radius: 50%;
+            opacity: 0;
+            box-shadow: 0 0 15px #10b981;
+        }
+
+        /* ========================================
+           VARIANT 11: Satellite Tracking
+           Orbital radar with transmission reveal
+        ======================================== */
+        .logo-11 .logo-text span {
+            opacity: 0;
+        }
+
+        .logo-11 .orbit {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 1px dashed rgba(59, 130, 246, 0.2);
+        }
+
+        .logo-11 .satellite {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #3b82f6;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #3b82f6, 0 0 20px rgba(59, 130, 246, 0.5);
+            animation: orbitSatellite 3s linear infinite;
+        }
+
+        .logo-11 .transmission {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.15) 20deg, transparent 40deg);
+            border-radius: 50%;
+            animation: radarSweep 3s linear infinite;
+        }
+
+        /* ========================================
+           VARIANT 12: Verification Sweep
+           Final refined combination
+        ======================================== */
+        .logo-12 .logo-text span {
+            opacity: 0;
+        }
+
+        .logo-12 .verify-radar {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+        }
+
+        .logo-12 .verify-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.12);
+        }
+
+        .logo-12 .verify-ring:nth-child(2) { inset: 25%; }
+        .logo-12 .verify-ring:nth-child(3) { inset: 50%; }
+
+        .logo-12 .verify-sweep {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.25) 25deg, transparent 50deg);
+            animation: radarSweep 2s linear infinite;
+        }
+
+        .logo-12 .verify-center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 6px;
+            height: 6px;
+            background: #3b82f6;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px #3b82f6;
+        }
+
+        .logo-12 .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.1em;
+            background: #3b82f6;
+            margin-left: 1px;
+            animation: blink 0.7s infinite;
+            vertical-align: middle;
+        }
+
+        /* ========================================
+           SHARED KEYFRAMES
+        ======================================== */
+        @keyframes radarSweep {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @keyframes scanRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes holoScan {
+            0%, 100% { top: 20%; opacity: 0.3; }
+            50% { top: 80%; opacity: 1; }
+        }
+
+        @keyframes orbitSatellite {
+            from {
+                transform: rotate(0deg) translateX(100px) rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg) translateX(100px) rotate(-360deg);
+            }
+        }
+
+        @keyframes pulseRing {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        /* Replay button */
+        .replay-btn {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #3b82f6;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .replay-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Typewriter + Radar Sweep Combinations</h1>
+    <p class="subtitle">12 variants combining letter-by-letter reveal with rotating radar detection</p>
+
+    <div class="grid">
+        <!-- Variant 1: Classic Combo -->
+        <div class="logo-card">
+            <div class="logo-container logo-1">
+                <div class="radar-ring"></div>
+                <div class="radar-sweep"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+            </div>
+            <p class="variant-name"><span class="variant-number">#1</span> Classic Combo</p>
+            <button class="replay-btn" onclick="playVariant1()">Replay</button>
+        </div>
+
+        <!-- Variant 2: Radar Detection Mode -->
+        <div class="logo-card">
+            <div class="logo-container logo-2">
+                <div class="radar-container">
+                    <div class="radar-ring"></div>
+                    <div class="radar-ring"></div>
+                    <div class="radar-ring"></div>
+                    <div class="radar-sweep"></div>
+                </div>
+                <div class="detection-dot" style="top: 30%; left: 60%;"></div>
+                <div class="detection-dot" style="top: 50%; left: 40%;"></div>
+                <div class="detection-dot" style="top: 70%; left: 55%;"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span>
+                </div>
+            </div>
+            <p class="variant-name"><span class="variant-number">#2</span> Detection Mode</p>
+            <button class="replay-btn" onclick="playVariant2()">Replay</button>
+        </div>
+
+        <!-- Variant 3: Scan Line Typewriter -->
+        <div class="logo-card">
+            <div class="logo-container logo-3">
+                <div class="radar-bg"></div>
+                <div class="scan-line"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span>
+                </div>
+            </div>
+            <p class="variant-name"><span class="variant-number">#3</span> Scan Line Reveal</p>
+            <button class="replay-btn" onclick="playVariant3()">Replay</button>
+        </div>
+
+        <!-- Variant 4: Ping Detection -->
+        <div class="logo-card">
+            <div class="logo-container logo-4">
+                <div class="center-dot"></div>
+                <div class="radar-pulse"></div>
+                <div class="radar-pulse"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span>
+                </div>
+            </div>
+            <p class="variant-name"><span class="variant-number">#4</span> Ping Detection</p>
+            <button class="replay-btn" onclick="playVariant4()">Replay</button>
+        </div>
+
+        <!-- Variant 5: Sonar Wave Reveal -->
+        <div class="logo-card">
+            <div class="logo-container logo-5">
+                <div class="sonar-origin"></div>
+                <div class="sonar-wave"></div>
+                <div class="sonar-wave"></div>
+                <div class="sonar-wave"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span>
+                </div>
+            </div>
+            <p class="variant-name"><span class="variant-number">#5</span> Sonar Wave Reveal</p>
+            <button class="replay-btn" onclick="playVariant5()">Replay</button>
+        </div>
+
+        <!-- Variant 6: Rotating Scanner -->
+        <div class="logo-card">
+            <div class="logo-container logo-6">
+                <div class="scanner-rings"></div>
+                <div class="scanner-glow"></div>
+                <div class="scanner-arm"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span>
+                </div>
+            </div>
+            <p class="variant-name"><span class="variant-number">#6</span> Rotating Scanner</p>
+            <button class="replay-btn" onclick="playVariant6()">Replay</button>
+        </div>
+
+        <!-- Variant 7: Target Lock -->
+        <div class="logo-card">
+            <div class="logo-container logo-7">
+                <div class="bg-sweep"></div>
+                <div class="target-reticle"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span>
+                </div>
+            </div>
+            <p class="variant-name"><span class="variant-number">#7</span> Target Lock</p>
+            <button class="replay-btn" onclick="playVariant7()">Replay</button>
+        </div>
+
+        <!-- Variant 8: Echo Ping Typewriter -->
+        <div class="logo-card">
+            <div class="logo-container logo-8">
+                <div class="persistent-sweep"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span>
+                </div>
+            </div>
+            <p class="variant-name"><span class="variant-number">#8</span> Echo Ping</p>
+            <button class="replay-btn" onclick="playVariant8()">Replay</button>
+        </div>
+
+        <!-- Variant 9: Holographic Scan -->
+        <div class="logo-card">
+            <div class="logo-container logo-9">
+                <div class="holo-grid"></div>
+                <div class="radar-corner"></div>
+                <div class="holo-sweep"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span>
+                </div>
+            </div>
+            <p class="variant-name"><span class="variant-number">#9</span> Holographic Scan</p>
+            <button class="replay-btn" onclick="playVariant9()">Replay</button>
+        </div>
+
+        <!-- Variant 10: Truth Seeker Radar -->
+        <div class="logo-card">
+            <div class="logo-container logo-10">
+                <div class="truth-radar">
+                    <div class="truth-radar-ring"></div>
+                    <div class="truth-radar-ring"></div>
+                    <div class="truth-radar-ring"></div>
+                    <div class="truth-radar-ring"></div>
+                    <div class="truth-beam"></div>
+                </div>
+                <div class="found-marker" style="top: 35%; left: 65%;"></div>
+                <div class="found-marker" style="top: 55%; left: 35%;"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span>
+                </div>
+            </div>
+            <p class="variant-name"><span class="variant-number">#10</span> Truth Seeker</p>
+            <button class="replay-btn" onclick="playVariant10()">Replay</button>
+        </div>
+
+        <!-- Variant 11: Satellite Tracking -->
+        <div class="logo-card">
+            <div class="logo-container logo-11">
+                <div class="orbit"></div>
+                <div class="transmission"></div>
+                <div class="satellite"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span>
+                </div>
+            </div>
+            <p class="variant-name"><span class="variant-number">#11</span> Satellite Tracking</p>
+            <button class="replay-btn" onclick="playVariant11()">Replay</button>
+        </div>
+
+        <!-- Variant 12: Verification Sweep -->
+        <div class="logo-card">
+            <div class="logo-container logo-12">
+                <div class="verify-radar">
+                    <div class="verify-ring"></div>
+                    <div class="verify-ring"></div>
+                    <div class="verify-ring"></div>
+                    <div class="verify-sweep"></div>
+                    <div class="verify-center"></div>
+                </div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+            </div>
+            <p class="variant-name"><span class="variant-number">#12</span> Verification Sweep</p>
+            <button class="replay-btn" onclick="playVariant12()">Replay</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize all animations on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                playVariant1();
+                playVariant2();
+                playVariant3();
+                playVariant4();
+                playVariant5();
+                playVariant6();
+                playVariant7();
+                playVariant8();
+                playVariant9();
+                playVariant10();
+                playVariant11();
+                playVariant12();
+            }, 500);
+        });
+
+        // Variant 1: Classic Combo
+        function playVariant1() {
+            const letters = document.querySelectorAll('.logo-1 .logo-text span:not(.cursor)');
+            gsap.set(letters, { opacity: 0 });
+
+            gsap.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.12,
+                ease: "none"
+            });
+        }
+
+        // Variant 2: Radar Detection Mode
+        function playVariant2() {
+            const letters = document.querySelectorAll('.logo-2 .logo-text span');
+            const dots = document.querySelectorAll('.logo-2 .detection-dot');
+
+            gsap.set(letters, { opacity: 0 });
+            gsap.set(dots, { opacity: 0, scale: 0 });
+
+            // Dots appear during radar sweep
+            gsap.to(dots, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.3,
+                stagger: 0.4,
+                delay: 0.5,
+                ease: "back.out(2)"
+            });
+
+            // Then letters reveal
+            gsap.to(letters, {
+                opacity: 1,
+                duration: 0.08,
+                stagger: 0.1,
+                delay: 1.5,
+                ease: "none"
+            });
+        }
+
+        // Variant 3: Scan Line Typewriter
+        function playVariant3() {
+            const letters = document.querySelectorAll('.logo-3 .logo-text span');
+            const scanLine = document.querySelector('.logo-3 .scan-line');
+
+            gsap.set(letters, { opacity: 0, y: 5 });
+            gsap.set(scanLine, { left: '0%' });
+
+            const tl = gsap.timeline();
+
+            tl.to(scanLine, {
+                left: '100%',
+                duration: 2,
+                ease: "none"
+            });
+
+            letters.forEach((letter, i) => {
+                tl.to(letter, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.1,
+                    ease: "power2.out"
+                }, 0.2 * i);
+            });
+        }
+
+        // Variant 4: Ping Detection
+        function playVariant4() {
+            const letters = document.querySelectorAll('.logo-4 .logo-text span');
+            const pulses = document.querySelectorAll('.logo-4 .radar-pulse');
+
+            gsap.set(letters, { opacity: 0 });
+
+            const tl = gsap.timeline();
+
+            letters.forEach((letter, i) => {
+                // Pulse effect
+                tl.to(pulses, {
+                    scale: 2,
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    stagger: 0.1
+                }, i * 0.15);
+
+                // Reset pulse
+                tl.set(pulses, { scale: 0, opacity: 0.5 }, i * 0.15 + 0.3);
+
+                // Letter appears
+                tl.to(letter, {
+                    opacity: 1,
+                    duration: 0.05
+                }, i * 0.15 + 0.1);
+            });
+        }
+
+        // Variant 5: Sonar Wave Reveal
+        function playVariant5() {
+            const letters = document.querySelectorAll('.logo-5 .logo-text span');
+            const waves = document.querySelectorAll('.logo-5 .sonar-wave');
+
+            gsap.set(letters, { opacity: 0, filter: 'blur(4px)' });
+            gsap.set(waves, { width: 0, height: 0, opacity: 0 });
+
+            const tl = gsap.timeline();
+
+            // Send out waves
+            waves.forEach((wave, i) => {
+                tl.to(wave, {
+                    width: 400,
+                    height: 400,
+                    opacity: 0,
+                    duration: 1.5,
+                    ease: "power1.out"
+                }, i * 0.3);
+
+                tl.set(wave, { opacity: 0.6 }, i * 0.3);
+            });
+
+            // Reveal letters as wave passes
+            letters.forEach((letter, i) => {
+                tl.to(letter, {
+                    opacity: 1,
+                    filter: 'blur(0px)',
+                    duration: 0.2,
+                    ease: "power2.out"
+                }, 0.3 + i * 0.12);
+            });
+        }
+
+        // Variant 6: Rotating Scanner
+        function playVariant6() {
+            const letters = document.querySelectorAll('.logo-6 .logo-text span');
+
+            gsap.set(letters, { opacity: 0 });
+
+            gsap.to(letters, {
+                opacity: 1,
+                duration: 0.08,
+                stagger: 0.15,
+                delay: 0.5,
+                ease: "none"
+            });
+        }
+
+        // Variant 7: Target Lock
+        function playVariant7() {
+            const letters = document.querySelectorAll('.logo-7 .logo-text span');
+            const reticle = document.querySelector('.logo-7 .target-reticle');
+            const container = document.querySelector('.logo-7');
+
+            gsap.set(letters, { opacity: 0 });
+            gsap.set(reticle, { opacity: 0, scale: 2 });
+
+            const tl = gsap.timeline();
+
+            letters.forEach((letter, i) => {
+                const rect = letter.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+
+                // Move reticle to letter position
+                tl.to(reticle, {
+                    opacity: 1,
+                    scale: 1,
+                    left: `${(rect.left - containerRect.left) + rect.width/2 - 25}px`,
+                    top: `${(rect.top - containerRect.top) + rect.height/2 - 25}px`,
+                    duration: 0.2,
+                    ease: "power2.out"
+                }, i * 0.18);
+
+                // Flash and reveal letter
+                tl.to(letter, {
+                    opacity: 1,
+                    duration: 0.05
+                }, i * 0.18 + 0.15);
+            });
+
+            // Fade out reticle
+            tl.to(reticle, {
+                opacity: 0,
+                duration: 0.3
+            });
+        }
+
+        // Variant 8: Echo Ping Typewriter
+        function playVariant8() {
+            const letters = document.querySelectorAll('.logo-8 .logo-text span');
+            const container = document.querySelector('.logo-8');
+
+            gsap.set(letters, { opacity: 0 });
+
+            // Clear old echo rings
+            container.querySelectorAll('.echo-ring').forEach(r => r.remove());
+
+            letters.forEach((letter, i) => {
+                setTimeout(() => {
+                    gsap.to(letter, { opacity: 1, duration: 0.05 });
+
+                    // Create echo ring at letter position
+                    const ring = document.createElement('div');
+                    ring.className = 'echo-ring';
+                    const rect = letter.getBoundingClientRect();
+                    const containerRect = container.getBoundingClientRect();
+                    ring.style.left = `${rect.left - containerRect.left + rect.width/2}px`;
+                    ring.style.top = `${rect.top - containerRect.top + rect.height/2}px`;
+                    ring.style.width = '0px';
+                    ring.style.height = '0px';
+                    container.appendChild(ring);
+
+                    gsap.to(ring, {
+                        width: 60,
+                        height: 60,
+                        marginLeft: -30,
+                        marginTop: -30,
+                        opacity: 0,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        onComplete: () => ring.remove()
+                    });
+                    gsap.set(ring, { opacity: 0.6 });
+                }, i * 120);
+            });
+        }
+
+        // Variant 9: Holographic Scan
+        function playVariant9() {
+            const letters = document.querySelectorAll('.logo-9 .logo-text span');
+
+            gsap.set(letters, { opacity: 0 });
+
+            gsap.to(letters, {
+                opacity: 1,
+                duration: 0.1,
+                stagger: 0.1,
+                delay: 0.3,
+                ease: "none"
+            });
+        }
+
+        // Variant 10: Truth Seeker Radar
+        function playVariant10() {
+            const letters = document.querySelectorAll('.logo-10 .logo-text span');
+            const markers = document.querySelectorAll('.logo-10 .found-marker');
+
+            gsap.set(letters, { opacity: 0 });
+            gsap.set(markers, { opacity: 0, scale: 0 });
+
+            // Markers pulse in
+            gsap.to(markers, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.3,
+                stagger: 0.5,
+                delay: 0.8,
+                ease: "back.out(2)"
+            });
+
+            // Letters reveal
+            gsap.to(letters, {
+                opacity: 1,
+                duration: 0.08,
+                stagger: 0.12,
+                delay: 1.5,
+                ease: "none"
+            });
+        }
+
+        // Variant 11: Satellite Tracking
+        function playVariant11() {
+            const letters = document.querySelectorAll('.logo-11 .logo-text span');
+
+            gsap.set(letters, { opacity: 0 });
+
+            // Letters beam in as satellite passes
+            gsap.to(letters, {
+                opacity: 1,
+                duration: 0.1,
+                stagger: 0.3,
+                delay: 0.5,
+                ease: "power2.out"
+            });
+        }
+
+        // Variant 12: Verification Sweep
+        function playVariant12() {
+            const letters = document.querySelectorAll('.logo-12 .logo-text span:not(.cursor)');
+
+            gsap.set(letters, { opacity: 0 });
+
+            gsap.to(letters, {
+                opacity: 1,
+                duration: 0.06,
+                stagger: 0.1,
+                ease: "none"
+            });
+        }
+    </script>
+</body>
+</html>

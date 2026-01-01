@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenuVerity Logo Mockups - 25 Variations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #050A14;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-red: #ef4444;
+            --accent-green: #10b981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            color: #94a3b8;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .logo-card {
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .logo-number {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            font-size: 0.7rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .logo-name {
+            position: absolute;
+            bottom: 12px;
+            font-size: 0.7rem;
+            color: #64748b;
+            text-align: center;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        /* Base logo style */
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .logo .genu { color: #ffffff; }
+        .logo .verity { color: var(--accent-blue); }
+
+        /* ========== LOGO VARIATIONS ========== */
+
+        /* 1. Soft Glow */
+        .logo-1 .logo {
+            text-shadow:
+                0 0 10px rgba(59, 130, 246, 0.5),
+                0 0 20px rgba(59, 130, 246, 0.3),
+                0 0 40px rgba(59, 130, 246, 0.2);
+        }
+
+        /* 2. Pulse Glow */
+        .logo-2 .logo {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { text-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
+            50% { text-shadow: 0 0 30px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.4); }
+        }
+
+        /* 3. Neon Flicker */
+        .logo-3 .logo {
+            animation: neonFlicker 3s infinite;
+        }
+        @keyframes neonFlicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 10px rgba(59, 130, 246, 0.8), 0 0 20px rgba(59, 130, 246, 0.6);
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+
+        /* 4. Gradient Shine */
+        .logo-4 .verity {
+            background: linear-gradient(90deg, #3b82f6, #06b6d4, #3b82f6);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShine 3s linear infinite;
+        }
+        @keyframes gradientShine {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* 5. Scanner Line */
+        .logo-5 {
+            position: relative;
+        }
+        .logo-5 .scanner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, var(--accent-cyan), transparent);
+            animation: scanLine 2s ease-in-out infinite;
+        }
+        @keyframes scanLine {
+            0%, 100% { left: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
+        /* 6. Truth Reveal */
+        .logo-6 .verity {
+            position: relative;
+            overflow: hidden;
+        }
+        .logo-6 .verity::after {
+            content: 'Verity';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent-green);
+            clip-path: inset(0 100% 0 0);
+            animation: truthReveal 3s ease-in-out infinite;
+        }
+        @keyframes truthReveal {
+            0%, 40% { clip-path: inset(0 100% 0 0); }
+            50%, 90% { clip-path: inset(0 0 0 0); }
+            100% { clip-path: inset(0 100% 0 0); }
+        }
+
+        /* 7. Glitch Effect */
+        .logo-7 .logo {
+            position: relative;
+        }
+        .logo-7 .glitch {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .logo-7 .glitch-1 {
+            color: var(--accent-red);
+            animation: glitch1 2s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+        }
+        .logo-7 .glitch-2 {
+            color: var(--accent-cyan);
+            animation: glitch2 2s infinite;
+            clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+        }
+        @keyframes glitch1 {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-3px, 1px); }
+            94% { transform: translate(3px, -1px); }
+        }
+        @keyframes glitch2 {
+            0%, 90%, 100% { transform: translate(0); }
+            93% { transform: translate(3px, 1px); }
+            95% { transform: translate(-3px, -1px); }
+        }
+
+        /* 8. Typewriter */
+        .logo-8 .verity {
+            overflow: hidden;
+            border-right: 2px solid var(--accent-blue);
+            white-space: nowrap;
+            animation: typewriter 2s steps(6) infinite, blink 0.5s step-end infinite alternate;
+            width: 0;
+        }
+        @keyframes typewriter {
+            0%, 10% { width: 0; }
+            30%, 70% { width: 6ch; }
+            90%, 100% { width: 0; }
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* 9. Particle Ring */
+        .logo-9 {
+            position: relative;
+        }
+        .logo-9 .particle-ring {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            animation: ringRotate 10s linear infinite;
+        }
+        .logo-9 .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-blue);
+        }
+        .logo-9 .particle:nth-child(1) { top: -3px; left: 50%; }
+        .logo-9 .particle:nth-child(2) { bottom: -3px; left: 50%; }
+        .logo-9 .particle:nth-child(3) { left: -3px; top: 50%; }
+        .logo-9 .particle:nth-child(4) { right: -3px; top: 50%; }
+        @keyframes ringRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* 10. Data Stream Background */
+        .logo-10 {
+            position: relative;
+            overflow: hidden;
+        }
+        .logo-10 .data-stream {
+            position: absolute;
+            font-family: monospace;
+            font-size: 10px;
+            color: rgba(59, 130, 246, 0.15);
+            white-space: nowrap;
+            animation: dataScroll 20s linear infinite;
+        }
+        @keyframes dataScroll {
+            from { transform: translateY(100%); }
+            to { transform: translateY(-100%); }
+        }
+
+        /* 11. Heartbeat */
+        .logo-11 .logo {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+
+        /* 12. Split Reveal */
+        .logo-12 .genu, .logo-12 .verity {
+            display: inline-block;
+            animation: splitReveal 3s ease-in-out infinite;
+        }
+        .logo-12 .genu { animation-delay: 0s; }
+        .logo-12 .verity { animation-delay: 0.2s; }
+        @keyframes splitReveal {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            45% { transform: translateY(-10px); opacity: 0.5; }
+            55% { transform: translateY(10px); opacity: 0.5; }
+        }
+
+        /* 13. Spotlight */
+        .logo-13 {
+            position: relative;
+        }
+        .logo-13::before {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 150%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: skewX(-20deg);
+            animation: spotlight 3s ease-in-out infinite;
+        }
+        @keyframes spotlight {
+            0% { left: -50px; }
+            100% { left: calc(100% + 50px); }
+        }
+
+        /* 14. Wave */
+        .logo-14 .logo span {
+            display: inline-block;
+            animation: wave 1s ease-in-out infinite;
+        }
+        .logo-14 .logo span:nth-child(1) { animation-delay: 0s; }
+        .logo-14 .logo span:nth-child(2) { animation-delay: 0.1s; }
+        .logo-14 .logo span:nth-child(3) { animation-delay: 0.2s; }
+        .logo-14 .logo span:nth-child(4) { animation-delay: 0.3s; }
+        .logo-14 .logo span:nth-child(5) { animation-delay: 0.4s; }
+        .logo-14 .logo span:nth-child(6) { animation-delay: 0.5s; }
+        .logo-14 .logo span:nth-child(7) { animation-delay: 0.6s; }
+        .logo-14 .logo span:nth-child(8) { animation-delay: 0.7s; }
+        .logo-14 .logo span:nth-child(9) { animation-delay: 0.8s; }
+        .logo-14 .logo span:nth-child(10) { animation-delay: 0.9s; }
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* 15. Verified Checkmark */
+        .logo-15 {
+            position: relative;
+        }
+        .logo-15 .checkmark {
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: checkPop 2s ease-in-out infinite;
+        }
+        .logo-15 .checkmark svg {
+            width: 14px;
+            height: 14px;
+            stroke: white;
+            stroke-width: 3;
+        }
+        @keyframes checkPop {
+            0%, 60%, 100% { transform: translateY(-50%) scale(1); }
+            70% { transform: translateY(-50%) scale(1.2); }
+            80% { transform: translateY(-50%) scale(0.9); }
+            90% { transform: translateY(-50%) scale(1.05); }
+        }
+
+        /* 16. Fact Check Stamp */
+        .logo-16 {
+            position: relative;
+        }
+        .logo-16 .stamp {
+            position: absolute;
+            font-size: 0.6rem;
+            font-weight: 800;
+            color: var(--accent-green);
+            border: 2px solid var(--accent-green);
+            padding: 2px 6px;
+            border-radius: 4px;
+            transform: rotate(-15deg);
+            opacity: 0;
+            animation: stampIn 3s ease-in-out infinite;
+            top: -15px;
+            right: -20px;
+        }
+        @keyframes stampIn {
+            0%, 40% { opacity: 0; transform: rotate(-15deg) scale(2); }
+            50%, 90% { opacity: 1; transform: rotate(-15deg) scale(1); }
+            100% { opacity: 0; }
+        }
+
+        /* 17. Binary Background */
+        .logo-17 {
+            position: relative;
+        }
+        .logo-17 .binary {
+            position: absolute;
+            font-family: monospace;
+            font-size: 8px;
+            color: rgba(59, 130, 246, 0.1);
+            pointer-events: none;
+        }
+
+        /* 18. Morphing Outline */
+        .logo-18 .logo {
+            position: relative;
+        }
+        .logo-18 .outline {
+            position: absolute;
+            inset: -8px -12px;
+            border: 2px solid var(--accent-blue);
+            border-radius: 8px;
+            animation: morphOutline 4s ease-in-out infinite;
+        }
+        @keyframes morphOutline {
+            0%, 100% { border-radius: 8px; }
+            25% { border-radius: 20px 8px 20px 8px; }
+            50% { border-radius: 8px 20px 8px 20px; }
+            75% { border-radius: 20px; }
+        }
+
+        /* 19. Radar Sweep */
+        .logo-19 {
+            position: relative;
+        }
+        .logo-19 .radar {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
+            animation: radarSweep 2s linear infinite;
+        }
+        @keyframes radarSweep {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* 20. Lie Detector */
+        .logo-20 {
+            position: relative;
+        }
+        .logo-20 .detector-line {
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            overflow: hidden;
+        }
+        .logo-20 .detector-line svg {
+            width: 200%;
+            height: 100%;
+            animation: detectorMove 2s linear infinite;
+        }
+        .logo-20 .detector-line path {
+            fill: none;
+            stroke: var(--accent-green);
+            stroke-width: 2;
+        }
+        @keyframes detectorMove {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* 21. Shield */
+        .logo-21 {
+            position: relative;
+        }
+        .logo-21 .shield {
+            position: absolute;
+            inset: -20px -30px;
+            border: 2px solid rgba(59, 130, 246, 0.5);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            animation: shieldPulse 2s ease-in-out infinite;
+        }
+        @keyframes shieldPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        /* 22. Matrix Rain */
+        .logo-22 {
+            position: relative;
+            overflow: hidden;
+        }
+        .logo-22 .matrix-col {
+            position: absolute;
+            font-family: monospace;
+            font-size: 10px;
+            color: rgba(16, 185, 129, 0.3);
+            animation: matrixFall 3s linear infinite;
+            top: -100%;
+        }
+        @keyframes matrixFall {
+            to { transform: translateY(400%); }
+        }
+
+        /* 23. Loading Progress */
+        .logo-23 {
+            position: relative;
+        }
+        .logo-23 .progress-bar {
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .logo-23 .progress-fill {
+            height: 100%;
+            background: var(--accent-blue);
+            animation: progressFill 2s ease-in-out infinite;
+        }
+        @keyframes progressFill {
+            0% { width: 0; }
+            50% { width: 100%; }
+            50.1% { width: 100%; margin-left: 0; }
+            100% { width: 0; margin-left: 100%; }
+        }
+
+        /* 24. Holographic */
+        .logo-24 .logo {
+            background: linear-gradient(135deg, #fff 0%, #3b82f6 25%, #06b6d4 50%, #10b981 75%, #fff 100%);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: holographic 3s ease infinite;
+        }
+        .logo-24 .genu, .logo-24 .verity {
+            -webkit-text-fill-color: transparent;
+        }
+        @keyframes holographic {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 25. Disinfo Detector (signature piece) */
+        .logo-25 {
+            position: relative;
+        }
+        .logo-25 .scan-frame {
+            position: absolute;
+            inset: -15px -25px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+        }
+        .logo-25 .scan-frame::before,
+        .logo-25 .scan-frame::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-cyan);
+        }
+        .logo-25 .scan-frame::before {
+            top: -2px;
+            left: -2px;
+            border-right: none;
+            border-bottom: none;
+        }
+        .logo-25 .scan-frame::after {
+            bottom: -2px;
+            right: -2px;
+            border-left: none;
+            border-top: none;
+        }
+        .logo-25 .crosshair {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .logo-25 .crosshair::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: -25px;
+            bottom: -25px;
+            width: 1px;
+            background: linear-gradient(180deg, var(--accent-cyan), transparent 30%, transparent 70%, var(--accent-cyan));
+            opacity: 0.5;
+        }
+        .logo-25 .crosshair::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -35px;
+            right: -35px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent-cyan), transparent 30%, transparent 70%, var(--accent-cyan));
+            opacity: 0.5;
+        }
+        .logo-25 .status {
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--accent-green);
+            animation: statusBlink 1s step-end infinite;
+        }
+        @keyframes statusBlink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <h1>GenuVerity Logo Mockups</h1>
+
+    <div class="grid">
+        <!-- 1. Soft Glow -->
+        <div class="logo-card logo-1">
+            <span class="logo-number">#1</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Soft Glow</span>
+        </div>
+
+        <!-- 2. Pulse Glow -->
+        <div class="logo-card logo-2">
+            <span class="logo-number">#2</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Pulse Glow</span>
+        </div>
+
+        <!-- 3. Neon Flicker -->
+        <div class="logo-card logo-3">
+            <span class="logo-number">#3</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Neon Flicker</span>
+        </div>
+
+        <!-- 4. Gradient Shine -->
+        <div class="logo-card logo-4">
+            <span class="logo-number">#4</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Gradient Shine</span>
+        </div>
+
+        <!-- 5. Scanner Line -->
+        <div class="logo-card logo-5">
+            <span class="logo-number">#5</span>
+            <div class="scanner"></div>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Scanner Line</span>
+        </div>
+
+        <!-- 6. Truth Reveal -->
+        <div class="logo-card logo-6">
+            <span class="logo-number">#6</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Truth Reveal (Green Flash)</span>
+        </div>
+
+        <!-- 7. Glitch Effect -->
+        <div class="logo-card logo-7">
+            <span class="logo-number">#7</span>
+            <div class="logo">
+                <span class="genu">Genu</span><span class="verity">Verity</span>
+                <span class="glitch glitch-1"><span class="genu">Genu</span><span class="verity">Verity</span></span>
+                <span class="glitch glitch-2"><span class="genu">Genu</span><span class="verity">Verity</span></span>
+            </div>
+            <span class="logo-name">Glitch (Disinfo Detected)</span>
+        </div>
+
+        <!-- 8. Typewriter -->
+        <div class="logo-card logo-8">
+            <span class="logo-number">#8</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Typewriter Reveal</span>
+        </div>
+
+        <!-- 9. Particle Ring -->
+        <div class="logo-card logo-9">
+            <span class="logo-number">#9</span>
+            <div class="particle-ring">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Particle Ring</span>
+        </div>
+
+        <!-- 10. Data Stream -->
+        <div class="logo-card logo-10">
+            <span class="logo-number">#10</span>
+            <div class="data-stream" style="left: 10%;">01001000 01100101 01101100</div>
+            <div class="data-stream" style="left: 30%; animation-delay: -5s;">10110010 00101001 11010100</div>
+            <div class="data-stream" style="left: 50%; animation-delay: -10s;">01101001 10010110 01001011</div>
+            <div class="data-stream" style="left: 70%; animation-delay: -15s;">11001010 01010101 10101010</div>
+            <div class="logo" style="position: relative; z-index: 1;"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Data Stream</span>
+        </div>
+
+        <!-- 11. Heartbeat -->
+        <div class="logo-card logo-11">
+            <span class="logo-number">#11</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Heartbeat Pulse</span>
+        </div>
+
+        <!-- 12. Split Reveal -->
+        <div class="logo-card logo-12">
+            <span class="logo-number">#12</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Split Float</span>
+        </div>
+
+        <!-- 13. Spotlight -->
+        <div class="logo-card logo-13">
+            <span class="logo-number">#13</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Spotlight Sweep</span>
+        </div>
+
+        <!-- 14. Wave -->
+        <div class="logo-card logo-14">
+            <span class="logo-number">#14</span>
+            <div class="logo">
+                <span class="genu"><span>G</span><span>e</span><span>n</span><span>u</span></span><span class="verity"><span>V</span><span>e</span><span>r</span><span>i</span><span>t</span><span>y</span></span>
+            </div>
+            <span class="logo-name">Letter Wave</span>
+        </div>
+
+        <!-- 15. Verified Checkmark -->
+        <div class="logo-card logo-15">
+            <span class="logo-number">#15</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <div class="checkmark">
+                <svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <span class="logo-name">Verified Badge</span>
+        </div>
+
+        <!-- 16. Fact Check Stamp -->
+        <div class="logo-card logo-16">
+            <span class="logo-number">#16</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <div class="stamp">VERIFIED</div>
+            <span class="logo-name">Fact Check Stamp</span>
+        </div>
+
+        <!-- 17. Binary Background -->
+        <div class="logo-card logo-17" id="logo17">
+            <span class="logo-number">#17</span>
+            <div class="logo" style="position: relative; z-index: 1;"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Binary Matrix</span>
+        </div>
+
+        <!-- 18. Morphing Outline -->
+        <div class="logo-card logo-18">
+            <span class="logo-number">#18</span>
+            <div class="logo">
+                <div class="outline"></div>
+                <span class="genu">Genu</span><span class="verity">Verity</span>
+            </div>
+            <span class="logo-name">Morphing Border</span>
+        </div>
+
+        <!-- 19. Radar Sweep -->
+        <div class="logo-card logo-19">
+            <span class="logo-number">#19</span>
+            <div class="radar"></div>
+            <div class="logo" style="position: relative; z-index: 1;"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Radar Sweep</span>
+        </div>
+
+        <!-- 20. Lie Detector -->
+        <div class="logo-card logo-20">
+            <span class="logo-number">#20</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <div class="detector-line">
+                <svg viewBox="0 0 400 30" preserveAspectRatio="none">
+                    <path d="M0,15 L20,15 L25,5 L30,25 L35,10 L40,20 L45,15 L65,15 L70,5 L75,25 L80,15 L100,15 L105,5 L110,25 L115,10 L120,20 L125,15 L145,15 L150,5 L155,25 L160,15 L180,15 L185,5 L190,25 L195,10 L200,20 L205,15 L225,15 L230,5 L235,25 L240,15 L260,15 L265,5 L270,25 L275,10 L280,20 L285,15 L305,15 L310,5 L315,25 L320,15 L340,15 L345,5 L350,25 L355,10 L360,20 L365,15 L400,15"/>
+                </svg>
+            </div>
+            <span class="logo-name">Truth Detector Line</span>
+        </div>
+
+        <!-- 21. Shield -->
+        <div class="logo-card logo-21">
+            <span class="logo-number">#21</span>
+            <div class="shield"></div>
+            <div class="logo" style="position: relative; z-index: 1;"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Shield Protection</span>
+        </div>
+
+        <!-- 22. Matrix Rain -->
+        <div class="logo-card logo-22" id="logo22">
+            <span class="logo-number">#22</span>
+            <div class="logo" style="position: relative; z-index: 1;"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Matrix Rain</span>
+        </div>
+
+        <!-- 23. Loading Progress -->
+        <div class="logo-card logo-23">
+            <span class="logo-number">#23</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <div class="progress-bar"><div class="progress-fill"></div></div>
+            <span class="logo-name">Verification Progress</span>
+        </div>
+
+        <!-- 24. Holographic -->
+        <div class="logo-card logo-24">
+            <span class="logo-number">#24</span>
+            <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <span class="logo-name">Holographic Shine</span>
+        </div>
+
+        <!-- 25. Disinfo Detector (Signature) -->
+        <div class="logo-card logo-25">
+            <span class="logo-number">#25</span>
+            <div class="scan-frame"></div>
+            <div class="crosshair"></div>
+            <div class="logo" style="position: relative; z-index: 1;"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            <div class="status">● SCANNING FOR DISINFO</div>
+            <span class="logo-name">Disinfo Detector HUD</span>
+        </div>
+    </div>
+
+    <script>
+        // Generate binary background for #17
+        const logo17 = document.getElementById('logo17');
+        for (let i = 0; i < 50; i++) {
+            const binary = document.createElement('div');
+            binary.className = 'binary';
+            binary.textContent = Math.random() > 0.5 ? '1' : '0';
+            binary.style.left = Math.random() * 100 + '%';
+            binary.style.top = Math.random() * 100 + '%';
+            binary.style.animationDuration = (2 + Math.random() * 3) + 's';
+            logo17.appendChild(binary);
+        }
+
+        // Generate matrix rain for #22
+        const logo22 = document.getElementById('logo22');
+        const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ01';
+        for (let i = 0; i < 15; i++) {
+            const col = document.createElement('div');
+            col.className = 'matrix-col';
+            col.style.left = (i * 7) + '%';
+            col.style.animationDelay = (Math.random() * 3) + 's';
+            col.style.animationDuration = (2 + Math.random() * 2) + 's';
+            let text = '';
+            for (let j = 0; j < 20; j++) {
+                text += chars[Math.floor(Math.random() * chars.length)] + '<br>';
+            }
+            col.innerHTML = text;
+            logo22.appendChild(col);
+        }
+
+        // GSAP animations for extra flair
+        gsap.to('.logo-9 .particle-ring', {
+            rotation: 360,
+            duration: 10,
+            ease: 'none',
+            repeat: -1
+        });
+
+        // Binary hover animation for #17
+        const binaries = document.querySelectorAll('.logo-17 .binary');
+        binaries.forEach(b => {
+            gsap.to(b, {
+                opacity: Math.random() * 0.3,
+                duration: 1 + Math.random() * 2,
+                repeat: -1,
+                yoyo: true
+            });
+        });
+
+        // Radar ping effect
+        gsap.to('.logo-19 .radar', {
+            opacity: 0.3,
+            duration: 0.5,
+            repeat: -1,
+            yoyo: true,
+            ease: 'power1.inOut'
+        });
+
+        // Shield glow effect
+        gsap.to('.logo-21 .shield', {
+            boxShadow: '0 0 30px rgba(59, 130, 246, 0.5), inset 0 0 30px rgba(59, 130, 246, 0.1)',
+            duration: 1.5,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut'
+        });
+
+        // Crosshair pulse for #25
+        gsap.to('.logo-25 .scan-frame::before, .logo-25 .scan-frame::after', {
+            borderColor: '#10b981',
+            duration: 0.5,
+            repeat: -1,
+            yoyo: true
+        });
+    </script>
+</body>
+</html>

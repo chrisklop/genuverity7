@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenuVerity Logo - Typewriter + Radar + Lie Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0f;
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            color: #e4e4e7;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .subtitle {
+            color: #71717a;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .logo-card {
+            background: #12121a;
+            border: 1px solid #27272a;
+            border-radius: 16px;
+            padding: 50px 30px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            transition: border-color 0.3s;
+            position: relative;
+        }
+
+        .logo-card:hover {
+            border-color: #3b82f6;
+        }
+
+        .logo-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 20px;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            display: inline-flex;
+            position: relative;
+            z-index: 2;
+            white-space: nowrap;
+        }
+
+        .genu { color: #ffffff; }
+        .verity { color: #3b82f6; }
+
+        .variant-name {
+            color: #a1a1aa;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .variant-number {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .variant-desc {
+            color: #52525b;
+            font-size: 0.75rem;
+            text-align: center;
+            max-width: 300px;
+        }
+
+        /* Polygraph/Lie Detector SVG Line */
+        .polygraph-svg {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            overflow: visible;
+        }
+
+        .polygraph-line {
+            fill: none;
+            stroke: #3b82f6;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.6));
+        }
+
+        .polygraph-line-glow {
+            fill: none;
+            stroke: rgba(59, 130, 246, 0.3);
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 0.9em;
+            background: #3b82f6;
+            margin-left: 1px;
+            animation: blink 0.7s infinite;
+            vertical-align: baseline;
+        }
+
+        /* ========================================
+           VARIANT 1: Classic Polygraph Underline
+        ======================================== */
+        .logo-1 .logo-text span { opacity: 0; }
+
+        /* ========================================
+           VARIANT 2: Polygraph + Mini Radar
+        ======================================== */
+        .logo-2 .logo-text span { opacity: 0; }
+
+        .logo-2 .mini-radar {
+            position: absolute;
+            left: -28px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+        }
+
+        .logo-2 .radar-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+
+        .logo-2 .radar-sweep {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.7) 20deg, transparent 40deg);
+            animation: radarSweep 1.5s linear infinite;
+        }
+
+        /* ========================================
+           VARIANT 3: Double Polygraph (top + bottom)
+        ======================================== */
+        .logo-3 .logo-text span { opacity: 0; }
+
+        .logo-3 .polygraph-svg.top {
+            bottom: auto;
+            top: -2px;
+            transform: scaleY(-1);
+        }
+
+        /* ========================================
+           VARIANT 4: Heartbeat Spike on Verity
+        ======================================== */
+        .logo-4 .logo-text span { opacity: 0; }
+
+        /* ========================================
+           VARIANT 5: Polygraph with Scan Dot
+        ======================================== */
+        .logo-5 .logo-text span { opacity: 0; }
+
+        .logo-5 .scan-dot {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 6px;
+            height: 6px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #3b82f6, 0 0 15px rgba(59, 130, 246, 0.5);
+            z-index: 10;
+        }
+
+        /* ========================================
+           VARIANT 6: Corner Radar + Polygraph
+        ======================================== */
+        .logo-6 .logo-text span { opacity: 0; }
+
+        .logo-6 .corner-radar {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 14px;
+            height: 14px;
+        }
+
+        .logo-6 .cr-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+        }
+
+        .logo-6 .cr-sweep {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.8) 30deg, transparent 60deg);
+            animation: radarSweep 1.5s linear infinite;
+        }
+
+        /* ========================================
+           VARIANT 7: Verification Complete Effect
+        ======================================== */
+        .logo-7 .logo-text span { opacity: 0; }
+
+        .logo-7 .check-badge {
+            position: absolute;
+            right: -24px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border: 2px solid #10b981;
+            border-radius: 50%;
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-7 .checkmark {
+            width: 7px;
+            height: 4px;
+            border-left: 2px solid #10b981;
+            border-bottom: 2px solid #10b981;
+            transform: rotate(-45deg) translateY(-1px);
+        }
+
+        /* ========================================
+           VARIANT 8: Continuous Monitor
+        ======================================== */
+        .logo-8 .logo-text span { opacity: 0; }
+
+        /* ========================================
+           VARIANT 9: Polygraph Pulse Origin
+        ======================================== */
+        .logo-9 .logo-text span { opacity: 0; }
+
+        .logo-9 .pulse-origin {
+            position: absolute;
+            left: -5px;
+            bottom: 8px;
+            width: 4px;
+            height: 4px;
+            background: #3b82f6;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #3b82f6;
+        }
+
+        .logo-9 .pulse-ring {
+            position: absolute;
+            left: -5px;
+            bottom: 8px;
+            width: 4px;
+            height: 4px;
+            border: 1px solid #3b82f6;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        /* ========================================
+           VARIANT 10: Framed Polygraph
+        ======================================== */
+        .logo-10 .logo-text span { opacity: 0; }
+
+        .logo-10 .frame {
+            position: absolute;
+            inset: -8px -12px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 4px;
+            opacity: 0;
+        }
+
+        /* ========================================
+           VARIANT 11: Radar + Polygraph Combo
+        ======================================== */
+        .logo-11 .logo-text span { opacity: 0; }
+
+        .logo-11 .radar-bg {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.08) 30deg, transparent 60deg);
+            animation: radarSweep 3s linear infinite;
+            z-index: 0;
+        }
+
+        /* ========================================
+           VARIANT 12: THE REFINED FINAL
+        ======================================== */
+        .logo-12 {
+            padding: 18px 28px;
+        }
+
+        .logo-12 .logo-text span { opacity: 0; }
+
+        .logo-12 .mini-radar {
+            position: absolute;
+            left: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+        }
+
+        .logo-12 .radar-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.35);
+        }
+
+        .logo-12 .radar-sweep {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, #3b82f6 25deg, transparent 50deg);
+            animation: radarSweep 2s linear infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @keyframes radarSweep {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .replay-btn {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #3b82f6;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .replay-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+        }
+
+        .logo-card.featured {
+            border-color: rgba(59, 130, 246, 0.5);
+            background: linear-gradient(135deg, #12121a 0%, #161625 100%);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            color: white;
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <h1>Typewriter + Radar + Lie Detector</h1>
+    <p class="subtitle">Combining #8 Typewriter, #19 Radar Sweep, #20 Polygraph Line - with actual jagged waveform</p>
+
+    <div class="grid">
+        <!-- Variant 1: Classic Polygraph -->
+        <div class="logo-card">
+            <div class="logo-container logo-1">
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow polygraph-path-1" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line polygraph-path-1" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#1</span> Classic Polygraph</p>
+            <p class="variant-desc">Typewriter with lie detector waveform underneath</p>
+            <button class="replay-btn" onclick="playVariant1()">Replay</button>
+        </div>
+
+        <!-- Variant 2: Polygraph + Mini Radar -->
+        <div class="logo-card">
+            <div class="logo-container logo-2">
+                <div class="mini-radar">
+                    <div class="radar-ring"></div>
+                    <div class="radar-sweep"></div>
+                </div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow polygraph-path-2" d="M0,15 L30,15 L35,15 L40,5 L45,25 L50,8 L55,22 L60,15 L90,15 L95,15 L100,3 L105,27 L110,10 L115,20 L120,15 L200,15"/>
+                    <path class="polygraph-line polygraph-path-2" d="M0,15 L30,15 L35,15 L40,5 L45,25 L50,8 L55,22 L60,15 L90,15 L95,15 L100,3 L105,27 L110,10 L115,20 L120,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#2</span> Radar + Polygraph</p>
+            <p class="variant-desc">Mini radar badge with waveform</p>
+            <button class="replay-btn" onclick="playVariant2()">Replay</button>
+        </div>
+
+        <!-- Variant 3: Double Polygraph -->
+        <div class="logo-card">
+            <div class="logo-container logo-3">
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg top" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line polygraph-path-3a" d="M0,15 L25,15 L30,8 L35,22 L40,12 L45,18 L50,15 L200,15" style="stroke: rgba(59, 130, 246, 0.4);"/>
+                </svg>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow polygraph-path-3b" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line polygraph-path-3b" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#3</span> Double Waveform</p>
+            <p class="variant-desc">Mirrored polygraph lines top and bottom</p>
+            <button class="replay-btn" onclick="playVariant3()">Replay</button>
+        </div>
+
+        <!-- Variant 4: Heartbeat on Verity -->
+        <div class="logo-card">
+            <div class="logo-container logo-4">
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow polygraph-path-4" d="M0,15 L80,15 L85,15 L90,2 L95,28 L100,5 L105,25 L110,15 L200,15"/>
+                    <path class="polygraph-line polygraph-path-4" d="M0,15 L80,15 L85,15 L90,2 L95,28 L100,5 L105,25 L110,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#4</span> Verity Spike</p>
+            <p class="variant-desc">Big spike under "Verity" - truth detected</p>
+            <button class="replay-btn" onclick="playVariant4()">Replay</button>
+        </div>
+
+        <!-- Variant 5: With Scan Dot -->
+        <div class="logo-card">
+            <div class="logo-container logo-5">
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <div class="scan-dot"></div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow polygraph-path-5" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line polygraph-path-5" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#5</span> Scanning Dot</p>
+            <p class="variant-desc">Glowing dot traces the waveform</p>
+            <button class="replay-btn" onclick="playVariant5()">Replay</button>
+        </div>
+
+        <!-- Variant 6: Corner Radar + Polygraph -->
+        <div class="logo-card">
+            <div class="logo-container logo-6">
+                <div class="corner-radar">
+                    <div class="cr-ring"></div>
+                    <div class="cr-sweep"></div>
+                </div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow polygraph-path-6" d="M0,15 L25,15 L30,7 L35,23 L40,12 L45,18 L50,15 L80,15 L85,4 L90,26 L95,9 L100,21 L105,15 L200,15"/>
+                    <path class="polygraph-line polygraph-path-6" d="M0,15 L25,15 L30,7 L35,23 L40,12 L45,18 L50,15 L80,15 L85,4 L90,26 L95,9 L100,21 L105,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#6</span> Corner Radar</p>
+            <p class="variant-desc">Tiny radar in corner with polygraph below</p>
+            <button class="replay-btn" onclick="playVariant6()">Replay</button>
+        </div>
+
+        <!-- Variant 7: Verification Complete -->
+        <div class="logo-card">
+            <div class="logo-container logo-7">
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span>
+                </div>
+                <div class="check-badge"><div class="checkmark"></div></div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow polygraph-path-7" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line polygraph-path-7" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#7</span> Verified Badge</p>
+            <p class="variant-desc">Polygraph completes, checkmark appears</p>
+            <button class="replay-btn" onclick="playVariant7()">Replay</button>
+        </div>
+
+        <!-- Variant 8: Continuous Monitor -->
+        <div class="logo-card">
+            <div class="logo-container logo-8">
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow polygraph-path-8" d="M0,15 L15,15 L20,8 L25,22 L30,15 L45,15 L50,5 L55,25 L60,10 L65,20 L70,15 L85,15 L90,3 L95,27 L100,8 L105,22 L110,15 L200,15"/>
+                    <path class="polygraph-line polygraph-path-8" d="M0,15 L15,15 L20,8 L25,22 L30,15 L45,15 L50,5 L55,25 L60,10 L65,20 L70,15 L85,15 L90,3 L95,27 L100,8 L105,22 L110,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#8</span> Continuous Monitor</p>
+            <p class="variant-desc">Multiple spikes - always scanning</p>
+            <button class="replay-btn" onclick="playVariant8()">Replay</button>
+        </div>
+
+        <!-- Variant 9: Pulse Origin -->
+        <div class="logo-card">
+            <div class="logo-container logo-9">
+                <div class="pulse-origin"></div>
+                <div class="pulse-ring"></div>
+                <div class="pulse-ring" style="animation-delay: 0.5s;"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow polygraph-path-9" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line polygraph-path-9" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#9</span> Pulse Origin</p>
+            <p class="variant-desc">Pulsing dot at waveform origin</p>
+            <button class="replay-btn" onclick="playVariant9()">Replay</button>
+        </div>
+
+        <!-- Variant 10: Framed -->
+        <div class="logo-card">
+            <div class="logo-container logo-10">
+                <div class="frame"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow polygraph-path-10" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line polygraph-path-10" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#10</span> Framed</p>
+            <p class="variant-desc">Subtle frame appears after verification</p>
+            <button class="replay-btn" onclick="playVariant10()">Replay</button>
+        </div>
+
+        <!-- Variant 11: Radar BG + Polygraph -->
+        <div class="logo-card">
+            <div class="logo-container logo-11">
+                <div class="radar-bg"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow polygraph-path-11" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line polygraph-path-11" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#11</span> Radar Background</p>
+            <p class="variant-desc">Subtle sweeping radar behind text</p>
+            <button class="replay-btn" onclick="playVariant11()">Replay</button>
+        </div>
+
+        <!-- Variant 12: THE REFINED FINAL -->
+        <div class="logo-card featured">
+            <span class="featured-badge">Recommended</span>
+            <div class="logo-container logo-12">
+                <div class="mini-radar">
+                    <div class="radar-ring"></div>
+                    <div class="radar-sweep"></div>
+                </div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow polygraph-path-12" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                    <path class="polygraph-line polygraph-path-12" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#12</span> The Complete Package</p>
+            <p class="variant-desc">Typewriter + Mini Radar + Polygraph waveform</p>
+            <button class="replay-btn" onclick="playVariant12()">Replay</button>
+        </div>
+    </div>
+
+    <script>
+        // Get total length of SVG path for stroke animation
+        function getPathLength(selector) {
+            const path = document.querySelector(selector);
+            return path ? path.getTotalLength() : 200;
+        }
+
+        // Initialize all on load
+        window.addEventListener('load', () => {
+            // Set up all path lengths
+            document.querySelectorAll('.polygraph-line, .polygraph-line-glow').forEach(path => {
+                const length = path.getTotalLength();
+                path.style.strokeDasharray = length;
+                path.style.strokeDashoffset = length;
+            });
+
+            setTimeout(() => {
+                for (let i = 1; i <= 12; i++) {
+                    window[`playVariant${i}`]();
+                }
+            }, 500);
+        });
+
+        // Variant 1: Classic Polygraph
+        function playVariant1() {
+            const letters = document.querySelectorAll('.logo-1 .logo-text span:not(.cursor)');
+            const paths = document.querySelectorAll('.polygraph-path-1');
+
+            gsap.set(letters, { opacity: 0 });
+            paths.forEach(p => {
+                const len = p.getTotalLength();
+                gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+            });
+
+            const tl = gsap.timeline();
+
+            tl.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.1
+            });
+
+            tl.to(paths, {
+                strokeDashoffset: 0,
+                duration: 1.5,
+                ease: "none"
+            }, 0.2);
+        }
+
+        // Variant 2: Radar + Polygraph
+        function playVariant2() {
+            const letters = document.querySelectorAll('.logo-2 .logo-text span:not(.cursor)');
+            const paths = document.querySelectorAll('.polygraph-path-2');
+
+            gsap.set(letters, { opacity: 0 });
+            paths.forEach(p => {
+                const len = p.getTotalLength();
+                gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+            });
+
+            const tl = gsap.timeline();
+
+            tl.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.1,
+                delay: 0.3
+            });
+
+            tl.to(paths, {
+                strokeDashoffset: 0,
+                duration: 1.5,
+                ease: "none"
+            }, 0.4);
+        }
+
+        // Variant 3: Double Polygraph
+        function playVariant3() {
+            const letters = document.querySelectorAll('.logo-3 .logo-text span:not(.cursor)');
+            const pathsA = document.querySelectorAll('.polygraph-path-3a');
+            const pathsB = document.querySelectorAll('.polygraph-path-3b');
+
+            gsap.set(letters, { opacity: 0 });
+            [...pathsA, ...pathsB].forEach(p => {
+                const len = p.getTotalLength();
+                gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+            });
+
+            const tl = gsap.timeline();
+
+            tl.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.1
+            });
+
+            tl.to(pathsA, {
+                strokeDashoffset: 0,
+                duration: 1.2,
+                ease: "none"
+            }, 0.1);
+
+            tl.to(pathsB, {
+                strokeDashoffset: 0,
+                duration: 1.5,
+                ease: "none"
+            }, 0.2);
+        }
+
+        // Variant 4: Verity Spike
+        function playVariant4() {
+            const letters = document.querySelectorAll('.logo-4 .logo-text span:not(.cursor)');
+            const paths = document.querySelectorAll('.polygraph-path-4');
+
+            gsap.set(letters, { opacity: 0 });
+            paths.forEach(p => {
+                const len = p.getTotalLength();
+                gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+            });
+
+            const tl = gsap.timeline();
+
+            tl.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.1
+            });
+
+            tl.to(paths, {
+                strokeDashoffset: 0,
+                duration: 1.5,
+                ease: "none"
+            }, 0.2);
+        }
+
+        // Variant 5: Scanning Dot
+        function playVariant5() {
+            const letters = document.querySelectorAll('.logo-5 .logo-text span:not(.cursor)');
+            const paths = document.querySelectorAll('.polygraph-path-5');
+            const dot = document.querySelector('.logo-5 .scan-dot');
+
+            gsap.set(letters, { opacity: 0 });
+            gsap.set(dot, { left: 0 });
+            paths.forEach(p => {
+                const len = p.getTotalLength();
+                gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+            });
+
+            const tl = gsap.timeline();
+
+            tl.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.1
+            });
+
+            tl.to(paths, {
+                strokeDashoffset: 0,
+                duration: 2,
+                ease: "none"
+            }, 0.2);
+
+            tl.to(dot, {
+                left: '100%',
+                duration: 2,
+                ease: "none"
+            }, 0.2);
+        }
+
+        // Variant 6: Corner Radar
+        function playVariant6() {
+            const letters = document.querySelectorAll('.logo-6 .logo-text span:not(.cursor)');
+            const paths = document.querySelectorAll('.polygraph-path-6');
+
+            gsap.set(letters, { opacity: 0 });
+            paths.forEach(p => {
+                const len = p.getTotalLength();
+                gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+            });
+
+            const tl = gsap.timeline();
+
+            tl.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.1,
+                delay: 0.2
+            });
+
+            tl.to(paths, {
+                strokeDashoffset: 0,
+                duration: 1.5,
+                ease: "none"
+            }, 0.3);
+        }
+
+        // Variant 7: Verified Badge
+        function playVariant7() {
+            const letters = document.querySelectorAll('.logo-7 .logo-text span');
+            const paths = document.querySelectorAll('.polygraph-path-7');
+            const badge = document.querySelector('.logo-7 .check-badge');
+
+            gsap.set(letters, { opacity: 0 });
+            gsap.set(badge, { opacity: 0, scale: 0 });
+            paths.forEach(p => {
+                const len = p.getTotalLength();
+                gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+            });
+
+            const tl = gsap.timeline();
+
+            tl.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.1
+            });
+
+            tl.to(paths, {
+                strokeDashoffset: 0,
+                duration: 1.5,
+                ease: "none"
+            }, 0.2);
+
+            tl.to(badge, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.3,
+                ease: "back.out(2)"
+            });
+        }
+
+        // Variant 8: Continuous Monitor
+        function playVariant8() {
+            const letters = document.querySelectorAll('.logo-8 .logo-text span:not(.cursor)');
+            const paths = document.querySelectorAll('.polygraph-path-8');
+
+            gsap.set(letters, { opacity: 0 });
+            paths.forEach(p => {
+                const len = p.getTotalLength();
+                gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+            });
+
+            const tl = gsap.timeline();
+
+            tl.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.1
+            });
+
+            tl.to(paths, {
+                strokeDashoffset: 0,
+                duration: 1.8,
+                ease: "none"
+            }, 0.2);
+        }
+
+        // Variant 9: Pulse Origin
+        function playVariant9() {
+            const letters = document.querySelectorAll('.logo-9 .logo-text span:not(.cursor)');
+            const paths = document.querySelectorAll('.polygraph-path-9');
+            const rings = document.querySelectorAll('.logo-9 .pulse-ring');
+
+            gsap.set(letters, { opacity: 0 });
+            paths.forEach(p => {
+                const len = p.getTotalLength();
+                gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+            });
+
+            const tl = gsap.timeline();
+
+            tl.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.1
+            });
+
+            tl.to(paths, {
+                strokeDashoffset: 0,
+                duration: 1.5,
+                ease: "none"
+            }, 0.2);
+
+            // Continuous pulse
+            rings.forEach((ring, i) => {
+                gsap.to(ring, {
+                    width: 30,
+                    height: 30,
+                    marginLeft: -13,
+                    marginBottom: -13,
+                    opacity: 0,
+                    duration: 1.5,
+                    repeat: -1,
+                    delay: i * 0.75,
+                    ease: "power1.out"
+                });
+                gsap.set(ring, { opacity: 0.5 });
+            });
+        }
+
+        // Variant 10: Framed
+        function playVariant10() {
+            const letters = document.querySelectorAll('.logo-10 .logo-text span:not(.cursor)');
+            const paths = document.querySelectorAll('.polygraph-path-10');
+            const frame = document.querySelector('.logo-10 .frame');
+
+            gsap.set(letters, { opacity: 0 });
+            gsap.set(frame, { opacity: 0 });
+            paths.forEach(p => {
+                const len = p.getTotalLength();
+                gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+            });
+
+            const tl = gsap.timeline();
+
+            tl.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.1
+            });
+
+            tl.to(paths, {
+                strokeDashoffset: 0,
+                duration: 1.5,
+                ease: "none"
+            }, 0.2);
+
+            tl.to(frame, {
+                opacity: 1,
+                duration: 0.3
+            });
+        }
+
+        // Variant 11: Radar Background
+        function playVariant11() {
+            const letters = document.querySelectorAll('.logo-11 .logo-text span:not(.cursor)');
+            const paths = document.querySelectorAll('.polygraph-path-11');
+
+            gsap.set(letters, { opacity: 0 });
+            paths.forEach(p => {
+                const len = p.getTotalLength();
+                gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+            });
+
+            const tl = gsap.timeline();
+
+            tl.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.1,
+                delay: 0.3
+            });
+
+            tl.to(paths, {
+                strokeDashoffset: 0,
+                duration: 1.5,
+                ease: "none"
+            }, 0.4);
+        }
+
+        // Variant 12: The Complete Package
+        function playVariant12() {
+            const letters = document.querySelectorAll('.logo-12 .logo-text span:not(.cursor)');
+            const paths = document.querySelectorAll('.polygraph-path-12');
+
+            gsap.set(letters, { opacity: 0 });
+            paths.forEach(p => {
+                const len = p.getTotalLength();
+                gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+            });
+
+            const tl = gsap.timeline();
+
+            tl.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.1,
+                delay: 0.2
+            });
+
+            tl.to(paths, {
+                strokeDashoffset: 0,
+                duration: 1.5,
+                ease: "none"
+            }, 0.3);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenuVerity Logo - Typewriter + Spotlight Variants</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #050A14;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #94a3b8;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1rem;
+            color: #64748b;
+            font-weight: 400;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-card {
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .logo-number {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .logo-name {
+            position: absolute;
+            bottom: 16px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-align: center;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo .genu { color: #ffffff; }
+        .logo .verity { color: var(--accent-blue); }
+
+        /* ========== VARIANT 1: Spotlight Reveals Text ========== */
+        .v1 .logo-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .v1 .logo {
+            color: transparent;
+            background: linear-gradient(90deg, #fff 0%, #fff 40%, var(--accent-blue) 40%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            opacity: 0.15;
+        }
+        .v1 .logo-reveal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(90deg, #fff 0%, #fff 40%, var(--accent-blue) 40%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            clip-path: inset(0 100% 0 0);
+            animation: v1Reveal 3s ease-in-out infinite;
+        }
+        .v1 .spotlight {
+            position: absolute;
+            top: -50%;
+            width: 60px;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            transform: skewX(-15deg);
+            animation: v1Spotlight 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes v1Reveal {
+            0%, 10% { clip-path: inset(0 100% 0 0); }
+            50%, 60% { clip-path: inset(0 0% 0 0); }
+            90%, 100% { clip-path: inset(0 100% 0 0); }
+        }
+        @keyframes v1Spotlight {
+            0%, 10% { left: -60px; }
+            50%, 60% { left: calc(100% + 60px); }
+            90%, 100% { left: -60px; }
+        }
+
+        /* ========== VARIANT 2: Typewriter with Trailing Glow ========== */
+        .v2 .logo-container {
+            position: relative;
+        }
+        .v2 .logo-text {
+            display: flex;
+        }
+        .v2 .char {
+            opacity: 0;
+            text-shadow: 0 0 0 transparent;
+            animation: v2Type 4s infinite;
+        }
+        .v2 .char.g1 { animation-delay: 0.0s; }
+        .v2 .char.g2 { animation-delay: 0.1s; }
+        .v2 .char.g3 { animation-delay: 0.2s; }
+        .v2 .char.g4 { animation-delay: 0.3s; }
+        .v2 .char.v1 { animation-delay: 0.4s; color: var(--accent-blue); }
+        .v2 .char.v2 { animation-delay: 0.5s; color: var(--accent-blue); }
+        .v2 .char.v3 { animation-delay: 0.6s; color: var(--accent-blue); }
+        .v2 .char.v4 { animation-delay: 0.7s; color: var(--accent-blue); }
+        .v2 .char.v5 { animation-delay: 0.8s; color: var(--accent-blue); }
+        .v2 .char.v6 { animation-delay: 0.9s; color: var(--accent-blue); }
+        @keyframes v2Type {
+            0%, 5% { opacity: 0; text-shadow: 0 0 0 transparent; }
+            10% { opacity: 1; text-shadow: 0 0 30px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.4); }
+            20%, 70% { opacity: 1; text-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
+            85%, 100% { opacity: 0; text-shadow: 0 0 0 transparent; }
+        }
+        .v2 .cursor {
+            width: 3px;
+            height: 1.2em;
+            background: var(--accent-cyan);
+            margin-left: 4px;
+            animation: v2Cursor 4s infinite, v2Blink 0.6s step-end infinite;
+            box-shadow: 0 0 15px var(--accent-cyan), 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+        @keyframes v2Cursor {
+            0% { transform: translateX(-240px); }
+            25% { transform: translateX(0); }
+            75%, 100% { transform: translateX(0); }
+        }
+        @keyframes v2Blink {
+            50% { opacity: 0; }
+        }
+
+        /* ========== VARIANT 3: Spotlight Beam Types Each Letter ========== */
+        .v3 .logo-container {
+            position: relative;
+        }
+        .v3 .char {
+            display: inline-block;
+            opacity: 0.1;
+            transition: all 0.3s ease;
+        }
+        .v3 .beam {
+            position: absolute;
+            top: -30px;
+            width: 30px;
+            height: calc(100% + 60px);
+            background: linear-gradient(180deg,
+                transparent 0%,
+                rgba(6, 182, 212, 0.1) 20%,
+                rgba(6, 182, 212, 0.3) 50%,
+                rgba(6, 182, 212, 0.1) 80%,
+                transparent 100%
+            );
+            animation: v3Beam 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .v3 .beam::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+        @keyframes v3Beam {
+            0%, 5% { left: -30px; }
+            95%, 100% { left: calc(100% + 30px); }
+        }
+
+        /* ========== VARIANT 4: Scanner Typewriter ========== */
+        .v4 .logo-container {
+            position: relative;
+            padding: 20px 0;
+        }
+        .v4 .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, var(--accent-cyan), var(--accent-cyan), transparent);
+            box-shadow: 0 0 20px var(--accent-cyan), 0 0 40px rgba(6, 182, 212, 0.5);
+            animation: v4Scan 2.5s ease-in-out infinite;
+        }
+        .v4 .logo {
+            clip-path: inset(0 100% 0 0);
+            animation: v4Reveal 2.5s ease-in-out infinite;
+        }
+        .v4 .logo-ghost {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            opacity: 0.1;
+        }
+        @keyframes v4Scan {
+            0%, 5% { left: 0; }
+            45%, 55% { left: 100%; }
+            95%, 100% { left: 0; }
+        }
+        @keyframes v4Reveal {
+            0%, 5% { clip-path: inset(0 100% 0 0); }
+            45%, 55% { clip-path: inset(0 0% 0 0); }
+            95%, 100% { clip-path: inset(0 100% 0 0); }
+        }
+
+        /* ========== VARIANT 5: Glowing Typewriter Cascade ========== */
+        .v5 .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(-10px);
+            filter: blur(4px);
+        }
+        .v5 .glow-line {
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            width: 0;
+            animation: v5Line 3s ease-out infinite;
+            box-shadow: 0 0 10px var(--accent-blue);
+        }
+        @keyframes v5Line {
+            0%, 10% { width: 0; }
+            50%, 60% { width: 100%; }
+            90%, 100% { width: 0; }
+        }
+
+        /* ========== VARIANT 6: Dual Spotlight Pinch ========== */
+        .v6 .logo-container {
+            position: relative;
+        }
+        .v6 .logo {
+            opacity: 0.1;
+        }
+        .v6 .logo-lit {
+            position: absolute;
+            top: 0;
+            left: 0;
+            clip-path: inset(0 50% 0 50%);
+            animation: v6Pinch 3s ease-in-out infinite;
+        }
+        .v6 .spot-left, .v6 .spot-right {
+            position: absolute;
+            top: -50%;
+            width: 40px;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(59,130,246,0.1), transparent);
+            transform: skewX(-10deg);
+        }
+        .v6 .spot-left { animation: v6SpotL 3s ease-in-out infinite; }
+        .v6 .spot-right { animation: v6SpotR 3s ease-in-out infinite; }
+        @keyframes v6Pinch {
+            0%, 10% { clip-path: inset(0 50% 0 50%); }
+            50%, 60% { clip-path: inset(0 0% 0 0%); }
+            90%, 100% { clip-path: inset(0 50% 0 50%); }
+        }
+        @keyframes v6SpotL {
+            0%, 10% { left: calc(50% - 20px); }
+            50%, 60% { left: -40px; }
+            90%, 100% { left: calc(50% - 20px); }
+        }
+        @keyframes v6SpotR {
+            0%, 10% { right: calc(50% - 20px); left: auto; }
+            50%, 60% { right: -40px; }
+            90%, 100% { right: calc(50% - 20px); }
+        }
+
+        /* ========== VARIANT 7: Verification Scan ========== */
+        .v7 .logo-container {
+            position: relative;
+        }
+        .v7 .logo {
+            transition: all 0.3s;
+        }
+        .v7 .scan-bar {
+            position: absolute;
+            top: -10px;
+            left: 0;
+            right: 0;
+            height: calc(100% + 20px);
+            background: linear-gradient(180deg,
+                transparent 0%,
+                rgba(16, 185, 129, 0.1) 45%,
+                rgba(16, 185, 129, 0.4) 50%,
+                rgba(16, 185, 129, 0.1) 55%,
+                transparent 100%
+            );
+            animation: v7Scan 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .v7 .status {
+            position: absolute;
+            bottom: -30px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--accent-green);
+            opacity: 0;
+            animation: v7Status 2s ease-in-out infinite;
+        }
+        @keyframes v7Scan {
+            0%, 100% { clip-path: inset(100% 0 0 0); }
+            50% { clip-path: inset(0 0 0 0); }
+        }
+        @keyframes v7Status {
+            0%, 40% { opacity: 0; }
+            50%, 80% { opacity: 1; }
+            90%, 100% { opacity: 0; }
+        }
+
+        /* ========== VARIANT 8: Elegant Wipe with Glow Trail ========== */
+        .v8 .logo-container {
+            position: relative;
+        }
+        .v8 .logo-base {
+            opacity: 0.15;
+        }
+        .v8 .logo-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            -webkit-mask: linear-gradient(90deg, #000 0%, #000 50%, transparent 50%, transparent 100%);
+            mask: linear-gradient(90deg, #000 0%, #000 50%, transparent 50%, transparent 100%);
+            -webkit-mask-size: 200% 100%;
+            mask-size: 200% 100%;
+            animation: v8Wipe 3s ease-in-out infinite;
+        }
+        .v8 .glow-edge {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 120%;
+            background: var(--accent-cyan);
+            border-radius: 2px;
+            box-shadow:
+                0 0 20px var(--accent-cyan),
+                0 0 40px var(--accent-cyan),
+                0 0 60px rgba(6, 182, 212, 0.5);
+            animation: v8Edge 3s ease-in-out infinite;
+        }
+        @keyframes v8Wipe {
+            0%, 10% { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
+            50%, 60% { -webkit-mask-position: 0% 0; mask-position: 0% 0; }
+            90%, 100% { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
+        }
+        @keyframes v8Edge {
+            0%, 10% { left: 0; opacity: 0; }
+            15% { opacity: 1; }
+            50% { left: 100%; opacity: 1; }
+            55%, 100% { opacity: 0; }
+        }
+
+        /* ========== VARIANT 9: Particle Typewriter ========== */
+        .v9 .logo-container {
+            position: relative;
+        }
+        .v9 .char {
+            display: inline-block;
+            opacity: 0;
+        }
+        .v9 .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .v9 .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        /* ========== VARIANT 10: Cinema Reveal ========== */
+        .v10 .logo-container {
+            position: relative;
+            padding: 30px 0;
+        }
+        .v10 .curtain-top, .v10 .curtain-bottom {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: var(--bg-primary);
+            z-index: 2;
+        }
+        .v10 .curtain-top {
+            top: 0;
+            animation: v10CurtainT 4s ease-in-out infinite;
+            transform-origin: top;
+        }
+        .v10 .curtain-bottom {
+            bottom: 0;
+            animation: v10CurtainB 4s ease-in-out infinite;
+            transform-origin: bottom;
+        }
+        .v10 .logo {
+            text-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+        }
+        .v10 .spotlight-cone {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 80px solid transparent;
+            border-right: 80px solid transparent;
+            border-top: 150px solid rgba(255, 255, 255, 0.03);
+            opacity: 0;
+            animation: v10Cone 4s ease-in-out infinite;
+        }
+        @keyframes v10CurtainT {
+            0%, 20% { transform: scaleY(1); }
+            40%, 70% { transform: scaleY(0); }
+            90%, 100% { transform: scaleY(1); }
+        }
+        @keyframes v10CurtainB {
+            0%, 20% { transform: scaleY(1); }
+            40%, 70% { transform: scaleY(0); }
+            90%, 100% { transform: scaleY(1); }
+        }
+        @keyframes v10Cone {
+            0%, 30% { opacity: 0; }
+            40%, 70% { opacity: 1; }
+            80%, 100% { opacity: 0; }
+        }
+
+        /* ========== VARIANT 11: Morse Code Flash ========== */
+        .v11 .logo {
+            animation: v11Flash 4s ease-in-out infinite;
+        }
+        .v11 .underline {
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            height: 3px;
+            background: var(--accent-cyan);
+            width: 0;
+            animation: v11Line 4s ease-out infinite;
+            box-shadow: 0 0 15px var(--accent-cyan);
+        }
+        @keyframes v11Flash {
+            0%, 5% { opacity: 0; text-shadow: none; }
+            6%, 8% { opacity: 1; text-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+            9%, 11% { opacity: 0.3; }
+            12%, 14% { opacity: 1; text-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+            15%, 17% { opacity: 0.3; }
+            18%, 25% { opacity: 1; text-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+            26%, 85% { opacity: 1; text-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
+            95%, 100% { opacity: 0; }
+        }
+        @keyframes v11Line {
+            0%, 25% { width: 0; }
+            50% { width: 100%; }
+            85%, 100% { width: 0; }
+        }
+
+        /* ========== VARIANT 12: Holographic Typewriter ========== */
+        .v12 .char {
+            display: inline-block;
+            opacity: 0;
+            background: linear-gradient(135deg, #fff, #3b82f6, #06b6d4, #fff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .v12 .char.white {
+            background: linear-gradient(135deg, #fff 0%, #e0e7ff 50%, #fff 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        .v12 .reflection {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            transform: scaleY(-1);
+            opacity: 0.15;
+            filter: blur(2px);
+            -webkit-mask: linear-gradient(180deg, rgba(0,0,0,0.5), transparent);
+            mask: linear-gradient(180deg, rgba(0,0,0,0.5), transparent);
+        }
+    </style>
+</head>
+<body>
+    <h1>Typewriter + Spotlight Combinations</h1>
+    <h2>12 refined variants blending both effects</h2>
+
+    <div class="grid">
+        <!-- Variant 1: Spotlight Reveals Text -->
+        <div class="logo-card v1">
+            <span class="logo-number">#1</span>
+            <div class="logo-container">
+                <div class="spotlight"></div>
+                <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+                <div class="logo logo-reveal"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            </div>
+            <span class="logo-name">Spotlight Reveal</span>
+        </div>
+
+        <!-- Variant 2: Typewriter with Trailing Glow -->
+        <div class="logo-card v2">
+            <span class="logo-number">#2</span>
+            <div class="logo-container">
+                <div class="logo logo-text">
+                    <span class="char g1">G</span><span class="char g2">e</span><span class="char g3">n</span><span class="char g4">u</span><span class="char v1">V</span><span class="char v2">e</span><span class="char v3">r</span><span class="char v4">i</span><span class="char v5">t</span><span class="char v6">y</span>
+                    <span class="cursor"></span>
+                </div>
+            </div>
+            <span class="logo-name">Glowing Cursor Trail</span>
+        </div>
+
+        <!-- Variant 3: Spotlight Beam Types Each Letter -->
+        <div class="logo-card v3" id="v3">
+            <span class="logo-number">#3</span>
+            <div class="logo-container">
+                <div class="beam"></div>
+                <div class="logo">
+                    <span class="char genu">G</span><span class="char genu">e</span><span class="char genu">n</span><span class="char genu">u</span><span class="char verity">V</span><span class="char verity">e</span><span class="char verity">r</span><span class="char verity">i</span><span class="char verity">t</span><span class="char verity">y</span>
+                </div>
+            </div>
+            <span class="logo-name">Beam Illumination</span>
+        </div>
+
+        <!-- Variant 4: Scanner Typewriter -->
+        <div class="logo-card v4">
+            <span class="logo-number">#4</span>
+            <div class="logo-container">
+                <div class="logo logo-ghost"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+                <div class="scan-line"></div>
+                <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            </div>
+            <span class="logo-name">Scanner Reveal</span>
+        </div>
+
+        <!-- Variant 5: Glowing Typewriter Cascade -->
+        <div class="logo-card v5" id="v5">
+            <span class="logo-number">#5</span>
+            <div class="logo-container" style="position: relative;">
+                <div class="logo">
+                    <span class="char genu">G</span><span class="char genu">e</span><span class="char genu">n</span><span class="char genu">u</span><span class="char verity">V</span><span class="char verity">e</span><span class="char verity">r</span><span class="char verity">i</span><span class="char verity">t</span><span class="char verity">y</span>
+                </div>
+                <div class="glow-line"></div>
+            </div>
+            <span class="logo-name">Cascade + Underline</span>
+        </div>
+
+        <!-- Variant 6: Dual Spotlight Pinch -->
+        <div class="logo-card v6">
+            <span class="logo-number">#6</span>
+            <div class="logo-container">
+                <div class="spot-left"></div>
+                <div class="spot-right"></div>
+                <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+                <div class="logo logo-lit"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            </div>
+            <span class="logo-name">Dual Spotlight Pinch</span>
+        </div>
+
+        <!-- Variant 7: Verification Scan -->
+        <div class="logo-card v7">
+            <span class="logo-number">#7</span>
+            <div class="logo-container">
+                <div class="scan-bar"></div>
+                <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+                <div class="status">✓ VERIFIED</div>
+            </div>
+            <span class="logo-name">Verification Scan</span>
+        </div>
+
+        <!-- Variant 8: Elegant Wipe with Glow Trail -->
+        <div class="logo-card v8">
+            <span class="logo-number">#8</span>
+            <div class="logo-container">
+                <div class="glow-edge"></div>
+                <div class="logo logo-base"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+                <div class="logo logo-top"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            </div>
+            <span class="logo-name">Elegant Wipe + Glow Edge</span>
+        </div>
+
+        <!-- Variant 9: Particle Typewriter -->
+        <div class="logo-card v9" id="v9">
+            <span class="logo-number">#9</span>
+            <div class="logo-container">
+                <div class="particles"></div>
+                <div class="logo">
+                    <span class="char genu">G</span><span class="char genu">e</span><span class="char genu">n</span><span class="char genu">u</span><span class="char verity">V</span><span class="char verity">e</span><span class="char verity">r</span><span class="char verity">i</span><span class="char verity">t</span><span class="char verity">y</span>
+                </div>
+            </div>
+            <span class="logo-name">Particle Burst Typewriter</span>
+        </div>
+
+        <!-- Variant 10: Cinema Reveal -->
+        <div class="logo-card v10">
+            <span class="logo-number">#10</span>
+            <div class="logo-container">
+                <div class="spotlight-cone"></div>
+                <div class="curtain-top"></div>
+                <div class="curtain-bottom"></div>
+                <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+            </div>
+            <span class="logo-name">Cinema Curtain Reveal</span>
+        </div>
+
+        <!-- Variant 11: Morse Code Flash -->
+        <div class="logo-card v11">
+            <span class="logo-number">#11</span>
+            <div class="logo-container" style="position: relative;">
+                <div class="logo"><span class="genu">Genu</span><span class="verity">Verity</span></div>
+                <div class="underline"></div>
+            </div>
+            <span class="logo-name">Signal Flash + Underline</span>
+        </div>
+
+        <!-- Variant 12: Holographic Typewriter -->
+        <div class="logo-card v12" id="v12">
+            <span class="logo-number">#12</span>
+            <div class="logo-container" style="position: relative;">
+                <div class="logo">
+                    <span class="char white">G</span><span class="char white">e</span><span class="char white">n</span><span class="char white">u</span><span class="char">V</span><span class="char">e</span><span class="char">r</span><span class="char">i</span><span class="char">t</span><span class="char">y</span>
+                </div>
+                <div class="logo reflection">
+                    <span style="color:#fff">Genu</span><span style="color:var(--accent-blue)">Verity</span>
+                </div>
+            </div>
+            <span class="logo-name">Holographic + Reflection</span>
+        </div>
+    </div>
+
+    <script>
+        // GSAP Animations
+
+        // Variant 3: Beam illuminates letters as it passes
+        const v3Chars = document.querySelectorAll('.v3 .char');
+        const v3Beam = document.querySelector('.v3 .beam');
+
+        function animateV3() {
+            const tl = gsap.timeline({ repeat: -1 });
+            tl.set(v3Chars, { opacity: 0.1 });
+
+            v3Chars.forEach((char, i) => {
+                tl.to(char, {
+                    opacity: 1,
+                    textShadow: '0 0 20px rgba(6, 182, 212, 0.8)',
+                    duration: 0.15,
+                    ease: 'power2.out'
+                }, i * 0.25 + 0.3);
+                tl.to(char, {
+                    textShadow: '0 0 5px rgba(6, 182, 212, 0.3)',
+                    duration: 0.3
+                }, i * 0.25 + 0.5);
+            });
+
+            tl.to(v3Chars, {
+                opacity: 0.1,
+                textShadow: 'none',
+                duration: 0.5,
+                stagger: 0.05
+            }, '+=1');
+
+            tl.set({}, {}, '+=0.5');
+        }
+        animateV3();
+
+        // Variant 5: Cascade typewriter with glow
+        const v5Chars = document.querySelectorAll('.v5 .char');
+
+        function animateV5() {
+            const tl = gsap.timeline({ repeat: -1 });
+
+            v5Chars.forEach((char, i) => {
+                tl.to(char, {
+                    opacity: 1,
+                    y: 0,
+                    filter: 'blur(0px)',
+                    textShadow: '0 0 25px rgba(59, 130, 246, 0.8)',
+                    duration: 0.2,
+                    ease: 'back.out(1.5)'
+                }, i * 0.1 + 0.3);
+                tl.to(char, {
+                    textShadow: '0 0 8px rgba(59, 130, 246, 0.3)',
+                    duration: 0.3
+                }, i * 0.1 + 0.5);
+            });
+
+            tl.to(v5Chars, {
+                opacity: 0,
+                y: 10,
+                filter: 'blur(4px)',
+                duration: 0.4,
+                stagger: 0.03
+            }, '+=1.5');
+
+            tl.set(v5Chars, { y: -10 });
+            tl.set({}, {}, '+=0.3');
+        }
+        animateV5();
+
+        // Variant 9: Particle burst on each letter
+        const v9Container = document.querySelector('.v9 .particles');
+        const v9Chars = document.querySelectorAll('.v9 .char');
+
+        function createParticles(x, y) {
+            for (let i = 0; i < 6; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                v9Container.appendChild(particle);
+
+                gsap.to(particle, {
+                    x: (Math.random() - 0.5) * 60,
+                    y: (Math.random() - 0.5) * 40,
+                    opacity: 1,
+                    duration: 0.2,
+                    ease: 'power2.out'
+                });
+                gsap.to(particle, {
+                    opacity: 0,
+                    duration: 0.4,
+                    delay: 0.2,
+                    onComplete: () => particle.remove()
+                });
+            }
+        }
+
+        function animateV9() {
+            const tl = gsap.timeline({ repeat: -1 });
+
+            v9Chars.forEach((char, i) => {
+                tl.to(char, {
+                    opacity: 1,
+                    duration: 0.15,
+                    ease: 'power2.out',
+                    onStart: () => {
+                        const rect = char.getBoundingClientRect();
+                        const containerRect = v9Container.getBoundingClientRect();
+                        createParticles(
+                            rect.left - containerRect.left + rect.width / 2,
+                            rect.top - containerRect.top + rect.height / 2
+                        );
+                    }
+                }, i * 0.15 + 0.2);
+            });
+
+            tl.to(v9Chars, {
+                opacity: 0,
+                duration: 0.3,
+                stagger: 0.02
+            }, '+=2');
+
+            tl.set({}, {}, '+=0.5');
+        }
+        animateV9();
+
+        // Variant 12: Holographic typewriter
+        const v12Chars = document.querySelectorAll('.v12 .char');
+        const v12Reflection = document.querySelector('.v12 .reflection');
+
+        function animateV12() {
+            const tl = gsap.timeline({ repeat: -1 });
+
+            v12Chars.forEach((char, i) => {
+                tl.to(char, {
+                    opacity: 1,
+                    backgroundPosition: '0% 50%',
+                    duration: 0.2,
+                    ease: 'power2.out'
+                }, i * 0.12 + 0.2);
+            });
+
+            tl.to(v12Chars, {
+                backgroundPosition: '100% 50%',
+                duration: 1.5,
+                ease: 'sine.inOut'
+            }, '+=0.3');
+
+            tl.fromTo(v12Reflection,
+                { opacity: 0 },
+                { opacity: 0.15, duration: 0.5 },
+                1
+            );
+
+            tl.to(v12Chars, {
+                opacity: 0,
+                duration: 0.4,
+                stagger: 0.02
+            }, '+=1');
+
+            tl.to(v12Reflection, {
+                opacity: 0,
+                duration: 0.3
+            }, '-=0.3');
+
+            tl.set({}, {}, '+=0.3');
+        }
+        animateV12();
+    </script>
+</body>
+</html>
