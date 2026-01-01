@@ -1131,10 +1131,6 @@
     {
       "source": "/fairness-doctrine-history",
       "destination": "/localreports/fairness-doctrine-history.html"
-    },
-    {
-      "source": "/((?!api).*)",
-      "destination": "/index.html"
     }
   ]
 }
