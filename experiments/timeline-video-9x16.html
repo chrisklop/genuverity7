@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080, height=1920">
+    <title>Timeline Video - 9:16 Social</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 1080px;
+            height: 1920px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-container {
+            width: 1080px;
+            height: 1920px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, #0a0a0f 0%, #050510 50%, #0a0a0f 100%);
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Ambient background */
+        .ambient-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0.4;
+            background:
+                radial-gradient(ellipse 100% 50% at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse 80% 40% at 50% 100%, rgba(239, 68, 68, 0.1) 0%, transparent 50%);
+        }
+
+        /* Grid overlay */
+        .grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0;
+        }
+
+        /* Scanline effect */
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+            opacity: 0;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+        }
+
+        /* ============================
+           INTRO SECTION
+        ============================ */
+        .intro-section {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+        }
+
+        .intro-logo {
+            font-size: 72px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 30px;
+        }
+
+        .intro-logo .genu { color: #ffffff; }
+        .intro-logo .verity { color: #3b82f6; }
+
+        .intro-tagline {
+            font-size: 28px;
+            color: rgba(255,255,255,0.6);
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 60px;
+        }
+
+        .intro-presents {
+            font-size: 20px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Polygraph line for intro */
+        .intro-polygraph {
+            position: absolute;
+            bottom: 400px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 80px;
+        }
+
+        .intro-polygraph svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .intro-polygraph-line {
+            fill: none;
+            stroke: #3b82f6;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
+        }
+
+        /* ============================
+           TITLE CARD
+        ============================ */
+        .title-card {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            padding: 80px;
+        }
+
+        .title-main {
+            font-size: 64px;
+            font-weight: 800;
+            text-align: center;
+            line-height: 1.1;
+            margin-bottom: 40px;
+            background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-sub {
+            font-size: 32px;
+            color: rgba(255,255,255,0.5);
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .title-years {
+            font-size: 120px;
+            font-weight: 900;
+            color: rgba(59, 130, 246, 0.2);
+            position: absolute;
+            bottom: 200px;
+            letter-spacing: -5px;
+        }
+
+        /* ============================
+           ERA SECTIONS
+        ============================ */
+        .era-slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            padding: 100px 60px;
+        }
+
+        .era-year {
+            font-size: 140px;
+            font-weight: 900;
+            color: rgba(255,255,255,0.06);
+            position: absolute;
+            top: 80px;
+            right: 40px;
+            line-height: 1;
+        }
+
+        .era-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #3b82f6;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            width: fit-content;
+        }
+
+        .era-title {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 40px;
+            max-width: 900px;
+        }
+
+        .era-description {
+            font-family: 'Crimson Pro', serif;
+            font-size: 36px;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.7);
+            max-width: 850px;
+            margin-bottom: 60px;
+        }
+
+        .era-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .era-stat-value {
+            font-size: 80px;
+            font-weight: 800;
+            color: #3b82f6;
+        }
+
+        .era-stat-label {
+            font-size: 20px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        /* Visual element for each era */
+        .era-visual {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 500px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            opacity: 0.8;
+        }
+
+        /* Era-specific colors */
+        .era-yellow .era-badge { background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3); color: #f59e0b; }
+        .era-yellow .era-stat-value { color: #f59e0b; }
+
+        .era-wwi .era-badge { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: #ef4444; }
+        .era-wwi .era-stat-value { color: #ef4444; }
+
+        .era-coldwar .era-badge { background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.3); color: #3b82f6; }
+        .era-coldwar .era-stat-value { color: #3b82f6; }
+
+        .era-corporate .era-badge { background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: #10b981; }
+        .era-corporate .era-stat-value { color: #10b981; }
+
+        .era-digital .era-badge { background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.3); color: #8b5cf6; }
+        .era-digital .era-stat-value { color: #8b5cf6; }
+
+        .era-censorship .era-badge { background: rgba(236, 72, 153, 0.15); border-color: rgba(236, 72, 153, 0.3); color: #ec4899; }
+        .era-censorship .era-stat-value { color: #ec4899; }
+
+        .era-ai .era-badge { background: rgba(6, 182, 212, 0.15); border-color: rgba(6, 182, 212, 0.3); color: #06b6d4; }
+        .era-ai .era-stat-value { color: #06b6d4; }
+
+        /* ============================
+           OUTRO SECTION
+        ============================ */
+        .outro-section {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            padding: 80px;
+        }
+
+        .outro-logo {
+            font-size: 96px;
+            font-weight: 800;
+            letter-spacing: -3px;
+            margin-bottom: 40px;
+        }
+
+        .outro-logo .genu { color: #ffffff; }
+        .outro-logo .verity { color: #3b82f6; }
+
+        .outro-cta {
+            font-size: 36px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .outro-url {
+            font-size: 28px;
+            color: #3b82f6;
+            padding: 20px 50px;
+            border: 2px solid rgba(59, 130, 246, 0.5);
+            border-radius: 50px;
+            letter-spacing: 2px;
+        }
+
+        /* Polygraph animation for outro */
+        .outro-polygraph {
+            position: absolute;
+            bottom: 300px;
+            width: 800px;
+            height: 100px;
+        }
+
+        /* ============================
+           PROGRESS BAR
+        ============================ */
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4);
+        }
+
+        /* ============================
+           TIMELINE INDICATOR
+        ============================ */
+        .timeline-indicator {
+            position: absolute;
+            left: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            opacity: 0;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transition: all 0.3s;
+        }
+
+        .timeline-dot.active {
+            background: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+        }
+
+        /* Timer display */
+        .timer {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 2px;
+        }
+
+        /* Play button overlay */
+        .play-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .play-button {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.2);
+            border: 3px solid #3b82f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+            transition: all 0.3s;
+        }
+
+        .play-button:hover {
+            background: rgba(59, 130, 246, 0.3);
+            transform: scale(1.1);
+        }
+
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 50px solid #3b82f6;
+            border-top: 30px solid transparent;
+            border-bottom: 30px solid transparent;
+            margin-left: 15px;
+        }
+
+        .play-text {
+            font-size: 24px;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .play-overlay.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <div class="ambient-bg"></div>
+        <div class="grid-overlay"></div>
+        <div class="scanline"></div>
+
+        <!-- Play Overlay -->
+        <div class="play-overlay" id="playOverlay">
+            <div class="play-button"></div>
+            <div class="play-text">Click to Play</div>
+        </div>
+
+        <!-- Intro -->
+        <div class="intro-section" id="intro">
+            <div class="intro-presents">GenuVerity Presents</div>
+            <div class="intro-logo">
+                <span class="genu">Genu</span><span class="verity">Verity</span>
+            </div>
+            <div class="intro-tagline">Truth Has a Timeline</div>
+            <div class="intro-polygraph">
+                <svg viewBox="0 0 600 80" preserveAspectRatio="none">
+                    <path class="intro-polygraph-line" id="introLine" d="M0,40 L100,40 L120,40 L140,10 L160,70 L180,25 L200,55 L220,40 L320,40 L340,40 L360,5 L380,75 L400,20 L420,60 L440,40 L600,40"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Title Card -->
+        <div class="title-card" id="titleCard">
+            <div class="title-main">The Architecture<br>of Perception</div>
+            <div class="title-sub">130 years of manufactured reality</div>
+            <div class="title-years">1898–2025</div>
+        </div>
+
+        <!-- Era 1: Yellow Journalism -->
+        <div class="era-slide era-yellow" id="eraYellow">
+            <div class="era-year">1898</div>
+            <div class="era-badge">Era I</div>
+            <div class="era-title">Yellow Journalism</div>
+            <div class="era-description">
+                When Hearst and Pulitzer weaponized headlines to manufacture a war with Spain.
+            </div>
+            <div class="era-stat">
+                <div class="era-stat-value">$50M</div>
+                <div class="era-stat-label">Media empire value</div>
+            </div>
+        </div>
+
+        <!-- Era 2: WWI Propaganda -->
+        <div class="era-slide era-wwi" id="eraWWI">
+            <div class="era-year">1917</div>
+            <div class="era-badge">Era II</div>
+            <div class="era-title">State Propaganda</div>
+            <div class="era-description">
+                The Committee on Public Information deployed 75,000 "Four Minute Men" to shape public opinion.
+            </div>
+            <div class="era-stat">
+                <div class="era-stat-value">75K</div>
+                <div class="era-stat-label">Government speakers</div>
+            </div>
+        </div>
+
+        <!-- Era 3: Cold War -->
+        <div class="era-slide era-coldwar" id="eraColdWar">
+            <div class="era-year">1947</div>
+            <div class="era-badge">Era III</div>
+            <div class="era-title">Cold War<br>Consensus</div>
+            <div class="era-description">
+                The CIA's Operation Mockingbird infiltrated major news organizations worldwide.
+            </div>
+            <div class="era-stat">
+                <div class="era-stat-value">400+</div>
+                <div class="era-stat-label">Journalists on payroll</div>
+            </div>
+        </div>
+
+        <!-- Era 4: Corporate Era -->
+        <div class="era-slide era-corporate" id="eraCorporate">
+            <div class="era-year">1987</div>
+            <div class="era-badge">Era IV</div>
+            <div class="era-title">The Corporate<br>Pivot</div>
+            <div class="era-description">
+                Fairness Doctrine dies. Six corporations now control 90% of American media.
+            </div>
+            <div class="era-stat">
+                <div class="era-stat-value">6</div>
+                <div class="era-stat-label">Media conglomerates</div>
+            </div>
+        </div>
+
+        <!-- Era 5: Digital Age -->
+        <div class="era-slide era-digital" id="eraDigital">
+            <div class="era-year">2004</div>
+            <div class="era-badge">Era V</div>
+            <div class="era-title">Digital<br>Disinformation</div>
+            <div class="era-description">
+                Social media algorithms optimize for engagement over truth.
+            </div>
+            <div class="era-stat">
+                <div class="era-stat-value">70%</div>
+                <div class="era-stat-label">Faster misinformation spread</div>
+            </div>
+        </div>
+
+        <!-- Era 6: Censorship -->
+        <div class="era-slide era-censorship" id="eraCensorship">
+            <div class="era-year">2020</div>
+            <div class="era-badge">Era VI</div>
+            <div class="era-title">The Censorship<br>Complex</div>
+            <div class="era-description">
+                Government-tech partnerships decide what information you're allowed to see.
+            </div>
+            <div class="era-stat">
+                <div class="era-stat-value">45M</div>
+                <div class="era-stat-label">Posts flagged</div>
+            </div>
+        </div>
+
+        <!-- Era 7: AI Era -->
+        <div class="era-slide era-ai" id="eraAI">
+            <div class="era-year">2025</div>
+            <div class="era-badge">Era VII</div>
+            <div class="era-title">Synthetic<br>Reality</div>
+            <div class="era-description">
+                AI-generated content makes truth nearly indistinguishable from fiction.
+            </div>
+            <div class="era-stat">
+                <div class="era-stat-value">∞</div>
+                <div class="era-stat-label">Possible narratives</div>
+            </div>
+        </div>
+
+        <!-- Outro -->
+        <div class="outro-section" id="outro">
+            <div class="outro-logo">
+                <span class="genu">Genu</span><span class="verity">Verity</span>
+            </div>
+            <div class="outro-cta">Explore the full timeline</div>
+            <div class="outro-url">genuverity.com/timeline</div>
+            <div class="outro-polygraph">
+                <svg viewBox="0 0 800 100" preserveAspectRatio="none">
+                    <path class="intro-polygraph-line" id="outroLine" d="M0,50 L150,50 L180,50 L210,15 L240,85 L270,30 L300,70 L330,50 L500,50 L530,50 L560,10 L590,90 L620,25 L650,75 L680,50 L800,50"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Timeline Indicator -->
+        <div class="timeline-indicator" id="timelineIndicator">
+            <div class="timeline-dot" data-era="1"></div>
+            <div class="timeline-dot" data-era="2"></div>
+            <div class="timeline-dot" data-era="3"></div>
+            <div class="timeline-dot" data-era="4"></div>
+            <div class="timeline-dot" data-era="5"></div>
+            <div class="timeline-dot" data-era="6"></div>
+            <div class="timeline-dot" data-era="7"></div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Timer -->
+        <div class="timer" id="timer">00:00 / 01:15</div>
+    </div>
+
+    <script>
+        const TOTAL_DURATION = 75; // seconds
+
+        // Timeline segments (in seconds)
+        const segments = {
+            intro: { start: 0, end: 8 },
+            titleCard: { start: 8, end: 14 },
+            eraYellow: { start: 14, end: 23 },
+            eraWWI: { start: 23, end: 32 },
+            eraColdWar: { start: 32, end: 41 },
+            eraCorporate: { start: 41, end: 50 },
+            eraDigital: { start: 50, end: 57 },
+            eraCensorship: { start: 57, end: 64 },
+            eraAI: { start: 64, end: 70 },
+            outro: { start: 70, end: 75 }
+        };
+
+        let masterTimeline;
+        let startTime;
+        let animationFrame;
+
+        // Create master timeline
+        function createTimeline() {
+            masterTimeline = gsap.timeline({ paused: true });
+
+            // Intro sequence (0-8s)
+            masterTimeline
+                .to('.grid-overlay', { opacity: 0.5, duration: 1 }, 0)
+                .to('#intro', { opacity: 1, duration: 1 }, 0.5)
+                .fromTo('#introLine',
+                    { strokeDasharray: 800, strokeDashoffset: 800 },
+                    { strokeDashoffset: 0, duration: 3, ease: 'none' }, 1)
+                .to('.scanline', { opacity: 1, top: '100%', duration: 2, ease: 'none' }, 2)
+                .to('.scanline', { opacity: 0, duration: 0.3 }, 4)
+                .to('#intro', { opacity: 0, duration: 0.8 }, 7);
+
+            // Title Card (8-14s)
+            masterTimeline
+                .to('#titleCard', { opacity: 1, duration: 0.8 }, 8)
+                .from('.title-main', { y: 50, opacity: 0, duration: 0.8 }, 8.3)
+                .from('.title-sub', { y: 30, opacity: 0, duration: 0.6 }, 8.8)
+                .from('.title-years', { scale: 0.8, opacity: 0, duration: 1 }, 9)
+                .to('#titleCard', { opacity: 0, duration: 0.8 }, 13);
+
+            // Show timeline indicator
+            masterTimeline.to('#timelineIndicator', { opacity: 1, duration: 0.5 }, 14);
+
+            // Era 1: Yellow Journalism (14-23s)
+            masterTimeline
+                .call(() => setActiveDot(1), null, 14)
+                .to('#eraYellow', { opacity: 1, duration: 0.8 }, 14)
+                .from('#eraYellow .era-year', { x: 100, opacity: 0, duration: 0.6 }, 14.3)
+                .from('#eraYellow .era-badge', { y: -20, opacity: 0, duration: 0.4 }, 14.5)
+                .from('#eraYellow .era-title', { y: 40, opacity: 0, duration: 0.6 }, 14.8)
+                .from('#eraYellow .era-description', { y: 30, opacity: 0, duration: 0.5 }, 15.3)
+                .from('#eraYellow .era-stat', { y: 30, opacity: 0, duration: 0.5 }, 15.8)
+                .to('#eraYellow', { opacity: 0, duration: 0.6 }, 22);
+
+            // Era 2: WWI (23-32s)
+            masterTimeline
+                .call(() => setActiveDot(2), null, 23)
+                .to('#eraWWI', { opacity: 1, duration: 0.8 }, 23)
+                .from('#eraWWI .era-year', { x: 100, opacity: 0, duration: 0.6 }, 23.3)
+                .from('#eraWWI .era-badge', { y: -20, opacity: 0, duration: 0.4 }, 23.5)
+                .from('#eraWWI .era-title', { y: 40, opacity: 0, duration: 0.6 }, 23.8)
+                .from('#eraWWI .era-description', { y: 30, opacity: 0, duration: 0.5 }, 24.3)
+                .from('#eraWWI .era-stat', { y: 30, opacity: 0, duration: 0.5 }, 24.8)
+                .to('#eraWWI', { opacity: 0, duration: 0.6 }, 31);
+
+            // Era 3: Cold War (32-41s)
+            masterTimeline
+                .call(() => setActiveDot(3), null, 32)
+                .to('#eraColdWar', { opacity: 1, duration: 0.8 }, 32)
+                .from('#eraColdWar .era-year', { x: 100, opacity: 0, duration: 0.6 }, 32.3)
+                .from('#eraColdWar .era-badge', { y: -20, opacity: 0, duration: 0.4 }, 32.5)
+                .from('#eraColdWar .era-title', { y: 40, opacity: 0, duration: 0.6 }, 32.8)
+                .from('#eraColdWar .era-description', { y: 30, opacity: 0, duration: 0.5 }, 33.3)
+                .from('#eraColdWar .era-stat', { y: 30, opacity: 0, duration: 0.5 }, 33.8)
+                .to('#eraColdWar', { opacity: 0, duration: 0.6 }, 40);
+
+            // Era 4: Corporate (41-50s)
+            masterTimeline
+                .call(() => setActiveDot(4), null, 41)
+                .to('#eraCorporate', { opacity: 1, duration: 0.8 }, 41)
+                .from('#eraCorporate .era-year', { x: 100, opacity: 0, duration: 0.6 }, 41.3)
+                .from('#eraCorporate .era-badge', { y: -20, opacity: 0, duration: 0.4 }, 41.5)
+                .from('#eraCorporate .era-title', { y: 40, opacity: 0, duration: 0.6 }, 41.8)
+                .from('#eraCorporate .era-description', { y: 30, opacity: 0, duration: 0.5 }, 42.3)
+                .from('#eraCorporate .era-stat', { y: 30, opacity: 0, duration: 0.5 }, 42.8)
+                .to('#eraCorporate', { opacity: 0, duration: 0.6 }, 49);
+
+            // Era 5: Digital (50-57s)
+            masterTimeline
+                .call(() => setActiveDot(5), null, 50)
+                .to('#eraDigital', { opacity: 1, duration: 0.8 }, 50)
+                .from('#eraDigital .era-year', { x: 100, opacity: 0, duration: 0.6 }, 50.3)
+                .from('#eraDigital .era-badge', { y: -20, opacity: 0, duration: 0.4 }, 50.5)
+                .from('#eraDigital .era-title', { y: 40, opacity: 0, duration: 0.6 }, 50.8)
+                .from('#eraDigital .era-description', { y: 30, opacity: 0, duration: 0.5 }, 51.3)
+                .from('#eraDigital .era-stat', { y: 30, opacity: 0, duration: 0.5 }, 51.8)
+                .to('#eraDigital', { opacity: 0, duration: 0.6 }, 56);
+
+            // Era 6: Censorship (57-64s)
+            masterTimeline
+                .call(() => setActiveDot(6), null, 57)
+                .to('#eraCensorship', { opacity: 1, duration: 0.8 }, 57)
+                .from('#eraCensorship .era-year', { x: 100, opacity: 0, duration: 0.6 }, 57.3)
+                .from('#eraCensorship .era-badge', { y: -20, opacity: 0, duration: 0.4 }, 57.5)
+                .from('#eraCensorship .era-title', { y: 40, opacity: 0, duration: 0.6 }, 57.8)
+                .from('#eraCensorship .era-description', { y: 30, opacity: 0, duration: 0.5 }, 58.3)
+                .from('#eraCensorship .era-stat', { y: 30, opacity: 0, duration: 0.5 }, 58.8)
+                .to('#eraCensorship', { opacity: 0, duration: 0.6 }, 63);
+
+            // Era 7: AI (64-70s)
+            masterTimeline
+                .call(() => setActiveDot(7), null, 64)
+                .to('#eraAI', { opacity: 1, duration: 0.8 }, 64)
+                .from('#eraAI .era-year', { x: 100, opacity: 0, duration: 0.6 }, 64.3)
+                .from('#eraAI .era-badge', { y: -20, opacity: 0, duration: 0.4 }, 64.5)
+                .from('#eraAI .era-title', { y: 40, opacity: 0, duration: 0.6 }, 64.8)
+                .from('#eraAI .era-description', { y: 30, opacity: 0, duration: 0.5 }, 65.3)
+                .from('#eraAI .era-stat', { y: 30, opacity: 0, duration: 0.5 }, 65.8)
+                .to('#eraAI', { opacity: 0, duration: 0.6 }, 69)
+                .to('#timelineIndicator', { opacity: 0, duration: 0.5 }, 69);
+
+            // Outro (70-75s)
+            masterTimeline
+                .to('#outro', { opacity: 1, duration: 0.8 }, 70)
+                .from('.outro-logo', { scale: 0.8, opacity: 0, duration: 0.6 }, 70.3)
+                .from('.outro-cta', { y: 30, opacity: 0, duration: 0.5 }, 70.8)
+                .from('.outro-url', { y: 20, opacity: 0, duration: 0.5 }, 71.2)
+                .fromTo('#outroLine',
+                    { strokeDasharray: 1000, strokeDashoffset: 1000 },
+                    { strokeDashoffset: 0, duration: 2.5, ease: 'none' }, 71.5);
+
+            return masterTimeline;
+        }
+
+        function setActiveDot(era) {
+            document.querySelectorAll('.timeline-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i + 1 === era);
+            });
+        }
+
+        function updateTimer(elapsed) {
+            const mins = Math.floor(elapsed / 60);
+            const secs = Math.floor(elapsed % 60);
+            const totalMins = Math.floor(TOTAL_DURATION / 60);
+            const totalSecs = TOTAL_DURATION % 60;
+            document.getElementById('timer').textContent =
+                `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} / ${String(totalMins).padStart(2, '0')}:${String(totalSecs).padStart(2, '0')}`;
+        }
+
+        function updateProgress(elapsed) {
+            const progress = (elapsed / TOTAL_DURATION) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+        }
+
+        function animate() {
+            const elapsed = (Date.now() - startTime) / 1000;
+
+            if (elapsed <= TOTAL_DURATION) {
+                updateTimer(elapsed);
+                updateProgress(elapsed);
+                animationFrame = requestAnimationFrame(animate);
+            }
+        }
+
+        function startVideo() {
+            document.getElementById('playOverlay').classList.add('hidden');
+            startTime = Date.now();
+            masterTimeline.play();
+            animate();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createTimeline();
+            document.getElementById('playOverlay').addEventListener('click', startVideo);
+        });
+    </script>
+</body>
+</html>
