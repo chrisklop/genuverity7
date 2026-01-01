@@ -74,6 +74,28 @@ According to <a href="https://bls.gov/..." target="_blank" rel="noopener">BLS da
 inflation rose <strong>2.7%</strong> in November.
 ```
 
+### Chart Height Constraint (CRITICAL)
+**All Chart.js canvases MUST be wrapped in a height-constrained div:**
+```html
+<figure class="float-figure copyable-section">
+    <div class="chart-wrapper">
+        <div class="chart-header">...</div>
+        <!-- REQUIRED: Height-constrained wrapper -->
+        <div style="height: 280px; position: relative;">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+</figure>
+```
+
+**Why:** When `maintainAspectRatio: false`, Chart.js will expand to fill container height. Without a constraint, charts render at 20,000+ pixels tall.
+
+**Do NOT do this:**
+```html
+<!-- WRONG - chart will expand infinitely -->
+<canvas id="myChart" height="280"></canvas>
+```
+
 ---
 
 ## Phase 4: HTML Structure
