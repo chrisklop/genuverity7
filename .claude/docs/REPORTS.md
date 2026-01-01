@@ -7,13 +7,16 @@ Complete guide for creating GenuVerity fact-check reports.
 ## Workflow Overview
 
 ```
-1. cp docs/report-template-2025.html localreports/slug.html
-2. Research → 8+ verified sources
-3. Fill template → citations, charts, verdict
-4. ./validate-report.sh
-5. Update js/reports-data.js (ID 0, increment others)
-6. node tools/generate-sitemaps.js
-7. git add + commit + push
+1. git checkout -b report/slug-name           # Feature branch
+2. cp docs/report-template-2025.html localreports/slug.html
+3. Research → 8+ verified sources
+4. Fill template → citations, charts, verdict
+5. ./validate-report.sh
+6. Update js/reports-data.js (ID 0, increment others)
+7. node tools/generate-sitemaps.js
+8. git add + commit + push origin report/slug-name
+9. npm run test:preview <vercel-preview-url>  # TEST REQUIRED
+10. Merge to main (after tests pass)
 ```
 
 ---
@@ -162,9 +165,36 @@ inflation rose <strong>2.7%</strong> in November.
 □ Extract chart data from FIRST chart in report
 □ Run: node tools/generate-sitemaps.js
 □ git add localreports/*.html js/reports-data.js sitemap.xml sitemap-news.xml vercel.json
-□ git commit + push
+□ git commit -m "Add report: slug-name"
+□ git push origin report/slug-name (NOT main)
 □ NEVER run vercel --prod (Reports Instance)
 ```
+
+---
+
+## Phase 7: Testing Before Merge (REQUIRED)
+
+```
+□ Wait for Vercel preview deployment (~30 seconds)
+□ Get preview URL from GitHub PR or Vercel dashboard
+   Format: https://genuverity7-git-report-slug-name-xxx.vercel.app
+□ Run test suite:
+   npm run test:preview https://genuverity7-git-report-slug-name-xxx.vercel.app
+□ Verify all 8 tests pass
+□ If tests fail → fix and push again
+□ If tests pass → merge to main:
+   git checkout main && git merge report/slug-name && git push origin main
+□ Confirm live at: https://www.genuverity.com/slug-name
+```
+
+### What the tests verify:
+- Homepage still loads
+- API endpoints work
+- Newsletter form accessible
+- Reports page shows new report
+- New report page structure valid
+- Mobile compatibility
+- No JavaScript errors
 
 ---
 

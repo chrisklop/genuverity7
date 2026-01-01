@@ -5,12 +5,17 @@
     "scripts": {
         "build": "chmod +x bust-cache.sh && ./bust-cache.sh",
         "thumbnails": "node scripts/generate-thumbnails.js",
-        "radar": "node scripts/radar.js"
+        "radar": "node scripts/radar.js",
+        "test": "node scripts/test-deploy.js",
+        "test:local": "node scripts/test-deploy.js http://localhost:8000",
+        "test:preview": "node scripts/test-deploy.js",
+        "pretest": "echo 'Running pre-deploy tests...'"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "playwright": "^1.57.0",
         "puppeteer": "^24.34.0"
     },
     "dependencies": {

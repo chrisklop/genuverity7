@@ -104,6 +104,72 @@ Single-page app with three views:
 
 ---
 
+## Testing & Preview Workflow (REQUIRED)
+
+**Every code change MUST be tested before production.**
+
+### Workflow
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│  Feature    │────▶│   Preview   │────▶│ Production  │
+│  Branch     │     │   Deploy    │     │   (main)    │
+└─────────────┘     └─────────────┘     └─────────────┘
+       │                    │                    │
+       │                    ▼                    │
+       │              Run tests on               │
+       │              preview URL                │
+       │                    │                    │
+       │              Tests pass? ───No──▶ Fix & retry
+       │                    │
+       │                   Yes
+       │                    │
+       └────────────────────┴──▶ Merge to main
+```
+
+### Commands
+
+```bash
+# 1. Create feature branch
+./scripts/deploy-workflow.sh new fix/description
+
+# 2. Make changes, commit, push
+git add . && git commit -m "Description"
+git push origin fix/description
+
+# 3. Get Vercel preview URL from GitHub PR or Vercel dashboard
+# Format: https://genuverity7-git-fix-description-xxx.vercel.app
+
+# 4. Run pre-deploy tests (REQUIRED)
+npm run test:preview https://genuverity7-git-xxx.vercel.app
+
+# 5. If tests pass, merge to production
+./scripts/deploy-workflow.sh promote
+```
+
+### Test Suite Coverage
+
+| Test | What it validates |
+|------|-------------------|
+| Homepage loads | Page renders, title present |
+| API health | `/api/health` returns OK |
+| Form clickable | Newsletter form accessible |
+| Form submission | Full flow (mocked, no Resend credits) |
+| Reports page | Cards render from JS |
+| Report structure | Article + sources present |
+| Mobile viewport | 375px compatibility |
+| Console errors | No critical JS errors |
+
+### Quick Test Commands
+
+```bash
+npm run test                    # Test localhost:8000
+npm run test:preview <url>      # Test preview deployment
+./scripts/deploy-workflow.sh status  # Check branch state
+```
+
+---
+
 ## Deployment
 
 ### Vercel Configuration (`vercel.json`)
@@ -112,14 +178,19 @@ Single-page app with three views:
 
 ### Deployment Commands
 ```bash
+# Test FIRST (required)
+npm run test:preview <preview-url>
+
+# Then deploy
 vercel --prod          # Deploy to production
 vercel logs genuverity7.vercel.app  # View logs
 ```
 
 ### Rules
-- **Architecture Instance**: Runs `vercel --prod`
+- **Architecture Instance**: Runs `vercel --prod` AFTER tests pass
 - **Reports Instance**: NEVER deploys - git push auto-deploys
 - Before deploy: `git pull` to get latest reports
+- **NEVER push to main without testing preview first**
 
 ---
 
