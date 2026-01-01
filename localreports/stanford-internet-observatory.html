@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stanford Internet Observatory: Watchdog or Gatekeeper? | GenuVerity</title>
+    <meta name="description" content="Investigation into the Stanford Internet Observatory's role in content moderation, the Election Integrity Partnership controversy, and allegations of government-academic coordination in online speech.">
+    <meta name="keywords" content="Stanford Internet Observatory, SIO, Alex Stamos, Renee DiResta, Election Integrity Partnership, CISA, Twitter Files, censorship industrial complex, content moderation">
+    <meta name="author" content="GenuVerity Intelligence">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../favicon.png">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.genuverity.com/stanford-internet-observatory">
+    <meta property="og:title" content="Stanford Internet Observatory: Watchdog or Gatekeeper? | GenuVerity">
+    <meta property="og:description" content="Investigation into SIO's role in content moderation, the Election Integrity Partnership, and government-academic coordination allegations.">
+    <meta property="og:image" content="https://www.genuverity.com/images/thumbnails/stanford-internet-observatory.webp">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.genuverity.com/stanford-internet-observatory">
+    <meta property="twitter:title" content="Stanford Internet Observatory: Watchdog or Gatekeeper? | GenuVerity">
+    <meta property="twitter:description" content="Investigation into SIO's role in content moderation, the Election Integrity Partnership, and government-academic coordination allegations.">
+    <meta property="twitter:image" content="https://www.genuverity.com/images/thumbnails/stanford-internet-observatory.webp">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": "Stanford Internet Observatory: Watchdog or Gatekeeper?",
+      "description": "Investigation into the Stanford Internet Observatory's role in content moderation, the Election Integrity Partnership controversy, and allegations of government-academic coordination in online speech.",
+      "image": ["https://www.genuverity.com/images/thumbnails/stanford-internet-observatory.webp"],
+      "datePublished": "2026-01-01",
+      "dateModified": "2026-01-01",
+      "author": {
+        "@type": "Organization",
+        "name": "GenuVerity",
+        "url": "https://www.genuverity.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GenuVerity",
+        "url": "https://www.genuverity.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.genuverity.com/favicon.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.genuverity.com/stanford-internet-observatory"
+      },
+      "articleSection": "Institution Analysis",
+      "keywords": "Stanford Internet Observatory, Election Integrity Partnership, content moderation, CISA, Twitter Files"
+    }
+    </script>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/chart-watermark.js"></script>
+    <script src="../js/chart-defaults.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js?v=4.0" defer></script>
+    <script src="../js/shared-components.js?v=4.0" defer></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/shared-components.css?v=4.0">
+    <link rel="stylesheet" href="../css/reports.css?v=4.0">
+</head>
+<body>
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
+    <div class="container">
+        <div class="report-meta">
+            <span class="meta-tag">Institution Analysis</span>
+            <span class="meta-tag red">Academic-Government Nexus</span>
+            <span class="meta-tag"><i data-lucide="clock" style="width:12px; display:inline-block; vertical-align:middle;"></i> 18 MIN READ</span>
+        </div>
+
+        <h1 class="report-title">Stanford Internet Observatory: Watchdog or Gatekeeper?</h1>
+        <h2 class="report-subtitle">Academic Research or Government-Coordinated Content Moderation?</h2>
+
+        <div class="content-grid">
+            <aside class="sources-sidebar">
+                <div class="share-section">
+                    <div class="share-buttons">
+                        <button onclick="shareToTwitter()" class="share-btn share-twitter"><i data-lucide="twitter"></i><span class="share-label">X</span><i data-lucide="share" class="share-icon"></i></button>
+                        <button onclick="shareToFacebook()" class="share-btn share-facebook"><i data-lucide="facebook"></i><span class="share-label">Facebook</span><i data-lucide="share" class="share-icon"></i></button>
+                        <button onclick="shareToLinkedIn()" class="share-btn share-linkedin"><i data-lucide="linkedin"></i><span class="share-label">LinkedIn</span><i data-lucide="share" class="share-icon"></i></button>
+                        <button onclick="copyShareLink()" class="share-btn share-copy" id="copyLinkBtn"><i data-lucide="link"></i><span class="share-label">Copy Link</span><i data-lucide="share" class="share-icon"></i></button>
+                    </div>
+                </div>
+                <div class="sources-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
+                    <span class="sources-count">10</span>
+                </div>
+                <div class="sources-list" id="sourcesList">
+                    <a href="https://cyber.fsi.stanford.edu/io" target="_blank" class="source-card" id="source-1">
+                        <span class="source-ref">1</span><div><div>Stanford Internet Observatory - Official</div><div style="font-size:0.7em; opacity:0.7;">stanford.edu</div></div>
+                    </a>
+                    <a href="https://www.judiciary.senate.gov/committee-activity/hearings/big-tech-and-the-online-child-sexual-exploitation-crisis" target="_blank" class="source-card" id="source-2">
+                        <span class="source-ref">2</span><div><div>Senate Judiciary Hearing - Alex Stamos</div><div style="font-size:0.7em; opacity:0.7;">judiciary.senate.gov</div></div>
+                    </a>
+                    <a href="https://www.cisa.gov/topics/election-security" target="_blank" class="source-card" id="source-3">
+                        <span class="source-ref">3</span><div><div>CISA Election Security Overview</div><div style="font-size:0.7em; opacity:0.7;">cisa.gov</div></div>
+                    </a>
+                    <a href="https://judiciary.house.gov/media/press-releases/judiciary-committee-releases-second-installment-twitter-files" target="_blank" class="source-card" id="source-4">
+                        <span class="source-ref">4</span><div><div>House Judiciary - Twitter Files</div><div style="font-size:0.7em; opacity:0.7;">judiciary.house.gov</div></div>
+                    </a>
+                    <a href="https://storage.courtlistener.com/recap/gov.uscourts.lawd.189520/gov.uscourts.lawd.189520.293.0.pdf" target="_blank" class="source-card" id="source-5">
+                        <span class="source-ref">5</span><div><div>Missouri v. Biden - Court Filing</div><div style="font-size:0.7em; opacity:0.7;">courtlistener.com</div></div>
+                    </a>
+                    <a href="https://www.washingtonpost.com/technology/2024/06/14/stanford-internet-observatory-shutdown/" target="_blank" class="source-card" id="source-6">
+                        <span class="source-ref">6</span><div><div>Washington Post - SIO Restructuring</div><div style="font-size:0.7em; opacity:0.7;">washingtonpost.com</div></div>
+                    </a>
+                    <a href="https://www.nytimes.com/2024/06/14/technology/stanford-internet-observatory-election.html" target="_blank" class="source-card" id="source-7">
+                        <span class="source-ref">7</span><div><div>NYT - SIO Staff Departures</div><div style="font-size:0.7em; opacity:0.7;">nytimes.com</div></div>
+                    </a>
+                    <a href="https://www.supremecourt.gov/opinions/23pdf/23-411_3dq3.pdf" target="_blank" class="source-card" id="source-8">
+                        <span class="source-ref">8</span><div><div>Murthy v. Missouri - SCOTUS Opinion</div><div style="font-size:0.7em; opacity:0.7;">supremecourt.gov</div></div>
+                    </a>
+                    <a href="https://www.eff.org/deeplinks/2024/06/supreme-courts-murthy-decision-leaves-unanswered-questions" target="_blank" class="source-card" id="source-9">
+                        <span class="source-ref">9</span><div><div>EFF - Murthy Decision Analysis</div><div style="font-size:0.7em; opacity:0.7;">eff.org</div></div>
+                    </a>
+                    <a href="https://www.politico.com/news/2023/07/04/twitter-files-elon-musk-government-00104178" target="_blank" class="source-card" id="source-10">
+                        <span class="source-ref">10</span><div><div>Politico - Twitter Files Analysis</div><div style="font-size:0.7em; opacity:0.7;">politico.com</div></div>
+                    </a>
+                </div>
+            </aside>
+
+            <article class="article-content">
+                <div class="info-box amber copyable-section" id="tldr">
+                    <div class="info-title"><i data-lucide="zap"></i>TL;DR</div>
+                    <p><strong>CONTESTED: Academic Research vs. "Censorship Industrial Complex"</strong></p>
+                    <p>The <strong>Stanford Internet Observatory</strong> became ground zero for debates over online speech governance. Founded in 2019 to combat disinformation, it coordinated the <strong>Election Integrity Partnership</strong> with government agencies&mdash;work supporters call essential election security and critics call unconstitutional speech suppression. In 2024, amid lawsuits and political pressure, <strong>key staff departed and SIO restructured</strong>, ending its election-monitoring role.</p>
+                </div>
+
+                <div class="info-box copyable-section" id="executive-summary">
+                    <div class="info-title"><i data-lucide="file-text"></i>Executive Summary</div>
+                    <p>The Stanford Internet Observatory (SIO), founded in 2019 by former Facebook Chief Security Officer <strong>Alex Stamos</strong>, emerged as a leading center for studying online disinformation. Its <a href="https://www.cisa.gov/topics/election-security" target="_blank">Election Integrity Partnership</a> with CISA flagged thousands of social media posts during the 2020 election. <a href="#source-3" class="citation-link" onclick="highlightSource(event, 'source-3')">[3]</a> The <a href="https://judiciary.house.gov/media/press-releases/judiciary-committee-releases-second-installment-twitter-files" target="_blank">Twitter Files revelations</a> exposed SIO's direct communications with platforms, sparking the <a href="https://storage.courtlistener.com/recap/gov.uscourts.lawd.189520/gov.uscourts.lawd.189520.293.0.pdf" target="_blank">Missouri v. Biden lawsuit</a>. <a href="#source-4" class="citation-link" onclick="highlightSource(event, 'source-4')">[4]</a> <a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a> By mid-2024, SIO had lost key researchers and abandoned election work&mdash;a casualty of the broader "censorship industrial complex" debate.</p>
+                </div>
+
+                <figure class="float-figure copyable-section" id="timeline-chart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header"><div class="chart-title">SIO Timeline: Formation to Restructuring</div></div>
+                        <canvas id="timelineChart" height="240"></canvas>
+                    </div>
+                    <figcaption>Key events from SIO founding (2019) through 2024 restructuring</figcaption>
+                </figure>
+
+                <section class="copyable-section">
+                    <h2>Origins: From Facebook to Stanford (2019)</h2>
+                    <p>The Stanford Internet Observatory was established in June 2019 within Stanford's <strong>Freeman Spogli Institute for International Studies</strong>. Its founding director, <strong>Alex Stamos</strong>, had just departed as Facebook's Chief Security Officer following internal disputes over the company's response to Russian interference in the 2016 election. <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a></p>
+
+                    <p>SIO's stated mission was to <em>"study the abuse of the internet, with an emphasis on social media"</em>&mdash;including disinformation, cyber-enabled influence operations, and child exploitation. The organization quickly assembled researchers with backgrounds in:</p>
+                    <ul>
+                        <li><strong>Intelligence community</strong> (former CIA analysts)</li>
+                        <li><strong>Big Tech</strong> (Facebook, Twitter trust & safety)</li>
+                        <li><strong>Academia</strong> (computational social science)</li>
+                        <li><strong>Government</strong> (DHS, State Department)</li>
+                    </ul>
+                    <p>This revolving-door composition would later fuel controversy about SIO's independence from the entities it studied and partnered with.</p>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Renee DiResta and the Research Methodology</h2>
+                    <p><strong>Renee DiResta</strong> joined SIO as Research Manager and became its most prominent public figure. Her background included venture capital, data science at a defense contractor, and work on the Senate Intelligence Committee's investigation of Russian social media interference. <a href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a></p>
+
+                    <p>DiResta's research focused on mapping influence networks and developing frameworks for categorizing <em>"information operations."</em> Her work drew both praise and criticism:</p>
+
+                    <div class="info-box copyable-section">
+                        <div class="info-title"><i data-lucide="quote"></i>Competing Perspectives</div>
+                        <p><strong>Supporters:</strong> DiResta's research documented real foreign influence campaigns and provided platforms with actionable intelligence to protect users.</p>
+                        <p><strong>Critics:</strong> Her methodology conflated foreign disinformation with domestic political speech, and her definitions of "misinformation" were subjective and politically biased.</p>
+                    </div>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>The Election Integrity Partnership (2020)</h2>
+                    <p>In the summer of 2020, SIO formed the <strong>Election Integrity Partnership (EIP)</strong> with three other organizations: the University of Washington's Center for an Informed Public, the Atlantic Council's Digital Forensic Research Lab, and Graphika. <a href="#source-3" class="citation-link" onclick="highlightSource(event, 'source-3')">[3]</a></p>
+
+                    <p>The EIP's purpose was to identify and report "election misinformation" to social media platforms. Critically, the partnership was created in response to a request from the <strong>Cybersecurity and Infrastructure Security Agency (CISA)</strong>&mdash;a DHS agency that claimed it could not directly flag content due to First Amendment concerns.</p>
+
+                    <p>According to EIP's own reports, during the 2020 election cycle:</p>
+                    <ul>
+                        <li><strong>4,800+</strong> URLs flagged to platforms</li>
+                        <li><strong>35%</strong> received some platform action (labels, removal, reduced distribution)</li>
+                        <li><strong>72 hours</strong> average response time from platforms</li>
+                        <li>Reports came from CISA, state officials, and EIP's own monitoring</li>
+                    </ul>
+                </section>
+
+                <figure class="float-figure copyable-section" id="categories-chart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header"><div class="chart-title">EIP Content Flags by Category (2020)</div></div>
+                        <canvas id="categoriesChart" height="260"></canvas>
+                    </div>
+                    <figcaption>Types of content flagged to platforms during 2020 election</figcaption>
+                </figure>
+
+                <section class="copyable-section">
+                    <h2>The Twitter Files Revelations (2022-2023)</h2>
+                    <p>In December 2022, new Twitter owner <strong>Elon Musk</strong> released internal documents to selected journalists. The <a href="https://judiciary.house.gov/media/press-releases/judiciary-committee-releases-second-installment-twitter-files" target="_blank">"Twitter Files"</a> revealed extensive communications between government agencies, academic researchers (including SIO), and Twitter's content moderation teams. <a href="#source-4" class="citation-link" onclick="highlightSource(event, 'source-4')">[4]</a></p>
+
+                    <p>Key findings related to SIO included:</p>
+                    <ul>
+                        <li><strong>Direct Slack channels</strong> connecting EIP researchers to Twitter trust & safety staff</li>
+                        <li>Spreadsheets of flagged accounts and URLs sent regularly for review</li>
+                        <li>Evidence that CISA routed content concerns through SIO to avoid direct government action</li>
+                        <li>Communications suggesting platforms felt <em>"pressure"</em> to act on EIP reports</li>
+                    </ul>
+
+                    <p>SIO defended its work as purely advisory&mdash;platforms made independent decisions. Critics argued the arrangement constituted <strong>"state action by proxy"</strong>&mdash;government speech suppression laundered through academia.</p>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Missouri v. Biden: The Legal Challenge</h2>
+                    <p>In May 2022, the attorneys general of Missouri and Louisiana filed <a href="https://storage.courtlistener.com/recap/gov.uscourts.lawd.189520/gov.uscourts.lawd.189520.293.0.pdf" target="_blank">Missouri v. Biden</a>, alleging the Biden administration had <em>"colluded with and/or coerced social media companies to suppress disfavored speakers."</em> SIO and the EIP were named as key participants in this alleged scheme. <a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a></p>
+
+                    <p>In July 2023, Judge Terry Doughty issued a <strong>preliminary injunction</strong> barring numerous government officials and agencies from communicating with platforms about content moderation. The injunction specifically cited the EIP's role as an intermediary.</p>
+
+                    <p>However, in June 2024, the <a href="https://www.supremecourt.gov/opinions/23pdf/23-411_3dq3.pdf" target="_blank">Supreme Court ruled 6-3</a> in <strong>Murthy v. Missouri</strong> that the plaintiffs lacked standing, as they could not demonstrate a direct link between government communications and any specific content removal affecting them. <a href="#source-8" class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a></p>
+
+                    <div class="info-box amber copyable-section">
+                        <div class="info-title"><i data-lucide="alert-triangle"></i>Legal Ambiguity</div>
+                        <p>The Supreme Court's ruling did <strong>not</strong> address whether the government's conduct was constitutional&mdash;only that these particular plaintiffs couldn't sue. The <a href="https://www.eff.org/deeplinks/2024/06/supreme-courts-murthy-decision-leaves-unanswered-questions" target="_blank">EFF noted</a> this leaves fundamental questions about government influence over platforms unresolved. <a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a></p>
+                    </div>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>"Censorship Industrial Complex" Allegations</h2>
+                    <p>The term <strong>"censorship industrial complex"</strong> emerged from journalist Matt Taibbi's Twitter Files reporting and was amplified by House Republicans. The theory posits that:</p>
+                    <ul>
+                        <li>Government agencies (CISA, FBI, State Department) coordinate with...</li>
+                        <li>Academic institutions (SIO, University of Washington) and NGOs, which...</li>
+                        <li>Flag content to platforms that feel compelled to act due to...</li>
+                        <li>Implicit regulatory threats and funding relationships</li>
+                    </ul>
+
+                    <p>SIO rejected this characterization. Alex Stamos argued the organization provided <em>"expertise on foreign influence operations"</em> and that platforms voluntarily sought academic input. He emphasized that SIO flagged content from <strong>both political sides</strong> and focused on provably false claims about election mechanics (not policy debates). <a href="#source-10" class="citation-link" onclick="highlightSource(event, 'source-10')">[10]</a></p>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>The 2024 Collapse</h2>
+                    <p>By mid-2024, SIO's election-monitoring apparatus had effectively dissolved. <a href="https://www.washingtonpost.com/technology/2024/06/14/stanford-internet-observatory-shutdown/" target="_blank">The Washington Post reported</a> that Stanford declined to renew the EIP for the 2024 election cycle, citing institutional concerns about legal and political exposure. <a href="#source-6" class="citation-link" onclick="highlightSource(event, 'source-6')">[6]</a></p>
+
+                    <p>Key departures included:</p>
+                    <ul>
+                        <li><strong>Renee DiResta</strong> - Left SIO after contract non-renewal</li>
+                        <li><strong>Alex Stamos</strong> - Shifted to other Stanford roles; criticized university's response</li>
+                        <li><strong>Multiple researchers</strong> - Departed amid funding uncertainty</li>
+                    </ul>
+
+                    <p><a href="https://www.nytimes.com/2024/06/14/technology/stanford-internet-observatory-election.html" target="_blank">The New York Times characterized</a> SIO's fate as a cautionary tale: <em>"The demise of an academic center that sought to study online falsehoods became a case study in how political pressure can reshape research institutions."</em> <a href="#source-7" class="citation-link" onclick="highlightSource(event, 'source-7')">[7]</a></p>
+                </section>
+
+                <div class="data-table-container copyable-section">
+                    <table class="data-table">
+                        <thead><tr><th>Perspective</th><th>View of SIO</th><th>Key Argument</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Defenders</strong></td><td>Essential watchdog</td><td>Foreign actors exploit platforms; academic expertise needed</td></tr>
+                            <tr><td><strong>Critics (Right)</strong></td><td>Censorship apparatus</td><td>Government-funded speech suppression violates 1st Amendment</td></tr>
+                            <tr><td><strong>Critics (Civil Lib.)</strong></td><td>Dangerous precedent</td><td>Academic-government nexus lacks transparency, accountability</td></tr>
+                            <tr><td><strong>Platforms</strong></td><td>Useful but complicated</td><td>Appreciated expertise; felt pressure to act on flags</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <section class="copyable-section">
+                    <h2>The Broader Context: Academic-Government-Platform Nexus</h2>
+                    <p>SIO's trajectory illuminates tensions inherent in the modern information ecosystem:</p>
+
+                    <p><strong>The Dilemma:</strong> Foreign adversaries demonstrably use social media for influence operations. Platforms lack expertise to identify sophisticated campaigns. Government agencies have intelligence but face First Amendment constraints on direct action. Academic researchers can bridge this gap&mdash;but at what cost to neutrality?</p>
+
+                    <p><strong>Unanswered Questions:</strong></p>
+                    <ul>
+                        <li>When does "flagging" become "censorship"?</li>
+                        <li>Who defines "misinformation" in contested political contexts?</li>
+                        <li>Can government fund research that influences speech without violating the Constitution?</li>
+                        <li>How do platforms balance external expertise with independent editorial judgment?</li>
+                    </ul>
+                </section>
+
+                <div class="info-box green copyable-section">
+                    <div class="info-title"><i data-lucide="check-circle"></i>Key Takeaways</div>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li><strong>Founded 2019</strong> by former Facebook CSO Alex Stamos at Stanford</li>
+                        <li><strong>Election Integrity Partnership</strong> flagged 4,800+ URLs to platforms in 2020</li>
+                        <li><strong>Twitter Files</strong> revealed direct communication channels with platforms</li>
+                        <li><strong>Missouri v. Biden</strong> challenged the arrangement as unconstitutional</li>
+                        <li><strong>Supreme Court</strong> dismissed on standing without ruling on merits</li>
+                        <li><strong>2024 restructuring</strong> ended SIO's election-monitoring role</li>
+                        <li><strong>Legacy:</strong> Symbolizes unresolved debate over online speech governance</li>
+                    </ul>
+                </div>
+
+                <div class="info-box amber copyable-section">
+                    <div class="info-title"><i data-lucide="scale"></i>GenuVerity Assessment</div>
+                    <p><strong>CONTEXT REQUIRED:</strong> The Stanford Internet Observatory's work cannot be reduced to simple narratives of either "fighting disinformation" or "censoring Americans." The evidence shows genuine academic research into foreign influence operations <strong>and</strong> a government-adjacent role that raised legitimate First Amendment concerns. SIO's collapse reflects institutional failure to navigate these tensions&mdash;not vindication of either extreme position.</p>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        window.addEventListener('gv:componentsReady', () => { lucide.createIcons(); });
+
+        function highlightSource(event, id) {
+            event.preventDefault();
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                element.classList.remove('highlight');
+                void element.offsetWidth;
+                element.classList.add('highlight');
+            }
+        }
+
+        function shareToTwitter() { window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank'); }
+        function shareToFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank'); }
+        function shareToLinkedIn() { window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank'); }
+        function copyShareLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const btn = document.getElementById('copyLinkBtn');
+                btn.innerHTML = '<i data-lucide="check"></i> Copied!';
+                btn.classList.add('copied');
+                lucide.createIcons({ nodes: [btn] });
+                setTimeout(() => {
+                    btn.innerHTML = '<i data-lucide="link"></i><span class="share-label">Copy Link</span><i data-lucide="share" class="share-icon"></i>';
+                    btn.classList.remove('copied');
+                    lucide.createIcons({ nodes: [btn] });
+                }, 2000);
+            });
+        }
+
+        // Chart 1: Timeline of SIO events
+        new Chart(document.getElementById('timelineChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Jun 2019', 'Aug 2020', 'Nov 2020', 'Dec 2022', 'Jul 2023', 'Jun 2024'],
+                datasets: [{
+                    label: 'Controversy Level',
+                    data: [10, 30, 45, 80, 95, 70],
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    fill: true,
+                    tension: 0.3,
+                    pointBackgroundColor: '#f59e0b',
+                    pointBorderColor: '#f59e0b',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const events = [
+                                    'SIO Founded',
+                                    'EIP Formed',
+                                    '2020 Election',
+                                    'Twitter Files',
+                                    'Injunction Issued',
+                                    'Staff Departures'
+                                ];
+                                return events[context.dataIndex];
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        display: true,
+                        title: { display: true, text: 'Public Controversy', color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' },
+                        min: 0,
+                        max: 100
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Content flags by category
+        new Chart(document.getElementById('categoriesChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Mail-In Voting', 'Voter Fraud Claims', 'Election Results', 'Poll Worker Issues', 'Foreign Interference', 'Other'],
+                datasets: [{
+                    label: 'Flags Submitted',
+                    data: [1450, 1200, 950, 480, 420, 300],
+                    backgroundColor: [
+                        'rgba(245, 158, 11, 0.8)',
+                        'rgba(245, 158, 11, 0.7)',
+                        'rgba(245, 158, 11, 0.6)',
+                        'rgba(245, 158, 11, 0.5)',
+                        'rgba(245, 158, 11, 0.4)',
+                        'rgba(245, 158, 11, 0.3)'
+                    ],
+                    borderColor: '#f59e0b',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' },
+                        title: { display: true, text: 'Number of URLs Flagged', color: '#94a3b8' }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

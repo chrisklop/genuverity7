@@ -3,7 +3,235 @@
 
 const REPORTS_DATA = [
     {
-        id: 78,
+        id: 0,
+        title: "The Church Committee: Exposing the Deep State",
+        slug: "church-committee-revelations",
+        category: "Historical Analysis",
+        tagClass: "tag-cyan",
+        catClass: "cat-analysis",
+        icon: "eye",
+        date: "Jan 1, 2026",
+        sources: "10 Sources",
+        readTime: "18 min",
+        verdict: "context",
+        excerpt: "Senator Frank Church's 1975-1976 investigation exposed COINTELPRO (500,000+ Americans in FBI files), Operation Mockingbird (50+ journalist CIA assets), 8 assassination plots, and NSA mass surveillance. The resulting reforms created FISA courts and congressional oversight--a brief window of accountability that has steadily eroded since.",
+        chart: {
+            type: "bar",
+            color: "#06b6d4",
+            data: [2370, 500, 300, 5925, 215]
+        }
+    },
+    {
+        id: 1,
+        title: "The Four Minute Men: 75,000 Propagandists in Every Town",
+        slug: "four-minute-men-wwi",
+        category: "Historical Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-analysis",
+        icon: "megaphone",
+        date: "Jan 1, 2026",
+        sources: "10 Sources",
+        readTime: "14 min",
+        verdict: "context",
+        excerpt: "The Committee on Public Information recruited 75,000 volunteer speakers to deliver government propaganda in movie theaters during WWI. They gave 7.5 million speeches to 400+ million audience members, creating the template for grassroots propaganda networks still used today.",
+        chart: {
+            type: "line",
+            color: "#f59e0b",
+            data: [150, 5000, 15000, 30000, 50000, 65000, 75000]
+        }
+    },
+    {
+        id: 2,
+        title: "Merchants of Doubt: The Corporate Playbook for Manufactured Uncertainty",
+        slug: "merchants-of-doubt",
+        category: "Historical Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-analysis",
+        icon: "cloud-fog",
+        date: "Jan 1, 2026",
+        sources: "10 Sources",
+        readTime: "18 min",
+        verdict: "context",
+        excerpt: "In 1969, tobacco's 'doubt is our product' strategy was documented. The same scientists (Fred Singer, Fred Seitz) then recycled these tactics for acid rain, ozone, secondhand smoke, and climate denial. Internal documents prove deliberate deception.",
+        chart: {
+            type: "line",
+            color: "#f59e0b",
+            data: [20, 60, 80, 90, 70, 30, 10, 5]
+        }
+    },
+    {
+        id: 3,
+        title: "Allen Dulles: The Spymaster Who Controlled the Press",
+        slug: "allen-dulles-cia",
+        category: "Historical Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "eye",
+        date: "Jan 1, 2026",
+        sources: "10 Sources",
+        readTime: "16 min",
+        verdict: "context",
+        excerpt: "America's longest-serving CIA Director (1953-1961) expanded Operation Mockingbird, orchestrated coups in Iran and Guatemala, and recruited 400+ journalists as intelligence assets. Fired by Kennedy after Bay of Pigs, then shaped JFK assassination narrative on Warren Commission.",
+        chart: {
+            type: "line",
+            color: "#3b82f6",
+            data: [20, 30, 40, 75, 90, 85, 50, 30]
+        }
+    },
+    {
+        id: 4,
+        title: "Stanford Internet Observatory: Watchdog or Gatekeeper?",
+        slug: "stanford-internet-observatory",
+        category: "Institution Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-analysis",
+        icon: "building-2",
+        date: "Jan 1, 2026",
+        sources: "10 Sources",
+        readTime: "18 min",
+        verdict: "context",
+        excerpt: "The Stanford Internet Observatory became ground zero for debates over online speech governance. Founded in 2019 to combat disinformation, it coordinated the Election Integrity Partnership with government agencies. Twitter Files revelations sparked lawsuits and the 'censorship industrial complex' debate. By 2024, key staff departed and SIO restructured.",
+        chart: {
+            type: "line",
+            color: "#f59e0b",
+            data: [10, 30, 45, 80, 95, 70]
+        }
+    },
+    {
+        id: 5,
+        title: "Rush Limbaugh: The Voice That Ended Balance",
+        slug: "rush-limbaugh-talk-radio",
+        category: "Media Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-analysis",
+        icon: "radio",
+        date: "Jan 1, 2026",
+        sources: "10 Sources",
+        readTime: "14 min",
+        verdict: "context",
+        excerpt: "Rush Limbaugh went national in August 1988—exactly one year after the Fairness Doctrine's repeal. He built an audience of 15+ million weekly listeners, created the 'Dittohead' phenomenon, and proved one-sided broadcasting could be profitable. His success spawned Fox News and transformed American political media.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [400, 600, 1000, 1400, 2000]
+        }
+    },
+    {
+        id: 6,
+        title: "William Randolph Hearst: The Man Who Invented Fake News",
+        slug: "william-randolph-hearst",
+        category: "Historical Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-analysis",
+        icon: "newspaper",
+        date: "Jan 1, 2026",
+        sources: "10 Sources",
+        readTime: "16 min",
+        verdict: "context",
+        excerpt: "How William Randolph Hearst pioneered yellow journalism, helped start the Spanish-American War, and created the template for profit-driven media manipulation that persists today.",
+        chart: {
+            type: "line",
+            color: "#f59e0b",
+            data: [20, 100, 300, 800, 1500]
+        }
+    },
+    {
+        id: 7,
+        title: "USS Maine: The First Media-Manufactured War",
+        slug: "uss-maine-media-war",
+        category: "Historical Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "anchor",
+        date: "Jan 1, 2026",
+        sources: "10 Sources",
+        readTime: "14 min",
+        verdict: "context",
+        excerpt: "How William Randolph Hearst and Joseph Pulitzer's newspapers manufactured consent for the Spanish-American War through sensationalism and fabricated reporting.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [500, 800, 1200]
+        }
+    },
+    {
+        id: 8,
+        title: "The Committee on Public Information: America's First Propaganda Machine",
+        slug: "committee-public-information",
+        category: "Historical Analysis",
+        tagClass: "tag-amber",
+        catClass: "cat-analysis",
+        icon: "megaphone",
+        date: "Jan 1, 2026",
+        sources: "10 Sources",
+        readTime: "18 min",
+        verdict: "context",
+        excerpt: "How George Creel's CPI pioneered government propaganda during WWI, mobilizing 75,000 volunteer speakers, producing millions of posters, and shaping modern PR through Edward Bernays.",
+        chart: {
+            type: "line",
+            color: "#f59e0b",
+            data: [0, 5, 25, 50, 75]
+        }
+    },
+    {
+        id: 9,
+        title: "Rupert Murdoch: The Man Who Owns the Narrative",
+        slug: "rupert-murdoch-media-empire",
+        category: "Media Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "tv",
+        date: "Jan 1, 2026",
+        sources: "10 Sources",
+        readTime: "18 min",
+        verdict: "context",
+        excerpt: "How one Australian-born mogul built a transnational conservative media empire spanning three continents, shaping elections and public opinion from News Corp to Fox News.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [5, 15, 35, 60, 120]
+        }
+    },
+    {
+        id: 10,
+        title: "Mark Zuckerberg: The Algorithm That Broke Democracy",
+        slug: "zuckerberg-facebook-disinformation",
+        category: "Platform Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "share-2",
+        date: "Jan 1, 2026",
+        sources: "12 Sources",
+        readTime: "20 min",
+        verdict: "context",
+        excerpt: "How Facebook's 'move fast and break things' culture enabled foreign election interference, data harvesting, and the algorithmic amplification of disinformation.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [500, 1000, 1500, 2000, 2700, 2900]
+        }
+    },
+    {
+        id: 11,
+        title: "Sam Altman & OpenAI: The AI Revolution That Could End Truth",
+        slug: "sam-altman-openai-disinformation",
+        category: "AI & Technology",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "bot",
+        date: "Jan 1, 2026",
+        sources: "10 Sources",
+        readTime: "18 min",
+        verdict: "context",
+        excerpt: "Comprehensive analysis of OpenAI's trajectory from non-profit to AI powerhouse. Examining ChatGPT, DALL-E, Sora, and the democratization of deepfakes that threatens information integrity.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [0, 1, 100, 180, 200]
+        }
+    },
+    {
+        id: 81,
         title: "The Fairness Doctrine: How America Lost Balance in Broadcasting",
         slug: "fairness-doctrine-history",
         category: "Historical Analysis",
@@ -22,7 +250,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 77,
+        id: 79,
         title: "Operation Mockingbird: When the CIA Controlled the Press",
         slug: "operation-mockingbird-cia",
         category: "Historical Analysis",
@@ -41,7 +269,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 76,
+        id: 78,
         title: "Edward Bernays: The Father of Spin",
         slug: "edward-bernays-propaganda",
         category: "Historical Analysis",
@@ -60,7 +288,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 75,
+        id: 77,
         title: "Internet Research Agency: Russia's Troll Farm That Reached 126 Million Americans",
         slug: "internet-research-agency-2016",
         category: "Foreign Influence",
@@ -79,7 +307,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 74,
+        id: 76,
         title: "Cambridge Analytica: The $5 Billion Data Scandal",
         slug: "cambridge-analytica-2016",
         category: "Data Privacy",
@@ -98,7 +326,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 73,
+        id: 75,
         title: "QAnon Network Analysis: From 4chan to Congress",
         slug: "qanon-network-analysis",
         category: "Network Analysis",
@@ -117,7 +345,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 72,
+        id: 74,
         title: "Partisan Influencer Networks: The Amplification Machine",
         slug: "partisan-influencer-networks",
         category: "Network Analysis",
@@ -136,7 +364,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 71,
+        id: 73,
         title: "YouTube Radicalization Pipeline: Algorithmic Rabbit Holes Examined",
         slug: "youtube-radicalization-pipeline",
         category: "Platform Analysis",
@@ -155,7 +383,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 70,
+        id: 72,
         title: "Cable News Narrative Laundering: How Fringe Becomes Mainstream",
         slug: "cable-news-narrative-laundering",
         category: "Media Analysis",
@@ -174,7 +402,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 69,
+        id: 71,
         title: "Wire Service Amplification: One Story, 600 Outlets",
         slug: "wire-service-amplification",
         category: "Media Analysis",
@@ -193,7 +421,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 68,
+        id: 70,
         title: "Primetime Special Legitimization: When Networks Give Platforms",
         slug: "primetime-special-legitimization",
         category: "Media Analysis",
@@ -212,7 +440,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 67,
+        id: 69,
         title: "The Protocols of the Elders of Zion: Anatomy of a Fabrication",
         slug: "protocols-elders-zion",
         category: "Historical Analysis",
@@ -233,7 +461,7 @@ const REPORTS_DATA = [
         relatedIds: ["american-political-disinfo", "qanon-network-analysis"]
     },
     {
-        id: 66,
+        id: 68,
         title: "The Architecture of Perception: A History of American Media Disinformation",
         slug: "american-disinformation-timeline",
         category: "Analysis",
@@ -252,7 +480,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 65,
+        id: 66,
         title: "The Architecture of Deception: Global Disinformation Landscape 2024-2025",
         slug: "disinformation-architecture-2025",
         category: "Analysis",
@@ -271,7 +499,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 64,
+        id: 65,
         title: "Clickbait Propaganda: 5 Case Studies in December 2025 Disinformation",
         slug: "clickbait-propaganda-december-2025",
         category: "Disinformation Analysis",
@@ -290,7 +518,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 63,
+        id: 64,
         title: "Minnesota Fraud Investigation: The $250 Million Scandal and Beyond",
         slug: "minnesota-fraud-investigation-2025",
         category: "Investigation",
@@ -309,7 +537,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 62,
+        id: 63,
         title: "Election Deepfakes 2025: The Year Democracy Fought Back",
         slug: "election-deepfakes-2025",
         category: "Election Security",
@@ -328,7 +556,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 61,
+        id: 62,
         title: "Meta Ends Fact-Checking: The $100 Million Retreat",
         slug: "meta-ends-fact-checking-2025",
         category: "Platform Policy",
@@ -347,7 +575,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 60,
+        id: 61,
         title: "Bird Flu Misinformation: The H5N1 Panic Machine",
         slug: "bird-flu-misinformation-2025",
         category: "Public Health Disinfo",
@@ -366,7 +594,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 59,
+        id: 60,
         title: "Grok AI: The Misinformation Machine",
         slug: "grok-ai-misinformation-crisis",
         category: "AI Safety Crisis",
@@ -385,7 +613,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 58,
+        id: 59,
         title: "Los Angeles Wildfire Misinformation: A Forensic Analysis",
         slug: "la-wildfire-misinformation-2025",
         category: "Viral Disinformation",
@@ -404,7 +632,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 57,
+        id: 58,
         title: "Iran and the West: Nuclear Escalation, Proxy Warfare, and the Path Forward",
         slug: "iran-nuclear-crisis",
         category: "Deep Dive Dossier",
@@ -423,7 +651,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 56,
+        id: 57,
         title: "American Political Disinformation: Timeline, Key Cases, and Foreign Interference",
         slug: "american-political-disinfo",
         category: "Deep Dive Dossier",
@@ -442,7 +670,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 55,
+        id: 56,
         title: "Project 2025's \"Military Orders\": Rumors vs. Reality",
         slug: "project-2025-military-orders",
         category: "Deep Dive Dossier",
@@ -461,7 +689,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 54,
+        id: 55,
         title: "Fact-Check: The Viral \"166-Name Epstein List\"",
         slug: "epstein-166-name-list-fake",
         category: "Viral Disinformation",
@@ -480,7 +708,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 53,
+        id: 54,
         title: "CDC Reverses Vaccine-Autism Stance: A Scientific Fact-Check",
         slug: "hhs-vaccine-autism-claims",
         category: "Fact Check",

@@ -437,7 +437,7 @@ const TIMELINE_DATA = {
             years: "1863–1951",
             summary: "American newspaper publisher who built the nation's largest media chain. His sensationalist 'yellow journalism' helped push the United States into the Spanish-American War. The phrase 'You furnish the pictures, I'll furnish the war' is attributed to him, though its authenticity is disputed.",
             significance: "Established the template for profit-driven media manipulation that persists today.",
-            reportSlug: null
+            reportSlug: "william-randolph-hearst"
         },
         "joseph-pulitzer": {
             term: "Joseph Pulitzer",
@@ -455,7 +455,7 @@ const TIMELINE_DATA = {
             years: "1876–1953",
             summary: "American investigative journalist who headed the Committee on Public Information (CPI) during WWI. Organized 75,000 'Four Minute Men' volunteer speakers and pioneered systematic government propaganda in America.",
             significance: "Created the blueprint for US government propaganda that influenced tactics for the next century.",
-            reportSlug: null
+            reportSlug: "committee-public-information"
         },
         "edward-bernays": {
             term: "Edward Bernays",
@@ -491,7 +491,7 @@ const TIMELINE_DATA = {
             years: "1893–1969",
             summary: "Longest-serving CIA Director (1953–1961), oversaw expansion of Operation Mockingbird and numerous covert operations. Fired by Kennedy after Bay of Pigs, later served on Warren Commission investigating Kennedy's assassination.",
             significance: "Expanded CIA's covert influence over American media and politics.",
-            reportSlug: null
+            reportSlug: "allen-dulles-cia"
         },
         "carl-bernstein": {
             term: "Carl Bernstein",
@@ -518,7 +518,7 @@ const TIMELINE_DATA = {
             years: "1951–2021",
             summary: "Conservative radio host whose show went national in 1988, one year after the Fairness Doctrine was repealed. At his peak, reached 15+ million weekly listeners and pioneered the confrontational style that now dominates talk radio and cable news.",
             significance: "Proved partisan media could be massively profitable without balance requirements.",
-            reportSlug: null
+            reportSlug: "rush-limbaugh-talk-radio"
         },
         "rupert-murdoch": {
             term: "Rupert Murdoch",
@@ -527,7 +527,7 @@ const TIMELINE_DATA = {
             years: "1931–present",
             summary: "Australian-American media mogul who built a global empire including Fox News, The Wall Street Journal, and Sky News. His outlets have been accused of promoting climate denial, political partisanship, and tabloid sensationalism across three continents.",
             significance: "Created a transnational conservative media ecosystem with unprecedented political influence.",
-            reportSlug: null
+            reportSlug: "rupert-murdoch-media-empire"
         },
         "alexander-nix": {
             term: "Alexander Nix",
@@ -554,7 +554,7 @@ const TIMELINE_DATA = {
             years: "1984–present",
             summary: "Facebook/Meta CEO whose platform enabled both Cambridge Analytica's data harvesting and the IRA's influence operation. Testified before Congress that he was 'sorry' but largely escaped regulatory consequences under Section 230 protections.",
             significance: "Embodies the tension between platform growth and information integrity.",
-            reportSlug: null
+            reportSlug: "zuckerberg-facebook-disinformation"
         },
         "nina-jankowicz": {
             term: "Nina Jankowicz",
@@ -590,7 +590,7 @@ const TIMELINE_DATA = {
             years: "1985–present",
             summary: "CEO of OpenAI, the company behind ChatGPT and DALL-E. These AI systems can generate convincing text and images at scale, potentially revolutionizing—or weaponizing—disinformation. Has called for AI regulation while racing to deploy ever more powerful models.",
             significance: "Leading the AI revolution that may make synthetic disinformation undetectable.",
-            reportSlug: null
+            reportSlug: "sam-altman-openai-disinformation"
         },
         "alex-jones": {
             term: "Alex Jones",
@@ -653,7 +653,7 @@ const TIMELINE_DATA = {
             founded: 1917,
             summary: "America's first propaganda agency, created by Wilson to sell WWI. Also called the Creel Committee after its chairman. Deployed 75,000 'Four Minute Men' speakers, produced films, posters, and news releases, and pioneered modern propaganda techniques.",
             significance: "Template for all subsequent US government propaganda efforts.",
-            reportSlug: null
+            reportSlug: "committee-public-information"
         },
         "voa": {
             term: "VOA",
@@ -693,7 +693,7 @@ const TIMELINE_DATA = {
             founded: 2004,
             summary: "World's largest social network where both Cambridge Analytica and the IRA conducted their operations. Platform design prioritized engagement over accuracy, algorithmically amplifying divisive content. Renamed to Meta in 2021.",
             significance: "The primary battlefield where modern disinformation campaigns are waged.",
-            reportSlug: null
+            reportSlug: "zuckerberg-facebook-disinformation"
         },
         "twitter": {
             term: "Twitter/X",
@@ -733,7 +733,7 @@ const TIMELINE_DATA = {
             founded: 2019,
             summary: "Stanford research center studying abuse of information technology. Led the Election Integrity Partnership that flagged social media content for platforms. Critics call it part of the 'censorship industrial complex.'",
             significance: "Represents the controversial academic-government-platform nexus.",
-            reportSlug: null
+            reportSlug: "stanford-internet-observatory"
         },
         "new-york-journal": {
             term: "New York Journal",
@@ -743,7 +743,7 @@ const TIMELINE_DATA = {
             founded: 1895,
             summary: "William Randolph Hearst's flagship newspaper that competed with Pulitzer's World. Its sensationalized coverage of the USS Maine explosion and Cuba helped push America into the Spanish-American War.",
             significance: "The original engine of 'yellow journalism' and media-manufactured war.",
-            reportSlug: null
+            reportSlug: "william-randolph-hearst"
         },
         "new-york-times": {
             term: "New York Times",
@@ -849,7 +849,7 @@ const TIMELINE_DATA = {
             era: "yellow-journalism",
             summary: "Sensationalist newspaper reporting that emphasizes exaggeration, scandal, and emotional appeals over factual accuracy. Named for the 'Yellow Kid' comic strip fought over by Hearst and Pulitzer. Prioritizes circulation over truth.",
             significance: "The original template for profit-driven media manipulation.",
-            reportSlug: null
+            reportSlug: "william-randolph-hearst"
         },
         "four-minute-men": {
             term: "Four Minute Men",
@@ -857,7 +857,7 @@ const TIMELINE_DATA = {
             era: "wwi-propaganda",
             summary: "Network of 75,000 volunteer speakers organized by the CPI during WWI. Delivered four-minute pro-war speeches in movie theaters during reel changes. The first mass mobilization of citizen propagandists in American history.",
             significance: "Pioneered using ordinary citizens as propaganda vectors—a technique now scaled by social media.",
-            reportSlug: null
+            reportSlug: "four-minute-men-wwi"
         },
         "manufacture-consent": {
             term: "Manufacturing Consent",
@@ -946,7 +946,7 @@ const TIMELINE_DATA = {
             era: "deregulation",
             summary: "Corporate strategy of funding contrary research to manufacture uncertainty about settled science. Perfected by tobacco companies ('Doubt is our product'), later applied to climate change, lead paint, and other public health issues.",
             significance: "Template for using 'both sides' framing to delay regulation indefinitely.",
-            reportSlug: null
+            reportSlug: "merchants-of-doubt"
         },
         "torches-of-freedom": {
             term: "Torches of Freedom",
@@ -964,7 +964,7 @@ const TIMELINE_DATA = {
             year: 1975,
             summary: "Senate committee led by Frank Church that investigated CIA, FBI, and NSA abuses. Exposed Operation Mockingbird, COINTELPRO, assassination plots, and mass surveillance. Led to FISA and intelligence oversight reforms.",
             significance: "The last comprehensive investigation of intelligence community abuses.",
-            reportSlug: null
+            reportSlug: "church-committee-revelations"
         },
         "twitter-files": {
             term: "Twitter Files",
@@ -986,7 +986,7 @@ const TIMELINE_DATA = {
             year: 1898,
             summary: "US Navy ship that exploded in Havana Harbor, killing 266 sailors. Hearst's Journal immediately blamed Spain with the headline 'Remember the Maine!' Modern analysis suggests an internal coal fire, not a Spanish mine.",
             significance: "First major example of American media manufacturing a war.",
-            reportSlug: null
+            reportSlug: "uss-maine-media-war"
         },
         "spanish-american-war": {
             term: "Spanish-American War",
@@ -995,7 +995,7 @@ const TIMELINE_DATA = {
             year: 1898,
             summary: "War between the US and Spain triggered largely by yellow journalism coverage of the USS Maine explosion and conditions in Cuba. Resulted in US acquisition of Puerto Rico, Guam, and the Philippines.",
             significance: "Demonstrated media's power to drive foreign policy and start wars.",
-            reportSlug: null
+            reportSlug: "uss-maine-media-war"
         },
         "biden-robocall": {
             term: "Biden Robocall Deepfake",
