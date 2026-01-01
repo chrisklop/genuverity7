@@ -1100,7 +1100,12 @@ const REPORTS_DATA = [
         date: "Dec 20, 2025",
         sources: "9 Sources",
         readTime: "5 min",
-        excerpt: "Viral claims about IRS sending $2,000 stimulus checks in December 2025 are completely false. No such program exists. Verdict: FALSE."
+        excerpt: "Viral claims about IRS sending $2,000 stimulus checks in December 2025 are completely false. No such program exists. Verdict: FALSE.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [0, 2000]
+        }
     },
     {
         id: 30,
@@ -1113,7 +1118,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "8 Sources",
         readTime: "7 min",
-        excerpt: "Debunking viral claims about mysterious drones over New Jersey including Project Blue Beam, Iranian involvement, and alien theories. Verdict: MOSTLY FALSE."
+        excerpt: "Debunking viral claims about mysterious drones over New Jersey including Project Blue Beam, Iranian involvement, and alien theories. Verdict: MOSTLY FALSE.",
+        chart: {
+            type: "network",
+            color: "#f59e0b",
+            data: { nodes: 10, connections: 15 }
+        }
     },
     {
         id: 31,
@@ -1126,7 +1136,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "9 Sources",
         readTime: "6 min",
-        excerpt: "X's new location transparency feature reveals surprising foreign origins for accounts amplifying pro-Trump content."
+        excerpt: "X's new location transparency feature reveals surprising foreign origins for accounts amplifying pro-Trump content.",
+        chart: {
+            type: "network",
+            color: "#ef4444",
+            data: { nodes: 14, connections: 22 }
+        }
     },
     {
         id: 32,
@@ -1139,7 +1154,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "10 Sources",
         readTime: "8 min",
-        excerpt: "Examining viral claims about immigrant crime rates. DOJ and academic research show immigrants commit crimes at lower rates than native-born citizens."
+        excerpt: "Examining viral claims about immigrant crime rates. DOJ and academic research show immigrants commit crimes at lower rates than native-born citizens.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [100, 56, 45]
+        }
     },
     {
         id: 33,
@@ -1152,7 +1172,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "8 Sources",
         readTime: "6 min",
-        excerpt: "Viral claim that 51% of young Americans support Hamas is misleading. Original poll asked about sympathy, not support, and results are more nuanced."
+        excerpt: "Viral claim that 51% of young Americans support Hamas is misleading. Original poll asked about sympathy, not support, and results are more nuanced.",
+        chart: {
+            type: "donut",
+            color: "#f59e0b",
+            data: 51
+        }
     },
     {
         id: 34,
@@ -1165,7 +1190,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "10 Sources",
         readTime: "6 min",
-        excerpt: "Trump claimed grocery prices are 'falling rapidly.' BLS data shows more items increased than decreased. Verdict: FALSE."
+        excerpt: "Trump claimed grocery prices are 'falling rapidly.' BLS data shows more items increased than decreased. Verdict: FALSE.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [65, 35]
+        }
     },
     {
         id: 35,
@@ -1178,7 +1208,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "10 Sources",
         readTime: "7 min",
-        excerpt: "AI-generated deepfakes targeting public figures, 93% of social videos now synthetic, and the erosion of trust in digital content."
+        excerpt: "AI-generated deepfakes targeting public figures, 93% of social videos now synthetic, and the erosion of trust in digital content.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [7, 15, 35, 60, 85, 93]
+        }
     },
     {
         id: 36,
@@ -1191,7 +1226,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "8 Sources",
         readTime: "7 min",
-        excerpt: "Viral Breitbart headline cherry-picks legitimate climate science to mislead readers about current global warming threat."
+        excerpt: "Viral Breitbart headline cherry-picks legitimate climate science to mislead readers about current global warming threat.",
+        chart: {
+            type: "line",
+            color: "#f59e0b",
+            data: [14.0, 14.2, 14.5, 14.8, 15.1, 15.3]
+        }
     },
     {
         id: 37,
@@ -1204,7 +1244,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "9 Sources",
         readTime: "7 min",
-        excerpt: "Multiple false claims spread within hours of Sydney shooting. Hero's identity fabricated, shooter's background distorted, non-existent second shooting claimed."
+        excerpt: "Multiple false claims spread within hours of Sydney shooting. Hero's identity fabricated, shooter's background distorted, non-existent second shooting claimed.",
+        chart: {
+            type: "timeline",
+            color: "#ef4444",
+            data: [10, 30, 55, 75, 90]
+        }
     },
     {
         id: 38,
@@ -1217,7 +1262,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "15 Sources",
         readTime: "7 min",
-        excerpt: "Examining DOGE's claim of $2 trillion in savings. NPR found only $102M verified—0.005% of claimed amount. Federal spending actually rose."
+        excerpt: "Examining DOGE's claim of $2 trillion in savings. NPR found only $102M verified—0.005% of claimed amount. Federal spending actually rose.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [2000, 102]
+        }
     },
     {
         id: 39,
@@ -1230,7 +1280,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "10 Sources",
         readTime: "6 min",
-        excerpt: "Trump claims 25 million migrants entered under Biden. Official CBP data shows ~10M encounters, many expelled. Verdict: FALSE."
+        excerpt: "Trump claims 25 million migrants entered under Biden. Official CBP data shows ~10M encounters, many expelled. Verdict: FALSE.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [25, 10]
+        }
     },
     {
         id: 40,
@@ -1243,7 +1298,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "11 Sources",
         readTime: "6 min",
-        excerpt: "Trump's $1,776 military bonus is actually rebranded housing funds Congress already approved—not new presidential spending or tariff revenue."
+        excerpt: "Trump's $1,776 military bonus is actually rebranded housing funds Congress already approved—not new presidential spending or tariff revenue.",
+        chart: {
+            type: "bar",
+            color: "#f59e0b",
+            data: [1776, 1776]
+        }
     },
     {
         id: 41,
@@ -1256,7 +1316,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "9 Sources",
         readTime: "10 min",
-        excerpt: "FDA CBER Director Vinay Prasad's leaked memo claims vaccines killed at least 10 children—but provides no evidence. Experts call it 'factually incorrect' and 'disingenuous.'"
+        excerpt: "FDA CBER Director Vinay Prasad's leaked memo claims vaccines killed at least 10 children—but provides no evidence. Experts call it 'factually incorrect' and 'disingenuous.'",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [10, 0]
+        }
     },
     {
         id: 42,
@@ -1269,7 +1334,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "10 Sources",
         readTime: "8 min",
-        excerpt: "Investigating IDF 'double-tap' strikes on Palestinian fishing boats and the legal questions surrounding targeting fleeing civilians."
+        excerpt: "Investigating IDF 'double-tap' strikes on Palestinian fishing boats and the legal questions surrounding targeting fleeing civilians.",
+        chart: {
+            type: "timeline",
+            color: "#ef4444",
+            data: [15, 40, 60, 80, 95]
+        }
     },
     {
         id: 43,
@@ -1282,7 +1352,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "5 Claims",
         readTime: "6 min",
-        excerpt: "Fact-checking the President's prime-time address on immigration, economy, and policy accomplishments. Claim-by-claim analysis with primary sources."
+        excerpt: "Fact-checking the President's prime-time address on immigration, economy, and policy accomplishments. Claim-by-claim analysis with primary sources.",
+        chart: {
+            type: "bar",
+            color: "#f59e0b",
+            data: [2, 1, 2]
+        }
     },
     {
         id: 44,
@@ -1295,7 +1370,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "12 Sources",
         readTime: "10 min",
-        excerpt: "Analyzing the prosecution's case, defense arguments, and contested evidence in the UnitedHealthcare CEO murder trial."
+        excerpt: "Analyzing the prosecution's case, defense arguments, and contested evidence in the UnitedHealthcare CEO murder trial.",
+        chart: {
+            type: "timeline",
+            color: "#ef4444",
+            data: [10, 25, 45, 70, 90]
+        }
     },
     {
         id: 45,
@@ -1308,7 +1388,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "10 Sources",
         readTime: "9 min",
-        excerpt: "Breaking down the Oracle, Silver Lake, and UAE consortium deal structure, and why ByteDance still controls the algorithm."
+        excerpt: "Breaking down the Oracle, Silver Lake, and UAE consortium deal structure, and why ByteDance still controls the algorithm.",
+        chart: {
+            type: "donut",
+            color: "#3b82f6",
+            data: 60
+        }
     },
     {
         id: 46,
@@ -1321,7 +1406,12 @@ const REPORTS_DATA = [
         date: "Dec 19, 2025",
         sources: "8 Sources",
         readTime: "7 min",
-        excerpt: "What the CDC actually changed on its website regarding vaccines and autism, and what the scientific consensus still shows."
+        excerpt: "What the CDC actually changed on its website regarding vaccines and autism, and what the scientific consensus still shows.",
+        chart: {
+            type: "bar",
+            color: "#f59e0b",
+            data: [95, 5]
+        }
     },
     {
         id: 47,
@@ -1334,7 +1424,12 @@ const REPORTS_DATA = [
         date: "Dec 18, 2025",
         sources: "12 Sources",
         readTime: "8 min",
-        excerpt: "Trump signs historic executive order directing federal reclassification of cannabis. Analysis of $2B+ tax relief and why this falls short of legalization."
+        excerpt: "Trump signs historic executive order directing federal reclassification of cannabis. Analysis of $2B+ tax relief and why this falls short of legalization.",
+        chart: {
+            type: "timeline",
+            color: "#10b981",
+            data: [10, 30, 50, 70, 90]
+        }
     },
     {
         id: 48,
@@ -1347,7 +1442,12 @@ const REPORTS_DATA = [
         date: "Dec 18, 2025",
         sources: "Interactive",
         readTime: "12 min",
-        excerpt: "How China, Japan, and hedge funds could weaponize $8+ trillion in US Treasury holdings as tariffs escalate to 145%."
+        excerpt: "How China, Japan, and hedge funds could weaponize $8+ trillion in US Treasury holdings as tariffs escalate to 145%.",
+        chart: {
+            type: "bar",
+            color: "#10b981",
+            data: [8.1, 1.1, 1.0, 0.9]
+        }
     },
     {
         id: 49,
@@ -1360,7 +1460,12 @@ const REPORTS_DATA = [
         date: "Dec 18, 2025",
         sources: "12 Sources",
         readTime: "9 min",
-        excerpt: "BLS reported 2.7% inflation—but a 43-day shutdown left October data uncollected. Analysis of why CPI diverges from consumer experience."
+        excerpt: "BLS reported 2.7% inflation—but a 43-day shutdown left October data uncollected. Analysis of why CPI diverges from consumer experience.",
+        chart: {
+            type: "line",
+            color: "#f59e0b",
+            data: [2.1, 5.4, 9.1, 6.5, 3.4, 2.7]
+        }
     },
     {
         id: 50,
@@ -1373,7 +1478,12 @@ const REPORTS_DATA = [
         date: "Dec 18, 2025",
         sources: "32 Domains",
         readTime: "15 min",
-        excerpt: "Russia's sophisticated media impersonation: 60+ fake news websites mimicking Washington Post, Fox News, and major outlets."
+        excerpt: "Russia's sophisticated media impersonation: 60+ fake news websites mimicking Washington Post, Fox News, and major outlets.",
+        chart: {
+            type: "network",
+            color: "#4a7dcc",
+            data: { nodes: 16, connections: 24 }
+        }
     },
     {
         id: 51,
@@ -1386,7 +1496,12 @@ const REPORTS_DATA = [
         date: "Dec 18, 2025",
         sources: "185 Nodes",
         readTime: "14 min",
-        excerpt: "China's largest influence operation: 8,700+ coordinated accounts across 50+ platforms targeting Western democracies."
+        excerpt: "China's largest influence operation: 8,700+ coordinated accounts across 50+ platforms targeting Western democracies.",
+        chart: {
+            type: "network",
+            color: "#ef6b5b",
+            data: { nodes: 18, connections: 30 }
+        }
     },
     {
         id: 52,
@@ -1399,7 +1514,12 @@ const REPORTS_DATA = [
         date: "Dec 17, 2025",
         sources: "18 Claims",
         readTime: "15 min",
-        excerpt: "Comprehensive analysis of 18 claims on partisan plaques installed beneath Biden's portrait in the White House."
+        excerpt: "Comprehensive analysis of 18 claims on partisan plaques installed beneath Biden's portrait in the White House.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [13, 3, 2]
+        }
     },
     {
         id: 14,
