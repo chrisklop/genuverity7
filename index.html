@@ -1710,6 +1710,7 @@
                 justify-content: center;
                 transform: scale(0.85);
                 /* Scale down for mobile */
+                pointer-events: none; /* Don't block form clicks */
             }
 
             .hero-title {
@@ -2596,7 +2597,7 @@
                                 <span><i data-lucide="calendar" style="width:12px;height:12px;"></i> ${report.date}</span>
                                 <span><i data-lucide="clock" style="width:12px;height:12px;"></i> ${report.readTime}</span>
                             </div>
-                            <a href="${report.slug}" class="card-cta" onclick="event.stopPropagation();">
+                            <a href="/${report.slug}" class="card-cta" onclick="event.stopPropagation();">
                                 Read <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
                             </a>
                         </div>
@@ -2615,7 +2616,7 @@
                             e.stopPropagation();
                             goToCard(cardIndex);
                         } else {
-                            window.location.href = report.slug;
+                            window.location.href = '/' + report.slug;
                         }
                     });
 
@@ -2929,7 +2930,7 @@
                             item.onmouseleave = () => item.style.background = 'transparent';
                             item.onclick = (e) => {
                                 e.stopPropagation(); // Prevent propagation
-                                window.location.href = report.slug;
+                                window.location.href = '/' + report.slug;
                             };
 
                             targetDropdown.appendChild(item);
@@ -2961,7 +2962,7 @@
                                 r.title.toLowerCase().includes(query.toLowerCase())
                             );
                             if (bestMatch) {
-                                window.location.href = bestMatch.slug;
+                                window.location.href = '/' + bestMatch.slug;
                             }
                         }
                     }
