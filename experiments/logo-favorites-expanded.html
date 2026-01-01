@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenuVerity Logo - Favorites Expanded (#5, #11, #12)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0f;
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            color: #e4e4e7;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .subtitle {
+            color: #71717a;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .section-title {
+            color: #3b82f6;
+            text-align: center;
+            font-size: 1.1rem;
+            margin: 50px 0 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #27272a;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .logo-card {
+            background: #12121a;
+            border: 1px solid #27272a;
+            border-radius: 16px;
+            padding: 50px 30px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            transition: border-color 0.3s;
+            position: relative;
+        }
+
+        .logo-card:hover {
+            border-color: #3b82f6;
+        }
+
+        .logo-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 20px;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            display: inline-flex;
+            position: relative;
+            z-index: 2;
+            white-space: nowrap;
+        }
+
+        .genu { color: #ffffff; }
+        .verity { color: #3b82f6; }
+
+        .variant-name {
+            color: #a1a1aa;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .variant-number {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .variant-desc {
+            color: #52525b;
+            font-size: 0.75rem;
+            text-align: center;
+            max-width: 300px;
+        }
+
+        .polygraph-svg {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            overflow: visible;
+        }
+
+        .polygraph-line {
+            fill: none;
+            stroke: #3b82f6;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.6));
+        }
+
+        .polygraph-line-glow {
+            fill: none;
+            stroke: rgba(59, 130, 246, 0.3);
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 0.9em;
+            background: #3b82f6;
+            margin-left: 1px;
+            animation: blink 0.7s infinite;
+            vertical-align: baseline;
+        }
+
+        /* ==========================================
+           #5 VARIANTS - SCANNING DOT
+        ========================================== */
+
+        /* Base scan dot styles */
+        .scan-dot {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 6px;
+            height: 6px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #3b82f6, 0 0 15px rgba(59, 130, 246, 0.5);
+            z-index: 10;
+        }
+
+        /* 5A: Classic scan dot */
+        .logo-5a .logo-text span { opacity: 0; }
+
+        /* 5B: Larger glowing dot */
+        .logo-5b .logo-text span { opacity: 0; }
+        .logo-5b .scan-dot {
+            width: 10px;
+            height: 10px;
+            background: #3b82f6;
+            box-shadow: 0 0 12px #3b82f6, 0 0 25px rgba(59, 130, 246, 0.7), 0 0 40px rgba(59, 130, 246, 0.4);
+        }
+
+        /* 5C: Dot with trail */
+        .logo-5c .logo-text span { opacity: 0; }
+        .logo-5c .scan-dot {
+            width: 8px;
+            height: 8px;
+        }
+        .logo-5c .dot-trail {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 30px;
+            height: 4px;
+            background: linear-gradient(to right, transparent, rgba(59, 130, 246, 0.6));
+            border-radius: 2px;
+            z-index: 9;
+        }
+
+        /* 5D: Pulsing scan dot */
+        .logo-5d .logo-text span { opacity: 0; }
+        .logo-5d .scan-dot {
+            animation: pulseDot 0.5s ease-in-out infinite;
+        }
+        .logo-5d .pulse-ring-dot {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 6px;
+            height: 6px;
+            border: 1px solid #3b82f6;
+            border-radius: 50%;
+            z-index: 9;
+        }
+
+        /* 5E: Cyan accent dot */
+        .logo-5e .logo-text span { opacity: 0; }
+        .logo-5e .scan-dot {
+            background: #06b6d4;
+            box-shadow: 0 0 10px #06b6d4, 0 0 20px rgba(6, 182, 212, 0.6);
+        }
+        .logo-5e .polygraph-line {
+            stroke: url(#gradient-5e);
+        }
+
+        /* 5F: Double dot scanner */
+        .logo-5f .logo-text span { opacity: 0; }
+        .logo-5f .scan-dot-secondary {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 4px;
+            height: 4px;
+            background: rgba(59, 130, 246, 0.6);
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(59, 130, 246, 0.4);
+            z-index: 9;
+        }
+
+        /* ==========================================
+           #11 VARIANTS - RADAR BACKGROUND
+        ========================================== */
+
+        /* 11A: Classic radar bg */
+        .logo-11a .logo-text span { opacity: 0; }
+        .logo-11a .radar-bg {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.1) 30deg, transparent 60deg);
+            animation: radarSweep 3s linear infinite;
+            z-index: 0;
+        }
+
+        /* 11B: Stronger radar with ring */
+        .logo-11b .logo-text span { opacity: 0; }
+        .logo-11b .radar-bg {
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.15) 25deg, transparent 50deg);
+            animation: radarSweep 2.5s linear infinite;
+            z-index: 0;
+        }
+        .logo-11b .radar-ring-bg {
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            z-index: 0;
+        }
+
+        /* 11C: Multiple concentric rings */
+        .logo-11c .logo-text span { opacity: 0; }
+        .logo-11c .radar-bg {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.12) 20deg, transparent 40deg);
+            animation: radarSweep 2s linear infinite;
+            z-index: 0;
+        }
+        .logo-11c .radar-ring-1 {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        .logo-11c .radar-ring-2 {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+        }
+        .logo-11c .radar-ring-3 {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        /* 11D: Dual sweep */
+        .logo-11d .logo-text span { opacity: 0; }
+        .logo-11d .radar-bg {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.1) 20deg, transparent 40deg);
+            animation: radarSweep 3s linear infinite;
+            z-index: 0;
+        }
+        .logo-11d .radar-bg-2 {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: conic-gradient(from 180deg, transparent 0deg, rgba(6, 182, 212, 0.08) 20deg, transparent 40deg);
+            animation: radarSweep 3s linear infinite;
+            z-index: 0;
+        }
+
+        /* 11E: Crosshair radar */
+        .logo-11e .logo-text span { opacity: 0; }
+        .logo-11e .radar-bg {
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.12) 25deg, transparent 50deg);
+            animation: radarSweep 2.5s linear infinite;
+            z-index: 0;
+        }
+        .logo-11e .crosshair-h {
+            position: absolute;
+            width: 130px;
+            height: 1px;
+            background: rgba(59, 130, 246, 0.15);
+        }
+        .logo-11e .crosshair-v {
+            position: absolute;
+            width: 1px;
+            height: 130px;
+            background: rgba(59, 130, 246, 0.15);
+        }
+
+        /* 11F: Fade pulse radar */
+        .logo-11f .logo-text span { opacity: 0; }
+        .logo-11f .radar-bg {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.15) 30deg, transparent 60deg);
+            animation: radarSweep 2s linear infinite, radarPulse 4s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        /* ==========================================
+           #12 VARIANTS - COMPLETE PACKAGE
+        ========================================== */
+
+        /* Base mini radar styles */
+        .mini-radar {
+            position: absolute;
+            left: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+        }
+        .radar-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.35);
+        }
+        .radar-sweep {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, #3b82f6 25deg, transparent 50deg);
+            animation: radarSweep 2s linear infinite;
+        }
+
+        /* 12A: Classic complete */
+        .logo-12a {
+            padding: 18px 28px;
+        }
+        .logo-12a .logo-text span { opacity: 0; }
+
+        /* 12B: Larger radar icon */
+        .logo-12b {
+            padding: 18px 32px;
+        }
+        .logo-12b .logo-text span { opacity: 0; }
+        .logo-12b .mini-radar {
+            width: 20px;
+            height: 20px;
+            left: 0;
+        }
+        .logo-12b .radar-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background: #3b82f6;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* 12C: Radar on right */
+        .logo-12c {
+            padding: 18px 28px;
+        }
+        .logo-12c .logo-text span { opacity: 0; }
+        .logo-12c .mini-radar {
+            left: auto;
+            right: 2px;
+        }
+
+        /* 12D: Double mini radar */
+        .logo-12d {
+            padding: 18px 32px;
+        }
+        .logo-12d .logo-text span { opacity: 0; }
+        .logo-12d .mini-radar-right {
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+        }
+        .logo-12d .mini-radar-right .radar-sweep {
+            animation-direction: reverse;
+            background: conic-gradient(from 0deg, transparent 0deg, #06b6d4 25deg, transparent 50deg);
+        }
+
+        /* 12E: Radar with detection blip */
+        .logo-12e {
+            padding: 18px 28px;
+        }
+        .logo-12e .logo-text span { opacity: 0; }
+        .logo-12e .detection-blip {
+            position: absolute;
+            left: 12px;
+            top: calc(50% - 5px);
+            width: 4px;
+            height: 4px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #10b981;
+            opacity: 0;
+        }
+
+        /* 12F: Elegant minimal */
+        .logo-12f {
+            padding: 18px 24px;
+        }
+        .logo-12f .logo-text span { opacity: 0; }
+        .logo-12f .mini-radar {
+            width: 12px;
+            height: 12px;
+            left: 4px;
+        }
+        .logo-12f .radar-ring {
+            border-color: rgba(59, 130, 246, 0.25);
+        }
+        .logo-12f .polygraph-line {
+            stroke-width: 1.5;
+        }
+
+        /* ==========================================
+           KEYFRAMES
+        ========================================== */
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @keyframes radarSweep {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        @keyframes radarPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .replay-btn {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #3b82f6;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .replay-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Favorites Expanded</h1>
+    <p class="subtitle">Variants of #5 (Scanning Dot), #11 (Radar Background), #12 (Complete Package)</p>
+
+    <!-- ==================== #5 VARIANTS ==================== -->
+    <h2 class="section-title">#5 - Scanning Dot Variants</h2>
+    <div class="grid">
+        <!-- 5A: Classic -->
+        <div class="logo-card">
+            <div class="logo-container logo-5a">
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <div class="scan-dot"></div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-5a" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line path-5a" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#5A</span> Classic Scan</p>
+            <p class="variant-desc">Original white dot traces the waveform</p>
+            <button class="replay-btn" onclick="play5a()">Replay</button>
+        </div>
+
+        <!-- 5B: Large Glow -->
+        <div class="logo-card">
+            <div class="logo-container logo-5b">
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <div class="scan-dot"></div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-5b" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line path-5b" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#5B</span> Large Glow</p>
+            <p class="variant-desc">Bigger, more prominent glowing dot</p>
+            <button class="replay-btn" onclick="play5b()">Replay</button>
+        </div>
+
+        <!-- 5C: Trail -->
+        <div class="logo-card">
+            <div class="logo-container logo-5c">
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <div class="dot-trail"></div>
+                <div class="scan-dot"></div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-5c" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line path-5c" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#5C</span> With Trail</p>
+            <p class="variant-desc">Dot leaves a fading trail behind it</p>
+            <button class="replay-btn" onclick="play5c()">Replay</button>
+        </div>
+
+        <!-- 5D: Pulsing -->
+        <div class="logo-card">
+            <div class="logo-container logo-5d">
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <div class="pulse-ring-dot"></div>
+                <div class="scan-dot"></div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-5d" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line path-5d" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#5D</span> Pulsing</p>
+            <p class="variant-desc">Dot pulses as it scans</p>
+            <button class="replay-btn" onclick="play5d()">Replay</button>
+        </div>
+
+        <!-- 5E: Cyan Accent -->
+        <div class="logo-card">
+            <div class="logo-container logo-5e">
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <div class="scan-dot"></div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="gradient-5e" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#3b82f6"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                    <path class="polygraph-line-glow path-5e" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line path-5e" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#5E</span> Cyan Accent</p>
+            <p class="variant-desc">Cyan dot with gradient waveform</p>
+            <button class="replay-btn" onclick="play5e()">Replay</button>
+        </div>
+
+        <!-- 5F: Double Dot -->
+        <div class="logo-card">
+            <div class="logo-container logo-5f">
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <div class="scan-dot-secondary"></div>
+                <div class="scan-dot"></div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-5f" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line path-5f" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#5F</span> Double Scanner</p>
+            <p class="variant-desc">Two dots scanning at different speeds</p>
+            <button class="replay-btn" onclick="play5f()">Replay</button>
+        </div>
+    </div>
+
+    <!-- ==================== #11 VARIANTS ==================== -->
+    <h2 class="section-title">#11 - Radar Background Variants</h2>
+    <div class="grid">
+        <!-- 11A: Classic -->
+        <div class="logo-card">
+            <div class="logo-container logo-11a">
+                <div class="radar-bg"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-11a" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line path-11a" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#11A</span> Classic Sweep</p>
+            <p class="variant-desc">Subtle radar sweep behind text</p>
+            <button class="replay-btn" onclick="play11a()">Replay</button>
+        </div>
+
+        <!-- 11B: With Ring -->
+        <div class="logo-card">
+            <div class="logo-container logo-11b">
+                <div class="radar-ring-bg"></div>
+                <div class="radar-bg"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-11b" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line path-11b" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#11B</span> With Ring</p>
+            <p class="variant-desc">Stronger sweep with outer ring</p>
+            <button class="replay-btn" onclick="play11b()">Replay</button>
+        </div>
+
+        <!-- 11C: Concentric -->
+        <div class="logo-card">
+            <div class="logo-container logo-11c">
+                <div class="radar-ring-1"></div>
+                <div class="radar-ring-2"></div>
+                <div class="radar-ring-3"></div>
+                <div class="radar-bg"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-11c" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line path-11c" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#11C</span> Concentric</p>
+            <p class="variant-desc">Multiple concentric radar rings</p>
+            <button class="replay-btn" onclick="play11c()">Replay</button>
+        </div>
+
+        <!-- 11D: Dual Sweep -->
+        <div class="logo-card">
+            <div class="logo-container logo-11d">
+                <div class="radar-bg"></div>
+                <div class="radar-bg-2"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-11d" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line path-11d" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#11D</span> Dual Sweep</p>
+            <p class="variant-desc">Two opposing radar sweeps</p>
+            <button class="replay-btn" onclick="play11d()">Replay</button>
+        </div>
+
+        <!-- 11E: Crosshair -->
+        <div class="logo-card">
+            <div class="logo-container logo-11e">
+                <div class="crosshair-h"></div>
+                <div class="crosshair-v"></div>
+                <div class="radar-bg"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-11e" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line path-11e" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#11E</span> Crosshair</p>
+            <p class="variant-desc">Radar with targeting crosshairs</p>
+            <button class="replay-btn" onclick="play11e()">Replay</button>
+        </div>
+
+        <!-- 11F: Pulse -->
+        <div class="logo-card">
+            <div class="logo-container logo-11f">
+                <div class="radar-bg"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-11f" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                    <path class="polygraph-line path-11f" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#11F</span> Pulse Fade</p>
+            <p class="variant-desc">Radar pulses in and out</p>
+            <button class="replay-btn" onclick="play11f()">Replay</button>
+        </div>
+    </div>
+
+    <!-- ==================== #12 VARIANTS ==================== -->
+    <h2 class="section-title">#12 - Complete Package Variants</h2>
+    <div class="grid">
+        <!-- 12A: Classic -->
+        <div class="logo-card">
+            <div class="logo-container logo-12a">
+                <div class="mini-radar">
+                    <div class="radar-ring"></div>
+                    <div class="radar-sweep"></div>
+                </div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-12a" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                    <path class="polygraph-line path-12a" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#12A</span> Classic Complete</p>
+            <p class="variant-desc">Mini radar + typewriter + polygraph</p>
+            <button class="replay-btn" onclick="play12a()">Replay</button>
+        </div>
+
+        <!-- 12B: Larger Radar -->
+        <div class="logo-card">
+            <div class="logo-container logo-12b">
+                <div class="mini-radar">
+                    <div class="radar-ring"></div>
+                    <div class="radar-sweep"></div>
+                    <div class="radar-center"></div>
+                </div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-12b" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                    <path class="polygraph-line path-12b" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#12B</span> Larger Radar</p>
+            <p class="variant-desc">More prominent radar icon with center dot</p>
+            <button class="replay-btn" onclick="play12b()">Replay</button>
+        </div>
+
+        <!-- 12C: Radar Right -->
+        <div class="logo-card">
+            <div class="logo-container logo-12c">
+                <div class="mini-radar">
+                    <div class="radar-ring"></div>
+                    <div class="radar-sweep"></div>
+                </div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-12c" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                    <path class="polygraph-line path-12c" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#12C</span> Radar Right</p>
+            <p class="variant-desc">Radar icon on the right side</p>
+            <button class="replay-btn" onclick="play12c()">Replay</button>
+        </div>
+
+        <!-- 12D: Double Radar -->
+        <div class="logo-card">
+            <div class="logo-container logo-12d">
+                <div class="mini-radar">
+                    <div class="radar-ring"></div>
+                    <div class="radar-sweep"></div>
+                </div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <div class="mini-radar-right">
+                    <div class="radar-ring"></div>
+                    <div class="radar-sweep"></div>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-12d" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                    <path class="polygraph-line path-12d" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#12D</span> Double Radar</p>
+            <p class="variant-desc">Radar icons on both sides</p>
+            <button class="replay-btn" onclick="play12d()">Replay</button>
+        </div>
+
+        <!-- 12E: Detection Blip -->
+        <div class="logo-card">
+            <div class="logo-container logo-12e">
+                <div class="mini-radar">
+                    <div class="radar-ring"></div>
+                    <div class="radar-sweep"></div>
+                </div>
+                <div class="detection-blip"></div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-12e" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                    <path class="polygraph-line path-12e" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#12E</span> Detection Blip</p>
+            <p class="variant-desc">Green blip appears when truth detected</p>
+            <button class="replay-btn" onclick="play12e()">Replay</button>
+        </div>
+
+        <!-- 12F: Elegant Minimal -->
+        <div class="logo-card">
+            <div class="logo-container logo-12f">
+                <div class="mini-radar">
+                    <div class="radar-ring"></div>
+                    <div class="radar-sweep"></div>
+                </div>
+                <div class="logo-text">
+                    <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="cursor"></span>
+                </div>
+                <svg class="polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                    <path class="polygraph-line-glow path-12f" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                    <path class="polygraph-line path-12f" d="M0,15 L25,15 L30,15 L35,6 L40,24 L45,10 L50,20 L55,15 L85,15 L90,15 L95,4 L100,26 L105,8 L110,22 L115,15 L200,15"/>
+                </svg>
+            </div>
+            <p class="variant-name"><span class="variant-number">#12F</span> Elegant Minimal</p>
+            <p class="variant-desc">Smaller, more refined elements</p>
+            <button class="replay-btn" onclick="play12f()">Replay</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize all on load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.polygraph-line, .polygraph-line-glow').forEach(path => {
+                const length = path.getTotalLength();
+                path.style.strokeDasharray = length;
+                path.style.strokeDashoffset = length;
+            });
+
+            setTimeout(() => {
+                // Play all variants
+                ['5a','5b','5c','5d','5e','5f','11a','11b','11c','11d','11e','11f','12a','12b','12c','12d','12e','12f'].forEach(id => {
+                    window[`play${id}`]();
+                });
+            }, 500);
+        });
+
+        // Helper function
+        function animateVariant(selector, options = {}) {
+            const letters = document.querySelectorAll(`${selector} .logo-text span:not(.cursor)`);
+            const paths = document.querySelectorAll(`${selector} .polygraph-line, ${selector} .polygraph-line-glow`);
+            const scanDot = document.querySelector(`${selector} .scan-dot`);
+            const trail = document.querySelector(`${selector} .dot-trail`);
+            const pulseRing = document.querySelector(`${selector} .pulse-ring-dot`);
+            const secondary = document.querySelector(`${selector} .scan-dot-secondary`);
+            const blip = document.querySelector(`${selector} .detection-blip`);
+
+            gsap.set(letters, { opacity: 0 });
+            paths.forEach(p => {
+                const len = p.getTotalLength();
+                gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+            });
+
+            if (scanDot) gsap.set(scanDot, { left: 0 });
+            if (trail) gsap.set(trail, { left: -30 });
+            if (pulseRing) gsap.set(pulseRing, { left: 0 });
+            if (secondary) gsap.set(secondary, { left: 0 });
+            if (blip) gsap.set(blip, { opacity: 0 });
+
+            const tl = gsap.timeline();
+
+            tl.to(letters, {
+                opacity: 1,
+                duration: 0.05,
+                stagger: 0.1,
+                delay: options.delay || 0
+            });
+
+            tl.to(paths, {
+                strokeDashoffset: 0,
+                duration: options.duration || 2,
+                ease: "none"
+            }, 0.2);
+
+            if (scanDot) {
+                tl.to(scanDot, {
+                    left: '100%',
+                    duration: options.duration || 2,
+                    ease: "none"
+                }, 0.2);
+            }
+
+            if (trail) {
+                tl.to(trail, {
+                    left: '100%',
+                    duration: options.duration || 2,
+                    ease: "none"
+                }, 0.2);
+            }
+
+            if (pulseRing) {
+                tl.to(pulseRing, {
+                    left: '100%',
+                    duration: options.duration || 2,
+                    ease: "none"
+                }, 0.2);
+            }
+
+            if (secondary) {
+                tl.to(secondary, {
+                    left: '100%',
+                    duration: (options.duration || 2) * 1.3,
+                    ease: "none"
+                }, 0.2);
+            }
+
+            if (blip) {
+                tl.to(blip, {
+                    opacity: 1,
+                    duration: 0.2,
+                    ease: "power2.out"
+                }, '-=0.5');
+            }
+
+            return tl;
+        }
+
+        // #5 Variants
+        function play5a() { animateVariant('.logo-5a'); }
+        function play5b() { animateVariant('.logo-5b'); }
+        function play5c() { animateVariant('.logo-5c'); }
+        function play5d() { animateVariant('.logo-5d'); }
+        function play5e() { animateVariant('.logo-5e'); }
+        function play5f() { animateVariant('.logo-5f'); }
+
+        // #11 Variants
+        function play11a() { animateVariant('.logo-11a', { delay: 0.3 }); }
+        function play11b() { animateVariant('.logo-11b', { delay: 0.3 }); }
+        function play11c() { animateVariant('.logo-11c', { delay: 0.3 }); }
+        function play11d() { animateVariant('.logo-11d', { delay: 0.3 }); }
+        function play11e() { animateVariant('.logo-11e', { delay: 0.3 }); }
+        function play11f() { animateVariant('.logo-11f', { delay: 0.3 }); }
+
+        // #12 Variants
+        function play12a() { animateVariant('.logo-12a', { delay: 0.2 }); }
+        function play12b() { animateVariant('.logo-12b', { delay: 0.2 }); }
+        function play12c() { animateVariant('.logo-12c', { delay: 0.2 }); }
+        function play12d() { animateVariant('.logo-12d', { delay: 0.2 }); }
+        function play12e() { animateVariant('.logo-12e', { delay: 0.2 }); }
+        function play12f() { animateVariant('.logo-12f', { delay: 0.2 }); }
+    </script>
+</body>
+</html>
