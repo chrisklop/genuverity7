@@ -867,40 +867,140 @@
         }
 
         @media (max-width: 768px) {
-            .era-section {
-                padding: 80px 16px;
+            /* ═══════════════════════════════════════════════════════════════
+               MOBILE TIMELINE REDESIGN - Card-based vertical layout
+               ═══════════════════════════════════════════════════════════════ */
+
+            /* Hero Section - Simplified */
+            .hero-section {
+                height: 80vh;
+                min-height: 500px;
             }
 
-            .era-stats {
-                flex-direction: column;
-                gap: 20px;
+            .hero-sticky {
+                position: relative;
+            }
+
+            .hero-content {
+                padding: 0 20px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            /* Era Sections - Vertical Stack */
+            .era-section {
+                padding: 60px 16px;
+                min-height: auto;
+            }
+
+            .era-container {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            /* Reset alternating layout for mobile */
+            .era-section:nth-child(even) .era-container {
+                direction: ltr;
+            }
+
+            /* Hide decorative elements */
+            .floating-node {
+                display: none;
+            }
+
+            .era-bg-gradient {
+                opacity: 0.3;
+            }
+
+            /* Force content visible - override GSAP */
+            .era-content {
+                order: 1;
+                transform: none !important;
+                opacity: 1 !important;
             }
 
             .era-visual {
+                order: 2;
+                transform: none !important;
+                opacity: 1 !important;
                 height: auto;
-                min-height: 300px;
+                min-height: 200px;
                 max-width: 100%;
             }
 
             .visual-frame {
                 position: relative;
                 height: auto;
-                min-height: 280px;
+                min-height: 220px;
             }
 
-            /* Fix event cards overflow on mobile */
+            /* Era Content Styling */
+            .era-badge {
+                padding: 6px 14px;
+                font-size: 0.7rem;
+            }
+
+            .era-title {
+                font-size: 1.75rem;
+                margin-bottom: 16px;
+            }
+
+            .era-summary {
+                font-size: 1rem;
+                line-height: 1.7;
+                margin-bottom: 24px;
+            }
+
+            .era-quote {
+                font-size: 1.1rem;
+                padding-left: 16px;
+                margin-bottom: 24px;
+            }
+
+            /* Compact Stats - 2 per row */
+            .era-stats {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+
+            .era-stat-value {
+                font-size: 1.8rem;
+            }
+
+            .era-stat-label {
+                font-size: 0.65rem;
+            }
+
+            /* Event Cards - Show only first 2 */
             .event-cards {
                 padding: 16px;
                 width: 100%;
                 max-width: 100%;
                 overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
             }
 
             .event-card {
                 padding: 14px;
-                margin-bottom: 12px;
+                margin-bottom: 0;
                 max-width: 100%;
                 overflow: hidden;
+                transform: none !important;
+                opacity: 1 !important;
+            }
+
+            /* Hide event cards beyond the first 2 */
+            .event-card:nth-child(n+3) {
+                display: none;
             }
 
             .event-card-title {
@@ -914,17 +1014,116 @@
                 line-height: 1.5;
             }
 
+            /* Sound toggle - larger touch target */
             .sound-toggle {
-                bottom: 20px;
-                right: 20px;
+                bottom: 80px; /* Above mobile nav */
+                right: 16px;
                 width: 48px;
                 height: 48px;
-                /* Larger touch target for mobile */
             }
 
+            /* Network container */
             .network-container {
-                height: 400px;
+                height: 350px;
             }
+
+            /* Transition sections */
+            .transition-section {
+                height: 40vh;
+                min-height: 300px;
+            }
+
+            .transition-content {
+                padding: 24px;
+            }
+
+            .transition-text {
+                font-size: 1.1rem;
+            }
+
+            /* Mobile Era Navigation Bar */
+            .mobile-era-nav {
+                display: flex;
+            }
+
+            /* Context overlay as bottom sheet */
+            .context-overlay {
+                position: fixed;
+                bottom: 0;
+                left: 0 !important;
+                right: 0;
+                top: auto !important;
+                max-width: 100%;
+                width: 100%;
+                border-radius: 20px 20px 0 0;
+                max-height: 70vh;
+                overflow-y: auto;
+                transform: translateY(100%);
+                padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            }
+
+            .context-overlay.visible {
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Era Navigation - Hidden on desktop */
+        .mobile-era-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 15, 26, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            justify-content: space-around;
+            align-items: center;
+            padding: 12px 8px calc(12px + env(safe-area-inset-bottom));
+            border-top: 1px solid var(--border-subtle);
+            z-index: 1000;
+        }
+
+        .mobile-era-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            opacity: 0.4;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .mobile-era-dot.active {
+            opacity: 1;
+            transform: scale(1.4);
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .mobile-era-dot:hover {
+            opacity: 0.7;
+        }
+
+        /* Network mobile fallback */
+        .network-mobile-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .network-mobile-fallback img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .network-mobile-fallback p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
 
         /* ═══════════════════════════════════════════════════════════════
@@ -2747,95 +2946,144 @@
         // ERA SECTION ANIMATIONS
         // ═══════════════════════════════════════════════════════════════
         function initEraAnimations() {
-            document.querySelectorAll('.era-section').forEach(section => {
-                const content = section.querySelector('.era-content');
-                const visual = section.querySelector('.era-visual');
-                const cards = section.querySelectorAll('.event-card');
+            // Use GSAP matchMedia for responsive animations
+            const mm = gsap.matchMedia();
 
-                // Content animation
-                gsap.to(content, {
-                    scrollTrigger: {
-                        trigger: section,
-                        start: 'top 70%',
-                        toggleActions: 'play none none reverse'
-                    },
-                    opacity: 1,
-                    x: 0,
-                    duration: 1,
-                    ease: 'power2.out'
-                });
+            // Desktop: Full ScrollTrigger animations
+            mm.add("(min-width: 769px)", () => {
+                document.querySelectorAll('.era-section').forEach(section => {
+                    const content = section.querySelector('.era-content');
+                    const visual = section.querySelector('.era-visual');
+                    const cards = section.querySelectorAll('.event-card');
 
-                // Visual animation
-                gsap.to(visual, {
-                    scrollTrigger: {
+                    // Content animation
+                    gsap.to(content, {
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top 70%',
+                            toggleActions: 'play none none reverse'
+                        },
+                        opacity: 1,
+                        x: 0,
+                        duration: 1,
+                        ease: 'power2.out'
+                    });
+
+                    // Visual animation
+                    gsap.to(visual, {
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top 60%',
+                            toggleActions: 'play none none reverse'
+                        },
+                        opacity: 1,
+                        x: 0,
+                        scale: 1,
+                        duration: 1.2,
+                        ease: 'power2.out',
+                        delay: 0.2
+                    });
+
+                    // Event cards stagger with piano plinks
+                    let cardSoundIndex = 0;
+                    gsap.to(cards, {
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top 50%',
+                            toggleActions: 'play none none reverse'
+                        },
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        stagger: {
+                            each: 0.15,
+                            onStart: function() {
+                                // Play ascending piano note for each card
+                                if (typeof playPianoPlink === 'function') {
+                                    playPianoPlink(cardSoundIndex % 5 + 3); // Notes F4-B4
+                                    cardSoundIndex++;
+                                }
+                            }
+                        },
+                        ease: 'power2.out',
+                        delay: 0.5
+                    });
+
+                    // Stat counter animation
+                    const stats = section.querySelectorAll('.era-stat-value');
+                    stats.forEach(stat => {
+                        const value = stat.textContent;
+                        if (!isNaN(parseFloat(value.replace(/[^0-9.]/g, '')))) {
+                            ScrollTrigger.create({
+                                trigger: stat,
+                                start: 'top 80%',
+                                onEnter: () => animateValue(stat, value)
+                            });
+                        }
+                    });
+
+                    // Activate era background and transition audio
+                    ScrollTrigger.create({
                         trigger: section,
                         start: 'top 60%',
-                        toggleActions: 'play none none reverse'
-                    },
-                    opacity: 1,
-                    x: 0,
-                    scale: 1,
-                    duration: 1.2,
-                    ease: 'power2.out',
-                    delay: 0.2
+                        end: 'bottom 40%',
+                        onEnter: () => {
+                            section.classList.add('active');
+                            const eraId = section.dataset.era;
+                            if (eraId) transitionToEra(eraId);
+                        },
+                        onLeave: () => section.classList.remove('active'),
+                        onEnterBack: () => {
+                            section.classList.add('active');
+                            const eraId = section.dataset.era;
+                            if (eraId) transitionToEra(eraId);
+                        },
+                        onLeaveBack: () => section.classList.remove('active')
+                    });
                 });
+            });
 
-                // Event cards stagger with piano plinks
-                let cardSoundIndex = 0;
-                gsap.to(cards, {
-                    scrollTrigger: {
-                        trigger: section,
-                        start: 'top 50%',
-                        toggleActions: 'play none none reverse'
-                    },
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.6,
-                    stagger: {
-                        each: 0.15,
-                        onStart: function() {
-                            // Play ascending piano note for each card
-                            if (typeof playPianoPlink === 'function') {
-                                playPianoPlink(cardSoundIndex % 5 + 3); // Notes F4-B4
-                                cardSoundIndex++;
+            // Mobile: No scroll animations - show content immediately
+            mm.add("(max-width: 768px)", () => {
+                document.querySelectorAll('.era-section').forEach(section => {
+                    const content = section.querySelector('.era-content');
+                    const visual = section.querySelector('.era-visual');
+                    const cards = section.querySelectorAll('.event-card');
+
+                    // Set all content visible immediately
+                    gsap.set([content, visual], {
+                        opacity: 1,
+                        x: 0,
+                        scale: 1,
+                        transform: 'none'
+                    });
+
+                    gsap.set(cards, {
+                        opacity: 1,
+                        y: 0,
+                        transform: 'none'
+                    });
+
+                    // Simple intersection observer for era activation (no animation, just state)
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                section.classList.add('active');
+                                updateMobileNav(section.dataset.era);
                             }
-                        }
-                    },
-                    ease: 'power2.out',
-                    delay: 0.5
-                });
-
-                // Stat counter animation
-                const stats = section.querySelectorAll('.era-stat-value');
-                stats.forEach(stat => {
-                    const value = stat.textContent;
-                    if (!isNaN(parseFloat(value.replace(/[^0-9.]/g, '')))) {
-                        ScrollTrigger.create({
-                            trigger: stat,
-                            start: 'top 80%',
-                            onEnter: () => animateValue(stat, value)
                         });
-                    }
-                });
+                    }, { threshold: 0.3 });
 
-                // Activate era background and transition audio
-                ScrollTrigger.create({
-                    trigger: section,
-                    start: 'top 60%',
-                    end: 'bottom 40%',
-                    onEnter: () => {
-                        section.classList.add('active');
-                        const eraId = section.dataset.era;
-                        if (eraId) transitionToEra(eraId);
-                    },
-                    onLeave: () => section.classList.remove('active'),
-                    onEnterBack: () => {
-                        section.classList.add('active');
-                        const eraId = section.dataset.era;
-                        if (eraId) transitionToEra(eraId);
-                    },
-                    onLeaveBack: () => section.classList.remove('active')
+                    observer.observe(section);
                 });
+            });
+        }
+
+        // Update mobile navigation dots
+        function updateMobileNav(eraId) {
+            if (!eraId) return;
+            document.querySelectorAll('.mobile-era-dot').forEach(dot => {
+                dot.classList.toggle('active', dot.dataset.era === eraId);
             });
         }
 
@@ -2950,6 +3198,34 @@
 
         function initNetworkGraph() {
             const container = document.querySelector('.network-container');
+            const graphContainer = document.getElementById('3d-graph');
+
+            // Mobile fallback - show simplified message instead of heavy 3D graph
+            if (window.innerWidth <= 768) {
+                if (graphContainer) {
+                    graphContainer.innerHTML = `
+                        <div class="network-mobile-fallback">
+                            <div style="font-size: 3rem; margin-bottom: 16px; opacity: 0.5;">
+                                <i data-lucide="network" style="width: 64px; height: 64px;"></i>
+                            </div>
+                            <h3 style="font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 12px; color: var(--text-primary);">
+                                Interactive Network Graph
+                            </h3>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 280px; margin: 0 auto;">
+                                Rotate your device to landscape or view on desktop for the full 3D disinformation network visualization.
+                            </p>
+                        </div>
+                    `;
+                    // Initialize lucide icons
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
+                }
+                // Still show the container with simple fade
+                gsap.set(container, { opacity: 1, scale: 1 });
+                gsap.set('.network-header', { opacity: 1, y: 0 });
+                return;
+            }
 
             // Animate header in
             gsap.to('.network-header', {
@@ -4097,6 +4373,40 @@
                 }
             });
         });
+    </script>
+
+    <!-- Mobile Era Navigation -->
+    <nav class="mobile-era-nav" aria-label="Era navigation">
+        <div class="mobile-era-dot" data-era="yellow-journalism" style="background: #ef4444;" title="Yellow Journalism"></div>
+        <div class="mobile-era-dot" data-era="wwi-propaganda" style="background: #f59e0b;" title="WWI Propaganda"></div>
+        <div class="mobile-era-dot" data-era="cold-war" style="background: #3b82f6;" title="Cold War"></div>
+        <div class="mobile-era-dot" data-era="deregulation" style="background: #06b6d4;" title="Deregulation"></div>
+        <div class="mobile-era-dot" data-era="digital-age" style="background: #10b981;" title="Digital Age"></div>
+        <div class="mobile-era-dot" data-era="censorship-complex" style="background: #f59e0b;" title="Censorship Era"></div>
+        <div class="mobile-era-dot" data-era="synthetic-future" style="background: #ef4444;" title="AI Era"></div>
+    </nav>
+
+    <script>
+        // Initialize mobile navigation
+        (function initMobileNav() {
+            if (window.innerWidth > 768) return;
+
+            const dots = document.querySelectorAll('.mobile-era-dot');
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const eraId = dot.dataset.era;
+                    const targetSection = document.querySelector(`.era-section[data-era="${eraId}"]`);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // Set first dot as active initially
+            if (dots.length > 0) {
+                dots[0].classList.add('active');
+            }
+        })();
     </script>
 
     <!-- Shared Footer -->
