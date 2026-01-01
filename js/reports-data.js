@@ -1102,9 +1102,9 @@ const REPORTS_DATA = [
         readTime: "5 min",
         excerpt: "Viral claims about IRS sending $2,000 stimulus checks in December 2025 are completely false. No such program exists. Verdict: FALSE.",
         chart: {
-            type: "bar",
+            type: "line",
             color: "#ef4444",
-            data: [0, 2000]
+            data: [150, 890, 4200, 18500, 45000, 89000]
         }
     },
     {
@@ -1138,9 +1138,9 @@ const REPORTS_DATA = [
         readTime: "6 min",
         excerpt: "X's new location transparency feature reveals surprising foreign origins for accounts amplifying pro-Trump content.",
         chart: {
-            type: "network",
-            color: "#ef4444",
-            data: { nodes: 14, connections: 22 }
+            type: "bar",
+            color: "#3b82f6",
+            data: [58, 42, 35, 28, 37]
         }
     },
     {
@@ -1156,9 +1156,9 @@ const REPORTS_DATA = [
         readTime: "8 min",
         excerpt: "Examining viral claims about immigrant crime rates. DOJ and academic research show immigrants commit crimes at lower rates than native-born citizens.",
         chart: {
-            type: "bar",
-            color: "#ef4444",
-            data: [100, 56, 45]
+            type: "line",
+            color: "#FF2A2A",
+            data: [730, 685, 506, 469, 405, 373, 399, 358]
         }
     },
     {
@@ -1174,9 +1174,9 @@ const REPORTS_DATA = [
         readTime: "6 min",
         excerpt: "Viral claim that 51% of young Americans support Hamas is misleading. Original poll asked about sympathy, not support, and results are more nuanced.",
         chart: {
-            type: "donut",
-            color: "#f59e0b",
-            data: 51
+            type: "bar",
+            color: "#06b6d4",
+            data: [45, 38, 52, 12]
         }
     },
     {
@@ -1193,8 +1193,8 @@ const REPORTS_DATA = [
         excerpt: "Trump claimed grocery prices are 'falling rapidly.' BLS data shows more items increased than decreased. Verdict: FALSE.",
         chart: {
             type: "bar",
-            color: "#ef4444",
-            data: [65, 35]
+            color: "#FF2A2A",
+            data: [5.8, 3.2, 2.9, 1.7, 54.1, 2.1, 1.4, 0.8]
         }
     },
     {
@@ -1266,7 +1266,7 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#ef4444",
-            data: [2000, 102]
+            data: [2000, 0.102]
         }
     },
     {
@@ -1283,8 +1283,8 @@ const REPORTS_DATA = [
         excerpt: "Trump claims 25 million migrants entered under Biden. Official CBP data shows ~10M encounters, many expelled. Verdict: FALSE.",
         chart: {
             type: "bar",
-            color: "#ef4444",
-            data: [25, 10]
+            color: "#3b82f6",
+            data: [1.73, 2.38, 2.48, 3.2]
         }
     },
     {
@@ -1300,9 +1300,9 @@ const REPORTS_DATA = [
         readTime: "6 min",
         excerpt: "Trump's $1,776 military bonus is actually rebranded housing funds Congress already approved—not new presidential spending or tariff revenue.",
         chart: {
-            type: "bar",
-            color: "#f59e0b",
-            data: [1776, 1776]
+            type: "donut",
+            color: "#3b82f6",
+            data: 90
         }
     },
     {
@@ -1336,9 +1336,9 @@ const REPORTS_DATA = [
         readTime: "8 min",
         excerpt: "Investigating IDF 'double-tap' strikes on Palestinian fishing boats and the legal questions surrounding targeting fleeing civilians.",
         chart: {
-            type: "timeline",
+            type: "line",
             color: "#ef4444",
-            data: [15, 40, 60, 80, 95]
+            data: [11, 25, 48, 75, 99]
         }
     },
     {
@@ -1354,9 +1354,9 @@ const REPORTS_DATA = [
         readTime: "6 min",
         excerpt: "Fact-checking the President's prime-time address on immigration, economy, and policy accomplishments. Claim-by-claim analysis with primary sources.",
         chart: {
-            type: "bar",
-            color: "#f59e0b",
-            data: [2, 1, 2]
+            type: "donut",
+            color: "#ef4444",
+            data: 57
         }
     },
     {
@@ -1372,9 +1372,9 @@ const REPORTS_DATA = [
         readTime: "10 min",
         excerpt: "Analyzing the prosecution's case, defense arguments, and contested evidence in the UnitedHealthcare CEO murder trial.",
         chart: {
-            type: "timeline",
-            color: "#ef4444",
-            data: [10, 25, 45, 70, 90]
+            type: "bar",
+            color: "#f59e0b",
+            data: [100, 80, 0, 0]
         }
     },
     {
@@ -1392,7 +1392,7 @@ const REPORTS_DATA = [
         chart: {
             type: "donut",
             color: "#3b82f6",
-            data: 60
+            data: 35
         }
     },
     {
@@ -1408,9 +1408,9 @@ const REPORTS_DATA = [
         readTime: "7 min",
         excerpt: "What the CDC actually changed on its website regarding vaccines and autism, and what the scientific consensus still shows.",
         chart: {
-            type: "bar",
-            color: "#f59e0b",
-            data: [95, 5]
+            type: "line",
+            color: "#3b82f6",
+            data: [95.2, 94.1, 93.0, 92.7, 92.7]
         }
     },
     {
@@ -1426,9 +1426,9 @@ const REPORTS_DATA = [
         readTime: "8 min",
         excerpt: "Trump signs historic executive order directing federal reclassification of cannabis. Analysis of $2B+ tax relief and why this falls short of legalization.",
         chart: {
-            type: "timeline",
-            color: "#10b981",
-            data: [10, 30, 50, 70, 90]
+            type: "bar",
+            color: "#3b82f6",
+            data: [70, 21, 21]
         }
     },
     {
@@ -1462,9 +1462,9 @@ const REPORTS_DATA = [
         readTime: "9 min",
         excerpt: "BLS reported 2.7% inflation—but a 43-day shutdown left October data uncollected. Analysis of why CPI diverges from consumer experience.",
         chart: {
-            type: "line",
-            color: "#f59e0b",
-            data: [2.1, 5.4, 9.1, 6.5, 3.4, 2.7]
+            type: "bar",
+            color: "#3b82f6",
+            data: [2.7, 2.62, 2.66, 3.2, 4.1, 4.8]
         }
     },
     {
