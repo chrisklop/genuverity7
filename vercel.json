@@ -8,6 +8,16 @@
   },
   "redirects": [
     {
+      "source": "/localreports/225-executive-orders-2025.html",
+      "destination": "/225-executive-orders-2025",
+      "permanent": true
+    },
+    {
+      "source": "/225-executive-orders-2025.html",
+      "destination": "/225-executive-orders-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/ai-deepfakes-2025.html",
       "destination": "/ai-deepfakes-2025",
       "permanent": true
@@ -65,6 +75,16 @@
     {
       "source": "/bird-flu-misinformation-2025.html",
       "destination": "/bird-flu-misinformation-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/birthright-citizenship-eo-2025.html",
+      "destination": "/birthright-citizenship-eo-2025",
+      "permanent": true
+    },
+    {
+      "source": "/birthright-citizenship-eo-2025.html",
+      "destination": "/birthright-citizenship-eo-2025",
       "permanent": true
     },
     {
@@ -138,6 +158,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/charlie-kirk-assassination-conspiracy-2025.html",
+      "destination": "/charlie-kirk-assassination-conspiracy-2025",
+      "permanent": true
+    },
+    {
+      "source": "/charlie-kirk-assassination-conspiracy-2025.html",
+      "destination": "/charlie-kirk-assassination-conspiracy-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/chemtrails-2025.html",
       "destination": "/chemtrails-2025",
       "permanent": true
@@ -175,6 +205,16 @@
     {
       "source": "/disinformation-architecture-2025.html",
       "destination": "/disinformation-architecture-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/doge-gaza-condom-claim-2025.html",
+      "destination": "/doge-gaza-condom-claim-2025",
+      "permanent": true
+    },
+    {
+      "source": "/doge-gaza-condom-claim-2025.html",
+      "destination": "/doge-gaza-condom-claim-2025",
       "permanent": true
     },
     {
@@ -288,6 +328,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/gaza-ceasefire-attribution-2025.html",
+      "destination": "/gaza-ceasefire-attribution-2025",
+      "permanent": true
+    },
+    {
+      "source": "/gaza-ceasefire-attribution-2025.html",
+      "destination": "/gaza-ceasefire-attribution-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/german-christmas-market-disinfo.html",
       "destination": "/german-christmas-market-disinfo",
       "permanent": true
@@ -305,6 +355,16 @@
     {
       "source": "/golden-fleet-analysis.html",
       "destination": "/golden-fleet-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/government-shutdown-2025.html",
+      "destination": "/government-shutdown-2025",
+      "permanent": true
+    },
+    {
+      "source": "/government-shutdown-2025.html",
+      "destination": "/government-shutdown-2025",
       "permanent": true
     },
     {
@@ -388,6 +448,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/inflation-historical-cap-2025.html",
+      "destination": "/inflation-historical-cap-2025",
+      "permanent": true
+    },
+    {
+      "source": "/inflation-historical-cap-2025.html",
+      "destination": "/inflation-historical-cap-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/inflation-methodology.html",
       "destination": "/inflation-methodology",
       "permanent": true
@@ -438,6 +508,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/la-ice-raids-riots-2025.html",
+      "destination": "/la-ice-raids-riots-2025",
+      "permanent": true
+    },
+    {
+      "source": "/la-ice-raids-riots-2025.html",
+      "destination": "/la-ice-raids-riots-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/la-wildfire-misinformation-2025.html",
       "destination": "/la-wildfire-misinformation-2025",
       "permanent": true
@@ -448,13 +528,13 @@
       "permanent": true
     },
     {
-      "source": "/localreports/laptop-farms.backup.html",
-      "destination": "/laptop-farms.backup",
+      "source": "/localreports/la-wildfires-misinfo-jan-2025.html",
+      "destination": "/la-wildfires-misinfo-jan-2025",
       "permanent": true
     },
     {
-      "source": "/laptop-farms.backup.html",
-      "destination": "/laptop-farms.backup",
+      "source": "/la-wildfires-misinfo-jan-2025.html",
+      "destination": "/la-wildfires-misinfo-jan-2025",
       "permanent": true
     },
     {
@@ -468,6 +548,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/liberation-day-address-2025.html",
+      "destination": "/liberation-day-address-2025",
+      "permanent": true
+    },
+    {
+      "source": "/liberation-day-address-2025.html",
+      "destination": "/liberation-day-address-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/maga-accounts-foreign.html",
       "destination": "/maga-accounts-foreign",
       "permanent": true
@@ -475,6 +565,16 @@
     {
       "source": "/maga-accounts-foreign.html",
       "destination": "/maga-accounts-foreign",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/mamdani-nyc-election-2025.html",
+      "destination": "/mamdani-nyc-election-2025",
+      "permanent": true
+    },
+    {
+      "source": "/mamdani-nyc-election-2025.html",
+      "destination": "/mamdani-nyc-election-2025",
       "permanent": true
     },
     {
@@ -498,6 +598,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/measles-natural-cures-2025.html",
+      "destination": "/measles-natural-cures-2025",
+      "permanent": true
+    },
+    {
+      "source": "/measles-natural-cures-2025.html",
+      "destination": "/measles-natural-cures-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/meta-ends-fact-checking-2025.html",
       "destination": "/meta-ends-fact-checking-2025",
       "permanent": true
@@ -515,6 +625,16 @@
     {
       "source": "/minnesota-fraud-investigation-2025.html",
       "destination": "/minnesota-fraud-investigation-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/mrna-vaccine-misinfo-2025.html",
+      "destination": "/mrna-vaccine-misinfo-2025",
+      "permanent": true
+    },
+    {
+      "source": "/mrna-vaccine-misinfo-2025.html",
+      "destination": "/mrna-vaccine-misinfo-2025",
       "permanent": true
     },
     {
@@ -598,6 +718,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/phony-bls-statistics-2025.html",
+      "destination": "/phony-bls-statistics-2025",
+      "permanent": true
+    },
+    {
+      "source": "/phony-bls-statistics-2025.html",
+      "destination": "/phony-bls-statistics-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/plaque-fact-check.html",
       "destination": "/plaque-fact-check",
       "permanent": true
@@ -648,6 +778,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/reciprocal-tariff-chart-2025.html",
+      "destination": "/reciprocal-tariff-chart-2025",
+      "permanent": true
+    },
+    {
+      "source": "/reciprocal-tariff-chart-2025.html",
+      "destination": "/reciprocal-tariff-chart-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/rob-reiner-misinformation-2025.html",
       "destination": "/rob-reiner-misinformation-2025",
       "permanent": true
@@ -688,6 +828,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/tda-gang-claims-2025.html",
+      "destination": "/tda-gang-claims-2025",
+      "permanent": true
+    },
+    {
+      "source": "/tda-gang-claims-2025.html",
+      "destination": "/tda-gang-claims-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/tesla-pi-phone-fake.html",
       "destination": "/tesla-pi-phone-fake",
       "permanent": true
@@ -715,6 +865,16 @@
     {
       "source": "/tommy-robinson-guadeloupe.html",
       "destination": "/tommy-robinson-guadeloupe",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/trade-war-tariffs-2025.html",
+      "destination": "/trade-war-tariffs-2025",
+      "permanent": true
+    },
+    {
+      "source": "/trade-war-tariffs-2025.html",
+      "destination": "/trade-war-tariffs-2025",
       "permanent": true
     },
     {
@@ -765,6 +925,36 @@
     {
       "source": "/trump-speech-factcheck.html",
       "destination": "/trump-speech-factcheck",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/tylenol-autism-claims-2025.html",
+      "destination": "/tylenol-autism-claims-2025",
+      "permanent": true
+    },
+    {
+      "source": "/tylenol-autism-claims-2025.html",
+      "destination": "/tylenol-autism-claims-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/ukraine-russia-war-origin-2025.html",
+      "destination": "/ukraine-russia-war-origin-2025",
+      "permanent": true
+    },
+    {
+      "source": "/ukraine-russia-war-origin-2025.html",
+      "destination": "/ukraine-russia-war-origin-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/un-general-assembly-2025.html",
+      "destination": "/un-general-assembly-2025",
+      "permanent": true
+    },
+    {
+      "source": "/un-general-assembly-2025.html",
+      "destination": "/un-general-assembly-2025",
       "permanent": true
     },
     {
@@ -903,6 +1093,10 @@
       "destination": "/api/index.py"
     },
     {
+      "source": "/225-executive-orders-2025",
+      "destination": "/localreports/225-executive-orders-2025.html"
+    },
+    {
       "source": "/ai-deepfakes-2025",
       "destination": "/localreports/ai-deepfakes-2025.html"
     },
@@ -925,6 +1119,10 @@
     {
       "source": "/bird-flu-misinformation-2025",
       "destination": "/localreports/bird-flu-misinformation-2025.html"
+    },
+    {
+      "source": "/birthright-citizenship-eo-2025",
+      "destination": "/localreports/birthright-citizenship-eo-2025.html"
     },
     {
       "source": "/blueanon-starlink",
@@ -955,6 +1153,10 @@
       "destination": "/localreports/cdc-vaccine-autism.html"
     },
     {
+      "source": "/charlie-kirk-assassination-conspiracy-2025",
+      "destination": "/localreports/charlie-kirk-assassination-conspiracy-2025.html"
+    },
+    {
       "source": "/chemtrails-2025",
       "destination": "/localreports/chemtrails-2025.html"
     },
@@ -969,6 +1171,10 @@
     {
       "source": "/disinformation-architecture-2025",
       "destination": "/localreports/disinformation-architecture-2025.html"
+    },
+    {
+      "source": "/doge-gaza-condom-claim-2025",
+      "destination": "/localreports/doge-gaza-condom-claim-2025.html"
     },
     {
       "source": "/doge-savings-claims",
@@ -1015,12 +1221,20 @@
       "destination": "/localreports/fednow-freeze.html"
     },
     {
+      "source": "/gaza-ceasefire-attribution-2025",
+      "destination": "/localreports/gaza-ceasefire-attribution-2025.html"
+    },
+    {
       "source": "/german-christmas-market-disinfo",
       "destination": "/localreports/german-christmas-market-disinfo.html"
     },
     {
       "source": "/golden-fleet-analysis",
       "destination": "/localreports/golden-fleet-analysis.html"
+    },
+    {
+      "source": "/government-shutdown-2025",
+      "destination": "/localreports/government-shutdown-2025.html"
     },
     {
       "source": "/great-reset-wef",
@@ -1055,6 +1269,10 @@
       "destination": "/localreports/immigration-crime-claims.html"
     },
     {
+      "source": "/inflation-historical-cap-2025",
+      "destination": "/localreports/inflation-historical-cap-2025.html"
+    },
+    {
       "source": "/inflation-methodology",
       "destination": "/localreports/inflation-methodology.html"
     },
@@ -1075,20 +1293,32 @@
       "destination": "/localreports/irs-stimulus-hoax.html"
     },
     {
+      "source": "/la-ice-raids-riots-2025",
+      "destination": "/localreports/la-ice-raids-riots-2025.html"
+    },
+    {
       "source": "/la-wildfire-misinformation-2025",
       "destination": "/localreports/la-wildfire-misinformation-2025.html"
     },
     {
-      "source": "/laptop-farms.backup",
-      "destination": "/localreports/laptop-farms.backup.html"
+      "source": "/la-wildfires-misinfo-jan-2025",
+      "destination": "/localreports/la-wildfires-misinfo-jan-2025.html"
     },
     {
       "source": "/laptop-farms",
       "destination": "/localreports/laptop-farms.html"
     },
     {
+      "source": "/liberation-day-address-2025",
+      "destination": "/localreports/liberation-day-address-2025.html"
+    },
+    {
       "source": "/maga-accounts-foreign",
       "destination": "/localreports/maga-accounts-foreign.html"
+    },
+    {
+      "source": "/mamdani-nyc-election-2025",
+      "destination": "/localreports/mamdani-nyc-election-2025.html"
     },
     {
       "source": "/mangione-trial-analysis",
@@ -1099,12 +1329,20 @@
       "destination": "/localreports/marijuana-rescheduling.html"
     },
     {
+      "source": "/measles-natural-cures-2025",
+      "destination": "/localreports/measles-natural-cures-2025.html"
+    },
+    {
       "source": "/meta-ends-fact-checking-2025",
       "destination": "/localreports/meta-ends-fact-checking-2025.html"
     },
     {
       "source": "/minnesota-fraud-investigation-2025",
       "destination": "/localreports/minnesota-fraud-investigation-2025.html"
+    },
+    {
+      "source": "/mrna-vaccine-misinfo-2025",
+      "destination": "/localreports/mrna-vaccine-misinfo-2025.html"
     },
     {
       "source": "/musk-eu-claims",
@@ -1139,6 +1377,10 @@
       "destination": "/localreports/partisan-influencer-networks.html"
     },
     {
+      "source": "/phony-bls-statistics-2025",
+      "destination": "/localreports/phony-bls-statistics-2025.html"
+    },
+    {
       "source": "/plaque-fact-check",
       "destination": "/localreports/plaque-fact-check.html"
     },
@@ -1159,6 +1401,10 @@
       "destination": "/localreports/qanon-network-analysis.html"
     },
     {
+      "source": "/reciprocal-tariff-chart-2025",
+      "destination": "/localreports/reciprocal-tariff-chart-2025.html"
+    },
+    {
       "source": "/rob-reiner-misinformation-2025",
       "destination": "/localreports/rob-reiner-misinformation-2025.html"
     },
@@ -1175,6 +1421,10 @@
       "destination": "/localreports/syria-disinformation-2024.html"
     },
     {
+      "source": "/tda-gang-claims-2025",
+      "destination": "/localreports/tda-gang-claims-2025.html"
+    },
+    {
       "source": "/tesla-pi-phone-fake",
       "destination": "/localreports/tesla-pi-phone-fake.html"
     },
@@ -1185,6 +1435,10 @@
     {
       "source": "/tommy-robinson-guadeloupe",
       "destination": "/localreports/tommy-robinson-guadeloupe.html"
+    },
+    {
+      "source": "/trade-war-tariffs-2025",
+      "destination": "/localreports/trade-war-tariffs-2025.html"
     },
     {
       "source": "/treasury-leverage",
@@ -1205,6 +1459,18 @@
     {
       "source": "/trump-speech-factcheck",
       "destination": "/localreports/trump-speech-factcheck.html"
+    },
+    {
+      "source": "/tylenol-autism-claims-2025",
+      "destination": "/localreports/tylenol-autism-claims-2025.html"
+    },
+    {
+      "source": "/ukraine-russia-war-origin-2025",
+      "destination": "/localreports/ukraine-russia-war-origin-2025.html"
+    },
+    {
+      "source": "/un-general-assembly-2025",
+      "destination": "/localreports/un-general-assembly-2025.html"
     },
     {
       "source": "/us-argentina-farm-crisis-2025",
