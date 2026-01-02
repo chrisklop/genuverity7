@@ -2519,10 +2519,17 @@
                 return `<div class="chart-container"><div class="chart-network">${linesHTML}${nodesHTML}</div></div>`;
             }
 
-            function generateHBarChart(data, colors) {
-                return `<div class="chart-container" style="align-items: center;"><div class="chart-hbars">${data.map((d, i) =>
+            function generateHBarChart(data, colors, labels) {
+                // Normalize to percentage scale
+                const maxVal = Math.max(...data.map(d => typeof d === 'object' ? d.value : d));
+                const normalizedData = data.map((d, i) => {
+                    const value = typeof d === 'object' ? d.value : d;
+                    const label = typeof d === 'object' ? d.label : (labels && labels[i] ? labels[i] : '');
+                    return { label, value: (value / maxVal) * 100 };
+                });
+                return `<div class="chart-container" style="align-items: center;"><div class="chart-hbars">${normalizedData.map((d, i) =>
                     `<div class="hbar-row">
-                    <span class="hbar-label">${d.label}</span>
+                    ${d.label ? `<span class="hbar-label">${d.label.replace('\\n', ' ')}</span>` : ''}
                     <div class="hbar" style="width: ${d.value}%; background: ${colors[i % colors.length]};"></div>
                 </div>`
                 ).join('')}</div></div>`;
@@ -2570,7 +2577,7 @@
                     let chartHTML = '';
                     if (report.chart) {
                         const c = report.chart;
-                        if (c.type === 'hbar') chartHTML = generateHBarChart(c.data, Array.isArray(c.color) ? c.color : [c.color, '#f59e0b', '#3b82f6', '#10b981']);
+                        if (c.type === 'hbar') chartHTML = generateHBarChart(c.data, c.colors || [c.color, '#f59e0b', '#3b82f6', '#10b981'], c.labels);
                         else if (c.type === 'timeline') chartHTML = generateTimelineChart(c.data, c.color);
                         else if (c.type === 'bar') chartHTML = generateBarChart(c.color, c.data);
                         else if (c.type === 'donut') chartHTML = generateDonutChart(c.data, c.color);

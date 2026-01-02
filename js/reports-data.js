@@ -246,9 +246,11 @@ const REPORTS_DATA = [
         verdict: "context",
         excerpt: "From Yellow Journalism to AI deepfakes: 130 years of manufactured reality. Tracing the evolution from the Creel Committee to Operation Mockingbird, the Fairness Doctrine to Section 230, and the rise of the 'Censorship Industrial Complex.'",
         chart: {
-            type: "bar",
-            color: "#3b82f6",
-            data: [1, 2, 3, 3, 4, 5, 6, 7, 8, 9]
+            type: "hbar",
+            color: "#ef4444",
+            data: [1, 2, 3, 3, 4, 5, 6, 7, 8, 9],
+            labels: ["1898 USS Maine", "1917 Creel", "1948 Smith-Mundt", "1949 Fairness", "1987 Repeal", "1996 Sec 230", "2012 Mod.", "2016 Cambridge", "2020 CISA", "2024 AI"],
+            colors: ["#ef4444", "#ef4444", "#3b82f6", "#10b981", "#f59e0b", "#06b6d4", "#f59e0b", "#ef4444", "#f59e0b", "#ef4444"]
         }
     },
     {
@@ -360,9 +362,11 @@ const REPORTS_DATA = [
         verdict: "false",  // Debunks misinformation claims
         excerpt: "Bill Gates conspiracy theories, RFK Jr.'s $500M vaccine cuts based on false claims, 'Plandemic 2.0' narratives, and PCR test skepticism - how misinformation is undermining the H5N1 response as 66 human cases emerge.",
         chart: {
-            type: "bar",
+            type: "hbar",
             color: "#ef4444",
-            data: [70, 1, 989, 16]
+            data: [70, 1, 989, 16],
+            labels: ["Human Cases", "Deaths", "Dairy Herds", "States"],
+            colors: ["#ef4444", "#dc2626", "#f59e0b", "#3b82f6"]
         }
     },
     {
@@ -620,9 +624,11 @@ const REPORTS_DATA = [
         readTime: "18 min",
         excerpt: "Merriam-Webster named 'Slop' Word of the Year 2025. We investigate 'Pink Slime 2.0' networks, state-sponsored AI (Russia's Doppelgänger, China's Falsos Amigos), and why detection is a losing battle.",
         chart: {
-            type: "bar",
-            color: "#3b82f6",
-            data: [5, 400]
+            type: "hbar",
+            color: "#10b981",
+            data: [5, 400],
+            labels: ["Legitimate Newsroom", "AI Slop Farm"],
+            colors: ["#10b981", "#ef4444"]
         }
     },
     {
