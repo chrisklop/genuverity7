@@ -98,6 +98,26 @@
       "permanent": true
     },
     {
+      "source": "/localreports/cable-news-narrative-laundering.html",
+      "destination": "/cable-news-narrative-laundering",
+      "permanent": true
+    },
+    {
+      "source": "/cable-news-narrative-laundering.html",
+      "destination": "/cable-news-narrative-laundering",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/cambridge-analytica-2016.html",
+      "destination": "/cambridge-analytica-2016",
+      "permanent": true
+    },
+    {
+      "source": "/cambridge-analytica-2016.html",
+      "destination": "/cambridge-analytica-2016",
+      "permanent": true
+    },
+    {
       "source": "/localreports/cdc-hepatitis-b-vaccine-2025.html",
       "destination": "/cdc-hepatitis-b-vaccine-2025",
       "permanent": true
@@ -188,6 +208,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/edward-bernays-propaganda.html",
+      "destination": "/edward-bernays-propaganda",
+      "permanent": true
+    },
+    {
+      "source": "/edward-bernays-propaganda.html",
+      "destination": "/edward-bernays-propaganda",
+      "permanent": true
+    },
+    {
       "source": "/localreports/election-deepfakes-2025.html",
       "destination": "/election-deepfakes-2025",
       "permanent": true
@@ -225,6 +255,16 @@
     {
       "source": "/epstein-documents-2025.html",
       "destination": "/epstein-documents-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/fairness-doctrine-history.html",
+      "destination": "/fairness-doctrine-history",
+      "permanent": true
+    },
+    {
+      "source": "/fairness-doctrine-history.html",
+      "destination": "/fairness-doctrine-history",
       "permanent": true
     },
     {
@@ -355,6 +395,16 @@
     {
       "source": "/inflation-methodology.html",
       "destination": "/inflation-methodology",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/internet-research-agency-2016.html",
+      "destination": "/internet-research-agency-2016",
+      "permanent": true
+    },
+    {
+      "source": "/internet-research-agency-2016.html",
+      "destination": "/internet-research-agency-2016",
       "permanent": true
     },
     {
@@ -508,6 +558,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/operation-mockingbird-cia.html",
+      "destination": "/operation-mockingbird-cia",
+      "permanent": true
+    },
+    {
+      "source": "/operation-mockingbird-cia.html",
+      "destination": "/operation-mockingbird-cia",
+      "permanent": true
+    },
+    {
       "source": "/localreports/paid-protesters-hoax.html",
       "destination": "/paid-protesters-hoax",
       "permanent": true
@@ -528,6 +588,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/partisan-influencer-networks.html",
+      "destination": "/partisan-influencer-networks",
+      "permanent": true
+    },
+    {
+      "source": "/partisan-influencer-networks.html",
+      "destination": "/partisan-influencer-networks",
+      "permanent": true
+    },
+    {
       "source": "/localreports/plaque-fact-check.html",
       "destination": "/plaque-fact-check",
       "permanent": true
@@ -538,6 +608,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/primetime-special-legitimization.html",
+      "destination": "/primetime-special-legitimization",
+      "permanent": true
+    },
+    {
+      "source": "/primetime-special-legitimization.html",
+      "destination": "/primetime-special-legitimization",
+      "permanent": true
+    },
+    {
       "source": "/localreports/project-2025-military-orders.html",
       "destination": "/project-2025-military-orders",
       "permanent": true
@@ -545,6 +625,26 @@
     {
       "source": "/project-2025-military-orders.html",
       "destination": "/project-2025-military-orders",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/protocols-elders-zion.html",
+      "destination": "/protocols-elders-zion",
+      "permanent": true
+    },
+    {
+      "source": "/protocols-elders-zion.html",
+      "destination": "/protocols-elders-zion",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/qanon-network-analysis.html",
+      "destination": "/qanon-network-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/qanon-network-analysis.html",
+      "destination": "/qanon-network-analysis",
       "permanent": true
     },
     {
@@ -718,53 +818,23 @@
       "permanent": true
     },
     {
-      "source": "/localreports/cambridge-analytica-2016.html",
-      "destination": "/cambridge-analytica-2016",
+      "source": "/localreports/wire-service-amplification.html",
+      "destination": "/wire-service-amplification",
       "permanent": true
     },
     {
-      "source": "/cambridge-analytica-2016.html",
-      "destination": "/cambridge-analytica-2016",
+      "source": "/wire-service-amplification.html",
+      "destination": "/wire-service-amplification",
       "permanent": true
     },
     {
-      "source": "/localreports/internet-research-agency-2016.html",
-      "destination": "/internet-research-agency-2016",
+      "source": "/localreports/youtube-radicalization-pipeline.html",
+      "destination": "/youtube-radicalization-pipeline",
       "permanent": true
     },
     {
-      "source": "/internet-research-agency-2016.html",
-      "destination": "/internet-research-agency-2016",
-      "permanent": true
-    },
-    {
-      "source": "/localreports/edward-bernays-propaganda.html",
-      "destination": "/edward-bernays-propaganda",
-      "permanent": true
-    },
-    {
-      "source": "/edward-bernays-propaganda.html",
-      "destination": "/edward-bernays-propaganda",
-      "permanent": true
-    },
-    {
-      "source": "/localreports/operation-mockingbird-cia.html",
-      "destination": "/operation-mockingbird-cia",
-      "permanent": true
-    },
-    {
-      "source": "/operation-mockingbird-cia.html",
-      "destination": "/operation-mockingbird-cia",
-      "permanent": true
-    },
-    {
-      "source": "/localreports/fairness-doctrine-history.html",
-      "destination": "/fairness-doctrine-history",
-      "permanent": true
-    },
-    {
-      "source": "/fairness-doctrine-history.html",
-      "destination": "/fairness-doctrine-history",
+      "source": "/youtube-radicalization-pipeline.html",
+      "destination": "/youtube-radicalization-pipeline",
       "permanent": true
     }
   ],
@@ -817,10 +887,6 @@
   ],
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api"
-    },
-    {
       "source": "/sitemap.xml",
       "destination": "/sitemap.xml"
     },
@@ -831,6 +897,10 @@
     {
       "source": "/robots.txt",
       "destination": "/robots.txt"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "/api/index.py"
     },
     {
       "source": "/ai-deepfakes-2025",
@@ -869,6 +939,14 @@
       "destination": "/localreports/bondi-beach-misinfo.html"
     },
     {
+      "source": "/cable-news-narrative-laundering",
+      "destination": "/localreports/cable-news-narrative-laundering.html"
+    },
+    {
+      "source": "/cambridge-analytica-2016",
+      "destination": "/localreports/cambridge-analytica-2016.html"
+    },
+    {
       "source": "/cdc-hepatitis-b-vaccine-2025",
       "destination": "/localreports/cdc-hepatitis-b-vaccine-2025.html"
     },
@@ -905,6 +983,10 @@
       "destination": "/localreports/doppelganger-analysis.html"
     },
     {
+      "source": "/edward-bernays-propaganda",
+      "destination": "/localreports/edward-bernays-propaganda.html"
+    },
+    {
       "source": "/election-deepfakes-2025",
       "destination": "/localreports/election-deepfakes-2025.html"
     },
@@ -919,6 +1001,10 @@
     {
       "source": "/epstein-documents-2025",
       "destination": "/localreports/epstein-documents-2025.html"
+    },
+    {
+      "source": "/fairness-doctrine-history",
+      "destination": "/localreports/fairness-doctrine-history.html"
     },
     {
       "source": "/fda-vaccine-memo-fact-check",
@@ -971,6 +1057,10 @@
     {
       "source": "/inflation-methodology",
       "destination": "/localreports/inflation-methodology.html"
+    },
+    {
+      "source": "/internet-research-agency-2016",
+      "destination": "/localreports/internet-research-agency-2016.html"
     },
     {
       "source": "/iran-nuclear-crisis",
@@ -1033,6 +1123,10 @@
       "destination": "/localreports/nj-drone-conspiracy.html"
     },
     {
+      "source": "/operation-mockingbird-cia",
+      "destination": "/localreports/operation-mockingbird-cia.html"
+    },
+    {
       "source": "/paid-protesters-hoax",
       "destination": "/localreports/paid-protesters-hoax.html"
     },
@@ -1041,12 +1135,28 @@
       "destination": "/localreports/palantir-panopticon.html"
     },
     {
+      "source": "/partisan-influencer-networks",
+      "destination": "/localreports/partisan-influencer-networks.html"
+    },
+    {
       "source": "/plaque-fact-check",
       "destination": "/localreports/plaque-fact-check.html"
     },
     {
+      "source": "/primetime-special-legitimization",
+      "destination": "/localreports/primetime-special-legitimization.html"
+    },
+    {
       "source": "/project-2025-military-orders",
       "destination": "/localreports/project-2025-military-orders.html"
+    },
+    {
+      "source": "/protocols-elders-zion",
+      "destination": "/localreports/protocols-elders-zion.html"
+    },
+    {
+      "source": "/qanon-network-analysis",
+      "destination": "/localreports/qanon-network-analysis.html"
     },
     {
       "source": "/rob-reiner-misinformation-2025",
@@ -1117,24 +1227,16 @@
       "destination": "/localreports/warrior-dividend-analysis.html"
     },
     {
-      "source": "/cambridge-analytica-2016",
-      "destination": "/localreports/cambridge-analytica-2016.html"
+      "source": "/wire-service-amplification",
+      "destination": "/localreports/wire-service-amplification.html"
     },
     {
-      "source": "/internet-research-agency-2016",
-      "destination": "/localreports/internet-research-agency-2016.html"
+      "source": "/youtube-radicalization-pipeline",
+      "destination": "/localreports/youtube-radicalization-pipeline.html"
     },
     {
-      "source": "/edward-bernays-propaganda",
-      "destination": "/localreports/edward-bernays-propaganda.html"
-    },
-    {
-      "source": "/operation-mockingbird-cia",
-      "destination": "/localreports/operation-mockingbird-cia.html"
-    },
-    {
-      "source": "/fairness-doctrine-history",
-      "destination": "/localreports/fairness-doctrine-history.html"
+      "source": "/:path*",
+      "destination": "/index.html"
     }
   ]
 }
