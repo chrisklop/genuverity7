@@ -3,7 +3,420 @@
 
 const REPORTS_DATA = [
     {
-        id: 78,
+        id: 0,
+        title: "Tren de Aragua Gang Claims: Real Gang, Exaggerated Threat",
+        slug: "tda-gang-claims-2025",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "users",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "mixed",
+        excerpt: "MIXED: Tren de Aragua is a real Venezuelan gang with some US presence. However, claims of cities being 'taken over' are exaggerated. Aurora's Republican mayor called viral claims 'grossly exaggerated.' FBI estimates few hundred members nationwide - a law enforcement concern but not the invasion depicted in viral posts.",
+        chart: {
+            type: "bar",
+            color: "#f59e0b",
+            data: [10000, 300],
+            labels: ["Viral Claims", "FBI Estimate"],
+            colors: ["#ef4444", "#10b981"]
+        }
+    },
+    {
+        id: 0,
+        title: "Ukraine-Russia War Origin Claims: False Narrative Debunked",
+        slug: "ukraine-russia-war-origin-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "globe",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "false",
+        excerpt: "FALSE: Claims that Ukraine started the war with Russia are false. Russia launched a full-scale invasion on Feb 24, 2022. UN General Assembly condemned invasion 141-5. ICJ ordered Russia to cease operations. ICC issued arrest warrant for Putin. Putin announced the 'special military operation' - Ukraine did not attack Russia.",
+        chart: {
+            type: "donut",
+            color: "#10b981",
+            data: [141, 5, 35],
+            labels: ["Condemned Russia", "Supported Russia", "Abstained"],
+            colors: ["#10b981", "#ef4444", "#f59e0b"]
+        }
+    },
+    {
+        id: 0,
+        title: "DOGE Gaza Condom Claim: Misleading Foreign Aid Framing",
+        slug: "doge-gaza-condom-claim-2025",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "11 min",
+        verdict: "misleading",
+        excerpt: "MISLEADING: DOGE's viral claim about 'spending on condoms in Gaza' misrepresented standard USAID global health programming. The spending was part of long-standing family planning programs in 40+ countries - not a Gaza-specific initiative. The claim manufactured outrage by stripping context from routine public health expenditures.",
+        chart: {
+            type: "donut",
+            color: "#3b82f6",
+            data: [45, 30, 10, 10, 5],
+            labels: ["Africa", "Asia", "MENA", "LatAm", "Other"],
+            colors: ["#3b82f6", "#10b981", "#f59e0b", "#06b6d4", "#64748b"]
+        }
+    },
+    {
+        id: 0,
+        title: "Reciprocal Tariff Chart: White House Used Fabricated Data",
+        slug: "reciprocal-tariff-chart-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "bar-chart-2",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "12 min",
+        verdict: "false",
+        excerpt: "FALSE: The White House 'reciprocal tariff' chart contained fabricated numbers. Claimed rates (China 67%, EU 39%, Japan 46%) don't match WTO data. Real rates: China 7.5%, EU 5.1%, Japan 4.2%. Numbers were calculated by dividing trade deficit by imports - a formula with no relationship to actual tariffs.",
+        chart: {
+            type: "hbar",
+            color: "#ef4444",
+            data: [67, 7.5],
+            labels: ["WH Claim (China)", "Actual WTO Rate"],
+            colors: ["#ef4444", "#3b82f6"]
+        }
+    },
+    {
+        id: 0,
+        title: "Inflation 'Historical Cap' Claim: Not Worst in History",
+        slug: "inflation-historical-cap-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "trending-up",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "15 min",
+        verdict: "false",
+        excerpt: "FALSE: Claims that recent inflation reached 'historical caps' or was worst in history are false. The 2022 peak of 9.1% was a 40-year high, but well below 1980's 14.8%. By 2025, inflation returned near the Fed's 2% target. Characterizing recent inflation as historically unprecedented misrepresents the data.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [12.3, 13.3, 14.8, 8.9, 6.1, 3.4, 1.5, 1.4, 9.1, 2.6],
+            labels: ["1974", "1979", "1980", "1981", "1990", "2000", "2010", "2020", "2022", "2025"]
+        }
+    },
+    {
+        id: 0,
+        title: "'Phony' BLS Statistics Claims: Assault on Government Data",
+        slug: "phony-bls-statistics-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "database",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "false",
+        excerpt: "FALSE: Claims that BLS data is 'phony' or manipulated are false. The BLS operates independently with publicly documented methodology. Data revisions are standard practice, not manipulation. 78% of economists express high trust in BLS data. The 2025 benchmark revision was within historical norms.",
+        chart: {
+            type: "donut",
+            color: "#10b981",
+            data: [78, 18, 4],
+            labels: ["High Trust", "Moderate", "Low Trust"],
+            colors: ["#10b981", "#f59e0b", "#ef4444"]
+        }
+    },
+    {
+        id: 0,
+        title: "Measles 'Natural' Cures Claims: Dangerous Health Misinformation",
+        slug: "measles-natural-cures-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "heart-pulse",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "15 min",
+        verdict: "false",
+        excerpt: "FALSE: Claims that measles can be treated with 'natural' remedies like vitamin A megadoses, elderberry, or essential oils are dangerous misinformation. No 'natural cure' for measles exists. The only proven prevention is vaccination. Measles cases surged as vaccination rates declined.",
+        chart: {
+            type: "hbar",
+            color: "#f59e0b",
+            data: [505, 57, 2],
+            labels: ["Cases", "Hospitalizations", "Deaths"],
+            colors: ["#f59e0b", "#ef4444", "#dc2626"]
+        }
+    },
+    {
+        id: 0,
+        title: "mRNA Vaccine Misinformation: Persistent False Claims",
+        slug: "mrna-vaccine-misinfo-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-x",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "false",
+        excerpt: "FALSE: Claims that mRNA vaccines alter DNA, contain microchips, or cause mass harm are scientifically false. mRNA cannot integrate into DNA. COVID vaccines have prevented an estimated 3+ million US deaths. Billions of doses administered with extensive safety monitoring confirm the vaccines are safe and effective.",
+        chart: {
+            type: "bar",
+            color: "#10b981",
+            data: [95, 94.1, 3.2],
+            labels: ["Efficacy %", "Safety %", "Deaths Prevented (M)"],
+            colors: ["#10b981", "#10b981", "#3b82f6"]
+        }
+    },
+    {
+        id: 0,
+        title: "Tylenol and Autism Controversy: Misrepresented Science",
+        slug: "tylenol-autism-claims-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "pill",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "false",
+        excerpt: "FALSE: Claims linking Tylenol during pregnancy to autism misrepresent scientific evidence. FDA, NIH, and major medical organizations confirm acetaminophen remains safe when used as directed. Correlation studies cited by RFK Jr. and allies do not establish causation. No mechanism has been identified.",
+        chart: {
+            type: "donut",
+            color: "#10b981",
+            data: [85, 15],
+            labels: ["Safe Use", "Misuse Risk"],
+            colors: ["#10b981", "#f59e0b"]
+        }
+    },
+    {
+        id: 0,
+        title: "Birthright Citizenship EO: Constitutional Crisis in Courts",
+        slug: "birthright-citizenship-eo-2025",
+        category: "Fact Check",
+        tagClass: "tag-cyan",
+        catClass: "cat-factcheck",
+        icon: "scale",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "context",
+        excerpt: "CONTEXT NEEDED: Trump's EO challenging birthright citizenship was blocked by multiple federal courts. Order contradicts 127 years of precedent (Wong Kim Ark, 1898). Supreme Court to rule in 2026. While administration raised historical arguments, an executive order cannot override the 14th Amendment.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [1, 2, 3, 4, 5, 6, 7],
+            labels: ["EO Signed", "Lawsuit", "Injunction", "9th Cir", "SCOTUS", "Cert", "Ruling"],
+            colors: ["#ef4444", "#f59e0b", "#10b981", "#10b981", "#f59e0b", "#3b82f6", "#06b6d4"]
+        }
+    },
+    {
+        id: 0,
+        title: "80th UN General Assembly Claims: A Comprehensive Fact-Check",
+        slug: "un-general-assembly-2025",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "globe",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "20 min",
+        verdict: "mixed",
+        excerpt: "MIXED: Multiple false claims from UNGA 2025. Geneva relocation claim is FALSE - UN confirmed NYC session on Sept 8. Trump's 'inflation defeated' claim FALSE - CPI worsening since May. 'London wants sharia law' is a debunked conspiracy theory. Climate claims MISLEADING - 80% of global electricity growth from renewables, solar/wind at 16% of U.S. electricity (surpassing coal).",
+        chart: {
+            type: "hbar",
+            color: "#ef4444",
+            data: [3, 2, 1],
+            labels: ["FALSE Claims", "MISLEADING", "DISPUTED"],
+            colors: ["#ef4444", "#f59e0b", "#06b6d4"]
+        }
+    },
+    {
+        id: 1,
+        title: "Trade War 2.0 Tariff Claims: A Comprehensive Fact-Check",
+        slug: "trade-war-tariffs-2025",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "dollar-sign",
+        date: "Jan 2, 2026",
+        sources: "15 Sources",
+        readTime: "22 min",
+        verdict: "misleading",
+        excerpt: "MISLEADING: Tariff claims misrepresent economic reality. 'Foreign countries pay tariffs' is FALSE - U.S. importers pay 100%. At 11.2% effective rate (highest since 1943), retail prices up 4.9pp. Average household cost: $1,100 in 2025, rising to $1,400 in 2026. Manufacturing jobs DOWN 40,000+ since April. Largest tax increase as % of GDP since 1993.",
+        chart: {
+            type: "hbar",
+            color: "#ef4444",
+            data: [8.99, 7.5, 7.5, 6.5, 6.0, 4.3, 4.9],
+            labels: ["Apparel", "Coffee/Tea", "Cameras", "Furniture", "Imports", "Domestic", "Retail"],
+            colors: ["#ef4444", "#ef4444", "#ef4444", "#f59e0b", "#f59e0b", "#f59e0b", "#3b82f6"]
+        }
+    },
+    {
+        id: 1,
+        title: "Zohran Mamdani NYC Election Claims Debunked",
+        slug: "mamdani-nyc-election-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "x-circle",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "18 min",
+        verdict: "false",
+        excerpt: "All major claims targeting NYC's first Muslim mayor rated FALSE. PolitiFact: Sharia law claim 'Pants on Fire' - Mamdani supports gay rights, decriminalizing sex work (antithesis of Sharia). Trump's 'communist' label debunked. Post-election hoaxes about NYPD resignations and trucking boycotts traced to satire/fabrications. CSOHATE: 35,522 posts analyzed, 72% used extremist labeling.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [120, 450, 890, 1850, 4200, 8900, 12500],
+            colors: ["#ef4444"]
+        }
+    },
+    {
+        id: 2,
+        title: "225 Executive Orders in 2025: The Numbers Are Real, But Context Matters",
+        slug: "225-executive-orders-2025",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "file-text",
+        date: "Jan 2, 2026",
+        sources: "18 Sources",
+        readTime: "20 min",
+        verdict: "misleading",
+        excerpt: "Trump signed 225 executive orders in 2025 (EO 14147-14371) - the highest first-year total since FDR's 568 in 1933. First 100 days: 143 EOs (record). Day 1: 26 EOs (record). Numbers are TRUE, but 'dictatorship' claims lack context - courts have blocked 12+ orders. Pew: 51% say 'too much', 27% say 'about right'.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [568, 225, 77, 55, 39, 54, 57],
+            colors: ["#3b82f6", "#ef4444", "#06b6d4", "#f59e0b", "#06b6d4", "#f59e0b", "#06b6d4"]
+        }
+    },
+    {
+        id: 1,
+        title: "2025 Government Shutdown - Longest in U.S. History",
+        slug: "government-shutdown-2025",
+        category: "Fact Check",
+        tagClass: "tag-green",
+        catClass: "cat-factcheck",
+        icon: "landmark",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "18 min",
+        verdict: "true",
+        excerpt: "CONFIRMED: At 43 days (Oct 1 - Nov 12, 2025), this shutdown surpassed the 34-day 2018-2019 record. DOGE's $150B savings claim disputed - NPR found tracker 'riddled with errors,' Partnership for Public Service estimates it COST $135B. 317,000 federal employees left by year's end.",
+        chart: {
+            type: "hbar",
+            color: "#ef4444",
+            data: [43, 34, 21, 16, 12],
+            labels: ["2025", "2018-19", "1995-96", "2013", "1977"],
+            colors: ["#ef4444", "#3b82f6", "#06b6d4", "#10b981", "#f59e0b"]
+        }
+    },
+    {
+        id: 1,
+        title: "Charlie Kirk Assassination Conspiracy Theories Debunked",
+        slug: "charlie-kirk-assassination-conspiracy-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "x-circle",
+        date: "Jan 2, 2026",
+        sources: "15 Sources",
+        readTime: "18 min",
+        verdict: "false",
+        excerpt: "Comprehensive debunking of conspiracy theories surrounding Charlie Kirk's September 2025 assassination. Israeli involvement, Ukrainian plots, Groyper connections, 'staged death' claims, and Egyptian aircraft surveillance - all rated FALSE. Alex Jones debunked Candace Owens: '66% of her location claims were wrong.'",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [10, 100, 85, 70, 55, 40, 25],
+            colors: ["#ef4444", "#10b981"]
+        }
+    },
+    {
+        id: 1,
+        title: "Gaza Ceasefire Deal Attribution: Who Gets the Credit?",
+        slug: "gaza-ceasefire-attribution-2025",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "scale",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "20 min",
+        verdict: "misleading",
+        excerpt: "Both Biden and Trump oversimplify credit for the January 2025 Gaza ceasefire. Biden's 'exact framework' claim is partially true - similar structure but key differences. Trump's 'could only happen' due to his victory is partially true - his team applied real pressure on Israel. Experts agree BOTH administrations contributed. The ceasefire collapsed after 62 days.",
+        chart: {
+            type: "line",
+            color: "#f59e0b",
+            data: [30, 35, 40, 45, 55, 75, 100],
+            colors: ["#3b82f6", "#ef4444"]
+        }
+    },
+    {
+        id: 2,
+        title: "LA Wildfires Misinformation January 2025: Complete Fact-Check",
+        slug: "la-wildfires-misinfo-jan-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-disinfo",
+        icon: "flame",
+        date: "Jan 2, 2026",
+        sources: "17 Sources",
+        readTime: "22 min",
+        verdict: "false",
+        excerpt: "Comprehensive debunking of January 2025 LA wildfire misinformation: AI Hollywood sign fakes with extra 'L', DEI conspiracy theories targeting Fire Chief Crowley, geo-engineered fire claims by Stew Peters and Alex Jones, QAnon Getty tunnel myths, Chinese disinfo campaigns, and FEMA funding lies - all rated FALSE.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [5, 75, 100, 80, 60, 45, 35, 25],
+            colors: ["#ef4444", "#3b82f6", "#f59e0b", "#06b6d4"]
+        }
+    },
+    {
+        id: 1,
+        title: "Los Angeles ICE Raids and Riots 2025: Fact vs. Fiction",
+        slug: "la-ice-raids-riots-2025",
+        category: "Immigration Policy",
+        tagClass: "tag-cyan",
+        catClass: "cat-factcheck",
+        icon: "shield-alert",
+        date: "Jan 2, 2026",
+        sources: "18 Sources",
+        readTime: "22 min",
+        verdict: "mixed",
+        excerpt: "DHS claimed 70% of June 2025 LA ICE raid arrestees were criminals; Human Rights Watch found 66% had NO criminal history. Viral videos debunked as 2020 footage. 2,000 National Guard deployed, 700 Marines activated. 9th Circuit ruled 'reasonable suspicion cannot be based on generalizations.'",
+        chart: {
+            type: "hbar",
+            color: "#06b6d4",
+            data: [70, 66, 29, 5],
+            labels: ["DHS: Criminal Record", "HRW: No Criminal History", "HRW: Minor Infractions", "HRW: Violent Convictions"],
+            colors: ["#ef4444", "#10b981", "#f59e0b", "#ef4444"]
+        }
+    },
+    {
+        id: 1,
+        title: "Liberation Day Address Claims: A Comprehensive Fact-Check",
+        slug: "liberation-day-address-2025",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "scale",
+        date: "Jan 2, 2026",
+        sources: "17 Sources",
+        readTime: "18 min",
+        verdict: "mixed",
+        excerpt: "Trump's April 2, 2025 'Liberation Day' tariff announcement contained multiple false claims. 'Reciprocal tariffs' were NOT based on actual foreign rates but trade-balance targets. EU's claimed 39% tariff is actually ~3%. Revenue projections of $600B vastly overstated - actual: $226-330B.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [39, 3, 67, 7.5, 46, 4],
+            colors: ["#ef4444", "#10b981", "#ef4444", "#10b981", "#ef4444", "#10b981"]
+        }
+    },
+    {
+        id: 80,
         title: "The Fairness Doctrine: How America Lost Balance in Broadcasting",
         slug: "fairness-doctrine-history",
         category: "Historical Analysis",
@@ -22,7 +435,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 77,
+        id: 79,
         title: "Operation Mockingbird: When the CIA Controlled the Press",
         slug: "operation-mockingbird-cia",
         category: "Historical Analysis",
@@ -42,7 +455,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 76,
+        id: 78,
         title: "Edward Bernays: The Father of Spin",
         slug: "edward-bernays-propaganda",
         category: "Historical Analysis",
@@ -62,7 +475,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 75,
+        id: 76,
         title: "Internet Research Agency: Russia's Troll Farm That Reached 126 Million Americans",
         slug: "internet-research-agency-2016",
         category: "Foreign Influence",
@@ -82,7 +495,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 74,
+        id: 75,
         title: "Cambridge Analytica: The $5 Billion Data Scandal",
         slug: "cambridge-analytica-2016",
         category: "Data Privacy",
@@ -102,7 +515,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 73,
+        id: 74,
         title: "QAnon Network Analysis: From 4chan to Congress",
         slug: "qanon-network-analysis",
         category: "Network Analysis",
@@ -122,7 +535,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 72,
+        id: 73,
         title: "Partisan Influencer Networks: The Amplification Machine",
         slug: "partisan-influencer-networks",
         category: "Network Analysis",
@@ -143,7 +556,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 71,
+        id: 72,
         title: "YouTube Radicalization Pipeline: Algorithmic Rabbit Holes Examined",
         slug: "youtube-radicalization-pipeline",
         category: "Platform Analysis",
@@ -163,7 +576,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 70,
+        id: 71,
         title: "Cable News Narrative Laundering: How Fringe Becomes Mainstream",
         slug: "cable-news-narrative-laundering",
         category: "Media Analysis",
@@ -182,7 +595,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 69,
+        id: 70,
         title: "Wire Service Amplification: One Story, 600 Outlets",
         slug: "wire-service-amplification",
         category: "Media Analysis",
@@ -202,7 +615,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 68,
+        id: 69,
         title: "Primetime Special Legitimization: When Networks Give Platforms",
         slug: "primetime-special-legitimization",
         category: "Media Analysis",
@@ -222,7 +635,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 67,
+        id: 68,
         title: "The Protocols of the Elders of Zion: Anatomy of a Fabrication",
         slug: "protocols-elders-zion",
         category: "Historical Analysis",
@@ -244,7 +657,7 @@ const REPORTS_DATA = [
         relatedIds: ["american-political-disinfo", "qanon-network-analysis"]
     },
     {
-        id: 66,
+        id: 67,
         title: "The Architecture of Perception: A History of American Media Disinformation",
         slug: "american-disinformation-timeline",
         category: "Analysis",
@@ -265,7 +678,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 65,
+        id: 66,
         title: "The Architecture of Deception: Global Disinformation Landscape 2024-2025",
         slug: "disinformation-architecture-2025",
         category: "Analysis",
@@ -285,7 +698,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 64,
+        id: 65,
         title: "Clickbait Propaganda: 5 Case Studies in December 2025 Disinformation",
         slug: "clickbait-propaganda-december-2025",
         category: "Disinformation Analysis",
@@ -306,7 +719,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 63,
+        id: 64,
         title: "Minnesota Fraud Investigation: The $250 Million Scandal and Beyond",
         slug: "minnesota-fraud-investigation-2025",
         category: "Investigation",
@@ -327,7 +740,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 62,
+        id: 63,
         title: "Election Deepfakes 2025: The Year Democracy Fought Back",
         slug: "election-deepfakes-2025",
         category: "Election Security",
@@ -347,7 +760,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 61,
+        id: 62,
         title: "Meta Ends Fact-Checking: The $100 Million Retreat",
         slug: "meta-ends-fact-checking-2025",
         category: "Platform Policy",
@@ -367,7 +780,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 60,
+        id: 61,
         title: "Bird Flu Misinformation: The H5N1 Panic Machine",
         slug: "bird-flu-misinformation-2025",
         category: "Public Health Disinfo",
@@ -388,7 +801,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 59,
+        id: 60,
         title: "Grok AI: The Misinformation Machine",
         slug: "grok-ai-misinformation-crisis",
         category: "AI Safety Crisis",
@@ -408,7 +821,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 58,
+        id: 59,
         title: "Los Angeles Wildfire Misinformation: A Forensic Analysis",
         slug: "la-wildfire-misinformation-2025",
         category: "Viral Disinformation",
@@ -428,7 +841,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 57,
+        id: 58,
         title: "Iran and the West: Nuclear Escalation, Proxy Warfare, and the Path Forward",
         slug: "iran-nuclear-crisis",
         category: "Deep Dive Dossier",
@@ -448,7 +861,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 56,
+        id: 57,
         title: "American Political Disinformation: Timeline, Key Cases, and Foreign Interference",
         slug: "american-political-disinfo",
         category: "Deep Dive Dossier",
@@ -468,7 +881,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 55,
+        id: 56,
         title: "Project 2025's \"Military Orders\": Rumors vs. Reality",
         slug: "project-2025-military-orders",
         category: "Deep Dive Dossier",
@@ -488,7 +901,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 54,
+        id: 55,
         title: "Fact-Check: The Viral \"166-Name Epstein List\"",
         slug: "epstein-166-name-list-fake",
         category: "Viral Disinformation",
@@ -508,7 +921,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 53,
+        id: 54,
         title: "CDC Reverses Vaccine-Autism Stance: A Scientific Fact-Check",
         slug: "hhs-vaccine-autism-claims",
         category: "Fact Check",
@@ -529,7 +942,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 0,
+        id: 53,
         title: "Is the US Economy Headed for Recession? A Data-Driven Analysis",
         slug: "us-recession-analysis-2025",
         category: "Economic Analysis",
@@ -548,7 +961,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 1,
+        id: 52,
         title: "The Tesla Pi Phone: Anatomy of a Digital Ghost Product",
         slug: "tesla-pi-phone-fake",
         category: "Deep Dive Dossier",
@@ -567,7 +980,7 @@ const REPORTS_DATA = [
     },
 
     {
-        id: 2,
+        id: 51,
         title: "The Great Smishing Surge of Late 2025: A Forensic Deep Dive",
         slug: "smishing-surge-2025",
         category: "Deep Dive Dossier",
@@ -587,7 +1000,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 3,
+        id: 50,
         title: "Forensic Audit: 28 Trump Accusers & The Epstein Discipline Gap",
         slug: "trump-allegations-epstein",
         category: "Forensic Audit",
@@ -606,7 +1019,7 @@ const REPORTS_DATA = [
         }
     },
     {
-        id: 4,
+        id: 49,
         title: "Market Equilibrium and the Deceleration of United States Petroleum Costs",
         slug: "us-gas-price-decline",
         category: "Economic Analysis",
