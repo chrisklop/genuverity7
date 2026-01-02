@@ -1021,14 +1021,22 @@
             return `<div class="chart-container"><div class="chart-network">${linesHTML}${nodesHTML}</div></div>`;
         }
 
-        function generateHBarChart(data, colors) {
+        function generateHBarChart(data, colors, labels) {
             // Ensure we have vibrant colors
             const defaultColors = ['#ef4444', '#f59e0b', '#3b82f6', '#10b981', '#8b5cf6'];
             const barColors = colors && colors.length > 0 ? colors : defaultColors;
 
-            return `<div class="chart-container" style="align-items: center;"><div class="chart-hbars">${data.map((d, i) =>
+            // Normalize to percentage scale - handle both object and array formats
+            const maxVal = Math.max(...data.map(d => typeof d === 'object' ? d.value : d));
+            const normalizedData = data.map((d, i) => {
+                const value = typeof d === 'object' ? d.value : d;
+                const label = typeof d === 'object' ? d.label : (labels && labels[i] ? labels[i] : '');
+                return { label, value: (value / maxVal) * 100 };
+            });
+
+            return `<div class="chart-container" style="align-items: center;"><div class="chart-hbars">${normalizedData.map((d, i) =>
                 `<div class="hbar-row">
-                    <span class="hbar-label">${d.label}</span>
+                    ${d.label ? `<span class="hbar-label">${d.label.replace('\\n', ' ')}</span>` : ''}
                     <div class="hbar" style="width: ${d.value}%; background: ${barColors[i % barColors.length]};"></div>
                 </div>`
             ).join('')}</div></div>`;
@@ -1049,7 +1057,7 @@
             if (!report.chart) return generateBarChart('#3b82f6');
 
             const c = report.chart;
-            if (c.type === 'hbar') return generateHBarChart(c.data, Array.isArray(c.color) ? c.color : [c.color, '#f59e0b', '#3b82f6', '#10b981']);
+            if (c.type === 'hbar') return generateHBarChart(c.data, c.colors || [c.color, '#f59e0b', '#3b82f6', '#10b981'], c.labels);
             if (c.type === 'timeline') return generateTimelineChart(c.data, c.color);
             if (c.type === 'bar') return generateBarChart(c.color, c.data);
             if (c.type === 'donut') return generateDonutChart(c.data, c.color);
