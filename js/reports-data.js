@@ -4,6 +4,353 @@
 const REPORTS_DATA = [
     {
         id: 0,
+        title: "Nigeria NIN-Bank Account Linking Claims: Separating Policy from Panic",
+        slug: "nigeria-nin-bank-access-2025",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "credit-card",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "misleading",
+        excerpt: "MISLEADING: Claims about bank account freezes due to missing NIN were exaggerated. CBN mandated NIN-BVN linking, but deadlines were extended repeatedly and no mass freezes occurred. The policy is real; the panic was manufactured.",
+        chart: {
+            type: "line",
+            color: "#3b82f6",
+            data: [42, 68, 89, 98, 105]
+        }
+    },
+    {
+        id: 0,
+        title: "African Tetanus/Polio Sterilization Claims Debunked",
+        slug: "african-vaccine-sterilization-2025",
+        category: "African Misinformation",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "syringe",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "false",
+        excerpt: "FALSE: Claims that WHO and UNICEF vaccines caused mass sterilization in Africa are completely false. The 2014 Kenya Catholic bishops controversy was debunked by WHO-certified labs. These recycled conspiracy theories have contributed to deadly vaccine hesitancy.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [2, 8, 15, 12, 18]
+        }
+    },
+    {
+        id: 0,
+        title: "Ebola Organ Theft Claims: Deadly Misinformation Debunked",
+        slug: "ebola-organ-theft-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-alert",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "false",
+        excerpt: "FALSE: Conspiracy theories claiming Ebola was a cover for organ harvesting fueled deadly attacks on health workers in West Africa. At least 8 people were killed in Guinea. WHO, CDC, and multiple investigations found zero evidence of organ theft.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [49, 759, 5864, 20206, 24907, 27443, 28147, 28601, 28616]
+        }
+    },
+    {
+        id: 0,
+        title: "Ebola Outbreak 2025 (DRC): Misinformation Analysis",
+        slug: "ebola-outbreak-drc-2025",
+        category: "Fact Check",
+        tagClass: "tag-cyan",
+        catClass: "cat-factcheck",
+        icon: "activity",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "mixed",
+        excerpt: "MIXED: The 2025 DRC Ebola outbreak is real and verified by WHO. However, dangerous misinformation about false cures (salt water, onions) and transmission myths has accompanied the outbreak. Community distrust of health workers reflects legitimate historical grievances.",
+        chart: {
+            type: "hbar",
+            data: [32, 24, 21, 14, 9],
+            labels: ["False Cures", "Transmission", "Conspiracy", "Vaccines", "Distrust"],
+            colors: ["#ef4444", "#f59e0b", "#3b82f6", "#06b6d4", "#10b981"]
+        }
+    },
+    {
+        id: 0,
+        title: "Brazil Supreme Court Bias Claims: Examining the Evidence",
+        slug: "brazil-supreme-court-bias-2025",
+        category: "International",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "scale",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "misleading",
+        excerpt: "MISLEADING: Claims of systematic bias in Brazil's STF conflate legitimate judicial actions against documented threats to democracy with political persecution. The X/Twitter ban followed established legal procedures after non-compliance with court orders.",
+        chart: {
+            type: "hbar",
+            data: [12, 9, 8, 14, 15, 10],
+            labels: ["Election Pro-Gov", "Election Anti", "Corruption Pro", "Corruption Anti", "Rights Pro", "Rights Anti"],
+            colors: ["#3b82f6", "#ef4444", "#3b82f6", "#ef4444", "#3b82f6", "#ef4444"]
+        }
+    },
+    {
+        id: 0,
+        title: "Nigeria Petroleum Surcharge Hoax: False Claims Cause Public Panic",
+        slug: "nigeria-petroleum-surcharge-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "fuel",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "false",
+        excerpt: "FALSE: Viral claims about new petroleum surcharges in Nigeria are completely fabricated. NNPCL, NMDPRA, and the Presidency all issued denials. TheCable FactCheck, Africa Check, and Dubawa rated the claims FALSE. The hoax caused unnecessary panic buying at fuel stations.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [2, 15, 45, 120, 85, 40, 12]
+        }
+    },
+    {
+        id: 0,
+        title: "Ebola Vaccine Sterility Claims: The Conspiracy That Endangers Public Health",
+        slug: "ebola-vaccine-sterility-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "syringe",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "false",
+        excerpt: "FALSE: Claims that Ebola vaccines cause infertility are dangerous misinformation with no scientific basis. Over 500,000 vaccinations administered with zero fertility-related adverse events. These conspiracy theories have hindered outbreak response and cost lives.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [45, 20, 15, 10, 85, 100, 70, 25, 20, 30, 65]
+        }
+    },
+    {
+        id: 0,
+        title: "SA Zulu King Salary Claims: Royal Funding vs. Exaggerated Figures",
+        slug: "sa-zulu-king-salary-2025",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "crown",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "misleading",
+        excerpt: "MISLEADING: Claims that King Misuzulu kaZwelithini receives R66 million in annual 'salary' conflate personal stipend (~R1.8M) with Royal Household operational budget (~R65M). Africa Check confirmed the King's actual personal allowance is a fraction of viral claims.",
+        chart: {
+            type: "hbar",
+            data: [1.8, 65, 66],
+            labels: ["Personal Stipend", "Household Budget", "Viral Claim"],
+            colors: ["#10b981", "#f59e0b", "#ef4444"]
+        }
+    },
+    {
+        id: 0,
+        title: "IDF Soldier Captivity Image: AI-Generated Propaganda Exposed",
+        slug: "idf-soldier-captivity-image-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-alert",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "13 min",
+        verdict: "false",
+        excerpt: "FALSE: Images claiming to show IDF soldiers captured by Hezbollah or Hamas were AI-generated fakes. Full Fact, Reuters, and multiple fact-checkers identified obvious AI artifacts. The IDF confirmed no soldiers were captured in the depicted scenarios.",
+        chart: {
+            type: "hbar",
+            data: [85, 72, 68, 91, 95],
+            labels: ["Hand Errors", "Uniform", "Face", "Light", "Meta"],
+            colors: ["#ef4444", "#f59e0b", "#3b82f6", "#10b981", "#06b6d4"]
+        }
+    },
+    {
+        id: 0,
+        title: "Hollywood Sign AI Fire Image: Viral Fake During LA Wildfires",
+        slug: "hollywood-sign-ai-fire-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "flame",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "12 min",
+        verdict: "false",
+        excerpt: "FALSE: AI-generated images showing the Hollywood sign engulfed in flames went viral during the January 2025 LA wildfires. The sign was never in danger. Multiple telltale AI artifacts identified, including extra 'L' in HOLLLYWOOD.",
+        chart: {
+            type: "bar",
+            data: [5.2, 0.8],
+            labels: ["AI Image Views (M)", "Debunk Views (M)"],
+            colors: ["#ef4444", "#10b981"]
+        }
+    },
+    {
+        id: 0,
+        title: "Syria Assad Underground Photo: AI-Generated Images Exposed",
+        slug: "syria-assad-underground-photo-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "image-off",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "false",
+        excerpt: "FALSE: Viral images claiming to show Assad's underground bunker or prison cells were AI-generated or misattributed. Some from Vietnam War museum, others showed clear AI artifacts. Real atrocities at Saydnaya documented separately.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [0.5, 3.2, 8.5, 12.1, 9.8, 6.2, 3.1]
+        }
+    },
+    {
+        id: 0,
+        title: "NSF Grant Termination Claims: Policy vs. Conspiracy",
+        slug: "nsf-grant-termination-2025",
+        category: "Fact Check",
+        tagClass: "tag-cyan",
+        catClass: "cat-factcheck",
+        icon: "graduation-cap",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "15 min",
+        verdict: "context",
+        excerpt: "CONTEXT: NSF terminated 1,500+ grants, ~90% DEI-related per Ted Cruz's list. Claims about targeting 'climate science' mostly false. However, concerns about chilling effects on research are legitimate.",
+        chart: {
+            type: "donut",
+            color: "#3b82f6",
+            data: 90
+        }
+    },
+    {
+        id: 0,
+        title: "JD Vance 'Misinformation' Comments: The Full Context",
+        slug: "vance-misinformation-comments-2025",
+        category: "Fact Check",
+        tagClass: "tag-cyan",
+        catClass: "cat-factcheck",
+        icon: "message-circle",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "context",
+        excerpt: "CONTEXT: Vance made legitimate points about weaponized 'misinformation' labels, supported by Knight Foundation data. But he also spread claims rated false. Both sides selectively quoted his remarks.",
+        chart: {
+            type: "donut",
+            color: "#ef4444",
+            data: 45
+        }
+    },
+    {
+        id: 0,
+        title: "Southport Stabbing Riots: How False Claims Fueled Violence",
+        slug: "southport-stabbing-misinfo-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "alert-octagon",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "false",
+        excerpt: "FALSE: Claims the Southport attacker was a Muslim asylum seeker are completely false. Court records confirm Axel Rudakubana was born in Cardiff, Wales. False claims triggered riots in 20+ UK cities.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [3, 8, 12, 15, 22, 18, 10]
+        }
+    },
+    {
+        id: 0,
+        title: "Meta Third-Party Fact-Check Exit: What Actually Changed",
+        slug: "meta-tpfc-exit-2025",
+        category: "Fact Check",
+        tagClass: "tag-cyan",
+        catClass: "cat-factcheck",
+        icon: "share-2",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "15 min",
+        verdict: "context",
+        excerpt: "CONTEXT: Meta ended TPFC partnerships and transitions to Community Notes. Claims Meta 'abandoned moderation' are FALSE - content removal policies remain. Change affects labeling, not removal.",
+        chart: {
+            type: "line",
+            color: "#3b82f6",
+            data: [0.5, 2.1, 8.5, 12.3, 15.8, 0]
+        }
+    },
+    {
+        id: 0,
+        title: "Pete Hegseth Signalgate: Security Concerns vs. Precedent",
+        slug: "hegseth-signalgate-2025",
+        category: "Fact Check",
+        tagClass: "tag-cyan",
+        catClass: "cat-factcheck",
+        icon: "lock",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "context",
+        excerpt: "CONTEXT: CISA recommends Signal for certain communications. Core issues are Federal Records Act compliance and classification. Both 'security breach' and 'nothing wrong' framings oversimplify.",
+        chart: {
+            type: "bar",
+            color: "#06b6d4",
+            data: [1, 2, 5, 4, 3, 3, 2]
+        }
+    },
+    {
+        id: 0,
+        title: "D.C. Murder Rate Comparison: Cherry-Picked Statistics",
+        slug: "dc-murder-rate-comparison-2025",
+        category: "Fact Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "bar-chart-2",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "misleading",
+        excerpt: "MISLEADING: D.C. violent crime hit 30-year low in 2024-2025 per DOJ. Per-capita comparisons with smaller cities are methodologically flawed. 2024 homicides down 25% from 2023 spike.",
+        chart: {
+            type: "line",
+            color: "#3b82f6",
+            data: [479, 360, 239, 195, 131, 162, 198, 232, 174, 165]
+        }
+    },
+    {
+        id: 0,
+        title: "Portland's 'Burning' Narrative: Recycled 2020 Footage",
+        slug: "portland-burning-narrative-2025",
+        category: "Fact Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "flame",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "false",
+        excerpt: "FALSE: Claims Portland was 'destroyed' or 'burning' in 2025 used recycled 2020 footage. Fire department data shows minimal incidents. Police Chief: protests confined to one city block of 145 sq miles.",
+        chart: {
+            type: "bar",
+            color: "#ef4444",
+            data: [95, 12, 3]
+        }
+    },
+    {
+        id: 0,
         title: "Tren de Aragua Gang Claims: Real Gang, Exaggerated Threat",
         slug: "tda-gang-claims-2025",
         category: "Fact Check",

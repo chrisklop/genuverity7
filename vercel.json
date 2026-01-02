@@ -18,6 +18,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/african-vaccine-sterilization-2025.html",
+      "destination": "/african-vaccine-sterilization-2025",
+      "permanent": true
+    },
+    {
+      "source": "/african-vaccine-sterilization-2025.html",
+      "destination": "/african-vaccine-sterilization-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/ai-deepfakes-2025.html",
       "destination": "/ai-deepfakes-2025",
       "permanent": true
@@ -118,6 +128,26 @@
       "permanent": true
     },
     {
+      "source": "/localreports/brazil-election-integrity-2025.html",
+      "destination": "/brazil-election-integrity-2025",
+      "permanent": true
+    },
+    {
+      "source": "/brazil-election-integrity-2025.html",
+      "destination": "/brazil-election-integrity-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/brazil-supreme-court-bias-2025.html",
+      "destination": "/brazil-supreme-court-bias-2025",
+      "permanent": true
+    },
+    {
+      "source": "/brazil-supreme-court-bias-2025.html",
+      "destination": "/brazil-supreme-court-bias-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/cable-news-narrative-laundering.html",
       "destination": "/cable-news-narrative-laundering",
       "permanent": true
@@ -198,6 +228,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/dc-murder-rate-comparison-2025.html",
+      "destination": "/dc-murder-rate-comparison-2025",
+      "permanent": true
+    },
+    {
+      "source": "/dc-murder-rate-comparison-2025.html",
+      "destination": "/dc-murder-rate-comparison-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/disinformation-architecture-2025.html",
       "destination": "/disinformation-architecture-2025",
       "permanent": true
@@ -245,6 +285,36 @@
     {
       "source": "/doppelganger-analysis.html",
       "destination": "/doppelganger-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/ebola-organ-theft-2025.html",
+      "destination": "/ebola-organ-theft-2025",
+      "permanent": true
+    },
+    {
+      "source": "/ebola-organ-theft-2025.html",
+      "destination": "/ebola-organ-theft-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/ebola-outbreak-drc-2025.html",
+      "destination": "/ebola-outbreak-drc-2025",
+      "permanent": true
+    },
+    {
+      "source": "/ebola-outbreak-drc-2025.html",
+      "destination": "/ebola-outbreak-drc-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/ebola-vaccine-sterility-2025.html",
+      "destination": "/ebola-vaccine-sterility-2025",
+      "permanent": true
+    },
+    {
+      "source": "/ebola-vaccine-sterility-2025.html",
+      "destination": "/ebola-vaccine-sterility-2025",
       "permanent": true
     },
     {
@@ -428,6 +498,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/hegseth-signalgate-2025.html",
+      "destination": "/hegseth-signalgate-2025",
+      "permanent": true
+    },
+    {
+      "source": "/hegseth-signalgate-2025.html",
+      "destination": "/hegseth-signalgate-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/hhs-vaccine-autism-claims.html",
       "destination": "/hhs-vaccine-autism-claims",
       "permanent": true
@@ -435,6 +515,26 @@
     {
       "source": "/hhs-vaccine-autism-claims.html",
       "destination": "/hhs-vaccine-autism-claims",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/hollywood-sign-ai-fire-2025.html",
+      "destination": "/hollywood-sign-ai-fire-2025",
+      "permanent": true
+    },
+    {
+      "source": "/hollywood-sign-ai-fire-2025.html",
+      "destination": "/hollywood-sign-ai-fire-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/idf-soldier-captivity-image-2025.html",
+      "destination": "/idf-soldier-captivity-image-2025",
+      "permanent": true
+    },
+    {
+      "source": "/idf-soldier-captivity-image-2025.html",
+      "destination": "/idf-soldier-captivity-image-2025",
       "permanent": true
     },
     {
@@ -618,6 +718,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/meta-tpfc-exit-2025.html",
+      "destination": "/meta-tpfc-exit-2025",
+      "permanent": true
+    },
+    {
+      "source": "/meta-tpfc-exit-2025.html",
+      "destination": "/meta-tpfc-exit-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/minnesota-fraud-investigation-2025.html",
       "destination": "/minnesota-fraud-investigation-2025",
       "permanent": true
@@ -668,6 +778,26 @@
       "permanent": true
     },
     {
+      "source": "/localreports/nigeria-nin-bank-access-2025.html",
+      "destination": "/nigeria-nin-bank-access-2025",
+      "permanent": true
+    },
+    {
+      "source": "/nigeria-nin-bank-access-2025.html",
+      "destination": "/nigeria-nin-bank-access-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/nigeria-petroleum-surcharge-2025.html",
+      "destination": "/nigeria-petroleum-surcharge-2025",
+      "permanent": true
+    },
+    {
+      "source": "/nigeria-petroleum-surcharge-2025.html",
+      "destination": "/nigeria-petroleum-surcharge-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/nj-drone-conspiracy.html",
       "destination": "/nj-drone-conspiracy",
       "permanent": true
@@ -675,6 +805,16 @@
     {
       "source": "/nj-drone-conspiracy.html",
       "destination": "/nj-drone-conspiracy",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/nsf-grant-termination-2025.html",
+      "destination": "/nsf-grant-termination-2025",
+      "permanent": true
+    },
+    {
+      "source": "/nsf-grant-termination-2025.html",
+      "destination": "/nsf-grant-termination-2025",
       "permanent": true
     },
     {
@@ -735,6 +875,16 @@
     {
       "source": "/plaque-fact-check.html",
       "destination": "/plaque-fact-check",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/portland-burning-narrative-2025.html",
+      "destination": "/portland-burning-narrative-2025",
+      "permanent": true
+    },
+    {
+      "source": "/portland-burning-narrative-2025.html",
+      "destination": "/portland-burning-narrative-2025",
       "permanent": true
     },
     {
@@ -808,6 +958,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/sa-zulu-king-salary-2025.html",
+      "destination": "/sa-zulu-king-salary-2025",
+      "permanent": true
+    },
+    {
+      "source": "/sa-zulu-king-salary-2025.html",
+      "destination": "/sa-zulu-king-salary-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/smishing-surge-2025.html",
       "destination": "/smishing-surge-2025",
       "permanent": true
@@ -815,6 +975,26 @@
     {
       "source": "/smishing-surge-2025.html",
       "destination": "/smishing-surge-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/southport-stabbing-misinfo-2025.html",
+      "destination": "/southport-stabbing-misinfo-2025",
+      "permanent": true
+    },
+    {
+      "source": "/southport-stabbing-misinfo-2025.html",
+      "destination": "/southport-stabbing-misinfo-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/syria-assad-underground-photo-2025.html",
+      "destination": "/syria-assad-underground-photo-2025",
+      "permanent": true
+    },
+    {
+      "source": "/syria-assad-underground-photo-2025.html",
+      "destination": "/syria-assad-underground-photo-2025",
       "permanent": true
     },
     {
@@ -998,6 +1178,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/vance-misinformation-comments-2025.html",
+      "destination": "/vance-misinformation-comments-2025",
+      "permanent": true
+    },
+    {
+      "source": "/vance-misinformation-comments-2025.html",
+      "destination": "/vance-misinformation-comments-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/warrior-dividend-analysis.html",
       "destination": "/warrior-dividend-analysis",
       "permanent": true
@@ -1097,6 +1287,10 @@
       "destination": "/localreports/225-executive-orders-2025.html"
     },
     {
+      "source": "/african-vaccine-sterilization-2025",
+      "destination": "/localreports/african-vaccine-sterilization-2025.html"
+    },
+    {
       "source": "/ai-deepfakes-2025",
       "destination": "/localreports/ai-deepfakes-2025.html"
     },
@@ -1137,6 +1331,14 @@
       "destination": "/localreports/bondi-beach-misinfo.html"
     },
     {
+      "source": "/brazil-election-integrity-2025",
+      "destination": "/localreports/brazil-election-integrity-2025.html"
+    },
+    {
+      "source": "/brazil-supreme-court-bias-2025",
+      "destination": "/localreports/brazil-supreme-court-bias-2025.html"
+    },
+    {
       "source": "/cable-news-narrative-laundering",
       "destination": "/localreports/cable-news-narrative-laundering.html"
     },
@@ -1169,6 +1371,10 @@
       "destination": "/localreports/climate-ice-age-study.html"
     },
     {
+      "source": "/dc-murder-rate-comparison-2025",
+      "destination": "/localreports/dc-murder-rate-comparison-2025.html"
+    },
+    {
       "source": "/disinformation-architecture-2025",
       "destination": "/localreports/disinformation-architecture-2025.html"
     },
@@ -1187,6 +1393,18 @@
     {
       "source": "/doppelganger-analysis",
       "destination": "/localreports/doppelganger-analysis.html"
+    },
+    {
+      "source": "/ebola-organ-theft-2025",
+      "destination": "/localreports/ebola-organ-theft-2025.html"
+    },
+    {
+      "source": "/ebola-outbreak-drc-2025",
+      "destination": "/localreports/ebola-outbreak-drc-2025.html"
+    },
+    {
+      "source": "/ebola-vaccine-sterility-2025",
+      "destination": "/localreports/ebola-vaccine-sterility-2025.html"
     },
     {
       "source": "/edward-bernays-propaganda",
@@ -1261,8 +1479,20 @@
       "destination": "/localreports/hegseth-boat-strike.html"
     },
     {
+      "source": "/hegseth-signalgate-2025",
+      "destination": "/localreports/hegseth-signalgate-2025.html"
+    },
+    {
       "source": "/hhs-vaccine-autism-claims",
       "destination": "/localreports/hhs-vaccine-autism-claims.html"
+    },
+    {
+      "source": "/hollywood-sign-ai-fire-2025",
+      "destination": "/localreports/hollywood-sign-ai-fire-2025.html"
+    },
+    {
+      "source": "/idf-soldier-captivity-image-2025",
+      "destination": "/localreports/idf-soldier-captivity-image-2025.html"
     },
     {
       "source": "/immigration-crime-claims",
@@ -1337,6 +1567,10 @@
       "destination": "/localreports/meta-ends-fact-checking-2025.html"
     },
     {
+      "source": "/meta-tpfc-exit-2025",
+      "destination": "/localreports/meta-tpfc-exit-2025.html"
+    },
+    {
       "source": "/minnesota-fraud-investigation-2025",
       "destination": "/localreports/minnesota-fraud-investigation-2025.html"
     },
@@ -1357,8 +1591,20 @@
       "destination": "/localreports/network-analysis.html"
     },
     {
+      "source": "/nigeria-nin-bank-access-2025",
+      "destination": "/localreports/nigeria-nin-bank-access-2025.html"
+    },
+    {
+      "source": "/nigeria-petroleum-surcharge-2025",
+      "destination": "/localreports/nigeria-petroleum-surcharge-2025.html"
+    },
+    {
       "source": "/nj-drone-conspiracy",
       "destination": "/localreports/nj-drone-conspiracy.html"
+    },
+    {
+      "source": "/nsf-grant-termination-2025",
+      "destination": "/localreports/nsf-grant-termination-2025.html"
     },
     {
       "source": "/operation-mockingbird-cia",
@@ -1383,6 +1629,10 @@
     {
       "source": "/plaque-fact-check",
       "destination": "/localreports/plaque-fact-check.html"
+    },
+    {
+      "source": "/portland-burning-narrative-2025",
+      "destination": "/localreports/portland-burning-narrative-2025.html"
     },
     {
       "source": "/primetime-special-legitimization",
@@ -1413,8 +1663,20 @@
       "destination": "/localreports/ruby-bradley-quote.html"
     },
     {
+      "source": "/sa-zulu-king-salary-2025",
+      "destination": "/localreports/sa-zulu-king-salary-2025.html"
+    },
+    {
       "source": "/smishing-surge-2025",
       "destination": "/localreports/smishing-surge-2025.html"
+    },
+    {
+      "source": "/southport-stabbing-misinfo-2025",
+      "destination": "/localreports/southport-stabbing-misinfo-2025.html"
+    },
+    {
+      "source": "/syria-assad-underground-photo-2025",
+      "destination": "/localreports/syria-assad-underground-photo-2025.html"
     },
     {
       "source": "/syria-disinformation-2024",
@@ -1487,6 +1749,10 @@
     {
       "source": "/us-recession-analysis-2025",
       "destination": "/localreports/us-recession-analysis-2025.html"
+    },
+    {
+      "source": "/vance-misinformation-comments-2025",
+      "destination": "/localreports/vance-misinformation-comments-2025.html"
     },
     {
       "source": "/warrior-dividend-analysis",
