@@ -37,7 +37,8 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#ef4444",
-            data: [400, 50, 1000, 3000]
+            data: [400, 50, 1000, 3000],
+            colors: ["#ef4444", "#f59e0b", "#3b82f6", "#10b981"]
         }
     },
     {
@@ -55,8 +56,9 @@ const REPORTS_DATA = [
         excerpt: "Freud's nephew invented modern PR by privatizing WWI propaganda techniques. His 'Torches of Freedom' campaign convinced women smoking was feminist liberation. He later helped overthrow Guatemala's democracy for United Fruit Company.",
         chart: {
             type: "line",
-            color: "#f59e0b",
-            data: [5, 8, 12, 18, 24, 33]
+            color: "#3b82f6",
+            data: [5, 8, 12, 18, 24, 33],
+            colors: ["#3b82f6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444"]
         }
     },
     {
@@ -75,7 +77,8 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#3b82f6",
-            data: [126, 20, 1.4, 0.5]
+            data: [126, 20, 1.4, 0.5],
+            colors: ["#3b82f6", "#f59e0b", "#06b6d4", "#ef4444"]
         }
     },
     {
@@ -93,8 +96,9 @@ const REPORTS_DATA = [
         excerpt: "A personality quiz harvested 87 million Facebook profiles. Psychographic targeting delivered personalized disinformation invisible to fact-checkers. The FTC's $5 billion fine was the largest privacy penalty in history—and Facebook's stock rose on the news.",
         chart: {
             type: "line",
-            color: "#ef4444",
-            data: [5, 20, 30, 50, 100, 95, 80, 60]
+            color: "#3b82f6",
+            data: [5, 20, 30, 50, 100, 95, 80, 60],
+            colors: ["#3b82f6", "#06b6d4", "#10b981", "#f59e0b", "#64748b"]
         }
     },
     {
@@ -113,7 +117,8 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#3b82f6",
-            data: [175, 77.1, 63.7]
+            data: [175, 77.1, 63.7],
+            colors: ["#3b82f6", "#06b6d4", "#10b981"]
         }
     },
     {
@@ -130,9 +135,11 @@ const REPORTS_DATA = [
         verdict: "context",
         excerpt: "False news spreads 70% more likely to be retweeted. 47% identify influencers as top misinformation threat. Analysis of parasocial trust, financial incentives, and state-sponsored influencer operations targeting democratic elections.",
         chart: {
-            type: "bar",
-            color: "#3b82f6",
-            data: [47, 47, 38, 35]
+            type: "hbar",
+            color: "#ef4444",
+            data: [47, 47, 38, 35],
+            labels: ["Influencers", "Politicians", "Foreign Actors", "AI/Bots"],
+            colors: ["#ef4444", "#f59e0b", "#3b82f6", "#06b6d4"]
         }
     },
     {
@@ -150,8 +157,9 @@ const REPORTS_DATA = [
         excerpt: "The 'rabbit hole' hypothesis is more contested than narratives suggest. 2025 PNAS study: algorithm has limited impact on beliefs. But off-platform viewing may drive more radicalization than YouTube's internal recommendations.",
         chart: {
             type: "donut",
-            color: "#3b82f6",
-            data: 14
+            color: "#ef4444",
+            data: [14, 7, 2],
+            colors: ["#ef4444", "#f59e0b", "#10b981"]
         }
     },
     {
@@ -188,8 +196,9 @@ const REPORTS_DATA = [
         excerpt: "Wire services syndicate to 500-600+ outlets simultaneously. False news reaches 1,500 people 6x faster than truth. The illusory truth effect makes repeated exposure dangerous—and syndication maximizes repetition.",
         chart: {
             type: "bar",
-            color: "#3b82f6",
-            data: [6, 1]
+            color: "#ef4444",
+            data: [6, 1],
+            colors: ["#ef4444", "#10b981"]
         }
     },
     {
@@ -208,7 +217,8 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#ef4444",
-            data: [94, 8]
+            data: [94, 8],
+            colors: ["#ef4444", "#10b981"]
         }
     },
     {
@@ -227,7 +237,8 @@ const REPORTS_DATA = [
         chart: {
             type: "line",
             color: "#ef4444",
-            data: [10, 30, 40, 50, 70, 60, 90, 85, 95, 75, 80]
+            data: [10, 30, 40, 50, 70, 60, 90, 85, 95, 75, 80],
+            colors: ["#ef4444", "#ef4444", "#ef4444", "#ef4444"]
         },
         registryId: "protocols-elders-zion",
         relatedIds: ["american-political-disinfo", "qanon-network-analysis"]
@@ -249,7 +260,7 @@ const REPORTS_DATA = [
             type: "hbar",
             color: "#ef4444",
             data: [1, 2, 3, 3, 4, 5, 6, 7, 8, 9],
-            labels: ["1898 USS Maine", "1917 Creel", "1948 Smith-Mundt", "1949 Fairness", "1987 Repeal", "1996 Sec 230", "2012 Mod.", "2016 Cambridge", "2020 CISA", "2024 AI"],
+            labels: ["1898 USS Maine", "1917 Creel Comm.", "1948 Smith-Mundt", "1949 Fairness Doc.", "1987 Doc. Repeal", "1996 Section 230", "2012 S-M Modern.", "2016 Cambridge A.", "2020 CISA/EIP", "2024 AI Deepfakes"],
             colors: ["#ef4444", "#ef4444", "#3b82f6", "#10b981", "#f59e0b", "#06b6d4", "#f59e0b", "#ef4444", "#f59e0b", "#ef4444"]
         }
     },
@@ -269,7 +280,8 @@ const REPORTS_DATA = [
         chart: {
             type: "donut",
             color: "#ef4444",
-            data: 2
+            data: [2.6, 5.6],
+            colors: ["#ef4444", "#3b82f6"]
         }
     },
     {
@@ -286,9 +298,11 @@ const REPORTS_DATA = [
         verdict: "false",  // Debunking multiple false narratives
         excerpt: "Five viral disinformation campaigns deconstructed: Infowars 'Deep State defeat' (still owes $1.5B), Epstein photo 'hoax' framing, Minnesota daycare 'audit' filmed outside operating hours, Kirk assassination conspiracies debunked by Alex Jones, and 2018 Trump footage recycled for Duterte arrest.",
         chart: {
-            type: "bar",
-            color: "#3b82f6",
-            data: [1, 2, 3, 4, 5]
+            type: "hbar",
+            color: "#ef4444",
+            data: [1, 2, 3, 4, 5],
+            labels: ["Procedural Distortio", "Pre-emptive Inoculat", "Visual Decontextuali", "Factional Weaponizat", "Temporal Displacemen"],
+            colors: ["#ef4444", "#f59e0b", "#3b82f6", "#10b981", "#06b6d4"]
         }
     },
     {
@@ -305,9 +319,11 @@ const REPORTS_DATA = [
         verdict: "context",  // Documented fraud + contested $9B estimate requires context
         excerpt: "The largest pandemic relief fraud in U.S. history—$250M stolen via Feeding Our Future. Federal prosecutors estimate $9B in broader Medicaid fraud; state officials say that's speculation. 82 of 92 defendants are Somali American, but mastermind Aimee Bock is white.",
         chart: {
-            type: "bar",
+            type: "hbar",
             color: "#ef4444",
-            data: [3.4, 42, 197]
+            data: [3.4, 42, 197],
+            labels: ["2019", "2020", "2021"],
+            colors: ["#ef4444", "#ef4444", "#ef4444"]
         }
     },
     {
@@ -326,7 +342,8 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#3b82f6",
-            data: [85, 95, 70, 75, 60, 50]
+            data: [85, 95, 70, 75, 60, 50],
+            colors: ["#3b82f6", "#ef4444", "#f59e0b", "#06b6d4", "#10b981", "#f59e0b"]
         }
     },
     {
@@ -345,7 +362,8 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#3b82f6",
-            data: [80, 20, 20, 30, 40, 100]
+            data: [80, 20, 20, 30, 40, 100],
+            colors: ["#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#ef4444"]
         }
     },
     {
@@ -365,7 +383,7 @@ const REPORTS_DATA = [
             type: "hbar",
             color: "#ef4444",
             data: [70, 1, 989, 16],
-            labels: ["Human Cases", "Deaths", "Dairy Herds", "States"],
+            labels: ["Human Cases", "Deaths", "Dairy Herds", "States Affected"],
             colors: ["#ef4444", "#dc2626", "#f59e0b", "#3b82f6"]
         }
     },
@@ -384,8 +402,9 @@ const REPORTS_DATA = [
         excerpt: "Elon Musk's Grok AI chatbot has repeatedly spread dangerous misinformation during breaking news - fabricating heroes at Bondi Beach, praising Hitler, and falsely blaming a trans pilot for the DC crash. 12+ documented incidents analyzed.",
         chart: {
             type: "bar",
-            color: "#ef4444",
-            data: [1, 2, 0, 0, 2, 0, 4, 0, 0, 0, 0, 3]
+            color: "#64748b",
+            data: [1, 2, 0, 0, 2, 0, 4, 0, 0, 0, 0, 3],
+            colors: ["#64748b", "#94a3b8", "#f59e0b", "#06b6d4", "#ef4444"]
         }
     },
     {
@@ -403,8 +422,9 @@ const REPORTS_DATA = [
         excerpt: "AI-generated Hollywood sign fakes, DEI conspiracy theories, water policy lies, and FEMA funding misinformation - every major claim about the January 2025 LA wildfires debunked with 15 primary sources.",
         chart: {
             type: "line",
-            color: "#ef4444",
-            data: [10, 85, 95, 70, 55, 45, 35, 30]
+            color: "#10b981",
+            data: [10, 85, 95, 70, 55, 45, 35, 30],
+            colors: ["#10b981", "#ef4444", "#f59e0b", "#3b82f6"]
         }
     },
     {
@@ -422,8 +442,9 @@ const REPORTS_DATA = [
         excerpt: "From the 2018 JCPOA withdrawal to threshold state: Iran's 60% uranium enrichment, proxy warfare from Hezbollah to Houthis, and why the non-proliferation regime is 'on the line.' Comprehensive analysis of the controlled crisis reshaping Middle East security.",
         chart: {
             type: "line",
-            color: "#ef4444",
-            data: [3.67, 3.67, 4.5, 4.5, 60, 60, 60]
+            color: "#10b981",
+            data: [3.67, 3.67, 4.5, 4.5, 60, 60, 60],
+            colors: ["#10b981", "#ef4444", "#f59e0b", "#3b82f6"]
         }
     },
     {
@@ -441,8 +462,9 @@ const REPORTS_DATA = [
         excerpt: "From the birther movement to Russian interference, Pizzagate violence, QAnon radicalization, and January 6—how disinformation evolved into a systematic threat to American democracy. Includes Mueller indictments, Fox News's $787M settlement, and foreign influence from Russia, China, and Iran.",
         chart: {
             type: "line",
-            color: "#ef4444",
-            data: [1, 5, 60, 95, 85, 100, 95]
+            color: "#3b82f6",
+            data: [1, 5, 60, 95, 85, 100, 95],
+            colors: ["#3b82f6", "#ef4444"]
         }
     },
     {
@@ -460,8 +482,9 @@ const REPORTS_DATA = [
         excerpt: "Viral claims of 'secret military orders' are unproven, but the public plan to strip protections from 50,000 workers—30% of whom are veterans—is verified and specific.",
         chart: {
             type: "line",
-            color: "#3b82f6",
-            data: [10, 15, 20, 40, 80, 100, 90, 70, 60, 50, 65, 85]
+            color: "#ef4444",
+            data: [10, 15, 20, 40, 80, 100, 90, 70, 60, 50, 65, 85],
+            colors: ["#ef4444", "#64748b"]
         }
     },
     {
@@ -479,8 +502,9 @@ const REPORTS_DATA = [
         excerpt: "Forensic analysis of the viral 166-name list reveals it is 78% fabricated, originating from a 4chan hoax mixing real names with political targets who appear in no unsealed documents. Verdict: PANTS ON FIRE.",
         chart: {
             type: "bar",
-            color: "#f59e0b",
-            data: [166, 36]
+            color: "#ef4444",
+            data: [166, 36],
+            colors: ["#ef4444", "#3b82f6"]
         }
     },
     {
@@ -497,9 +521,11 @@ const REPORTS_DATA = [
         verdict: "false",  // Vaccine-autism claim is FALSE
         excerpt: "HHS under RFK Jr. rewrote the CDC's vaccine-autism page. We analyze 35 peer-reviewed studies and institutional sources to fact-check the claim that vaccines cause autism. Verdict: FALSE.",
         chart: {
-            type: "bar",
-            color: "#3b82f6",
-            data: [95, 20]
+            type: "hbar",
+            color: "#10b981",
+            data: [95, 20],
+            labels: ["Pre-Nov 2025", "Post-Nov 2025"],
+            colors: ["#10b981", "#ef4444"]
         }
     },
     {
@@ -516,8 +542,9 @@ const REPORTS_DATA = [
         excerpt: "Comprehensive analysis of US recession probability with 38 sources from government, Wall Street, and independent economists. Examining GDP, unemployment, the Sahm Rule, and government data reliability.",
         chart: {
             type: "line",
-            color: "#3b82f6",
-            data: [2.2, 2.1, 4.9, 3.4, 1.6, 3.0, 3.0, 2.3, 2.4, 3.1, 4.3]
+            color: "#10b981",
+            data: [2.2, 2.1, 4.9, 3.4, 1.6, 3, 3, 2.3, 2.4, 3.1, 4.3],
+            colors: ["#10b981", "#3b82f6", "#06b6d4", "#10b981", "#10b981", "#f59e0b", "#f59e0b"]
         }
     },
     {
@@ -552,9 +579,11 @@ const REPORTS_DATA = [
         readTime: "35 min",
         excerpt: "Forensic analysis of the post-Christmas smishing explosion, weaponizing regional toll authorities and AI-driven delivery scams. Exposing the 'Lighthouse' PhaaS infrastructure and the Smishing Triad.",
         chart: {
-            type: "bar",
+            type: "hbar",
             color: "#3b82f6",
-            data: [100, 100, 100]
+            data: [100, 100, 100],
+            labels: ["Toll Scam Search", "AI-Delivery Scams", "Text Volume"],
+            colors: ["#3b82f6", "#06b6d4", "#ef4444"]
         }
     },
     {
@@ -571,8 +600,9 @@ const REPORTS_DATA = [
         excerpt: "A 40-year forensic accounting of 28 accusers, the 'Katie Johnson' lawsuit, and the 'Disciplined for Less' paradox regarding Jes Staley, Leon Black, and Prince Andrew.",
         chart: {
             type: "line",
-            color: "#3b82f6",
-            data: [1, 8, 12, 24, 28]
+            color: "#ef4444",
+            data: [1, 8, 12, 24, 28],
+            colors: ["#ef4444", "#ef4444", "#ef4444", "#10b981"]
         }
     },
     {
@@ -590,7 +620,8 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#06b6d4",
-            data: [61.8, 57.5]
+            data: [61.8, 57.5],
+            colors: ["#06b6d4", "#3b82f6"]
         }
     },
     {
@@ -627,7 +658,7 @@ const REPORTS_DATA = [
             type: "hbar",
             color: "#10b981",
             data: [5, 400],
-            labels: ["Legitimate Newsroom", "AI Slop Farm"],
+            labels: ["Legitimate Local New", "AI Slop Farm (UAIN)"],
             colors: ["#10b981", "#ef4444"]
         }
     },
@@ -645,8 +676,9 @@ const REPORTS_DATA = [
         excerpt: "Every Dominion 'fraud' claim from the 2020 Kraken lawsuits was rejected by courts, resulting in historic $175K sanctions. The 'Military Intelligence Expert' was an IT consultant who 'kept washing out of courses.'",
         chart: {
             type: "bar",
-            color: "#3b82f6",
-            data: [62, 8, 0]
+            color: "#ef4444",
+            data: [62, 8, 0],
+            colors: ["#ef4444", "#f59e0b", "#10b981"]
         }
     },
     {
@@ -681,9 +713,11 @@ const REPORTS_DATA = [
         readTime: "22 min",
         excerpt: "The 'Laptop Farm' has mutated from ad fraud into critical espionage infrastructure. How DPRK and Russian operatives influence US elections from American living rooms.",
         chart: {
-            type: "bar",
+            type: "hbar",
             color: "#3b82f6",
-            data: [100, 90, 85, 80, 75, 70]
+            data: [100, 90, 85, 80, 75, 70],
+            labels: ["US Laptop Farm", "US Facilitator", "Freelance Platform", "DPRK Operator", "Laundering Mixer", "Regime Weapons Prog"],
+            colors: ["#3b82f6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"]
         }
     },
     {
@@ -718,8 +752,9 @@ const REPORTS_DATA = [
         excerpt: "Debunking viral claims about Project Hamilton 'Phase 2' freezing 15,000 accounts. Includes live FRED data showing Fed operations are normal.",
         chart: {
             type: "line",
-            color: "#ef4444",
-            data: [10, 25, 140, 90, 55]
+            color: "#3b82f6",
+            data: [10, 25, 140, 90, 55],
+            colors: ["#3b82f6", "#3b82f6", "#06b6d4", "#f59e0b"]
         }
     },
     {
@@ -755,7 +790,8 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#3b82f6",
-            data: [40000, 28000, 15000, 13000, 9700]
+            data: [40000, 28000, 15000, 13000, 9700],
+            colors: ["#3b82f6", "#ef4444", "#06b6d4", "#ef4444", "#3b82f6"]
         }
     },
     {
@@ -790,8 +826,9 @@ const REPORTS_DATA = [
         excerpt: "Forensic analysis of the $40B Argentina bailout, market displacement of US soybeans, Chapter 12 bankruptcies surging 68%, and oligopolistic market structures.",
         chart: {
             type: "donut",
-            color: "#ef4444",
-            data: 20
+            color: "#3b82f6",
+            data: [20, 20],
+            colors: ["#3b82f6", "#06b6d4"]
         }
     },
     {
@@ -809,7 +846,8 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#3b82f6",
-            data: [35, 28, 22, 8, 5, 2]
+            data: [35, 28, 22, 8, 5, 2],
+            colors: ["#3b82f6", "#06b6d4", "#f59e0b", "#10b981", "#ef4444", "#64748b"]
         }
     },
     {
@@ -845,7 +883,8 @@ const REPORTS_DATA = [
         chart: {
             type: "donut",
             color: "#3b82f6",
-            data: 40
+            data: [40, 15, 15, 12, 8, 10],
+            colors: ["#3b82f6", "#ef4444", "#f59e0b", "#06b6d4", "#10b981", "#64748b"]
         }
     },
     {
@@ -862,8 +901,9 @@ const REPORTS_DATA = [
         excerpt: "RFK Jr.'s hand-picked CDC panel votes 8-3 to end 30-year universal vaccination policy. AAP boycotts meetings, states rebel, medical community sounds alarm.",
         chart: {
             type: "bar",
-            color: "#3b82f6",
-            data: [20000, 8000, 3000, 1000, 400, 100, 20]
+            color: "#ef4444",
+            data: [20000, 8000, 3000, 1000, 400, 100, 20],
+            colors: ["#ef4444", "#f59e0b", "#f59e0b", "#06b6d4", "#06b6d4", "#10b981", "#10b981"]
         }
     },
     {
@@ -899,7 +939,7 @@ const REPORTS_DATA = [
         chart: {
             type: "line",
             color: "#3b82f6",
-            data: [0.7, 2.1, 2.1, 1.9, 2.3, 1.4, 7.0, 6.5, 3.4, 2.9, 2.7]
+            data: [0.7, 2.1, 2.1, 1.9, 2.3, 1.4, 7, 6.5, 3.4, 2.9, 2.7]
         }
     },
     {
@@ -1078,8 +1118,9 @@ const REPORTS_DATA = [
         excerpt: "Musk calls DSA fines 'censorship' but EU content moderation applies to all platforms equally. His claims about discriminatory targeting are MOSTLY FALSE.",
         chart: {
             type: "bar",
-            color: "#3b82f6",
-            data: [31, 22, 18, 28, 12, 8]
+            color: "#ef4444",
+            data: [31, 22, 18, 28, 12, 8],
+            colors: ["#ef4444", "#f59e0b", "#06b6d4", "#3b82f6", "#64748b", "#10b981"]
         }
     },
     {
@@ -1132,8 +1173,9 @@ const REPORTS_DATA = [
         excerpt: "X's new location transparency feature reveals surprising foreign origins for accounts amplifying pro-Trump content.",
         chart: {
             type: "bar",
-            color: "#3b82f6",
-            data: [58, 42, 35, 28, 37]
+            color: "#ef4444",
+            data: [58, 42, 35, 28, 37],
+            colors: ["#ef4444", "#f59e0b", "#3b82f6", "#06b6d4", "#64748b"]
         }
     },
     {
@@ -1169,7 +1211,8 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#06b6d4",
-            data: [45, 38, 52, 12]
+            data: [45, 38, 52, 12],
+            colors: ["#06b6d4", "#06b6d4", "#06b6d4", "#ef4444"]
         }
     },
     {
@@ -1186,8 +1229,9 @@ const REPORTS_DATA = [
         excerpt: "Trump claimed grocery prices are 'falling rapidly.' BLS data shows more items increased than decreased. Verdict: FALSE.",
         chart: {
             type: "bar",
-            color: "#FF2A2A",
-            data: [5.8, 3.2, 2.9, 1.7, 54.1, 2.1, 1.4, 0.8]
+            color: "#ff2a2a",
+            data: [5.8, 3.2, 2.9, 1.7, 54.1, 2.1, 1.4, 0.8],
+            colors: ["#ff2a2a", "#ff2a2a", "#ff2a2a", "#ff2a2a", "#f59e0b", "#ff2a2a", "#ff2a2a", "#ff2a2a"]
         }
     },
     {
@@ -1259,7 +1303,8 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#ef4444",
-            data: [2000, 0.102]
+            data: [2000, 0.102],
+            colors: ["#ef4444", "#3b82f6"]
         }
     },
     {
@@ -1276,7 +1321,7 @@ const REPORTS_DATA = [
         excerpt: "Trump claims 25 million migrants entered under Biden. Official CBP data shows ~10M encounters, many expelled. Verdict: FALSE.",
         chart: {
             type: "bar",
-            color: "#3b82f6",
+            color: "#0d1424",
             data: [1.73, 2.38, 2.48, 3.2]
         }
     },
@@ -1294,8 +1339,9 @@ const REPORTS_DATA = [
         excerpt: "Trump's $1,776 military bonus is actually rebranded housing funds Congress already approved—not new presidential spending or tariff revenue.",
         chart: {
             type: "donut",
-            color: "#3b82f6",
-            data: 90
+            color: "#f59e0b",
+            data: [2.6, 0.3],
+            colors: ["#f59e0b", "#3b82f6"]
         }
     },
     {
@@ -1349,7 +1395,8 @@ const REPORTS_DATA = [
         chart: {
             type: "donut",
             color: "#ef4444",
-            data: 57
+            data: [4, 2, 1],
+            colors: ["#ef4444", "#f59e0b", "#3b82f6"]
         }
     },
     {
@@ -1365,9 +1412,10 @@ const REPORTS_DATA = [
         readTime: "10 min",
         excerpt: "Analyzing the prosecution's case, defense arguments, and contested evidence in the UnitedHealthcare CEO murder trial.",
         chart: {
-            type: "bar",
+            type: "hbar",
             color: "#f59e0b",
-            data: [100, 80, 0, 0]
+            data: [100, 80, 0, 0],
+            labels: ["Physical Evidence", "Statements", "Surveillance", "Witness Testimony"]
         }
     },
     {
@@ -1385,7 +1433,8 @@ const REPORTS_DATA = [
         chart: {
             type: "donut",
             color: "#3b82f6",
-            data: 35
+            data: [15, 15, 15, 35, 19.9],
+            colors: ["#3b82f6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444"]
         }
     },
     {
@@ -1402,8 +1451,9 @@ const REPORTS_DATA = [
         excerpt: "What the CDC actually changed on its website regarding vaccines and autism, and what the scientific consensus still shows.",
         chart: {
             type: "line",
-            color: "#3b82f6",
-            data: [95.2, 94.1, 93.0, 92.7, 92.7]
+            color: "#10b981",
+            data: [95.2, 94.1, 93, 92.7, 92.7],
+            colors: ["#10b981", "#ef4444"]
         }
     },
     {
@@ -1419,9 +1469,11 @@ const REPORTS_DATA = [
         readTime: "8 min",
         excerpt: "Trump signs historic executive order directing federal reclassification of cannabis. Analysis of $2B+ tax relief and why this falls short of legalization.",
         chart: {
-            type: "bar",
-            color: "#3b82f6",
-            data: [70, 21, 21]
+            type: "hbar",
+            color: "#ef4444",
+            data: [70, 21, 21],
+            labels: ["Cannabis (280E)", "Standard Corp", "After Rescheduling"],
+            colors: ["#ef4444", "#3b82f6", "#10b981"]
         }
     },
     {
@@ -1456,8 +1508,9 @@ const REPORTS_DATA = [
         excerpt: "BLS reported 2.7% inflation—but a 43-day shutdown left October data uncollected. Analysis of why CPI diverges from consumer experience.",
         chart: {
             type: "bar",
-            color: "#3b82f6",
-            data: [2.7, 2.62, 2.66, 3.2, 4.1, 4.8]
+            color: "#10b981",
+            data: [2.7, 2.62, 2.66, 3.2, 4.1, 4.8],
+            colors: ["#10b981", "#3b82f6", "#06b6d4", "#f59e0b", "#f59e0b", "#ff2a2a"]
         }
     },
     {
