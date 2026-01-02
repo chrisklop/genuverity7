@@ -43,7 +43,7 @@ const STATIC_PAGES = [
 function getAllReportSlugs() {
     const files = fs.readdirSync(LOCALREPORTS_DIR);
     return files
-        .filter(f => f.endsWith('.html'))
+        .filter(f => f.endsWith('.html') && !f.includes('.backup') && !f.includes('.bak'))
         .map(f => f.replace('.html', ''));
 }
 
@@ -362,6 +362,36 @@ async function main() {
     console.log('📖 Reading metadata from js/reports-data.js...');
     const reports = parseReportsData();
     console.log(`   Found ${reports.length} report entries\n`);
+
+    // VALIDATION: Check for mismatches between files and data
+    console.log('🔍 Validating consistency...');
+    const reportSlugs = new Set(reports.map(r => r.slug));
+    const fileSlugs = new Set(allSlugs);
+
+    const missingInData = allSlugs.filter(s => !reportSlugs.has(s));
+    const missingFiles = reports.filter(r => !fileSlugs.has(r.slug)).map(r => r.slug);
+
+    let hasWarnings = false;
+
+    if (missingInData.length > 0) {
+        hasWarnings = true;
+        console.log(`\n   ⚠️  HTML files WITHOUT reports-data.js entry (${missingInData.length}):`);
+        missingInData.forEach(s => console.log(`      • ${s}`));
+        console.log('      → Add these to js/reports-data.js');
+    }
+
+    if (missingFiles.length > 0) {
+        hasWarnings = true;
+        console.log(`\n   ⚠️  reports-data.js entries WITHOUT HTML file (${missingFiles.length}):`);
+        missingFiles.forEach(s => console.log(`      • ${s}`));
+        console.log('      → Create localreports/${slug}.html or remove from reports-data.js');
+    }
+
+    if (!hasWarnings) {
+        console.log('   ✅ All files and data entries match\n');
+    } else {
+        console.log('\n');
+    }
 
     // Generate standard sitemap
     console.log('📝 Generating sitemap.xml (clean URLs)...');
