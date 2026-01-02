@@ -1870,10 +1870,17 @@
             return `<div class="chart-container"><div class="chart-network">${linesHTML}${nodesHTML}</div></div>`;
         }
 
-        function generateHBarChart(data, colors) {
-            return `<div class="chart-container" style="align-items: center;"><div class="chart-hbars">${data.map((d, i) =>
+        function generateHBarChart(data, colors, labels) {
+            // Normalize to percentage scale - handle both object and array formats
+            const maxVal = Math.max(...data.map(d => typeof d === 'object' ? d.value : d));
+            const normalizedData = data.map((d, i) => {
+                const value = typeof d === 'object' ? d.value : d;
+                const label = typeof d === 'object' ? d.label : (labels && labels[i] ? labels[i] : '');
+                return { label, value: (value / maxVal) * 100 };
+            });
+            return `<div class="chart-container" style="align-items: center;"><div class="chart-hbars">${normalizedData.map((d, i) =>
                 `<div class="hbar-row">
-                    <span class="hbar-label">${d.label}</span>
+                    ${d.label ? `<span class="hbar-label">${d.label.replace('\\n', ' ')}</span>` : ''}
                     <div class="hbar" style="width: ${d.value}%; background: ${colors[i % colors.length]};"></div>
                 </div>`
             ).join('')}</div></div>`;
@@ -1921,7 +1928,7 @@
                 case 'network':
                     return generateNetworkChart(config.color, config.color, config.data);
                 case 'hbar':
-                    return generateHBarChart(config.data || [{label:'A',value:80},{label:'B',value:60}], [config.color, '#64748b', '#475569']);
+                    return generateHBarChart(config.data || [{label:'A',value:80},{label:'B',value:60}], config.colors || [config.color, '#64748b', '#475569'], config.labels);
                 case 'timeline':
                     return generateTimelineChart(config.data || [20, 40, 60, 80], config.color);
                 default:
@@ -1959,7 +1966,7 @@
                                 <span><i data-lucide="calendar" style="width:12px;height:12px;"></i> ${report.date}</span>
                                 <span><i data-lucide="clock" style="width:12px;height:12px;"></i> ${report.readTime}</span>
                             </div>
-                            <a href="${report.slug}" class="card-cta" onclick="event.stopPropagation();">
+                            <a href="/${report.slug}" class="card-cta" onclick="event.stopPropagation();">
                                 Read <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
                             </a>
                         </div>
@@ -1984,7 +1991,7 @@
                         goToCard(cardIndex);
                     } else {
                         // Active card - navigate to report
-                        window.location.href = report.slug;
+                        window.location.href = '/' + report.slug;
                     }
                 });
 
@@ -2174,7 +2181,7 @@
                         // Clicked on active card - navigate to report
                         const report = reports[currentCardIndex];
                         if (report) {
-                            window.location.href = report.slug;
+                            window.location.href = '/' + report.slug;
                         }
                     } else {
                         // Clicked on background card - bring to front
@@ -2227,7 +2234,7 @@
                                     <span><i data-lucide="file-check" style="width:14px;height:14px;"></i> ${report.sources}</span>
                                     <span><i data-lucide="clock" style="width:14px;height:14px;"></i> ${report.readTime}</span>
                                 </div>
-                                <a href="${report.slug}" class="list-cta">
+                                <a href="/${report.slug}" class="list-cta">
                                     Read Report <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
                                 </a>
                             </div>
