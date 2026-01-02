@@ -17,8 +17,8 @@ const REPORTS_DATA = [
         excerpt: "From 1949 to 1987, the FCC required broadcasters to present balanced viewpoints. Its repeal unleashed Rush Limbaugh, Fox News, and the partisan media landscape we know today. Talk radio stations exploded from 400 to 2,000+ within five years.",
         chart: {
             type: "line",
-            color: "#f59e0b",
-            data: [400, 600, 1000, 1400, 2000]
+            color: "#ef4444",
+            data: [200, 360, 800, 1000, 1200, 1300]
         }
     },
     {
@@ -35,9 +35,9 @@ const REPORTS_DATA = [
         verdict: "context",
         excerpt: "For decades, 400+ American journalists worked as CIA assets. Frank Wisner called his network the 'Mighty Wurlitzer.' The Church Committee exposed it all—but did the practice ever truly end?",
         chart: {
-            type: "network",
+            type: "bar",
             color: "#ef4444",
-            data: { nodes: 12, connections: 20 }
+            data: [400, 50, 1000, 3000]
         }
     },
     {
@@ -54,9 +54,9 @@ const REPORTS_DATA = [
         verdict: "context",
         excerpt: "Freud's nephew invented modern PR by privatizing WWI propaganda techniques. His 'Torches of Freedom' campaign convinced women smoking was feminist liberation. He later helped overthrow Guatemala's democracy for United Fruit Company.",
         chart: {
-            type: "timeline",
+            type: "line",
             color: "#f59e0b",
-            data: [10, 30, 50, 70, 90]
+            data: [5, 8, 12, 18, 24, 33]
         }
     },
     {
@@ -74,8 +74,8 @@ const REPORTS_DATA = [
         excerpt: "A St. Petersburg office building became the command center for the largest foreign influence operation in American history. 80,000 Facebook posts, 126 million Americans reached, real protests organized by fake accounts—all for under $100,000/month.",
         chart: {
             type: "bar",
-            color: "#ef4444",
-            data: [126, 20, 1.4]
+            color: "#3b82f6",
+            data: [126, 20, 1.4, 0.5]
         }
     },
     {
@@ -92,9 +92,9 @@ const REPORTS_DATA = [
         verdict: "context",
         excerpt: "A personality quiz harvested 87 million Facebook profiles. Psychographic targeting delivered personalized disinformation invisible to fact-checkers. The FTC's $5 billion fine was the largest privacy penalty in history—and Facebook's stock rose on the news.",
         chart: {
-            type: "donut",
+            type: "line",
             color: "#ef4444",
-            data: 87
+            data: [5, 20, 30, 50, 100, 95, 80, 60]
         }
     },
     {
@@ -111,9 +111,9 @@ const REPORTS_DATA = [
         verdict: "context",
         excerpt: "How anonymous 4chan posts became a political force with congressional representation. Tracing QAnon's spread through coordinated amplification, key influencers like MTG, and platform responses. 21% of January 6 arrests had QAnon ties.",
         chart: {
-            type: "network",
-            color: "#f59e0b",
-            data: { nodes: 13, connections: 24 }
+            type: "bar",
+            color: "#3b82f6",
+            data: [175, 77.1, 63.7]
         }
     },
     {
@@ -131,7 +131,7 @@ const REPORTS_DATA = [
         excerpt: "False news spreads 70% more likely to be retweeted. 47% identify influencers as top misinformation threat. Analysis of parasocial trust, financial incentives, and state-sponsored influencer operations targeting democratic elections.",
         chart: {
             type: "bar",
-            color: "#ef4444",
+            color: "#3b82f6",
             data: [47, 47, 38, 35]
         }
     },
@@ -150,8 +150,8 @@ const REPORTS_DATA = [
         excerpt: "The 'rabbit hole' hypothesis is more contested than narratives suggest. 2025 PNAS study: algorithm has limited impact on beliefs. But off-platform viewing may drive more radicalization than YouTube's internal recommendations.",
         chart: {
             type: "donut",
-            color: "#f59e0b",
-            data: 61
+            color: "#3b82f6",
+            data: 14
         }
     },
     {
@@ -225,9 +225,9 @@ const REPORTS_DATA = [
         verdict: "false",
         excerpt: "The most destructive antisemitic forgery in history. First exposed as plagiarism in 1921, yet still circulating today. From Tsarist Russia to Henry Ford to Hamas—how a fabricated text became infrastructure for genocide.",
         chart: {
-            type: "timeline",
+            type: "line",
             color: "#ef4444",
-            data: [5, 15, 35, 65, 80, 95, 85, 75]
+            data: [10, 30, 40, 50, 70, 60, 90, 85, 95, 75, 80]
         },
         registryId: "protocols-elders-zion",
         relatedIds: ["american-political-disinfo", "qanon-network-analysis"]
@@ -246,9 +246,9 @@ const REPORTS_DATA = [
         verdict: "context",
         excerpt: "From Yellow Journalism to AI deepfakes: 130 years of manufactured reality. Tracing the evolution from the Creel Committee to Operation Mockingbird, the Fairness Doctrine to Section 230, and the rise of the 'Censorship Industrial Complex.'",
         chart: {
-            type: "timeline",
-            color: "#f59e0b",
-            data: [10, 25, 40, 55, 70, 85]
+            type: "bar",
+            color: "#3b82f6",
+            data: [1, 2, 3, 3, 4, 5, 6, 7, 8, 9]
         }
     },
     {
@@ -265,9 +265,9 @@ const REPORTS_DATA = [
         verdict: "context",
         excerpt: "Forensic analysis of the industrial-grade disinformation complex: $2.6B ad revenue pipeline, 1,200+ pink slime sites, $10M Tenet Media Russian funding, and the asymmetric infrastructure between left and right-wing manipulation ecosystems.",
         chart: {
-            type: "network",
+            type: "donut",
             color: "#ef4444",
-            data: { nodes: 15, connections: 25 }
+            data: 2
         }
     },
     {
@@ -285,8 +285,8 @@ const REPORTS_DATA = [
         excerpt: "Five viral disinformation campaigns deconstructed: Infowars 'Deep State defeat' (still owes $1.5B), Epstein photo 'hoax' framing, Minnesota daycare 'audit' filmed outside operating hours, Kirk assassination conspiracies debunked by Alex Jones, and 2018 Trump footage recycled for Duterte arrest.",
         chart: {
             type: "bar",
-            color: "#ef4444",
-            data: [1, 2, 3, 4, 5]  // 5 disinformation techniques (from typesChart - horizontal bar)
+            color: "#3b82f6",
+            data: [1, 2, 3, 4, 5]
         }
     },
     {
@@ -305,7 +305,7 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#ef4444",
-            data: [3.4, 42, 197]  // FOF federal funding 2019-2021 in millions (from fundingChart)
+            data: [3.4, 42, 197]
         }
     },
     {
@@ -323,8 +323,8 @@ const REPORTS_DATA = [
         excerpt: "From Ireland's fabricated candidate withdrawal to Poland's €2B cyber umbrella—AI deepfakes targeted elections worldwide in 2025. $200M+ in fraud losses Q1 alone. Yet democracy adapts: Connolly won despite the deepfake, FCC issued $6M fine for Biden robocall.",
         chart: {
             type: "bar",
-            color: "#f59e0b",
-            data: [85, 95, 70, 75, 60, 50]  // Impact Score by event (from timelineChart)
+            color: "#3b82f6",
+            data: [85, 95, 70, 75, 60, 50]
         }
     },
     {
@@ -343,7 +343,7 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#3b82f6",
-            data: [80, 20, 20, 30, 40, 100]  // Policy Shift Intensity Jan 2-7 (from timelineChart)
+            data: [80, 20, 20, 30, 40, 100]
         }
     },
     {
@@ -360,9 +360,9 @@ const REPORTS_DATA = [
         verdict: "false",  // Debunks misinformation claims
         excerpt: "Bill Gates conspiracy theories, RFK Jr.'s $500M vaccine cuts based on false claims, 'Plandemic 2.0' narratives, and PCR test skepticism - how misinformation is undermining the H5N1 response as 66 human cases emerge.",
         chart: {
-            type: "line",
+            type: "bar",
             color: "#ef4444",
-            data: [5, 12, 18, 25, 35, 50, 66]
+            data: [70, 1, 989, 16]
         }
     },
     {
@@ -381,7 +381,7 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#ef4444",
-            data: [1, 2, 0, 0, 2, 0, 4, 0, 0, 0, 0, 3]  // Incidents by month Jan-Dec 2025 (from timelineChart)
+            data: [1, 2, 0, 0, 2, 0, 4, 0, 0, 0, 0, 3]
         }
     },
     {
@@ -400,7 +400,7 @@ const REPORTS_DATA = [
         chart: {
             type: "line",
             color: "#ef4444",
-            data: [10, 85, 95, 70, 55, 45, 35, 30]  // AI Fake Images spread Jan 7-14 (from timelineChart)
+            data: [10, 85, 95, 70, 55, 45, 35, 30]
         }
     },
     {
@@ -419,7 +419,7 @@ const REPORTS_DATA = [
         chart: {
             type: "line",
             color: "#ef4444",
-            data: [3.67, 3.67, 4.5, 4.5, 60, 60, 60]  // Enrichment % escalation 2015-2025
+            data: [3.67, 3.67, 4.5, 4.5, 60, 60, 60]
         }
     },
     {
@@ -438,7 +438,7 @@ const REPORTS_DATA = [
         chart: {
             type: "line",
             color: "#ef4444",
-            data: [1, 5, 60, 95, 85, 100, 95]  // Disinformation volume growth 2015-2021
+            data: [1, 5, 60, 95, 85, 100, 95]
         }
     },
     {
@@ -456,8 +456,8 @@ const REPORTS_DATA = [
         excerpt: "Viral claims of 'secret military orders' are unproven, but the public plan to strip protections from 50,000 workers—30% of whom are veterans—is verified and specific.",
         chart: {
             type: "line",
-            color: "#ef4444",
-            data: [0, 0, 2, 5, 5, 8, 12, 10, 8, 15, 60, 95]  // Military Orders spike data from Chart 1
+            color: "#3b82f6",
+            data: [10, 15, 20, 40, 80, 100, 90, 70, 60, 50, 65, 85]
         }
     },
     {
@@ -475,7 +475,7 @@ const REPORTS_DATA = [
         excerpt: "Forensic analysis of the viral 166-name list reveals it is 78% fabricated, originating from a 4chan hoax mixing real names with political targets who appear in no unsealed documents. Verdict: PANTS ON FIRE.",
         chart: {
             type: "bar",
-            color: "#ef4444",
+            color: "#f59e0b",
             data: [166, 36]
         }
     },
@@ -494,7 +494,7 @@ const REPORTS_DATA = [
         excerpt: "HHS under RFK Jr. rewrote the CDC's vaccine-autism page. We analyze 35 peer-reviewed studies and institutional sources to fact-check the claim that vaccines cause autism. Verdict: FALSE.",
         chart: {
             type: "bar",
-            color: "#ef4444",
+            color: "#3b82f6",
             data: [95, 20]
         }
     },
@@ -511,9 +511,9 @@ const REPORTS_DATA = [
         readTime: "28 min",
         excerpt: "Comprehensive analysis of US recession probability with 38 sources from government, Wall Street, and independent economists. Examining GDP, unemployment, the Sahm Rule, and government data reliability.",
         chart: {
-            type: "donut",
-            color: "#f59e0b",
-            data: 30
+            type: "line",
+            color: "#3b82f6",
+            data: [2.2, 2.1, 4.9, 3.4, 1.6, 3.0, 3.0, 2.3, 2.4, 3.1, 4.3]
         }
     },
     {
@@ -530,8 +530,8 @@ const REPORTS_DATA = [
         excerpt: "Forensic deconstruction of a multi-year information operation—from ADR Studio concept art to $500M engagement economy. How belief became infrastructure, and fiction generated fortune.",
         chart: {
             type: "line",
-            color: "#ef4444",
-            data: [5, 25, 65, 85, 75, 90]
+            color: "#3b82f6",
+            data: [10, 45, 85, 60, 40, 100]
         }
     },
 
@@ -549,8 +549,8 @@ const REPORTS_DATA = [
         excerpt: "Forensic analysis of the post-Christmas smishing explosion, weaponizing regional toll authorities and AI-driven delivery scams. Exposing the 'Lighthouse' PhaaS infrastructure and the Smishing Triad.",
         chart: {
             type: "bar",
-            color: "#ef4444",
-            data: [1000, 200, 604]
+            color: "#3b82f6",
+            data: [100, 100, 100]
         }
     },
     {
@@ -568,7 +568,7 @@ const REPORTS_DATA = [
         chart: {
             type: "line",
             color: "#3b82f6",
-            data: [1, 8, 12, 24, 28]  // Real data: Cumulative allegations over time
+            data: [1, 8, 12, 24, 28]
         }
     },
     {
@@ -586,7 +586,7 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#06b6d4",
-            data: [61.80, 57.50]  // Real data: Brent vs WTI crude prices
+            data: [61.8, 57.5]
         }
     },
     {
@@ -620,12 +620,9 @@ const REPORTS_DATA = [
         readTime: "18 min",
         excerpt: "Merriam-Webster named 'Slop' Word of the Year 2025. We investigate 'Pink Slime 2.0' networks, state-sponsored AI (Russia's Doppelgänger, China's Falsos Amigos), and why detection is a losing battle.",
         chart: {
-            type: "hbar",
-            color: "#ef4444",
-            data: [
-                { label: 'AI Slop Farm', value: 400 },
-                { label: 'Human Newsroom', value: 5 }
-            ]
+            type: "bar",
+            color: "#3b82f6",
+            data: [5, 400]
         }
     },
     {
@@ -642,12 +639,8 @@ const REPORTS_DATA = [
         excerpt: "Every Dominion 'fraud' claim from the 2020 Kraken lawsuits was rejected by courts, resulting in historic $175K sanctions. The 'Military Intelligence Expert' was an IT consultant who 'kept washing out of courses.'",
         chart: {
             type: "bar",
-            color: "#ef4444",
-            data: [
-                { label: 'Dismissed', value: 62, color: '#ef4444' },
-                { label: 'Withdrawn', value: 8, color: '#f59e0b' },
-                { label: 'Won', value: 0, color: '#10b981' }
-            ]
+            color: "#3b82f6",
+            data: [62, 8, 0]
         }
     },
     {
@@ -663,9 +656,9 @@ const REPORTS_DATA = [
         readTime: "18 min",
         excerpt: "Unprecedented fusion of executive power and private wealth: $460B cabinet, Trump family crypto empire, systematic regulatory capture, and state-intermediated enterprise.",
         chart: {
-            type: "bar",
-            color: "#ef4444",
-            data: [400, 1.5, 1.1, 1.1, 1.0, 1.0]
+            type: "line",
+            color: "#3b82f6",
+            data: [4.5, 3.7, 3.1, 3.1, 3.1, 2.5, 2.5, 3.2, 2.6, 5.7, 7.3]
         }
     },
 
@@ -682,9 +675,9 @@ const REPORTS_DATA = [
         readTime: "22 min",
         excerpt: "The 'Laptop Farm' has mutated from ad fraud into critical espionage infrastructure. How DPRK and Russian operatives influence US elections from American living rooms.",
         chart: {
-            type: "line",
-            color: "#ef4444",
-            data: [65, 81, 125, 172, 185, 200]
+            type: "bar",
+            color: "#3b82f6",
+            data: [100, 90, 85, 80, 75, 70]
         }
     },
     {
@@ -700,9 +693,9 @@ const REPORTS_DATA = [
         readTime: "25 min",
         excerpt: "Forensic audit of Epstein's fleet reveals a 'Sovereign Logistics Wing' rather than a private air force. New 2025 files confirm 8 Trump flights and a removed Mar-a-Lago photo.",
         chart: {
-            type: "network",
+            type: "line",
             color: "#3b82f6",
-            data: { nodes: 8, connections: 14 }
+            data: [4220, 4220, 4220, 4220, 6750, 6750, 6750, 0]
         }
     },
     {
@@ -719,8 +712,8 @@ const REPORTS_DATA = [
         excerpt: "Debunking viral claims about Project Hamilton 'Phase 2' freezing 15,000 accounts. Includes live FRED data showing Fed operations are normal.",
         chart: {
             type: "line",
-            color: "#3b82f6",
-            data: [100, 102, 105, 108, 110]
+            color: "#ef4444",
+            data: [10, 25, 140, 90, 55]
         }
     },
     {
@@ -736,9 +729,9 @@ const REPORTS_DATA = [
         readTime: "20 min",
         excerpt: "Palantir is no longer just a contractor; it is the operating system of the American government. From 'ImmigrationOS' to the 'Mega-API', we analyze the architecture of the 2025 surveillance state.",
         chart: {
-            type: "network",
-            color: "#ef4444",
-            data: { 'nodes': 12, 'connections': 22 }
+            type: "line",
+            color: "#3b82f6",
+            data: [320, 345, 370, 400, 430, 458, 486]
         }
     },
     {
@@ -756,13 +749,7 @@ const REPORTS_DATA = [
         chart: {
             type: "bar",
             color: "#3b82f6",
-            data: [
-                { label: 'BBG', value: 40000, color: '#3b82f6' },
-                { label: 'Kirov', value: 28000, color: '#ef4444' },
-                { label: 'Zumwalt', value: 15000, color: '#06b6d4' },
-                { label: 'Type 055', value: 13000, color: '#ef4444' },
-                { label: 'Burke', value: 9700, color: '#3b82f6' }
-            ]
+            data: [40000, 28000, 15000, 13000, 9700]
         }
     },
     {
@@ -796,9 +783,9 @@ const REPORTS_DATA = [
         readTime: "18 min",
         excerpt: "Forensic analysis of the $40B Argentina bailout, market displacement of US soybeans, Chapter 12 bankruptcies surging 68%, and oligopolistic market structures.",
         chart: {
-            type: "line",
-            color: "#f59e0b",
-            data: [20, 35, 45, 60, 55, 68, 80, 95]
+            type: "donut",
+            color: "#ef4444",
+            data: 20
         }
     },
     {
@@ -814,9 +801,9 @@ const REPORTS_DATA = [
         readTime: "8 min",
         excerpt: "Viral false claims about Muslim men 'storming' Christmas markets debunked. Far-right groups spread doctored videos, AI imagery, and exploit Magdeburg attack.",
         chart: {
-            type: "hbar",
-            color: "#ef4444",
-            data: [{ label: 'TikTok', value: 85 }, { label: 'X/Avian', value: 70 }, { label: 'Telegram', value: 60 }, { label: 'Insta', value: 30 }]
+            type: "bar",
+            color: "#3b82f6",
+            data: [35, 28, 22, 8, 5, 2]
         }
     },
     {
@@ -832,9 +819,9 @@ const REPORTS_DATA = [
         readTime: "12 min",
         excerpt: "Comprehensive analysis of viral hoaxes following Rob Reiner's murder. Trump's 'TDS' post is real, but the fake 2023 tweet and Epstein connections are fabricated.",
         chart: {
-            type: "timeline",
-            color: "#06b6d4",
-            data: [10, 25, 50, 65, 90]
+            type: "line",
+            color: "#ef4444",
+            data: [0, 12000, 85000, 320000, 580000, 420000, 180000]
         }
     },
     {
@@ -850,9 +837,9 @@ const REPORTS_DATA = [
         readTime: "10 min",
         excerpt: "50,000+ posts spread false info about Syria's new government. 60% from foreign accounts. Russia, Iran wage information war after military defeat.",
         chart: {
-            type: "network",
-            color: "#ef4444",
-            data: { nodes: 20, connections: 40 }
+            type: "donut",
+            color: "#3b82f6",
+            data: 40
         }
     },
     {
@@ -868,9 +855,9 @@ const REPORTS_DATA = [
         readTime: "12 min",
         excerpt: "RFK Jr.'s hand-picked CDC panel votes 8-3 to end 30-year universal vaccination policy. AAP boycotts meetings, states rebel, medical community sounds alarm.",
         chart: {
-            type: "donut",
-            color: "#f59e0b",
-            data: 73
+            type: "bar",
+            color: "#3b82f6",
+            data: [20000, 8000, 3000, 1000, 400, 100, 20]
         }
     },
     {
@@ -886,9 +873,9 @@ const REPORTS_DATA = [
         readTime: "10 min",
         excerpt: "U.S. military strike near Venezuela killed survivors 'shirtless and struggling in the water.' Bipartisan outcry over transparency. Pentagon refuses to release video.",
         chart: {
-            type: "timeline",
-            color: "#06b6d4",
-            data: [15, 30, 45, 60, 85]
+            type: "bar",
+            color: "#3b82f6",
+            data: [2, 3, 2, 4, 5, 6, 8, 4]
         }
     },
     {
@@ -906,7 +893,7 @@ const REPORTS_DATA = [
         chart: {
             type: "line",
             color: "#3b82f6",
-            data: [10, 15, 85, 95, 60, 40, 30, 27]
+            data: [0.7, 2.1, 2.1, 1.9, 2.3, 1.4, 7.0, 6.5, 3.4, 2.9, 2.7]
         }
     },
     {
@@ -1068,7 +1055,7 @@ const REPORTS_DATA = [
         chart: {
             type: "line",
             color: "#ef4444",
-            data: [1, 12, 42, 76, 95, 100]
+            data: [0.1, 5, 18, 32, 40, 42]
         }
     },
     {
@@ -1085,8 +1072,8 @@ const REPORTS_DATA = [
         excerpt: "Musk calls DSA fines 'censorship' but EU content moderation applies to all platforms equally. His claims about discriminatory targeting are MOSTLY FALSE.",
         chart: {
             type: "bar",
-            color: "#f59e0b",
-            data: [45, 50, 48, 52, 49, 51, 53, 50]
+            color: "#3b82f6",
+            data: [31, 22, 18, 28, 12, 8]
         }
     },
     {
