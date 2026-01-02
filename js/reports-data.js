@@ -37,10 +37,9 @@ const REPORTS_DATA = [
         verdict: "false",
         excerpt: "FALSE: Claims that Ukraine started the war with Russia are false. Russia launched a full-scale invasion on Feb 24, 2022. UN General Assembly condemned invasion 141-5. ICJ ordered Russia to cease operations. ICC issued arrest warrant for Putin. Putin announced the 'special military operation' - Ukraine did not attack Russia.",
         chart: {
-            type: "donut",
-            color: "#10b981",
+            type: "hbar",
             data: [141, 5, 35],
-            labels: ["Condemned Russia", "Supported Russia", "Abstained"],
+            labels: ["Condemned", "Supported", "Abstained"],
             colors: ["#10b981", "#ef4444", "#f59e0b"]
         }
     },
@@ -58,8 +57,7 @@ const REPORTS_DATA = [
         verdict: "misleading",
         excerpt: "MISLEADING: DOGE's viral claim about 'spending on condoms in Gaza' misrepresented standard USAID global health programming. The spending was part of long-standing family planning programs in 40+ countries - not a Gaza-specific initiative. The claim manufactured outrage by stripping context from routine public health expenditures.",
         chart: {
-            type: "donut",
-            color: "#3b82f6",
+            type: "hbar",
             data: [45, 30, 10, 10, 5],
             labels: ["Africa", "Asia", "MENA", "LatAm", "Other"],
             colors: ["#3b82f6", "#10b981", "#f59e0b", "#06b6d4", "#64748b"]
@@ -120,8 +118,7 @@ const REPORTS_DATA = [
         verdict: "false",
         excerpt: "FALSE: Claims that BLS data is 'phony' or manipulated are false. The BLS operates independently with publicly documented methodology. Data revisions are standard practice, not manipulation. 78% of economists express high trust in BLS data. The 2025 benchmark revision was within historical norms.",
         chart: {
-            type: "donut",
-            color: "#10b981",
+            type: "hbar",
             data: [78, 18, 4],
             labels: ["High Trust", "Moderate", "Low Trust"],
             colors: ["#10b981", "#f59e0b", "#ef4444"]
@@ -185,9 +182,7 @@ const REPORTS_DATA = [
         chart: {
             type: "donut",
             color: "#10b981",
-            data: [85, 15],
-            labels: ["Safe Use", "Misuse Risk"],
-            colors: ["#10b981", "#f59e0b"]
+            data: 85
         }
     },
     {
