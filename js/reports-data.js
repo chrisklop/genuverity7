@@ -15,7 +15,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: A viral image purportedly showing President Biden in a military situation room was AI-generated. Digital forensics revealed synthetic artifacts.",
-        chart: {"type":"bar","color":"#3b82f6","data":[97,94,91,88],"colors":["#ef4444","#ef4444","#ef4444","#ef4444"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[97,94,91,88],"labels":["Hive Moderation","Google AI or Not","Illuminarty","FotoForensics ELA"],"colors":["#ef4444","#ef4444","#ef4444","#ef4444"]}
     },
     {
         id: 1,
@@ -30,7 +30,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "context",
         excerpt: "CONTEXT: Google's AI Overviews feature has generated numerous documented errors, from recommending glue on pizza to dangerous health advice.",
-        chart: {"type":"bar","color":"#3b82f6","data":[34,28,22,10,6],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[34,28,22,10,6],"labels":["Health/Safety","Factual Errors","Sourcing Issues","Fabrications","Outdated Info"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
         id: 2,
@@ -45,7 +45,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Viral images of mass NATO troop casualties are fabricated Russian propaganda using AI-generated images.",
-        chart: {"type":"bar","color":"#3b82f6","data":[38,27,18,12,5],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[38,27,18,12,5],"labels":["Recycled Photos","AI-Generated Images","Fake Documents","Misattributed Video","Fabricated Quotes"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
         id: 3,
@@ -120,7 +120,7 @@ const REPORTS_DATA = [
         readTime: "12 min",
         verdict: "false",
         excerpt: "FALSE: A manipulated video appearing to show inappropriate behavior between Trump and Clinton was exposed as fake. Frame-by-frame forensic analysis revealed editing artifacts, and the original unedited footage from the same event showed a normal interaction.",
-        chart: {"type":"hbar","color":"#ef4444","data":[94,87,82,78,91],"labels":["Frame Splice","Compression","Motion","Audio Desync","AI Signature"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#ef4444"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[94,87,82,78,91],"labels":["Frame Splicing","Compression Artifacts","Motion Inconsistency","Audio Desync","AI Signatures"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#ef4444"]}
     },
     {
         id: 8,
@@ -150,7 +150,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "false",
         excerpt: "FALSE: AI-generated videos of 'Hurricane Melissa' destruction depicted non-existent events. NOAA and NHC confirmed no hurricane named Melissa occurred in 2025. The videos were used to solicit fraudulent donations, matching previous AI disaster fraud campaigns.",
-        chart: {"type":"bar","color":"#3b82f6","data":[94,89,97,92,86],"colors":["#ef4444","#f59e0b","#ef4444","#f59e0b","#3b82f6"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[94,89,97,92,86],"labels":["Temporal Glitches","Morphing Artifacts","Hand Anomalies","Text Failures","Audio Mismatch"],"colors":["#ef4444","#f59e0b","#ef4444","#f59e0b","#3b82f6"]}
     },
     {
         id: 10,
@@ -165,7 +165,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "misleading",
         excerpt: "MISLEADING: RFK Jr.'s claims about antidepressants as targets for removal misrepresented medical consensus. Major psychiatric associations and FDA data contradict the characterization. Experts warned statements could discourage needed mental health treatment.",
-        chart: {"type":"bar","color":"#3b82f6","data":[2.13,1.97,1.89,1.69,1.52,1],"colors":["#10b981","#10b981","#3b82f6","#3b82f6","#3b82f6","#64748b"]}
+        chart: {"type":"hbar","color":"#10b981","data":[2.13,1.97,1.89,1.69,1.52,1],"labels":["Amitriptyline","Escitalopram","Venlafaxine","Sertraline","Fluoxetine","Placebo"],"colors":["#10b981","#10b981","#3b82f6","#3b82f6","#3b82f6","#64748b"]}
     },
     {
         id: 11,
@@ -180,7 +180,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "misleading",
         excerpt: "MISLEADING: Claims about educational materials promoting 'premature sexualization' consistently misrepresent actual content. Brazil's 'kit gay' never existed as described. Internationally, viral claims typically involve age-appropriate materials or images taken out of context.",
-        chart: {"type":"bar","color":"#3b82f6","data":[32,28,18,14,8],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[32,28,18,14,8],"labels":["Decontextualized Images","Age Misrepresentation","Conflation of Programs","Complete Fabrication","Misattribution"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
         id: 12,
@@ -255,7 +255,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "mixed",
         excerpt: "MIXED: The 2025 DRC Ebola outbreak is real and verified by WHO. However, dangerous misinformation about false cures (salt water, onions) and transmission myths has accompanied the outbreak. Community distrust of health workers reflects legitimate historical grievances.",
-        chart: {"type":"bar","color":"#3b82f6","data":[32,24,21,14,9],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[32,24,21,14,9],"labels":["False Cures","Transmission Myths","Conspiracy Theories","Vaccine Fears","Distrust of Workers"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
         id: 17,
@@ -270,7 +270,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "misleading",
         excerpt: "MISLEADING: Claims of systematic bias in Brazil's STF conflate legitimate judicial actions against documented threats to democracy with political persecution. The X/Twitter ban followed established legal procedures after non-compliance with court orders.",
-        chart: {"type":"bar","color":"#3b82f6","data":[12,8,15,7,11]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[12,8,15,7,11],"labels":["Election Cases","Corruption","Civil Rights","Executive Power","Legislative"]}
     },
     {
         id: 18,
@@ -300,7 +300,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "false",
         excerpt: "FALSE: Claims that Ebola vaccines cause infertility are dangerous misinformation with no scientific basis. Over 500,000 vaccinations administered with zero fertility-related adverse events. These conspiracy theories have hindered outbreak response and cost lives.",
-        chart: {"type":"bar","color":"#3b82f6","data":[500000,16000,0,0],"colors":["#10b981","#3b82f6","#ef4444","#ef4444"]}
+        chart: {"type":"hbar","color":"#10b981","data":[500000,16000,0,0],"labels":["Vaccinations","Clinical Trial Participants","Sterility Cases","Fertility Issues"],"colors":["#10b981","#3b82f6","#ef4444","#ef4444"]}
     },
     {
         id: 20,
@@ -315,7 +315,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "misleading",
         excerpt: "MISLEADING: Claims that King Misuzulu kaZwelithini receives R66 million in annual 'salary' conflate personal stipend (~R1.8M) with Royal Household operational budget (~R65M). Africa Check confirmed the King's actual personal allowance is a fraction of viral claims.",
-        chart: {"type":"bar","color":"#3b82f6","data":[1.8,65,66],"colors":["#10b981","#f59e0b","#ef4444"]}
+        chart: {"type":"hbar","color":"#10b981","data":[1.8,65,66],"labels":["Personal Stipend","Household Budget","Viral Claim"],"colors":["#10b981","#f59e0b","#ef4444"]}
     },
     {
         id: 21,
@@ -330,7 +330,7 @@ const REPORTS_DATA = [
         readTime: "13 min",
         verdict: "false",
         excerpt: "FALSE: Images claiming to show IDF soldiers captured by Hezbollah or Hamas were AI-generated fakes. Full Fact, Reuters, and multiple fact-checkers identified obvious AI artifacts. The IDF confirmed no soldiers were captured in the depicted scenarios.",
-        chart: {"type":"bar","color":"#3b82f6","data":[85,72,68,91,95],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[85,72,68,91,95],"labels":["Hand Errors","Uniform Errors","Face Artifacts","Lighting Issues","Metadata"],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4"]}
     },
     {
         id: 22,
@@ -345,7 +345,7 @@ const REPORTS_DATA = [
         readTime: "12 min",
         verdict: "false",
         excerpt: "FALSE: AI-generated images showing the Hollywood sign engulfed in flames went viral during the January 2025 LA wildfires. The sign was never in danger. Multiple telltale AI artifacts identified, including extra 'L' in HOLLLYWOOD.",
-        chart: {"type":"bar","color":"#3b82f6","data":[5.2,0.8],"labels":["AI Image Views (M)","Debunk Views (M)"],"colors":["#ef4444","#10b981"]}
+        chart: {"type":"bar","color":"#ef4444","data":[5.2,0.8],"colors":["#ef4444","#10b981"]}
     },
     {
         id: 23,
@@ -375,7 +375,7 @@ const REPORTS_DATA = [
         readTime: "15 min",
         verdict: "context",
         excerpt: "CONTEXT: NSF terminated 1,500+ grants, ~90% DEI-related per Ted Cruz's list. Claims about targeting 'climate science' mostly false. However, concerns about chilling effects on research are legitimate.",
-        chart: {"type":"donut","color":"#3b82f6","data":90}
+        chart: {"type":"donut","color":"#3b82f6","data":90,"colors":["#3b82f6","#f59e0b","#64748b"]}
     },
     {
         id: 25,
@@ -390,7 +390,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "context",
         excerpt: "CONTEXT: Vance made legitimate points about weaponized 'misinformation' labels, supported by Knight Foundation data. But he also spread claims rated false. Both sides selectively quoted his remarks.",
-        chart: {"type":"donut","color":"#3b82f6","data":38,"colors":["#10b981","#ef4444","#64748b"]}
+        chart: {"type":"donut","color":"#10b981","data":38,"colors":["#10b981","#ef4444","#64748b"]}
     },
     {
         id: 26,
@@ -435,7 +435,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "context",
         excerpt: "CONTEXT: CISA recommends Signal for certain communications. Core issues are Federal Records Act compliance and classification. Both 'security breach' and 'nothing wrong' framings oversimplify.",
-        chart: {"type":"bar","color":"#06b6d4","data":[1,2,5,4,3,3,2]}
+        chart: {"type":"bar","color":"#06b6d4","data":[1,2,5,4,3,3,2],"colors":["#06b6d4","#06b6d4","#ef4444","#f59e0b","#3b82f6","#3b82f6","#10b981"]}
     },
     {
         id: 29,
@@ -495,7 +495,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "false",
         excerpt: "FALSE: Claims that Ukraine started the war with Russia are false. Russia launched a full-scale invasion on Feb 24, 2022. UN General Assembly condemned invasion 141-5. ICJ ordered Russia to cease operations. ICC issued arrest warrant for Putin. Putin announced the 'special military operation' - Ukraine did not attack Russia.",
-        chart: {"type":"donut","color":"#3b82f6","data":141,"colors":["#10b981","#ef4444","#f59e0b","#64748b"]}
+        chart: {"type":"donut","color":"#10b981","data":73,"colors":["#10b981","#ef4444","#f59e0b","#64748b"]}
     },
     {
         id: 33,
@@ -540,7 +540,7 @@ const REPORTS_DATA = [
         readTime: "15 min",
         verdict: "false",
         excerpt: "FALSE: Claims that recent inflation reached 'historical caps' or was worst in history are false. The 2022 peak of 9.1% was a 40-year high, but well below 1980's 14.8%. By 2025, inflation returned near the Fed's 2% target. Characterizing recent inflation as historically unprecedented misrepresents the data.",
-        chart: {"type":"line","color":"#ef4444","data":[12.3,13.3,14.8,8.9,6.1,3.4,1.5,1.4,9.1,2.6],"labels":["1974","1979","1980","1981","1990","2000","2010","2020","2022","2025"]}
+        chart: {"type":"line","color":"#ef4444","data":[12.3,13.3,14.8,8.9,6.1,3.4,1.5,1.4,9.1,2.6]}
     },
     {
         id: 36,
@@ -555,7 +555,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "false",
         excerpt: "FALSE: Claims that BLS data is 'phony' or manipulated are false. The BLS operates independently with publicly documented methodology. Data revisions are standard practice, not manipulation. 78% of economists express high trust in BLS data. The 2025 benchmark revision was within historical norms.",
-        chart: {"type":"bar","color":"#3b82f6","colors":["#ef4444","#10b981","#ef4444","#ef4444"]}
+        chart: {"type":"bar","color":"#ef4444","data":[-514,267,-306,-818],"colors":["#ef4444","#10b981","#ef4444","#ef4444"]}
     },
     {
         id: 37,
@@ -570,7 +570,7 @@ const REPORTS_DATA = [
         readTime: "15 min",
         verdict: "false",
         excerpt: "FALSE: Claims that measles can be treated with 'natural' remedies like vitamin A megadoses, elderberry, or essential oils are dangerous misinformation. No 'natural cure' for measles exists. The only proven prevention is vaccination. Measles cases surged as vaccination rates declined.",
-        chart: {"type":"bar","color":"#3b82f6","data":[505,57,2],"colors":["#f59e0b","#ef4444","#dc2626"]}
+        chart: {"type":"hbar","color":"#f59e0b","data":[505,57,2],"labels":["Confirmed Cases","Hospitalizations","Deaths"],"colors":["#f59e0b","#ef4444","#dc2626"]}
     },
     {
         id: 38,
@@ -585,7 +585,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "false",
         excerpt: "FALSE: Claims that mRNA vaccines alter DNA, contain microchips, or cause mass harm are scientifically false. mRNA cannot integrate into DNA. COVID vaccines have prevented an estimated 3+ million US deaths. Billions of doses administered with extensive safety monitoring confirm the vaccines are safe and effective.",
-        chart: {"type":"bar","color":"#3b82f6","data":[95,94.1,0],"colors":["#10b981","#10b981","#ef4444"]}
+        chart: {"type":"bar","color":"#10b981","data":[95,94.1,0],"colors":["#10b981","#10b981","#ef4444"]}
     },
     {
         id: 39,
@@ -600,7 +600,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "false",
         excerpt: "FALSE: Claims linking Tylenol during pregnancy to autism misrepresent scientific evidence. FDA, NIH, and major medical organizations confirm acetaminophen remains safe when used as directed. Correlation studies cited by RFK Jr. and allies do not establish causation. No mechanism has been identified.",
-        chart: {"type":"bar","color":"#3b82f6","data":[1.3,1.25,1],"colors":["#f59e0b","#f59e0b","#10b981"]}
+        chart: {"type":"bar","color":"#f59e0b","data":[1.3,1.25,1],"colors":["#f59e0b","#f59e0b","#10b981"]}
     },
     {
         id: 40,
@@ -615,7 +615,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "context",
         excerpt: "CONTEXT NEEDED: Trump's EO challenging birthright citizenship was blocked by multiple federal courts. Order contradicts 127 years of precedent (Wong Kim Ark, 1898). Supreme Court to rule in 2026. While administration raised historical arguments, an executive order cannot override the 14th Amendment.",
-        chart: {"type":"bar","color":"#ef4444","data":[1,2,3,4,5,6,7],"labels":["EO Signed","Lawsuit","Injunction","9th Cir","SCOTUS","Cert","Ruling"],"colors":["#ef4444","#f59e0b","#10b981","#10b981","#f59e0b","#3b82f6","#06b6d4"]}
+        chart: {"type":"bar","color":"#ef4444","data":[1,2,3,4,5,6,7],"colors":["#ef4444","#10b981","#10b981","#f59e0b","#10b981","#3b82f6","#06b6d4"]}
     },
     {
         id: 41,
@@ -630,7 +630,7 @@ const REPORTS_DATA = [
         readTime: "20 min",
         verdict: "mixed",
         excerpt: "MIXED: Multiple false claims from UNGA 2025. Geneva relocation claim is FALSE - UN confirmed NYC session on Sept 8. Trump's 'inflation defeated' claim FALSE - CPI worsening since May. 'London wants sharia law' is a debunked conspiracy theory. Climate claims MISLEADING - 80% of global electricity growth from renewables, solar/wind at 16% of U.S. electricity (surpassing coal).",
-        chart: {"type":"bar","color":"#3b82f6","data":[3,2,1]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[3,2,1],"labels":["FALSE Claims","MISLEADING Claims","DISPUTED Claims"]}
     },
     {
         id: 42,
@@ -645,7 +645,7 @@ const REPORTS_DATA = [
         readTime: "22 min",
         verdict: "misleading",
         excerpt: "MISLEADING: Tariff claims misrepresent economic reality. 'Foreign countries pay tariffs' is FALSE - U.S. importers pay 100%. At 11.2% effective rate (highest since 1943), retail prices up 4.9pp. Average household cost: $1,100 in 2025, rising to $1,400 in 2026. Manufacturing jobs DOWN 40,000+ since April. Largest tax increase as % of GDP since 1993.",
-        chart: {"type":"bar","color":"#3b82f6","data":[8.99,7.5,7.5,6.5,6,4.3,4.9]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[8.99,7.5,7.5,6.5,6,4.3,4.9],"labels":["Apparel","Coffee & Tea","Cameras","Furniture","Imported Goods","Domestic Goods","All Retail"]}
     },
     {
         id: 43,
@@ -660,7 +660,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "false",
         excerpt: "All major claims targeting NYC's first Muslim mayor rated FALSE. PolitiFact: Sharia law claim 'Pants on Fire' - Mamdani supports gay rights, decriminalizing sex work (antithesis of Sharia). Trump's 'communist' label debunked. Post-election hoaxes about NYPD resignations and trucking boycotts traced to satire/fabrications. CSOHATE: 35,522 posts analyzed, 72% used extremist labeling.",
-        chart: {"type":"line","color":"#ef4444","data":[120,450,890,1850,4200,8900,12500],"colors":["#ef4444"]}
+        chart: {"type":"line","color":"#ef4444","data":[120,450,890,1850,4200,8900,12500]}
     },
     {
         id: 44,
@@ -675,7 +675,7 @@ const REPORTS_DATA = [
         readTime: "20 min",
         verdict: "misleading",
         excerpt: "Trump signed 225 executive orders in 2025 (EO 14147-14371) - the highest first-year total since FDR's 568 in 1933. First 100 days: 143 EOs (record). Day 1: 26 EOs (record). Numbers are TRUE, but 'dictatorship' claims lack context - courts have blocked 12+ orders. Pew: 51% say 'too much', 27% say 'about right'.",
-        chart: {"type":"bar","color":"#ef4444","data":[568,225,77,55,39,54,57],"colors":["#3b82f6","#ef4444","#06b6d4","#f59e0b","#06b6d4","#f59e0b","#06b6d4"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[568,225,77,55,39,54,57]}
     },
     {
         id: 45,
@@ -690,7 +690,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "true",
         excerpt: "CONFIRMED: At 43 days (Oct 1 - Nov 12, 2025), this shutdown surpassed the 34-day 2018-2019 record. DOGE's $150B savings claim disputed - NPR found tracker 'riddled with errors,' Partnership for Public Service estimates it COST $135B. 317,000 federal employees left by year's end.",
-        chart: {"type":"bar","color":"#3b82f6","data":[43,34,21,16,12],"colors":["#ef4444","#3b82f6","#06b6d4","#10b981","#f59e0b"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[43,34,21,16,12],"labels":["2025 (Oct-Nov)","2018-2019","1995-1996","2013","1977"],"colors":["#ef4444","#3b82f6","#06b6d4","#10b981","#f59e0b"]}
     },
     {
         id: 46,
@@ -705,7 +705,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "false",
         excerpt: "Comprehensive debunking of conspiracy theories surrounding Charlie Kirk's September 2025 assassination. Israeli involvement, Ukrainian plots, Groyper connections, 'staged death' claims, and Egyptian aircraft surveillance - all rated FALSE. Alex Jones debunked Candace Owens: '66% of her location claims were wrong.'",
-        chart: {"type":"line","color":"#ef4444","data":[10,100,85,70,55,40,25],"colors":["#ef4444","#10b981"]}
+        chart: {"type":"line","color":"#ef4444","data":[10,100,85,70,55,40,25]}
     },
     {
         id: 47,
@@ -720,7 +720,7 @@ const REPORTS_DATA = [
         readTime: "20 min",
         verdict: "misleading",
         excerpt: "Both Biden and Trump oversimplify credit for the January 2025 Gaza ceasefire. Biden's 'exact framework' claim is partially true - similar structure but key differences. Trump's 'could only happen' due to his victory is partially true - his team applied real pressure on Israel. Experts agree BOTH administrations contributed. The ceasefire collapsed after 62 days.",
-        chart: {"type":"line","color":"#f59e0b","data":[30,35,40,45,55,75,100],"colors":["#3b82f6","#ef4444"]}
+        chart: {"type":"line","color":"#3b82f6","data":[30,35,40,45,55,75,100]}
     },
     {
         id: 48,
@@ -735,7 +735,7 @@ const REPORTS_DATA = [
         readTime: "22 min",
         verdict: "false",
         excerpt: "Comprehensive debunking of January 2025 LA wildfire misinformation: AI Hollywood sign fakes with extra 'L', DEI conspiracy theories targeting Fire Chief Crowley, geo-engineered fire claims by Stew Peters and Alex Jones, QAnon Getty tunnel myths, Chinese disinfo campaigns, and FEMA funding lies - all rated FALSE.",
-        chart: {"type":"line","color":"#ef4444","data":[5,75,100,80,60,45,35,25],"colors":["#ef4444","#3b82f6","#f59e0b","#06b6d4"]}
+        chart: {"type":"line","color":"#ef4444","data":[5,75,100,80,60,45,35,25]}
     },
     {
         id: 49,
@@ -750,7 +750,7 @@ const REPORTS_DATA = [
         readTime: "22 min",
         verdict: "mixed",
         excerpt: "DHS claimed 70% of June 2025 LA ICE raid arrestees were criminals; Human Rights Watch found 66% had NO criminal history. Viral videos debunked as 2020 footage. 2,000 National Guard deployed, 700 Marines activated. 9th Circuit ruled 'reasonable suspicion cannot be based on generalizations.'",
-        chart: {"type":"bar","color":"#3b82f6","data":[70,66,29,5],"colors":["#ef4444","#10b981","#f59e0b","#ef4444"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[70,66,29,5],"labels":["DHS: Had Criminal Record","HRW: No Criminal History","HRW: Minor Infractions","HRW: Violent Convictions"],"colors":["#ef4444","#10b981","#f59e0b","#ef4444"]}
     },
     {
         id: 50,
@@ -780,7 +780,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Claims about Kilmar Abrego Garcia's MS-13 tattoos were debunked. The deportation case became a flashpoint for gang misidentification issues.",
-        chart: {"type":"bar","color":"#3b82f6","data":[18,22,15,17],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
+        chart: {"type":"bar","color":"#ef4444","data":[18,22,15,17],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
     },
     {
         id: 52,
@@ -825,7 +825,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "misleading",
         excerpt: "MISLEADING: A video involving Bangladeshi police officer Dipu Das was taken out of context and misattributed on social media.",
-        chart: {"type":"donut","color":"#3b82f6","data":55,"colors":["#ef4444","#f59e0b","#10b981"]}
+        chart: {"type":"donut","color":"#ef4444","data":55,"colors":["#ef4444","#f59e0b","#10b981"]}
     },
     {
         id: 55,
@@ -840,7 +840,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "context",
         excerpt: "CONTEXT: NewsGuard audits revealed significant accuracy issues with the Chinese DeepSeek AI chatbot, particularly on politically sensitive topics.",
-        chart: {"type":"bar","color":"#3b82f6","data":[82,85,78,65],"colors":["#10b981","#3b82f6","#f59e0b","#ef4444"]}
+        chart: {"type":"bar","color":"#10b981","data":[82,85,78,65],"colors":["#10b981","#3b82f6","#f59e0b","#ef4444"]}
     },
     {
         id: 56,
@@ -855,7 +855,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "mixed",
         excerpt: "MIXED: Claims about fabricated Epstein files mixed legitimate documents with viral hoaxes in 2025.",
-        chart: {"type":"donut","color":"#3b82f6","data":45,"colors":["#ef4444","#f59e0b","#10b981"]}
+        chart: {"type":"donut","color":"#ef4444","data":45,"colors":["#ef4444","#f59e0b","#10b981"]}
     },
     {
         id: 57,
@@ -870,7 +870,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "context",
         excerpt: "CONTEXT: NewsGuard audits revealed Google Gemini AI providing inaccurate information on sensitive topics.",
-        chart: {"type":"bar","color":"#3b82f6","data":[88,85,82,75,72],"colors":["#10b981","#3b82f6","#06b6d4","#f59e0b","#ef4444"]}
+        chart: {"type":"bar","color":"#10b981","data":[88,85,82,75,72],"colors":["#10b981","#3b82f6","#06b6d4","#f59e0b","#ef4444"]}
     },
     {
         id: 58,
@@ -885,7 +885,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "context",
         excerpt: "CONTEXT: The 'digital arrest' scam targeting Indians became a major fraud trend in 2025, with PM Modi warning citizens.",
-        chart: {"type":"bar","color":"#3b82f6","data":[4200,7800,11333],"colors":["#f59e0b","#ef4444","#dc2626"]}
+        chart: {"type":"bar","color":"#f59e0b","data":[4200,7800,11333],"colors":["#f59e0b","#ef4444","#dc2626"]}
     },
     {
         id: 59,
@@ -960,7 +960,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: A fabricated video showing Venezuelan President Maduro surrendering was exposed as a deepfake.",
-        chart: {"type":"bar","color":"#ef4444","data":[95,88,82,75]}
+        chart: {"type":"hbar","color":"#ef4444","data":[95,88,82,75],"labels":["Lip Sync","Facial Artifacts","Audio Mismatch","Lighting Errors"]}
     },
     {
         id: 64,
@@ -1005,7 +1005,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Multiple 'cheapfake' videos misrepresenting PM Modi's statements spread in 2025.",
-        chart: {"type":"bar","color":"#3b82f6","data":[38,22,18,12,10],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4"]}
+        chart: {"type":"bar","color":"#ef4444","data":[38,22,18,12,10],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4"]}
     },
     {
         id: 67,
@@ -1020,7 +1020,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "misleading",
         excerpt: "MISLEADING: Claims about North Carolina's wireless driving ban misrepresented the actual legislation.",
-        chart: {"type":"donut","color":"#3b82f6","data":35,"colors":["#ef4444","#10b981","#3b82f6","#f59e0b"]}
+        chart: {"type":"donut","color":"#ef4444","data":35,"colors":["#ef4444","#10b981","#3b82f6","#f59e0b"]}
     },
     {
         id: 68,
@@ -1035,7 +1035,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Netanyahu's claims about no starvation in Gaza contradicted UN and humanitarian reports.",
-        chart: {"type":"donut","color":"#3b82f6","data":92,"colors":["#ef4444","#f59e0b","#10b981"]}
+        chart: {"type":"donut","color":"#ef4444","data":92,"colors":["#ef4444","#f59e0b","#10b981"]}
     },
     {
         id: 69,
@@ -1050,7 +1050,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: False claims about new mandatory education fees in Nigeria spread viral panic.",
-        chart: {"type":"donut","color":"#3b82f6","data":45,"colors":["#ef4444","#10b981","#3b82f6"]}
+        chart: {"type":"donut","color":"#ef4444","data":45,"colors":["#ef4444","#10b981","#3b82f6"]}
     },
     {
         id: 70,
@@ -1080,7 +1080,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Claims that Patriot Front members are federal agents have been debunked.",
-        chart: {"type":"bar","color":"#3b82f6","data":[45,18,32,25],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
+        chart: {"type":"bar","color":"#ef4444","data":[45,18,32,25],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
     },
     {
         id: 72,
@@ -1095,7 +1095,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "context",
         excerpt: "CONTEXT: The Pravda disinformation network continued operations in 2025 with documented AI integration.",
-        chart: {"type":"donut","color":"#3b82f6","data":35,"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4","#64748b"]}
+        chart: {"type":"donut","color":"#ef4444","data":23,"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4","#64748b"]}
     },
     {
         id: 73,
@@ -1125,7 +1125,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: A viral quote attributed to WWII hero Ruby Bradley was completely fabricated.",
-        chart: {"type":"bar","color":"#3b82f6","data":[45,38,22,18],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
+        chart: {"type":"bar","color":"#ef4444","data":[45,38,22,18],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
     },
     {
         id: 75,
@@ -1140,7 +1140,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Claims that South Africa has 15 million illegal migrants are unsupported by evidence.",
-        chart: {"type":"bar","color":"#3b82f6","data":[15,2.4,1.5],"colors":["#ef4444","#10b981","#3b82f6"]}
+        chart: {"type":"bar","color":"#ef4444","data":[15,2.4,1.5],"colors":["#ef4444","#10b981","#3b82f6"]}
     },
     {
         id: 76,
@@ -1170,7 +1170,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: A viral photo claiming to show a Mozambican woman being arrested was from 2019.",
-        chart: {"type":"bar","color":"#3b82f6","data":[1,850],"colors":["#10b981","#ef4444"]}
+        chart: {"type":"bar","color":"#10b981","data":[1,850],"colors":["#10b981","#ef4444"]}
     },
     {
         id: 78,
@@ -1185,7 +1185,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "misleading",
         excerpt: "MISLEADING: Viral claims about South African self-defense laws misrepresent actual legal standards.",
-        chart: {"type":"bar","color":"#3b82f6","data":[100,100,0],"colors":["#10b981","#10b981","#ef4444"]}
+        chart: {"type":"hbar","color":"#10b981","data":[100,100,0],"labels":["Self-Defense Legal","Proportionality Required","New Law Changed Rights"],"colors":["#10b981","#10b981","#ef4444"]}
     },
     {
         id: 79,
@@ -1200,7 +1200,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: A fabricated video showing UK PM Starmer announcing curfews was Russian disinformation.",
-        chart: {"type":"bar","color":"#3b82f6","data":[89,76,82,58,64],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[89,76,82,58,64],"labels":["Lip Sync","Audio","Blinking","Background","Lighting"],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4"]}
     },
     {
         id: 80,
@@ -1215,7 +1215,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "context",
         excerpt: "CONTEXT: Microsoft-identified Russian influence operation Storm-1516 conducted multiple campaigns in 2025.",
-        chart: {"type":"bar","color":"#3b82f6","data":[18,12,15,8,7],"colors":["#ef4444","#3b82f6","#f59e0b","#10b981","#06b6d4"]}
+        chart: {"type":"bar","color":"#ef4444","data":[18,12,15,8,7],"colors":["#ef4444","#3b82f6","#f59e0b","#10b981","#06b6d4"]}
     },
     {
         id: 81,
@@ -1260,7 +1260,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "misleading",
         excerpt: "MISLEADING: Trump's claims about native-born job creation used questionable data analysis.",
-        chart: {"type":"bar","color":"#3b82f6","data":[670,60],"colors":["#10b981","#f59e0b"]}
+        chart: {"type":"bar","color":"#10b981","data":[670,60],"colors":["#10b981","#f59e0b"]}
     },
     {
         id: 84,
@@ -1275,7 +1275,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "context",
         excerpt: "CONTEXT: Claims about Trump 'admitting' to the comment require context about the original incident.",
-        chart: {"type":"bar","color":"#3b82f6","data":[100,75,45,30],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
+        chart: {"type":"bar","color":"#ef4444","data":[100,75,45,30],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
     },
     {
         id: 85,
@@ -1290,7 +1290,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: A manipulated image showing Donald Trump using a walker was exposed as fake.",
-        chart: {"type":"bar","color":"#3b82f6","data":[92,78,85,64],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[92,78,85,64],"labels":["ELA Artifacts","Shadow Mismatch","Pixel Inconsistency","Metadata Issues"],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
     },
     {
         id: 86,
@@ -1305,7 +1305,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: AI-generated images falsely showing convicted rapist Kuldeep Singh Sengar being garlanded were debunked.",
-        chart: {"type":"bar","color":"#3b82f6","data":[97.8,94.2,89.5,95],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
+        chart: {"type":"bar","color":"#ef4444","data":[97.8,94.2,89.5,95],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
     },
     {
         id: 87,
@@ -1350,7 +1350,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Viral audio clips purportedly featuring JD Vance and Elon Musk were AI-generated fakes.",
-        chart: {"type":"bar","color":"#ef4444","data":[92,87,78,65]}
+        chart: {"type":"hbar","color":"#ef4444","data":[92,87,78,65],"labels":["Spectral Anomalies","Breathing Patterns","Pitch Variance","Background Noise"]}
     },
     {
         id: 90,
@@ -1365,7 +1365,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: A deepfake video falsely showing UP CM Yogi Adityanath resigning was exposed.",
-        chart: {"type":"bar","color":"#3b82f6","data":[92,78,85,71,65],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[92,78,85,71,65],"labels":["Lip Sync Issues","Facial Artifacts","Audio Anomalies","Blinking Pattern","Resolution Mismatch"],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4"]}
     },
     {
         id: 91,
@@ -1410,7 +1410,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "context",
         excerpt: "Freud's nephew invented modern PR by privatizing WWI propaganda techniques. His 'Torches of Freedom' campaign convinced women smoking was feminist liberation. He later helped overthrow Guatemala's democracy for United Fruit Company.",
-        chart: {"type":"line","color":"#3b82f6","data":[5,8,12,18,24,33],"colors":["#3b82f6","#06b6d4","#10b981","#f59e0b","#ef4444"]}
+        chart: {"type":"line","color":"#f59e0b","data":[5,8,12,18,24,33]}
     },
     {
         id: 94,
@@ -1440,7 +1440,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "context",
         excerpt: "A personality quiz harvested 87 million Facebook profiles. Psychographic targeting delivered personalized disinformation invisible to fact-checkers. The FTC's $5 billion fine was the largest privacy penalty in history—and Facebook's stock rose on the news.",
-        chart: {"type":"line","color":"#3b82f6","data":[5,20,30,50,100,95,80,60],"colors":["#3b82f6","#06b6d4","#10b981","#f59e0b","#64748b"]}
+        chart: {"type":"line","color":"#ef4444","data":[5,20,30,50,100,95,80,60]}
     },
     {
         id: 96,
@@ -1455,7 +1455,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "context",
         excerpt: "How anonymous 4chan posts became a political force with congressional representation. Tracing QAnon's spread through coordinated amplification, key influencers like MTG, and platform responses. 21% of January 6 arrests had QAnon ties.",
-        chart: {"type":"bar","color":"#3b82f6","data":[175,77.1,63.7],"colors":["#3b82f6","#06b6d4","#10b981"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[175,77.1,63.7]}
     },
     {
         id: 97,
@@ -1470,7 +1470,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "context",
         excerpt: "False news spreads 70% more likely to be retweeted. 47% identify influencers as top misinformation threat. Analysis of parasocial trust, financial incentives, and state-sponsored influencer operations targeting democratic elections.",
-        chart: {"type":"bar","color":"#3b82f6","data":[47,47,38,35]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[47,47,38,35],"labels":["Influencers","Politicians","Foreign Actors","AI/Bots"]}
     },
     {
         id: 98,
@@ -1485,7 +1485,7 @@ const REPORTS_DATA = [
         readTime: "20 min",
         verdict: "mixed",
         excerpt: "The 'rabbit hole' hypothesis is more contested than narratives suggest. 2025 PNAS study: algorithm has limited impact on beliefs. But off-platform viewing may drive more radicalization than YouTube's internal recommendations.",
-        chart: {"type":"donut","color":"#3b82f6","data":14}
+        chart: {"type":"donut","color":"#3b82f6","data":61}
     },
     {
         id: 99,
@@ -1515,7 +1515,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "context",
         excerpt: "Wire services syndicate to 500-600+ outlets simultaneously. False news reaches 1,500 people 6x faster than truth. The illusory truth effect makes repeated exposure dangerous—and syndication maximizes repetition.",
-        chart: {"type":"bar","color":"#ef4444","data":[6,1],"colors":["#ef4444","#10b981"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[6,1]}
     },
     {
         id: 101,
@@ -1530,7 +1530,7 @@ const REPORTS_DATA = [
         readTime: "12 min",
         verdict: "context",
         excerpt: "Networks have NO legal obligation for 'equal time'—Fairness Doctrine abolished 1987. Editorial discretion is an active choice. 94% of journalists see misinformation as major problem; only 8% think orgs handle it well.",
-        chart: {"type":"bar","color":"#ef4444","data":[94,8],"colors":["#ef4444","#10b981"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[94,8]}
     },
     {
         id: 102,
@@ -1545,7 +1545,7 @@ const REPORTS_DATA = [
         readTime: "35 min",
         verdict: "false",
         excerpt: "The most destructive antisemitic forgery in history. First exposed as plagiarism in 1921, yet still circulating today. From Tsarist Russia to Henry Ford to Hamas—how a fabricated text became infrastructure for genocide.",
-        chart: {"type":"line","color":"#ef4444","data":[10,30,40,50,70,60,90,85,95,75,80],"colors":["#ef4444","#ef4444","#ef4444","#ef4444"]}
+        chart: {"type":"line","color":"#ef4444","data":[10,30,40,50,70,60,90,85,95,75,80]}
     },
     {
         id: 103,
@@ -1575,7 +1575,7 @@ const REPORTS_DATA = [
         readTime: "35 min",
         verdict: "context",
         excerpt: "Forensic analysis of the industrial-grade disinformation complex: $2.6B ad revenue pipeline, 1,200+ pink slime sites, $10M Tenet Media Russian funding, and the asymmetric infrastructure between left and right-wing manipulation ecosystems.",
-        chart: {"type":"donut","color":"#3b82f6","data":3,"colors":["#ef4444","#3b82f6"]}
+        chart: {"type":"donut","color":"#ef4444","data":32,"colors":["#ef4444","#3b82f6"]}
     },
     {
         id: 105,
@@ -1590,7 +1590,7 @@ const REPORTS_DATA = [
         readTime: "22 min",
         verdict: "false",
         excerpt: "Five viral disinformation campaigns deconstructed: Infowars 'Deep State defeat' (still owes $1.5B), Epstein photo 'hoax' framing, Minnesota daycare 'audit' filmed outside operating hours, Kirk assassination conspiracies debunked by Alex Jones, and 2018 Trump footage recycled for Duterte arrest.",
-        chart: {"type":"bar","color":"#3b82f6","data":[1,2,3,4,5]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[1,2,3,4,5],"labels":["Procedural Distortion","Pre-emptive Inoculation","Visual Decontextualization","Factional Weaponization","Temporal Displacement"]}
     },
     {
         id: 106,
@@ -1635,7 +1635,7 @@ const REPORTS_DATA = [
         readTime: "20 min",
         verdict: "true",
         excerpt: "Meta dismantles its $100M global fact-checking network spanning 90+ organizations across 119 countries. Joel Kaplan appointed, $1M donated to Trump—then fact-checking ended 5 days later. Community Notes work when applied, but only 7.4% of election notes ever reach users.",
-        chart: {"type":"bar","color":"#3b82f6","data":[80,20,20,30,40,100],"colors":["#3b82f6","#3b82f6","#3b82f6","#3b82f6","#3b82f6","#ef4444"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[80,20,20,30,40,100],"colors":["#3b82f6","#ef4444"]}
     },
     {
         id: 109,
@@ -1650,7 +1650,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "false",
         excerpt: "Bill Gates conspiracy theories, RFK Jr.'s $500M vaccine cuts based on false claims, 'Plandemic 2.0' narratives, and PCR test skepticism - how misinformation is undermining the H5N1 response as 66 human cases emerge.",
-        chart: {"type":"bar","color":"#3b82f6","data":[70,1,989,16],"colors":["#ef4444","#dc2626","#f59e0b","#3b82f6"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[70,1,989,16],"labels":["Human Cases","Deaths","Dairy Herds","States Affected"],"colors":["#ef4444","#dc2626","#f59e0b","#3b82f6"]}
     },
     {
         id: 110,
@@ -1665,7 +1665,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "false",
         excerpt: "Elon Musk's Grok AI chatbot has repeatedly spread dangerous misinformation during breaking news - fabricating heroes at Bondi Beach, praising Hitler, and falsely blaming a trans pilot for the DC crash. 12+ documented incidents analyzed.",
-        chart: {"type":"bar","color":"#64748b","data":[1,2,0,0,2,0,4,0,0,0,0,3],"colors":["#64748b","#94a3b8","#f59e0b","#06b6d4","#ef4444"]}
+        chart: {"type":"bar","color":"#ef4444","data":[1,2,0,0,2,0,4,0,0,0,0,3]}
     },
     {
         id: 111,
@@ -1680,7 +1680,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "false",
         excerpt: "AI-generated Hollywood sign fakes, DEI conspiracy theories, water policy lies, and FEMA funding misinformation - every major claim about the January 2025 LA wildfires debunked with 15 primary sources.",
-        chart: {"type":"line","color":"#10b981","data":[10,85,95,70,55,45,35,30],"colors":["#10b981","#ef4444","#f59e0b","#3b82f6"]}
+        chart: {"type":"line","color":"#ef4444","data":[10,85,95,70,55,45,35,30]}
     },
     {
         id: 112,
@@ -1695,7 +1695,7 @@ const REPORTS_DATA = [
         readTime: "28 min",
         verdict: "true",
         excerpt: "From the 2018 JCPOA withdrawal to threshold state: Iran's 60% uranium enrichment, proxy warfare from Hezbollah to Houthis, and why the non-proliferation regime is 'on the line.' Comprehensive analysis of the controlled crisis reshaping Middle East security.",
-        chart: {"type":"line","color":"#10b981","data":[3.67,3.67,4.5,4.5,60,60,60],"colors":["#10b981","#ef4444","#f59e0b","#3b82f6"]}
+        chart: {"type":"line","color":"#ef4444","data":[3.67,3.67,4.5,4.5,60,60,60]}
     },
     {
         id: 113,
@@ -1710,7 +1710,7 @@ const REPORTS_DATA = [
         readTime: "32 min",
         verdict: "true",
         excerpt: "From the birther movement to Russian interference, Pizzagate violence, QAnon radicalization, and January 6—how disinformation evolved into a systematic threat to American democracy. Includes Mueller indictments, Fox News's $787M settlement, and foreign influence from Russia, China, and Iran.",
-        chart: {"type":"line","color":"#3b82f6","data":[1,5,60,95,85,100,95],"colors":["#3b82f6","#ef4444"]}
+        chart: {"type":"line","color":"#ef4444","data":[1,5,60,95,85,100,95]}
     },
     {
         id: 114,
@@ -1725,7 +1725,7 @@ const REPORTS_DATA = [
         readTime: "22 min",
         verdict: "mixed",
         excerpt: "Viral claims of 'secret military orders' are unproven, but the public plan to strip protections from 50,000 workers—30% of whom are veterans—is verified and specific.",
-        chart: {"type":"line","color":"#ef4444","data":[10,15,20,40,80,100,90,70,60,50,65,85],"colors":["#ef4444","#64748b"]}
+        chart: {"type":"line","color":"#3b82f6","data":[10,15,20,40,80,100,90,70,60,50,65,85]}
     },
     {
         id: 115,
@@ -1740,7 +1740,7 @@ const REPORTS_DATA = [
         readTime: "12 min",
         verdict: "false",
         excerpt: "Forensic analysis of the viral 166-name list reveals it is 78% fabricated, originating from a 4chan hoax mixing real names with political targets who appear in no unsealed documents. Verdict: PANTS ON FIRE.",
-        chart: {"type":"bar","color":"#ef4444","data":[166,36],"colors":["#ef4444","#3b82f6"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[166,36]}
     },
     {
         id: 116,
@@ -1755,7 +1755,7 @@ const REPORTS_DATA = [
         readTime: "24 min",
         verdict: "false",
         excerpt: "HHS under RFK Jr. rewrote the CDC's vaccine-autism page. We analyze 35 peer-reviewed studies and institutional sources to fact-check the claim that vaccines cause autism. Verdict: FALSE.",
-        chart: {"type":"bar","color":"#3b82f6","data":[95,20],"colors":["#10b981","#ef4444"]}
+        chart: {"type":"hbar","color":"#10b981","data":[95,20],"labels":["Pre-Nov 2025","Post-Nov 2025"],"colors":["#10b981","#ef4444"]}
     },
     {
         id: 117,
@@ -1770,7 +1770,7 @@ const REPORTS_DATA = [
         readTime: "28 min",
         verdict: "undefined",
         excerpt: "Comprehensive analysis of US recession probability with 38 sources from government, Wall Street, and independent economists. Examining GDP, unemployment, the Sahm Rule, and government data reliability.",
-        chart: {"type":"line","color":"#10b981","data":[2.2,2.1,4.9,3.4,1.6,3,3,2.3,2.4,3.1,4.3],"colors":["#10b981","#3b82f6","#06b6d4","#10b981","#10b981","#f59e0b","#f59e0b"]}
+        chart: {"type":"line","color":"#3b82f6","data":[2.2,2.1,4.9,3.4,1.6,3,3,2.3,2.4,3.1,4.3]}
     },
     {
         id: 118,
@@ -1800,7 +1800,7 @@ const REPORTS_DATA = [
         readTime: "35 min",
         verdict: "undefined",
         excerpt: "Forensic analysis of the post-Christmas smishing explosion, weaponizing regional toll authorities and AI-driven delivery scams. Exposing the 'Lighthouse' PhaaS infrastructure and the Smishing Triad.",
-        chart: {"type":"bar","color":"#3b82f6","data":[100,100,100]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[100,100,100],"labels":["Toll Scam Search","AI-Delivery Scams","Text Volume"]}
     },
     {
         id: 120,
@@ -1815,7 +1815,7 @@ const REPORTS_DATA = [
         readTime: "25 min",
         verdict: "undefined",
         excerpt: "A 40-year forensic accounting of 28 accusers, the 'Katie Johnson' lawsuit, and the 'Disciplined for Less' paradox regarding Jes Staley, Leon Black, and Prince Andrew.",
-        chart: {"type":"line","color":"#ef4444","data":[1,8,12,24,28],"colors":["#ef4444","#ef4444","#ef4444","#10b981"]}
+        chart: {"type":"line","color":"#3b82f6","data":[1,8,12,24,28]}
     },
     {
         id: 121,
@@ -1844,8 +1844,7 @@ const REPORTS_DATA = [
         sources: "38 Sources",
         readTime: "18 min",
         verdict: "undefined",
-        excerpt: "December 2025 breakthrough: P7C3-A20 compound achieves complete reversal of advanced Alzheimer's disease in mice through NAD+ restoration. Full cognitive recovery, BBB repair, and biomarker normalization challenge century-old dogma of irreversibility.",
-        chart: {"type":"line","color":"#10b981","data":[20,35,50,70,85,95,100]}
+        excerpt: "December 2025 breakthrough: P7C3-A20 compound achieves complete reversal of advanced Alzheimer's disease in mice through NAD+ restoration. Full cognitive recovery, BBB repair, and biomarker normalization challenge century-old dogma of irreversibility."
     },
     {
         id: 123,
@@ -1860,7 +1859,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "undefined",
         excerpt: "Merriam-Webster named 'Slop' Word of the Year 2025. We investigate 'Pink Slime 2.0' networks, state-sponsored AI (Russia's Doppelgänger, China's Falsos Amigos), and why detection is a losing battle.",
-        chart: {"type":"bar","color":"#3b82f6","data":[5,400]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[5,400],"labels":["Legitimate Local Newsroom","AI Slop Farm (UAIN)"]}
     },
     {
         id: 124,
@@ -1875,7 +1874,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "undefined",
         excerpt: "Every Dominion 'fraud' claim from the 2020 Kraken lawsuits was rejected by courts, resulting in historic $175K sanctions. The 'Military Intelligence Expert' was an IT consultant who 'kept washing out of courses.'",
-        chart: {"type":"bar","color":"#ef4444","data":[62,8,0],"colors":["#ef4444","#f59e0b","#10b981"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[62,8,0]}
     },
     {
         id: 125,
@@ -1920,7 +1919,7 @@ const REPORTS_DATA = [
         readTime: "22 min",
         verdict: "undefined",
         excerpt: "The 'Laptop Farm' has mutated from ad fraud into critical espionage infrastructure. How DPRK and Russian operatives influence US elections from American living rooms.",
-        chart: {"type":"bar","color":"#3b82f6","data":[100,90,85,80,75,70]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[100,90,85,80,75,70],"labels":["US Laptop Farm","US Facilitator","Freelance Platform","DPRK Operator","Laundering Mixer","Regime Weapons Prog"]}
     },
     {
         id: 128,
@@ -1965,7 +1964,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "undefined",
         excerpt: "Historic pivot in naval doctrine: The 35,000-ton Trump-class battleship, nuclear railguns, and the industrial 'MASGA' strategy leveraging South Korean shipyards.",
-        chart: {"type":"bar","color":"#3b82f6","data":[40000,28000,15000,13000,9700],"colors":["#3b82f6","#ef4444","#06b6d4","#ef4444","#3b82f6"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[40000,28000,15000,13000,9700]}
     },
     {
         id: 131,
@@ -1979,8 +1978,7 @@ const REPORTS_DATA = [
         sources: "12 Sources",
         readTime: "16 min",
         verdict: "undefined",
-        excerpt: "Forensic investigation of viral IRS $1,390 & Social Security $4,500 hoaxes, exposing AI-driven content farms, algorithmic feedback loops, and identity theft pipelines.",
-        chart: {"type":"network","color":"#ef4444","data":{"nodes":15,"connections":25}}
+        excerpt: "Forensic investigation of viral IRS $1,390 & Social Security $4,500 hoaxes, exposing AI-driven content farms, algorithmic feedback loops, and identity theft pipelines."
     },
     {
         id: 132,
@@ -1995,7 +1993,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "undefined",
         excerpt: "Forensic analysis of the $40B Argentina bailout, market displacement of US soybeans, Chapter 12 bankruptcies surging 68%, and oligopolistic market structures.",
-        chart: {"type":"donut","color":"#3b82f6","data":20}
+        chart: {"type":"donut","color":"#3b82f6","data":50}
     },
     {
         id: 133,
@@ -2010,7 +2008,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "undefined",
         excerpt: "Viral false claims about Muslim men 'storming' Christmas markets debunked. Far-right groups spread doctored videos, AI imagery, and exploit Magdeburg attack.",
-        chart: {"type":"bar","color":"#3b82f6","data":[35,28,22,8,5,2],"colors":["#3b82f6","#06b6d4","#f59e0b","#10b981","#ef4444","#64748b"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[35,28,22,8,5,2]}
     },
     {
         id: 134,
@@ -2040,7 +2038,7 @@ const REPORTS_DATA = [
         readTime: "10 min",
         verdict: "undefined",
         excerpt: "50,000+ posts spread false info about Syria's new government. 60% from foreign accounts. Russia, Iran wage information war after military defeat.",
-        chart: {"type":"donut","color":"#3b82f6","data":40}
+        chart: {"type":"donut","color":"#0d1424","data":40}
     },
     {
         id: 136,
@@ -2055,7 +2053,7 @@ const REPORTS_DATA = [
         readTime: "12 min",
         verdict: "undefined",
         excerpt: "RFK Jr.'s hand-picked CDC panel votes 8-3 to end 30-year universal vaccination policy. AAP boycotts meetings, states rebel, medical community sounds alarm.",
-        chart: {"type":"bar","color":"#ef4444","data":[20000,8000,3000,1000,400,100,20],"colors":["#ef4444","#f59e0b","#f59e0b","#06b6d4","#06b6d4","#10b981","#10b981"]}
+        chart: {"type":"bar","color":"#0d1424","data":[20000,8000,3000,1000,400,100,20]}
     },
     {
         id: 137,
@@ -2099,8 +2097,7 @@ const REPORTS_DATA = [
         sources: "18 Sources",
         readTime: "12 min",
         verdict: "undefined",
-        excerpt: "DOJ releases 300,000+ pages then removes 16 files including Trump photo. Bipartisan outrage over redactions. 680+ pages entirely blacked out. Updated Dec 21.",
-        chart: {"type":"bar","color":"#f59e0b","data":[80,40,60,90,20,50,70,30]}
+        excerpt: "DOJ releases 300,000+ pages then removes 16 files including Trump photo. Bipartisan outrage over redactions. 680+ pages entirely blacked out. Updated Dec 21."
     },
     {
         id: 140,
@@ -2114,8 +2111,7 @@ const REPORTS_DATA = [
         sources: "8 Sources",
         readTime: "6 min",
         verdict: "undefined",
-        excerpt: "The viral 'loser' quote attributed to decorated Army nurse Colonel Ruby Bradley is fabricated. No primary source exists. Honor her by sharing her real heroic story.",
-        chart: {"type":"bar","color":"#ef4444","data":[45,38,32,28,25,40]}
+        excerpt: "The viral 'loser' quote attributed to decorated Army nurse Colonel Ruby Bradley is fabricated. No primary source exists. Honor her by sharing her real heroic story."
     },
     {
         id: 141,
@@ -2129,8 +2125,7 @@ const REPORTS_DATA = [
         sources: "10 Sources",
         readTime: "7 min",
         verdict: "undefined",
-        excerpt: "Claims of Soros-funded paid protesters via Craigslist ads have been debunked after every major protest for over a decade. Zero verified instances of mass paid protesting.",
-        chart: {"type":"bar","color":"#ef4444","data":[5,12,8,25,45,65,85,95]}
+        excerpt: "Claims of Soros-funded paid protesters via Craigslist ads have been debunked after every major protest for over a decade. Zero verified instances of mass paid protesting."
     },
     {
         id: 142,
@@ -2144,8 +2139,7 @@ const REPORTS_DATA = [
         sources: "9 Sources",
         readTime: "8 min",
         verdict: "undefined",
-        excerpt: "At least 47 AI-generated fake videos depicting immigration raids have gone viral in 2025, created with tools like Sora. None depict real events.",
-        chart: {"type":"line","color":"#ef4444","data":[5,10,25,40,65,80,90,100]}
+        excerpt: "At least 47 AI-generated fake videos depicting immigration raids have gone viral in 2025, created with tools like Sora. None depict real events."
     },
     {
         id: 143,
@@ -2159,8 +2153,7 @@ const REPORTS_DATA = [
         sources: "11 Sources",
         readTime: "9 min",
         verdict: "undefined",
-        excerpt: "The Great Reset is real but conspiracy claims vastly exaggerate its scope. The WEF is a discussion forum with no power to implement policies.",
-        chart: {"type":"network","color":"#f59e0b","data":{"nodes":12,"connections":18}}
+        excerpt: "The Great Reset is real but conspiracy claims vastly exaggerate its scope. The WEF is a discussion forum with no power to implement policies."
     },
     {
         id: 144,
@@ -2174,8 +2167,7 @@ const REPORTS_DATA = [
         sources: "10 Sources",
         readTime: "7 min",
         verdict: "undefined",
-        excerpt: "The chemtrails conspiracy resurges on TikTok with 18,300+ videos in Dec 2025. Science is clear: contrails are frozen water vapor, not chemical spraying.",
-        chart: {"type":"hbar","color":"#ef4444","data":[{"label":"TikTok","value":92},{"label":"Facebook","value":45},{"label":"YouTube","value":30},{"label":"X","value":65}]}
+        excerpt: "The chemtrails conspiracy resurges on TikTok with 18,300+ videos in Dec 2025. Science is clear: contrails are frozen water vapor, not chemical spraying."
     },
     {
         id: 145,
@@ -2189,8 +2181,7 @@ const REPORTS_DATA = [
         sources: "10 Sources",
         readTime: "7 min",
         verdict: "undefined",
-        excerpt: "Left-wing conspiracy theory claims Starlink can alter votes. Reality: voting machines are air-gapped and not connected to any network during elections.",
-        chart: {"type":"bar","color":"#ef4444","data":[45,38,22,15,8]}
+        excerpt: "Left-wing conspiracy theory claims Starlink can alter votes. Reality: voting machines are air-gapped and not connected to any network during elections."
     },
     {
         id: 146,
@@ -2204,8 +2195,7 @@ const REPORTS_DATA = [
         sources: "9 Sources",
         readTime: "8 min",
         verdict: "undefined",
-        excerpt: "HAARP blamed for LA wildfires and hurricanes. Science: HAARP operates 60+ miles up in the ionosphere—weather forms in the troposphere below 10 miles.",
-        chart: {"type":"bar","color":"#ef4444","data":[10,20,15,40,60,50,80,90]}
+        excerpt: "HAARP blamed for LA wildfires and hurricanes. Science: HAARP operates 60+ miles up in the ionosphere—weather forms in the troposphere below 10 miles."
     },
     {
         id: 147,
@@ -2235,7 +2225,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "undefined",
         excerpt: "Musk calls DSA fines 'censorship' but EU content moderation applies to all platforms equally. His claims about discriminatory targeting are MOSTLY FALSE.",
-        chart: {"type":"bar","color":"#ef4444","data":[31,22,18,28,12,8],"colors":["#ef4444","#f59e0b","#06b6d4","#3b82f6","#64748b","#10b981"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[31,22,18,28,12,8]}
     },
     {
         id: 149,
@@ -2264,8 +2254,7 @@ const REPORTS_DATA = [
         sources: "8 Sources",
         readTime: "7 min",
         verdict: "undefined",
-        excerpt: "Debunking viral claims about mysterious drones over New Jersey including Project Blue Beam, Iranian involvement, and alien theories. Verdict: MOSTLY FALSE.",
-        chart: {"type":"network","color":"#f59e0b","data":{"nodes":10,"connections":15}}
+        excerpt: "Debunking viral claims about mysterious drones over New Jersey including Project Blue Beam, Iranian involvement, and alien theories. Verdict: MOSTLY FALSE."
     },
     {
         id: 151,
@@ -2280,7 +2269,7 @@ const REPORTS_DATA = [
         readTime: "6 min",
         verdict: "undefined",
         excerpt: "X's new location transparency feature reveals surprising foreign origins for accounts amplifying pro-Trump content.",
-        chart: {"type":"bar","color":"#ef4444","data":[58,42,35,28,37],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#64748b"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[58,42,35,28,37]}
     },
     {
         id: 152,
@@ -2310,7 +2299,7 @@ const REPORTS_DATA = [
         readTime: "6 min",
         verdict: "undefined",
         excerpt: "Viral claim that 51% of young Americans support Hamas is misleading. Original poll asked about sympathy, not support, and results are more nuanced.",
-        chart: {"type":"bar","color":"#06b6d4","data":[45,38,52,12],"colors":["#06b6d4","#06b6d4","#06b6d4","#ef4444"]}
+        chart: {"type":"bar","color":"#0d1424","data":[45,38,52,12]}
     },
     {
         id: 154,
@@ -2325,7 +2314,7 @@ const REPORTS_DATA = [
         readTime: "6 min",
         verdict: "undefined",
         excerpt: "Trump claimed grocery prices are 'falling rapidly.' BLS data shows more items increased than decreased. Verdict: FALSE.",
-        chart: {"type":"bar","color":"#ff2a2a","data":[5.8,3.2,2.9,1.7,54.1,2.1,1.4,0.8],"colors":["#ff2a2a","#ff2a2a","#ff2a2a","#ff2a2a","#f59e0b","#ff2a2a","#ff2a2a","#ff2a2a"]}
+        chart: {"type":"bar","color":"#0d1424","data":[5.8,3.2,2.9,1.7,54.1,2.1,1.4,0.8]}
     },
     {
         id: 155,
@@ -2339,8 +2328,7 @@ const REPORTS_DATA = [
         sources: "10 Sources",
         readTime: "7 min",
         verdict: "undefined",
-        excerpt: "AI-generated deepfakes targeting public figures, 93% of social videos now synthetic, and the erosion of trust in digital content.",
-        chart: {"type":"line","color":"#ef4444","data":[7,15,35,60,85,93]}
+        excerpt: "AI-generated deepfakes targeting public figures, 93% of social videos now synthetic, and the erosion of trust in digital content."
     },
     {
         id: 156,
@@ -2369,8 +2357,7 @@ const REPORTS_DATA = [
         sources: "9 Sources",
         readTime: "7 min",
         verdict: "undefined",
-        excerpt: "Multiple false claims spread within hours of Sydney shooting. Hero's identity fabricated, shooter's background distorted, non-existent second shooting claimed.",
-        chart: {"type":"timeline","color":"#ef4444","data":[10,30,55,75,90]}
+        excerpt: "Multiple false claims spread within hours of Sydney shooting. Hero's identity fabricated, shooter's background distorted, non-existent second shooting claimed."
     },
     {
         id: 158,
@@ -2385,7 +2372,7 @@ const REPORTS_DATA = [
         readTime: "7 min",
         verdict: "undefined",
         excerpt: "Examining DOGE's claim of $2 trillion in savings. NPR found only $102M verified—0.005% of claimed amount. Federal spending actually rose.",
-        chart: {"type":"bar","color":"#ef4444","data":[2000,0.102],"colors":["#ef4444","#3b82f6"]}
+        chart: {"type":"bar","color":"#0d1424","data":[2000,0.102]}
     },
     {
         id: 159,
@@ -2400,7 +2387,7 @@ const REPORTS_DATA = [
         readTime: "6 min",
         verdict: "undefined",
         excerpt: "Trump claims 25 million migrants entered under Biden. Official CBP data shows ~10M encounters, many expelled. Verdict: FALSE.",
-        chart: {"type":"bar","color":"#0d1424","data":[1.73,2.38,2.48,3.2]}
+        chart: {"type":"bar","color":"#3b82f6","data":[1.73,2.38,2.48,3.2]}
     },
     {
         id: 160,
@@ -2415,7 +2402,7 @@ const REPORTS_DATA = [
         readTime: "6 min",
         verdict: "undefined",
         excerpt: "Trump's $1,776 military bonus is actually rebranded housing funds Congress already approved—not new presidential spending or tariff revenue.",
-        chart: {"type":"donut","color":"#3b82f6","data":3}
+        chart: {"type":"donut","color":"#3b82f6","data":90}
     },
     {
         id: 161,
@@ -2429,8 +2416,7 @@ const REPORTS_DATA = [
         sources: "9 Sources",
         readTime: "10 min",
         verdict: "undefined",
-        excerpt: "FDA CBER Director Vinay Prasad's leaked memo claims vaccines killed at least 10 children—but provides no evidence. Experts call it 'factually incorrect' and 'disingenuous.'",
-        chart: {"type":"bar","color":"#ef4444","data":[10,0]}
+        excerpt: "FDA CBER Director Vinay Prasad's leaked memo claims vaccines killed at least 10 children—but provides no evidence. Experts call it 'factually incorrect' and 'disingenuous.'"
     },
     {
         id: 162,
@@ -2460,7 +2446,7 @@ const REPORTS_DATA = [
         readTime: "6 min",
         verdict: "undefined",
         excerpt: "Fact-checking the President's prime-time address on immigration, economy, and policy accomplishments. Claim-by-claim analysis with primary sources.",
-        chart: {"type":"donut","color":"#3b82f6","data":4}
+        chart: {"type":"donut","color":"#3b82f6","data":57}
     },
     {
         id: 164,
@@ -2475,7 +2461,7 @@ const REPORTS_DATA = [
         readTime: "10 min",
         verdict: "undefined",
         excerpt: "Analyzing the prosecution's case, defense arguments, and contested evidence in the UnitedHealthcare CEO murder trial.",
-        chart: {"type":"bar","color":"#f59e0b","data":[100,80,0,0]}
+        chart: {"type":"hbar","color":"#f59e0b","data":[100,80,0,0],"labels":["Physical Evidence","Statements","Surveillance","Witness Testimony"]}
     },
     {
         id: 165,
@@ -2505,7 +2491,7 @@ const REPORTS_DATA = [
         readTime: "7 min",
         verdict: "undefined",
         excerpt: "What the CDC actually changed on its website regarding vaccines and autism, and what the scientific consensus still shows.",
-        chart: {"type":"line","color":"#10b981","data":[95.2,94.1,93,92.7,92.7],"colors":["#10b981","#ef4444"]}
+        chart: {"type":"line","color":"#3b82f6","data":[95.2,94.1,93,92.7,92.7]}
     },
     {
         id: 167,
@@ -2534,8 +2520,7 @@ const REPORTS_DATA = [
         sources: "Interactive",
         readTime: "12 min",
         verdict: "undefined",
-        excerpt: "How China, Japan, and hedge funds could weaponize $8+ trillion in US Treasury holdings as tariffs escalate to 145%.",
-        chart: {"type":"bar","color":"#10b981","data":[8.1,1.1,1,0.9]}
+        excerpt: "How China, Japan, and hedge funds could weaponize $8+ trillion in US Treasury holdings as tariffs escalate to 145%."
     },
     {
         id: 169,
@@ -2550,7 +2535,7 @@ const REPORTS_DATA = [
         readTime: "9 min",
         verdict: "undefined",
         excerpt: "BLS reported 2.7% inflation—but a 43-day shutdown left October data uncollected. Analysis of why CPI diverges from consumer experience.",
-        chart: {"type":"bar","color":"#10b981","data":[2.7,2.62,2.66,3.2,4.1,4.8],"colors":["#10b981","#3b82f6","#06b6d4","#f59e0b","#f59e0b","#ff2a2a"]}
+        chart: {"type":"bar","color":"#1e3a5f","data":[2.7,2.62,2.66,3.2,4.1,4.8]}
     },
     {
         id: 170,
@@ -2564,8 +2549,7 @@ const REPORTS_DATA = [
         sources: "32 Domains",
         readTime: "15 min",
         verdict: "undefined",
-        excerpt: "Russia's sophisticated media impersonation: 60+ fake news websites mimicking Washington Post, Fox News, and major outlets.",
-        chart: {"type":"network","color":"#4a7dcc","data":{"nodes":16,"connections":24}}
+        excerpt: "Russia's sophisticated media impersonation: 60+ fake news websites mimicking Washington Post, Fox News, and major outlets."
     },
     {
         id: 171,
@@ -2579,8 +2563,7 @@ const REPORTS_DATA = [
         sources: "185 Nodes",
         readTime: "14 min",
         verdict: "undefined",
-        excerpt: "China's largest influence operation: 8,700+ coordinated accounts across 50+ platforms targeting Western democracies.",
-        chart: {"type":"network","color":"#ef6b5b","data":{"nodes":18,"connections":30}}
+        excerpt: "China's largest influence operation: 8,700+ coordinated accounts across 50+ platforms targeting Western democracies."
     },
     {
         id: 172,
@@ -2609,8 +2592,7 @@ const REPORTS_DATA = [
         sources: "18 Claims",
         readTime: "15 min",
         verdict: "undefined",
-        excerpt: "Comprehensive analysis of 18 claims on partisan plaques installed beneath Biden's portrait in the White House.",
-        chart: {"type":"bar","color":"#ef4444","data":[13,3,2]}
+        excerpt: "Comprehensive analysis of 18 claims on partisan plaques installed beneath Biden's portrait in the White House."
     },
     {
         id: 174,
@@ -2700,7 +2682,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "misleading",
         excerpt: "MISLEADING: Viral photos claimed to be from Epstein archives were frequently misattributed or manipulated. While genuine court documents were released in January 2024, accompanying images on social media mixed authentic evidence with photos from unrelated public events, digitally altered images, and fabrications.",
-        chart: {"type":"bar","color":"#3b82f6","data":[38,27,22,13],"colors":["#3b82f6","#ef4444","#f59e0b","#06b6d4"]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[38,27,22,13],"labels":["Public Event Photos","Digitally Altered","Misattributed Context","Complete Fabrications"],"colors":["#3b82f6","#ef4444","#f59e0b","#06b6d4"]}
     },
     {
         id: 180,
@@ -2730,7 +2712,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "context",
         excerpt: "NEEDS CONTEXT: AI chatbots provided inaccurate information about Australian voting procedures during the 2025 federal election. Documented errors included wrong registration deadlines, ID requirements, and federal/state rule confusion. While errors were real, they stem from AI limitations rather than deliberate manipulation.",
-        chart: {"type":"bar","color":"#3b82f6","data":[28,23,19,15,12],"labels":["Registration","ID Errors","Procedures","Deadlines","State/Fed"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
+        chart: {"type":"bar","color":"#ef4444","data":[28,23,19,15,12],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
         id: 182,

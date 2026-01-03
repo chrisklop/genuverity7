@@ -2,10 +2,8 @@
 /**
  * Sync Chart Configs from Report HTML to reports-data.js
  *
- * This tool extracts actual Chart.js data from report HTML files
- * and updates reports-data.js to ensure thumbnails match the real charts.
- *
- * RUN THIS after creating/modifying any report with charts!
+ * CRITICAL: This ensures thumbnail previews match actual report charts.
+ * Run after EVERY report creation/modification.
  */
 
 const fs = require('fs');
@@ -14,81 +12,133 @@ const path = require('path');
 const REPORTS_DATA_PATH = path.join(__dirname, '..', 'js', 'reports-data.js');
 const LOCAL_REPORTS_DIR = path.join(__dirname, '..', 'localreports');
 
-// Parse chart data from HTML
-function extractChartFromHTML(htmlContent) {
-    // Find the FIRST new Chart() call (primary chart for thumbnail)
-    const chartMatch = htmlContent.match(/new Chart\([^,]+,\s*\{[\s\S]*?type:\s*['"](\w+)['"][\s\S]*?\}/);
-    if (!chartMatch) return null;
+/**
+ * Extract the FULL Chart.js configuration from HTML
+ * Uses brace counting to capture the complete config object
+ */
+function extractFullChartConfig(htmlContent) {
+    // Find "new Chart(" and extract everything until the matching closing
+    const chartStart = htmlContent.indexOf('new Chart(');
+    if (chartStart === -1) return null;
 
-    const chartBlock = chartMatch[0];
-    const chartType = chartMatch[1];
+    // Find the config object start (second argument to Chart constructor)
+    const configStart = htmlContent.indexOf('{', chartStart);
+    if (configStart === -1) return null;
 
-    // Extract data array
-    const dataMatch = chartBlock.match(/data:\s*\[([\d.,\s]+)\]/);
-    const data = dataMatch
-        ? dataMatch[1].split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n))
-        : null;
-
-    // Extract color(s)
-    let color = '#3b82f6'; // default
-    const borderColorMatch = chartBlock.match(/borderColor:\s*['"]([^'"]+)['"]/);
-    const bgColorMatch = chartBlock.match(/backgroundColor:\s*['"]([^'"]+)['"]/);
-    const bgColorArrayMatch = chartBlock.match(/backgroundColor:\s*\[([^\]]+)\]/);
-
-    if (borderColorMatch) color = borderColorMatch[1];
-    else if (bgColorMatch) color = bgColorMatch[1];
-
-    // Extract colors array for hbar/bar charts
-    let colors = null;
-    if (bgColorArrayMatch) {
-        colors = bgColorArrayMatch[1]
-            .match(/#[0-9a-fA-F]{6}/g)
-            ?.filter(c => c);
+    // Count braces to find the matching end
+    let depth = 0;
+    let configEnd = -1;
+    for (let i = configStart; i < htmlContent.length; i++) {
+        if (htmlContent[i] === '{') depth++;
+        if (htmlContent[i] === '}') depth--;
+        if (depth === 0) {
+            configEnd = i + 1;
+            break;
+        }
     }
 
-    // Extract labels for hbar charts
+    if (configEnd === -1) return null;
+
+    const configStr = htmlContent.substring(configStart, configEnd);
+    return configStr;
+}
+
+/**
+ * Parse chart configuration from the extracted config string
+ */
+function parseChartConfig(configStr) {
+    if (!configStr) return null;
+
+    // Extract chart type
+    const typeMatch = configStr.match(/type:\s*['"](\w+)['"]/);
+    if (!typeMatch) return null;
+    let chartType = typeMatch[1];
+
+    // Check if it's horizontal (indexAxis: 'y')
+    const isHorizontal = /indexAxis:\s*['"]y['"]/.test(configStr);
+    if (chartType === 'bar' && isHorizontal) {
+        chartType = 'hbar';
+    }
+    if (chartType === 'doughnut') {
+        chartType = 'donut';
+    }
+
+    // Extract data array from datasets[0].data
+    let data = null;
+    const dataMatch = configStr.match(/datasets:\s*\[\s*\{[\s\S]*?data:\s*\[([\d.,\s-]+)\]/);
+    if (dataMatch) {
+        data = dataMatch[1].split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+    }
+
+    // Extract labels
     let labels = null;
-    const labelsMatch = chartBlock.match(/labels:\s*\[([\s\S]*?)\]/);
+    const labelsMatch = configStr.match(/labels:\s*\[([\s\S]*?)\]/);
     if (labelsMatch) {
-        labels = labelsMatch[1]
-            .match(/['"]([^'"]+)['"]/g)
-            ?.map(l => l.replace(/['"]/g, ''));
+        const labelsStr = labelsMatch[1];
+        labels = [];
+        const labelRegex = /['"]([^'"]+)['"]/g;
+        let match;
+        while ((match = labelRegex.exec(labelsStr)) !== null) {
+            labels.push(match[1]);
+        }
+        if (labels.length === 0) labels = null;
     }
 
-    // Determine normalized chart type
-    let normalizedType = chartType;
-    if (chartType === 'bar') {
-        // Check if it's horizontal
-        const indexAxisMatch = chartBlock.match(/indexAxis:\s*['"]y['"]/);
-        if (indexAxisMatch) normalizedType = 'hbar';
-    } else if (chartType === 'doughnut') {
-        normalizedType = 'donut';
+    // Extract colors (backgroundColor array)
+    let colors = null;
+    const colorsMatch = configStr.match(/backgroundColor:\s*\[([\s\S]*?)\]/);
+    if (colorsMatch) {
+        const colorsStr = colorsMatch[1];
+        colors = colorsStr.match(/#[0-9a-fA-F]{6}/g);
     }
 
-    // Build chart config
+    // Extract single color (borderColor or backgroundColor string)
+    let color = '#3b82f6'; // default
+    const borderColorMatch = configStr.match(/borderColor:\s*['"]([#\w]+)['"]/);
+    const bgColorSingleMatch = configStr.match(/backgroundColor:\s*['"]([#\w]+)['"]/);
+    if (borderColorMatch && borderColorMatch[1].startsWith('#')) {
+        color = borderColorMatch[1];
+    } else if (bgColorSingleMatch && bgColorSingleMatch[1].startsWith('#')) {
+        color = bgColorSingleMatch[1];
+    } else if (colors && colors.length > 0) {
+        color = colors[0];
+    }
+
+    // Build the config
     const config = {
-        type: normalizedType,
-        color: color.startsWith('rgba') ? '#3b82f6' : color
+        type: chartType,
+        color: color
     };
 
     if (data && data.length > 0) {
-        // For donut charts, use first value as percentage
-        if (normalizedType === 'donut') {
-            config.data = Math.round(data[0]);
+        if (chartType === 'donut') {
+            // For donut, calculate first segment percentage
+            const total = data.reduce((a, b) => a + b, 0);
+            config.data = total > 0 ? Math.round((data[0] / total) * 100) : 50;
         } else {
             config.data = data;
         }
     }
 
-    if (labels && labels.length > 0 && normalizedType === 'hbar') {
+    // Include labels for hbar charts (critical for matching the report)
+    if (labels && labels.length > 0 && chartType === 'hbar') {
         config.labels = labels;
     }
 
-    if (colors && colors.length > 0) {
+    if (colors && colors.length > 1) {
         config.colors = colors;
     }
 
     return config;
+}
+
+/**
+ * Extract chart config from an HTML file
+ */
+function extractChartFromFile(htmlPath) {
+    const htmlContent = fs.readFileSync(htmlPath, 'utf8');
+    const configStr = extractFullChartConfig(htmlContent);
+    return parseChartConfig(configStr);
 }
 
 // Read current reports-data.js
@@ -111,6 +161,7 @@ console.log(`Found ${reports.length} reports in reports-data.js\n`);
 let updated = 0;
 let added = 0;
 let unchanged = 0;
+let noChart = 0;
 
 // Process each report
 for (const report of reports) {
@@ -120,30 +171,38 @@ for (const report of reports) {
         continue;
     }
 
-    const htmlContent = fs.readFileSync(htmlPath, 'utf8');
-    const extractedChart = extractChartFromHTML(htmlContent);
+    const extractedChart = extractChartFromFile(htmlPath);
 
     if (!extractedChart) {
-        if (!report.chart) unchanged++;
+        noChart++;
+        // Remove chart config if no chart in HTML
+        if (report.chart) {
+            delete report.chart;
+            console.log(`  🗑️  Removed stale config: ${report.slug}`);
+        }
         continue;
     }
 
-    // Compare with existing chart config
     const existingChart = report.chart;
 
     if (!existingChart) {
         report.chart = extractedChart;
         added++;
-        console.log(`  ➕ Added: ${report.slug}`);
+        console.log(`  ➕ Added: ${report.slug} (${extractedChart.type})`);
     } else {
-        // Check if they match (compare type and data)
-        const sameType = existingChart.type === extractedChart.type;
-        const sameData = JSON.stringify(existingChart.data) === JSON.stringify(extractedChart.data);
+        // Check if they match
+        const existingStr = JSON.stringify(existingChart);
+        const extractedStr = JSON.stringify(extractedChart);
 
-        if (!sameType || !sameData) {
+        if (existingStr !== extractedStr) {
+            console.log(`  🔄 ${report.slug}:`);
+            console.log(`      Was: ${existingChart.type} with ${Array.isArray(existingChart.data) ? existingChart.data.length : 1} data points`);
+            console.log(`      Now: ${extractedChart.type} with ${Array.isArray(extractedChart.data) ? extractedChart.data.length : 1} data points`);
+            if (extractedChart.labels) {
+                console.log(`      Labels: ${extractedChart.labels.slice(0, 3).join(', ')}...`);
+            }
             report.chart = extractedChart;
             updated++;
-            console.log(`  🔄 Updated: ${report.slug} (${existingChart.type} → ${extractedChart.type})`);
         } else {
             unchanged++;
         }
@@ -154,6 +213,7 @@ console.log(`\n📋 Summary:`);
 console.log(`   Added: ${added}`);
 console.log(`   Updated: ${updated}`);
 console.log(`   Unchanged: ${unchanged}`);
+console.log(`   No chart in HTML: ${noChart}`);
 
 if (added + updated === 0) {
     console.log(`\n✅ All chart configs are already in sync!`);
@@ -199,4 +259,3 @@ if (typeof module !== 'undefined' && module.exports) {
 
 fs.writeFileSync(REPORTS_DATA_PATH, newContent);
 console.log(`\n✅ Updated ${REPORTS_DATA_PATH}`);
-console.log(`\n🎯 Chart thumbnails should now match actual report charts!`);
