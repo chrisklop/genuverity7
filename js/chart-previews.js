@@ -69,20 +69,76 @@ const ChartPreviews = (function() {
         </div></div>`;
     }
 
-    // Donut chart with percentage
-    function generateDonutChart(percent, color) {
+    // Donut/Pie chart - supports multi-segment data arrays
+    function generateDonutChart(data, color, colors) {
         const circumference = 2 * Math.PI * 40;
-        const offset = circumference * (1 - percent / 100);
-        const bgColor = 'rgba(100, 116, 139, 0.2)';
+
+        // Handle both single percentage (legacy) and array data
+        if (typeof data === 'number') {
+            // Legacy single-percentage mode
+            const offset = circumference * (1 - data / 100);
+            const bgColor = 'rgba(100, 116, 139, 0.2)';
+            return `<div class="chart-container" style="justify-content: center; align-items: center;">
+                <div class="chart-donut">
+                    <svg viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="40" stroke="${bgColor}" stroke-width="12"/>
+                        <circle cx="50" cy="50" r="40" stroke="${color}"
+                            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" stroke-width="12"/>
+                    </svg>
+                    <span class="donut-label">${data}%</span>
+                </div>
+            </div>`;
+        }
+
+        // Multi-segment donut chart
+        const dataArray = Array.isArray(data) ? data : [50, 50];
+        const total = dataArray.reduce((a, b) => a + b, 0);
+        const defaultColors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#06b6d4'];
+        const segmentColors = colors && colors.length > 0 ? colors : defaultColors;
+
+        // Generate SVG path segments for pie/donut
+        let segments = [];
+        let currentAngle = -90; // Start from top
+
+        dataArray.forEach((value, i) => {
+            const percentage = (value / total) * 100;
+            const angle = (percentage / 100) * 360;
+            const segmentColor = segmentColors[i % segmentColors.length];
+
+            // Calculate arc path
+            const startAngle = currentAngle * (Math.PI / 180);
+            const endAngle = (currentAngle + angle) * (Math.PI / 180);
+
+            const x1 = 50 + 40 * Math.cos(startAngle);
+            const y1 = 50 + 40 * Math.sin(startAngle);
+            const x2 = 50 + 40 * Math.cos(endAngle);
+            const y2 = 50 + 40 * Math.sin(endAngle);
+
+            const largeArc = angle > 180 ? 1 : 0;
+
+            // Create arc segment using stroke-dasharray trick for donut
+            const segmentLength = (percentage / 100) * circumference;
+            const segmentOffset = ((currentAngle + 90) / 360) * circumference;
+
+            segments.push(`<circle cx="50" cy="50" r="40"
+                stroke="${segmentColor}" stroke-width="12" fill="none"
+                stroke-dasharray="${segmentLength} ${circumference - segmentLength}"
+                stroke-dashoffset="${-segmentOffset}"
+                style="transform-origin: center;"/>`);
+
+            currentAngle += angle;
+        });
+
+        // Show largest segment percentage in center
+        const maxValue = Math.max(...dataArray);
+        const maxPercent = Math.round((maxValue / total) * 100);
 
         return `<div class="chart-container" style="justify-content: center; align-items: center;">
             <div class="chart-donut">
                 <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="40" stroke="${bgColor}" stroke-width="12"/>
-                    <circle cx="50" cy="50" r="40" stroke="${color}"
-                        stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" stroke-width="12"/>
+                    ${segments.join('\n                    ')}
                 </svg>
-                <span class="donut-label">${percent}%</span>
+                <span class="donut-label">${maxPercent}%</span>
             </div>
         </div>`;
     }
@@ -166,7 +222,7 @@ const ChartPreviews = (function() {
             case 'bar':
                 return generateBarChart(color, c.data);
             case 'donut':
-                return generateDonutChart(c.data, color);
+                return generateDonutChart(c.data, color, c.colors);
             case 'network':
                 return generateNetworkChart(color, color, c.data);
             case 'line':

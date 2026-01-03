@@ -60,7 +60,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "mixed",
         excerpt: "MIXED: Analysis of viral misinformation surrounding the Sean 'Diddy' Combs federal trial.",
-        chart: {"type":"donut","color":"#0f172a","data":58,"colors":["#ef4444","#f59e0b","#10b981"]}
+        chart: {"type":"donut","color":"#0f172a","data":[58,27,15],"colors":["#ef4444","#f59e0b","#10b981"]}
     },
     {
         id: 4,
@@ -375,7 +375,7 @@ const REPORTS_DATA = [
         readTime: "15 min",
         verdict: "context",
         excerpt: "CONTEXT: NSF terminated 1,500+ grants, ~90% DEI-related per Ted Cruz's list. Claims about targeting 'climate science' mostly false. However, concerns about chilling effects on research are legitimate.",
-        chart: {"type":"donut","color":"#3b82f6","data":90,"colors":["#3b82f6","#f59e0b","#64748b"]}
+        chart: {"type":"donut","color":"#3b82f6","data":[90,7,3],"colors":["#3b82f6","#f59e0b","#64748b"]}
     },
     {
         id: 25,
@@ -390,7 +390,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "context",
         excerpt: "CONTEXT: Vance made legitimate points about weaponized 'misinformation' labels, supported by Knight Foundation data. But he also spread claims rated false. Both sides selectively quoted his remarks.",
-        chart: {"type":"donut","color":"#10b981","data":38,"colors":["#10b981","#ef4444","#64748b"]}
+        chart: {"type":"donut","color":"#10b981","data":[38,45,17],"colors":["#10b981","#ef4444","#64748b"]}
     },
     {
         id: 26,
@@ -495,7 +495,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "false",
         excerpt: "FALSE: Claims that Ukraine started the war with Russia are false. Russia launched a full-scale invasion on Feb 24, 2022. UN General Assembly condemned invasion 141-5. ICJ ordered Russia to cease operations. ICC issued arrest warrant for Putin. Putin announced the 'special military operation' - Ukraine did not attack Russia.",
-        chart: {"type":"donut","color":"#10b981","data":73,"colors":["#10b981","#ef4444","#f59e0b","#64748b"]}
+        chart: {"type":"donut","color":"#10b981","data":[141,5,35,12],"colors":["#10b981","#ef4444","#f59e0b","#64748b"]}
     },
     {
         id: 33,
@@ -510,7 +510,7 @@ const REPORTS_DATA = [
         readTime: "11 min",
         verdict: "misleading",
         excerpt: "MISLEADING: DOGE's viral claim about 'spending on condoms in Gaza' misrepresented standard USAID global health programming. The spending was part of long-standing family planning programs in 40+ countries - not a Gaza-specific initiative. The claim manufactured outrage by stripping context from routine public health expenditures.",
-        chart: {"type":"donut","color":"#3b82f6","data":45,"colors":["#3b82f6","#10b981","#f59e0b","#06b6d4","#64748b"]}
+        chart: {"type":"donut","color":"#3b82f6","data":[45,30,10,10,5],"colors":["#3b82f6","#10b981","#f59e0b","#06b6d4","#64748b"]}
     },
     {
         id: 34,
@@ -825,7 +825,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "misleading",
         excerpt: "MISLEADING: A video involving Bangladeshi police officer Dipu Das was taken out of context and misattributed on social media.",
-        chart: {"type":"donut","color":"#ef4444","data":55,"colors":["#ef4444","#f59e0b","#10b981"]}
+        chart: {"type":"donut","color":"#ef4444","data":[55,35,10],"colors":["#ef4444","#f59e0b","#10b981"]}
     },
     {
         id: 55,
@@ -855,7 +855,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "mixed",
         excerpt: "MIXED: Claims about fabricated Epstein files mixed legitimate documents with viral hoaxes in 2025.",
-        chart: {"type":"donut","color":"#ef4444","data":45,"colors":["#ef4444","#f59e0b","#10b981"]}
+        chart: {"type":"donut","color":"#ef4444","data":[45,30,25],"colors":["#ef4444","#f59e0b","#10b981"]}
     },
     {
         id: 57,
@@ -915,7 +915,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "misleading",
         excerpt: "MISLEADING: Claims about Rep. Jeffries prioritizing a ballroom over crisis response lacked crucial context.",
-        chart: {"type":"donut","color":"#3b82f6","data":25,"colors":["#3b82f6","#06b6d4","#10b981","#f59e0b"]}
+        chart: {"type":"donut","color":"#3b82f6","data":[25,35,20,20],"colors":["#3b82f6","#06b6d4","#10b981","#f59e0b"]}
     },
     {
         id: 61,
@@ -975,7 +975,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "context",
         excerpt: "CONTEXT: Claims about menopausal hormone therapy benefits lack nuance about individual risks.",
-        chart: {"type":"donut","color":"#3b82f6","data":30,"colors":["#3b82f6","#06b6d4","#f59e0b","#10b981"]}
+        chart: {"type":"donut","color":"#3b82f6","data":[30,25,25,20],"colors":["#3b82f6","#06b6d4","#f59e0b","#10b981"]}
     },
     {
         id: 65,
@@ -1020,7 +1020,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "misleading",
         excerpt: "MISLEADING: Claims about North Carolina's wireless driving ban misrepresented the actual legislation.",
-        chart: {"type":"donut","color":"#ef4444","data":35,"colors":["#ef4444","#10b981","#3b82f6","#f59e0b"]}
+        chart: {"type":"donut","color":"#ef4444","data":[35,30,25,10],"colors":["#ef4444","#10b981","#3b82f6","#f59e0b"]}
     },
     {
         id: 68,
@@ -1035,7 +1035,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Netanyahu's claims about no starvation in Gaza contradicted UN and humanitarian reports.",
-        chart: {"type":"donut","color":"#ef4444","data":92,"colors":["#ef4444","#f59e0b","#10b981"]}
+        chart: {"type":"donut","color":"#ef4444","data":[92,6,2],"colors":["#ef4444","#f59e0b","#10b981"]}
     },
     {
         id: 69,
@@ -1050,7 +1050,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: False claims about new mandatory education fees in Nigeria spread viral panic.",
-        chart: {"type":"donut","color":"#ef4444","data":45,"colors":["#ef4444","#10b981","#3b82f6"]}
+        chart: {"type":"donut","color":"#ef4444","data":[45,35,20],"colors":["#ef4444","#10b981","#3b82f6"]}
     },
     {
         id: 70,
@@ -1095,7 +1095,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "context",
         excerpt: "CONTEXT: The Pravda disinformation network continued operations in 2025 with documented AI integration.",
-        chart: {"type":"donut","color":"#ef4444","data":23,"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4","#64748b"]}
+        chart: {"type":"donut","color":"#ef4444","data":[35,25,20,15,30,25],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4","#64748b"]}
     },
     {
         id: 73,
@@ -1245,7 +1245,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: A viral image showing Trump commenting on Duterte's arrest was fabricated.",
-        chart: {"type":"donut","color":"#3b82f6","data":42,"colors":["#3b82f6","#06b6d4","#ef4444","#10b981"]}
+        chart: {"type":"donut","color":"#3b82f6","data":[42,28,18,12],"colors":["#3b82f6","#06b6d4","#ef4444","#10b981"]}
     },
     {
         id: 83,
@@ -1335,7 +1335,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "misleading",
         excerpt: "MISLEADING: Claims about a USDA 'transgender study' misrepresented research on feminine hygiene.",
-        chart: {"type":"donut","color":"#3b82f6","data":40,"colors":["#3b82f6","#06b6d4","#10b981","#f59e0b"]}
+        chart: {"type":"donut","color":"#3b82f6","data":[40,30,25,5],"colors":["#3b82f6","#06b6d4","#10b981","#f59e0b"]}
     },
     {
         id: 89,
@@ -1485,7 +1485,7 @@ const REPORTS_DATA = [
         readTime: "20 min",
         verdict: "mixed",
         excerpt: "The 'rabbit hole' hypothesis is more contested than narratives suggest. 2025 PNAS study: algorithm has limited impact on beliefs. But off-platform viewing may drive more radicalization than YouTube's internal recommendations.",
-        chart: {"type":"donut","color":"#3b82f6","data":61}
+        chart: {"type":"donut","color":"#3b82f6","data":[14,7,2]}
     },
     {
         id: 99,
@@ -1575,7 +1575,7 @@ const REPORTS_DATA = [
         readTime: "35 min",
         verdict: "context",
         excerpt: "Forensic analysis of the industrial-grade disinformation complex: $2.6B ad revenue pipeline, 1,200+ pink slime sites, $10M Tenet Media Russian funding, and the asymmetric infrastructure between left and right-wing manipulation ecosystems.",
-        chart: {"type":"donut","color":"#ef4444","data":32,"colors":["#ef4444","#3b82f6"]}
+        chart: {"type":"donut","color":"#ef4444","data":[2.6,5.6],"colors":["#ef4444","#3b82f6"]}
     },
     {
         id: 105,
@@ -1993,7 +1993,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "undefined",
         excerpt: "Forensic analysis of the $40B Argentina bailout, market displacement of US soybeans, Chapter 12 bankruptcies surging 68%, and oligopolistic market structures.",
-        chart: {"type":"donut","color":"#3b82f6","data":50}
+        chart: {"type":"donut","color":"#3b82f6","data":[20,20]}
     },
     {
         id: 133,
@@ -2038,7 +2038,7 @@ const REPORTS_DATA = [
         readTime: "10 min",
         verdict: "undefined",
         excerpt: "50,000+ posts spread false info about Syria's new government. 60% from foreign accounts. Russia, Iran wage information war after military defeat.",
-        chart: {"type":"donut","color":"#0d1424","data":40}
+        chart: {"type":"donut","color":"#0d1424","data":[40,15,15,12,8,10]}
     },
     {
         id: 136,
@@ -2402,7 +2402,7 @@ const REPORTS_DATA = [
         readTime: "6 min",
         verdict: "undefined",
         excerpt: "Trump's $1,776 military bonus is actually rebranded housing funds Congress already approved—not new presidential spending or tariff revenue.",
-        chart: {"type":"donut","color":"#3b82f6","data":90}
+        chart: {"type":"donut","color":"#3b82f6","data":[2.6,0.3]}
     },
     {
         id: 161,
@@ -2446,7 +2446,7 @@ const REPORTS_DATA = [
         readTime: "6 min",
         verdict: "undefined",
         excerpt: "Fact-checking the President's prime-time address on immigration, economy, and policy accomplishments. Claim-by-claim analysis with primary sources.",
-        chart: {"type":"donut","color":"#3b82f6","data":57}
+        chart: {"type":"donut","color":"#3b82f6","data":[4,2,1]}
     },
     {
         id: 164,
@@ -2476,7 +2476,7 @@ const REPORTS_DATA = [
         readTime: "9 min",
         verdict: "undefined",
         excerpt: "Breaking down the Oracle, Silver Lake, and UAE consortium deal structure, and why ByteDance still controls the algorithm.",
-        chart: {"type":"donut","color":"#3b82f6","data":15}
+        chart: {"type":"donut","color":"#3b82f6","data":[15,15,15,35,19.9]}
     },
     {
         id: 166,
@@ -2697,7 +2697,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "misleading",
         excerpt: "MISLEADING: Claims linking NYC mayoral candidate Zohran Mamdani to extremists used guilt-by-association fallacies. Evidence cited - photos at public events and third-party endorsements - does not demonstrate endorsement of extremist ideologies. Fact-checkers noted pattern of misleading attack ads.",
-        chart: {"type":"donut","color":"#0a0a0f","data":35,"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
+        chart: {"type":"donut","color":"#0a0a0f","data":[35,25,20,12,8],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
         id: 181,

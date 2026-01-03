@@ -111,13 +111,8 @@ function parseChartConfig(configStr) {
     };
 
     if (data && data.length > 0) {
-        if (chartType === 'donut') {
-            // For donut, calculate first segment percentage
-            const total = data.reduce((a, b) => a + b, 0);
-            config.data = total > 0 ? Math.round((data[0] / total) * 100) : 50;
-        } else {
-            config.data = data;
-        }
+        // Always preserve full data array - chart-previews.js handles all types
+        config.data = data;
     }
 
     // Include labels for hbar charts (critical for matching the report)
@@ -125,6 +120,7 @@ function parseChartConfig(configStr) {
         config.labels = labels;
     }
 
+    // Include colors for multi-segment charts (donut, bar, hbar)
     if (colors && colors.length > 1) {
         config.colors = colors;
     }
