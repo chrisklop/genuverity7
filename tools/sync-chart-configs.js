@@ -49,13 +49,14 @@ function extractFullChartConfig(htmlContent) {
 function parseChartConfig(configStr) {
     if (!configStr) return null;
 
-    // Extract chart type
-    const typeMatch = configStr.match(/type:\s*['"](\w+)['"]/);
+    // Extract chart type (supports both JS object and JSON formats)
+    // JS: type: 'bar'  |  JSON: "type": "bar"
+    const typeMatch = configStr.match(/"?type"?\s*:\s*['"](\w+)['"]/);
     if (!typeMatch) return null;
     let chartType = typeMatch[1];
 
     // Check if it's horizontal (indexAxis: 'y')
-    const isHorizontal = /indexAxis:\s*['"]y['"]/.test(configStr);
+    const isHorizontal = /"?indexAxis"?\s*:\s*['"]y['"]/.test(configStr);
     if (chartType === 'bar' && isHorizontal) {
         chartType = 'hbar';
     }
@@ -63,16 +64,16 @@ function parseChartConfig(configStr) {
         chartType = 'donut';
     }
 
-    // Extract data array from datasets[0].data
+    // Extract data array from datasets[0].data (supports both JS and JSON formats)
     let data = null;
-    const dataMatch = configStr.match(/datasets:\s*\[\s*\{[\s\S]*?data:\s*\[([\d.,\s-]+)\]/);
+    const dataMatch = configStr.match(/"?datasets"?\s*:\s*\[\s*\{[\s\S]*?"?data"?\s*:\s*\[([\d.,\s-]+)\]/);
     if (dataMatch) {
         data = dataMatch[1].split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
     }
 
-    // Extract labels
+    // Extract labels (supports both JS and JSON formats)
     let labels = null;
-    const labelsMatch = configStr.match(/labels:\s*\[([\s\S]*?)\]/);
+    const labelsMatch = configStr.match(/"?labels"?\s*:\s*\[([\s\S]*?)\]/);
     if (labelsMatch) {
         const labelsStr = labelsMatch[1];
         labels = [];
@@ -84,18 +85,18 @@ function parseChartConfig(configStr) {
         if (labels.length === 0) labels = null;
     }
 
-    // Extract colors (backgroundColor array)
+    // Extract colors (backgroundColor array) - supports both JS and JSON formats
     let colors = null;
-    const colorsMatch = configStr.match(/backgroundColor:\s*\[([\s\S]*?)\]/);
+    const colorsMatch = configStr.match(/"?backgroundColor"?\s*:\s*\[([\s\S]*?)\]/);
     if (colorsMatch) {
         const colorsStr = colorsMatch[1];
         colors = colorsStr.match(/#[0-9a-fA-F]{6}/g);
     }
 
-    // Extract single color (borderColor or backgroundColor string)
+    // Extract single color (borderColor or backgroundColor string) - supports both JS and JSON formats
     let color = '#3b82f6'; // default
-    const borderColorMatch = configStr.match(/borderColor:\s*['"]([#\w]+)['"]/);
-    const bgColorSingleMatch = configStr.match(/backgroundColor:\s*['"]([#\w]+)['"]/);
+    const borderColorMatch = configStr.match(/"?borderColor"?\s*:\s*['"]([#\w]+)['"]/);
+    const bgColorSingleMatch = configStr.match(/"?backgroundColor"?\s*:\s*['"]([#\w]+)['"]/);
     if (borderColorMatch && borderColorMatch[1].startsWith('#')) {
         color = borderColorMatch[1];
     } else if (bgColorSingleMatch && bgColorSingleMatch[1].startsWith('#')) {

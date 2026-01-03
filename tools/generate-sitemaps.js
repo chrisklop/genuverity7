@@ -184,9 +184,21 @@ function extractChartFromHtml(htmlPath) {
 function checkMissingChartConfigs(reportsDataContent, allSlugs) {
     const missing = [];
 
-    // Parse existing chart configs from reports-data.js
-    const chartMatches = [...reportsDataContent.matchAll(/slug:\s*["']([^"']+)["'][\s\S]*?chart:\s*\{/g)];
-    const slugsWithCharts = new Set(chartMatches.map(m => m[1].replace('localreports/', '').replace('.html', '')));
+    // Parse reports-data.js properly by evaluating the array
+    let reports = [];
+    try {
+        const match = reportsDataContent.match(/const REPORTS_DATA = \[([\s\S]*?)\];/);
+        if (match) {
+            eval('reports = [' + match[1] + ']');
+        }
+    } catch (e) {
+        console.error('Error parsing reports-data.js:', e.message);
+    }
+
+    // Build set of slugs that have chart configs
+    const slugsWithCharts = new Set(
+        reports.filter(r => r.chart).map(r => r.slug)
+    );
 
     for (const slug of allSlugs) {
         if (slugsWithCharts.has(slug)) continue;

@@ -2416,7 +2416,8 @@ const REPORTS_DATA = [
         sources: "9 Sources",
         readTime: "10 min",
         verdict: "undefined",
-        excerpt: "FDA CBER Director Vinay Prasad's leaked memo claims vaccines killed at least 10 children—but provides no evidence. Experts call it 'factually incorrect' and 'disingenuous.'"
+        excerpt: "FDA CBER Director Vinay Prasad's leaked memo claims vaccines killed at least 10 children—but provides no evidence. Experts call it 'factually incorrect' and 'disingenuous.'",
+        chart: {"type":"hbar","color":"#ef4444","data":[1300,10,32],"labels":["Deaths FROM COVID-19","Claimed vaccine deaths","COVID hospitalizations (thousands)"],"colors":["#ef4444","#f59e0b","#3b82f6"]}
     },
     {
         id: 162,
