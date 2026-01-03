@@ -150,7 +150,7 @@ function generateNetworkChart(nodeColor, lineColor) {
 }
 
 function generateHBarChart(data, colors) {
-    // data is array of {label, value}
+    // data is array of {label, value} or just numbers
     const rowHeight = 100 / (data.length || 1);
     const barHeight = rowHeight * 0.4;
 
@@ -158,14 +158,16 @@ function generateHBarChart(data, colors) {
         const yCenter = i * rowHeight + rowHeight / 2;
         const yBar = yCenter - barHeight / 2;
         const color = colors[i % colors.length];
+        const value = typeof d === 'object' ? d.value : d;
+        const label = typeof d === 'object' ? (d.label || '') : '';
 
         return `
-            <!-- Label -->
-            <text x="0" y="${yCenter}" dominant-baseline="middle" fill="#94a3b8" font-size="10" font-family="sans-serif" style="text-anchor: start;">${d.label}</text>
+            ${label ? `<!-- Label -->
+            <text x="0" y="${yCenter}" dominant-baseline="middle" fill="#94a3b8" font-size="10" font-family="sans-serif" style="text-anchor: start;">${label}</text>` : ''}
             <!-- Bar Background -->
-            <rect x="50" y="${yBar}" width="130" height="${barHeight}" fill="${color}" opacity="0.1" rx="2" />
+            <rect x="${label ? 50 : 0}" y="${yBar}" width="${label ? 130 : 180}" height="${barHeight}" fill="${color}" opacity="0.1" rx="2" />
             <!-- Value Bar -->
-            <rect x="50" y="${yBar}" width="${d.value * 1.3}" height="${barHeight}" fill="${color}" rx="2" />
+            <rect x="${label ? 50 : 0}" y="${yBar}" width="${value * (label ? 1.3 : 1.8)}" height="${barHeight}" fill="${color}" rx="2" />
         `;
     }).join('');
 
@@ -241,7 +243,11 @@ function generateChartForReport(report) {
         case 'network':
             return generateNetworkChart(config.color, config.color);
         case 'hbar':
-            return generateHBarChart(config.data, [config.color, '#64748b', '#475569']);
+            // Combine data with labels if provided separately
+            const hbarData = config.labels
+                ? config.data.map((v, i) => ({ value: v, label: config.labels[i] || '' }))
+                : config.data;
+            return generateHBarChart(hbarData, config.colors || [config.color, '#64748b', '#475569']);
         case 'timeline':
             return generateTimelineChart(config.data, config.color);
         default:

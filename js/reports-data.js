@@ -4,6 +4,252 @@
 const REPORTS_DATA = [
     {
         id: 0,
+        title: "Epstein Young Women Archive Photos: Viral Misattributions",
+        slug: "epstein-archive-photos-2025",
+        category: "Conspiracy & Hoaxes",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "image",
+        date: "Jan 2, 2025",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "misleading",
+        excerpt: "MISLEADING: Viral photos claimed to be from Epstein archives were frequently misattributed or manipulated. While genuine court documents were released in January 2024, accompanying images on social media mixed authentic evidence with photos from unrelated public events, digitally altered images, and fabrications.",
+        chart: {
+            type: "hbar",
+            color: "#ef4444",
+            data: [38, 27, 22, 13],
+            labels: ["Public Event", "Altered", "Misattributed", "Fabricated"],
+            colors: ["#3b82f6", "#ef4444", "#f59e0b", "#06b6d4"]
+        }
+    },
+    {
+        id: 1,
+        title: "AI 'Obituary Pirates'",
+        slug: "ai-obituary-pirates-2025",
+        category: "Platform & Tech",
+        tagClass: "tag-blue",
+        catClass: "cat-factcheck",
+        icon: "skull",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "context",
+        excerpt: "NEEDS CONTEXT: AI-generated obituary farms are a verified phenomenon that exploited grieving families with fabricated memorial content. NewsGuard documented 400+ such sites. However, the scope varies, not all fake obituary sites use AI, and platforms have begun implementing countermeasures.",
+        chart: {
+            type: "line",
+            color: "#3b82f6",
+            data: [12, 45, 89, 156, 287, 412, 389, 298]
+        }
+    },
+    {
+        id: 2,
+        title: "Trump / Bill Clinton Crotch Pat Video Exposed as Deepfake",
+        slug: "trump-clinton-crotch-pat-2025",
+        category: "AI & Deepfakes",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "video-off",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "12 min",
+        verdict: "false",
+        excerpt: "FALSE: A manipulated video appearing to show inappropriate behavior between Trump and Clinton was exposed as fake. Frame-by-frame forensic analysis revealed editing artifacts, and the original unedited footage from the same event showed a normal interaction.",
+        chart: {
+            type: "hbar",
+            color: "#ef4444",
+            data: [94, 87, 82, 78, 91],
+            labels: ["Frame Splice", "Compression", "Motion", "Audio Desync", "AI Signature"],
+            colors: ["#ef4444", "#f59e0b", "#3b82f6", "#06b6d4", "#ef4444"]
+        }
+    },
+    {
+        id: 1,
+        title: "Mamdani Extremist Associate Link: Guilt-by-Association Claims Examined",
+        slug: "mamdani-extremist-link-2025",
+        category: "U.S. Politics & Policy",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "scale",
+        date: "Jan 2, 2025",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "misleading",
+        excerpt: "MISLEADING: Claims linking NYC mayoral candidate Zohran Mamdani to extremists used guilt-by-association fallacies. Evidence cited - photos at public events and third-party endorsements - does not demonstrate endorsement of extremist ideologies. Fact-checkers noted pattern of misleading attack ads.",
+        chart: {
+            type: "donut",
+            color: "#ef4444",
+            data: [35, 25, 20, 12, 8],
+            labels: ["Photo Assoc.", "Endorsements", "Policy Distort", "Event Attend", "Unsubstant."],
+            colors: ["#ef4444", "#f59e0b", "#3b82f6", "#06b6d4", "#10b981"]
+        }
+    },
+    {
+        id: 0,
+        title: "Australian Election Chatbot Poisoning",
+        slug: "australia-election-chatbot-2025",
+        category: "AI & Deepfakes",
+        tagClass: "tag-blue",
+        catClass: "cat-factcheck",
+        icon: "bot",
+        date: "Jan 2, 2025",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "context",
+        excerpt: "NEEDS CONTEXT: AI chatbots provided inaccurate information about Australian voting procedures during the 2025 federal election. Documented errors included wrong registration deadlines, ID requirements, and federal/state rule confusion. While errors were real, they stem from AI limitations rather than deliberate manipulation.",
+        chart: {
+            type: "bar",
+            color: "#3b82f6",
+            data: [28, 23, 19, 15, 12],
+            labels: ["Registration", "ID Errors", "Procedures", "Deadlines", "State/Fed"],
+            colors: ["#ef4444", "#f59e0b", "#3b82f6", "#06b6d4", "#10b981"]
+        }
+    },
+    {
+        id: 0,
+        title: "Montana 'Pedophile Bonfire' Hoax",
+        slug: "montana-pedophile-bonfire-2025",
+        category: "Conspiracy & Hoaxes",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "flame",
+        date: "Jan 2, 2025",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "false",
+        excerpt: "FALSE: Viral claims about a 'pedophile bonfire' event in Montana are completely fabricated. No police reports, news coverage, or evidence exists. Montana law enforcement confirmed no such event occurred. The hoax follows a dangerous pattern of fake 'community justice' stories designed to incite vigilante violence.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [1, 8, 35, 95, 180, 150, 85, 45]
+        }
+    },
+    {
+        id: 0,
+        title: "British Budget Details Misinfo",
+        slug: "british-budget-misinfo-2025",
+        category: "International Affairs",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "landmark",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "misleading",
+        excerpt: "MISLEADING: Claims about the UK budget contained multiple factual errors and misrepresentations. Various claims about tax increases were exaggerated or misattributed, viral posts confused proposed and actual measures, and spending figures were taken out of context.",
+        chart: {
+            type: "bar",
+            color: "#3b82f6",
+            data: [70, 15, 8, 10, 40, 0, 0, 2],
+            labels: ["Claims", "Actual"],
+            colors: ["#ef4444", "#3b82f6"]
+        }
+    },
+    {
+        id: 1,
+        title: "D.C. Mid-Air Collision Misinfo",
+        slug: "dc-midair-collision-misinfo-2025",
+        category: "Conspiracy & Hoaxes",
+        tagClass: "tag-cyan",
+        catClass: "cat-factcheck",
+        icon: "plane",
+        date: "Jan 30, 2025",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "mixed",
+        excerpt: "MIXED: The D.C. mid-air collision tragedy was accompanied by multiple misinformation narratives. Claims blaming DEI hiring policies are unsupported by evidence. Conspiracy theories about deliberate acts are unfounded. However, concerns about FAA staffing shortages are legitimate and documented.",
+        chart: {
+            type: "hbar",
+            color: "#ef4444",
+            data: [35, 25, 18, 15, 7],
+            labels: ["DEI Blame", "Conspiracy", "Cover-up", "Staffing", "Other"],
+            colors: ["#ef4444", "#f59e0b", "#3b82f6", "#10b981", "#06b6d4"]
+        }
+    },
+    {
+        id: 1,
+        title: "Hurricane Melissa AI Videos: Fake Storm, Real Fraud",
+        slug: "hurricane-melissa-ai-videos-2025",
+        category: "AI & Deepfakes",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "video",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "14 min",
+        verdict: "false",
+        excerpt: "FALSE: AI-generated videos of 'Hurricane Melissa' destruction depicted non-existent events. NOAA and NHC confirmed no hurricane named Melissa occurred in 2025. The videos were used to solicit fraudulent donations, matching previous AI disaster fraud campaigns.",
+        chart: {
+            type: "hbar",
+            color: "#ef4444",
+            data: [94, 89, 97, 92, 86],
+            labels: ["Temporal", "Morphing", "Hand Anom", "Text Fail", "Audio"],
+            colors: ["#ef4444", "#f59e0b", "#ef4444", "#f59e0b", "#3b82f6"]
+        }
+    },
+    {
+        id: 1,
+        title: "RFK Jr. Antidepressants Claims: Medical Consensus Misrepresented",
+        slug: "rfk-antidepressants-target-2025",
+        category: "Health & Medical",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "pill",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "misleading",
+        excerpt: "MISLEADING: RFK Jr.'s claims about antidepressants as targets for removal misrepresented medical consensus. Major psychiatric associations and FDA data contradict the characterization. Experts warned statements could discourage needed mental health treatment.",
+        chart: {
+            type: "hbar",
+            color: "#ef4444",
+            data: [2.13, 1.97, 1.89, 1.69, 1.52, 1.0],
+            labels: ["Amitriptyline", "Escitalopram", "Venlafaxine", "Sertraline", "Fluoxetine", "Placebo"],
+            colors: ["#10b981", "#10b981", "#3b82f6", "#3b82f6", "#3b82f6", "#64748b"]
+        }
+    },
+    {
+        id: 1,
+        title: "'Premature Sexualization' Narrative: How Educational Materials Are Misrepresented",
+        slug: "premature-sexualization-narrative-2025",
+        category: "International",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "book-open",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "misleading",
+        excerpt: "MISLEADING: Claims about educational materials promoting 'premature sexualization' consistently misrepresent actual content. Brazil's 'kit gay' never existed as described. Internationally, viral claims typically involve age-appropriate materials or images taken out of context.",
+        chart: {
+            type: "hbar",
+            color: "#ef4444",
+            data: [32, 28, 18, 14, 8],
+            labels: ["Decontext", "Age Misrep", "Conflation", "Fabrication", "Misattrib"],
+            colors: ["#ef4444", "#f59e0b", "#3b82f6", "#06b6d4", "#10b981"]
+        }
+    },
+    {
+        id: 0,
+        title: "Brazil Election Integrity Claims: Debunked Fraud Allegations Persist",
+        slug: "brazil-election-integrity-2025",
+        category: "International",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "vote",
+        date: "Jan 2, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "false",
+        excerpt: "FALSE: Claims that Brazil's 2022 election was rigged through electronic voting machine fraud have been comprehensively debunked. The TSE, OAS, Carter Center, and Brazil's own military audit found no evidence of fraud. Bolsonaro was banned from office until 2030 and indicted for an alleged coup plot.",
+        chart: {
+            type: "line",
+            color: "#ef4444",
+            data: [65, 85, 100, 60, 45, 70]
+        }
+    },
+    {
+        id: 1,
         title: "Nigeria NIN-Bank Account Linking Claims: Separating Policy from Panic",
         slug: "nigeria-nin-bank-access-2025",
         category: "Fact Check",
@@ -74,6 +320,7 @@ const REPORTS_DATA = [
         excerpt: "MIXED: The 2025 DRC Ebola outbreak is real and verified by WHO. However, dangerous misinformation about false cures (salt water, onions) and transmission myths has accompanied the outbreak. Community distrust of health workers reflects legitimate historical grievances.",
         chart: {
             type: "hbar",
+            color: "#ef4444",
             data: [32, 24, 21, 14, 9],
             labels: ["False Cures", "Transmission", "Conspiracy", "Vaccines", "Distrust"],
             colors: ["#ef4444", "#f59e0b", "#3b82f6", "#06b6d4", "#10b981"]
@@ -94,6 +341,7 @@ const REPORTS_DATA = [
         excerpt: "MISLEADING: Claims of systematic bias in Brazil's STF conflate legitimate judicial actions against documented threats to democracy with political persecution. The X/Twitter ban followed established legal procedures after non-compliance with court orders.",
         chart: {
             type: "hbar",
+            color: "#ef4444",
             data: [12, 9, 8, 14, 15, 10],
             labels: ["Election Pro-Gov", "Election Anti", "Corruption Pro", "Corruption Anti", "Rights Pro", "Rights Anti"],
             colors: ["#3b82f6", "#ef4444", "#3b82f6", "#ef4444", "#3b82f6", "#ef4444"]
@@ -152,6 +400,7 @@ const REPORTS_DATA = [
         excerpt: "MISLEADING: Claims that King Misuzulu kaZwelithini receives R66 million in annual 'salary' conflate personal stipend (~R1.8M) with Royal Household operational budget (~R65M). Africa Check confirmed the King's actual personal allowance is a fraction of viral claims.",
         chart: {
             type: "hbar",
+            color: "#ef4444",
             data: [1.8, 65, 66],
             labels: ["Personal Stipend", "Household Budget", "Viral Claim"],
             colors: ["#10b981", "#f59e0b", "#ef4444"]
@@ -172,6 +421,7 @@ const REPORTS_DATA = [
         excerpt: "FALSE: Images claiming to show IDF soldiers captured by Hezbollah or Hamas were AI-generated fakes. Full Fact, Reuters, and multiple fact-checkers identified obvious AI artifacts. The IDF confirmed no soldiers were captured in the depicted scenarios.",
         chart: {
             type: "hbar",
+            color: "#ef4444",
             data: [85, 72, 68, 91, 95],
             labels: ["Hand Errors", "Uniform", "Face", "Light", "Meta"],
             colors: ["#ef4444", "#f59e0b", "#3b82f6", "#10b981", "#06b6d4"]
@@ -192,6 +442,7 @@ const REPORTS_DATA = [
         excerpt: "FALSE: AI-generated images showing the Hollywood sign engulfed in flames went viral during the January 2025 LA wildfires. The sign was never in danger. Multiple telltale AI artifacts identified, including extra 'L' in HOLLLYWOOD.",
         chart: {
             type: "bar",
+            color: "#3b82f6",
             data: [5.2, 0.8],
             labels: ["AI Image Views (M)", "Debunk Views (M)"],
             colors: ["#ef4444", "#10b981"]
@@ -385,6 +636,7 @@ const REPORTS_DATA = [
         excerpt: "FALSE: Claims that Ukraine started the war with Russia are false. Russia launched a full-scale invasion on Feb 24, 2022. UN General Assembly condemned invasion 141-5. ICJ ordered Russia to cease operations. ICC issued arrest warrant for Putin. Putin announced the 'special military operation' - Ukraine did not attack Russia.",
         chart: {
             type: "hbar",
+            color: "#ef4444",
             data: [141, 5, 35],
             labels: ["Condemned", "Supported", "Abstained"],
             colors: ["#10b981", "#ef4444", "#f59e0b"]
@@ -405,6 +657,7 @@ const REPORTS_DATA = [
         excerpt: "MISLEADING: DOGE's viral claim about 'spending on condoms in Gaza' misrepresented standard USAID global health programming. The spending was part of long-standing family planning programs in 40+ countries - not a Gaza-specific initiative. The claim manufactured outrage by stripping context from routine public health expenditures.",
         chart: {
             type: "hbar",
+            color: "#ef4444",
             data: [45, 30, 10, 10, 5],
             labels: ["Africa", "Asia", "MENA", "LatAm", "Other"],
             colors: ["#3b82f6", "#10b981", "#f59e0b", "#06b6d4", "#64748b"]
@@ -466,6 +719,7 @@ const REPORTS_DATA = [
         excerpt: "FALSE: Claims that BLS data is 'phony' or manipulated are false. The BLS operates independently with publicly documented methodology. Data revisions are standard practice, not manipulation. 78% of economists express high trust in BLS data. The 2025 benchmark revision was within historical norms.",
         chart: {
             type: "hbar",
+            color: "#ef4444",
             data: [78, 18, 4],
             labels: ["High Trust", "Moderate", "Low Trust"],
             colors: ["#10b981", "#f59e0b", "#ef4444"]

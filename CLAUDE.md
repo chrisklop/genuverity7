@@ -211,10 +211,48 @@ git checkout main && git merge report/slug-name && git push origin main
 |------|---------|
 | `js/reports-data.js` | Report metadata for landing page |
 | `js/experiences-data.js` | Labs/experiences metadata |
+| `js/chart-previews.js` | **Unified chart thumbnail renderer** |
 | `docs/report-template-2025.html` | Golden template for reports |
-| `tools/generate-sitemaps.js` | Sitemap + clean URL generator |
+| `tools/generate-sitemaps.js` | Sitemap + clean URL generator + **chart validation** |
 | `api/index.py` | Production API endpoints |
 | `server.py` | Local development server |
+
+---
+
+## 📊 CHART THUMBNAILS
+
+Report cards on `index.html` and `newsfeed.html` display mini-chart previews.
+
+### Architecture
+- **Single source**: `js/chart-previews.js` - unified chart rendering module
+- **Used by**: `index.html` carousel, `newsfeed.html` news feed
+- **Config source**: `chart` property in `js/reports-data.js`
+
+### Chart Config Format (MANDATORY)
+```javascript
+chart: {
+    type: "hbar",           // bar, line, donut, hbar, network, timeline
+    color: "#ef4444",       // REQUIRED - Primary color (even if colors[] provided)
+    data: [5, 400],         // Data values (format varies by type)
+    labels: ["A", "B"],     // Optional: for hbar charts
+    colors: ["#ef4444", "#10b981"]  // Optional: multiple colors for hbar
+}
+```
+
+**CRITICAL: `color` property is MANDATORY** - line/donut charts fail without it, hbar uses it as fallback
+
+### Adding Charts to New Reports
+
+1. **generate-sitemaps.js auto-detects** missing chart configs
+2. Run `node tools/generate-sitemaps.js` - it will suggest configs
+3. Copy suggested config to `js/reports-data.js` entry
+4. Test locally with `python server.py`
+
+### Validation
+```bash
+node tools/generate-sitemaps.js
+# Will warn if reports have Chart.js but no reports-data.js chart config
+```
 
 ---
 

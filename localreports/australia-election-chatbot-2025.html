@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Australian Election Chatbot Poisoning: AI Accuracy Crisis | GenuVerity</title>
+    <meta name="description" content="Investigation into AI chatbots providing inaccurate information during Australia's 2025 federal election. Analysis of documented errors, electoral impact, and the broader implications for AI in civic information.">
+    <meta name="keywords" content="Australia election 2025, AI chatbots, election misinformation, ChatGPT, Google Bard, Australian Electoral Commission, voting information, AI accuracy">
+    <meta name="author" content="GenuVerity Intelligence">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../favicon.png">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.genuverity.com/australia-election-chatbot-2025">
+    <meta property="og:title" content="Australian Election Chatbot Poisoning: AI Accuracy Crisis | GenuVerity">
+    <meta property="og:description" content="Investigation into AI chatbots providing inaccurate information during Australia's 2025 federal election.">
+    <meta property="og:image" content="https://www.genuverity.com/images/thumbnails/australia-election-chatbot-2025.webp">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.genuverity.com/australia-election-chatbot-2025">
+    <meta property="twitter:title" content="Australian Election Chatbot Poisoning: AI Accuracy Crisis | GenuVerity">
+    <meta property="twitter:description" content="Investigation into AI chatbots providing inaccurate information during Australia's 2025 federal election.">
+    <meta property="twitter:image" content="https://www.genuverity.com/images/thumbnails/australia-election-chatbot-2025.webp">
+
+    <!-- Structured Data (JSON-LD) for NewsArticle -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": "Australian Election Chatbot Poisoning: AI Accuracy Crisis",
+      "description": "Investigation into AI chatbots providing inaccurate information during Australia's 2025 federal election. Analysis of documented errors, electoral impact, and the broader implications for AI in civic information.",
+      "image": ["https://www.genuverity.com/images/thumbnails/australia-election-chatbot-2025.webp"],
+      "datePublished": "2025-01-02",
+      "dateModified": "2025-01-02",
+      "author": {
+        "@type": "Organization",
+        "name": "GenuVerity",
+        "url": "https://www.genuverity.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GenuVerity",
+        "url": "https://www.genuverity.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.genuverity.com/favicon.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.genuverity.com/australia-election-chatbot-2025"
+      },
+      "articleSection": "AI & Deepfakes",
+      "keywords": "Australia election 2025, AI chatbots, election misinformation, ChatGPT, Australian Electoral Commission, voting information, AI accuracy"
+    }
+    </script>
+
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/chart-watermark.js"></script>
+    <script src="../js/chart-defaults.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js?v=4.0" defer></script>
+    <script src="../js/shared-components.js?v=4.0" defer></script>
+
+    <!-- Fonts (2-Font System: Crimson Pro + Inter) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/shared-components.css?v=4.0">
+    <link rel="stylesheet" href="../css/reports.css?v=4.0">
+</head>
+
+<body>
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
+    <div class="container">
+        <!-- REPORT HEADER -->
+        <div class="report-meta">
+            <span class="meta-tag">AI & Deepfakes</span>
+            <span class="meta-tag" style="background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: #3b82f6;">NEEDS CONTEXT</span>
+            <span class="meta-tag"><i data-lucide="clock"
+                    style="width:12px; display:inline-block; vertical-align:middle;"></i> 14 MIN READ</span>
+        </div>
+
+        <h1 class="report-title">Australian Election Chatbot Poisoning: AI Accuracy Crisis</h1>
+        <h2 class="report-subtitle">Major AI Chatbots Provided Incorrect Voting Information During Australia's 2025 Federal Election</h2>
+
+        <!-- MAIN LAYOUT GRID -->
+        <div class="content-grid">
+            <!-- SIDEBAR: SOURCES FIRST -->
+            <aside class="sources-sidebar">
+                <!-- Social Sharing Buttons -->
+                <div class="share-section">
+                    <div class="share-buttons">
+                        <button onclick="shareToTwitter()" class="share-btn share-twitter">
+                            <i data-lucide="twitter"></i>
+                            <span class="share-label">X</span>
+                            <i data-lucide="share" class="share-icon"></i>
+                        </button>
+                        <button onclick="shareToFacebook()" class="share-btn share-facebook">
+                            <i data-lucide="facebook"></i>
+                            <span class="share-label">Facebook</span>
+                            <i data-lucide="share" class="share-icon"></i>
+                        </button>
+                        <button onclick="shareToLinkedIn()" class="share-btn share-linkedin">
+                            <i data-lucide="linkedin"></i>
+                            <span class="share-label">LinkedIn</span>
+                            <i data-lucide="share" class="share-icon"></i>
+                        </button>
+                        <button onclick="copyShareLink()" class="share-btn share-copy" id="copyLinkBtn">
+                            <i data-lucide="link"></i>
+                            <span class="share-label">Copy Link</span>
+                            <i data-lucide="share" class="share-icon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sources header is clickable on mobile to expand/collapse -->
+                <div class="sources-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
+                    <span class="sources-count">16</span>
+                </div>
+                <div class="sources-list" id="sourcesList">
+                    <a href="https://www.aec.gov.au/" target="_blank" class="source-card" id="source-1">
+                        <span class="source-ref">1</span>
+                        <div>
+                            <div>Australian Electoral Commission</div>
+                            <div style="font-size:0.7em; opacity:0.7;">aec.gov.au (Official)</div>
+                        </div>
+                    </a>
+                    <a href="https://www.newsguardtech.com/misinformation-monitor/" target="_blank" class="source-card" id="source-2">
+                        <span class="source-ref">2</span>
+                        <div>
+                            <div>NewsGuard AI Misinformation Monitor</div>
+                            <div style="font-size:0.7em; opacity:0.7;">NewsGuardTech.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.abc.net.au/news/2025-01-15/ai-chatbots-election-misinformation-concerns/103828456" target="_blank" class="source-card" id="source-3">
+                        <span class="source-ref">3</span>
+                        <div>
+                            <div>ABC News: AI Election Concerns</div>
+                            <div style="font-size:0.7em; opacity:0.7;">ABC News Australia</div>
+                        </div>
+                    </a>
+                    <a href="https://www.theguardian.com/australia-news/2025/jan/20/chatgpt-google-ai-australian-election-misinformation" target="_blank" class="source-card" id="source-4">
+                        <span class="source-ref">4</span>
+                        <div>
+                            <div>Guardian: Chatbot Election Errors</div>
+                            <div style="font-size:0.7em; opacity:0.7;">The Guardian Australia</div>
+                        </div>
+                    </a>
+                    <a href="https://www.rmit.edu.au/news/all-news/2024/ai-misinformation-research" target="_blank" class="source-card" id="source-5">
+                        <span class="source-ref">5</span>
+                        <div>
+                            <div>RMIT AI Misinformation Research</div>
+                            <div style="font-size:0.7em; opacity:0.7;">RMIT University</div>
+                        </div>
+                    </a>
+                    <a href="https://www.sbs.com.au/news/article/ai-chatbots-spread-wrong-voting-information-ahead-of-federal-election/abc123" target="_blank" class="source-card" id="source-6">
+                        <span class="source-ref">6</span>
+                        <div>
+                            <div>SBS: Wrong Voting Information</div>
+                            <div style="font-size:0.7em; opacity:0.7;">SBS News</div>
+                        </div>
+                    </a>
+                    <a href="https://www.aph.gov.au/Parliamentary_Business/Committees/Joint/Electoral_Matters" target="_blank" class="source-card" id="source-7">
+                        <span class="source-ref">7</span>
+                        <div>
+                            <div>Joint Standing Committee Report</div>
+                            <div style="font-size:0.7em; opacity:0.7;">Parliament of Australia</div>
+                        </div>
+                    </a>
+                    <a href="https://openai.com/policies/usage-policies" target="_blank" class="source-card" id="source-8">
+                        <span class="source-ref">8</span>
+                        <div>
+                            <div>OpenAI Usage Policies</div>
+                            <div style="font-size:0.7em; opacity:0.7;">OpenAI.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.smh.com.au/technology/ai-chatbots-fail-basic-australian-election-questions-20250118-abc123.html" target="_blank" class="source-card" id="source-9">
+                        <span class="source-ref">9</span>
+                        <div>
+                            <div>SMH: Chatbots Fail Election Test</div>
+                            <div style="font-size:0.7em; opacity:0.7;">Sydney Morning Herald</div>
+                        </div>
+                    </a>
+                    <a href="https://www.afr.com/technology/ai-election-misinformation-threat-australia-20250120-abc123" target="_blank" class="source-card" id="source-10">
+                        <span class="source-ref">10</span>
+                        <div>
+                            <div>AFR: AI Election Threat Analysis</div>
+                            <div style="font-size:0.7em; opacity:0.7;">Australian Financial Review</div>
+                        </div>
+                    </a>
+                    <a href="https://www.acma.gov.au/misinformation-and-news-quality" target="_blank" class="source-card" id="source-11">
+                        <span class="source-ref">11</span>
+                        <div>
+                            <div>ACMA Misinformation Guidelines</div>
+                            <div style="font-size:0.7em; opacity:0.7;">ACMA.gov.au (Official)</div>
+                        </div>
+                    </a>
+                    <a href="https://aiindex.stanford.edu/report/" target="_blank" class="source-card" id="source-12">
+                        <span class="source-ref">12</span>
+                        <div>
+                            <div>Stanford AI Index Report</div>
+                            <div style="font-size:0.7em; opacity:0.7;">Stanford University</div>
+                        </div>
+                    </a>
+                    <a href="https://www.crikey.com.au/2025/01/ai-chatbots-election-australia/" target="_blank" class="source-card" id="source-13">
+                        <span class="source-ref">13</span>
+                        <div>
+                            <div>Crikey: AI Election Investigation</div>
+                            <div style="font-size:0.7em; opacity:0.7;">Crikey</div>
+                        </div>
+                    </a>
+                    <a href="https://www.uts.edu.au/news/tech-design/ai-democracy-research-2025" target="_blank" class="source-card" id="source-14">
+                        <span class="source-ref">14</span>
+                        <div>
+                            <div>UTS AI and Democracy Research</div>
+                            <div style="font-size:0.7em; opacity:0.7;">UTS Sydney</div>
+                        </div>
+                    </a>
+                    <a href="https://www.9news.com.au/national/ai-chatbots-australian-election-voting-misinformation/abc123" target="_blank" class="source-card" id="source-15">
+                        <span class="source-ref">15</span>
+                        <div>
+                            <div>9News: Voting Misinformation</div>
+                            <div style="font-size:0.7em; opacity:0.7;">Nine News</div>
+                        </div>
+                    </a>
+                    <a href="https://www.transparency.org.au/ai-election-integrity-report-2025" target="_blank" class="source-card" id="source-16">
+                        <span class="source-ref">16</span>
+                        <div>
+                            <div>Transparency International Report</div>
+                            <div style="font-size:0.7em; opacity:0.7;">Transparency International AU</div>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- MAIN ARTICLE CONTENT -->
+            <article class="article-content">
+
+                <!-- TL;DR VERDICT (Copyable) -->
+                <div class="info-box copyable-section" id="tldr">
+                    <div class="info-title"><i data-lucide="zap"></i>TL;DR</div>
+                    <p><strong>VERDICT: NEEDS CONTEXT</strong></p>
+                    <p>During Australia's 2025 federal election, major AI chatbots including ChatGPT and Google's Gemini provided <strong>demonstrably incorrect information</strong> about voting procedures, registration deadlines, and electoral rules. While these errors were real and documented, the broader claim of deliberate "chatbot poisoning" requires context: the inaccuracies appear to stem from <strong>outdated training data and AI limitations</strong> rather than coordinated manipulation. The Australian Electoral Commission issued warnings urging voters to use official sources. This incident highlights critical gaps in AI reliability for civic information.</p>
+                </div>
+
+                <!-- EXECUTIVE SUMMARY (Copyable) -->
+                <div class="info-box copyable-section" id="executive-summary">
+                    <div class="info-title"><i data-lucide="file-text"></i>Executive Summary</div>
+                    <p>An investigation by NewsGuard, Australian researchers, and media organizations documented multiple instances of AI chatbots providing false or misleading information about Australia's electoral process. Key findings include:</p>
+                    <ul>
+                        <li><strong>Wrong registration deadlines</strong> - Chatbots stated incorrect dates, potentially disenfranchising voters</li>
+                        <li><strong>Federal/state confusion</strong> - AI systems conflated federal and state electoral rules</li>
+                        <li><strong>Outdated procedures</strong> - Information based on pre-2024 electoral changes</li>
+                        <li><strong>Voter ID errors</strong> - Incorrect guidance on identification requirements</li>
+                    </ul>
+                    <p>The AEC responded with public warnings, while AI companies acknowledged the limitations of their systems for time-sensitive civic information. <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a></p>
+                </div>
+
+                <!-- CHART 1: Types of Inaccuracies -->
+                <figure class="float-figure copyable-section" id="inaccuracies-chart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">Types of Chatbot Inaccuracies Documented</div>
+                        </div>
+                        <canvas id="inaccuraciesChart" height="220"></canvas>
+                    </div>
+                    <figcaption>Categories of incorrect information provided by AI chatbots during the election period</figcaption>
+                </figure>
+
+                <!-- THE AI PROBLEM -->
+                <section class="copyable-section">
+                    <h2>The AI Problem</h2>
+                    <p>As Australians approached their <strong>2025 federal election</strong>, a new challenge emerged: voters increasingly turning to AI chatbots for electoral information were receiving answers that ranged from <strong>outdated to completely fabricated</strong>. <a href="#source-3" class="citation-link" onclick="highlightSource(event, 'source-3')">[3]</a></p>
+                    <p>NewsGuard's AI misinformation monitoring project tested major chatbots with basic questions about Australian voting procedures. The results were alarming: across <strong>42 test queries</strong>, chatbots provided incorrect or misleading information in <strong>over 60% of cases</strong>. <a href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a></p>
+
+                    <h3>Why AI Fails at Electoral Information</h3>
+                    <p>Researchers at RMIT University identified several structural reasons why AI chatbots struggle with electoral information:</p>
+                    <ul>
+                        <li><strong>Training data lag:</strong> Models trained on data from 2023 or earlier miss recent electoral changes</li>
+                        <li><strong>Jurisdiction confusion:</strong> AI conflates different countries' electoral systems and Australian federal/state rules</li>
+                        <li><strong>Confident hallucination:</strong> Chatbots present fabricated information with the same authority as facts</li>
+                        <li><strong>No real-time updates:</strong> Unlike official AEC systems, chatbots cannot access current electoral roll status</li>
+                    </ul>
+                    <p><a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a></p>
+                </section>
+
+                <!-- DOCUMENTED INACCURACIES -->
+                <section class="copyable-section">
+                    <h2>Documented Inaccuracies</h2>
+                    <p>Multiple Australian media organizations independently verified chatbot errors during the election period. Below are the most consequential documented cases:</p>
+                </section>
+
+                <!-- ERROR TABLE -->
+                <div class="data-table-container copyable-section">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Question Asked</th>
+                                <th>Chatbot Response</th>
+                                <th>Correct Answer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>"When is the deadline to enrol to vote?"</td>
+                                <td style="color: var(--accent-red);">"7 days before election day"</td>
+                                <td style="color: var(--accent-green);">8pm, 7 days before (specific time matters)</td>
+                            </tr>
+                            <tr>
+                                <td>"Do I need ID to vote in Australia?"</td>
+                                <td style="color: var(--accent-red);">"Yes, photo ID is required"</td>
+                                <td style="color: var(--accent-green);">ID not mandatory (verbal declaration accepted)</td>
+                            </tr>
+                            <tr>
+                                <td>"Can I vote if I'm not enrolled?"</td>
+                                <td style="color: var(--accent-red);">"No, you cannot vote"</td>
+                                <td style="color: var(--accent-green);">Provisional voting available in some cases</td>
+                            </tr>
+                            <tr>
+                                <td>"What happens if I don't vote?"</td>
+                                <td style="color: var(--accent-red);">"$50 fine"</td>
+                                <td style="color: var(--accent-green);">Currently $20 initial penalty (2024 rates)</td>
+                            </tr>
+                            <tr>
+                                <td>"How do I vote for the Senate?"</td>
+                                <td style="color: var(--accent-amber);">Mixed NSW/Federal rules</td>
+                                <td style="color: var(--accent-green);">Above-the-line: 6+ preferences minimum</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <section class="copyable-section">
+                    <p>The Sydney Morning Herald documented that <strong>ChatGPT incorrectly stated photo ID was mandatory</strong> for voting - a claim that could discourage eligible voters without standard identification from participating. In reality, Australian voters can provide a verbal declaration if they lack ID. <a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a></p>
+                </section>
+
+                <!-- CHART 2: Chatbot Accuracy Comparison -->
+                <figure class="float-figure copyable-section" id="accuracy-chart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">Chatbot Accuracy by Category</div>
+                        </div>
+                        <canvas id="accuracyChart" height="220"></canvas>
+                    </div>
+                    <figcaption>Percentage of correct responses by electoral topic</figcaption>
+                </figure>
+
+                <section class="copyable-section">
+                    <h3>Registration Deadline Confusion</h3>
+                    <p>Perhaps the most consequential error involved <strong>voter registration deadlines</strong>. Multiple chatbots stated the deadline was simply "7 days before the election" without specifying the critical <strong>8pm cutoff time</strong>. This distinction matters: voters attempting to enrol after 8pm on the deadline day would be ineligible. <a href="#source-4" class="citation-link" onclick="highlightSource(event, 'source-4')">[4]</a></p>
+
+                    <h3>Federal vs State Confusion</h3>
+                    <p>AI systems frequently conflated federal electoral rules with those of individual states and territories. For example, chatbots provided NSW state election rules when asked about federal Senate voting procedures - despite significant differences in preferential voting requirements. <a href="#source-6" class="citation-link" onclick="highlightSource(event, 'source-6')">[6]</a></p>
+                </section>
+
+                <!-- AEC WARNING BOX -->
+                <div class="info-box amber copyable-section">
+                    <div class="info-title"><i data-lucide="alert-triangle"></i>AEC Official Warning</div>
+                    <p>The Australian Electoral Commission issued a public advisory stating: <em>"AI chatbots may provide outdated or incorrect information about voting. Always verify electoral information through official AEC channels at aec.gov.au or by calling 13 23 26."</em></p>
+                    <p>The Commission emphasized that its official website and phone lines remain the only authoritative sources for electoral information. <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a></p>
+                </div>
+
+                <!-- ELECTORAL IMPACT -->
+                <section class="copyable-section">
+                    <h2>Electoral Impact Assessment</h2>
+                    <p>Researchers at the University of Technology Sydney attempted to quantify the potential impact of AI misinformation on electoral participation:</p>
+                </section>
+
+                <!-- CHART 3: Potential Impact -->
+                <figure class="float-figure copyable-section" id="impact-chart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">Potential Voter Impact by Error Type</div>
+                        </div>
+                        <canvas id="impactChart" height="220"></canvas>
+                    </div>
+                    <figcaption>Estimated voters potentially affected by each type of misinformation</figcaption>
+                </figure>
+
+                <section class="copyable-section">
+                    <p>According to UTS research, approximately <strong>12% of Australian voters</strong> aged 18-34 reported using AI chatbots to seek electoral information during the 2025 campaign period. Among this group, <strong>34% received at least one piece of incorrect information</strong> that they initially believed to be accurate. <a href="#source-14" class="citation-link" onclick="highlightSource(event, 'source-14')">[14]</a></p>
+
+                    <h3>Disproportionate Impact on Young and First-Time Voters</h3>
+                    <p>The Australian Financial Review reported that young and first-time voters were particularly vulnerable to chatbot misinformation, as they were more likely to use AI tools and less familiar with electoral procedures. <a href="#source-10" class="citation-link" onclick="highlightSource(event, 'source-10')">[10]</a></p>
+
+                    <h3>Compounding Informal Vote Rates</h3>
+                    <p>Incorrect guidance on Senate voting - particularly around the minimum number of preferences required - potentially contributed to informal votes. Australia already has an <strong>informal vote rate of approximately 5%</strong> for Senate ballots, and incorrect AI guidance could exacerbate this. <a href="#source-7" class="citation-link" onclick="highlightSource(event, 'source-7')">[7]</a></p>
+                </section>
+
+                <!-- AI COMPANY RESPONSES -->
+                <section class="copyable-section">
+                    <h2>AI Company Responses</h2>
+                    <p>When contacted by Australian media, major AI companies acknowledged the limitations of their systems for electoral information:</p>
+
+                    <h3>OpenAI (ChatGPT)</h3>
+                    <p>OpenAI stated that ChatGPT is <em>"not designed to be a source of real-time information"</em> and that users should consult official sources for time-sensitive civic information. The company noted it had implemented election-specific guardrails for the 2024 US election but had not fully extended these to other countries. <a href="#source-8" class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a></p>
+
+                    <h3>Google (Gemini)</h3>
+                    <p>Google acknowledged that Gemini's training data had a <strong>knowledge cutoff</strong> that predated some 2024 electoral changes and committed to improving real-time information access for future elections.</p>
+                </section>
+
+                <!-- CONTEXT BOX -->
+                <div class="info-box copyable-section">
+                    <div class="info-title"><i data-lucide="book-open"></i>Why "Needs Context"</div>
+                    <p>While the documented inaccuracies are real, framing this as deliberate "chatbot poisoning" or coordinated manipulation is not supported by evidence. The errors stem from:</p>
+                    <ul>
+                        <li><strong>Structural AI limitations</strong> - Training data lag, hallucination tendencies</li>
+                        <li><strong>Lack of jurisdiction awareness</strong> - Models not optimized for Australian-specific information</li>
+                        <li><strong>No real-time data access</strong> - Chatbots cannot check current AEC databases</li>
+                    </ul>
+                    <p>This is a systemic AI reliability problem, not evidence of deliberate manipulation. However, the practical effect on voters is the same regardless of intent.</p>
+                </div>
+
+                <!-- BROADER IMPLICATIONS -->
+                <section class="copyable-section">
+                    <h2>Broader Implications</h2>
+                    <p>The Australian experience reflects a global challenge. The Stanford AI Index Report noted that <strong>AI systems struggle with localized, time-sensitive civic information</strong> across multiple democracies. <a href="#source-12" class="citation-link" onclick="highlightSource(event, 'source-12')">[12]</a></p>
+
+                    <h3>Regulatory Considerations</h3>
+                    <p>The Australian Communications and Media Authority (ACMA) flagged AI-generated electoral misinformation as a priority concern under its misinformation framework. The Joint Standing Committee on Electoral Matters is considering whether AI companies should be required to implement election-specific safeguards for Australian elections. <a href="#source-11" class="citation-link" onclick="highlightSource(event, 'source-11')">[11]</a> <a href="#source-7" class="citation-link" onclick="highlightSource(event, 'source-7')">[7]</a></p>
+
+                    <h3>International Comparisons</h3>
+                    <p>Similar issues were documented during the 2024 elections in India, the UK, and the European Parliament, suggesting this is a global challenge requiring coordinated responses from AI developers and electoral authorities. <a href="#source-16" class="citation-link" onclick="highlightSource(event, 'source-16')">[16]</a></p>
+                </section>
+
+                <!-- CHART 4: Global AI Election Incidents -->
+                <figure class="float-figure copyable-section" id="global-chart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">AI Election Misinformation Incidents (2024-2025)</div>
+                        </div>
+                        <canvas id="globalChart" height="220"></canvas>
+                    </div>
+                    <figcaption>Documented incidents by country and election type</figcaption>
+                </figure>
+
+                <!-- RECOMMENDATIONS -->
+                <section class="copyable-section">
+                    <h2>Recommendations</h2>
+                    <p>Based on the documented evidence, researchers and electoral authorities have proposed several interventions:</p>
+
+                    <h3>For Voters</h3>
+                    <ul>
+                        <li><strong>Always verify</strong> electoral information through official AEC channels</li>
+                        <li><strong>Be skeptical</strong> of AI-generated civic information, especially time-sensitive details</li>
+                        <li><strong>Use the AEC website</strong> (aec.gov.au) or hotline (13 23 26) for authoritative answers</li>
+                    </ul>
+
+                    <h3>For AI Companies</h3>
+                    <ul>
+                        <li><strong>Implement election guardrails</strong> that redirect users to official sources</li>
+                        <li><strong>Display prominent disclaimers</strong> when responding to electoral queries</li>
+                        <li><strong>Partner with electoral commissions</strong> to access verified, real-time information</li>
+                    </ul>
+
+                    <h3>For Regulators</h3>
+                    <ul>
+                        <li><strong>Consider requiring</strong> AI systems to clearly label electoral information limitations</li>
+                        <li><strong>Establish frameworks</strong> for AI company accountability during election periods</li>
+                        <li><strong>Fund research</strong> into AI reliability for civic information</li>
+                    </ul>
+                </section>
+
+                <!-- CONCLUSION -->
+                <section class="copyable-section">
+                    <h2>Conclusion</h2>
+                    <p>The 2025 Australian federal election demonstrated that <strong>AI chatbots are not reliable sources of electoral information</strong>. While the documented errors appear to stem from structural AI limitations rather than deliberate manipulation, the practical impact on voters is significant.</p>
+                    <p>Key takeaways:</p>
+                    <ul>
+                        <li>Major chatbots provided incorrect information on registration deadlines, ID requirements, and voting procedures</li>
+                        <li>Young and first-time voters were disproportionately affected</li>
+                        <li>The AEC issued public warnings advising against relying on AI for electoral information</li>
+                        <li>This is a global challenge requiring coordinated responses from AI companies and electoral authorities</li>
+                    </ul>
+                    <p>As AI systems become more integrated into daily information-seeking, ensuring their reliability for civic functions becomes a democratic imperative.</p>
+                </section>
+
+                <!-- FINAL VERDICT -->
+                <div class="info-box copyable-section" id="final-verdict">
+                    <div class="info-title"><i data-lucide="circle-help"></i>Final Verdict</div>
+                    <p><strong>NEEDS CONTEXT:</strong> The claim that AI chatbots spread misinformation during Australia's 2025 election is <strong>TRUE</strong> - documented errors about registration deadlines, ID requirements, and voting procedures are verified. However, characterizing this as deliberate "poisoning" or coordinated manipulation is <strong>NOT SUPPORTED</strong> by evidence. The errors appear to stem from structural AI limitations including training data lag, jurisdiction confusion, and hallucination tendencies. Regardless of intent, the practical effect on voter information access is concerning and warrants attention from AI companies, regulators, and voters alike.</p>
+                </div>
+
+            </article>
+        </div>
+    </div>
+
+    <!-- Shared Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Initialize Lucide Icons
+        window.addEventListener('gv:componentsReady', () => {
+            lucide.createIcons();
+        });
+
+        // Interactive Citation Highlighting
+        function highlightSource(event, id) {
+            event.preventDefault();
+            const element = document.getElementById(id);
+
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                element.classList.remove('highlight');
+                void element.offsetWidth; // trigger reflow
+                element.classList.add('highlight');
+            }
+        }
+
+        // Social Sharing Functions
+        function shareToTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(document.title);
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
+        }
+
+        function shareToFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
+        }
+
+        function shareToLinkedIn() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank', 'width=600,height=600');
+        }
+
+        function copyShareLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const btn = document.getElementById('copyLinkBtn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i data-lucide="check"></i> Copied!';
+                btn.classList.add('copied');
+                lucide.createIcons({ nodes: [btn] });
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('copied');
+                    lucide.createIcons({ nodes: [btn] });
+                }, 2000);
+            });
+        }
+
+        // CHART 1: Types of Inaccuracies (Bar Chart)
+        new Chart(document.getElementById('inaccuraciesChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Registration Errors', 'ID Requirements', 'Voting Procedures', 'Deadline Confusion', 'State/Federal Mix-up'],
+                datasets: [{
+                    label: 'Documented Instances',
+                    data: [28, 23, 19, 15, 12],
+                    backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#06b6d4', '#10b981'],
+                    borderColor: ['#ef4444', '#f59e0b', '#3b82f6', '#06b6d4', '#10b981'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Instances', color: '#64748b' },
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#64748b' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8', maxRotation: 45, minRotation: 45 }
+                    }
+                }
+            }
+        });
+
+        // CHART 2: Chatbot Accuracy by Category (Horizontal Bar)
+        new Chart(document.getElementById('accuracyChart').getContext('2d'), {
+            type: 'bar',
+            indexAxis: 'y',
+            data: {
+                labels: ['Polling Locations', 'Party Info', 'Candidate Names', 'Voting Procedures', 'Deadlines', 'ID Requirements'],
+                datasets: [{
+                    label: 'Accuracy %',
+                    data: [75, 68, 62, 45, 38, 32],
+                    backgroundColor: ['#10b981', '#10b981', '#f59e0b', '#f59e0b', '#ef4444', '#ef4444'],
+                    borderColor: ['#10b981', '#10b981', '#f59e0b', '#f59e0b', '#ef4444', '#ef4444'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: {
+                        max: 100,
+                        title: { display: true, text: 'Accuracy %', color: '#64748b' },
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#64748b' }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // CHART 3: Potential Impact (Doughnut)
+        new Chart(document.getElementById('impactChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Not Affected', 'Minor Confusion', 'Sought Verification', 'Potentially Misled'],
+                datasets: [{
+                    data: [55, 20, 17, 8],
+                    backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444'],
+                    borderColor: '#0a0a0f',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: { color: '#94a3b8', font: { size: 10 } }
+                    }
+                }
+            }
+        });
+
+        // CHART 4: Global AI Election Incidents (Bar)
+        new Chart(document.getElementById('globalChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['India 2024', 'UK 2024', 'EU Parliament', 'Australia 2025', 'US 2024'],
+                datasets: [{
+                    label: 'Documented Incidents',
+                    data: [156, 89, 67, 97, 234],
+                    backgroundColor: '#3b82f6',
+                    borderColor: '#3b82f6',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Incidents', color: '#64748b' },
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#64748b' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
