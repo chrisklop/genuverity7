@@ -1382,7 +1382,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/dec/15/lie-of-the-year-2025-winner/"
             ],
             tags: ["Epstein", "photos", "misattribution"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 82,
@@ -1398,7 +1398,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/dec/15/lie-of-the-year-2025-winner/"
             ],
             tags: ["Montana", "hoax", "vigilantism"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 83,
@@ -1414,7 +1414,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/dec/15/lie-of-the-year-2025-winner/"
             ],
             tags: ["Trump", "Clinton", "manipulation"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 84,
@@ -1430,7 +1430,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://members.efcsn.com/application/applicationtjekdeta33a"
             ],
             tags: ["RFK", "antidepressants", "health policy"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 85,
@@ -1446,7 +1446,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://members.efcsn.com/application/applicationtjekdeta33a"
             ],
             tags: ["aviation", "DC", "tragedy"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 86,
@@ -1463,7 +1463,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://fullfact.org/latest/"
             ],
             tags: ["UK", "budget", "economy"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 87,
@@ -1479,7 +1479,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/special-reports/ai-tracking-center/"
             ],
             tags: ["hurricane", "AI", "disaster"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 88,
@@ -1495,7 +1495,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/special-reports/ai-tracking-center/"
             ],
             tags: ["NYC", "Mamdani", "extremism"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 89,
@@ -1511,7 +1511,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://graphika.com/reports"
             ],
             tags: ["AI", "obituaries", "scam"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 90,
@@ -1527,7 +1527,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.thehindu.com/sci-tech/technology/fewer-fact-checks-ascent-of-ai-social-media-scans-for-visas-events-that-marked-digital-platforms-in-2025/article70452036.ece"
             ],
             tags: ["Australia", "election", "AI"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 91,
@@ -1543,7 +1543,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/special-reports/ai-tracking-center/"
             ],
             tags: ["Combs", "trial", "celebrity"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 92,
@@ -1559,7 +1559,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/special-reports/ai-tracking-center/"
             ],
             tags: ["internet", "AI", "conspiracy"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 93,
@@ -1575,7 +1575,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://fullfact.org/"
             ],
             tags: ["Google", "AI", "search"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 94,
@@ -1591,7 +1591,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/special-reports/ai-tracking-center/"
             ],
             tags: ["NATO", "Russia", "military"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 95,
@@ -1608,7 +1608,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.disinfo.eu/disinfo-update-30-04-2025-2/"
             ],
             tags: ["Maui", "HAARP", "weather"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 96,
@@ -1624,7 +1624,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/special-reports/ai-tracking-center/"
             ],
             tags: ["food", "insects", "Europe"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 97,
@@ -1640,7 +1640,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/special-reports/ai-tracking-center/"
             ],
             tags: ["retail", "satanic panic", "hoax"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 98,
@@ -1656,7 +1656,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/special-reports/ai-tracking-center/"
             ],
             tags: ["Target", "retail", "satanic panic"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 99,
@@ -1672,7 +1672,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/reports/"
             ],
             tags: ["Biden", "AI", "manipulation"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 100,
@@ -1689,7 +1689,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.nuffieldfoundation.org/project/full-fact-2022-2025"
             ],
             tags: ["UK", "tax", "Christmas"],
-            reportStatus: "pending"
+            reportStatus: "live"
         }
     ],
 
