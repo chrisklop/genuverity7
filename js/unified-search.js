@@ -451,7 +451,7 @@ class UnifiedSearch {
                 </div>
             `;
 
-            item.addEventListener('click', () => window.location.href = report.slug);
+            item.addEventListener('click', () => window.location.href = '/' + report.slug);
             this.listView.appendChild(item);
         });
 
@@ -496,7 +496,7 @@ class UnifiedSearch {
 
             item.onmouseenter = () => { item.style.borderColor = 'var(--accent-cyan)'; item.style.background = 'var(--bg-tertiary)'; };
             item.onmouseleave = () => { item.style.borderColor = 'var(--border-color)'; item.style.background = 'var(--bg-card)'; };
-            item.onclick = () => window.location.href = report.slug;
+            item.onclick = () => window.location.href = '/' + report.slug;
 
             list.appendChild(item);
         });
@@ -669,7 +669,7 @@ class UnifiedSearch {
                         <div class="card-meta">
                             <span><i data-lucide="calendar" style="width:12px;height:12px;"></i> ${report.date}</span>
                         </div>
-                        <a href="${report.slug}" class="card-cta">Read</a>
+                        <a href="/${report.slug}" class="card-cta">Read</a>
                     </div>
                 </div>
             `;
@@ -690,7 +690,7 @@ class UnifiedSearch {
                     // It's the center card, allow navigation if clicking content
                     // The main card click will bubble up if we don't handle it
                     if (e.target.closest('.card-cta') || e.target.closest('.card-content') || e.target.closest('.carousel-card')) {
-                        window.location.href = report.slug;
+                        window.location.href = '/' + report.slug;
                     }
                 }
             };

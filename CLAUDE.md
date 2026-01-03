@@ -118,6 +118,18 @@ server.py
 - ❌ Gradient on text (`-webkit-background-clip: text`)
 - ❌ Gradient on cards
 - ❌ Purple colors
+- ❌ Navigation without leading `/` - ALWAYS use `'/' + report.slug` not `report.slug`
+
+### Navigation Pattern (MANDATORY)
+```javascript
+// CORRECT - absolute path
+window.location.href = '/' + report.slug;
+href="/${report.slug}"
+
+// WRONG - relative path causes refresh/404
+window.location.href = report.slug;
+href="${report.slug}"
+```
 
 ---
 
