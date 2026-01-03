@@ -26,6 +26,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 □ Colors: NO purple (#8b5cf6) anywhere
 □ Text: NO GRADIENT TEXT - use solid colors only
 □ Charts: Chart.js with Midnight Tech colors
+□ CHART THUMBNAILS: Run `node tools/sync-chart-configs.js` after creating/editing reports
 □ TESTING: Run npm run test:preview before merging to main
 ```
 
@@ -183,18 +184,21 @@ cp docs/report-template-2025.html localreports/slug.html
 # 5. Add to js/reports-data.js (ID 0, manually increment all other IDs)
 #    NEVER use sed/perl automation - causes duplicate `id:` keys
 
-# 6. Regenerate sitemaps
+# 6. SYNC CHART THUMBNAILS (CRITICAL - don't skip!)
+node tools/sync-chart-configs.js
+
+# 7. Regenerate sitemaps
 node tools/generate-sitemaps.js
 
-# 7. Commit and push to feature branch (NOT main)
+# 8. Commit and push to feature branch (NOT main)
 git add localreports/slug.html js/reports-data.js sitemap.xml sitemap-news.xml vercel.json
 git commit -m "Add report: slug"
 git push origin report/slug-name
 
-# 8. TEST on preview deployment (REQUIRED)
+# 9. TEST on preview deployment (REQUIRED)
 npm run test:preview https://genuverity7-git-report-slug-name-xxx.vercel.app
 
-# 9. If tests pass, merge to main
+# 10. If tests pass, merge to main
 git checkout main && git merge report/slug-name && git push origin main
 ```
 
@@ -234,31 +238,38 @@ git checkout main && git merge report/slug-name && git push origin main
 ## 📊 CHART THUMBNAILS
 
 Report cards on `index.html` and `newsfeed.html` display mini-chart previews.
+**Thumbnails MUST match the actual charts inside each report.**
+
+### ⚠️ CRITICAL: Sync After Every Report
+
+**ALWAYS run this after creating or editing ANY report:**
+```bash
+node tools/sync-chart-configs.js
+```
+
+This tool:
+1. Reads each report's HTML to find Chart.js charts
+2. Extracts the actual chart type, data, and colors
+3. Updates `js/reports-data.js` with matching configs
+4. Ensures thumbnails accurately preview the report's charts
+
+**If you skip this step, thumbnails will show generic/wrong charts!**
 
 ### Architecture
-- **Single source**: `js/chart-previews.js` - unified chart rendering module
-- **Used by**: `index.html` carousel, `newsfeed.html` news feed
-- **Config source**: `chart` property in `js/reports-data.js`
+- **Sync tool**: `tools/sync-chart-configs.js` - extracts chart data from HTML
+- **Renderer**: `js/chart-previews.js` - renders mini previews on cards
+- **Config storage**: `chart` property in `js/reports-data.js`
 
-### Chart Config Format (MANDATORY)
+### Chart Config Format
 ```javascript
 chart: {
     type: "hbar",           // bar, line, donut, hbar, network, timeline
-    color: "#ef4444",       // REQUIRED - Primary color (even if colors[] provided)
+    color: "#ef4444",       // Primary color
     data: [5, 400],         // Data values (format varies by type)
     labels: ["A", "B"],     // Optional: for hbar charts
-    colors: ["#ef4444", "#10b981"]  // Optional: multiple colors for hbar
+    colors: ["#ef4444", "#10b981"]  // Optional: multiple colors
 }
 ```
-
-**CRITICAL: `color` property is MANDATORY** - line/donut charts fail without it, hbar uses it as fallback
-
-### Adding Charts to New Reports
-
-1. **generate-sitemaps.js auto-detects** missing chart configs
-2. Run `node tools/generate-sitemaps.js` - it will suggest configs
-3. Copy suggested config to `js/reports-data.js` entry
-4. Test locally with `python server.py`
 
 ### Validation
 ```bash
