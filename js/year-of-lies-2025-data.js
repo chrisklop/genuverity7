@@ -388,7 +388,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/nov/21/lie-year-vote-reader-poll-choice/"
             ],
             tags: ["Portland", "protests", "cities"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 22,
@@ -404,7 +404,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://heartland.org/opinion/40-examples-of-fake-news-in-2025/"
             ],
             tags: ["crime", "DC", "statistics"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 23,
@@ -421,7 +421,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.poynter.org/reporting-editing/2025/most-read-news-articles-year/"
             ],
             tags: ["Hegseth", "Signal", "security"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 24,
@@ -438,7 +438,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://misinforeview.hks.harvard.edu/article/the-small-effects-of-short-user-corrections-on-misinformation-in-brazil-india-and-the-united-kingdom/"
             ],
             tags: ["Meta", "fact-checking", "platform"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 25,
@@ -455,7 +455,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://jmir.org/2025/1/e64225"
             ],
             tags: ["UK", "riots", "misidentification"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 26,
@@ -472,7 +472,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/reports/"
             ],
             tags: ["Vance", "misinformation", "politics"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 27,
@@ -488,7 +488,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/dec/15/lie-of-the-year-2025-winner/"
             ],
             tags: ["NSF", "science", "grants"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
 
         // === AI & DEEPFAKES ===
@@ -506,7 +506,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://dfrlab.org/research-and-analysis-archives/"
             ],
             tags: ["Syria", "AI", "deepfake"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 29,
@@ -522,7 +522,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.poynter.org/reporting-editing/2025/most-read-news-articles-year/"
             ],
             tags: ["AI", "Hollywood", "wildfires"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 30,
@@ -538,7 +538,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/reports/"
             ],
             tags: ["IDF", "Israel", "manipulation"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
 
         // === BRAZIL ===
@@ -556,7 +556,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2025/dnr-executive-summary"
             ],
             tags: ["Brazil", "elections", "democracy"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 32,
@@ -572,7 +572,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2025/dnr-executive-summary"
             ],
             tags: ["Brazil", "courts", "judiciary"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 33,
@@ -588,7 +588,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2025/dnr-executive-summary"
             ],
             tags: ["education", "Brazil", "culture war"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
 
         // === AFRICAN MISINFORMATION ===
@@ -606,7 +606,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://heartland.org/opinion/40-examples-of-fake-news-in-2025/"
             ],
             tags: ["Ebola", "DRC", "health"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 35,
@@ -622,7 +622,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://africacheck.org/"
             ],
             tags: ["vaccines", "sterility", "conspiracy"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 36,
@@ -638,7 +638,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://africacheck.org/"
             ],
             tags: ["Ebola", "conspiracy", "organs"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 37,
@@ -654,7 +654,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://africacheck.org/"
             ],
             tags: ["vaccines", "Africa", "conspiracy"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 38,
@@ -670,7 +670,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://africacheck.org/"
             ],
             tags: ["Nigeria", "petroleum", "economy"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 39,
@@ -686,7 +686,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.whitehouse.gov/fact-sheets/"
             ],
             tags: ["Nigeria", "banking", "ID"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 40,
@@ -702,7 +702,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.whitehouse.gov/fact-sheets/"
             ],
             tags: ["South Africa", "monarchy", "spending"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 41,
@@ -718,7 +718,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.pewresearch.org/"
             ],
             tags: ["South Africa", "immigration", "statistics"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 42,
@@ -734,7 +734,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.whitehouse.gov/fact-sheets/"
             ],
             tags: ["Nigeria", "education", "schools"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 43,
@@ -750,7 +750,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.whitehouse.gov/fact-sheets/"
             ],
             tags: ["South Africa", "law", "self-defense"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 44,
@@ -766,7 +766,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.whitehouse.gov/fact-sheets/"
             ],
             tags: ["South Africa", "Mozambique", "misattribution"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 45,
@@ -782,7 +782,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.whitehouse.gov/fact-sheets/"
             ],
             tags: ["Nigeria", "education", "fees"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 46,
@@ -798,7 +798,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.whitehouse.gov/fact-sheets/"
             ],
             tags: ["South Africa", "government", "spending"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
 
         // === SOUTH ASIAN ===
@@ -816,7 +816,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.boomlive.in/"
             ],
             tags: ["India", "Pakistan", "military"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 48,
@@ -832,7 +832,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.nordishub.eu/internal-mapping-ais-role-in-disinformation-in-the-nordic-is-less-than-feared-but-not-harmless/"
             ],
             tags: ["India", "deepfake", "politics"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 49,
@@ -848,7 +848,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.nordishub.eu/internal-mapping-ais-role-in-disinformation-in-the-nordic-is-less-than-feared-but-not-harmless/"
             ],
             tags: ["India", "AI", "crime"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 50,
@@ -864,7 +864,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.nordishub.eu/internal-mapping-ais-role-in-disinformation-in-the-nordic-is-less-than-feared-but-not-harmless/"
             ],
             tags: ["India", "scam", "fraud"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 51,
@@ -880,7 +880,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.nordishub.eu/internal-mapping-ais-role-in-disinformation-in-the-nordic-is-less-than-feared-but-not-harmless/"
             ],
             tags: ["Bangladesh", "police", "video"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 52,
@@ -896,7 +896,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.nordishub.eu/internal-mapping-ais-role-in-disinformation-in-the-nordic-is-less-than-feared-but-not-harmless/"
             ],
             tags: ["India", "Modi", "cheapfake"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
 
         // === RUSSIAN DISINFORMATION ===
@@ -915,7 +915,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/reports/"
             ],
             tags: ["Russia", "influence", "Storm-1516"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 54,
@@ -932,7 +932,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/reports/"
             ],
             tags: ["AI", "China", "chatbot"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 55,
@@ -950,7 +950,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://pmc.ncbi.nlm.nih.gov/articles/PMC12457897/"
             ],
             tags: ["Russia", "Pravda", "disinformation"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 56,
@@ -967,7 +967,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://fullfact.org/latest/"
             ],
             tags: ["UK", "deepfake", "Starmer"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 57,
@@ -984,7 +984,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/special-reports/ai-tracking-center/"
             ],
             tags: ["Russia", "Dougan", "influence"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 58,
@@ -1000,7 +1000,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardrealitycheck.com/"
             ],
             tags: ["AI", "Google", "Gemini"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
 
         // === VIRAL CONSPIRACIES ===
@@ -1019,7 +1019,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/dec/15/lie-of-the-year-2025-winner/"
             ],
             tags: ["Epstein", "documents", "conspiracy"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 60,
@@ -1035,7 +1035,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/special-reports/2024-elections-misinformation-tracker/"
             ],
             tags: ["Trump", "health", "manipulation"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 61,
@@ -1051,7 +1051,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/dec/15/history-lie-of-the-year-2009-2025/"
             ],
             tags: ["Trump", "death hoax", "conspiracy"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 62,
@@ -1067,7 +1067,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/media-coverage/"
             ],
             tags: ["SNAP", "Illinois", "welfare"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 63,
@@ -1083,7 +1083,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.factcheck.org/fake-news/"
             ],
             tags: ["Mike Lee", "Marxism", "politics"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 64,
@@ -1099,7 +1099,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/dec/15/lie-year-vote-reader-choice-results/"
             ],
             tags: ["Gaza", "Netanyahu", "humanitarian"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 65,
@@ -1115,7 +1115,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/dec/15/lie-of-the-year-2025-winner/"
             ],
             tags: ["immigration", "MS-13", "tattoos"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 66,
@@ -1131,7 +1131,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/dec/15/lie-of-the-year-2025-winner/"
             ],
             tags: ["Jeffries", "Congress", "spending"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 67,
@@ -1147,7 +1147,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/dec/15/lie-of-the-year-2025-winner/"
             ],
             tags: ["Jeffries", "NIH", "research"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 68,
@@ -1163,7 +1163,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.factcheck.org/2025/05/was-record-of-heroic-nurse-wiped-from-defense-department-archives/"
             ],
             tags: ["military", "quotes", "fabrication"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 69,
@@ -1179,7 +1179,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.factcheck.org/2025/03/viral-posts-share-phony-leaked-audio-of-vance-criticizing-musk/"
             ],
             tags: ["Vance", "Musk", "audio", "AI"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 70,
@@ -1196,7 +1196,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.factcheck.org/2025/04/how-to-combat-misinformation/"
             ],
             tags: ["Trump", "Duterte", "recycled video"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
 
         // === MORE FACT CHECKS ===
