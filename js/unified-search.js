@@ -91,17 +91,64 @@ function generateLineChart(color, data) {
     </div></div>`;
 }
 
-function generateDonutChart(percent, color) {
+function generateDonutChart(data, color, colors) {
     const circumference = 2 * Math.PI * 40;
-    const offset = circumference * (1 - percent / 100);
+
+    // Handle legacy single-percentage mode
+    if (typeof data === 'number') {
+        const offset = circumference * (1 - data / 100);
+        const bgColor = 'rgba(100, 116, 139, 0.2)';
+        return `<div class="chart-container" style="justify-content: center; align-items: center;">
+            <div class="chart-donut">
+                <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet">
+                    <circle cx="90" cy="50" r="40" stroke="${bgColor}" stroke-width="12" fill="none"/>
+                    <circle cx="90" cy="50" r="40" stroke="${color}" stroke-width="12" fill="none"
+                        stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"
+                        style="transform: rotate(-90deg); transform-origin: 90px 50px;"/>
+                </svg>
+                <span class="donut-label">${data}%</span>
+            </div>
+        </div>`;
+    }
+
+    // Multi-segment donut chart (array data like [58, 27, 15])
+    const dataArray = Array.isArray(data) ? data : [50, 50];
+    const total = dataArray.reduce((a, b) => a + b, 0);
+    const defaultColors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#06b6d4'];
+    const segmentColors = colors && colors.length > 0 ? colors : defaultColors;
+
+    // Generate SVG segments using stroke-dasharray
+    let segments = [];
+    let currentAngle = -90; // Start from top
+
+    dataArray.forEach((value, i) => {
+        const percentage = (value / total) * 100;
+        const angle = (percentage / 100) * 360;
+        const segmentColor = segmentColors[i % segmentColors.length];
+
+        // Calculate arc using stroke-dasharray trick
+        const segmentLength = (percentage / 100) * circumference;
+        const segmentOffset = ((currentAngle + 90) / 360) * circumference;
+
+        segments.push(`<circle cx="90" cy="50" r="40"
+            stroke="${segmentColor}" stroke-width="12" fill="none"
+            stroke-dasharray="${segmentLength} ${circumference - segmentLength}"
+            stroke-dashoffset="${-segmentOffset}"
+            style="transform-origin: 90px 50px;"/>`);
+
+        currentAngle += angle;
+    });
+
+    // Show largest segment percentage in center
+    const maxValue = Math.max(...dataArray);
+    const maxPercent = Math.round((maxValue / total) * 100);
+
     return `<div class="chart-container" style="justify-content: center; align-items: center;">
         <div class="chart-donut">
             <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet">
-                <circle cx="90" cy="50" r="40" stroke="var(--border-color)"/>
-                <circle cx="90" cy="50" r="40" stroke="${color}"
-                    stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"/>
+                ${segments.join('\n                ')}
             </svg>
-            <span class="donut-label">${percent}%</span>
+            <span class="donut-label">${maxPercent}%</span>
         </div>
     </div>`;
 }
@@ -239,7 +286,7 @@ function generateChartForReport(report) {
             // Ensure bar chart has random data if none provided
             return generateBarChart(config.color, config.data);
         case 'donut':
-            return generateDonutChart(config.data || 75, config.color);
+            return generateDonutChart(config.data || 75, config.color, config.colors);
         case 'network':
             return generateNetworkChart(config.color, config.color);
         case 'hbar':
