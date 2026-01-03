@@ -131,6 +131,32 @@ Use one of these category values:
 </div>
 ```
 
+## CRITICAL: Float-Figure Placement (Text Wrap)
+
+**ALWAYS** place float-figures BEFORE the text that should wrap around them:
+
+```html
+<!-- ✅ CORRECT - Text wraps beside chart -->
+<section>
+    <h2>Section Title</h2>
+    <figure class="float-figure">...chart...</figure>
+    <p>This paragraph wraps beside the chart.</p>
+    <p>More text continues wrapping.</p>
+</section>
+
+<!-- ❌ WRONG - Chart at end, no text to wrap -->
+<section>
+    <h2>Section Title</h2>
+    <p>This text appears ABOVE the chart.</p>
+    <figure class="float-figure">...chart...</figure>
+</section>  <!-- Nothing after figure! -->
+```
+
+**Key rules:**
+1. Place figure IMMEDIATELY AFTER `<h2>` or BEFORE paragraphs
+2. Ensure 2-3 paragraphs of text FOLLOW the figure
+3. NEVER place a figure as the last element in a section
+
 ## Token Optimization
 
 This skill is designed for **minimal token usage**:

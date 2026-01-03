@@ -99,6 +99,33 @@ Wrap in `<figure class="float-figure">` for magazine-style float-right:
 </figure>
 ```
 
+### ⚠️ FLOAT-FIGURE PLACEMENT (CRITICAL FOR TEXT WRAP)
+
+**ALWAYS place float-figures BEFORE the text that should wrap around them:**
+
+```html
+<!-- ✅ CORRECT - Text wraps beside chart -->
+<section>
+    <h2>Section Title</h2>
+    <figure class="float-figure">...chart...</figure>
+    <p>This paragraph wraps beside the chart.</p>
+    <p>More text that continues to wrap.</p>
+</section>
+
+<!-- ❌ WRONG - Chart at end, nothing to wrap -->
+<section>
+    <h2>Section Title</h2>
+    <p>This text appears ABOVE the chart.</p>
+    <figure class="float-figure">...chart...</figure>
+</section>  <!-- NO text after figure to wrap! -->
+```
+
+**Key rules:**
+1. Place figure IMMEDIATELY AFTER `<h2>` or BEFORE paragraphs
+2. Ensure 2-3 paragraphs of text FOLLOW the figure (not before)
+3. NEVER place a figure as the last element in a section
+4. If multiple figures exist, use `class="float-figure clear-above"` on subsequent figures to prevent overlap
+
 ### ⚠️ CHART HEIGHT CONSTRAINT (MANDATORY)
 
 **NEVER** put height attribute on canvas directly. **ALWAYS** wrap canvas in a div with fixed height:

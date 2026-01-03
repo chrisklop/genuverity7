@@ -530,12 +530,14 @@ section::after {
 }
 
 /* === MAGAZINE-STYLE FIGURES === */
+/* Text wrap pattern: Place figure BEFORE paragraphs that should wrap beside it.
+   Do NOT place figures at the end of sections with no text after them. */
 .float-figure {
     float: right;
     width: 45%;
     max-width: 450px;
     margin: 5px 0 20px 25px;
-    clear: both;
+    /* REMOVED: clear: both - was preventing text wrap. Use .float-figure.clear-above when needed */
     position: relative;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.27);
     cursor: zoom-in;
@@ -551,6 +553,11 @@ section::after {
     z-index: 1000;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
     border-color: var(--accent-blue);
+}
+
+/* Use when a figure should start below previous floated content */
+.float-figure.clear-above {
+    clear: both;
 }
 
 .float-figure img {
