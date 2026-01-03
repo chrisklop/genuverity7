@@ -89,6 +89,119 @@ function parseDate(dateStr) {
     }
 }
 
+/**
+ * Extract the first Chart.js configuration from an HTML file
+ * Returns a chart config object or null if no chart found
+ */
+function extractChartFromHtml(htmlPath) {
+    try {
+        const html = fs.readFileSync(htmlPath, 'utf8');
+
+        // Find Chart.js configuration blocks
+        const chartMatch = html.match(/new\s+Chart\s*\([^,]+,\s*(\{[\s\S]*?)\)\s*;/);
+        if (!chartMatch) return null;
+
+        const configBlock = chartMatch[1];
+
+        // Extract chart type
+        let type = 'bar';
+        const typeMatch = configBlock.match(/type:\s*['"](\w+)['"]/);
+        if (typeMatch) type = typeMatch[1];
+
+        // Check for horizontal bar (indexAxis: 'y')
+        if (configBlock.includes("indexAxis:") && configBlock.includes("'y'")) {
+            type = 'hbar';
+        }
+
+        // Extract data values
+        let data = [];
+        const dataMatch = configBlock.match(/data:\s*\[([\d\s,.-]+)\]/);
+        if (dataMatch) {
+            data = dataMatch[1].split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+        }
+
+        // Extract labels
+        let labels = [];
+        const labelsMatch = configBlock.match(/labels:\s*\[([\s\S]*?)\]/);
+        if (labelsMatch) {
+            labels = labelsMatch[1].match(/['"]([^'"]+)['"]/g);
+            if (labels) {
+                labels = labels.map(l => l.replace(/['"]/g, ''));
+            }
+        }
+
+        // Extract colors (borderColor or backgroundColor)
+        let colors = [];
+        const borderColorMatch = configBlock.match(/borderColor:\s*\[([\s\S]*?)\]/);
+        const bgColorMatch = configBlock.match(/backgroundColor:\s*\[([\s\S]*?)\]/);
+        const singleColorMatch = configBlock.match(/borderColor:\s*['"]([^'"]+)['"]/);
+
+        if (borderColorMatch) {
+            const colorMatches = borderColorMatch[1].match(/['"]([^'"]+)['"]/g);
+            if (colorMatches) {
+                colors = colorMatches.map(c => c.replace(/['"]/g, ''));
+            }
+        } else if (bgColorMatch) {
+            const colorMatches = bgColorMatch[1].match(/['"]([^'"]+)['"]/g);
+            if (colorMatches) {
+                colors = colorMatches.map(c => c.replace(/['"]/g, ''));
+            }
+        } else if (singleColorMatch) {
+            colors = [singleColorMatch[1]];
+        }
+
+        // Determine primary color
+        const color = colors.length > 0 ? colors[0] : '#3b82f6';
+
+        // Build chart config
+        const config = { type, color };
+
+        if (type === 'donut' || type === 'doughnut') {
+            config.type = 'donut';
+            config.data = data.length > 0 ? Math.round((data[0] / (data[0] + (data[1] || 0))) * 100) : 50;
+        } else if (type === 'hbar') {
+            config.data = data;
+            if (labels && labels.length > 0) config.labels = labels;
+            if (colors && colors.length > 1) config.colors = colors;
+        } else if (type === 'line') {
+            config.data = data;
+        } else if (type === 'bar') {
+            config.data = data;
+        } else if (type === 'network' || type === 'scatter') {
+            config.type = 'network';
+            config.data = { nodes: Math.min(data.length || 8, 12) };
+        }
+
+        return config;
+    } catch (e) {
+        return null;
+    }
+}
+
+/**
+ * Check which reports have charts in HTML but missing from reports-data.js
+ */
+function checkMissingChartConfigs(reportsDataContent, allSlugs) {
+    const missing = [];
+
+    // Parse existing chart configs from reports-data.js
+    const chartMatches = [...reportsDataContent.matchAll(/slug:\s*["']([^"']+)["'][\s\S]*?chart:\s*\{/g)];
+    const slugsWithCharts = new Set(chartMatches.map(m => m[1].replace('localreports/', '').replace('.html', '')));
+
+    for (const slug of allSlugs) {
+        if (slugsWithCharts.has(slug)) continue;
+
+        const htmlPath = path.join(LOCALREPORTS_DIR, `${slug}.html`);
+        const chartConfig = extractChartFromHtml(htmlPath);
+
+        if (chartConfig) {
+            missing.push({ slug, config: chartConfig });
+        }
+    }
+
+    return missing;
+}
+
 // Generate standard sitemap.xml with clean URLs
 function generateSitemap(reports) {
     const today = new Date().toISOString().split('T')[0];
@@ -391,6 +504,25 @@ async function main() {
         console.log('   ✅ All files and data entries match\n');
     } else {
         console.log('\n');
+    }
+
+    // VALIDATION: Check for missing chart configs
+    console.log('📊 Checking chart configurations...');
+    const reportsDataContent = fs.readFileSync(REPORTS_DATA_PATH, 'utf8');
+    const missingCharts = checkMissingChartConfigs(reportsDataContent, allSlugs);
+
+    if (missingCharts.length > 0) {
+        console.log(`   ⚠️  Reports with Chart.js but no reports-data.js chart config (${missingCharts.length}):`);
+        missingCharts.slice(0, 5).forEach(({ slug, config }) => {
+            console.log(`      • ${slug}`);
+            console.log(`        Suggested: chart: ${JSON.stringify(config)}`);
+        });
+        if (missingCharts.length > 5) {
+            console.log(`      ... and ${missingCharts.length - 5} more`);
+        }
+        console.log('      → Add chart configs to js/reports-data.js for thumbnail previews\n');
+    } else {
+        console.log('   ✅ All chart configs present\n');
     }
 
     // Generate standard sitemap

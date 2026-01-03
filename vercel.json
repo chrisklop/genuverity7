@@ -58,6 +58,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/ai-obituary-pirates-2025.html",
+      "destination": "/ai-obituary-pirates-2025",
+      "permanent": true
+    },
+    {
+      "source": "/ai-obituary-pirates-2025.html",
+      "destination": "/ai-obituary-pirates-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/ai-slop-fake-local-news.html",
       "destination": "/ai-slop-fake-local-news",
       "permanent": true
@@ -95,6 +105,16 @@
     {
       "source": "/atc-sorting-claims-2025.html",
       "destination": "/atc-sorting-claims-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/australia-election-chatbot-2025.html",
+      "destination": "/australia-election-chatbot-2025",
+      "permanent": true
+    },
+    {
+      "source": "/australia-election-chatbot-2025.html",
+      "destination": "/australia-election-chatbot-2025",
       "permanent": true
     },
     {
@@ -188,6 +208,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/british-budget-misinfo-2025.html",
+      "destination": "/british-budget-misinfo-2025",
+      "permanent": true
+    },
+    {
+      "source": "/british-budget-misinfo-2025.html",
+      "destination": "/british-budget-misinfo-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/cable-news-narrative-laundering.html",
       "destination": "/cable-news-narrative-laundering",
       "permanent": true
@@ -265,6 +295,16 @@
     {
       "source": "/climate-ice-age-study.html",
       "destination": "/climate-ice-age-study",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/dc-midair-collision-misinfo-2025.html",
+      "destination": "/dc-midair-collision-misinfo-2025",
+      "permanent": true
+    },
+    {
+      "source": "/dc-midair-collision-misinfo-2025.html",
+      "destination": "/dc-midair-collision-misinfo-2025",
       "permanent": true
     },
     {
@@ -405,6 +445,16 @@
     {
       "source": "/epstein-air-logistics.html",
       "destination": "/epstein-air-logistics",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/epstein-archive-photos-2025.html",
+      "destination": "/epstein-archive-photos-2025",
+      "permanent": true
+    },
+    {
+      "source": "/epstein-archive-photos-2025.html",
+      "destination": "/epstein-archive-photos-2025",
       "permanent": true
     },
     {
@@ -595,6 +645,16 @@
     {
       "source": "/hollywood-sign-ai-fire-2025.html",
       "destination": "/hollywood-sign-ai-fire-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/hurricane-melissa-ai-videos-2025.html",
+      "destination": "/hurricane-melissa-ai-videos-2025",
+      "permanent": true
+    },
+    {
+      "source": "/hurricane-melissa-ai-videos-2025.html",
+      "destination": "/hurricane-melissa-ai-videos-2025",
       "permanent": true
     },
     {
@@ -798,6 +858,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/mamdani-extremist-link-2025.html",
+      "destination": "/mamdani-extremist-link-2025",
+      "permanent": true
+    },
+    {
+      "source": "/mamdani-extremist-link-2025.html",
+      "destination": "/mamdani-extremist-link-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/mamdani-nyc-election-2025.html",
       "destination": "/mamdani-nyc-election-2025",
       "permanent": true
@@ -895,6 +965,16 @@
     {
       "source": "/modi-cheapfakes-2025.html",
       "destination": "/modi-cheapfakes-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/montana-pedophile-bonfire-2025.html",
+      "destination": "/montana-pedophile-bonfire-2025",
+      "permanent": true
+    },
+    {
+      "source": "/montana-pedophile-bonfire-2025.html",
+      "destination": "/montana-pedophile-bonfire-2025",
       "permanent": true
     },
     {
@@ -1178,6 +1258,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/rfk-antidepressants-target-2025.html",
+      "destination": "/rfk-antidepressants-target-2025",
+      "permanent": true
+    },
+    {
+      "source": "/rfk-antidepressants-target-2025.html",
+      "destination": "/rfk-antidepressants-target-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/rob-reiner-misinformation-2025.html",
       "destination": "/rob-reiner-misinformation-2025",
       "permanent": true
@@ -1405,6 +1495,16 @@
     {
       "source": "/trump-allegations-epstein.html",
       "destination": "/trump-allegations-epstein",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/trump-clinton-crotch-pat-2025.html",
+      "destination": "/trump-clinton-crotch-pat-2025",
+      "permanent": true
+    },
+    {
+      "source": "/trump-clinton-crotch-pat-2025.html",
+      "destination": "/trump-clinton-crotch-pat-2025",
       "permanent": true
     },
     {
@@ -1713,6 +1813,10 @@
       "destination": "/localreports/ai-deportation-videos.html"
     },
     {
+      "source": "/ai-obituary-pirates-2025",
+      "destination": "/localreports/ai-obituary-pirates-2025.html"
+    },
+    {
       "source": "/ai-slop-fake-local-news",
       "destination": "/localreports/ai-slop-fake-local-news.html"
     },
@@ -1727,6 +1831,10 @@
     {
       "source": "/atc-sorting-claims-2025",
       "destination": "/localreports/atc-sorting-claims-2025.html"
+    },
+    {
+      "source": "/australia-election-chatbot-2025",
+      "destination": "/localreports/australia-election-chatbot-2025.html"
     },
     {
       "source": "/autopen-pardon-termination-2025",
@@ -1765,6 +1873,10 @@
       "destination": "/localreports/brazil-supreme-court-bias-2025.html"
     },
     {
+      "source": "/british-budget-misinfo-2025",
+      "destination": "/localreports/british-budget-misinfo-2025.html"
+    },
+    {
       "source": "/cable-news-narrative-laundering",
       "destination": "/localreports/cable-news-narrative-laundering.html"
     },
@@ -1795,6 +1907,10 @@
     {
       "source": "/climate-ice-age-study",
       "destination": "/localreports/climate-ice-age-study.html"
+    },
+    {
+      "source": "/dc-midair-collision-misinfo-2025",
+      "destination": "/localreports/dc-midair-collision-misinfo-2025.html"
     },
     {
       "source": "/dc-murder-rate-comparison-2025",
@@ -1851,6 +1967,10 @@
     {
       "source": "/epstein-air-logistics",
       "destination": "/localreports/epstein-air-logistics.html"
+    },
+    {
+      "source": "/epstein-archive-photos-2025",
+      "destination": "/localreports/epstein-archive-photos-2025.html"
     },
     {
       "source": "/epstein-documents-2025",
@@ -1927,6 +2047,10 @@
     {
       "source": "/hollywood-sign-ai-fire-2025",
       "destination": "/localreports/hollywood-sign-ai-fire-2025.html"
+    },
+    {
+      "source": "/hurricane-melissa-ai-videos-2025",
+      "destination": "/localreports/hurricane-melissa-ai-videos-2025.html"
     },
     {
       "source": "/idf-soldier-captivity-image-2025",
@@ -2009,6 +2133,10 @@
       "destination": "/localreports/maga-accounts-foreign.html"
     },
     {
+      "source": "/mamdani-extremist-link-2025",
+      "destination": "/localreports/mamdani-extremist-link-2025.html"
+    },
+    {
       "source": "/mamdani-nyc-election-2025",
       "destination": "/localreports/mamdani-nyc-election-2025.html"
     },
@@ -2047,6 +2175,10 @@
     {
       "source": "/modi-cheapfakes-2025",
       "destination": "/localreports/modi-cheapfakes-2025.html"
+    },
+    {
+      "source": "/montana-pedophile-bonfire-2025",
+      "destination": "/localreports/montana-pedophile-bonfire-2025.html"
     },
     {
       "source": "/mrna-vaccine-misinfo-2025",
@@ -2161,6 +2293,10 @@
       "destination": "/localreports/reciprocal-tariff-chart-2025.html"
     },
     {
+      "source": "/rfk-antidepressants-target-2025",
+      "destination": "/localreports/rfk-antidepressants-target-2025.html"
+    },
+    {
       "source": "/rob-reiner-misinformation-2025",
       "destination": "/localreports/rob-reiner-misinformation-2025.html"
     },
@@ -2251,6 +2387,10 @@
     {
       "source": "/trump-allegations-epstein",
       "destination": "/localreports/trump-allegations-epstein.html"
+    },
+    {
+      "source": "/trump-clinton-crotch-pat-2025",
+      "destination": "/localreports/trump-clinton-crotch-pat-2025.html"
     },
     {
       "source": "/trump-dead-labor-day-2025",

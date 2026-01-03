@@ -32,6 +32,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
     <script src="js/reports-data.js?v=1766995800"></script>
+    <script src="js/chart-previews.js"></script>
     <script src="js/shared-components.js" defer></script>
     <link rel="stylesheet" href="css/shared-components.css?v=1766995800">
     <!-- Unified Search & Carousel -->
@@ -2450,143 +2451,19 @@
                 }
             });
 
-            // Chart generators - normalize data to 0-100 range for proper display
-            function normalizeData(data, minHeight = 15, maxHeight = 95) {
-                if (!data || data.length === 0) return data;
-                const max = Math.max(...data);
-                const min = Math.min(...data);
-                if (max === min) return data.map(() => (minHeight + maxHeight) / 2);
-                return data.map(v => minHeight + ((v - min) / (max - min)) * (maxHeight - minHeight));
-            }
-
-            function generateBarChart(color, data) {
-                const rawBars = data || Array.from({ length: 10 }, () => Math.random() * 80 + 20);
-                const bars = normalizeData(rawBars, 20, 95);
-                return `<div class="chart-container"><div class="chart-bars">${bars.map(h =>
-                    `<div class="bar" style="height: ${h}%; background: ${color};"></div>`
-                ).join('')}</div></div>`;
-            }
-
-            function generateLineChart(color, data) {
-                const rawPoints = data || Array.from({ length: 8 }, (_, i) => 20 + Math.random() * 60);
-                const pointsData = normalizeData(rawPoints, 15, 85);
-                const step = 100 / (pointsData.length - 1);
-                const points = pointsData.map((y, i) => ({ x: i * step, y }));
-
-                const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${100 - p.y}`).join(' ');
-                const areaD = pathD + ` L 100 100 L 0 100 Z`;
-                return `<div class="chart-container"><div class="chart-line">
-                <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <path class="area" d="${areaD}" fill="${color}"/>
-                    <path d="${pathD}" stroke="${color}"/>
-                </svg>
-            </div></div>`;
-            }
-
-            function generateDonutChart(percent, color) {
-                const circumference = 2 * Math.PI * 45;
-                const offset = circumference * (1 - percent / 100);
-                return `<div class="chart-container" style="justify-content: center; align-items: center;">
-                <div class="chart-donut">
-                    <svg viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="45" stroke="var(--border-color)"/>
-                        <circle cx="50" cy="50" r="45" stroke="${color}"
-                            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"/>
-                    </svg>
-                    <span class="donut-label">${percent}%</span>
-                </div>
-            </div>`;
-            }
-
-            function generateNetworkChart(nodeColor, lineColor, data) {
-                const count = (data && data.nodes) ? data.nodes : 12;
-                const nodes = Array.from({ length: count }, () => ({
-                    x: 10 + Math.random() * 80,
-                    y: 10 + Math.random() * 80,
-                    size: 6 + Math.random() * 10
-                }));
-                const nodesHTML = nodes.map((n, i) =>
-                    `<div class="node" style="left: ${n.x}%; top: ${n.y}%; width: ${n.size}px; height: ${n.size}px; background: ${nodeColor}; animation-delay: ${i * 0.15}s;"></div>`
-                ).join('');
-                const linesHTML = nodes.slice(0, Math.floor(count / 2)).map((n, i) => {
-                    const target = nodes[(i + 3) % nodes.length];
-                    const dx = target.x - n.x;
-                    const dy = target.y - n.y;
-                    const length = Math.sqrt(dx * dx + dy * dy);
-                    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-                    return `<div class="line" style="left: ${n.x}%; top: ${n.y}%; width: ${length}%; transform: rotate(${angle}deg); background: ${lineColor};"></div>`;
-                }).join('');
-                return `<div class="chart-container"><div class="chart-network">${linesHTML}${nodesHTML}</div></div>`;
-            }
-
-            function generateHBarChart(data, colors, labels) {
-                // Normalize to percentage scale
-                const maxVal = Math.max(...data.map(d => typeof d === 'object' ? d.value : d));
-                const normalizedData = data.map((d, i) => {
-                    const value = typeof d === 'object' ? d.value : d;
-                    const label = typeof d === 'object' ? d.label : (labels && labels[i] ? labels[i] : '');
-                    return { label, value: (value / maxVal) * 100 };
-                });
-                return `<div class="chart-container" style="align-items: center;"><div class="chart-hbars">${normalizedData.map((d, i) =>
-                    `<div class="hbar-row">
-                    ${d.label ? `<span class="hbar-label">${d.label.replace('\\n', ' ')}</span>` : ''}
-                    <div class="hbar" style="width: ${d.value}%; background: ${colors[i % colors.length]};"></div>
-                </div>`
-                ).join('')}</div></div>`;
-            }
-
-            function generateTimelineChart(points, color) {
-                return `<div class="chart-container" style="align-items: center;"><div class="chart-timeline">
-                <div class="timeline-line">
-                    ${points.map(p => `<div class="timeline-point" style="left: ${p}%; background: ${color};"></div>`).join('')}
-                </div>
-            </div></div>`;
-            }
-
-            // Chart configs per report
-            const chartConfigs = [
-                () => generateHBarChart([{ label: 'VAERS', value: 90 }, { label: 'VSD', value: 45 }, { label: 'FDA', value: 70 }, { label: 'CDC', value: 60 }], ['#ef4444', '#f59e0b', '#3b82f6', '#10b981']),
-                () => generateTimelineChart([10, 30, 55, 75, 95], '#ef4444'),
-                () => generateBarChart('#f59e0b'),
-                () => generateDonutChart(72, '#ef4444'),
-                () => generateNetworkChart('#3b82f6', '#3b82f6'),
-                () => generateLineChart('#f59e0b'),
-                () => generateDonutChart(85, '#10b981'),
-                () => generateLineChart('#10b981'),
-                () => generateBarChart('#f59e0b'),
-                () => generateNetworkChart('#4a7dcc', '#4a7dcc'),
-                () => generateNetworkChart('#ef6b5b', '#ef6b5b'),
-                () => generateLineChart('#ef4444'),
-                () => generateHBarChart([{ label: 'True', value: 28 }, { label: 'Mixed', value: 22 }, { label: 'False', value: 72 }, { label: 'Mislead', value: 50 }], ['#10b981', '#f59e0b', '#ef4444', '#ef4444'])
-            ];
-
+            // Chart rendering via shared module (js/chart-previews.js)
             // Generate carousel cards
             function initCarousel() {
                 const track = document.getElementById('carouselTrack');
                 const dotsContainer = document.getElementById('carouselDots');
-
-                // Fallback configs in case report missing chart data
-                const lastResortConfigs = chartConfigs;
 
                 reports.forEach((report, index) => {
                     const card = document.createElement('div');
                     card.className = 'carousel-card';
                     card.dataset.index = index;
 
-                    // Get chart for this card - prioritize report specific data
-                    let chartHTML = '';
-                    if (report.chart) {
-                        const c = report.chart;
-                        if (c.type === 'hbar') chartHTML = generateHBarChart(c.data, c.colors || [c.color, '#f59e0b', '#3b82f6', '#10b981'], c.labels);
-                        else if (c.type === 'timeline') chartHTML = generateTimelineChart(c.data, c.color);
-                        else if (c.type === 'bar') chartHTML = generateBarChart(c.color, c.data);
-                        else if (c.type === 'donut') chartHTML = generateDonutChart(c.data, c.color);
-                        else if (c.type === 'network') chartHTML = generateNetworkChart(c.color, c.color, c.data);
-                        else if (c.type === 'line') chartHTML = generateLineChart(c.color, c.data);
-                        else chartHTML = lastResortConfigs[index % lastResortConfigs.length]();
-                    } else {
-                        chartHTML = lastResortConfigs[index % lastResortConfigs.length]();
-                    }
+                    // Generate chart from report data using shared module
+                    const chartHTML = ChartPreviews.generateChart(report);
 
                     card.innerHTML = `
                     <div class="card-preview">
