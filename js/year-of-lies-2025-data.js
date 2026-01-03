@@ -1214,7 +1214,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.factcheck.org/2025/03/study-focused-on-feminine-hygiene-products-not-transgender-men/"
             ],
             tags: ["USDA", "transgender", "research"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 72,
@@ -1230,7 +1230,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.factcheck.org/2025/03/white-nationalist-group-is-still-active-contrary-to-social-media-claims/"
             ],
             tags: ["Patriot Front", "federal agents", "conspiracy"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 73,
@@ -1247,7 +1247,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.factcheck.org/person/donald-trump/"
             ],
             tags: ["jobs", "native-born", "statistics"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 74,
@@ -1264,7 +1264,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/reports/"
             ],
             tags: ["vaccines", "schedule", "global"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 75,
@@ -1280,7 +1280,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.factcheck.org/person/donald-trump/"
             ],
             tags: ["HRT", "menopause", "health"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 76,
@@ -1296,7 +1296,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.factcheck.org/person/donald-trump/"
             ],
             tags: ["Trump", "immigration", "quotes"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 77,
@@ -1313,7 +1313,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.newsguardtech.com/reports/"
             ],
             tags: ["FAA", "DEI", "aviation"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 78,
@@ -1330,7 +1330,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/dec/15/history-lie-of-the-year-2009-2025/"
             ],
             tags: ["North Carolina", "driving", "law"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 79,
@@ -1347,7 +1347,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/dec/15/history-lie-of-the-year-2009-2025/"
             ],
             tags: ["pardon", "autopen", "legal"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
         {
             id: 80,
@@ -1364,7 +1364,7 @@ const YEAR_OF_LIES_2025_DATA = {
                 "https://www.politifact.com/article/2025/dec/15/lie-of-the-year-2025-winner/"
             ],
             tags: ["Venezuela", "Maduro", "deepfake"],
-            reportStatus: "pending"
+            reportStatus: "live"
         },
 
         // === FINAL 20 ===

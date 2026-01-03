@@ -88,6 +88,26 @@
       "permanent": true
     },
     {
+      "source": "/localreports/atc-sorting-claims-2025.html",
+      "destination": "/atc-sorting-claims-2025",
+      "permanent": true
+    },
+    {
+      "source": "/atc-sorting-claims-2025.html",
+      "destination": "/atc-sorting-claims-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/autopen-pardon-termination-2025.html",
+      "destination": "/autopen-pardon-termination-2025",
+      "permanent": true
+    },
+    {
+      "source": "/autopen-pardon-termination-2025.html",
+      "destination": "/autopen-pardon-termination-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/bangladesh-dipu-das-video-2025.html",
       "destination": "/bangladesh-dipu-das-video-2025",
       "permanent": true
@@ -758,6 +778,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/maduro-surrender-video-2025.html",
+      "destination": "/maduro-surrender-video-2025",
+      "permanent": true
+    },
+    {
+      "source": "/maduro-surrender-video-2025.html",
+      "destination": "/maduro-surrender-video-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/maga-accounts-foreign.html",
       "destination": "/maga-accounts-foreign",
       "permanent": true
@@ -805,6 +835,16 @@
     {
       "source": "/measles-natural-cures-2025.html",
       "destination": "/measles-natural-cures-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/menopausal-hormone-therapy-2025.html",
+      "destination": "/menopausal-hormone-therapy-2025",
+      "permanent": true
+    },
+    {
+      "source": "/menopausal-hormone-therapy-2025.html",
+      "destination": "/menopausal-hormone-therapy-2025",
       "permanent": true
     },
     {
@@ -885,6 +925,16 @@
     {
       "source": "/nad-alzheimers-recovery.html",
       "destination": "/nad-alzheimers-recovery",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/nc-wireless-driving-ban-2025.html",
+      "destination": "/nc-wireless-driving-ban-2025",
+      "permanent": true
+    },
+    {
+      "source": "/nc-wireless-driving-ban-2025.html",
+      "destination": "/nc-wireless-driving-ban-2025",
       "permanent": true
     },
     {
@@ -1005,6 +1055,16 @@
     {
       "source": "/partisan-influencer-networks.html",
       "destination": "/partisan-influencer-networks",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/patriot-front-agents-claim-2025.html",
+      "destination": "/patriot-front-agents-claim-2025",
+      "permanent": true
+    },
+    {
+      "source": "/patriot-front-agents-claim-2025.html",
+      "destination": "/patriot-front-agents-claim-2025",
       "permanent": true
     },
     {
@@ -1368,6 +1428,26 @@
       "permanent": true
     },
     {
+      "source": "/localreports/trump-native-born-jobs-2025.html",
+      "destination": "/trump-native-born-jobs-2025",
+      "permanent": true
+    },
+    {
+      "source": "/trump-native-born-jobs-2025.html",
+      "destination": "/trump-native-born-jobs-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/trump-shitholes-admission-2025.html",
+      "destination": "/trump-shitholes-admission-2025",
+      "permanent": true
+    },
+    {
+      "source": "/trump-shitholes-admission-2025.html",
+      "destination": "/trump-shitholes-admission-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/trump-speech-factcheck.html",
       "destination": "/trump-speech-factcheck",
       "permanent": true
@@ -1465,6 +1545,26 @@
     {
       "source": "/us-recession-analysis-2025.html",
       "destination": "/us-recession-analysis-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/us-vaccine-schedule-global-2025.html",
+      "destination": "/us-vaccine-schedule-global-2025",
+      "permanent": true
+    },
+    {
+      "source": "/us-vaccine-schedule-global-2025.html",
+      "destination": "/us-vaccine-schedule-global-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/usda-transgender-study-2025.html",
+      "destination": "/usda-transgender-study-2025",
+      "permanent": true
+    },
+    {
+      "source": "/usda-transgender-study-2025.html",
+      "destination": "/usda-transgender-study-2025",
       "permanent": true
     },
     {
@@ -1623,6 +1723,14 @@
     {
       "source": "/american-political-disinfo",
       "destination": "/localreports/american-political-disinfo.html"
+    },
+    {
+      "source": "/atc-sorting-claims-2025",
+      "destination": "/localreports/atc-sorting-claims-2025.html"
+    },
+    {
+      "source": "/autopen-pardon-termination-2025",
+      "destination": "/localreports/autopen-pardon-termination-2025.html"
     },
     {
       "source": "/bangladesh-dipu-das-video-2025",
@@ -1893,6 +2001,10 @@
       "destination": "/localreports/liberation-day-address-2025.html"
     },
     {
+      "source": "/maduro-surrender-video-2025",
+      "destination": "/localreports/maduro-surrender-video-2025.html"
+    },
+    {
       "source": "/maga-accounts-foreign",
       "destination": "/localreports/maga-accounts-foreign.html"
     },
@@ -1911,6 +2023,10 @@
     {
       "source": "/measles-natural-cures-2025",
       "destination": "/localreports/measles-natural-cures-2025.html"
+    },
+    {
+      "source": "/menopausal-hormone-therapy-2025",
+      "destination": "/localreports/menopausal-hormone-therapy-2025.html"
     },
     {
       "source": "/meta-ends-fact-checking-2025",
@@ -1943,6 +2059,10 @@
     {
       "source": "/nad-alzheimers-recovery",
       "destination": "/localreports/nad-alzheimers-recovery.html"
+    },
+    {
+      "source": "/nc-wireless-driving-ban-2025",
+      "destination": "/localreports/nc-wireless-driving-ban-2025.html"
     },
     {
       "source": "/netanyahu-no-starvation-gaza-2025",
@@ -1991,6 +2111,10 @@
     {
       "source": "/partisan-influencer-networks",
       "destination": "/localreports/partisan-influencer-networks.html"
+    },
+    {
+      "source": "/patriot-front-agents-claim-2025",
+      "destination": "/localreports/patriot-front-agents-claim-2025.html"
     },
     {
       "source": "/phony-bls-statistics-2025",
@@ -2137,6 +2261,14 @@
       "destination": "/localreports/trump-duterte-arrest-response-2025.html"
     },
     {
+      "source": "/trump-native-born-jobs-2025",
+      "destination": "/localreports/trump-native-born-jobs-2025.html"
+    },
+    {
+      "source": "/trump-shitholes-admission-2025",
+      "destination": "/localreports/trump-shitholes-admission-2025.html"
+    },
+    {
       "source": "/trump-speech-factcheck",
       "destination": "/localreports/trump-speech-factcheck.html"
     },
@@ -2175,6 +2307,14 @@
     {
       "source": "/us-recession-analysis-2025",
       "destination": "/localreports/us-recession-analysis-2025.html"
+    },
+    {
+      "source": "/us-vaccine-schedule-global-2025",
+      "destination": "/localreports/us-vaccine-schedule-global-2025.html"
+    },
+    {
+      "source": "/usda-transgender-study-2025",
+      "destination": "/localreports/usda-transgender-study-2025.html"
     },
     {
       "source": "/vance-misinformation-comments-2025",
