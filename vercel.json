@@ -138,6 +138,26 @@
       "permanent": true
     },
     {
+      "source": "/localreports/barilla-insect-flour-2025.html",
+      "destination": "/barilla-insect-flour-2025",
+      "permanent": true
+    },
+    {
+      "source": "/barilla-insect-flour-2025.html",
+      "destination": "/barilla-insect-flour-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/biden-situation-room-image-2025.html",
+      "destination": "/biden-situation-room-image-2025",
+      "permanent": true
+    },
+    {
+      "source": "/biden-situation-room-image-2025.html",
+      "destination": "/biden-situation-room-image-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/bird-flu-misinformation-2025.html",
       "destination": "/bird-flu-misinformation-2025",
       "permanent": true
@@ -315,6 +335,16 @@
     {
       "source": "/dc-murder-rate-comparison-2025.html",
       "destination": "/dc-murder-rate-comparison-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/dead-internet-theory-2025.html",
+      "destination": "/dead-internet-theory-2025",
+      "permanent": true
+    },
+    {
+      "source": "/dead-internet-theory-2025.html",
+      "destination": "/dead-internet-theory-2025",
       "permanent": true
     },
     {
@@ -548,6 +578,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/google-lens-ai-overviews-2025.html",
+      "destination": "/google-lens-ai-overviews-2025",
+      "permanent": true
+    },
+    {
+      "source": "/google-lens-ai-overviews-2025.html",
+      "destination": "/google-lens-ai-overviews-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/government-shutdown-2025.html",
       "destination": "/government-shutdown-2025",
       "permanent": true
@@ -635,6 +675,16 @@
     {
       "source": "/hhs-vaccine-autism-claims.html",
       "destination": "/hhs-vaccine-autism-claims",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/hobby-lobby-demon-merchandise-2025.html",
+      "destination": "/hobby-lobby-demon-merchandise-2025",
+      "permanent": true
+    },
+    {
+      "source": "/hobby-lobby-demon-merchandise-2025.html",
+      "destination": "/hobby-lobby-demon-merchandise-2025",
       "permanent": true
     },
     {
@@ -898,6 +948,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/maui-weather-weapons-2025.html",
+      "destination": "/maui-weather-weapons-2025",
+      "permanent": true
+    },
+    {
+      "source": "/maui-weather-weapons-2025.html",
+      "destination": "/maui-weather-weapons-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/measles-natural-cures-2025.html",
       "destination": "/measles-natural-cures-2025",
       "permanent": true
@@ -1005,6 +1065,16 @@
     {
       "source": "/nad-alzheimers-recovery.html",
       "destination": "/nad-alzheimers-recovery",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/nato-troops-coffins-2025.html",
+      "destination": "/nato-troops-coffins-2025",
+      "permanent": true
+    },
+    {
+      "source": "/nato-troops-coffins-2025.html",
+      "destination": "/nato-troops-coffins-2025",
       "permanent": true
     },
     {
@@ -1348,6 +1418,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/sean-combs-trial-misinfo-2025.html",
+      "destination": "/sean-combs-trial-misinfo-2025",
+      "permanent": true
+    },
+    {
+      "source": "/sean-combs-trial-misinfo-2025.html",
+      "destination": "/sean-combs-trial-misinfo-2025",
+      "permanent": true
+    },
+    {
       "source": "/localreports/smishing-surge-2025.html",
       "destination": "/smishing-surge-2025",
       "permanent": true
@@ -1405,6 +1485,16 @@
     {
       "source": "/syria-disinformation-2024.html",
       "destination": "/syria-disinformation-2024",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/target-satanic-campaign-2025.html",
+      "destination": "/target-satanic-campaign-2025",
+      "permanent": true
+    },
+    {
+      "source": "/target-satanic-campaign-2025.html",
+      "destination": "/target-satanic-campaign-2025",
       "permanent": true
     },
     {
@@ -1575,6 +1665,16 @@
     {
       "source": "/tylenol-autism-claims-2025.html",
       "destination": "/tylenol-autism-claims-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/uk-christmas-decoration-tax-2025.html",
+      "destination": "/uk-christmas-decoration-tax-2025",
+      "permanent": true
+    },
+    {
+      "source": "/uk-christmas-decoration-tax-2025.html",
+      "destination": "/uk-christmas-decoration-tax-2025",
       "permanent": true
     },
     {
@@ -1857,6 +1957,14 @@
       "destination": "/localreports/bangladesh-dipu-das-video-2025.html"
     },
     {
+      "source": "/barilla-insect-flour-2025",
+      "destination": "/localreports/barilla-insect-flour-2025.html"
+    },
+    {
+      "source": "/biden-situation-room-image-2025",
+      "destination": "/localreports/biden-situation-room-image-2025.html"
+    },
+    {
       "source": "/bird-flu-misinformation-2025",
       "destination": "/localreports/bird-flu-misinformation-2025.html"
     },
@@ -1927,6 +2035,10 @@
     {
       "source": "/dc-murder-rate-comparison-2025",
       "destination": "/localreports/dc-murder-rate-comparison-2025.html"
+    },
+    {
+      "source": "/dead-internet-theory-2025",
+      "destination": "/localreports/dead-internet-theory-2025.html"
     },
     {
       "source": "/deepseek-chatbot-accuracy-2025",
@@ -2021,6 +2133,10 @@
       "destination": "/localreports/google-gemini-misinfo-audit-2025.html"
     },
     {
+      "source": "/google-lens-ai-overviews-2025",
+      "destination": "/localreports/google-lens-ai-overviews-2025.html"
+    },
+    {
       "source": "/government-shutdown-2025",
       "destination": "/localreports/government-shutdown-2025.html"
     },
@@ -2055,6 +2171,10 @@
     {
       "source": "/hhs-vaccine-autism-claims",
       "destination": "/localreports/hhs-vaccine-autism-claims.html"
+    },
+    {
+      "source": "/hobby-lobby-demon-merchandise-2025",
+      "destination": "/localreports/hobby-lobby-demon-merchandise-2025.html"
     },
     {
       "source": "/hollywood-sign-ai-fire-2025",
@@ -2161,6 +2281,10 @@
       "destination": "/localreports/marijuana-rescheduling.html"
     },
     {
+      "source": "/maui-weather-weapons-2025",
+      "destination": "/localreports/maui-weather-weapons-2025.html"
+    },
+    {
       "source": "/measles-natural-cures-2025",
       "destination": "/localreports/measles-natural-cures-2025.html"
     },
@@ -2203,6 +2327,10 @@
     {
       "source": "/nad-alzheimers-recovery",
       "destination": "/localreports/nad-alzheimers-recovery.html"
+    },
+    {
+      "source": "/nato-troops-coffins-2025",
+      "destination": "/localreports/nato-troops-coffins-2025.html"
     },
     {
       "source": "/nc-wireless-driving-ban-2025",
@@ -2341,6 +2469,10 @@
       "destination": "/localreports/sa-zulu-king-salary-2025.html"
     },
     {
+      "source": "/sean-combs-trial-misinfo-2025",
+      "destination": "/localreports/sean-combs-trial-misinfo-2025.html"
+    },
+    {
       "source": "/smishing-surge-2025",
       "destination": "/localreports/smishing-surge-2025.html"
     },
@@ -2363,6 +2495,10 @@
     {
       "source": "/syria-disinformation-2024",
       "destination": "/localreports/syria-disinformation-2024.html"
+    },
+    {
+      "source": "/target-satanic-campaign-2025",
+      "destination": "/localreports/target-satanic-campaign-2025.html"
     },
     {
       "source": "/tda-gang-claims-2025",
@@ -2431,6 +2567,10 @@
     {
       "source": "/tylenol-autism-claims-2025",
       "destination": "/localreports/tylenol-autism-claims-2025.html"
+    },
+    {
+      "source": "/uk-christmas-decoration-tax-2025",
+      "destination": "/localreports/uk-christmas-decoration-tax-2025.html"
     },
     {
       "source": "/ukraine-russia-war-origin-2025",

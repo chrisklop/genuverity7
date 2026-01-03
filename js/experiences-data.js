@@ -3,6 +3,27 @@
 
 const EXPERIENCES_DATA = [
     {
+        id: 2,
+        title: "2025: The Year of the Lie",
+        subtitle: "100 Debunked Claims That Defined a Year",
+        slug: "year-of-lies-2025.html",
+        category: "Annual Compendium",
+        tagClass: "tag-red",
+        catClass: "cat-experience",
+        icon: "calendar-x",
+        date: "Jan 2026",
+        events: "100 Claims",
+        duration: "30-60 min",
+        excerpt: "PolitiFact called 2025 'The Year of the Lie.' We fact-checked all 100 major misinformation campaigns, deepfakes, and viral hoaxes that defined the year—from AI election interference to health conspiracies.",
+        features: ["100 Fact-Checks", "Category Filtering", "Verdict Breakdown", "Source Links"],
+        preview: {
+            type: "donut",
+            color: "#ef4444",
+            data: [35, 28, 22, 15]
+        },
+        status: "live"
+    },
+    {
         id: 1,
         title: "Disinformation Flow Explorer",
         subtitle: "Trace Narratives from Fringe to Policy",
