@@ -117,6 +117,20 @@ Use one of these category values:
 6. **Runs** `./validate-report.sh` to verify
 7. **Commits** to feature branch
 
+## CRITICAL: Chart Height Constraint
+
+**ALWAYS** wrap canvas in height-constrained div. NEVER use height attribute on canvas:
+
+```html
+<!-- ❌ WRONG - Chart expands to 20,000+ pixels -->
+<canvas id="myChart" height="220"></canvas>
+
+<!-- ✅ CORRECT - Height constrained by wrapper -->
+<div style="height: 280px; position: relative;">
+    <canvas id="myChart"></canvas>
+</div>
+```
+
 ## Token Optimization
 
 This skill is designed for **minimal token usage**:

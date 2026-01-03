@@ -172,12 +172,15 @@
                 -->
 
                 <!-- TEMPLATE FOR CHART (magazine-style, floats right with text wrap):
+                CRITICAL: Canvas MUST be inside height-constrained div (not height attr on canvas)
                 <figure class="float-figure copyable-section" id="{{CHART_ID}}-wrapper">
                     <div class="chart-wrapper">
                         <div class="chart-header">
                             <div class="chart-title">{{CHART_TITLE}}</div>
                         </div>
-                        <canvas id="{{CHART_ID}}" height="220"></canvas>
+                        <div style="height: 280px; position: relative;">
+                            <canvas id="{{CHART_ID}}"></canvas>
+                        </div>
                     </div>
                     <figcaption>{{CHART_CAPTION}}</figcaption>
                 </figure>

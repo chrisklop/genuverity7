@@ -91,10 +91,29 @@ The user has **repeatedly complained** about these violations:
 Wrap in `<figure class="float-figure">` for magazine-style float-right:
 ```html
 <figure class="float-figure">
-    <canvas id="myChart"></canvas>
+    <!-- CRITICAL: Canvas MUST be inside height-constrained div -->
+    <div style="height: 280px; position: relative;">
+        <canvas id="myChart"></canvas>
+    </div>
     <figcaption>Chart description here</figcaption>
 </figure>
 ```
+
+### ⚠️ CHART HEIGHT CONSTRAINT (MANDATORY)
+
+**NEVER** put height attribute on canvas directly. **ALWAYS** wrap canvas in a div with fixed height:
+
+```html
+<!-- ❌ WRONG - Chart will expand to 20,000+ pixels -->
+<canvas id="myChart" height="220"></canvas>
+
+<!-- ✅ CORRECT - Height constrained by wrapper -->
+<div style="height: 280px; position: relative;">
+    <canvas id="myChart"></canvas>
+</div>
+```
+
+This is required because Chart.js with `maintainAspectRatio: false` needs a height-constrained parent container.
 
 ### Minimum Charts by Report Length
 | Length | Min Charts |
