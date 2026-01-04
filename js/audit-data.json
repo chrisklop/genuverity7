@@ -1,0 +1,516 @@
+{
+  "timestamp": "2026-01-04T19:27:34.458Z",
+  "version": "1.0.0",
+  "reportCount": 183,
+  "htmlFileCount": 182,
+  "metrics": {
+    "sources": {
+      "total": 2209,
+      "avgPerReport": "12.1",
+      "byType": {
+        "government": 602,
+        "academic": 128,
+        "news": 1079,
+        "expert": 0,
+        "other": 1764
+      },
+      "reportsBelow8": [
+        {
+          "slug": "fednow-freeze",
+          "count": 6
+        },
+        {
+          "slug": "german-christmas-market-disinfo",
+          "count": 1
+        },
+        {
+          "slug": "palantir-panopticon",
+          "count": 6
+        },
+        {
+          "slug": "tesla-pi-phone-fake",
+          "count": 4
+        },
+        {
+          "slug": "us-argentina-farm-crisis-2025",
+          "count": 1
+        },
+        {
+          "slug": "us-gas-price-decline",
+          "count": 2
+        }
+      ]
+    },
+    "verdicts": {
+      "counts": {
+        "false": 59,
+        "context": 29,
+        "mixed": 11,
+        "misleading": 23,
+        "true": 4,
+        "undefined": 57
+      },
+      "percentages": {
+        "false": "32.2",
+        "context": "15.8",
+        "mixed": "6.0",
+        "misleading": "12.6",
+        "true": "2.2",
+        "undefined": "31.1"
+      }
+    },
+    "categories": {
+      "distribution": {
+        "AI & Deepfakes": 15,
+        "Foreign Influence": 5,
+        "Media & Journalism": 1,
+        "Conspiracy & Hoaxes": 12,
+        "International": 14,
+        "Platform & Tech": 1,
+        "International Affairs": 1,
+        "Health & Medical": 1,
+        "Fact Check": 49,
+        "African Misinformation": 1,
+        "Immigration Policy": 1,
+        "Immigration & Border": 1,
+        "U.S. Politics & Policy": 11,
+        "Health & Science": 2,
+        "Historical Analysis": 4,
+        "Data Privacy": 1,
+        "Network Analysis": 2,
+        "Platform Analysis": 2,
+        "Media Analysis": 3,
+        "Analysis": 2,
+        "Disinformation Analysis": 2,
+        "Investigation": 1,
+        "Election Security": 1,
+        "Platform Policy": 1,
+        "Public Health Disinfo": 1,
+        "AI Safety Crisis": 1,
+        "Viral Disinformation": 2,
+        "Deep Dive Dossier": 7,
+        "Economic Analysis": 4,
+        "Forensic Audit": 2,
+        "Medical Breakthrough": 1,
+        "Forensic Fact Check": 1,
+        "Financial Forensics": 1,
+        "State-Sponsored Fraud": 1,
+        "Surveillance State": 1,
+        "Strategic Assessment": 1,
+        "Disinformation Forensics": 1,
+        "Disinformation": 1,
+        "Active Threat": 2,
+        "Policy Analysis": 2,
+        "Developing Story": 1,
+        "Document Analysis": 1,
+        "Recurring Hoax": 1,
+        "Synthetic Media Alert": 1,
+        "Conspiracy Analysis": 2,
+        "AI & Technology": 1,
+        "Climate Misinformation": 1,
+        "Misinformation": 2,
+        "Public Health": 2,
+        "Military Investigation": 1,
+        "Criminal Justice": 1,
+        "Tech Policy": 1,
+        "Executive Action": 1,
+        "Financial Analysis": 1,
+        "Data Quality Alert": 1,
+        "Media Impersonation": 1,
+        "72% False or Misleading": 1
+      },
+      "balanceScore": 0.7787539374660739
+    },
+    "technical": {
+      "chartsPresent": 176,
+      "chartsMissing": [],
+      "colorViolations": [
+        {
+          "file": "laptop-farms",
+          "color": "#8b5cf6"
+        }
+      ],
+      "wikiViolations": [
+        {
+          "file": "disinformation-architecture-2025",
+          "url": "https://en.wikipedia.org/wiki/2024_Tenet_Media_investigation"
+        },
+        {
+          "file": "disinformation-architecture-2025",
+          "url": "https://en.wikipedia.org/wiki/List_of_political_disinformation_website_campaigns_in_the_United_States"
+        },
+        {
+          "file": "disinformation-architecture-2025",
+          "url": "https://en.wikipedia.org/wiki/Breitbart_News"
+        },
+        {
+          "file": "disinformation-architecture-2025",
+          "url": "https://en.wikipedia.org/wiki/The_Epoch_Times"
+        },
+        {
+          "file": "disinformation-architecture-2025",
+          "url": "https://en.wikipedia.org/wiki/Republican_Party_efforts_to_disrupt_the_2024_United_States_presidential_election"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/The_Washington_Post"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/Fox_News"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/Social_Design_Agency"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/Sergei_Kiriyenko"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/Swing_state"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/ChatGPT"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/Deepfake"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/Social_Design_Agency"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/2022_Russian_invasion_of_Ukraine"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/Der_Spiegel"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/Le_Parisien"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/The_Guardian"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/OpenAI"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/ChatGPT"
+        },
+        {
+          "file": "doppelganger-analysis",
+          "url": "https://en.wikipedia.org/wiki/Sergei_Kiriyenko"
+        },
+        {
+          "file": "epstein-air-logistics",
+          "url": "https://en.wikipedia.org/wiki/Jeffrey_Epstein"
+        },
+        {
+          "file": "grok-ai-misinformation-crisis",
+          "url": "https://en.wikipedia.org/wiki/Grok_(chatbot)"
+        },
+        {
+          "file": "network-analysis",
+          "url": "https://en.wikipedia.org/wiki/Taiwan_independence_movement"
+        },
+        {
+          "file": "network-analysis",
+          "url": "https://en.wikipedia.org/wiki/Uyghur_genocide"
+        },
+        {
+          "file": "network-analysis",
+          "url": "https://en.wikipedia.org/wiki/2019%E2%80%932020_Hong_Kong_protests"
+        },
+        {
+          "file": "network-analysis",
+          "url": "https://en.wikipedia.org/wiki/2019%E2%80%932020_Hong_Kong_protests"
+        },
+        {
+          "file": "network-analysis",
+          "url": "https://en.wikipedia.org/wiki/COVID-19_misinformation"
+        },
+        {
+          "file": "network-analysis",
+          "url": "https://en.wikipedia.org/wiki/Ministry_of_Public_Security_(China)"
+        },
+        {
+          "file": "plaque-fact-check",
+          "url": "https://en.wikipedia.org/wiki/United_States–Taliban_deal"
+        },
+        {
+          "file": "trump-admin-financial-conflicts",
+          "url": "https://en.wikipedia.org/wiki/Wealth_of_Donald_Trump"
+        },
+        {
+          "file": "trump-admin-financial-conflicts",
+          "url": "https://en.wikipedia.org/wiki/Scott_Bessent"
+        },
+        {
+          "file": "trump-admin-financial-conflicts",
+          "url": "https://en.wikipedia.org/wiki/Affinity_Partners"
+        }
+      ],
+      "avgInlineCitations": "0.0",
+      "avgCopySections": "4.5"
+    },
+    "transparency": {
+      "avgReadTime": "14.6 min",
+      "publicationFrequency": "3.5/week",
+      "reportsInData": 183,
+      "htmlFilesFound": 182
+    }
+  },
+  "issues": [
+    {
+      "type": "color",
+      "severity": "error",
+      "report": "laptop-farms",
+      "detail": "Forbidden purple color: #8b5cf6"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "disinformation-architecture-2025",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/2024_Tenet_Media_investigation"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "disinformation-architecture-2025",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/List_of_political_disinformation_website_campaigns_in_the_United_States"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "disinformation-architecture-2025",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Breitbart_News"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "disinformation-architecture-2025",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/The_Epoch_Times"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "disinformation-architecture-2025",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Republican_Party_efforts_to_disrupt_the_2024_United_States_presidential_election"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/The_Washington_Post"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Fox_News"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Social_Design_Agency"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Sergei_Kiriyenko"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Swing_state"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/ChatGPT"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Deepfake"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Social_Design_Agency"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/2022_Russian_invasion_of_Ukraine"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Der_Spiegel"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Le_Parisien"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/The_Guardian"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/OpenAI"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/ChatGPT"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "doppelganger-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Sergei_Kiriyenko"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "epstein-air-logistics",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Jeffrey_Epstein"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "grok-ai-misinformation-crisis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Grok_(chatbot)"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "network-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Taiwan_independence_movement"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "network-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Uyghur_genocide"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "network-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/2019%E2%80%932020_Hong_Kong_protests"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "network-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/2019%E2%80%932020_Hong_Kong_protests"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "network-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/COVID-19_misinformation"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "network-analysis",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Ministry_of_Public_Security_(China)"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "plaque-fact-check",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/United_States–Taliban_deal"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "trump-admin-financial-conflicts",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Wealth_of_Donald_Trump"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "trump-admin-financial-conflicts",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Scott_Bessent"
+    },
+    {
+      "type": "wikipedia",
+      "severity": "warning",
+      "report": "trump-admin-financial-conflicts",
+      "detail": "Wikipedia link found: https://en.wikipedia.org/wiki/Affinity_Partners"
+    },
+    {
+      "type": "sources",
+      "severity": "warning",
+      "report": "fednow-freeze",
+      "detail": "Only 6 sources (minimum: 8)"
+    },
+    {
+      "type": "sources",
+      "severity": "warning",
+      "report": "german-christmas-market-disinfo",
+      "detail": "Only 1 sources (minimum: 8)"
+    },
+    {
+      "type": "sources",
+      "severity": "warning",
+      "report": "palantir-panopticon",
+      "detail": "Only 6 sources (minimum: 8)"
+    },
+    {
+      "type": "sources",
+      "severity": "warning",
+      "report": "tesla-pi-phone-fake",
+      "detail": "Only 4 sources (minimum: 8)"
+    },
+    {
+      "type": "sources",
+      "severity": "warning",
+      "report": "us-argentina-farm-crisis-2025",
+      "detail": "Only 1 sources (minimum: 8)"
+    },
+    {
+      "type": "sources",
+      "severity": "warning",
+      "report": "us-gas-price-decline",
+      "detail": "Only 2 sources (minimum: 8)"
+    }
+  ],
+  "scores": {
+    "sources": 83.2,
+    "methodology": 88,
+    "technical": 90,
+    "transparency": 100,
+    "overall": 88.6
+  }
+}
