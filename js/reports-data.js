@@ -4,21 +4,6 @@
 const REPORTS_DATA = [
     {
         id: 0,
-        title: "January 2026 Self-Audit Report",
-        slug: "transparency-january-2026",
-        category: "Transparency",
-        tagClass: "tag-green",
-        catClass: "cat-factcheck",
-        icon: "shield-check",
-        date: "Jan 4, 2026",
-        sources: "8 Sources",
-        readTime: "12 min",
-        verdict: "true",
-        excerpt: "SELF-AUDIT: GenuVerity fact-checks itself with the same rigor we apply to others. 183 reports analyzed, 2,209 sources verified, with full transparency on issues found.",
-        chart: {"type":"bar","color":"#06b6d4","data":[83.2,88,90,100,88.6],"colors":["#06b6d4","#3b82f6","#10b981","#10b981","#f59e0b"]}
-    },
-    {
-        id: 1,
         title: "Biden Military Situation Room Image: AI-Generated Political Deepfake",
         slug: "biden-situation-room-image-2025",
         category: "AI & Deepfakes",
@@ -33,7 +18,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[97,94,91,88],"labels":["Hive Moderation","Google AI or Not","Illuminarty","FotoForensics ELA"],"colors":["#ef4444","#ef4444","#ef4444","#ef4444"]}
     },
     {
-        id: 2,
+        id: 1,
         title: "Google AI Overviews Misinformation: When Search Goes Wrong",
         slug: "google-lens-ai-overviews-2025",
         category: "AI & Deepfakes",
@@ -48,7 +33,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[34,28,22,10,6],"labels":["Health/Safety","Factual Errors","Sourcing Issues","Fabrications","Outdated Info"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
-        id: 3,
+        id: 2,
         title: "NATO 'Troops in Coffins': Russian Disinformation Campaign Debunked",
         slug: "nato-troops-coffins-2025",
         category: "Foreign Influence",
@@ -63,7 +48,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[38,27,18,12,5],"labels":["Recycled Photos","AI-Generated Images","Fake Documents","Misattributed Video","Fabricated Quotes"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
-        id: 4,
+        id: 3,
         title: "Sean Combs Trial Misinformation: Separating Fact from Fiction",
         slug: "sean-combs-trial-misinfo-2025",
         category: "Media & Journalism",
@@ -78,7 +63,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#0f172a","data":[58,27,15],"colors":["#ef4444","#f59e0b","#10b981"]}
     },
     {
-        id: 5,
+        id: 4,
         title: "Target 'Satanic' Campaign: How Viral Claims Misrepresented Products",
         slug: "target-satanic-campaign-2025",
         category: "Conspiracy & Hoaxes",
@@ -93,7 +78,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[160,155,148,140,135,132,130]}
     },
     {
-        id: 6,
+        id: 5,
         title: "UK Christmas Decoration Tax: Viral Hoax Debunked",
         slug: "uk-christmas-decoration-tax-2025",
         category: "International",
@@ -108,7 +93,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[2,1,1,1,1,1,1,1,3,15,85,120]}
     },
     {
-        id: 7,
+        id: 6,
         title: "AI 'Obituary Pirates'",
         slug: "ai-obituary-pirates-2025",
         category: "Platform & Tech",
@@ -123,7 +108,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[12,45,89,156,287,412,389,298]}
     },
     {
-        id: 8,
+        id: 7,
         title: "Trump / Bill Clinton Crotch Pat Video Exposed as Deepfake",
         slug: "trump-clinton-crotch-pat-2025",
         category: "AI & Deepfakes",
@@ -138,7 +123,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[94,87,82,78,91],"labels":["Frame Splicing","Compression Artifacts","Motion Inconsistency","Audio Desync","AI Signatures"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#ef4444"]}
     },
     {
-        id: 9,
+        id: 8,
         title: "British Budget Details Misinfo",
         slug: "british-budget-misinfo-2025",
         category: "International Affairs",
@@ -153,7 +138,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[70,15,8,10]}
     },
     {
-        id: 10,
+        id: 9,
         title: "Hurricane Melissa AI Videos: Fake Storm, Real Fraud",
         slug: "hurricane-melissa-ai-videos-2025",
         category: "AI & Deepfakes",
@@ -168,7 +153,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[94,89,97,92,86],"labels":["Temporal Glitches","Morphing Artifacts","Hand Anomalies","Text Failures","Audio Mismatch"],"colors":["#ef4444","#f59e0b","#ef4444","#f59e0b","#3b82f6"]}
     },
     {
-        id: 11,
+        id: 10,
         title: "RFK Jr. Antidepressants Claims: Medical Consensus Misrepresented",
         slug: "rfk-antidepressants-target-2025",
         category: "Health & Medical",
@@ -183,7 +168,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#10b981","data":[2.13,1.97,1.89,1.69,1.52,1],"labels":["Amitriptyline","Escitalopram","Venlafaxine","Sertraline","Fluoxetine","Placebo"],"colors":["#10b981","#10b981","#3b82f6","#3b82f6","#3b82f6","#64748b"]}
     },
     {
-        id: 12,
+        id: 11,
         title: "'Premature Sexualization' Narrative: How Educational Materials Are Misrepresented",
         slug: "premature-sexualization-narrative-2025",
         category: "International",
@@ -198,7 +183,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[32,28,18,14,8],"labels":["Decontextualized Images","Age Misrepresentation","Conflation of Programs","Complete Fabrication","Misattribution"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
-        id: 13,
+        id: 12,
         title: "Brazil Election Integrity Claims: Debunked Fraud Allegations Persist",
         slug: "brazil-election-integrity-2025",
         category: "International",
@@ -213,7 +198,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[65,85,100,60,45,70]}
     },
     {
-        id: 14,
+        id: 13,
         title: "Nigeria NIN-Bank Account Linking Claims: Separating Policy from Panic",
         slug: "nigeria-nin-bank-access-2025",
         category: "Fact Check",
@@ -228,7 +213,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[42,68,89,98,105]}
     },
     {
-        id: 15,
+        id: 14,
         title: "African Tetanus/Polio Sterilization Claims Debunked",
         slug: "african-vaccine-sterilization-2025",
         category: "African Misinformation",
@@ -243,7 +228,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[2,8,15,12,18]}
     },
     {
-        id: 16,
+        id: 15,
         title: "Ebola Organ Theft Claims: Deadly Misinformation Debunked",
         slug: "ebola-organ-theft-2025",
         category: "Fact Check",
@@ -258,7 +243,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[49,759,5864,20206,24907,27443,28147,28601,28616]}
     },
     {
-        id: 17,
+        id: 16,
         title: "Ebola Outbreak 2025 (DRC): Misinformation Analysis",
         slug: "ebola-outbreak-drc-2025",
         category: "Fact Check",
@@ -273,7 +258,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[32,24,21,14,9],"labels":["False Cures","Transmission Myths","Conspiracy Theories","Vaccine Fears","Distrust of Workers"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
-        id: 18,
+        id: 17,
         title: "Brazil Supreme Court Bias Claims: Examining the Evidence",
         slug: "brazil-supreme-court-bias-2025",
         category: "International",
@@ -288,7 +273,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#3b82f6","data":[12,8,15,7,11],"labels":["Election Cases","Corruption","Civil Rights","Executive Power","Legislative"]}
     },
     {
-        id: 19,
+        id: 18,
         title: "Nigeria Petroleum Surcharge Hoax: False Claims Cause Public Panic",
         slug: "nigeria-petroleum-surcharge-2025",
         category: "Fact Check",
@@ -303,7 +288,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[2,15,45,120,85,40,12]}
     },
     {
-        id: 20,
+        id: 19,
         title: "Ebola Vaccine Sterility Claims: The Conspiracy That Endangers Public Health",
         slug: "ebola-vaccine-sterility-2025",
         category: "Fact Check",
@@ -318,7 +303,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#10b981","data":[500000,16000,0,0],"labels":["Vaccinations","Clinical Trial Participants","Sterility Cases","Fertility Issues"],"colors":["#10b981","#3b82f6","#ef4444","#ef4444"]}
     },
     {
-        id: 21,
+        id: 20,
         title: "SA Zulu King Salary Claims: Royal Funding vs. Exaggerated Figures",
         slug: "sa-zulu-king-salary-2025",
         category: "Fact Check",
@@ -333,7 +318,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#10b981","data":[1.8,65,66],"labels":["Personal Stipend","Household Budget","Viral Claim"],"colors":["#10b981","#f59e0b","#ef4444"]}
     },
     {
-        id: 22,
+        id: 21,
         title: "IDF Soldier Captivity Image: AI-Generated Propaganda Exposed",
         slug: "idf-soldier-captivity-image-2025",
         category: "Fact Check",
@@ -348,7 +333,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[85,72,68,91,95],"labels":["Hand Errors","Uniform Errors","Face Artifacts","Lighting Issues","Metadata"],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4"]}
     },
     {
-        id: 23,
+        id: 22,
         title: "Hollywood Sign AI Fire Image: Viral Fake During LA Wildfires",
         slug: "hollywood-sign-ai-fire-2025",
         category: "Fact Check",
@@ -363,7 +348,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[5.2,0.8],"colors":["#ef4444","#10b981"]}
     },
     {
-        id: 24,
+        id: 23,
         title: "Syria Assad Underground Photo: AI-Generated Images Exposed",
         slug: "syria-assad-underground-photo-2025",
         category: "Fact Check",
@@ -378,7 +363,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[0.5,3.2,8.5,12.1,9.8,6.2,3.1]}
     },
     {
-        id: 25,
+        id: 24,
         title: "NSF Grant Termination Claims: Policy vs. Conspiracy",
         slug: "nsf-grant-termination-2025",
         category: "Fact Check",
@@ -393,7 +378,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#3b82f6","data":[90,7,3],"colors":["#3b82f6","#f59e0b","#64748b"]}
     },
     {
-        id: 26,
+        id: 25,
         title: "JD Vance 'Misinformation' Comments: The Full Context",
         slug: "vance-misinformation-comments-2025",
         category: "Fact Check",
@@ -408,7 +393,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#10b981","data":[38,45,17],"colors":["#10b981","#ef4444","#64748b"]}
     },
     {
-        id: 27,
+        id: 26,
         title: "Southport Stabbing Riots: How False Claims Fueled Violence",
         slug: "southport-stabbing-misinfo-2025",
         category: "Fact Check",
@@ -423,7 +408,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[3,8,12,15,22,18,10]}
     },
     {
-        id: 28,
+        id: 27,
         title: "Meta Third-Party Fact-Check Exit: What Actually Changed",
         slug: "meta-tpfc-exit-2025",
         category: "Fact Check",
@@ -438,7 +423,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[0.5,2.1,8.5,12.3,15.8,0]}
     },
     {
-        id: 29,
+        id: 28,
         title: "Pete Hegseth Signalgate: Security Concerns vs. Precedent",
         slug: "hegseth-signalgate-2025",
         category: "Fact Check",
@@ -453,7 +438,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#06b6d4","data":[1,2,5,4,3,3,2],"colors":["#06b6d4","#06b6d4","#ef4444","#f59e0b","#3b82f6","#3b82f6","#10b981"]}
     },
     {
-        id: 30,
+        id: 29,
         title: "D.C. Murder Rate Comparison: Cherry-Picked Statistics",
         slug: "dc-murder-rate-comparison-2025",
         category: "Fact Check",
@@ -468,7 +453,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[479,360,239,195,131,162,198,232,174,165]}
     },
     {
-        id: 31,
+        id: 30,
         title: "Portland's 'Burning' Narrative: Recycled 2020 Footage",
         slug: "portland-burning-narrative-2025",
         category: "Fact Check",
@@ -483,7 +468,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[1000,500,100,200]}
     },
     {
-        id: 32,
+        id: 31,
         title: "Tren de Aragua Gang Claims: Real Gang, Exaggerated Threat",
         slug: "tda-gang-claims-2025",
         category: "Fact Check",
@@ -498,7 +483,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[10000,5,50]}
     },
     {
-        id: 33,
+        id: 32,
         title: "Ukraine-Russia War Origin Claims: False Narrative Debunked",
         slug: "ukraine-russia-war-origin-2025",
         category: "Fact Check",
@@ -513,7 +498,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#10b981","data":[141,5,35,12],"colors":["#10b981","#ef4444","#f59e0b","#64748b"]}
     },
     {
-        id: 34,
+        id: 33,
         title: "DOGE Gaza Condom Claim: Misleading Foreign Aid Framing",
         slug: "doge-gaza-condom-claim-2025",
         category: "Fact Check",
@@ -528,7 +513,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#3b82f6","data":[45,30,10,10,5],"colors":["#3b82f6","#10b981","#f59e0b","#06b6d4","#64748b"]}
     },
     {
-        id: 35,
+        id: 34,
         title: "Reciprocal Tariff Chart: White House Used Fabricated Data",
         slug: "reciprocal-tariff-chart-2025",
         category: "Fact Check",
@@ -543,7 +528,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[67,39,46,90,52]}
     },
     {
-        id: 36,
+        id: 35,
         title: "Inflation 'Historical Cap' Claim: Not Worst in History",
         slug: "inflation-historical-cap-2025",
         category: "Fact Check",
@@ -558,7 +543,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[12.3,13.3,14.8,8.9,6.1,3.4,1.5,1.4,9.1,2.6]}
     },
     {
-        id: 37,
+        id: 36,
         title: "'Phony' BLS Statistics Claims: Assault on Government Data",
         slug: "phony-bls-statistics-2025",
         category: "Fact Check",
@@ -573,7 +558,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[-514,267,-306,-818],"colors":["#ef4444","#10b981","#ef4444","#ef4444"]}
     },
     {
-        id: 38,
+        id: 37,
         title: "Measles 'Natural' Cures Claims: Dangerous Health Misinformation",
         slug: "measles-natural-cures-2025",
         category: "Fact Check",
@@ -588,7 +573,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#f59e0b","data":[505,57,2],"labels":["Confirmed Cases","Hospitalizations","Deaths"],"colors":["#f59e0b","#ef4444","#dc2626"]}
     },
     {
-        id: 39,
+        id: 38,
         title: "mRNA Vaccine Misinformation: Persistent False Claims",
         slug: "mrna-vaccine-misinfo-2025",
         category: "Fact Check",
@@ -603,7 +588,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#10b981","data":[95,94.1,0],"colors":["#10b981","#10b981","#ef4444"]}
     },
     {
-        id: 40,
+        id: 39,
         title: "Tylenol and Autism Controversy: Misrepresented Science",
         slug: "tylenol-autism-claims-2025",
         category: "Fact Check",
@@ -618,7 +603,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#f59e0b","data":[1.3,1.25,1],"colors":["#f59e0b","#f59e0b","#10b981"]}
     },
     {
-        id: 41,
+        id: 40,
         title: "Birthright Citizenship EO: Constitutional Crisis in Courts",
         slug: "birthright-citizenship-eo-2025",
         category: "Fact Check",
@@ -633,7 +618,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[1,2,3,4,5,6,7],"colors":["#ef4444","#10b981","#10b981","#f59e0b","#10b981","#3b82f6","#06b6d4"]}
     },
     {
-        id: 42,
+        id: 41,
         title: "80th UN General Assembly Claims: A Comprehensive Fact-Check",
         slug: "un-general-assembly-2025",
         category: "Fact Check",
@@ -648,7 +633,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#3b82f6","data":[3,2,1],"labels":["FALSE Claims","MISLEADING Claims","DISPUTED Claims"]}
     },
     {
-        id: 43,
+        id: 42,
         title: "Trade War 2.0 Tariff Claims: A Comprehensive Fact-Check",
         slug: "trade-war-tariffs-2025",
         category: "Fact Check",
@@ -663,7 +648,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#3b82f6","data":[8.99,7.5,7.5,6.5,6,4.3,4.9],"labels":["Apparel","Coffee & Tea","Cameras","Furniture","Imported Goods","Domestic Goods","All Retail"]}
     },
     {
-        id: 44,
+        id: 43,
         title: "Zohran Mamdani NYC Election Claims Debunked",
         slug: "mamdani-nyc-election-2025",
         category: "Fact Check",
@@ -678,7 +663,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[120,450,890,1850,4200,8900,12500]}
     },
     {
-        id: 45,
+        id: 44,
         title: "225 Executive Orders in 2025: The Numbers Are Real, But Context Matters",
         slug: "225-executive-orders-2025",
         category: "Fact Check",
@@ -693,7 +678,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[568,225,77,55,39,54,57]}
     },
     {
-        id: 46,
+        id: 45,
         title: "2025 Government Shutdown - Longest in U.S. History",
         slug: "government-shutdown-2025",
         category: "Fact Check",
@@ -708,7 +693,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[43,34,21,16,12],"labels":["2025 (Oct-Nov)","2018-2019","1995-1996","2013","1977"],"colors":["#ef4444","#3b82f6","#06b6d4","#10b981","#f59e0b"]}
     },
     {
-        id: 47,
+        id: 46,
         title: "Charlie Kirk Assassination Conspiracy Theories Debunked",
         slug: "charlie-kirk-assassination-conspiracy-2025",
         category: "Fact Check",
@@ -723,7 +708,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[10,100,85,70,55,40,25]}
     },
     {
-        id: 48,
+        id: 47,
         title: "Gaza Ceasefire Deal Attribution: Who Gets the Credit?",
         slug: "gaza-ceasefire-attribution-2025",
         category: "Fact Check",
@@ -738,7 +723,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[30,35,40,45,55,75,100]}
     },
     {
-        id: 49,
+        id: 48,
         title: "LA Wildfires Misinformation January 2025: Complete Fact-Check",
         slug: "la-wildfires-misinfo-jan-2025",
         category: "Fact Check",
@@ -753,7 +738,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[5,75,100,80,60,45,35,25]}
     },
     {
-        id: 50,
+        id: 49,
         title: "Los Angeles ICE Raids and Riots 2025: Fact vs. Fiction",
         slug: "la-ice-raids-riots-2025",
         category: "Immigration Policy",
@@ -768,7 +753,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[70,66,29,5],"labels":["DHS: Had Criminal Record","HRW: No Criminal History","HRW: Minor Infractions","HRW: Violent Convictions"],"colors":["#ef4444","#10b981","#f59e0b","#ef4444"]}
     },
     {
-        id: 51,
+        id: 50,
         title: "Liberation Day Address Claims: A Comprehensive Fact-Check",
         slug: "liberation-day-address-2025",
         category: "Fact Check",
@@ -783,7 +768,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[39,67,46,90,52,50]}
     },
     {
-        id: 52,
+        id: 51,
         title: "Abrego Garcia MS-13 Tattoos: Misidentification in Deportation Case",
         slug: "abrego-garcia-ms13-tattoos-2025",
         category: "Immigration & Border",
@@ -798,7 +783,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[18,22,15,17],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
     },
     {
-        id: 53,
+        id: 52,
         title: "Air Traffic Control DEI Claims: Misleading FAA Policy Criticism",
         slug: "atc-sorting-claims-2025",
         category: "U.S. Politics & Policy",
@@ -813,7 +798,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[45,85,90,65],"colors":["#3b82f6","#06b6d4","#10b981","#f59e0b"]}
     },
     {
-        id: 54,
+        id: 53,
         title: "Autopen Pardon Termination Claims: Legally Unfounded",
         slug: "autopen-pardon-termination-2025",
         category: "U.S. Politics & Policy",
@@ -828,7 +813,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[150,500,300,450],"colors":["#3b82f6","#06b6d4","#ef4444","#10b981"]}
     },
     {
-        id: 55,
+        id: 54,
         title: "Bangladesh Police Dipu Das Video: Misattributed Footage",
         slug: "bangladesh-dipu-das-video-2025",
         category: "International",
@@ -843,7 +828,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#ef4444","data":[55,35,10],"colors":["#ef4444","#f59e0b","#10b981"]}
     },
     {
-        id: 56,
+        id: 55,
         title: "DeepSeek Chatbot: Accuracy Issues Revealed by NewsGuard Audit",
         slug: "deepseek-chatbot-accuracy-2025",
         category: "AI & Deepfakes",
@@ -858,7 +843,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#10b981","data":[82,85,78,65],"colors":["#10b981","#3b82f6","#f59e0b","#ef4444"]}
     },
     {
-        id: 57,
+        id: 56,
         title: "Epstein Files Fabrication: Sorting Truth From Viral Hoaxes",
         slug: "epstein-files-fabrication-2025",
         category: "Conspiracy & Hoaxes",
@@ -873,7 +858,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#ef4444","data":[45,30,25],"colors":["#ef4444","#f59e0b","#10b981"]}
     },
     {
-        id: 58,
+        id: 57,
         title: "Google Gemini Misinformation Audit: AI Accuracy Concerns",
         slug: "google-gemini-misinfo-audit-2025",
         category: "AI & Deepfakes",
@@ -888,7 +873,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#10b981","data":[88,85,82,75,72],"colors":["#10b981","#3b82f6","#06b6d4","#f59e0b","#ef4444"]}
     },
     {
-        id: 59,
+        id: 58,
         title: "India Digital Arrest Scam: The Rs 11,000 Crore Fraud Epidemic",
         slug: "india-digital-arrest-scam-2025",
         category: "International",
@@ -903,7 +888,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#f59e0b","data":[4200,7800,11333],"colors":["#f59e0b","#ef4444","#dc2626"]}
     },
     {
-        id: 60,
+        id: 59,
         title: "India-Pakistan Karachi Invasion Claim: Crisis Misinformation Exposed",
         slug: "india-pakistan-karachi-invasion-2025",
         category: "International",
@@ -918,7 +903,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[2,15,45,78,52,28,12]}
     },
     {
-        id: 61,
+        id: 60,
         title: "Hakeem Jeffries Ballroom Priority Claim: Missing Context",
         slug: "jeffries-ballroom-priority-2025",
         category: "U.S. Politics & Policy",
@@ -933,7 +918,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#3b82f6","data":[25,35,20,20],"colors":["#3b82f6","#06b6d4","#10b981","#f59e0b"]}
     },
     {
-        id: 62,
+        id: 61,
         title: "Jeffries 'Ended Medical Research' Claim: False Budget Accusation",
         slug: "jeffries-ended-medical-research-2025",
         category: "U.S. Politics & Policy",
@@ -948,7 +933,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#10b981","data":[42,43,45,47,48,49]}
     },
     {
-        id: 63,
+        id: 62,
         title: "John Mark Dougan: Former Deputy Sheriff Leads Russian Disinformation",
         slug: "john-mark-dougan-storm-1516-2025",
         category: "Foreign Influence",
@@ -963,7 +948,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[3,5,8,12,15,18]}
     },
     {
-        id: 64,
+        id: 63,
         title: "Maduro 'Surrender' Video: Fabricated Deepfake Exposed",
         slug: "maduro-surrender-video-2025",
         category: "AI & Deepfakes",
@@ -978,7 +963,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[95,88,82,75],"labels":["Lip Sync","Facial Artifacts","Audio Mismatch","Lighting Errors"]}
     },
     {
-        id: 65,
+        id: 64,
         title: "Menopausal Hormone Therapy Claims: Missing Nuance on Risks",
         slug: "menopausal-hormone-therapy-2025",
         category: "Health & Science",
@@ -993,7 +978,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#3b82f6","data":[30,25,25,20],"colors":["#3b82f6","#06b6d4","#f59e0b","#10b981"]}
     },
     {
-        id: 66,
+        id: 65,
         title: "Mike Lee 'Marxist' Claim: Conservative Senator Mislabeled",
         slug: "mike-lee-marxist-claim-2025",
         category: "U.S. Politics & Policy",
@@ -1008,7 +993,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[98,96,94,97]}
     },
     {
-        id: 67,
+        id: 66,
         title: "Modi Cheapfakes: Manipulated Videos Target Indian PM",
         slug: "modi-cheapfakes-2025",
         category: "AI & Deepfakes",
@@ -1023,7 +1008,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[38,22,18,12,10],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4"]}
     },
     {
-        id: 68,
+        id: 67,
         title: "NC Wireless Driving Ban: Misleading Claims About Legislation",
         slug: "nc-wireless-driving-ban-2025",
         category: "U.S. Politics & Policy",
@@ -1038,7 +1023,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#ef4444","data":[35,30,25,10],"colors":["#ef4444","#10b981","#3b82f6","#f59e0b"]}
     },
     {
-        id: 69,
+        id: 68,
         title: "Netanyahu Gaza Starvation Claims: Contradicted by Humanitarian Reports",
         slug: "netanyahu-no-starvation-gaza-2025",
         category: "International",
@@ -1053,7 +1038,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#ef4444","data":[92,6,2],"colors":["#ef4444","#f59e0b","#10b981"]}
     },
     {
-        id: 70,
+        id: 69,
         title: "Nigeria Education Fees Hoax: Viral Panic Over Fabricated Charges",
         slug: "nigeria-education-fees-2025",
         category: "International",
@@ -1068,7 +1053,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#ef4444","data":[45,35,20],"colors":["#ef4444","#10b981","#3b82f6"]}
     },
     {
-        id: 71,
+        id: 70,
         title: "Nigeria School Opening Misinformation: Viral Panic Over Fake Dates",
         slug: "nigeria-school-opening-2025",
         category: "International",
@@ -1083,7 +1068,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[12,8,15]}
     },
     {
-        id: 72,
+        id: 71,
         title: "Patriot Front 'Federal Agents' Claim: Conspiracy Theory Debunked",
         slug: "patriot-front-agents-claim-2025",
         category: "Conspiracy & Hoaxes",
@@ -1098,7 +1083,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[45,18,32,25],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
     },
     {
-        id: 73,
+        id: 72,
         title: "Pravda Network: Russian AI-Powered Disinformation Infrastructure",
         slug: "pravda-network-2025",
         category: "Foreign Influence",
@@ -1113,7 +1098,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#ef4444","data":[35,25,20,15,30,25],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4","#64748b"]}
     },
     {
-        id: 74,
+        id: 73,
         title: "Pritzker SNAP Shutdown Claim: False Welfare Misinformation",
         slug: "pritzker-snap-shutdown-2025",
         category: "U.S. Politics & Policy",
@@ -1128,7 +1113,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#10b981","data":[4.2,4.1,4.3,4.2,4.4,4.3]}
     },
     {
-        id: 75,
+        id: 74,
         title: "Ruby Bradley 'Loser' Quote: Fabricated WWII Hero Quote",
         slug: "ruby-bradley-loser-quote-2025",
         category: "Conspiracy & Hoaxes",
@@ -1143,7 +1128,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[45,38,22,18],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
     },
     {
-        id: 76,
+        id: 75,
         title: "SA 15 Million Illegal Migrants Claim: Evidence-Free Xenophobia",
         slug: "sa-illegal-migrants-claim-2025",
         category: "International",
@@ -1158,7 +1143,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[15,2.4,1.5],"colors":["#ef4444","#10b981","#3b82f6"]}
     },
     {
-        id: 77,
+        id: 76,
         title: "SA Metro Spending Claims: Political Figures Misrepresent Budgets",
         slug: "sa-metro-spending-2025",
         category: "International",
@@ -1173,7 +1158,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[12.5,15.2,10.8,9.3,11.1],"colors":["#3b82f6","#ef4444","#ef4444","#ef4444","#ef4444"]}
     },
     {
-        id: 78,
+        id: 77,
         title: "SA Mozambican Woman Arrest Photo: Viral Misattribution Exposed",
         slug: "sa-mozambican-arrest-photo-2025",
         category: "International",
@@ -1188,7 +1173,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#10b981","data":[1,850],"colors":["#10b981","#ef4444"]}
     },
     {
-        id: 79,
+        id: 78,
         title: "SA Self-Defense Law Claims: Viral Misrepresentation",
         slug: "sa-self-defense-right-2025",
         category: "International",
@@ -1203,7 +1188,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#10b981","data":[100,100,0],"labels":["Self-Defense Legal","Proportionality Required","New Law Changed Rights"],"colors":["#10b981","#10b981","#ef4444"]}
     },
     {
-        id: 80,
+        id: 79,
         title: "Starmer Curfew Deepfake: Russian Operation Targets UK PM",
         slug: "starmer-curfew-fake-video-2025",
         category: "AI & Deepfakes",
@@ -1218,7 +1203,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[89,76,82,58,64],"labels":["Lip Sync","Audio","Blinking","Background","Lighting"],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4"]}
     },
     {
-        id: 81,
+        id: 80,
         title: "Storm-1516: Russian Influence Operation Campaigns in 2025",
         slug: "storm-1516-russian-campaigns-2025",
         category: "Foreign Influence",
@@ -1233,7 +1218,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[18,12,15,8,7],"colors":["#ef4444","#3b82f6","#f59e0b","#10b981","#06b6d4"]}
     },
     {
-        id: 82,
+        id: 81,
         title: "Trump Labor Day Death Hoax: Bizarre Conspiracy Theory Debunked",
         slug: "trump-dead-labor-day-2025",
         category: "Conspiracy & Hoaxes",
@@ -1248,7 +1233,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#10b981","data":[8,12,15,11,45]}
     },
     {
-        id: 83,
+        id: 82,
         title: "Trump Duterte Arrest Response: Fake Statement Image Debunked",
         slug: "trump-duterte-arrest-response-2025",
         category: "AI & Deepfakes",
@@ -1263,7 +1248,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#3b82f6","data":[42,28,18,12],"colors":["#3b82f6","#06b6d4","#ef4444","#10b981"]}
     },
     {
-        id: 84,
+        id: 83,
         title: "Trump Native-Born Job Creation Claim: Questionable Data Analysis",
         slug: "trump-native-born-jobs-2025",
         category: "U.S. Politics & Policy",
@@ -1278,7 +1263,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#10b981","data":[670,60],"colors":["#10b981","#f59e0b"]}
     },
     {
-        id: 85,
+        id: 84,
         title: "Trump 'Shithole Countries' Statement: Claims Need Context",
         slug: "trump-shitholes-admission-2025",
         category: "U.S. Politics & Policy",
@@ -1293,7 +1278,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[100,75,45,30],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
     },
     {
-        id: 86,
+        id: 85,
         title: "Trump Walker Image: Manipulated Photo Spreads Health Misinformation",
         slug: "trump-walker-image-2025",
         category: "AI & Deepfakes",
@@ -1308,7 +1293,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[92,78,85,64],"labels":["ELA Artifacts","Shadow Mismatch","Pixel Inconsistency","Metadata Issues"],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
     },
     {
-        id: 87,
+        id: 86,
         title: "Unnao Rape Convict AI Image: Fabricated Photo Exposed",
         slug: "unnao-rape-convict-ai-2025",
         category: "AI & Deepfakes",
@@ -1323,7 +1308,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[97.8,94.2,89.5,95],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
     },
     {
-        id: 88,
+        id: 87,
         title: "U.S. Vaccine Schedule Claims: Misleading Global Comparisons",
         slug: "us-vaccine-schedule-global-2025",
         category: "Health & Science",
@@ -1338,7 +1323,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[14,13,14,13,14]}
     },
     {
-        id: 89,
+        id: 88,
         title: "USDA 'Transgender Study' Claim: Misrepresented Research",
         slug: "usda-transgender-study-2025",
         category: "U.S. Politics & Policy",
@@ -1353,7 +1338,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#3b82f6","data":[40,30,25,5],"colors":["#3b82f6","#06b6d4","#10b981","#f59e0b"]}
     },
     {
-        id: 90,
+        id: 89,
         title: "JD Vance / Elon Musk Fake Audio: AI-Generated Voice Manipulation",
         slug: "vance-musk-fake-audio-2025",
         category: "AI & Deepfakes",
@@ -1368,7 +1353,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[92,87,78,65],"labels":["Spectral Anomalies","Breathing Patterns","Pitch Variance","Background Noise"]}
     },
     {
-        id: 91,
+        id: 90,
         title: "Yogi Adityanath Resignation Deepfake: AI-Generated Political Hoax",
         slug: "yogi-adityanath-deepfake-2025",
         category: "AI & Deepfakes",
@@ -1383,7 +1368,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[92,78,85,71,65],"labels":["Lip Sync Issues","Facial Artifacts","Audio Anomalies","Blinking Pattern","Resolution Mismatch"],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4"]}
     },
     {
-        id: 92,
+        id: 91,
         title: "The Fairness Doctrine: How America Lost Balance in Broadcasting",
         slug: "fairness-doctrine-history",
         category: "Historical Analysis",
@@ -1398,7 +1383,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[200,360,800,1000,1200,1300]}
     },
     {
-        id: 93,
+        id: 92,
         title: "Operation Mockingbird: When the CIA Controlled the Press",
         slug: "operation-mockingbird-cia",
         category: "Historical Analysis",
@@ -1413,7 +1398,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[400,50,1000,3000],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981"]}
     },
     {
-        id: 94,
+        id: 93,
         title: "Edward Bernays: The Father of Spin",
         slug: "edward-bernays-propaganda",
         category: "Historical Analysis",
@@ -1428,7 +1413,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#f59e0b","data":[5,8,12,18,24,33]}
     },
     {
-        id: 95,
+        id: 94,
         title: "Internet Research Agency: Russia's Troll Farm That Reached 126 Million Americans",
         slug: "internet-research-agency-2016",
         category: "Foreign Influence",
@@ -1443,7 +1428,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[126,20,1.4,0.5],"colors":["#3b82f6","#f59e0b","#06b6d4","#ef4444"]}
     },
     {
-        id: 96,
+        id: 95,
         title: "Cambridge Analytica: The $5 Billion Data Scandal",
         slug: "cambridge-analytica-2016",
         category: "Data Privacy",
@@ -1458,7 +1443,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[5,20,30,50,100,95,80,60]}
     },
     {
-        id: 97,
+        id: 96,
         title: "QAnon Network Analysis: From 4chan to Congress",
         slug: "qanon-network-analysis",
         category: "Network Analysis",
@@ -1473,7 +1458,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[175,77.1,63.7]}
     },
     {
-        id: 98,
+        id: 97,
         title: "Partisan Influencer Networks: The Amplification Machine",
         slug: "partisan-influencer-networks",
         category: "Network Analysis",
@@ -1488,7 +1473,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#3b82f6","data":[47,47,38,35],"labels":["Influencers","Politicians","Foreign Actors","AI/Bots"]}
     },
     {
-        id: 99,
+        id: 98,
         title: "YouTube Radicalization Pipeline: Algorithmic Rabbit Holes Examined",
         slug: "youtube-radicalization-pipeline",
         category: "Platform Analysis",
@@ -1503,7 +1488,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#3b82f6","data":[14,7,2]}
     },
     {
-        id: 100,
+        id: 99,
         title: "Cable News Narrative Laundering: How Fringe Becomes Mainstream",
         slug: "cable-news-narrative-laundering",
         category: "Media Analysis",
@@ -1518,7 +1503,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[45,55,68,78,82,88]}
     },
     {
-        id: 101,
+        id: 100,
         title: "Wire Service Amplification: One Story, 600 Outlets",
         slug: "wire-service-amplification",
         category: "Media Analysis",
@@ -1533,7 +1518,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[6,1]}
     },
     {
-        id: 102,
+        id: 101,
         title: "Primetime Special Legitimization: When Networks Give Platforms",
         slug: "primetime-special-legitimization",
         category: "Media Analysis",
@@ -1548,7 +1533,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[94,8]}
     },
     {
-        id: 103,
+        id: 102,
         title: "The Protocols of the Elders of Zion: Anatomy of a Fabrication",
         slug: "protocols-elders-zion",
         category: "Historical Analysis",
@@ -1563,7 +1548,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[10,30,40,50,70,60,90,85,95,75,80]}
     },
     {
-        id: 104,
+        id: 103,
         title: "The Architecture of Perception: A History of American Media Disinformation",
         slug: "american-disinformation-timeline",
         category: "Analysis",
@@ -1578,7 +1563,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[1,2,3,3,4,5,6,7,8,9]}
     },
     {
-        id: 105,
+        id: 104,
         title: "The Architecture of Deception: Global Disinformation Landscape 2024-2025",
         slug: "disinformation-architecture-2025",
         category: "Analysis",
@@ -1593,7 +1578,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#ef4444","data":[2.6,5.6],"colors":["#ef4444","#3b82f6"]}
     },
     {
-        id: 106,
+        id: 105,
         title: "Clickbait Propaganda: 5 Case Studies in December 2025 Disinformation",
         slug: "clickbait-propaganda-december-2025",
         category: "Disinformation Analysis",
@@ -1608,7 +1593,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#3b82f6","data":[1,2,3,4,5],"labels":["Procedural Distortion","Pre-emptive Inoculation","Visual Decontextualization","Factional Weaponization","Temporal Displacement"]}
     },
     {
-        id: 107,
+        id: 106,
         title: "Minnesota Fraud Investigation: The $250 Million Scandal and Beyond",
         slug: "minnesota-fraud-investigation-2025",
         category: "Investigation",
@@ -1623,7 +1608,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[3.4,42,197]}
     },
     {
-        id: 108,
+        id: 107,
         title: "Election Deepfakes 2025: The Year Democracy Fought Back",
         slug: "election-deepfakes-2025",
         category: "Election Security",
@@ -1638,7 +1623,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[85,95,70,75,60,50],"colors":["#3b82f6","#ef4444","#f59e0b","#06b6d4","#10b981","#f59e0b"]}
     },
     {
-        id: 109,
+        id: 108,
         title: "Meta Ends Fact-Checking: The $100 Million Retreat",
         slug: "meta-ends-fact-checking-2025",
         category: "Platform Policy",
@@ -1653,7 +1638,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[80,20,20,30,40,100],"colors":["#3b82f6","#ef4444"]}
     },
     {
-        id: 110,
+        id: 109,
         title: "Bird Flu Misinformation: The H5N1 Panic Machine",
         slug: "bird-flu-misinformation-2025",
         category: "Public Health Disinfo",
@@ -1668,7 +1653,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[70,1,989,16],"labels":["Human Cases","Deaths","Dairy Herds","States Affected"],"colors":["#ef4444","#dc2626","#f59e0b","#3b82f6"]}
     },
     {
-        id: 111,
+        id: 110,
         title: "Grok AI: The Misinformation Machine",
         slug: "grok-ai-misinformation-crisis",
         category: "AI Safety Crisis",
@@ -1683,7 +1668,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[1,2,0,0,2,0,4,0,0,0,0,3]}
     },
     {
-        id: 112,
+        id: 111,
         title: "Los Angeles Wildfire Misinformation: A Forensic Analysis",
         slug: "la-wildfire-misinformation-2025",
         category: "Viral Disinformation",
@@ -1698,7 +1683,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[10,85,95,70,55,45,35,30]}
     },
     {
-        id: 113,
+        id: 112,
         title: "Iran and the West: Nuclear Escalation, Proxy Warfare, and the Path Forward",
         slug: "iran-nuclear-crisis",
         category: "Deep Dive Dossier",
@@ -1713,7 +1698,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[3.67,3.67,4.5,4.5,60,60,60]}
     },
     {
-        id: 114,
+        id: 113,
         title: "American Political Disinformation: Timeline, Key Cases, and Foreign Interference",
         slug: "american-political-disinfo",
         category: "Deep Dive Dossier",
@@ -1728,7 +1713,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[1,5,60,95,85,100,95]}
     },
     {
-        id: 115,
+        id: 114,
         title: "Project 2025's \"Military Orders\": Rumors vs. Reality",
         slug: "project-2025-military-orders",
         category: "Deep Dive Dossier",
@@ -1743,7 +1728,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[10,15,20,40,80,100,90,70,60,50,65,85]}
     },
     {
-        id: 116,
+        id: 115,
         title: "Fact-Check: The Viral \"166-Name Epstein List\"",
         slug: "epstein-166-name-list-fake",
         category: "Viral Disinformation",
@@ -1758,7 +1743,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[166,36]}
     },
     {
-        id: 117,
+        id: 116,
         title: "CDC Reverses Vaccine-Autism Stance: A Scientific Fact-Check",
         slug: "hhs-vaccine-autism-claims",
         category: "Fact Check",
@@ -1773,7 +1758,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#10b981","data":[95,20],"labels":["Pre-Nov 2025","Post-Nov 2025"],"colors":["#10b981","#ef4444"]}
     },
     {
-        id: 118,
+        id: 117,
         title: "Is the US Economy Headed for Recession? A Data-Driven Analysis",
         slug: "us-recession-analysis-2025",
         category: "Economic Analysis",
@@ -1788,7 +1773,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[2.2,2.1,4.9,3.4,1.6,3,3,2.3,2.4,3.1,4.3]}
     },
     {
-        id: 119,
+        id: 118,
         title: "The Tesla Pi Phone: Anatomy of a Digital Ghost Product",
         slug: "tesla-pi-phone-fake",
         category: "Deep Dive Dossier",
@@ -1803,7 +1788,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[10,45,85,60,40,100]}
     },
     {
-        id: 120,
+        id: 119,
         title: "The Great Smishing Surge of Late 2025: A Forensic Deep Dive",
         slug: "smishing-surge-2025",
         category: "Deep Dive Dossier",
@@ -1818,7 +1803,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#3b82f6","data":[100,100,100],"labels":["Toll Scam Search","AI-Delivery Scams","Text Volume"]}
     },
     {
-        id: 121,
+        id: 120,
         title: "Forensic Audit: 28 Trump Accusers & The Epstein Discipline Gap",
         slug: "trump-allegations-epstein",
         category: "Forensic Audit",
@@ -1833,7 +1818,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[1,8,12,24,28]}
     },
     {
-        id: 122,
+        id: 121,
         title: "Market Equilibrium and the Deceleration of United States Petroleum Costs",
         slug: "us-gas-price-decline",
         category: "Economic Analysis",
@@ -1848,7 +1833,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#06b6d4","data":[61.8,57.5],"colors":["#06b6d4","#3b82f6"]}
     },
     {
-        id: 123,
+        id: 122,
         title: "Metabolic Resurrection: Reversing Advanced Alzheimer's via NAD+ Restoration",
         slug: "nad-alzheimers-recovery",
         category: "Medical Breakthrough",
@@ -1862,7 +1847,7 @@ const REPORTS_DATA = [
         excerpt: "December 2025 breakthrough: P7C3-A20 compound achieves complete reversal of advanced Alzheimer's disease in mice through NAD+ restoration. Full cognitive recovery, BBB repair, and biomarker normalization challenge century-old dogma of irreversibility."
     },
     {
-        id: 124,
+        id: 123,
         title: "The Age of Slop: AI-Generated Disinformation in 2025",
         slug: "ai-slop-fake-local-news",
         category: "Deep Dive Dossier",
@@ -1877,7 +1862,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#3b82f6","data":[5,400],"labels":["Legitimate Local Newsroom","AI Slop Farm (UAIN)"]}
     },
     {
-        id: 125,
+        id: 124,
         title: "Dominion 'Remote Access' & 'Spyder': Kraken Lawsuits Debunked",
         slug: "dominion-voting-claims-2020",
         category: "Forensic Fact Check",
@@ -1892,7 +1877,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[62,8,0]}
     },
     {
-        id: 126,
+        id: 125,
         title: "The Sovereign-Commercial Hybrid",
         slug: "trump-admin-financial-conflicts",
         category: "Financial Forensics",
@@ -1907,7 +1892,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[4.5,3.7,3.1,3.1,3.1,2.5,2.5,3.2,2.6,5.7,7.3]}
     },
     {
-        id: 127,
+        id: 126,
         title: "Is 'FedNow Phase 2' Freezing Accounts?",
         slug: "fednow-freeze",
         category: "Deep Dive Dossier",
@@ -1922,7 +1907,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6"}
     },
     {
-        id: 128,
+        id: 127,
         title: "The Silicon Sleeper Cells: Laptop Farms & The New Digital Front",
         slug: "laptop-farms",
         category: "State-Sponsored Fraud",
@@ -1937,7 +1922,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#3b82f6","data":[100,90,85,80,75,70],"labels":["US Laptop Farm","US Facilitator","Freelance Platform","DPRK Operator","Laundering Mixer","Regime Weapons Prog"]}
     },
     {
-        id: 129,
+        id: 128,
         title: "Aerial Assets & Sovereign Logistics: A Forensic Audit",
         slug: "epstein-air-logistics",
         category: "Forensic Audit",
@@ -1952,7 +1937,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[4220,4220,4220,4220,6750,6750,6750,0]}
     },
     {
-        id: 130,
+        id: 129,
         title: "The Panopticon of Efficiency: Palantir & The Surveillance State",
         slug: "palantir-panopticon",
         category: "Surveillance State",
@@ -1967,7 +1952,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[320,345,370,400,430,458,486]}
     },
     {
-        id: 131,
+        id: 130,
         title: "The Golden Fleet: Assessing the Paradigm Shift",
         slug: "golden-fleet-analysis",
         category: "Strategic Assessment",
@@ -1982,7 +1967,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[40000,28000,15000,13000,9700]}
     },
     {
-        id: 132,
+        id: 131,
         title: "The December 2025 Financial Disinformation Complex",
         slug: "irs-social-security-payment-hoax-2025",
         category: "Disinformation Forensics",
@@ -1996,7 +1981,7 @@ const REPORTS_DATA = [
         excerpt: "Forensic investigation of viral IRS $1,390 & Social Security $4,500 hoaxes, exposing AI-driven content farms, algorithmic feedback loops, and identity theft pipelines."
     },
     {
-        id: 133,
+        id: 132,
         title: "The 2025 Farm Crisis: Did Treasury Prioritize Argentina Over US Farmers?",
         slug: "us-argentina-farm-crisis-2025",
         category: "Economic Analysis",
@@ -2011,7 +1996,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#3b82f6","data":[20,20]}
     },
     {
-        id: 134,
+        id: 133,
         title: "German Christmas Markets: Flood of Far-Right Fake News",
         slug: "german-christmas-market-disinfo",
         category: "Disinformation",
@@ -2026,7 +2011,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[35,28,22,8,5,2]}
     },
     {
-        id: 135,
+        id: 134,
         title: "Rob Reiner Death: Separating Fact from Fiction",
         slug: "rob-reiner-misinformation-2025",
         category: "Disinformation Analysis",
@@ -2041,7 +2026,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[0,12000,85000,320000,580000,420000,180000]}
     },
     {
-        id: 136,
+        id: 135,
         title: "Post-Assad Syria: The Disinformation War",
         slug: "syria-disinformation-2024",
         category: "Active Threat",
@@ -2056,7 +2041,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#0d1424","data":[40,15,15,12,8,10]}
     },
     {
-        id: 137,
+        id: 136,
         title: "CDC Drops Universal Hepatitis B Vaccine for Newborns",
         slug: "cdc-hepatitis-b-vaccine-2025",
         category: "Policy Analysis",
@@ -2071,7 +2056,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#0d1424","data":[20000,8000,3000,1000,400,100,20]}
     },
     {
-        id: 138,
+        id: 137,
         title: "Pete Hegseth 'Double-Tap' Strike: What We Know",
         slug: "hegseth-boat-strike",
         category: "Developing Story",
@@ -2086,7 +2071,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[2,3,2,4,5,6,8,4]}
     },
     {
-        id: 139,
+        id: 138,
         title: "US Inflation: A Decade of Price Changes (2015-2025)",
         slug: "us-inflation-10-year-analysis",
         category: "Economic Analysis",
@@ -2101,7 +2086,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[0.7,2.1,2.1,1.9,2.3,1.4,7,6.5,3.4,2.9,2.7]}
     },
     {
-        id: 140,
+        id: 139,
         title: "Epstein Files: What December 2025 Release Actually Shows",
         slug: "epstein-documents-2025",
         category: "Document Analysis",
@@ -2115,7 +2100,7 @@ const REPORTS_DATA = [
         excerpt: "DOJ releases 300,000+ pages then removes 16 files including Trump photo. Bipartisan outrage over redactions. 680+ pages entirely blacked out. Updated Dec 21."
     },
     {
-        id: 141,
+        id: 140,
         title: "Ruby Bradley 'Loser' Quote: Viral Military Misquote Debunked",
         slug: "ruby-bradley-quote",
         category: "Fact Check",
@@ -2129,7 +2114,7 @@ const REPORTS_DATA = [
         excerpt: "The viral 'loser' quote attributed to decorated Army nurse Colonel Ruby Bradley is fabricated. No primary source exists. Honor her by sharing her real heroic story."
     },
     {
-        id: 142,
+        id: 141,
         title: "Paid Protesters Hoax: The Craigslist Ad Myth That Won't Die",
         slug: "paid-protesters-hoax",
         category: "Recurring Hoax",
@@ -2143,7 +2128,7 @@ const REPORTS_DATA = [
         excerpt: "Claims of Soros-funded paid protesters via Craigslist ads have been debunked after every major protest for over a decade. Zero verified instances of mass paid protesting."
     },
     {
-        id: 143,
+        id: 142,
         title: "AI-Generated Deportation Videos: The Sora Deepfake Crisis",
         slug: "ai-deportation-videos",
         category: "Synthetic Media Alert",
@@ -2157,7 +2142,7 @@ const REPORTS_DATA = [
         excerpt: "At least 47 AI-generated fake videos depicting immigration raids have gone viral in 2025, created with tools like Sora. None depict real events."
     },
     {
-        id: 144,
+        id: 143,
         title: "The Great Reset: WEF Conspiracy Theory Fact Check",
         slug: "great-reset-wef",
         category: "Conspiracy Analysis",
@@ -2171,7 +2156,7 @@ const REPORTS_DATA = [
         excerpt: "The Great Reset is real but conspiracy claims vastly exaggerate its scope. The WEF is a discussion forum with no power to implement policies."
     },
     {
-        id: 145,
+        id: 144,
         title: "Chemtrails in 2025: TikTok's Resurgent Conspiracy Theory",
         slug: "chemtrails-2025",
         category: "Fact Check",
@@ -2185,7 +2170,7 @@ const REPORTS_DATA = [
         excerpt: "The chemtrails conspiracy resurges on TikTok with 18,300+ videos in Dec 2025. Science is clear: contrails are frozen water vapor, not chemical spraying."
     },
     {
-        id: 146,
+        id: 145,
         title: "BlueAnon: Can Starlink Satellites Manipulate Elections?",
         slug: "blueanon-starlink",
         category: "Conspiracy Analysis",
@@ -2199,7 +2184,7 @@ const REPORTS_DATA = [
         excerpt: "Left-wing conspiracy theory claims Starlink can alter votes. Reality: voting machines are air-gapped and not connected to any network during elections."
     },
     {
-        id: 147,
+        id: 146,
         title: "HAARP Weather Control Conspiracy: Science vs Fiction",
         slug: "haarp-weather-control",
         category: "Fact Check",
@@ -2213,7 +2198,7 @@ const REPORTS_DATA = [
         excerpt: "HAARP blamed for LA wildfires and hurricanes. Science: HAARP operates 60+ miles up in the ionosphere—weather forms in the troposphere below 10 miles."
     },
     {
-        id: 148,
+        id: 147,
         title: "Tommy Robinson 'Death' in Guadeloupe: False Claims Debunked",
         slug: "tommy-robinson-guadeloupe",
         category: "Fact Check",
@@ -2228,7 +2213,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[0.1,5,18,32,40,42]}
     },
     {
-        id: 149,
+        id: 148,
         title: "Elon Musk vs EU: Claims Fact-Checked",
         slug: "musk-eu-claims",
         category: "Fact Check",
@@ -2243,7 +2228,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[31,22,18,28,12,8]}
     },
     {
-        id: 150,
+        id: 149,
         title: "IRS $2,000 Stimulus Check Hoax: December 2025",
         slug: "irs-stimulus-hoax",
         category: "Fact Check",
@@ -2258,7 +2243,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[150,890,4200,18500,45000,89000]}
     },
     {
-        id: 151,
+        id: 150,
         title: "New Jersey Drone Sightings: Conspiracy Theories Debunked",
         slug: "nj-drone-conspiracy",
         category: "Fact Check",
@@ -2272,7 +2257,7 @@ const REPORTS_DATA = [
         excerpt: "Debunking viral claims about mysterious drones over New Jersey including Project Blue Beam, Iranian involvement, and alien theories. Verdict: MOSTLY FALSE."
     },
     {
-        id: 152,
+        id: 151,
         title: "MAGA Accounts: Foreign Location Reveal",
         slug: "maga-accounts-foreign",
         category: "Platform Analysis",
@@ -2287,7 +2272,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[58,42,35,28,37]}
     },
     {
-        id: 153,
+        id: 152,
         title: "Immigration Crime Wave: Claims vs Data",
         slug: "immigration-crime-claims",
         category: "Fact Check",
@@ -2302,7 +2287,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#FF2A2A"}
     },
     {
-        id: 154,
+        id: 153,
         title: "Hamas 51% Youth Support Claim",
         slug: "hamas-youth-support",
         category: "Fact Check",
@@ -2317,7 +2302,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#0d1424","data":[45,38,52,12]}
     },
     {
-        id: 155,
+        id: 154,
         title: "Trump's Grocery Prices Claim: Fact Check",
         slug: "grocery-prices-claim",
         category: "Fact Check",
@@ -2332,7 +2317,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#0d1424","data":[5.8,3.2,2.9,1.7,54.1,2.1,1.4,0.8]}
     },
     {
-        id: 156,
+        id: 155,
         title: "The 2025 AI Deepfake Crisis",
         slug: "ai-deepfakes-2025",
         category: "AI & Technology",
@@ -2346,7 +2331,7 @@ const REPORTS_DATA = [
         excerpt: "AI-generated deepfakes targeting public figures, 93% of social videos now synthetic, and the erosion of trust in digital content."
     },
     {
-        id: 157,
+        id: 156,
         title: "Climate Skeptics Misuse Ice Age Research",
         slug: "climate-ice-age-study",
         category: "Climate Misinformation",
@@ -2361,7 +2346,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444"}
     },
     {
-        id: 158,
+        id: 157,
         title: "Bondi Beach Attack: Viral Misinformation Wave",
         slug: "bondi-beach-misinfo",
         category: "Misinformation",
@@ -2375,7 +2360,7 @@ const REPORTS_DATA = [
         excerpt: "Multiple false claims spread within hours of Sydney shooting. Hero's identity fabricated, shooter's background distorted, non-existent second shooting claimed."
     },
     {
-        id: 159,
+        id: 158,
         title: "Did Elon Musk's DOGE Save $2 Trillion?",
         slug: "doge-savings-claims",
         category: "Fact Check",
@@ -2390,7 +2375,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#0d1424","data":[2000,0.102]}
     },
     {
-        id: 160,
+        id: 159,
         title: "Trump's '25 Million Migrants' Claim",
         slug: "trump-25m-migrants",
         category: "Fact Check",
@@ -2405,7 +2390,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[1.73,2.38,2.48,3.2]}
     },
     {
-        id: 161,
+        id: 160,
         title: "The $1,776 'Warrior Dividend': What It Really Is",
         slug: "warrior-dividend-analysis",
         category: "Policy Analysis",
@@ -2420,7 +2405,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#3b82f6","data":[2.6,0.3]}
     },
     {
-        id: 162,
+        id: 161,
         title: "Fact Check: FDA Memo Claims COVID Vaccines Killed 10 Children",
         slug: "fda-vaccine-memo-fact-check",
         category: "Public Health",
@@ -2435,7 +2420,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[1300,10,32],"labels":["Deaths FROM COVID-19","Claimed vaccine deaths","COVID hospitalizations (thousands)"],"colors":["#ef4444","#f59e0b","#3b82f6"]}
     },
     {
-        id: 163,
+        id: 162,
         title: "Gaza Boat Strikes: Pattern of Civilian Targeting?",
         slug: "boat-strike-investigation",
         category: "Military Investigation",
@@ -2450,7 +2435,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[11,25,48,75,99]}
     },
     {
-        id: 164,
+        id: 163,
         title: "Trump's Dec 17 Speech: Claims vs Reality",
         slug: "trump-speech-factcheck",
         category: "Fact Check",
@@ -2465,7 +2450,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#3b82f6","data":[4,2,1]}
     },
     {
-        id: 165,
+        id: 164,
         title: "Luigi Mangione Trial: Evidence and Legal Strategy",
         slug: "mangione-trial-analysis",
         category: "Criminal Justice",
@@ -2480,7 +2465,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#f59e0b","data":[100,80,0,0],"labels":["Physical Evidence","Statements","Surveillance","Witness Testimony"]}
     },
     {
-        id: 166,
+        id: 165,
         title: "TikTok US Sale: What the Deal Actually Contains",
         slug: "tiktok-sale-analysis",
         category: "Tech Policy",
@@ -2495,7 +2480,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#3b82f6","data":[15,15,15,35,19.9]}
     },
     {
-        id: 167,
+        id: 166,
         title: "CDC Website Changes: Vaccine-Autism Claims Analyzed",
         slug: "cdc-vaccine-autism",
         category: "Public Health",
@@ -2510,7 +2495,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[95.2,94.1,93,92.7,92.7]}
     },
     {
-        id: 168,
+        id: 167,
         title: "Marijuana Rescheduling: From Schedule I to Schedule III",
         slug: "marijuana-rescheduling",
         category: "Executive Action",
@@ -2525,7 +2510,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[70,21,21]}
     },
     {
-        id: 169,
+        id: 168,
         title: "Dollar Dominance: Treasury Bonds as Trade War Leverage",
         slug: "treasury-leverage",
         category: "Financial Analysis",
@@ -2539,7 +2524,7 @@ const REPORTS_DATA = [
         excerpt: "How China, Japan, and hedge funds could weaponize $8+ trillion in US Treasury holdings as tariffs escalate to 145%."
     },
     {
-        id: 170,
+        id: 169,
         title: "US Inflation Data: Accurate Numbers, Compromised Collection",
         slug: "inflation-methodology",
         category: "Data Quality Alert",
@@ -2554,7 +2539,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#1e3a5f","data":[2.7,2.62,2.66,3.2,4.1,4.8]}
     },
     {
-        id: 171,
+        id: 170,
         title: "Mirror Maze: Doppelganger Network Analysis",
         slug: "doppelganger-analysis",
         category: "Media Impersonation",
@@ -2568,7 +2553,7 @@ const REPORTS_DATA = [
         excerpt: "Russia's sophisticated media impersonation: 60+ fake news websites mimicking Washington Post, Fox News, and major outlets."
     },
     {
-        id: 172,
+        id: 171,
         title: "Spamouflage Network Analysis",
         slug: "network-analysis",
         category: "Active Threat",
@@ -2582,7 +2567,7 @@ const REPORTS_DATA = [
         excerpt: "China's largest influence operation: 8,700+ coordinated accounts across 50+ platforms targeting Western democracies."
     },
     {
-        id: 173,
+        id: 172,
         title: "Is 'FedNow Phase 2' Freezing Accounts?",
         slug: "fednow-freeze",
         category: "Misinformation",
@@ -2597,7 +2582,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6"}
     },
     {
-        id: 174,
+        id: 173,
         title: "Fact Check: Biden White House Plaque Claims",
         slug: "plaque-fact-check",
         category: "72% False or Misleading",
@@ -2611,7 +2596,7 @@ const REPORTS_DATA = [
         excerpt: "Comprehensive analysis of 18 claims on partisan plaques installed beneath Biden's portrait in the White House."
     },
     {
-        id: 175,
+        id: 174,
         title: "D.C. Mid-Air Collision Misinfo",
         slug: "dc-midair-collision-misinfo-2025",
         category: "Conspiracy & Hoaxes",
@@ -2626,7 +2611,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[35,25,18,15,7],"labels":["DEI Blame","Conspiracy","Cover-up","Staffing","Other"],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4"]}
     },
     {
-        id: 176,
+        id: 175,
         title: "Barilla 'Insect Flour' Claims: EU Regulations vs. Social Media Panic",
         slug: "barilla-insect-flour-2025",
         category: "Conspiracy & Hoaxes",
@@ -2641,7 +2626,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[5,45,180,420,280,120,45]}
     },
     {
-        id: 177,
+        id: 176,
         title: "'The Internet Died in 2016' Theory",
         slug: "dead-internet-theory-2025",
         category: "Conspiracy & Hoaxes",
@@ -2656,7 +2641,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[3.4,3.9,4.5,5,5.4]}
     },
     {
-        id: 178,
+        id: 177,
         title: "Hobby Lobby 'Demon' Merchandise Claims Debunked",
         slug: "hobby-lobby-demon-merchandise-2025",
         category: "Conspiracy & Hoaxes",
@@ -2671,7 +2656,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[12,18,25,42,68,85]}
     },
     {
-        id: 179,
+        id: 178,
         title: "Maui 'Weather Weapons' Experiment",
         slug: "maui-weather-weapons-2025",
         category: "Conspiracy & Hoaxes",
@@ -2686,7 +2671,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[2,15,85,120,95,78,65,45]}
     },
     {
-        id: 180,
+        id: 179,
         title: "Epstein Young Women Archive Photos: Viral Misattributions",
         slug: "epstein-archive-photos-2025",
         category: "Conspiracy & Hoaxes",
@@ -2701,7 +2686,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#3b82f6","data":[38,27,22,13],"labels":["Public Event Photos","Digitally Altered","Misattributed Context","Complete Fabrications"],"colors":["#3b82f6","#ef4444","#f59e0b","#06b6d4"]}
     },
     {
-        id: 181,
+        id: 180,
         title: "Mamdani Extremist Associate Link: Guilt-by-Association Claims Examined",
         slug: "mamdani-extremist-link-2025",
         category: "U.S. Politics & Policy",
@@ -2716,7 +2701,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#0a0a0f","data":[35,25,20,12,8],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
-        id: 182,
+        id: 181,
         title: "Australian Election Chatbot Poisoning",
         slug: "australia-election-chatbot-2025",
         category: "AI & Deepfakes",
@@ -2731,7 +2716,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[28,23,19,15,12],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
-        id: 183,
+        id: 182,
         title: "Montana 'Pedophile Bonfire' Hoax",
         slug: "montana-pedophile-bonfire-2025",
         category: "Conspiracy & Hoaxes",

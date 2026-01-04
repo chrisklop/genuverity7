@@ -1548,16 +1548,6 @@
       "permanent": true
     },
     {
-      "source": "/localreports/transparency-january-2026.html",
-      "destination": "/transparency-january-2026",
-      "permanent": true
-    },
-    {
-      "source": "/transparency-january-2026.html",
-      "destination": "/transparency-january-2026",
-      "permanent": true
-    },
-    {
       "source": "/localreports/treasury-leverage.html",
       "destination": "/treasury-leverage",
       "permanent": true
@@ -2533,10 +2523,6 @@
     {
       "source": "/trade-war-tariffs-2025",
       "destination": "/localreports/trade-war-tariffs-2025.html"
-    },
-    {
-      "source": "/transparency-january-2026",
-      "destination": "/localreports/transparency-january-2026.html"
     },
     {
       "source": "/treasury-leverage",
