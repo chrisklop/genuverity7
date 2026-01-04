@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality Audit: Fact-Checking the Fact-Checker | GenuVerity</title>
+    <meta name="description" content="GenuVerity's January 2026 quality audit - applying our own fact-checking standards to our reports. Methodology, findings, and improvement commitments.">
+    <meta name="keywords" content="fact-checking, quality audit, transparency, methodology, GenuVerity, journalistic standards">
+    <meta name="author" content="GenuVerity Intelligence">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.genuverity.com/quality-audit-jan-2026">
+    <meta property="og:title" content="Quality Audit: Fact-Checking the Fact-Checker | GenuVerity">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": "Quality Audit: Fact-Checking the Fact-Checker",
+      "datePublished": "2026-01-04",
+      "author": {"@type": "Organization", "name": "GenuVerity"}
+    }
+    </script>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/chart-watermark.js"></script>
+    <script src="../js/chart-defaults.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js?v=4.0" defer></script>
+    <script src="../js/shared-components.js?v=4.0" defer></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/shared-components.css?v=4.0">
+    <link rel="stylesheet" href="../css/reports.css?v=4.0">
+</head>
+
+<body>
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
+    <div class="container">
+        <div class="report-meta">
+            <span class="meta-tag">Transparency</span>
+            <span class="meta-tag cyan">Self-Audit</span>
+            <span class="meta-tag"><i data-lucide="clock" style="width:12px; display:inline-block; vertical-align:middle;"></i> 12 MIN READ</span>
+        </div>
+
+        <h1 class="report-title">Quality Audit: Fact-Checking the Fact-Checker</h1>
+        <h2 class="report-subtitle">Applying our own rigorous standards to evaluate our reports. January 2026 findings, methodology, and improvement commitments.</h2>
+
+        <div class="content-grid">
+            <aside class="sources-sidebar">
+                <div class="share-section">
+                    <div class="share-buttons">
+                        <button onclick="shareToTwitter()" class="share-btn share-twitter"><i data-lucide="twitter"></i><span class="share-label">X</span></button>
+                        <button onclick="shareToFacebook()" class="share-btn share-facebook"><i data-lucide="facebook"></i><span class="share-label">Facebook</span></button>
+                        <button onclick="shareToLinkedIn()" class="share-btn share-linkedin"><i data-lucide="linkedin"></i><span class="share-label">LinkedIn</span></button>
+                        <button onclick="copyShareLink()" class="share-btn share-copy" id="copyLinkBtn"><i data-lucide="link"></i><span class="share-label">Copy Link</span></button>
+                    </div>
+                </div>
+
+                <div class="sources-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Methodology</div>
+                    <span class="sources-count">4</span>
+                </div>
+                <div class="sources-list" id="sourcesList">
+                    <a href="https://www.poynter.org/ifcn-code-of-principles/" target="_blank" class="source-card" id="source-1">
+                        <span class="source-ref">1</span>
+                        <div><div>IFCN Code of Principles</div><div style="font-size:0.7em; opacity:0.7;">poynter.org</div></div>
+                    </a>
+                    <a href="https://www.journalism.org/fact-checking-project/" target="_blank" class="source-card" id="source-2">
+                        <span class="source-ref">2</span>
+                        <div><div>Pew Research: Fact-Checking Standards</div><div style="font-size:0.7em; opacity:0.7;">journalism.org</div></div>
+                    </a>
+                    <a href="https://reutersinstitute.politics.ox.ac.uk/risj-review/trust-news-research" target="_blank" class="source-card" id="source-3">
+                        <span class="source-ref">3</span>
+                        <div><div>Reuters Institute: Trust in News</div><div style="font-size:0.7em; opacity:0.7;">reutersinstitute.politics.ox.ac.uk</div></div>
+                    </a>
+                    <a href="https://firstdraftnews.org/verification-handbook/" target="_blank" class="source-card" id="source-4">
+                        <span class="source-ref">4</span>
+                        <div><div>First Draft: Verification Handbook</div><div style="font-size:0.7em; opacity:0.7;">firstdraftnews.org</div></div>
+                    </a>
+                </div>
+
+                <div class="audit-metrics" style="margin-top: 24px; padding: 16px; background: rgba(6, 182, 212, 0.1); border-radius: 8px; border: 1px solid rgba(6, 182, 212, 0.2);">
+                    <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Audit Summary</div>
+                    <div style="display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: #94a3b8;">Reports Audited</span><span style="color: #fff; font-weight: 600;">28</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: #94a3b8;">Concerns Flagged</span><span style="color: #fff; font-weight: 600;">39</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: #94a3b8;">Valid After Review</span><span style="color: #fff; font-weight: 600;">13</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: #94a3b8;">Clean Reports</span><span style="color: #10b981; font-weight: 600;">6 (21%)</span></div>
+                    </div>
+                </div>
+            </aside>
+
+            <article class="article-content">
+                <div class="info-box cyan copyable-section" id="tldr">
+                    <div class="info-title"><i data-lucide="zap"></i>TL;DR</div>
+                    <p><strong>SELF-AUDIT RESULTS</strong></p>
+                    <p>We audited 28 GenuVerity reports using the same rigorous standards we apply to external claims. Result: 21% of reports had zero quality concerns. We identified patterns needing improvement - primarily around verdict assignment and expert citation specificity - and have updated our guidelines to address them. This audit demonstrates our commitment to applying our own standards to ourselves.</p>
+                </div>
+
+                <div class="info-box copyable-section" id="executive-summary">
+                    <div class="info-title"><i data-lucide="file-text"></i>Why Audit Ourselves?</div>
+                    <p>Fact-checkers hold others accountable. But who fact-checks the fact-checkers? GenuVerity believes transparency requires applying the same rigorous standards we use on external claims to our own work. This audit evaluates not technical compliance (source counts, formatting) but <strong>journalistic and analytical quality</strong> - are our verdicts supported? Is our reasoning sound? Do we treat subjects fairly?</p>
+                </div>
+
+                <figure class="float-figure copyable-section" id="dimension-chart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">Quality Audit Dimensions</div>
+                        </div>
+                        <div style="height: 280px; position: relative;">
+                            <canvas id="dimensionChart"></canvas>
+                        </div>
+                    </div>
+                    <figcaption>Weight distribution across four quality dimensions</figcaption>
+                </figure>
+
+                <section class="copyable-section">
+                    <h2>Audit Methodology</h2>
+                    <p>Our quality framework evaluates reports across four dimensions, weighted by importance to accurate fact-checking:</p>
+
+                    <div style="display: grid; gap: 16px; margin: 20px 0;">
+                        <div style="padding: 16px; background: rgba(59, 130, 246, 0.1); border-radius: 8px; border-left: 3px solid #3b82f6;">
+                            <strong style="color: #3b82f6;">Evidence Rigor (40%)</strong>
+                            <p style="margin: 8px 0 0; color: #94a3b8; font-size: 0.9rem;">Source credibility, primary vs secondary sources, quote context integrity, acknowledgment of contradictory evidence.</p>
+                        </div>
+                        <div style="padding: 16px; background: rgba(6, 182, 212, 0.1); border-radius: 8px; border-left: 3px solid #06b6d4;">
+                            <strong style="color: #06b6d4;">Logical Soundness (25%)</strong>
+                            <p style="margin: 8px 0 0; color: #94a3b8; font-size: 0.9rem;">Reasoning transparency, correlation vs causation handling, fallacy avoidance, complexity recognition.</p>
+                        </div>
+                        <div style="padding: 16px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border-left: 3px solid #10b981;">
+                            <strong style="color: #10b981;">Fairness & Balance (20%)</strong>
+                            <p style="margin: 8px 0 0; color: #94a3b8; font-size: 0.9rem;">Charitable interpretation of opposing arguments, explanation of WHY claims spread, avoidance of dismissive tone.</p>
+                        </div>
+                        <div style="padding: 16px; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border-left: 3px solid #f59e0b;">
+                            <strong style="color: #f59e0b;">Verdict Precision (15%)</strong>
+                            <p style="margin: 8px 0 0; color: #94a3b8; font-size: 0.9rem;">Scope match between verdict and claim, category accuracy, evidence-to-verdict alignment.</p>
+                        </div>
+                    </div>
+
+                    <p>This framework draws from the <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">IFCN Code of Principles</a>, academic research on fact-checking effectiveness from the <a href="#source-3" class="citation-link" onclick="highlightSource(event, 'source-3')">Reuters Institute</a>, and verification standards from <a href="#source-4" class="citation-link" onclick="highlightSource(event, 'source-4')">First Draft</a>.</p>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Audit Process</h2>
+                    <p>We used a <strong>hybrid approach</strong>: automated scanning flagged potential concerns, then human reviewers validated each flag. This balances efficiency with accuracy.</p>
+
+                    <p><strong>Sample selection:</strong> 28 reports stratified by verdict type (FALSE, TRUE, MIXED, MISLEADING, CONTEXT) to ensure representative coverage. Both recent and older reports included to test consistency over time.</p>
+
+                    <p><strong>What we scanned for:</strong></p>
+                    <ul style="color: #94a3b8; margin-left: 20px;">
+                        <li>Vague authority appeals ("experts say" without naming specific sources)</li>
+                        <li>Truncated quotes that might strip context</li>
+                        <li>Missing counter-arguments for FALSE/MISLEADING verdicts</li>
+                        <li>Verdict-evidence mismatches</li>
+                        <li>Undefined or missing verdict assignments</li>
+                    </ul>
+                </section>
+
+                <figure class="float-figure copyable-section" id="concerns-chart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">Concerns by Severity</div>
+                        </div>
+                        <div style="height: 280px; position: relative;">
+                            <canvas id="concernsChart"></canvas>
+                        </div>
+                    </div>
+                    <figcaption>Distribution of 39 flagged concerns across severity levels</figcaption>
+                </figure>
+
+                <section class="copyable-section">
+                    <h2>What We Found</h2>
+                    <p>The scanner flagged <strong>39 potential concerns</strong> across 28 reports. After human validation, <strong>13 were confirmed as valid</strong> (33% precision rate). The remaining 26 were false positives - legitimate uses flagged by overly broad patterns.</p>
+
+                    <h3>Valid Concerns Identified</h3>
+                    <div style="display: grid; gap: 12px; margin: 16px 0;">
+                        <div style="padding: 12px 16px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3);">
+                            <strong style="color: #ef4444;">HIGH: Missing Verdict Assignment</strong>
+                            <p style="margin: 8px 0 0; color: #94a3b8; font-size: 0.9rem;">5 reports had no verdict assigned in our data system. These were analysis or investigation pieces that should either have verdicts added or be reclassified as non-verdict content.</p>
+                        </div>
+                        <div style="padding: 12px 16px; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.3);">
+                            <strong style="color: #f59e0b;">MEDIUM: Vague Expert Citations</strong>
+                            <p style="margin: 8px 0 0; color: #94a3b8; font-size: 0.9rem;">3 instances of "experts say" or "researchers found" language that could be more specific. While sources were linked, the text should name the specific expert or institution.</p>
+                        </div>
+                        <div style="padding: 12px 16px; background: rgba(6, 182, 212, 0.1); border-radius: 8px; border: 1px solid rgba(6, 182, 212, 0.3);">
+                            <strong style="color: #06b6d4;">LOW: Missing Counter-Arguments</strong>
+                            <p style="margin: 8px 0 0; color: #94a3b8; font-size: 0.9rem;">3 FALSE/MISLEADING reports didn't fully explain WHY the debunked claim gained traction. Adding this context improves reader understanding and avoids appearing dismissive.</p>
+                        </div>
+                    </div>
+
+                    <h3>False Positives (Not Actual Problems)</h3>
+                    <p>The scanner over-flagged several patterns that, upon review, were appropriate:</p>
+                    <ul style="color: #94a3b8; margin-left: 20px;">
+                        <li><strong>Absolutist language:</strong> "No evidence exists" flagged 11 times - but this is appropriate fact-checking language when substantiated</li>
+                        <li><strong>Opinion source detection:</strong> 6 flags for the word "opinion" - all were references to "public opinion polls" or self-aware statements, not problematic sourcing</li>
+                        <li><strong>Truncated quotes:</strong> Most ellipsis usage was legitimate readability editing, not context-stripping</li>
+                    </ul>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Clean Reports: Our Exemplars</h2>
+                    <p><strong>6 reports (21%)</strong> had zero quality concerns flagged. These demonstrate best practices:</p>
+                    <ul style="color: #94a3b8; margin-left: 20px;">
+                        <li>Clear verdict-to-evidence alignment</li>
+                        <li>Specific expert citations with names and institutions</li>
+                        <li>Explanation of why false claims gained traction</li>
+                        <li>Full context for all quotes</li>
+                        <li>Acknowledgment of complexity where warranted</li>
+                    </ul>
+                    <p>These reports will serve as internal templates for future work.</p>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Actions Taken</h2>
+                    <p>Based on this audit, we've made the following changes:</p>
+
+                    <h3>Immediate Fixes</h3>
+                    <ul style="color: #94a3b8; margin-left: 20px;">
+                        <li>Reviewing 5 undefined-verdict reports to assign appropriate verdicts or reclassify</li>
+                        <li>Adding specific researcher names to 2 reports flagged for vague authority</li>
+                    </ul>
+
+                    <h3>Process Updates</h3>
+                    <ul style="color: #94a3b8; margin-left: 20px;">
+                        <li><strong>Mandatory verdict rule:</strong> Every fact-check report MUST have a verdict. Analysis pieces without verdicts must use a different category.</li>
+                        <li><strong>Specific expert citations:</strong> Guidelines now require naming the specific expert, institution, or study - not "experts say."</li>
+                        <li><strong>Counter-argument requirement:</strong> FALSE/MISLEADING reports must include a section explaining WHY the false claim spread.</li>
+                    </ul>
+
+                    <h3>Scanner Improvements</h3>
+                    <ul style="color: #94a3b8; margin-left: 20px;">
+                        <li>Removing over-sensitive patterns (absolutist language, "opinion" keyword)</li>
+                        <li>Refining detection to reduce false positives</li>
+                        <li>Adding exclusions for "public opinion" and self-aware statements</li>
+                    </ul>
+                </section>
+
+                <section class="copyable-section">
+                    <h2>Commitment to Ongoing Transparency</h2>
+                    <p>This audit is not a one-time exercise. We commit to:</p>
+                    <ul style="color: #94a3b8; margin-left: 20px;">
+                        <li><strong>Quarterly audits:</strong> Reviewing sample of reports against quality framework</li>
+                        <li><strong>Public reporting:</strong> Publishing audit results like this one</li>
+                        <li><strong>Methodology transparency:</strong> Our full quality rubric is available at <a href="../methodology.html" style="color: #3b82f6;">genuverity.com/methodology</a></li>
+                        <li><strong>Corrections policy:</strong> When we get something wrong, we issue prominent corrections</li>
+                    </ul>
+                    <p>Fact-checking requires trust. Trust requires transparency. We hold ourselves to the same standards we apply to others.</p>
+                </section>
+
+                <div class="info-box green copyable-section" id="bottom-line" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3);">
+                    <div class="info-title" style="color: #10b981;"><i data-lucide="check-circle"></i>The Bottom Line</div>
+                    <p>This audit found that <strong>79% of our reports</strong> had some flagged concerns, though most were false positives. After human review, <strong>13 valid issues</strong> were identified and are being addressed. Our updated guidelines will prevent these patterns in future reports. We're not perfect - but we're committed to improvement and transparency about where we fall short.</p>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <script>
+        // Dimension weights donut chart
+        new Chart(document.getElementById('dimensionChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Evidence Rigor', 'Logical Soundness', 'Fairness', 'Verdict Precision'],
+                datasets: [{
+                    data: [40, 25, 20, 15],
+                    backgroundColor: ['#3b82f6', '#06b6d4', '#10b981', '#f59e0b'],
+                    borderColor: '#0a0a0f',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#94a3b8', padding: 12, font: { size: 11 } }
+                    }
+                }
+            }
+        });
+
+        // Concerns by severity horizontal bar chart
+        new Chart(document.getElementById('concernsChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['HIGH', 'MEDIUM', 'LOW'],
+                datasets: [{
+                    label: 'Concerns',
+                    data: [5, 18, 16],
+                    backgroundColor: ['#ef4444', '#f59e0b', '#06b6d4'],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    y: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>

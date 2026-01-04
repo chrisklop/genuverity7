@@ -45,15 +45,36 @@ Every report MUST have one of these verdicts:
 
 **NEVER use `undefined`** - always assign a verdict.
 
-### 5. Visualizations
+### 5. Specific Expert Citations (NO VAGUE AUTHORITY)
+
+**NEVER use vague authority appeals:**
+
+| FORBIDDEN | REQUIRED INSTEAD |
+|-----------|------------------|
+| "Experts say..." | "Dr. [Name] at [Institution] stated..." |
+| "Studies show..." | "A [Year] [Institution] study found..." |
+| "Researchers found..." | "Research by [Name] published in [Journal]..." |
+| "Scientists agree..." | "[Organization] confirms..." |
+
+Always name the specific expert, institution, or study and link to the source.
+
+### 6. Counter-Argument Requirement
+
+For `false` or `misleading` verdicts, **MUST include** a "Why This Claim Spread" section:
+- Explain what makes the claim believable
+- Address legitimate underlying concerns
+- Avoid dismissive tone toward believers
+
+### 7. Visualizations
 - Include 1-2 Chart.js charts when applicable
 - Use GenuVerity watermark plugin
 - Follow Midnight Tech color scheme
 
-### 6. Structure
+### 8. Structure
 - Hero section with verdict/title
 - Executive summary
 - Detailed analysis with inline citations
+- "Why This Claim Spread" section (for false/misleading)
 - Primary sources grid
 - Feedback form
 
@@ -99,3 +120,19 @@ After creating ANY report HTML file:
 | Wikipedia citations | Search for primary sources instead |
 | Purple colors | Use only approved color palette |
 | Missing inline citations | Every factual claim needs a link |
+| **Undefined verdict** | ALWAYS assign verdict in both HTML and reports-data.js |
+| **Vague authority** | NEVER write "experts say" - name specific sources |
+| **Missing counter-argument** | FALSE/MISLEADING reports MUST explain why claim spread |
+
+## Quality Audit Standards
+
+Reports are periodically audited against these quality dimensions:
+
+| Dimension | Weight | What's Checked |
+|-----------|--------|----------------|
+| Evidence Rigor | 40% | Source credibility, primary vs secondary, quote context |
+| Logical Soundness | 25% | Reasoning transparency, fallacy avoidance |
+| Fairness | 20% | Counter-argument handling, tone, charitable interpretation |
+| Verdict Precision | 15% | Scope match, category accuracy, evidence alignment |
+
+**Target:** All reports should score 80+ on quality audit.

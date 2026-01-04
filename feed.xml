@@ -5,8 +5,15 @@
     <link>https://www.genuverity.com</link>
     <description>AI-powered fact-checking platform investigating misinformation, disinformation, and viral claims with source-first methodology.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 20:14:38 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 21:53:11 GMT</lastBuildDate>
     <atom:link href="https://www.genuverity.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Quality Audit: Fact-Checking the Fact-Checker</title>
+      <link>https://www.genuverity.com/quality-audit-jan-2026</link>
+      <guid isPermaLink="true">https://www.genuverity.com/quality-audit-jan-2026</guid>
+      <pubDate>Sun, 04 Jan 2026 06:00:00 GMT</pubDate>
+      <description>Quality Audit: Fact-Checking the Fact-Checker</description>
+    </item>
     <item>
       <title>Biden Military Situation Room Image: AI-Generated Political Deepfake</title>
       <link>https://www.genuverity.com/biden-situation-room-image-2025</link>
@@ -209,13 +216,6 @@
       <guid isPermaLink="true">https://www.genuverity.com/hegseth-signalgate-2025</guid>
       <pubDate>Fri, 02 Jan 2026 06:00:00 GMT</pubDate>
       <description>D.C. Murder Rate Comparison: Cherry-Picked Statistics</description>
-    </item>
-    <item>
-      <title>Portland</title>
-      <link>https://www.genuverity.com/dc-murder-rate-comparison-2025</link>
-      <guid isPermaLink="true">https://www.genuverity.com/dc-murder-rate-comparison-2025</guid>
-      <pubDate>Fri, 02 Jan 2026 06:00:00 GMT</pubDate>
-      <description>Portland</description>
     </item>
   </channel>
 </rss>

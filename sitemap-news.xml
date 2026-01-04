@@ -2,6 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://www.genuverity.com/quality-audit-jan-2026</loc>
+    <news:news>
+      <news:publication>
+        <news:name>GenuVerity</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-01-04</news:publication_date>
+      <news:title>Quality Audit: Fact-Checking the Fact-Checker</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://www.genuverity.com/biden-situation-room-image-2025</loc>
     <news:news>
       <news:publication>
@@ -318,17 +329,6 @@
       </news:publication>
       <news:publication_date>2026-01-02</news:publication_date>
       <news:title>D.C. Murder Rate Comparison: Cherry-Picked Statistics</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://www.genuverity.com/dc-murder-rate-comparison-2025</loc>
-    <news:news>
-      <news:publication>
-        <news:name>GenuVerity</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2026-01-02</news:publication_date>
-      <news:title>Portland</news:title>
     </news:news>
   </url>
 </urlset>

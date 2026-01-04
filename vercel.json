@@ -1318,6 +1318,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/quality-audit-jan-2026.html",
+      "destination": "/quality-audit-jan-2026",
+      "permanent": true
+    },
+    {
+      "source": "/quality-audit-jan-2026.html",
+      "destination": "/quality-audit-jan-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/reciprocal-tariff-chart-2025.html",
       "destination": "/reciprocal-tariff-chart-2025",
       "permanent": true
@@ -2431,6 +2441,10 @@
     {
       "source": "/qanon-network-analysis",
       "destination": "/localreports/qanon-network-analysis.html"
+    },
+    {
+      "source": "/quality-audit-jan-2026",
+      "destination": "/localreports/quality-audit-jan-2026.html"
     },
     {
       "source": "/reciprocal-tariff-chart-2025",

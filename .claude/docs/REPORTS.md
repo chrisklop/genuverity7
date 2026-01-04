@@ -50,7 +50,21 @@ Complete guide for creating GenuVerity fact-check reports.
 | **Chart.js** | With watermark plugin |
 | **Chart Layout** | Magazine-style `<figure class="float-figure">` |
 | **Reading Progress** | In nav header |
-| **Verdict Section** | Color-coded |
+| **Verdict Section** | Color-coded, **MUST have verdict assigned** |
+
+### Mandatory Verdict Assignment
+
+Every report MUST have a verdict in both the HTML and `reports-data.js`:
+
+| Verdict | When to Use |
+|---------|-------------|
+| `false` | Claim is demonstrably false |
+| `true` | Claim is verified as accurate |
+| `misleading` | Technically true but presented deceptively |
+| `mixed` | Multiple claims, some true, some false |
+| `context` | Claim lacks crucial context that changes meaning |
+
+**NEVER leave verdict as `undefined`** - if content is pure analysis without a verdict, classify it as an "Analysis" or "Investigation" category, not "Fact Check".
 
 ---
 
@@ -72,6 +86,42 @@ Every factual claim needs a link in the same sentence:
 ```html
 According to <a href="https://bls.gov/..." target="_blank" rel="noopener">BLS data</a>,
 inflation rose <strong>2.7%</strong> in November.
+```
+
+### Specific Expert Citations (NO VAGUE AUTHORITY)
+
+**NEVER use vague authority appeals.** Always name the specific source.
+
+| BAD (Vague) | GOOD (Specific) |
+|-------------|-----------------|
+| "Experts say..." | "Dr. Sarah Chen at MIT stated..." |
+| "Studies show..." | "A 2024 Stanford study by Dr. James Liu found..." |
+| "Researchers found..." | "According to research published in Nature by..." |
+| "Scientists agree..." | "The American Medical Association confirms..." |
+
+When citing research:
+- Name the institution or journal
+- Link to the specific study/paper
+- If quoting a person, include their credentials
+
+### Counter-Argument Requirement (FALSE/MISLEADING Reports)
+
+For reports with `false` or `misleading` verdicts, include a section explaining **why** the false claim gained traction. This:
+- Builds reader understanding
+- Avoids appearing dismissive
+- Provides psychological/social context
+
+**Required section:** "Why This Claim Spread" or similar, addressing:
+- What makes the claim believable?
+- What emotional/political factors drive its spread?
+- What legitimate concerns might underlie the false claim?
+
+Example:
+```html
+<h3>Why This Claim Spread</h3>
+<p>This misinformation gained traction because it tapped into legitimate concerns
+about [X]. The claim's visual format made it highly shareable, and it confirmed
+pre-existing beliefs about [Y]...</p>
 ```
 
 ---

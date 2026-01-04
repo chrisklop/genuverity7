@@ -1,0 +1,251 @@
+{
+  "version": "1.0.0",
+  "description": "GenuVerity Quality Audit Rubric - Fact-Checking the Fact-Checker",
+  "dimensions": {
+    "evidenceRigor": {
+      "weight": 0.40,
+      "maxPoints": 40,
+      "criteria": [
+        {
+          "id": "source-credibility",
+          "name": "Source Credibility",
+          "description": "Are sources authoritative for this specific claim domain?",
+          "points": 10,
+          "levels": {
+            "excellent": "All sources are primary or high-authority for the claim domain",
+            "good": "Majority of sources are primary; some reputable secondary",
+            "acceptable": "Mix of primary and secondary; some weak sources",
+            "poor": "Relies heavily on opinion pieces or low-authority sources"
+          }
+        },
+        {
+          "id": "direct-relevance",
+          "name": "Direct Relevance",
+          "description": "Do sources directly address the claim or only tangentially?",
+          "points": 10,
+          "levels": {
+            "excellent": "Sources directly address the specific claim being evaluated",
+            "good": "Most sources relevant; some provide background only",
+            "acceptable": "Some sources stretch to relate to the claim",
+            "poor": "Sources don't clearly support conclusions drawn"
+          }
+        },
+        {
+          "id": "completeness",
+          "name": "Evidence Completeness",
+          "description": "Is contradictory evidence acknowledged and addressed?",
+          "points": 10,
+          "levels": {
+            "excellent": "Acknowledges and addresses opposing evidence",
+            "good": "Mentions some counter-evidence",
+            "acceptable": "Focuses only on supporting evidence",
+            "poor": "Ignores clearly available contradictory evidence"
+          }
+        },
+        {
+          "id": "context-integrity",
+          "name": "Quote/Context Integrity",
+          "description": "Are quotes full and properly contextualized?",
+          "points": 10,
+          "levels": {
+            "excellent": "Full quotes with clear context provided",
+            "good": "Quotes are accurate with reasonable truncation",
+            "acceptable": "Some quotes truncated but meaning preserved",
+            "poor": "Quotes taken out of context or misleadingly truncated"
+          }
+        }
+      ]
+    },
+    "logicalSoundness": {
+      "weight": 0.25,
+      "maxPoints": 25,
+      "criteria": [
+        {
+          "id": "reasoning-transparency",
+          "name": "Reasoning Transparency",
+          "description": "Is the logic explicitly stated, not implied?",
+          "points": 8,
+          "levels": {
+            "excellent": "Clear 'because X, therefore Y' reasoning throughout",
+            "good": "Reasoning mostly explicit with minor gaps",
+            "acceptable": "Some reasoning implied rather than stated",
+            "poor": "Reader must guess how evidence connects to verdict"
+          }
+        },
+        {
+          "id": "fallacy-avoidance",
+          "name": "Fallacy Avoidance",
+          "description": "Free from strawman, false dichotomy, circular reasoning?",
+          "points": 9,
+          "levels": {
+            "excellent": "No logical fallacies; addresses strongest opposing arguments",
+            "good": "Minor logical shortcuts but fundamentally sound",
+            "acceptable": "Some weak reasoning but conclusions defensible",
+            "poor": "Contains clear logical fallacies or circular reasoning"
+          }
+        },
+        {
+          "id": "complexity-recognition",
+          "name": "Complexity Recognition",
+          "description": "Does it handle 'it depends' scenarios appropriately?",
+          "points": 8,
+          "levels": {
+            "excellent": "Acknowledges nuance and conditional truths",
+            "good": "Notes some complexity where relevant",
+            "acceptable": "Oversimplifies but captures core truth",
+            "poor": "Treats complex issue as black-and-white"
+          }
+        }
+      ]
+    },
+    "fairnessBalance": {
+      "weight": 0.20,
+      "maxPoints": 20,
+      "criteria": [
+        {
+          "id": "charitable-interpretation",
+          "name": "Charitable Interpretation",
+          "description": "Addresses strongest version of opposing argument?",
+          "points": 7,
+          "levels": {
+            "excellent": "Steelmans opposing view before refuting",
+            "good": "Presents opposing view fairly",
+            "acceptable": "Mentions opposing view briefly",
+            "poor": "Strawmans or ignores opposing perspective"
+          }
+        },
+        {
+          "id": "underlying-concerns",
+          "name": "Underlying Concerns",
+          "description": "Explains WHY people believe the false claim?",
+          "points": 7,
+          "levels": {
+            "excellent": "Explains psychological/social reasons for belief",
+            "good": "Notes some reasons for belief spread",
+            "acceptable": "Focuses only on proving claim wrong",
+            "poor": "Dismissive of believers"
+          }
+        },
+        {
+          "id": "tone",
+          "name": "Tone",
+          "description": "Professional and non-patronizing?",
+          "points": 6,
+          "levels": {
+            "excellent": "Respectful, educational tone throughout",
+            "good": "Generally professional with minor lapses",
+            "acceptable": "Some dismissive language",
+            "poor": "Patronizing or mocking tone"
+          }
+        }
+      ]
+    },
+    "verdictPrecision": {
+      "weight": 0.15,
+      "maxPoints": 15,
+      "criteria": [
+        {
+          "id": "scope-match",
+          "name": "Scope Match",
+          "description": "Does verdict address what was actually claimed?",
+          "points": 5,
+          "levels": {
+            "excellent": "Verdict precisely matches the claim scope",
+            "good": "Verdict mostly matches with minor scope variance",
+            "acceptable": "Some mismatch between claim and verdict scope",
+            "poor": "Verdict addresses different claim than stated"
+          }
+        },
+        {
+          "id": "category-accuracy",
+          "name": "Verdict Category Accuracy",
+          "description": "Correct verdict type (false vs misleading vs context)?",
+          "points": 5,
+          "levels": {
+            "excellent": "Verdict category perfectly matches evidence type",
+            "good": "Reasonable verdict category choice",
+            "acceptable": "Verdict could arguably be different category",
+            "poor": "Wrong verdict category for the evidence presented"
+          }
+        },
+        {
+          "id": "evidence-alignment",
+          "name": "Evidence-Verdict Alignment",
+          "description": "Does verdict strength match evidence strength?",
+          "points": 5,
+          "levels": {
+            "excellent": "Strong evidence for strong verdict; appropriate hedging",
+            "good": "Evidence generally supports verdict strength",
+            "acceptable": "Verdict slightly stronger than evidence warrants",
+            "poor": "Verdict not supported by evidence presented"
+          }
+        }
+      ]
+    }
+  },
+  "concernTypes": {
+    "vague-authority": {
+      "description": "Claims about what 'experts say' without naming specific experts or studies",
+      "severity": "medium",
+      "dimension": "evidenceRigor"
+    },
+    "truncated-quote": {
+      "description": "Quotes with ellipsis that may strip important context",
+      "severity": "medium",
+      "dimension": "evidenceRigor"
+    },
+    "opinion-source": {
+      "description": "Opinion/editorial source used for factual claim",
+      "severity": "medium",
+      "dimension": "evidenceRigor"
+    },
+    "opinion-source-url": {
+      "description": "Blog or opinion domain used as evidence",
+      "severity": "medium",
+      "dimension": "evidenceRigor"
+    },
+    "absolutist-language": {
+      "description": "Always/never/completely language that may oversimplify",
+      "severity": "low",
+      "dimension": "logicalSoundness"
+    },
+    "circular-reasoning": {
+      "description": "Conclusion restates premise without independent evidence",
+      "severity": "high",
+      "dimension": "logicalSoundness"
+    },
+    "missing-counter-argument": {
+      "description": "Doesn't address why people believe the false claim",
+      "severity": "low",
+      "dimension": "fairnessBalance"
+    },
+    "undefined-verdict": {
+      "description": "Report has no verdict assigned",
+      "severity": "high",
+      "dimension": "verdictPrecision"
+    },
+    "thin-evidence": {
+      "description": "Strong verdict with fewer than 6 sources",
+      "severity": "medium",
+      "dimension": "verdictPrecision"
+    },
+    "generic-link-text": {
+      "description": "Link text like 'click here' instead of descriptive text",
+      "severity": "low",
+      "dimension": "evidenceRigor"
+    }
+  },
+  "gradeScale": {
+    "A+": { "min": 95, "description": "Exceptional quality" },
+    "A": { "min": 90, "description": "Excellent quality" },
+    "A-": { "min": 87, "description": "Very good quality" },
+    "B+": { "min": 83, "description": "Good quality" },
+    "B": { "min": 80, "description": "Above average" },
+    "B-": { "min": 77, "description": "Satisfactory" },
+    "C+": { "min": 73, "description": "Acceptable" },
+    "C": { "min": 70, "description": "Below average" },
+    "C-": { "min": 67, "description": "Needs improvement" },
+    "D": { "min": 60, "description": "Poor quality" },
+    "F": { "min": 0, "description": "Failing" }
+  }
+}
