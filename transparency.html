@@ -365,23 +365,60 @@
             margin-bottom: 20px;
         }
 
-        .btn-primary {
+        /* Premium Glass Button */
+        .btn-premium-glass {
+            position: relative;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 24px;
-            background: var(--accent-blue);
-            border: none;
+            padding: 10px 20px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
             border-radius: 8px;
-            color: white;
-            font-weight: 600;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
             text-decoration: none;
-            transition: all 0.3s;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.1);
         }
 
-        .btn-primary:hover {
-            background: #2563eb;
+        .btn-premium-glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-premium-glass:hover {
+            background: rgba(59, 130, 246, 0.25);
+            border-color: rgba(59, 130, 246, 0.6);
             transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-premium-glass:hover::before {
+            left: 100%;
+        }
+
+        /* Cyan variant */
+        .btn-premium-glass.cyan {
+            background: rgba(6, 182, 212, 0.1);
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.1);
+        }
+
+        .btn-premium-glass.cyan:hover {
+            background: rgba(6, 182, 212, 0.25);
+            border-color: rgba(6, 182, 212, 0.6);
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
         }
 
         /* Footer */
@@ -538,8 +575,8 @@
         <section class="methodology-link">
             <h3>How We Fact-Check</h3>
             <p>Learn about our rigorous methodology, source verification process, and editorial standards.</p>
-            <a href="/methodology" class="btn-primary">
-                <i data-lucide="book-open" style="width: 18px;"></i>
+            <a href="methodology.html" class="btn-premium-glass cyan" style="display: inline-flex; justify-content: center; padding: 14px 28px;">
+                <i data-lucide="book-open" style="width: 18px; height: 18px;"></i>
                 View Methodology
             </a>
         </section>
