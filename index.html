@@ -407,6 +407,17 @@
                 font-size: 2.2rem;
                 margin-bottom: 12px;
             }
+
+            .hero-logo-text {
+                font-size: 2.2rem;
+            }
+
+            .hero-radar-bg {
+                width: 140px;
+                height: 140px;
+                margin-left: -70px;
+                margin-top: -70px;
+            }
         }
 
         /* === MAIN CONTAINER === */
@@ -447,6 +458,94 @@
 
         .hero-title .verity {
             color: var(--accent-blue);
+        }
+
+        /* === 11F-A HERO LOGO: Radar + Typewriter + Polygraph === */
+        .hero-logo-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 30px;
+        }
+
+        .hero-logo-text {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            display: inline-flex;
+            position: relative;
+            z-index: 2;
+            white-space: nowrap;
+        }
+
+        .hero-logo-text span:not(.hero-cursor) {
+            display: inline-block;
+            opacity: 0;
+        }
+
+        .hero-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.1em;
+            background: var(--accent-blue);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            opacity: 1;
+        }
+
+        .hero-radar-bg {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            left: 50%;
+            top: 50%;
+            margin-left: -90px;
+            margin-top: -90px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.15) 30deg, transparent 60deg);
+            animation: heroRadarSweep 2s linear infinite, heroRadarPulse 4s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes heroRadarSweep {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes heroRadarPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero-polygraph-svg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 35px;
+            overflow: visible;
+            z-index: 1;
+        }
+
+        .hero-polygraph-line {
+            fill: none;
+            stroke: var(--accent-blue);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.6));
+        }
+
+        .hero-polygraph-line-glow {
+            fill: none;
+            stroke: rgba(59, 130, 246, 0.3);
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .hero-motto-badge {
@@ -626,11 +725,12 @@
             color: var(--accent-blue) !important;
         }
 
+        /* G-E Navbar Logo - Glow Pulse Style */
         .g-icon-nav {
             font-family: 'Inter', sans-serif;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: white;
-            font-weight: 300;
+            font-weight: 800;
             position: relative;
             z-index: 2;
             line-height: 1;
@@ -641,25 +741,62 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
         }
 
         .ss-nav {
             position: absolute;
-            inset: -4px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            /* Green Ring REMOVED per user request */
             pointer-events: none;
         }
 
+        /* G-E: Glow effect */
+        .ss-nav::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 60%);
+            animation: navGlowPulse 4s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        /* G-E: Ring */
         .ss-nav::before {
             content: '';
             position: absolute;
             inset: 0;
             border-radius: 50%;
-            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.3) 30deg, transparent 60deg);
-            animation: sweep-30 4s ease-in-out infinite alternate;
+            border: 1.5px solid rgba(59, 130, 246, 0.4);
+            z-index: 1;
+        }
+
+        /* G-E: Radar sweep */
+        .nav-radar-sweep {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(59, 130, 246, 0.35) 40deg, transparent 80deg);
+            animation: radarSweep 2s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes navGlowPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes radarSweep {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         /* Hero Full Wordmark Wrapper */
@@ -2014,10 +2151,16 @@
             <!-- Compact Hero -->
             <section class="hero-compact">
                 <h1 class="hero-title">
-                    <span class="hero-logo-wrapper">
-                        <div class="ss-hero"></div>
-                        <span class="genu">Genu</span><span class="verity">Verity</span>
-                    </span>
+                    <div class="hero-logo-wrapper">
+                        <div class="hero-radar-bg"></div>
+                        <div class="hero-logo-text">
+                            <span class="genu">G</span><span class="genu">e</span><span class="genu">n</span><span class="genu">u</span><span class="verity">V</span><span class="verity">e</span><span class="verity">r</span><span class="verity">i</span><span class="verity">t</span><span class="verity">y</span><span class="hero-cursor"></span>
+                        </div>
+                        <svg class="hero-polygraph-svg" viewBox="0 0 200 30" preserveAspectRatio="none">
+                            <path class="hero-polygraph-line-glow" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                            <path class="hero-polygraph-line" d="M0,15 L20,15 L25,15 L30,5 L35,25 L40,10 L45,20 L50,15 L70,15 L75,15 L80,3 L85,27 L90,8 L95,22 L100,15 L200,15"/>
+                        </svg>
+                    </div>
                 </h1>
                 <div class="hero-motto-badge">
                     <span class="motto-text">
@@ -2702,18 +2845,63 @@
 
                 const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-                // --- 1. HERO ENTRANCE (Existing) ---
+                // --- 1. HERO ENTRANCE with 11F-A Typewriter Effect ---
                 gsap.set(".navbar", { y: -100, opacity: 0 });
-                gsap.set(".hero-title .genu", { y: 50, opacity: 0 });
-                gsap.set(".hero-title .verity", { y: 50, opacity: 0 });
+                gsap.set(".hero-logo-wrapper", { scale: 0.9, opacity: 0 });
                 gsap.set(".hero-motto-badge", { y: 30, opacity: 0 });
                 gsap.set(".hero-search", { scale: 0.9, opacity: 0 });
                 gsap.set(".carousel-container", { y: 50, opacity: 0 });
 
+                // Typewriter elements
+                const heroLogoText = document.querySelector('.hero-logo-text');
+                const heroLetters = document.querySelectorAll('.hero-logo-text span:not(.hero-cursor)');
+                const heroCursor = document.querySelector('.hero-cursor');
+                const heroPolygraphPaths = document.querySelectorAll('.hero-polygraph-line, .hero-polygraph-line-glow');
+
+                // Initialize polygraph lines
+                heroPolygraphPaths.forEach(p => {
+                    const len = p.getTotalLength();
+                    gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+                });
+
+                // Initial states - letters hidden, cursor visible at start
+                gsap.set(heroLetters, { opacity: 0 });
+                gsap.set(heroCursor, { opacity: 1, left: 0 });
+
+                // Build timeline
                 tl.to(".navbar", { duration: 1, y: 0, opacity: 1 })
-                    .to(".hero-title .genu", { duration: 0.8, y: 0, opacity: 1 }, "-=0.5")
-                    .to(".hero-title .verity", { duration: 0.8, y: 0, opacity: 1 }, "-=0.6")
-                    .to(".hero-motto-badge", { duration: 0.6, y: 0, opacity: 1 }, "-=0.4")
+                    .to(".hero-logo-wrapper", { duration: 0.5, scale: 1, opacity: 1 }, "-=0.3");
+
+                // Type out each letter and move cursor (sequential, 0.07s per letter)
+                heroLetters.forEach((letter, i) => {
+                    tl.to(letter, {
+                        opacity: 1,
+                        duration: 0.01,
+                        onComplete: () => {
+                            const letterRect = letter.getBoundingClientRect();
+                            const textRect = heroLogoText.getBoundingClientRect();
+                            const newLeft = letterRect.right - textRect.left;
+                            gsap.set(heroCursor, { left: newLeft });
+                        }
+                    }, i === 0 ? "+=0.1" : "+=0.07");
+                });
+
+                // Draw polygraph line as typing happens
+                tl.to(heroPolygraphPaths, {
+                    strokeDashoffset: 0,
+                    duration: 1.2,
+                    ease: "power1.inOut"
+                }, "-=0.8");
+
+                // Fade out cursor after typing completes
+                tl.to(heroCursor, {
+                    opacity: 0,
+                    duration: 0.2,
+                    ease: "power2.out"
+                }, "+=0.2");
+
+                // Continue with rest of entrance
+                tl.to(".hero-motto-badge", { duration: 0.6, y: 0, opacity: 1 }, "-=0.4")
                     .to(".hero-search", { duration: 0.8, scale: 1, opacity: 1 }, "-=0.2")
                     .to(".carousel-container", { duration: 1, y: 0, opacity: 1 }, "-=0.4");
 
