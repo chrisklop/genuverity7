@@ -9,18 +9,48 @@ Applies to: `*.html` files (except index.html, reports.html, methods.html, compa
 - Minimum 8 verified sources per report
 - All URLs must be verified via WebFetch before inclusion
 - Inline citations using `<a href="..." target="_blank" rel="noopener">`
-- NO Wikipedia links - use primary sources
+- **NO Wikipedia links** - use primary sources instead
+  - When tempted to use Wikipedia, find the citation Wikipedia uses and link to that instead
+  - For general background info, use britannica.com, official .gov sites, or academic sources
 
 ### 2. Color Compliance
-- **ALLOWED**: #3b82f6 (blue), #06b6d4 (cyan), #10b981 (green), #f59e0b (amber), #FF2A2A (red)
-- **FORBIDDEN**: #8b5cf6 (purple) - NEVER use this color
+- **ALLOWED**: #3b82f6 (blue), #06b6d4 (cyan), #10b981 (green), #f59e0b (amber), #ef4444 (red)
+- **FORBIDDEN**: #8b5cf6, #a855f7, #9333ea, #7c3aed (purple shades) - NEVER use these colors
 
-### 3. Visualizations
+### 3. Standard Categories (USE ONLY THESE)
+| Category | Use For |
+|----------|---------|
+| Fact Check | Standard claim verification |
+| AI & Deepfakes | Synthetic media, AI-generated content |
+| Foreign Influence | State-sponsored disinfo, foreign operations |
+| Conspiracy & Hoaxes | Debunked conspiracy theories |
+| U.S. Politics & Policy | Domestic political claims |
+| International | Non-US political/world events |
+| Health & Science | Medical, scientific misinformation |
+| Platform & Tech | Social media, tech company issues |
+| Media & Journalism | Press accuracy, media manipulation |
+| Economic & Financial | Financial misinformation |
+
+**DO NOT create new categories** - use the closest existing one above.
+
+### 4. Mandatory Verdict Assignment
+Every report MUST have one of these verdicts:
+| Verdict | When to Use |
+|---------|-------------|
+| `false` | Claim is demonstrably false |
+| `true` | Claim is verified as accurate |
+| `misleading` | Technically true but presented deceptively |
+| `mixed` | Multiple claims, some true, some false |
+| `context` | Claim lacks crucial context that changes meaning |
+
+**NEVER use `undefined`** - always assign a verdict.
+
+### 5. Visualizations
 - Include 1-2 Chart.js charts when applicable
 - Use GenuVerity watermark plugin
 - Follow Midnight Tech color scheme
 
-### 4. Structure
+### 6. Structure
 - Hero section with verdict/title
 - Executive summary
 - Detailed analysis with inline citations
