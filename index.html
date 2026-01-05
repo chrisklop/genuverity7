@@ -2642,7 +2642,7 @@
                         if (cardIndex !== currentCardIndex) {
                             e.stopPropagation();
                             goToCard(cardIndex);
-                        } else {
+                        } else if (report.slug) {
                             window.location.href = '/' + report.slug;
                         }
                     });
@@ -2775,11 +2775,14 @@
                     const endX = e.changedTouches[0].clientX;
                     const diff = startX - endX;
 
-                    // Threshold 35px: Sensitive enough for short swipes
-                    if (Math.abs(diff) > 35) {
-                        e.preventDefault(); // Prevent click-throughs
+                    // Any movement > 10px should prevent accidental clicks
+                    if (Math.abs(diff) > 10) {
                         wasDragging = true;
-                        navigateCarousel(diff > 0 ? 1 : -1);
+                        // Only navigate carousel if threshold met
+                        if (Math.abs(diff) > 35) {
+                            e.preventDefault(); // Prevent click-throughs
+                            navigateCarousel(diff > 0 ? 1 : -1);
+                        }
                         // Keep 'wasDragging' true until animation lock clears (500ms)
                         setTimeout(() => { wasDragging = false; }, 500);
                     }
