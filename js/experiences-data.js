@@ -3,6 +3,27 @@
 
 const EXPERIENCES_DATA = [
     {
+        id: 3,
+        title: "The Architecture of the California Sound",
+        subtitle: "A Comprehensive Historiography of Jan and Dean",
+        slug: "jan-and-dean-california-sound.html",
+        category: "Special Report",
+        tagClass: "tag-amber",
+        catClass: "cat-experience",
+        icon: "music",
+        date: "Jan 2026",
+        events: "25+ Events",
+        duration: "10-15 min",
+        excerpt: "Two guys for every tune. Journey through the rise, tragic crash, and triumphant legacy of the duo who helped architect the California Sound—from Surf City to Dead Man's Curve and beyond.",
+        features: ["5 Eras", "Chart Performance", "Easter Eggs", "Full Historiography"],
+        preview: {
+            type: "line",
+            color: "#f59e0b",
+            data: [10, 8, 1, 3, 8, 11, 25]
+        },
+        status: "live"
+    },
+    {
         id: 2,
         title: "2025: The Year of the Lie",
         subtitle: "100 Debunked Claims That Defined a Year",
