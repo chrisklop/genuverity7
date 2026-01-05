@@ -2564,8 +2564,9 @@
                 const heroInput = heroSearch.querySelector('input');
 
                 lucide.createIcons();
-                initCarousel();
-                initSwipeGestures();
+                // DISABLED: unified-search.js handles carousel rendering and touch events
+                // initCarousel();      // Creates duplicate cards - unified-search.js does this
+                // initSwipeGestures(); // Creates duplicate touch handlers - causes conflicts
                 initKeyboardNav();
 
                 // Update placeholder with report count
