@@ -311,28 +311,6 @@ class UnifiedSearch {
         let startY = 0;
         let isHorizontalSwipe = null; // null = undetermined, true/false after threshold
 
-        // Store anchor hrefs - we'll remove them during drag to prevent iOS navigation
-        const storedHrefs = new Map();
-
-        // Disable all anchors (prevents iOS tap-to-navigate during swipe)
-        const disableAnchors = () => {
-            this.carouselContainer.querySelectorAll('a.card-cta').forEach(a => {
-                if (!storedHrefs.has(a)) {
-                    storedHrefs.set(a, a.getAttribute('href'));
-                }
-                a.removeAttribute('href');
-                a.style.pointerEvents = 'none';
-            });
-        };
-
-        // Re-enable anchors after drag completes
-        const enableAnchors = () => {
-            storedHrefs.forEach((href, a) => {
-                a.setAttribute('href', href);
-                a.style.pointerEvents = '';
-            });
-        };
-
         // TOUCH START
         this.carouselContainer.addEventListener('touchstart', (e) => {
             if (state !== 'idle') return;
@@ -344,9 +322,6 @@ class UnifiedSearch {
             this.startX = startX;
             this.dragOffset = 0;
             this.wasDragging = false;
-
-            // Immediately disable anchors to prevent any tap-through
-            disableAnchors();
 
             // Disable card transitions for 1:1 drag feel
             this.carouselContainer.querySelectorAll('.carousel-card').forEach(c => {
@@ -368,9 +343,9 @@ class UnifiedSearch {
                 isHorizontalSwipe = Math.abs(diffX) > Math.abs(diffY);
             }
 
-            // Only handle horizontal swipes
+            // Only handle horizontal swipes (not edge swipes)
             if (isHorizontalSwipe === true) {
-                e.preventDefault(); // Prevent scroll and any navigation
+                // Don't preventDefault - let browser handle it naturally with touch-action CSS
                 this.wasDragging = true;
 
                 // Apply resistance at edges
@@ -383,7 +358,7 @@ class UnifiedSearch {
 
                 this.updateCarousel();
             }
-        }, { passive: false }); // MUST be non-passive to preventDefault
+        }, { passive: true }); // Passive for better performance and iOS compatibility
 
         // TOUCH END
         this.carouselContainer.addEventListener('touchend', (e) => {
@@ -407,13 +382,11 @@ class UnifiedSearch {
             this.dragOffset = 0;
             this.updateCarousel();
 
-            // Re-enable anchors AFTER a delay (blocks synthesized clicks)
+            // Brief delay before allowing clicks again
             setTimeout(() => {
-                enableAnchors();
                 state = 'idle';
-                // Keep wasDragging true a bit longer to block any late click events
-                setTimeout(() => { this.wasDragging = false; }, 100);
-            }, 400);
+                this.wasDragging = false;
+            }, 100);
         }, { passive: true });
 
         // TOUCH CANCEL (e.g., incoming call)
@@ -421,7 +394,6 @@ class UnifiedSearch {
             state = 'idle';
             this.dragOffset = 0;
             this.wasDragging = false;
-            enableAnchors();
             this.updateCarousel();
         }, { passive: true });
 
