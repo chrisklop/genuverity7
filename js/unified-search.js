@@ -1,20 +1,252 @@
 /**
  * Unified Search and 3D Carousel Logic for GenuVerity Landing Page
- *
- * IMPORTANT: Chart generation is handled by ChartPreviews (js/chart-previews.js)
- * This ensures a single source of truth for all chart thumbnail rendering.
- * Do NOT add chart generator functions here - update chart-previews.js instead.
  */
 
-// Delegate to ChartPreviews for chart generation (single source of truth)
-function generateChartForReport(report) {
-    // ChartPreviews is loaded before this file (see index.html script order)
-    if (typeof ChartPreviews !== 'undefined' && ChartPreviews.generateChart) {
-        return ChartPreviews.generateChart(report);
+// Chart Generators (Ported from reports.html/index.html)
+function generateBarChart(baseColor, rawData) {
+    let data = [];
+
+    // Normalize Data
+    if (rawData && Array.isArray(rawData)) {
+        if (typeof rawData[0] === 'number') {
+            // Legacy: simple array of numbers
+            data = rawData.map(v => ({ value: v, label: '', color: baseColor }));
+        } else {
+            // Rich Data: Objects with { label, value, color }
+            data = rawData.map(d => ({
+                value: d.value,
+                label: d.label || '',
+                color: d.color || baseColor
+            }));
+        }
+    } else {
+        // Fallback: Random bars
+        const randoms = Array.from({ length: 10 }, () => Math.random() * 80 + 20);
+        data = randoms.map(v => ({ value: v, label: '', color: baseColor }));
     }
-    // Fallback if ChartPreviews not loaded (shouldn't happen in production)
-    console.warn('ChartPreviews not loaded, using fallback');
-    return '<div class="chart-container"><div class="chart-bars"></div></div>';
+
+    // Determine scale
+    const maxValue = Math.max(...data.map(d => d.value), 1);
+
+    const count = data.length;
+    const totalGap = 30;
+    const barWidth = (180 - totalGap) / count;
+    const gap = totalGap / (count - 1 || 1);
+
+    const bars = data.map((d, i) => {
+        const height = (d.value / maxValue) * 80; // Reserve bottom 20% for labels? No, let's say 85 height
+        // If we have labels, shrink bars to make room
+        const hasLabels = data.some(item => item.label);
+        const graphHeight = hasLabels ? 80 : 100;
+        const normalizedHeight = (d.value / maxValue) * graphHeight;
+
+        const x = i * (barWidth + gap);
+        const y = graphHeight - normalizedHeight;
+
+        let el = `<rect x="${x}" y="${y}" width="${barWidth}" height="${normalizedHeight}" fill="${d.color}" rx="2" opacity="0.9" />`;
+
+        if (hasLabels && d.label) {
+            // Center text under bar
+            const textX = x + (barWidth / 2);
+            el += `<text x="${textX}" y="95" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="sans-serif" style="pointer-events:none;">${d.label}</text>`;
+        }
+        return el;
+    }).join('');
+
+    return `<div class="chart-container">
+        <div class="chart-bars" style="width:100%; height:100%;">
+            <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet" style="width:100%; height:100%; overflow:visible;">
+                ${bars}
+            </svg>
+        </div>
+    </div>`;
+}
+
+function generateLineChart(color, data) {
+    let points;
+    if (data && Array.isArray(data)) {
+        // Normalize data to fit within viewBox (15-85 range for Y)
+        const minVal = Math.min(...data);
+        const maxVal = Math.max(...data);
+        const range = maxVal - minVal || 1;
+
+        points = data.map((val, i) => ({
+            x: i * (180 / (data.length - 1)),
+            y: 15 + ((val - minVal) / range) * 70  // Normalize to 15-85 range
+        }));
+    } else {
+        points = Array.from({ length: 8 }, (_, i) => ({
+            x: i * (180 / 7),
+            y: 20 + Math.random() * 60
+        }));
+    }
+
+    const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${100 - p.y}`).join(' ');
+    const areaD = pathD + ` L 180 100 L 0 100 Z`;
+    return `<div class="chart-container"><div class="chart-line">
+        <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet">
+            <path class="area" d="${areaD}" fill="${color}"/>
+            <path d="${pathD}" stroke="${color}"/>
+        </svg>
+    </div></div>`;
+}
+
+function generateDonutChart(percent, color) {
+    const circumference = 2 * Math.PI * 40;
+    const offset = circumference * (1 - percent / 100);
+    return `<div class="chart-container" style="justify-content: center; align-items: center;">
+        <div class="chart-donut">
+            <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet">
+                <circle cx="90" cy="50" r="40" stroke="var(--border-color)"/>
+                <circle cx="90" cy="50" r="40" stroke="${color}"
+                    stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"/>
+            </svg>
+            <span class="donut-label">${percent}%</span>
+        </div>
+    </div>`;
+}
+
+function generateNetworkChart(nodeColor, lineColor) {
+    const nodes = Array.from({ length: 15 }, () => ({
+        x: 10 + Math.random() * 160,
+        y: 10 + Math.random() * 80,
+        r: 3 + Math.random() * 2
+    }));
+
+    // Generate connections
+    const links = [];
+    nodes.forEach((node, i) => {
+        // Connect to 2-3 nearest neighbors to form a nicer graph
+        const neighbors = nodes
+            .map((n, idx) => ({ idx, dist: Math.hypot(n.x - node.x, n.y - node.y) }))
+            .filter(n => n.idx !== i)
+            .sort((a, b) => a.dist - b.dist)
+            .slice(0, Math.random() > 0.5 ? 2 : 3);
+
+        neighbors.forEach(n => {
+            // Avoid duplicates (only connect if i < n.idx)
+            if (i < n.idx) {
+                links.push({ source: node, target: nodes[n.idx] });
+            }
+        });
+    });
+
+    const linesHTML = links.map(link =>
+        `<line x1="${link.source.x}" y1="${link.source.y}" x2="${link.target.x}" y2="${link.target.y}" stroke="${lineColor}" stroke-width="0.5" opacity="0.4" />`
+    ).join('');
+
+    const nodesHTML = nodes.map((n, i) =>
+        `<circle cx="${n.x}" cy="${n.y}" r="${n.r}" fill="${nodeColor}" style="animation: pulse 3s ease-in-out infinite; animation-delay: ${i * 0.2}s; transform-box: fill-box; transform-origin: center;" />`
+    ).join('');
+
+    return `<div class="chart-container">
+        <div class="chart-network" style="width:100%; height:100%;">
+            <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid slice" style="width:100%; height:100%; overflow:visible;">
+                ${linesHTML}
+                ${nodesHTML}
+            </svg>
+        </div>
+    </div>`;
+}
+
+function generateHBarChart(data, colors) {
+    // data is array of {label, value}
+    const rowHeight = 100 / (data.length || 1);
+    const barHeight = rowHeight * 0.4;
+
+    const content = data.map((d, i) => {
+        const yCenter = i * rowHeight + rowHeight / 2;
+        const yBar = yCenter - barHeight / 2;
+        const color = colors[i % colors.length];
+
+        return `
+            <!-- Label -->
+            <text x="0" y="${yCenter}" dominant-baseline="middle" fill="#94a3b8" font-size="10" font-family="sans-serif" style="text-anchor: start;">${d.label}</text>
+            <!-- Bar Background -->
+            <rect x="50" y="${yBar}" width="130" height="${barHeight}" fill="${color}" opacity="0.1" rx="2" />
+            <!-- Value Bar -->
+            <rect x="50" y="${yBar}" width="${d.value * 1.3}" height="${barHeight}" fill="${color}" rx="2" />
+        `;
+    }).join('');
+
+    return `<div class="chart-container">
+        <div class="chart-hbars" style="width:100%; height:100%;">
+            <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet" style="width:100%; height:100%; overflow:visible;">
+                ${content}
+            </svg>
+        </div>
+    </div>`;
+}
+
+function generateTimelineChart(points, color) {
+    // points is array of percentages 0-100
+    const dots = points.map(p =>
+        `<circle cx="${p * 1.8}" cy="50" r="4" fill="${color}" stroke="#111827" stroke-width="2" />`
+    ).join('');
+
+    return `<div class="chart-container">
+        <div class="chart-timeline" style="width:100%; height:100%;">
+             <svg viewBox="0 0 180 100" preserveAspectRatio="xMidYMid meet" style="width:100%; height:100%; overflow:visible;">
+                <line x1="0" y1="50" x2="180" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="2" />
+                ${dots}
+            </svg>
+        </div>
+    </div>`;
+}
+
+// Chart Dispatcher
+// Chart Dispatcher
+function generateChartForReport(report) {
+    let config = report.chart;
+
+    // Deterministic fallback if no chart data
+    if (!config) {
+        // Simple hash of title to seed random selection
+        let hash = 0;
+        const str = report.title || "default";
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        const seed = Math.abs(hash);
+
+        const types = ['bar', 'line', 'donut', 'network', 'timeline'];
+        const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#06b6d4'];
+
+        config = {
+            type: types[seed % types.length],
+            color: colors[(seed >> 2) % colors.length],
+            data: null // Generators usually have their own random data fallback
+        };
+
+        // Specific data tweaks for types that need arrays
+        if (config.type === 'timeline') config.data = [10, 30, 50, 70, 90].map(v => v + (seed % 10));
+        if (config.type === 'donut') config.data = 60 + (seed % 35);
+        if (config.type === 'hbar') {
+            config.data = [
+                { label: 'A', value: 80 + (seed % 20) },
+                { label: 'B', value: 50 + (seed % 40) }
+            ];
+        }
+    }
+
+    switch (config.type) {
+        case 'line':
+            return generateLineChart(config.color, config.data);
+        case 'bar':
+            // Ensure bar chart has random data if none provided
+            return generateBarChart(config.color, config.data);
+        case 'donut':
+            return generateDonutChart(config.data || 75, config.color);
+        case 'network':
+            return generateNetworkChart(config.color, config.color);
+        case 'hbar':
+            return generateHBarChart(config.data, [config.color, '#64748b', '#475569']);
+        case 'timeline':
+            return generateTimelineChart(config.data, config.color);
+        default:
+            return generateBarChart(config.color);
+    }
 }
 
 
@@ -213,7 +445,7 @@ class UnifiedSearch {
                 </div>
             `;
 
-            item.addEventListener('click', () => window.location.href = '/' + report.slug);
+            item.addEventListener('click', () => window.location.href = report.slug);
             this.listView.appendChild(item);
         });
 
@@ -258,7 +490,7 @@ class UnifiedSearch {
 
             item.onmouseenter = () => { item.style.borderColor = 'var(--accent-cyan)'; item.style.background = 'var(--bg-tertiary)'; };
             item.onmouseleave = () => { item.style.borderColor = 'var(--border-color)'; item.style.background = 'var(--bg-card)'; };
-            item.onclick = () => window.location.href = '/' + report.slug;
+            item.onclick = () => window.location.href = report.slug;
 
             list.appendChild(item);
         });
@@ -365,22 +597,13 @@ class UnifiedSearch {
         }, { passive: true });
 
         this.carouselContainer.addEventListener('touchmove', (e) => {
-            // Prevent default ONLY when actually dragging to block browser navigation
-            if (this.isDragging) {
-                const diff = Math.abs(e.touches[0].clientX - this.startX);
-                if (diff > 10) {
-                    e.preventDefault(); // Block iOS navigation gestures
-                }
-            }
             moveDrag(e.touches[0].clientX);
-        }, { passive: false }); // MUST be false to allow preventDefault
+        }, { passive: true });
 
         this.carouselContainer.addEventListener('touchend', (e) => {
             endDrag(e.changedTouches[0].clientX);
             // Keep touchActive true briefly to block ghost mouse events
             setTimeout(() => { touchActive = false; }, 100);
-            // Keep wasDragging true longer to catch iOS synthesized clicks (300ms delay)
-            setTimeout(() => { this.wasDragging = false; }, 400);
         }, { passive: true });
 
         // Mouse Listeners (blocked if touch was just used)
@@ -440,7 +663,7 @@ class UnifiedSearch {
                         <div class="card-meta">
                             <span><i data-lucide="calendar" style="width:12px;height:12px;"></i> ${report.date}</span>
                         </div>
-                        <a href="/${report.slug}" class="card-cta" onclick="if(window.unifiedSearch?.wasDragging){event.preventDefault();event.stopPropagation();return false;}">Read</a>
+                        <a href="${report.slug}" class="card-cta">Read</a>
                     </div>
                 </div>
             `;
@@ -461,7 +684,7 @@ class UnifiedSearch {
                     // It's the center card, allow navigation if clicking content
                     // The main card click will bubble up if we don't handle it
                     if (e.target.closest('.card-cta') || e.target.closest('.card-content') || e.target.closest('.carousel-card')) {
-                        window.location.href = '/' + report.slug;
+                        window.location.href = report.slug;
                     }
                 }
             };
