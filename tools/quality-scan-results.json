@@ -1,0 +1,650 @@
+{
+  "timestamp": "2026-01-04T20:44:14.617Z",
+  "version": "1.0.0",
+  "scanType": "sample",
+  "reportsScanned": 28,
+  "totalConcerns": 39,
+  "avgConcernsPerReport": "1.4",
+  "patterns": [
+    {
+      "type": "absolutist-language",
+      "count": 11,
+      "reportCount": 8,
+      "severity": "low",
+      "affectedReports": [
+        "portland-burning-narrative-2025",
+        "hhs-vaccine-autism-claims",
+        "yogi-adityanath-deepfake-2025",
+        "minnesota-fraud-investigation-2025",
+        "dc-midair-collision-misinfo-2025"
+      ]
+    },
+    {
+      "type": "truncated-quote",
+      "count": 8,
+      "reportCount": 6,
+      "severity": "medium",
+      "affectedReports": [
+        "grok-ai-misinformation-crisis",
+        "hhs-vaccine-autism-claims",
+        "disinformation-architecture-2025",
+        "tda-gang-claims-2025",
+        "dominion-voting-claims-2020"
+      ]
+    },
+    {
+      "type": "opinion-source",
+      "count": 6,
+      "reportCount": 4,
+      "severity": "medium",
+      "affectedReports": [
+        "grok-ai-misinformation-crisis",
+        "primetime-special-legitimization",
+        "ebola-outbreak-drc-2025",
+        "225-executive-orders-2025"
+      ]
+    },
+    {
+      "type": "missing-counter-argument",
+      "count": 5,
+      "reportCount": 5,
+      "severity": "low",
+      "affectedReports": [
+        "portland-burning-narrative-2025",
+        "starmer-curfew-fake-video-2025",
+        "yogi-adityanath-deepfake-2025",
+        "target-satanic-campaign-2025",
+        "sa-self-defense-right-2025"
+      ]
+    },
+    {
+      "type": "undefined-verdict",
+      "count": 5,
+      "reportCount": 5,
+      "severity": "high",
+      "affectedReports": [
+        "golden-fleet-analysis",
+        "dominion-voting-claims-2020",
+        "boat-strike-investigation",
+        "epstein-air-logistics",
+        "us-argentina-farm-crisis-2025"
+      ]
+    },
+    {
+      "type": "vague-authority",
+      "count": 4,
+      "reportCount": 3,
+      "severity": "medium",
+      "affectedReports": [
+        "youtube-radicalization-pipeline",
+        "meta-ends-fact-checking-2025",
+        "boat-strike-investigation"
+      ]
+    }
+  ],
+  "reports": [
+    {
+      "slug": "portland-burning-narrative-2025",
+      "verdict": "false",
+      "category": "Fact Check",
+      "sourceCount": 18,
+      "concernCount": 2,
+      "concerns": [
+        {
+          "type": "absolutist-language",
+          "severity": "low",
+          "excerpt": "no evidence",
+          "context": "...cked National Guard deployment, finding no evidence that protests \"grew out of control.\" Po...",
+          "line": 279,
+          "recommendation": "Consider if claim is truly absolute or if nuance needed."
+        },
+        {
+          "type": "missing-counter-argument",
+          "severity": "low",
+          "excerpt": "No counter-argument detected",
+          "context": "Report with \"false\" verdict doesn't appear to address opposing viewpoint",
+          "line": null,
+          "recommendation": "Consider addressing why people believe the false claim."
+        }
+      ]
+    },
+    {
+      "slug": "grok-ai-misinformation-crisis",
+      "verdict": "false",
+      "category": "AI Safety Crisis",
+      "sourceCount": 14,
+      "concernCount": 3,
+      "concerns": [
+        {
+          "type": "truncated-quote",
+          "severity": "medium",
+          "excerpt": "\"I understand some people have associated me with the crash in D.C., and that is false... It is insulting to the families to try to tie this to some sort of political agenda.\"",
+          "context": "...post a \"proof of life\" video: \"I understand some people have associated me with the crash in D.C., and that is false... It is insulting to the families to try to tie this to some sort of political agenda.\" [9] Grok Usage: Fact-Check Re...",
+          "line": 354,
+          "recommendation": "Verify full quote context. Consider showing more text."
+        },
+        {
+          "type": "truncated-quote",
+          "severity": "medium",
+          "excerpt": "'re asking a tool known for hallucinating... to fact-check for them.\"",
+          "context": "...on echo chamber, in which they're asking a tool known for hallucinating... to fact-check for them.\" [3] Theodora Skeadas , former...",
+          "line": 385,
+          "recommendation": "Verify full quote context. Consider showing more text."
+        },
+        {
+          "type": "opinion-source",
+          "severity": "medium",
+          "excerpt": "oped",
+          "context": "...utive Summary Grok, the AI chatbot developed by Elon Musk's xAI and embedded directl...",
+          "line": 203,
+          "recommendation": "Opinion pieces should not be sole source for factual claims."
+        }
+      ]
+    },
+    {
+      "slug": "starmer-curfew-fake-video-2025",
+      "verdict": "false",
+      "category": "AI & Deepfakes",
+      "sourceCount": 16,
+      "concernCount": 1,
+      "concerns": [
+        {
+          "type": "missing-counter-argument",
+          "severity": "low",
+          "excerpt": "No counter-argument detected",
+          "context": "Report with \"false\" verdict doesn't appear to address opposing viewpoint",
+          "line": null,
+          "recommendation": "Consider addressing why people believe the false claim."
+        }
+      ]
+    },
+    {
+      "slug": "hhs-vaccine-autism-claims",
+      "verdict": "false",
+      "category": "Fact Check",
+      "sourceCount": 35,
+      "concernCount": 3,
+      "concerns": [
+        {
+          "type": "truncated-quote",
+          "severity": "medium",
+          "excerpt": "' is not an evidence-based claim... Scientific studies have not ruled out the possibility that infant vaccines contribute to the development of autism.\"",
+          "context": "... 'vaccines do not cause autism' is not an evidence-based claim... Scientific studies have not ruled out the possibility that infant vaccines contribute to the development of autism.\" HHS Secretary RFK Jr. publicl...",
+          "line": null,
+          "recommendation": "Verify full quote context. Consider showing more text."
+        },
+        {
+          "type": "truncated-quote",
+          "severity": "medium",
+          "excerpt": "' theory of vaccine-related causation is scientifically unsupportable... The weight of scientific research and evidence does not support the petitioners'",
+          "context": "...stings wrote: \"The petitioners' theory of vaccine-related causation is scientifically unsupportable... The weight of scientific research and evidence does not support the petitioners' contentions.\" Appeals were de...",
+          "line": null,
+          "recommendation": "Verify full quote context. Consider showing more text."
+        },
+        {
+          "type": "absolutist-language",
+          "severity": "low",
+          "excerpt": "no evidence",
+          "context": "...review of MMR vaccine safety. Concluded no evidence of a link to autism, Crohn's disease, o...",
+          "line": 540,
+          "recommendation": "Consider if claim is truly absolute or if nuance needed."
+        }
+      ]
+    },
+    {
+      "slug": "yogi-adityanath-deepfake-2025",
+      "verdict": "false",
+      "category": "AI & Deepfakes",
+      "sourceCount": 16,
+      "concernCount": 2,
+      "concerns": [
+        {
+          "type": "absolutist-language",
+          "severity": "low",
+          "excerpt": "no basis",
+          "context": "...video was a sophisticated deepfake with no basis in reality. AI detection tools and fact...",
+          "line": 183,
+          "recommendation": "Consider if claim is truly absolute or if nuance needed."
+        },
+        {
+          "type": "missing-counter-argument",
+          "severity": "low",
+          "excerpt": "No counter-argument detected",
+          "context": "Report with \"false\" verdict doesn't appear to address opposing viewpoint",
+          "line": null,
+          "recommendation": "Consider addressing why people believe the false claim."
+        }
+      ]
+    },
+    {
+      "slug": "meta-tpfc-exit-2025",
+      "verdict": "context",
+      "category": "Fact Check",
+      "sourceCount": 16,
+      "concernCount": 0,
+      "concerns": []
+    },
+    {
+      "slug": "primetime-special-legitimization",
+      "verdict": "context",
+      "category": "Media Analysis",
+      "sourceCount": 10,
+      "concernCount": 1,
+      "concerns": [
+        {
+          "type": "opinion-source",
+          "severity": "medium",
+          "excerpt": "oped",
+          "context": "... Rule Explained - First Amendment Encyclopedia firstamendment.mtsu.edu 3 Journalism ...",
+          "line": 95,
+          "recommendation": "Opinion pieces should not be sole source for factual claims."
+        }
+      ]
+    },
+    {
+      "slug": "minnesota-fraud-investigation-2025",
+      "verdict": "context",
+      "category": "Investigation",
+      "sourceCount": 22,
+      "concernCount": 1,
+      "concerns": [
+        {
+          "type": "absolutist-language",
+          "severity": "low",
+          "excerpt": "no evidence",
+          "context": "...als within the previous six months, and no evidence of fraud had been documented. [6] Acade...",
+          "line": 416,
+          "recommendation": "Consider if claim is truly absolute or if nuance needed."
+        }
+      ]
+    },
+    {
+      "slug": "disinformation-architecture-2025",
+      "verdict": "context",
+      "category": "Analysis",
+      "sourceCount": 55,
+      "concernCount": 1,
+      "concerns": [
+        {
+          "type": "truncated-quote",
+          "severity": "medium",
+          "excerpt": "\"If I have to create stories so that the American media actually pays attention... that'",
+          "context": "...d to amplify. Vance admitted: \"If I have to create stories so that the American media actually pays attention... that's what I'm going to do.\" [37] ...",
+          "line": 317,
+          "recommendation": "Verify full quote context. Consider showing more text."
+        }
+      ]
+    },
+    {
+      "slug": "hegseth-signalgate-2025",
+      "verdict": "context",
+      "category": "Fact Check",
+      "sourceCount": 16,
+      "concernCount": 0,
+      "concerns": []
+    },
+    {
+      "slug": "tda-gang-claims-2025",
+      "verdict": "mixed",
+      "category": "Fact Check",
+      "sourceCount": 16,
+      "concernCount": 1,
+      "concerns": [
+        {
+          "type": "truncated-quote",
+          "severity": "medium",
+          "excerpt": "\"The reality is that the gang Civil area is limited to a handful of prior buildings in this apartment complex. ... The narrative that'",
+          "context": "...yor Mike Coffman (Republican) \"The reality is that the gang Civil area is limited to a handful of prior buildings in this apartment complex. ... The narrative that's been prior is simply not tru...",
+          "line": 207,
+          "recommendation": "Verify full quote context. Consider showing more text."
+        }
+      ]
+    },
+    {
+      "slug": "dc-midair-collision-misinfo-2025",
+      "verdict": "mixed",
+      "category": "Conspiracy & Hoaxes",
+      "sourceCount": 16,
+      "concernCount": 2,
+      "concerns": [
+        {
+          "type": "absolutist-language",
+          "severity": "low",
+          "excerpt": "no evidence",
+          "context": "... [5] Claim Rating: UNSUPPORTED There is no evidence linking DEI policies to this specific i...",
+          "line": 306,
+          "recommendation": "Consider if claim is truly absolute or if nuance needed."
+        },
+        {
+          "type": "absolutist-language",
+          "severity": "low",
+          "excerpt": "zero evidence",
+          "context": "... plot. [7] Claim Rating: FALSE There is zero evidence of deliberate action. Both the FBI and ...",
+          "line": 326,
+          "recommendation": "Consider if claim is truly absolute or if nuance needed."
+        }
+      ]
+    },
+    {
+      "slug": "youtube-radicalization-pipeline",
+      "verdict": "mixed",
+      "category": "Platform Analysis",
+      "sourceCount": 12,
+      "concernCount": 2,
+      "concerns": [
+        {
+          "type": "vague-authority",
+          "severity": "medium",
+          "excerpt": "studies show",
+          "context": "...on YouTube Radicalization Systematic review of 23 studies shows mixed evidence (PMC 2021) The Contested Hypothes...",
+          "line": 160,
+          "recommendation": "Specify which experts/studies. Link to specific source."
+        },
+        {
+          "type": "vague-authority",
+          "severity": "medium",
+          "excerpt": "researchers found",
+          "context": ".... Tracking 1,000+ U.S. residents over six months, researchers found users see more YouTube videos off-platform than o...",
+          "line": 247,
+          "recommendation": "Specify which experts/studies. Link to specific source."
+        }
+      ]
+    },
+    {
+      "slug": "project-2025-military-orders",
+      "verdict": "mixed",
+      "category": "Deep Dive Dossier",
+      "sourceCount": 10,
+      "concernCount": 0,
+      "concerns": []
+    },
+    {
+      "slug": "ebola-outbreak-drc-2025",
+      "verdict": "mixed",
+      "category": "Fact Check",
+      "sourceCount": 16,
+      "concernCount": 3,
+      "concerns": [
+        {
+          "type": "absolutist-language",
+          "severity": "low",
+          "excerpt": "completely false",
+          "context": "...re Ebola infection.\" The Facts: This is completely false and potentially dangerous. During the 2...",
+          "line": 374,
+          "recommendation": "Consider if claim is truly absolute or if nuance needed."
+        },
+        {
+          "type": "absolutist-language",
+          "severity": "low",
+          "excerpt": "no evidence",
+          "context": "...mor. WHO has explicitly stated there is no evidence that salt water has any effect on Ebola...",
+          "line": 374,
+          "recommendation": "Consider if claim is truly absolute or if nuance needed."
+        },
+        {
+          "type": "opinion-source",
+          "severity": "medium",
+          "excerpt": "oped",
+          "context": "...lop Fighting the Infodemic WHO has developed \"infodemic management\" strategies speci...",
+          "line": 506,
+          "recommendation": "Opinion pieces should not be sole source for factual claims."
+        }
+      ]
+    },
+    {
+      "slug": "target-satanic-campaign-2025",
+      "verdict": "misleading",
+      "category": "Conspiracy & Hoaxes",
+      "sourceCount": 12,
+      "concernCount": 1,
+      "concerns": [
+        {
+          "type": "missing-counter-argument",
+          "severity": "low",
+          "excerpt": "No counter-argument detected",
+          "context": "Report with \"misleading\" verdict doesn't appear to address opposing viewpoint",
+          "line": null,
+          "recommendation": "Consider addressing why people believe the false claim."
+        }
+      ]
+    },
+    {
+      "slug": "sa-self-defense-right-2025",
+      "verdict": "misleading",
+      "category": "International",
+      "sourceCount": 16,
+      "concernCount": 1,
+      "concerns": [
+        {
+          "type": "missing-counter-argument",
+          "severity": "low",
+          "excerpt": "No counter-argument detected",
+          "context": "Report with \"misleading\" verdict doesn't appear to address opposing viewpoint",
+          "line": null,
+          "recommendation": "Consider addressing why people believe the false claim."
+        }
+      ]
+    },
+    {
+      "slug": "225-executive-orders-2025",
+      "verdict": "misleading",
+      "category": "Fact Check",
+      "sourceCount": 18,
+      "concernCount": 3,
+      "concerns": [
+        {
+          "type": "opinion-source",
+          "severity": "medium",
+          "excerpt": "opinion,",
+          "context": "...characterizations of \"dictatorship\" are opinion, not fact. FDR signed 3,721 EOs. The con...",
+          "line": 368,
+          "recommendation": "Opinion pieces should not be sole source for factual claims."
+        },
+        {
+          "type": "opinion-source",
+          "severity": "medium",
+          "excerpt": "Opinion:",
+          "context": "...d by the litigation record. [18] Public Opinion: Is Trump Doing Too Much by Executive Or...",
+          "line": 386,
+          "recommendation": "Opinion pieces should not be sole source for factual claims."
+        },
+        {
+          "type": "opinion-source",
+          "severity": "medium",
+          "excerpt": "opinion:",
+          "context": "... functional separation of powers Public opinion: Americans are divided, with 51% saying ...",
+          "line": 620,
+          "recommendation": "Opinion pieces should not be sole source for factual claims."
+        }
+      ]
+    },
+    {
+      "slug": "nigeria-nin-bank-access-2025",
+      "verdict": "misleading",
+      "category": "Fact Check",
+      "sourceCount": 16,
+      "concernCount": 1,
+      "concerns": [
+        {
+          "type": "absolutist-language",
+          "severity": "low",
+          "excerpt": "no evidence",
+          "context": "...ptember 2022, and beyond), and there is no evidence of mass account freezes as viral posts ...",
+          "line": 259,
+          "recommendation": "Consider if claim is truly absolute or if nuance needed."
+        }
+      ]
+    },
+    {
+      "slug": "government-shutdown-2025",
+      "verdict": "true",
+      "category": "Fact Check",
+      "sourceCount": 16,
+      "concernCount": 0,
+      "concerns": []
+    },
+    {
+      "slug": "american-political-disinfo",
+      "verdict": "true",
+      "category": "Deep Dive Dossier",
+      "sourceCount": 11,
+      "concernCount": 0,
+      "concerns": []
+    },
+    {
+      "slug": "iran-nuclear-crisis",
+      "verdict": "true",
+      "category": "Deep Dive Dossier",
+      "sourceCount": 18,
+      "concernCount": 0,
+      "concerns": []
+    },
+    {
+      "slug": "meta-ends-fact-checking-2025",
+      "verdict": "true",
+      "category": "Platform Policy",
+      "sourceCount": 14,
+      "concernCount": 1,
+      "concerns": [
+        {
+          "type": "vague-authority",
+          "severity": "medium",
+          "excerpt": "researchers found",
+          "context": "...ons. During the 2024 U.S. presidential election , researchers found that misleading posts without notes spread 13 tim...",
+          "line": 296,
+          "recommendation": "Specify which experts/studies. Link to specific source."
+        }
+      ]
+    },
+    {
+      "slug": "golden-fleet-analysis",
+      "verdict": "undefined",
+      "category": "Strategic Assessment",
+      "sourceCount": 0,
+      "concernCount": 1,
+      "concerns": [
+        {
+          "type": "undefined-verdict",
+          "severity": "high",
+          "excerpt": "verdict: undefined",
+          "context": "Report \"golden-fleet-analysis\" has no verdict assigned",
+          "line": null,
+          "recommendation": "Every report must have a clear verdict: true, false, misleading, mixed, or context."
+        }
+      ]
+    },
+    {
+      "slug": "dominion-voting-claims-2020",
+      "verdict": "undefined",
+      "category": "Forensic Fact Check",
+      "sourceCount": 21,
+      "concernCount": 4,
+      "concerns": [
+        {
+          "type": "truncated-quote",
+          "severity": "medium",
+          "excerpt": "\"He kept washing out of courses... He'",
+          "context": "...ded a rare public correction: \"He kept washing out of courses... He's not an intelligence analyst....",
+          "line": 861,
+          "recommendation": "Verify full quote context. Consider showing more text."
+        },
+        {
+          "type": "absolutist-language",
+          "severity": "low",
+          "excerpt": "no evidence",
+          "context": "...\" was later exposed as unqualified, (2) no evidence was ever produced, (3) the attorneys we...",
+          "line": 811,
+          "recommendation": "Consider if claim is truly absolute or if nuance needed."
+        },
+        {
+          "type": "absolutist-language",
+          "severity": "low",
+          "excerpt": "No evidence",
+          "context": "...enting lies and fabricated credentials. No evidence of Dominion fraud has ever been substan...",
+          "line": 1032,
+          "recommendation": "Consider if claim is truly absolute or if nuance needed."
+        },
+        {
+          "type": "undefined-verdict",
+          "severity": "high",
+          "excerpt": "verdict: undefined",
+          "context": "Report \"dominion-voting-claims-2020\" has no verdict assigned",
+          "line": null,
+          "recommendation": "Every report must have a clear verdict: true, false, misleading, mixed, or context."
+        }
+      ]
+    },
+    {
+      "slug": "boat-strike-investigation",
+      "verdict": "undefined",
+      "category": "Military Investigation",
+      "sourceCount": 0,
+      "concernCount": 3,
+      "concerns": [
+        {
+          "type": "vague-authority",
+          "severity": "medium",
+          "excerpt": "experts say",
+          "context": "...ency. Is this campaign legal at all? Stanford Law experts say all strikes may constitute murder under domestic ...",
+          "line": 828,
+          "recommendation": "Specify which experts/studies. Link to specific source."
+        },
+        {
+          "type": "truncated-quote",
+          "severity": "medium",
+          "excerpt": "\"The United States is not currently operating in a context of armed conflict in its strikes in the Caribbean. For that reason, this is not a context in which war crimes apply... Instead, all of the strikes qualify as murder in violation of domestic criminal law, and extrajudicial killings in violation of international human rights law.\"",
+          "context": "...mestic and international law: \"The United States is not currently operating in a context of armed conflict in its strikes in the Caribbean. For that reason, this is not a context in which war crimes apply... Instead, all of the strikes qualify as murder in violation of domestic criminal law, and extrajudicial killings in violation of international human rights law.\" — Tom Dannenbaum , Stanford L...",
+          "line": 750,
+          "recommendation": "Verify full quote context. Consider showing more text."
+        },
+        {
+          "type": "undefined-verdict",
+          "severity": "high",
+          "excerpt": "verdict: undefined",
+          "context": "Report \"boat-strike-investigation\" has no verdict assigned",
+          "line": null,
+          "recommendation": "Every report must have a clear verdict: true, false, misleading, mixed, or context."
+        }
+      ]
+    },
+    {
+      "slug": "epstein-air-logistics",
+      "verdict": "undefined",
+      "category": "Forensic Audit",
+      "sourceCount": 32,
+      "concernCount": 1,
+      "concerns": [
+        {
+          "type": "undefined-verdict",
+          "severity": "high",
+          "excerpt": "verdict: undefined",
+          "context": "Report \"epstein-air-logistics\" has no verdict assigned",
+          "line": null,
+          "recommendation": "Every report must have a clear verdict: true, false, misleading, mixed, or context."
+        }
+      ]
+    },
+    {
+      "slug": "us-argentina-farm-crisis-2025",
+      "verdict": "undefined",
+      "category": "Economic Analysis",
+      "sourceCount": 1,
+      "concernCount": 1,
+      "concerns": [
+        {
+          "type": "undefined-verdict",
+          "severity": "high",
+          "excerpt": "verdict: undefined",
+          "context": "Report \"us-argentina-farm-crisis-2025\" has no verdict assigned",
+          "line": null,
+          "recommendation": "Every report must have a clear verdict: true, false, misleading, mixed, or context."
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "highSeverity": 5,
+    "mediumSeverity": 18,
+    "lowSeverity": 16
+  }
+}

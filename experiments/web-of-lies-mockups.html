@@ -9,7 +9,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://unpkg.com/pts@0.10.12/dist/pts.min.js"></script>
 
     <style>
         :root {
@@ -116,9 +115,10 @@
             position: relative;
         }
 
-        canvas {
+        canvas, svg {
             width: 100%;
             height: 100%;
+            display: block;
         }
 
         .controls {
@@ -144,138 +144,6 @@
             border-color: var(--accent-blue);
         }
 
-        .btn.active {
-            background: var(--accent-blue);
-            border-color: var(--accent-blue);
-        }
-
-        /* Experiment 1: Viral Spread */
-        #viralSpread {
-            background: radial-gradient(circle at center, rgba(239, 68, 68, 0.05) 0%, transparent 70%);
-        }
-
-        /* Experiment 2: Narrative Mutation */
-        .tree-container {
-            width: 100%;
-            height: 100%;
-        }
-
-        .node circle {
-            fill: var(--bg-card);
-            stroke: var(--accent-blue);
-            stroke-width: 2px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .node circle:hover {
-            fill: rgba(59, 130, 246, 0.2);
-            stroke-width: 3px;
-        }
-
-        .node text {
-            font-size: 11px;
-            fill: var(--text-secondary);
-        }
-
-        .link {
-            fill: none;
-            stroke: var(--border-color);
-            stroke-width: 1.5px;
-        }
-
-        .mutation-badge {
-            font-size: 9px;
-            fill: var(--accent-amber);
-        }
-
-        /* Experiment 3: Echo Chamber */
-        #echoChamber {
-            background: radial-gradient(circle at center, rgba(6, 182, 212, 0.03) 0%, transparent 60%);
-        }
-
-        /* Experiment 4: Bot Network */
-        .grid-cell {
-            fill: var(--bg-card);
-            stroke: var(--border-color);
-            stroke-width: 0.5px;
-            transition: fill 0.3s;
-        }
-
-        .grid-cell.active {
-            fill: var(--accent-red);
-        }
-
-        .grid-cell.bot {
-            fill: var(--accent-amber);
-        }
-
-        /* Experiment 5: Trust Erosion */
-        .trust-bar {
-            height: 40px;
-            background: linear-gradient(90deg, var(--accent-green), var(--accent-amber), var(--accent-red));
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .trust-indicator {
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            transition: width 0.5s ease-out;
-        }
-
-        /* Experiment 6: Source Flow Sankey */
-        .sankey-link {
-            fill: none;
-            stroke-opacity: 0.4;
-        }
-
-        .sankey-link:hover {
-            stroke-opacity: 0.7;
-        }
-
-        .sankey-node rect {
-            cursor: pointer;
-        }
-
-        .sankey-node text {
-            font-size: 11px;
-            fill: var(--text-secondary);
-        }
-
-        /* Tooltip */
-        .tooltip {
-            position: absolute;
-            padding: 12px 16px;
-            background: rgba(10, 18, 37, 0.95);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 0.85rem;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.2s;
-            max-width: 300px;
-            z-index: 1000;
-        }
-
-        .tooltip.visible {
-            opacity: 1;
-        }
-
-        .tooltip-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .tooltip-content {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-        }
-
         /* Stats overlay */
         .stats-overlay {
             position: absolute;
@@ -286,6 +154,7 @@
             border: 1px solid var(--border-color);
             border-radius: 12px;
             font-size: 0.85rem;
+            z-index: 10;
         }
 
         .stat-row {
@@ -312,6 +181,24 @@
         .stat-value.amber { color: var(--accent-amber); }
         .stat-value.green { color: var(--accent-green); }
         .stat-value.blue { color: var(--accent-blue); }
+
+        /* Trust bars */
+        .trust-bar {
+            height: 40px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-amber), var(--accent-red));
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trust-indicator {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            transition: width 0.5s ease-out;
+        }
     </style>
 </head>
 <body>
@@ -330,7 +217,7 @@
             <p class="experiment-desc">
                 Watch how a single piece of misinformation spreads exponentially through a network.
                 Each particle represents a share, repost, or mention. Red particles are the original
-                false claim; orange shows mutations; the glow intensity represents engagement.
+                false claim; orange shows mutations.
             </p>
             <div class="experiment-tech">
                 <span class="tech-tag">Canvas 2D</span>
@@ -339,7 +226,7 @@
             </div>
         </div>
 
-        <div class="canvas-container" id="viralSpread">
+        <div class="canvas-container" id="viralContainer">
             <canvas id="viralCanvas"></canvas>
             <div class="stats-overlay">
                 <div class="stat-row">
@@ -383,8 +270,8 @@
             </div>
         </div>
 
-        <div class="canvas-container">
-            <div id="mutationTree" class="tree-container"></div>
+        <div class="canvas-container" id="treeContainer">
+            <svg id="mutationTree"></svg>
         </div>
     </section>
 
@@ -401,13 +288,13 @@
                 amplified within closed systems.
             </p>
             <div class="experiment-tech">
-                <span class="tech-tag">Pts.js</span>
+                <span class="tech-tag">Canvas 2D</span>
                 <span class="tech-tag">Physics Simulation</span>
                 <span class="tech-tag">Collision Detection</span>
             </div>
         </div>
 
-        <div class="canvas-container" id="echoChamber">
+        <div class="canvas-container" id="echoContainer">
             <canvas id="echoCanvas"></canvas>
         </div>
     </section>
@@ -425,14 +312,14 @@
                 synchronized waves of activity.
             </p>
             <div class="experiment-tech">
-                <span class="tech-tag">SVG Grid</span>
+                <span class="tech-tag">Canvas Grid</span>
                 <span class="tech-tag">Wave Propagation</span>
                 <span class="tech-tag">Pattern Detection</span>
             </div>
         </div>
 
-        <div class="canvas-container">
-            <svg id="botNetwork" width="100%" height="100%"></svg>
+        <div class="canvas-container" id="botContainer">
+            <canvas id="botCanvas"></canvas>
             <div class="stats-overlay">
                 <div class="stat-row">
                     <span class="stat-label">Active Accounts</span>
@@ -474,7 +361,7 @@
             </div>
         </div>
 
-        <div class="canvas-container" style="padding: 40px;">
+        <div class="canvas-container" style="padding: 40px; height: auto; min-height: 500px;">
             <div id="trustErosion">
                 <div style="margin-bottom: 30px;">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
@@ -541,19 +428,19 @@
             <div class="experiment-number">Experiment 06</div>
             <h2 class="experiment-title">Source Laundering: From Fringe to Mainstream</h2>
             <p class="experiment-desc">
-                A Sankey diagram showing how narratives originating from fringe sources
+                A flow diagram showing how narratives originating from fringe sources
                 get picked up, repackaged, and eventually reported by mainstream outlets
                 as "some people say" stories.
             </p>
             <div class="experiment-tech">
-                <span class="tech-tag">D3.js Sankey</span>
+                <span class="tech-tag">D3.js</span>
                 <span class="tech-tag">Flow Visualization</span>
                 <span class="tech-tag">Source Tracking</span>
             </div>
         </div>
 
-        <div class="canvas-container">
-            <svg id="sankeyDiagram" width="100%" height="100%"></svg>
+        <div class="canvas-container" id="sankeyContainer">
+            <svg id="sankeyDiagram"></svg>
         </div>
     </section>
 
@@ -576,15 +463,10 @@
             </div>
         </div>
 
-        <div class="canvas-container">
-            <svg id="webOfLies" width="100%" height="100%"></svg>
+        <div class="canvas-container" id="webContainer">
+            <svg id="webOfLies"></svg>
         </div>
     </section>
-
-    <div class="tooltip" id="tooltip">
-        <div class="tooltip-title"></div>
-        <div class="tooltip-content"></div>
-    </div>
 
     <script>
         // ═══════════════════════════════════════════════════════════════
@@ -597,13 +479,13 @@
         let viralAnimationId = null;
         let factCheckActive = false;
 
-        function resizeViralCanvas() {
-            const container = document.getElementById('viralSpread');
-            viralCanvas.width = container.clientWidth;
-            viralCanvas.height = container.clientHeight;
+        function resizeCanvas(canvas, container) {
+            const rect = container.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
         }
-        resizeViralCanvas();
-        window.addEventListener('resize', resizeViralCanvas);
+
+        resizeCanvas(viralCanvas, document.getElementById('viralContainer'));
 
         class ViralParticle {
             constructor(x, y, generation = 0, isMutation = false) {
@@ -626,17 +508,14 @@
                 this.vx *= 0.99;
                 this.vy *= 0.99;
 
-                // Bounce off walls
                 if (this.x < this.radius || this.x > viralCanvas.width - this.radius) this.vx *= -1;
                 if (this.y < this.radius || this.y > viralCanvas.height - this.radius) this.vy *= -1;
 
-                // Spread logic
                 this.spreadTimer--;
                 if (this.spreadTimer <= 0 && !this.hasSpread && !this.factChecked && this.generation < 6) {
                     this.spread();
                 }
 
-                // Fade if fact-checked
                 if (this.factChecked) {
                     this.alpha -= 0.02;
                 }
@@ -663,14 +542,11 @@
                 const baseColor = this.isMutation ? '245, 158, 11' : '239, 68, 68';
                 const glowIntensity = Math.max(0.2, 1 - this.generation * 0.15);
 
-                // Glow effect
                 viralCtx.shadowBlur = 15 * glowIntensity;
                 viralCtx.shadowColor = `rgba(${baseColor}, ${this.alpha * 0.8})`;
-
                 viralCtx.fillStyle = `rgba(${baseColor}, ${this.alpha * glowIntensity})`;
                 viralCtx.fill();
 
-                // Inner core
                 viralCtx.beginPath();
                 viralCtx.arc(this.x, this.y, this.radius * 0.6, 0, Math.PI * 2);
                 viralCtx.fillStyle = `rgba(255, 255, 255, ${this.alpha * 0.5})`;
@@ -681,10 +557,9 @@
         }
 
         function animateViral() {
-            viralCtx.fillStyle = 'rgba(5, 10, 20, 0.1)';
+            viralCtx.fillStyle = 'rgba(10, 18, 37, 0.15)';
             viralCtx.fillRect(0, 0, viralCanvas.width, viralCanvas.height);
 
-            // Apply fact-check effect
             if (factCheckActive) {
                 viralParticles.forEach(p => {
                     if (Math.random() < 0.05) p.factChecked = true;
@@ -698,7 +573,6 @@
                 p.draw();
             });
 
-            // Update stats
             document.getElementById('totalShares').textContent = viralParticles.length.toLocaleString();
             document.getElementById('reach').textContent = (viralParticles.length * 847).toLocaleString();
             document.getElementById('mutations').textContent = viralParticles.filter(p => p.isMutation).length;
@@ -708,7 +582,6 @@
 
         function startViralSpread() {
             resetViralSpread();
-            // Start with one particle in center
             viralParticles.push(new ViralParticle(viralCanvas.width / 2, viralCanvas.height / 2, 0));
             animateViral();
         }
@@ -717,7 +590,7 @@
             cancelAnimationFrame(viralAnimationId);
             viralParticles = [];
             factCheckActive = false;
-            viralCtx.fillStyle = 'rgba(5, 10, 20, 1)';
+            viralCtx.fillStyle = 'rgba(10, 18, 37, 1)';
             viralCtx.fillRect(0, 0, viralCanvas.width, viralCanvas.height);
             document.getElementById('totalShares').textContent = '0';
             document.getElementById('reach').textContent = '0';
@@ -733,53 +606,48 @@
         // ═══════════════════════════════════════════════════════════════
 
         function initMutationTree() {
-            const container = document.getElementById('mutationTree');
-            const width = container.clientWidth;
-            const height = container.clientHeight;
+            const container = document.getElementById('treeContainer');
+            const rect = container.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+
+            const svg = d3.select('#mutationTree')
+                .attr('width', width)
+                .attr('height', height);
 
             const treeData = {
                 name: "5G causes COVID-19",
-                mutationType: "origin",
                 children: [
                     {
                         name: "5G weakens immune system",
-                        mutationType: "causal shift",
+                        mutation: "causal shift",
                         children: [
-                            { name: "5G makes vaccines ineffective", mutationType: "addition" },
-                            { name: "5G activates dormant viruses", mutationType: "escalation" }
+                            { name: "5G makes vaccines ineffective", mutation: "addition" },
+                            { name: "5G activates dormant viruses", mutation: "escalation" }
                         ]
                     },
                     {
                         name: "COVID is cover for 5G rollout",
-                        mutationType: "inversion",
+                        mutation: "inversion",
                         children: [
-                            { name: "Lockdowns enabled secret 5G installation", mutationType: "elaboration" },
-                            { name: "COVID symptoms are actually 5G radiation", mutationType: "replacement" }
+                            { name: "Lockdowns enabled secret 5G installation", mutation: "elaboration" },
+                            { name: "COVID symptoms = 5G radiation", mutation: "replacement" }
                         ]
                     },
                     {
                         name: "Bill Gates uses 5G for mind control",
-                        mutationType: "actor addition",
+                        mutation: "actor addition",
                         children: [
-                            { name: "Vaccines contain 5G-activated nanobots", mutationType: "tech fantasy" },
-                            { name: "5G towers track vaccinated people", mutationType: "surveillance" },
-                            { name: "Gates profits from both 5G and vaccines", mutationType: "motive" }
+                            { name: "Vaccines contain 5G nanobots", mutation: "tech fantasy" },
+                            { name: "5G towers track vaccinated people", mutation: "surveillance" }
                         ]
                     }
                 ]
             };
 
-            const svg = d3.select('#mutationTree')
-                .append('svg')
-                .attr('width', width)
-                .attr('height', height);
+            const g = svg.append('g').attr('transform', `translate(100, ${height / 2})`);
 
-            const g = svg.append('g')
-                .attr('transform', `translate(80, ${height / 2})`);
-
-            const tree = d3.tree()
-                .size([height - 100, width - 200]);
-
+            const tree = d3.tree().size([height - 80, width - 250]);
             const root = d3.hierarchy(treeData);
             tree(root);
 
@@ -788,270 +656,253 @@
                 .data(root.links())
                 .enter()
                 .append('path')
-                .attr('class', 'link')
-                .attr('d', d3.linkHorizontal()
-                    .x(d => d.y)
-                    .y(d => d.x));
+                .attr('fill', 'none')
+                .attr('stroke', 'rgba(255,255,255,0.2)')
+                .attr('stroke-width', 1.5)
+                .attr('d', d3.linkHorizontal().x(d => d.y).y(d => d.x));
 
             // Nodes
             const node = g.selectAll('.node')
                 .data(root.descendants())
                 .enter()
                 .append('g')
-                .attr('class', 'node')
                 .attr('transform', d => `translate(${d.y}, ${d.x})`);
 
             node.append('circle')
-                .attr('r', 8);
+                .attr('r', 8)
+                .attr('fill', '#0a1225')
+                .attr('stroke', '#3b82f6')
+                .attr('stroke-width', 2);
 
             node.append('text')
                 .attr('dy', -15)
                 .attr('x', d => d.children ? -10 : 10)
-                .style('text-anchor', d => d.children ? 'end' : 'start')
+                .attr('text-anchor', d => d.children ? 'end' : 'start')
+                .attr('fill', '#a1a1aa')
+                .attr('font-size', '11px')
                 .text(d => d.data.name);
 
-            // Mutation type badges
-            node.filter(d => d.data.mutationType !== 'origin')
+            // Mutation badges
+            node.filter(d => d.data.mutation)
                 .append('text')
-                .attr('class', 'mutation-badge')
-                .attr('dy', 20)
+                .attr('dy', 22)
                 .attr('x', d => d.children ? -10 : 10)
-                .style('text-anchor', d => d.children ? 'end' : 'start')
-                .text(d => `[${d.data.mutationType}]`);
+                .attr('text-anchor', d => d.children ? 'end' : 'start')
+                .attr('fill', '#f59e0b')
+                .attr('font-size', '9px')
+                .text(d => `[${d.data.mutation}]`);
         }
 
-        initMutationTree();
+        // ═══════════════════════════════════════════════════════════════
+        // EXPERIMENT 3: ECHO CHAMBER (Pure Canvas)
+        // ═══════════════════════════════════════════════════════════════
 
-        // ═══════════════════════════════════════════════════════════════
-        // EXPERIMENT 3: ECHO CHAMBER (Pts.js)
-        // ═══════════════════════════════════════════════════════════════
+        const echoCanvas = document.getElementById('echoCanvas');
+        const echoCtx = echoCanvas.getContext('2d');
+        let echoParticles = [];
 
         function initEchoChamber() {
-            const container = document.getElementById('echoChamber');
-            const space = new Pts.CanvasSpace('#echoCanvas').setup({
-                bgcolor: 'transparent',
-                resize: true
-            });
+            resizeCanvas(echoCanvas, document.getElementById('echoContainer'));
 
-            const form = space.getForm();
-
-            // Define echo chamber bubbles
             const chambers = [
-                { center: [200, 200], radius: 150, color: 'rgba(239, 68, 68, 0.1)', particles: [] },
-                { center: [500, 350], radius: 180, color: 'rgba(59, 130, 246, 0.1)', particles: [] },
-                { center: [850, 200], radius: 140, color: 'rgba(245, 158, 11, 0.1)', particles: [] },
-                { center: [700, 450], radius: 160, color: 'rgba(6, 182, 212, 0.1)', particles: [] }
+                { x: 200, y: 200, radius: 150, color: 'rgba(239, 68, 68, 0.15)', particles: [] },
+                { x: 500, y: 350, radius: 180, color: 'rgba(59, 130, 246, 0.15)', particles: [] },
+                { x: 850, y: 200, radius: 140, color: 'rgba(245, 158, 11, 0.15)', particles: [] },
+                { x: 700, y: 450, radius: 160, color: 'rgba(6, 182, 212, 0.15)', particles: [] }
             ];
 
-            // Create particles for each chamber
             chambers.forEach(chamber => {
-                for (let i = 0; i < 15; i++) {
+                for (let i = 0; i < 12; i++) {
                     const angle = Math.random() * Math.PI * 2;
-                    const dist = Math.random() * chamber.radius * 0.7;
+                    const dist = Math.random() * chamber.radius * 0.6;
                     chamber.particles.push({
-                        pos: new Pts.Pt(
-                            chamber.center[0] + Math.cos(angle) * dist,
-                            chamber.center[1] + Math.sin(angle) * dist
-                        ),
-                        vel: new Pts.Pt(
-                            (Math.random() - 0.5) * 3,
-                            (Math.random() - 0.5) * 3
-                        ),
-                        radius: 4 + Math.random() * 4
+                        x: chamber.x + Math.cos(angle) * dist,
+                        y: chamber.y + Math.sin(angle) * dist,
+                        vx: (Math.random() - 0.5) * 2,
+                        vy: (Math.random() - 0.5) * 2,
+                        radius: 3 + Math.random() * 4
                     });
                 }
             });
 
-            space.add({
-                animate: (time, ftime) => {
-                    // Draw chambers
-                    chambers.forEach(chamber => {
-                        // Chamber boundary
-                        form.fillOnly(chamber.color).circle([chamber.center, chamber.radius]);
-                        form.strokeOnly('rgba(255,255,255,0.1)', 1).circle([chamber.center, chamber.radius]);
+            function animateEcho() {
+                echoCtx.fillStyle = 'rgba(10, 18, 37, 0.2)';
+                echoCtx.fillRect(0, 0, echoCanvas.width, echoCanvas.height);
 
-                        // Update and draw particles
-                        chamber.particles.forEach(p => {
-                            // Update position
-                            p.pos.add(p.vel);
+                chambers.forEach(chamber => {
+                    // Draw chamber
+                    echoCtx.beginPath();
+                    echoCtx.arc(chamber.x, chamber.y, chamber.radius, 0, Math.PI * 2);
+                    echoCtx.fillStyle = chamber.color;
+                    echoCtx.fill();
+                    echoCtx.strokeStyle = 'rgba(255,255,255,0.1)';
+                    echoCtx.stroke();
 
-                            // Bounce off chamber walls
-                            const dist = p.pos.$subtract(chamber.center).magnitude();
-                            if (dist > chamber.radius - p.radius) {
-                                // Reflect velocity
-                                const normal = p.pos.$subtract(chamber.center).normalize();
-                                const dot = p.vel.dot(normal);
-                                p.vel.subtract(normal.$multiply(2 * dot));
+                    // Update and draw particles
+                    chamber.particles.forEach(p => {
+                        p.x += p.vx;
+                        p.y += p.vy;
 
-                                // Push back inside
-                                p.pos = new Pts.Pt(chamber.center).add(
-                                    normal.$multiply(chamber.radius - p.radius - 1)
-                                );
+                        // Bounce off chamber walls
+                        const dx = p.x - chamber.x;
+                        const dy = p.y - chamber.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist > chamber.radius - p.radius) {
+                            const nx = dx / dist;
+                            const ny = dy / dist;
+                            const dot = p.vx * nx + p.vy * ny;
+                            p.vx -= 2 * dot * nx;
+                            p.vy -= 2 * dot * ny;
+                            p.x = chamber.x + nx * (chamber.radius - p.radius - 1);
+                            p.y = chamber.y + ny * (chamber.radius - p.radius - 1);
+                        }
+
+                        // Draw particle
+                        echoCtx.beginPath();
+                        echoCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                        echoCtx.fillStyle = 'rgba(255,255,255,0.7)';
+                        echoCtx.fill();
+                    });
+
+                    // Draw connections
+                    chamber.particles.forEach((p1, i) => {
+                        chamber.particles.slice(i + 1).forEach(p2 => {
+                            const dx = p1.x - p2.x;
+                            const dy = p1.y - p2.y;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+                            if (dist < 60) {
+                                echoCtx.beginPath();
+                                echoCtx.moveTo(p1.x, p1.y);
+                                echoCtx.lineTo(p2.x, p2.y);
+                                echoCtx.strokeStyle = `rgba(255,255,255,${0.3 * (1 - dist / 60)})`;
+                                echoCtx.stroke();
                             }
-
-                            // Draw particle
-                            form.fillOnly('rgba(255,255,255,0.6)').circle([p.pos, p.radius]);
-                            form.fillOnly('rgba(255,255,255,0.9)').circle([p.pos, p.radius * 0.4]);
                         });
                     });
+                });
 
-                    // Draw connections within chambers
-                    chambers.forEach(chamber => {
-                        chamber.particles.forEach((p1, i) => {
-                            chamber.particles.slice(i + 1).forEach(p2 => {
-                                const dist = p1.pos.$subtract(p2.pos).magnitude();
-                                if (dist < 80) {
-                                    const alpha = (1 - dist / 80) * 0.3;
-                                    form.strokeOnly(`rgba(255,255,255,${alpha})`, 1).line([p1.pos, p2.pos]);
-                                }
-                            });
-                        });
-                    });
-                }
-            });
+                requestAnimationFrame(animateEcho);
+            }
 
-            space.play();
+            animateEcho();
         }
 
-        initEchoChamber();
-
         // ═══════════════════════════════════════════════════════════════
-        // EXPERIMENT 4: BOT NETWORK GRID
+        // EXPERIMENT 4: BOT NETWORK GRID (Canvas)
         // ═══════════════════════════════════════════════════════════════
 
-        let botGrid = [];
-        const gridCols = 40;
-        const gridRows = 20;
+        const botCanvas = document.getElementById('botCanvas');
+        const botCtx = botCanvas.getContext('2d');
+        let botCells = [];
+        const gridCols = 50;
+        const gridRows = 25;
 
         function initBotNetwork() {
-            const svg = d3.select('#botNetwork');
-            const container = document.querySelector('#botNetwork').parentElement;
-            const width = container.clientWidth;
-            const height = container.clientHeight;
+            resizeCanvas(botCanvas, document.getElementById('botContainer'));
 
-            svg.attr('viewBox', `0 0 ${width} ${height}`);
+            const cellWidth = botCanvas.width / gridCols;
+            const cellHeight = botCanvas.height / gridRows;
 
-            const cellWidth = width / gridCols;
-            const cellHeight = height / gridRows;
-
-            // Create grid
+            botCells = [];
             for (let row = 0; row < gridRows; row++) {
                 for (let col = 0; col < gridCols; col++) {
-                    const cell = svg.append('rect')
-                        .attr('class', 'grid-cell')
-                        .attr('x', col * cellWidth)
-                        .attr('y', row * cellHeight)
-                        .attr('width', cellWidth - 1)
-                        .attr('height', cellHeight - 1)
-                        .attr('rx', 2);
-
-                    botGrid.push({
-                        el: cell,
-                        row,
-                        col,
-                        isBot: Math.random() < 0.3,
-                        active: false
+                    botCells.push({
+                        x: col * cellWidth,
+                        y: row * cellHeight,
+                        width: cellWidth - 1,
+                        height: cellHeight - 1,
+                        row, col,
+                        isBot: Math.random() < 0.25,
+                        active: 0
                     });
                 }
             }
+
+            function animateBot() {
+                botCtx.fillStyle = '#0a1225';
+                botCtx.fillRect(0, 0, botCanvas.width, botCanvas.height);
+
+                let activeCount = 0;
+                let botActiveCount = 0;
+
+                botCells.forEach(cell => {
+                    if (cell.active > 0) {
+                        cell.active -= 0.02;
+                        activeCount++;
+                        if (cell.isBot) botActiveCount++;
+                    }
+
+                    let color = '#1a1f35';
+                    if (cell.active > 0) {
+                        color = cell.isBot ? `rgba(245, 158, 11, ${cell.active})` : `rgba(59, 130, 246, ${cell.active * 0.6})`;
+                    }
+
+                    botCtx.fillStyle = color;
+                    botCtx.fillRect(cell.x, cell.y, cell.width, cell.height);
+                });
+
+                document.getElementById('activeAccounts').textContent = activeCount;
+                document.getElementById('botProb').textContent = activeCount > 0 ?
+                    Math.round((botActiveCount / activeCount) * 100) + '%' : '0%';
+                document.getElementById('coordScore').textContent = (botActiveCount / 10).toFixed(2);
+
+                requestAnimationFrame(animateBot);
+            }
+
+            animateBot();
         }
 
         function triggerBotWave() {
             const startCol = Math.floor(gridCols / 2);
-
-            botGrid.forEach(cell => {
+            botCells.forEach(cell => {
                 if (cell.isBot) {
-                    const delay = Math.abs(cell.col - startCol) * 50 + Math.random() * 100;
-
                     setTimeout(() => {
-                        cell.el.classed('bot', true);
-                        cell.active = true;
-                        updateBotStats();
-
-                        setTimeout(() => {
-                            cell.el.classed('bot', false);
-                            cell.active = false;
-                            updateBotStats();
-                        }, 1500);
-                    }, delay);
+                        cell.active = 1;
+                    }, Math.abs(cell.col - startCol) * 30 + Math.random() * 50);
                 }
             });
         }
 
         function showOrganicActivity() {
-            // Random organic activity pattern
-            const iterations = 20;
-            for (let i = 0; i < iterations; i++) {
-                const randomCell = botGrid[Math.floor(Math.random() * botGrid.length)];
-
+            for (let i = 0; i < 30; i++) {
+                const randomCell = botCells[Math.floor(Math.random() * botCells.length)];
                 setTimeout(() => {
-                    randomCell.el.classed('active', true);
-                    updateBotStats();
-
-                    setTimeout(() => {
-                        randomCell.el.classed('active', false);
-                        updateBotStats();
-                    }, 500 + Math.random() * 1000);
-                }, i * 200 + Math.random() * 300);
+                    randomCell.active = 0.7 + Math.random() * 0.3;
+                }, i * 100 + Math.random() * 200);
             }
         }
-
-        function updateBotStats() {
-            const active = botGrid.filter(c => c.active || c.el.classed('active') || c.el.classed('bot')).length;
-            const bots = botGrid.filter(c => c.el.classed('bot')).length;
-
-            document.getElementById('activeAccounts').textContent = active;
-            document.getElementById('botProb').textContent = active > 0 ?
-                Math.round((bots / Math.max(active, 1)) * 100) + '%' : '0%';
-            document.getElementById('coordScore').textContent =
-                (bots / gridCols * 10).toFixed(2);
-        }
-
-        initBotNetwork();
 
         // ═══════════════════════════════════════════════════════════════
         // EXPERIMENT 5: TRUST EROSION
         // ═══════════════════════════════════════════════════════════════
 
-        const trustLevels = {
-            media: 87,
-            science: 92,
-            gov: 45,
-            election: 72
-        };
+        const trustLevels = { media: 87, science: 92, gov: 45, election: 72 };
 
         const disinfoEvents = [
             { text: "Viral post claims voting machines were 'hacked'", targets: ['election', 'gov'], damage: [8, 3] },
             { text: "False claim about vaccine side effects spreads", targets: ['science', 'media'], damage: [5, 4] },
             { text: "Doctored video of politician goes viral", targets: ['media', 'gov'], damage: [6, 5] },
-            { text: "Conspiracy about 'deep state' trends on social media", targets: ['gov', 'election'], damage: [7, 4] },
+            { text: "Conspiracy about 'deep state' trends", targets: ['gov', 'election'], damage: [7, 4] },
             { text: "Fake news site mimics legitimate outlet", targets: ['media'], damage: [8] },
-            { text: "AI-generated audio of scientist surfaces", targets: ['science', 'media'], damage: [6, 5] },
-            { text: "False election fraud claims amplified by bots", targets: ['election', 'media'], damage: [9, 4] }
+            { text: "AI-generated audio of scientist surfaces", targets: ['science', 'media'], damage: [6, 5] }
         ];
 
         function injectDisinfo() {
             const event = disinfoEvents[Math.floor(Math.random() * disinfoEvents.length)];
-
-            // Apply damage
             event.targets.forEach((target, i) => {
                 trustLevels[target] = Math.max(10, trustLevels[target] - event.damage[i]);
             });
-
-            // Update UI
             updateTrustDisplay();
 
-            // Log event
             const log = document.getElementById('eventLog');
             const entry = document.createElement('div');
-            entry.style.padding = '4px 0';
-            entry.style.borderBottom = '1px solid var(--border-color)';
-            entry.innerHTML = `<span style="color: var(--accent-red);">▼</span> ${event.text}`;
+            entry.style.cssText = 'padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.08);';
+            entry.innerHTML = `<span style="color: #ef4444;">▼</span> ${event.text}`;
             log.insertBefore(entry, log.firstChild);
         }
 
         function deployFactCheck5() {
-            // Restore some trust
             Object.keys(trustLevels).forEach(key => {
                 trustLevels[key] = Math.min(100, trustLevels[key] + 3);
             });
@@ -1059,9 +910,8 @@
 
             const log = document.getElementById('eventLog');
             const entry = document.createElement('div');
-            entry.style.padding = '4px 0';
-            entry.style.borderBottom = '1px solid var(--border-color)';
-            entry.innerHTML = `<span style="color: var(--accent-green);">▲</span> Fact-check deployed - trust partially restored`;
+            entry.style.cssText = 'padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.08);';
+            entry.innerHTML = `<span style="color: #10b981;">▲</span> Fact-check deployed - trust partially restored`;
             log.insertBefore(entry, log.firstChild);
         }
 
@@ -1084,28 +934,29 @@
             trustLevels.election = 72;
             updateTrustDisplay();
             document.getElementById('eventLog').innerHTML =
-                '<div style="padding: 4px 0; border-bottom: 1px solid var(--border-color);">Click "Inject Disinformation" to simulate false claim exposure</div>';
+                '<div style="padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">Click "Inject Disinformation" to simulate false claim exposure</div>';
         }
 
         // ═══════════════════════════════════════════════════════════════
-        // EXPERIMENT 6: SOURCE LAUNDERING SANKEY
+        // EXPERIMENT 6: SOURCE LAUNDERING FLOW
         // ═══════════════════════════════════════════════════════════════
 
         function initSankey() {
-            const container = document.querySelector('#sankeyDiagram').parentElement;
-            const width = container.clientWidth;
-            const height = container.clientHeight;
+            const container = document.getElementById('sankeyContainer');
+            const rect = container.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
 
             const svg = d3.select('#sankeyDiagram')
-                .attr('viewBox', `0 0 ${width} ${height}`);
+                .attr('width', width)
+                .attr('height', height);
 
-            // Simplified Sankey-like visualization using paths
             const sources = [
                 { name: "Anonymous Forum", x: 50, y: 80, color: '#ef4444' },
-                { name: "Fake News Site", x: 50, y: 180, color: '#ef4444' },
-                { name: "Foreign State Media", x: 50, y: 280, color: '#f59e0b' },
-                { name: "Fringe Podcast", x: 50, y: 380, color: '#ef4444' },
-                { name: "Bot Network", x: 50, y: 480, color: '#f59e0b' }
+                { name: "Fake News Site", x: 50, y: 160, color: '#ef4444' },
+                { name: "Foreign State Media", x: 50, y: 240, color: '#f59e0b' },
+                { name: "Fringe Podcast", x: 50, y: 320, color: '#ef4444' },
+                { name: "Bot Network", x: 50, y: 400, color: '#f59e0b' }
             ];
 
             const amplifiers = [
@@ -1126,100 +977,88 @@
                 { name: "Policy Debate", x: 800, y: 350, color: '#10b981' }
             ];
 
-            // Draw connections
             const connections = [
-                // Sources to Amplifiers
                 { from: sources[0], to: amplifiers[0], strength: 2 },
                 { from: sources[1], to: amplifiers[1], strength: 3 },
                 { from: sources[1], to: amplifiers[2], strength: 2 },
                 { from: sources[2], to: amplifiers[1], strength: 2 },
                 { from: sources[3], to: amplifiers[2], strength: 3 },
                 { from: sources[4], to: amplifiers[3], strength: 4 },
-                // Amplifiers to Mainstream
                 { from: amplifiers[0], to: mainstream[0], strength: 2 },
                 { from: amplifiers[1], to: mainstream[1], strength: 2 },
                 { from: amplifiers[2], to: mainstream[0], strength: 2 },
                 { from: amplifiers[3], to: mainstream[2], strength: 3 },
-                // Mainstream to Legitimized
                 { from: mainstream[0], to: legitimized[0], strength: 3 },
                 { from: mainstream[1], to: legitimized[0], strength: 2 },
                 { from: mainstream[2], to: legitimized[1], strength: 2 }
             ];
 
-            // Draw curved paths
+            // Draw paths
             connections.forEach(conn => {
-                const path = svg.append('path')
-                    .attr('class', 'sankey-link')
+                svg.append('path')
                     .attr('d', `M${conn.from.x + 120},${conn.from.y}
-                               C${(conn.from.x + conn.to.x) / 2},${conn.from.y}
-                                ${(conn.from.x + conn.to.x) / 2},${conn.to.y}
+                               C${(conn.from.x + conn.to.x) / 2 + 60},${conn.from.y}
+                                ${(conn.from.x + conn.to.x) / 2 + 60},${conn.to.y}
                                 ${conn.to.x},${conn.to.y}`)
+                    .attr('fill', 'none')
                     .attr('stroke', conn.from.color)
-                    .attr('stroke-width', conn.strength * 3);
+                    .attr('stroke-width', conn.strength * 2.5)
+                    .attr('opacity', 0.4);
             });
 
-            // Draw source nodes
+            // Draw nodes
             [...sources, ...amplifiers, ...mainstream, ...legitimized].forEach(node => {
-                const g = svg.append('g')
-                    .attr('class', 'sankey-node')
-                    .attr('transform', `translate(${node.x}, ${node.y - 15})`);
-
+                const g = svg.append('g').attr('transform', `translate(${node.x}, ${node.y - 12})`);
                 g.append('rect')
-                    .attr('width', 120)
-                    .attr('height', 30)
+                    .attr('width', 115)
+                    .attr('height', 24)
                     .attr('fill', node.color)
                     .attr('rx', 4);
-
                 g.append('text')
-                    .attr('x', 60)
-                    .attr('y', 20)
+                    .attr('x', 57)
+                    .attr('y', 16)
                     .attr('text-anchor', 'middle')
                     .attr('fill', '#fff')
-                    .attr('font-size', '10px')
+                    .attr('font-size', '9px')
                     .text(node.name);
             });
 
             // Labels
-            svg.append('text').attr('x', 110).attr('y', 30).attr('fill', '#666').text('ORIGIN');
-            svg.append('text').attr('x', 320).attr('y', 30).attr('fill', '#666').text('AMPLIFICATION');
-            svg.append('text').attr('x', 560).attr('y', 30).attr('fill', '#666').text('MAINSTREAM');
-            svg.append('text').attr('x', 810).attr('y', 30).attr('fill', '#666').text('LEGITIMIZED');
+            svg.append('text').attr('x', 105).attr('y', 30).attr('fill', '#666').attr('font-size', '12px').text('ORIGIN');
+            svg.append('text').attr('x', 320).attr('y', 30).attr('fill', '#666').attr('font-size', '12px').text('AMPLIFICATION');
+            svg.append('text').attr('x', 560).attr('y', 30).attr('fill', '#666').attr('font-size', '12px').text('MAINSTREAM');
+            svg.append('text').attr('x', 800).attr('y', 30).attr('fill', '#666').attr('font-size', '12px').text('LEGITIMIZED');
         }
-
-        initSankey();
 
         // ═══════════════════════════════════════════════════════════════
         // EXPERIMENT 7: WEB OF LIES FORCE GRAPH
         // ═══════════════════════════════════════════════════════════════
 
         function initWebOfLies() {
-            const container = document.querySelector('#webOfLies').parentElement;
-            const width = container.clientWidth;
-            const height = container.clientHeight;
+            const container = document.getElementById('webContainer');
+            const rect = container.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
 
             const svg = d3.select('#webOfLies')
-                .attr('viewBox', `0 0 ${width} ${height}`);
+                .attr('width', width)
+                .attr('height', height);
 
-            // Conspiracy theory nodes and connections
             const nodes = [
-                { id: "qanon", label: "QAnon", group: 1, size: 30 },
-                { id: "deepstate", label: "Deep State", group: 1, size: 25 },
-                { id: "nwo", label: "New World Order", group: 2, size: 28 },
-                { id: "5g", label: "5G Dangers", group: 3, size: 22 },
-                { id: "covid-lab", label: "Lab Leak", group: 3, size: 24 },
-                { id: "vaccine", label: "Vaccine Microchips", group: 3, size: 26 },
-                { id: "election", label: "Stolen Election", group: 1, size: 28 },
-                { id: "chemtrails", label: "Chemtrails", group: 2, size: 18 },
-                { id: "flatearth", label: "Flat Earth", group: 4, size: 16 },
-                { id: "moonlanding", label: "Moon Landing Hoax", group: 4, size: 14 },
-                { id: "illuminati", label: "Illuminati", group: 2, size: 24 },
-                { id: "reptilian", label: "Reptilians", group: 2, size: 15 },
-                { id: "pizzagate", label: "Pizzagate", group: 1, size: 20 },
-                { id: "antivax", label: "Anti-Vax", group: 3, size: 26 },
-                { id: "climate", label: "Climate Hoax", group: 4, size: 22 },
-                { id: "soros", label: "Soros Conspiracy", group: 1, size: 20 },
-                { id: "bigpharma", label: "Big Pharma", group: 3, size: 22 },
-                { id: "911", label: "9/11 Inside Job", group: 2, size: 20 }
+                { id: "qanon", label: "QAnon", group: 1, size: 25 },
+                { id: "deepstate", label: "Deep State", group: 1, size: 22 },
+                { id: "nwo", label: "New World Order", group: 2, size: 24 },
+                { id: "5g", label: "5G Dangers", group: 3, size: 20 },
+                { id: "vaccine", label: "Vaccine Chips", group: 3, size: 22 },
+                { id: "election", label: "Stolen Election", group: 1, size: 24 },
+                { id: "chemtrails", label: "Chemtrails", group: 2, size: 16 },
+                { id: "flatearth", label: "Flat Earth", group: 4, size: 14 },
+                { id: "illuminati", label: "Illuminati", group: 2, size: 20 },
+                { id: "pizzagate", label: "Pizzagate", group: 1, size: 18 },
+                { id: "antivax", label: "Anti-Vax", group: 3, size: 22 },
+                { id: "climate", label: "Climate Hoax", group: 4, size: 18 },
+                { id: "soros", label: "Soros", group: 1, size: 17 },
+                { id: "bigpharma", label: "Big Pharma", group: 3, size: 19 }
             ];
 
             const links = [
@@ -1230,21 +1069,15 @@
                 { source: "deepstate", target: "soros" },
                 { source: "nwo", target: "illuminati" },
                 { source: "nwo", target: "vaccine" },
-                { source: "5g", target: "covid-lab" },
                 { source: "5g", target: "vaccine" },
                 { source: "vaccine", target: "antivax" },
                 { source: "vaccine", target: "bigpharma" },
                 { source: "antivax", target: "bigpharma" },
-                { source: "illuminati", target: "reptilian" },
                 { source: "illuminati", target: "nwo" },
-                { source: "flatearth", target: "moonlanding" },
                 { source: "flatearth", target: "chemtrails" },
                 { source: "chemtrails", target: "climate" },
                 { source: "climate", target: "nwo" },
-                { source: "911", target: "deepstate" },
-                { source: "soros", target: "election" },
-                { source: "covid-lab", target: "bigpharma" },
-                { source: "election", target: "deepstate" }
+                { source: "soros", target: "election" }
             ];
 
             const colorScale = d3.scaleOrdinal()
@@ -1252,12 +1085,11 @@
                 .range(['#ef4444', '#f59e0b', '#06b6d4', '#10b981']);
 
             const simulation = d3.forceSimulation(nodes)
-                .force('link', d3.forceLink(links).id(d => d.id).distance(100))
-                .force('charge', d3.forceManyBody().strength(-300))
+                .force('link', d3.forceLink(links).id(d => d.id).distance(80))
+                .force('charge', d3.forceManyBody().strength(-200))
                 .force('center', d3.forceCenter(width / 2, height / 2))
-                .force('collision', d3.forceCollide().radius(d => d.size + 10));
+                .force('collision', d3.forceCollide().radius(d => d.size + 5));
 
-            // Draw links
             const link = svg.append('g')
                 .selectAll('line')
                 .data(links)
@@ -1266,16 +1098,21 @@
                 .attr('stroke', 'rgba(255,255,255,0.15)')
                 .attr('stroke-width', 1);
 
-            // Draw nodes
             const node = svg.append('g')
                 .selectAll('g')
                 .data(nodes)
                 .enter()
                 .append('g')
                 .call(d3.drag()
-                    .on('start', dragstarted)
-                    .on('drag', dragged)
-                    .on('end', dragended));
+                    .on('start', (event, d) => {
+                        if (!event.active) simulation.alphaTarget(0.3).restart();
+                        d.fx = d.x; d.fy = d.y;
+                    })
+                    .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
+                    .on('end', (event, d) => {
+                        if (!event.active) simulation.alphaTarget(0);
+                        d.fx = null; d.fy = null;
+                    }));
 
             node.append('circle')
                 .attr('r', d => d.size)
@@ -1289,40 +1126,36 @@
                 .attr('text-anchor', 'middle')
                 .attr('dy', 4)
                 .attr('fill', '#fff')
-                .attr('font-size', '10px');
+                .attr('font-size', '9px');
 
             simulation.on('tick', () => {
-                link
-                    .attr('x1', d => d.source.x)
-                    .attr('y1', d => d.source.y)
-                    .attr('x2', d => d.target.x)
-                    .attr('y2', d => d.target.y);
-
+                link.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
                 node.attr('transform', d => `translate(${d.x}, ${d.y})`);
             });
-
-            function dragstarted(event, d) {
-                if (!event.active) simulation.alphaTarget(0.3).restart();
-                d.fx = d.x;
-                d.fy = d.y;
-            }
-
-            function dragged(event, d) {
-                d.fx = event.x;
-                d.fy = event.y;
-            }
-
-            function dragended(event, d) {
-                if (!event.active) simulation.alphaTarget(0);
-                d.fx = null;
-                d.fy = null;
-            }
         }
 
-        initWebOfLies();
+        // ═══════════════════════════════════════════════════════════════
+        // INITIALIZE ALL ON LOAD
+        // ═══════════════════════════════════════════════════════════════
 
-        // Start viral animation automatically
-        setTimeout(startViralSpread, 1000);
+        window.addEventListener('load', () => {
+            initMutationTree();
+            initEchoChamber();
+            initBotNetwork();
+            initSankey();
+            initWebOfLies();
+
+            // Auto-start viral spread
+            setTimeout(startViralSpread, 500);
+        });
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            resizeCanvas(viralCanvas, document.getElementById('viralContainer'));
+            resizeCanvas(echoCanvas, document.getElementById('echoContainer'));
+            resizeCanvas(botCanvas, document.getElementById('botContainer'));
+        });
     </script>
 </body>
 </html>

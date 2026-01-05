@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenuVerity Disinformation Monitor - Daily Briefing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #050A14;
+            --bg-card: #0a0f1a;
+            --bg-card-hover: #111827;
+            --border-color: #1e293b;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --accent-green: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            background: rgba(10, 15, 26, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            max-width: 1600px;
+            margin: 0 auto;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            padding: 14px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-tab:hover {
+            color: var(--text-primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .nav-tab.active {
+            color: var(--accent-blue);
+            border-bottom-color: var(--accent-blue);
+        }
+
+        .nav-tab .icon {
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: 320px 1fr 380px;
+            gap: 30px;
+        }
+
+        /* Daily Briefing Sidebar */
+        .daily-briefing {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .briefing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .briefing-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        .briefing-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .briefing-content {
+            padding: 16px;
+        }
+
+        .briefing-meta {
+            display: flex;
+            gap: 8px;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .briefing-title {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .briefing-excerpt {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .briefing-stats {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            min-height: 100vh;
+        }
+
+        .hero-article {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hero-article:hover {
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25);
+            border-color: var(--accent-blue);
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .hero-content {
+            padding: 32px;
+        }
+
+        .verdict-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .verdict-false {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-red);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .verdict-true {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .verdict-mixed {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-amber);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .hero-excerpt {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .confidence-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .confidence-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .confidence-track {
+            flex: 1;
+            height: 6px;
+            background: var(--bg-primary);
+            border-radius: 3px;
+            overflow: hidden;
+            max-width: 200px;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-red) 0%, var(--accent-amber) 50%, var(--accent-green) 100%);
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+
+        /* Top News Stories */
+        .news-section {
+            margin-bottom: 40px;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .news-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            gap: 16px;
+        }
+
+        .news-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        .news-image {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .news-content {
+            padding: 16px 16px 16px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-category {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .news-title {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .news-excerpt {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: auto;
+        }
+
+        .news-footer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 12px;
+        }
+
+        /* Right Sidebar */
+        .right-sidebar {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+
+        .sidebar-brand {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .brand-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .brand-logo .genu {
+            color: var(--text-primary);
+        }
+
+        .brand-logo .verity {
+            color: var(--accent-blue);
+        }
+
+        .brand-tagline {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .trending-section {
+            margin-bottom: 30px;
+        }
+
+        .trending-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .trending-card:hover {
+            transform: translateX(4px);
+            box-shadow: -4px 0 12px rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        .trending-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .trending-content {
+            padding: 16px;
+        }
+
+        .trending-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .trending-title {
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .trending-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .trending-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .container {
+                grid-template-columns: 280px 1fr 340px;
+                gap: 24px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr 340px;
+                gap: 24px;
+            }
+
+            .daily-briefing {
+                display: none;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 20px 16px;
+            }
+
+            .right-sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-image {
+                height: 250px;
+            }
+
+            .news-card {
+                flex-direction: column;
+            }
+
+            .news-image {
+                width: 100%;
+                height: 200px;
+            }
+        }
+
+        /* Pulse animation for trending badges */
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .trending-badge::before {
+            content: '●';
+            animation: pulse 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-tabs">
+            <a href="#" class="nav-tab active">
+                <span class="icon">📰</span> Latest News
+            </a>
+            <a href="#" class="nav-tab">
+                <span class="icon">🎯</span> New Year
+            </a>
+            <a href="#" class="nav-tab">
+                <span class="icon">💼</span> Business & Markets
+            </a>
+            <a href="#" class="nav-tab">
+                <span class="icon">🏛️</span> Health & Medicine
+            </a>
+            <a href="#" class="nav-tab">
+                <span class="icon">🏀</span> Basketball
+            </a>
+            <a href="#" class="nav-tab">
+                <span class="icon">🎥</span> Artificial Intelligence
+            </a>
+            <a href="#" class="nav-tab">
+                <span class="icon">🎄</span> Christmas
+            </a>
+            <a href="#" class="nav-tab">
+                <span class="icon">📱</span> Social Media
+            </a>
+            <a href="#" class="nav-tab">
+                <span class="icon">🌍</span> Environment & Climate
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Daily Briefing Sidebar -->
+        <aside class="daily-briefing">
+            <h2 class="section-title">Daily Briefing</h2>
+            <div class="briefing-card animate-in">
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=300&fit=crop"
+                    alt="Briefing" class="briefing-image">
+                <div class="briefing-content">
+                    <div class="briefing-meta">
+                        <span>12 stories</span>
+                        <span>•</span>
+                        <span>45 fact-checks</span>
+                        <span>•</span>
+                        <span>8m read</span>
+                    </div>
+                    <h3 class="briefing-title">Year-End Disinformation Surge: Election Claims Resurface</h3>
+                    <p class="briefing-excerpt">Analysis shows coordinated campaigns spreading debunked 2020 election
+                        fraud narratives as 2024 approaches, with AI-generated deepfakes reaching record levels.</p>
+                    <div class="briefing-stats">
+                        <span>📊 28 sources</span>
+                        <span>⚡ Updated 2h ago</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Article -->
+            <article class="hero-article animate-in">
+                <img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1200&h=600&fit=crop" alt="Hero"
+                    class="hero-image">
+                <div class="hero-content">
+                    <div class="verdict-badge verdict-false">
+                        <span>⚠️</span> Verdict: False
+                    </div>
+                    <h1 class="hero-title">Viral "Emergency Broadcast System" Video Debunked: No Federal Alert System
+                        Hijacked</h1>
+                    <p class="hero-excerpt">Claims circulating across social media platforms alleging that foreign
+                        actors hijacked the Emergency Alert System have been thoroughly investigated and proven false.
+                        Federal authorities confirm all systems remain secure with no evidence of compromise.</p>
+                    <div class="hero-meta">
+                        <div class="confidence-bar">
+                            <span class="confidence-label">Verification Confidence</span>
+                            <div class="confidence-track">
+                                <div class="confidence-fill" style="width: 92%;"></div>
+                            </div>
+                            <span class="confidence-label">92%</span>
+                        </div>
+                        <span>|</span>
+                        <span>CNN, Reuters, AP</span>
+                        <span>|</span>
+                        <span>Updated 3h ago</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Top News Stories -->
+            <section class="news-section">
+                <h2 class="section-title">Top Disinformation Stories</h2>
+                <div class="news-grid">
+                    <article class="news-card animate-in" style="animation-delay: 0.1s;">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=300&h=300&fit=crop"
+                            alt="Healthcare" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Health & Medicine</span>
+                            <h3 class="news-title">Vaccine Misinformation Reaches New Heights Despite Scientific
+                                Consensus</h3>
+                            <p class="news-excerpt">Analysis of 500,000 social media posts reveals coordinated
+                                disinformation campaign targeting mRNA vaccines with debunked claims...</p>
+                            <div class="news-footer">
+                                <span>🏥 Medical experts</span>
+                                <span>•</span>
+                                <span>5 sources</span>
+                                <span>•</span>
+                                <span class="verdict-false"
+                                    style="padding: 2px 8px; border-radius: 4px; border: none; font-size: 10px;">FALSE</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-card animate-in" style="animation-delay: 0.2s;">
+                        <img src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=300&h=300&fit=crop"
+                            alt="AI" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Artificial Intelligence</span>
+                            <h3 class="news-title">Deepfake Detection: New AI Tools Identify 98.7% of Synthetic Videos
+                            </h3>
+                            <p class="news-excerpt">Major breakthrough in combating AI-generated misinformation as
+                                researchers unveil detection algorithm with unprecedented accuracy...</p>
+                            <div class="news-footer">
+                                <span>🔬 MIT, Stanford</span>
+                                <span>•</span>
+                                <span>12 sources</span>
+                                <span>•</span>
+                                <span class="verdict-true"
+                                    style="padding: 2px 8px; border-radius: 4px; border: none; font-size: 10px;">TRUE</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-card animate-in" style="animation-delay: 0.3s;">
+                        <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=300&h=300&fit=crop"
+                            alt="Climate" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Environment & Climate</span>
+                            <h3 class="news-title">Climate Denial Networks Traced to Coordinated Fossil Fuel Industry
+                                Campaign</h3>
+                            <p class="news-excerpt">Investigative analysis exposes sophisticated disinformation network
+                                spreading false climate science, funded by major energy corporations...</p>
+                            <div class="news-footer">
+                                <span>🌍 Climate Watch</span>
+                                <span>•</span>
+                                <span>18 sources</span>
+                                <span>•</span>
+                                <span class="verdict-false"
+                                    style="padding: 2px 8px; border-radius: 4px; border: none; font-size: 10px;">FALSE</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-card animate-in" style="animation-delay: 0.4s;">
+                        <img src="https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?w=300&h=300&fit=crop"
+                            alt="Election" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Politics & Elections</span>
+                            <h3 class="news-title">2024 Election Security: Experts Confirm Voting Systems Are More
+                                Secure Than Ever</h3>
+                            <p class="news-excerpt">Comprehensive cybersecurity audit reveals strengthened protections
+                                and zero evidence of vulnerabilities claimed in viral posts...</p>
+                            <div class="news-footer">
+                                <span>🗳️ CISA, DHS</span>
+                                <span>•</span>
+                                <span>9 sources</span>
+                                <span>•</span>
+                                <span class="verdict-mixed"
+                                    style="padding: 2px 8px; border-radius: 4px; border: none; font-size: 10px;">CONTEXT
+                                    NEEDED</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-card animate-in" style="animation-delay: 0.5s;">
+                        <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=300&h=300&fit=crop"
+                            alt="Social Media" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Social Media</span>
+                            <h3 class="news-title">Platform Accountability: TikTok Removes 1.2M Videos for Medical
+                                Misinformation</h3>
+                            <p class="news-excerpt">Q4 transparency report reveals massive takedown operation targeting
+                                dangerous health claims and unverified remedies...</p>
+                            <div class="news-footer">
+                                <span>📱 Tech platforms</span>
+                                <span>•</span>
+                                <span>7 sources</span>
+                                <span>•</span>
+                                <span class="verdict-true"
+                                    style="padding: 2px 8px; border-radius: 4px; border: none; font-size: 10px;">VERIFIED</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-card animate-in" style="animation-delay: 0.6s;">
+                        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=300&h=300&fit=crop"
+                            alt="Finance" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Business & Markets</span>
+                            <h3 class="news-title">Crypto Scam Alert: "AI Trading Bot" Scheme Defrauds Investors of $45M
+                            </h3>
+                            <p class="news-excerpt">Federal authorities warn of sophisticated cryptocurrency fraud
+                                leveraging false AI capabilities and celebrity deepfake endorsements...</p>
+                            <div class="news-footer">
+                                <span>💼 SEC, FBI</span>
+                                <span>•</span>
+                                <span>11 sources</span>
+                                <span>•</span>
+                                <span class="verdict-false"
+                                    style="padding: 2px 8px; border-radius: 4px; border: none; font-size: 10px;">SCAM</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="right-sidebar">
+            <!-- Branding -->
+            <div class="sidebar-brand animate-in">
+                <div class="brand-logo">
+                    <span class="genu">Genu</span><span class="verity">Verity</span>
+                </div>
+                <p class="brand-tagline">Real-time disinformation monitoring. Verified facts. Expert analysis. Your
+                    daily briefing on truth in the digital age.</p>
+            </div>
+
+            <!-- Trending Section -->
+            <div class="trending-section">
+                <h3 class="section-title" style="font-size: 20px;">🔥 Trending Now</h3>
+
+                <div class="trending-card animate-in" style="animation-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=300&fit=crop"
+                        alt="Trending" class="trending-image">
+                    <div class="trending-content">
+                        <span class="trending-badge">Breaking</span>
+                        <h4 class="trending-title">New Year's "Emergency Protocol" Hoax Spreads Across 12 Countries</h4>
+                        <div class="trending-meta">
+                            <div class="trending-stat">
+                                <span>👁️</span>
+                                <span>2.4M views</span>
+                            </div>
+                            <span class="verdict-false"
+                                style="padding: 2px 6px; border-radius: 3px; border: none; font-size: 9px;">FALSE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trending-card animate-in" style="animation-delay: 0.3s;">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop"
+                        alt="Trending" class="trending-image">
+                    <div class="trending-content">
+                        <span class="trending-badge">Viral</span>
+                        <h4 class="trending-title">AI Deepfake of World Leader Goes Undetected for 48 Hours</h4>
+                        <div class="trending-meta">
+                            <div class="trending-stat">
+                                <span>🔄</span>
+                                <span>890K shares</span>
+                            </div>
+                            <span class="verdict-mixed"
+                                style="padding: 2px 6px; border-radius: 3px; border: none; font-size: 9px;">MIXED</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trending-card animate-in" style="animation-delay: 0.4s;">
+                    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=300&fit=crop"
+                        alt="Trending" class="trending-image">
+                    <div class="trending-content">
+                        <span class="trending-badge">Debunked</span>
+                        <h4 class="trending-title">Celebrity Health Endorsement Revealed as Fabricated Advertisement
+                        </h4>
+                        <div class="trending-meta">
+                            <div class="trending-stat">
+                                <span>⚡</span>
+                                <span>1.1M views</span>
+                            </div>
+                            <span class="verdict-false"
+                                style="padding: 2px 6px; border-radius: 3px; border: none; font-size: 9px;">FALSE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Smooth animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            observer.observe(el);
+        });
+
+        // Active tab handling
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        // Card click handlers (for demo purposes)
+        document.querySelectorAll('.briefing-card, .hero-article, .news-card, .trending-card').forEach(card => {
+            card.addEventListener('click', () => {
+                console.log('Card clicked - would navigate to full article');
+            });
+        });
+    </script>
+</body>
+
+</html>
