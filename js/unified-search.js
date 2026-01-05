@@ -365,13 +365,22 @@ class UnifiedSearch {
         }, { passive: true });
 
         this.carouselContainer.addEventListener('touchmove', (e) => {
+            // Prevent default ONLY when actually dragging to block browser navigation
+            if (this.isDragging) {
+                const diff = Math.abs(e.touches[0].clientX - this.startX);
+                if (diff > 10) {
+                    e.preventDefault(); // Block iOS navigation gestures
+                }
+            }
             moveDrag(e.touches[0].clientX);
-        }, { passive: true });
+        }, { passive: false }); // MUST be false to allow preventDefault
 
         this.carouselContainer.addEventListener('touchend', (e) => {
             endDrag(e.changedTouches[0].clientX);
             // Keep touchActive true briefly to block ghost mouse events
             setTimeout(() => { touchActive = false; }, 100);
+            // Keep wasDragging true longer to catch iOS synthesized clicks (300ms delay)
+            setTimeout(() => { this.wasDragging = false; }, 400);
         }, { passive: true });
 
         // Mouse Listeners (blocked if touch was just used)

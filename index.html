@@ -1114,7 +1114,7 @@
             width: 100%;
             margin: 0 auto;
             cursor: grab;
-            touch-action: pan-y pinch-zoom;
+            touch-action: none; /* Block all default touch - JS handles carousel */
         }
 
         .carousel-container:active {
@@ -2565,8 +2565,9 @@
                 const heroInput = heroSearch.querySelector('input');
 
                 lucide.createIcons();
-                initCarousel();
-                initSwipeGestures();
+                // DISABLED: unified-search.js handles carousel creation and touch events
+                // initCarousel();      // Creates duplicate cards
+                // initSwipeGestures(); // Creates duplicate touch handlers - caused mobile nav bug
                 initKeyboardNav();
 
                 // Update placeholder with report count
