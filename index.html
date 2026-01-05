@@ -1413,14 +1413,11 @@
             gap: 6px;
             padding: 8px 16px;
             background: var(--accent-blue);
-            border: none;
             border-radius: 8px;
             color: white;
             font-size: 0.8rem;
             font-weight: 600;
-            font-family: inherit;
             text-decoration: none;
-            cursor: pointer;
             transition: all 0.3s;
         }
 
@@ -2557,7 +2554,7 @@
 
             let currentCardIndex = 0;
             const totalCards = reports.length;
-            window.wasDragging = false;
+            let wasDragging = false;
 
             // Initialize after shared components are ready
             window.addEventListener('gv:componentsReady', () => {
@@ -2627,9 +2624,9 @@
                                 <span><i data-lucide="calendar" style="width:12px;height:12px;"></i> ${report.date}</span>
                                 <span><i data-lucide="clock" style="width:12px;height:12px;"></i> ${report.readTime}</span>
                             </div>
-                            <button class="card-cta" data-slug="${report.slug}" onclick="event.stopPropagation(); if(!window.wasDragging) window.location.href='/${report.slug}';">
+                            <a href="/${report.slug}" class="card-cta" onclick="event.stopPropagation();">
                                 Read <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 `;
@@ -2637,15 +2634,15 @@
                     // Add click handler
                     card.addEventListener('click', (e) => {
                         if (e.target.closest('.card-cta')) return;
-                        if (window.wasDragging) {
-                            window.wasDragging = false;
+                        if (wasDragging) {
+                            wasDragging = false;
                             return;
                         }
                         const cardIndex = parseInt(card.dataset.index);
                         if (cardIndex !== currentCardIndex) {
                             e.stopPropagation();
                             goToCard(cardIndex);
-                        } else if (report.slug) {
+                        } else {
                             window.location.href = '/' + report.slug;
                         }
                     });
@@ -2778,16 +2775,13 @@
                     const endX = e.changedTouches[0].clientX;
                     const diff = startX - endX;
 
-                    // Any movement > 10px should prevent accidental clicks
-                    if (Math.abs(diff) > 10) {
-                        window.wasDragging = true;
-                        // Only navigate carousel if threshold met
-                        if (Math.abs(diff) > 35) {
-                            e.preventDefault(); // Prevent click-throughs
-                            navigateCarousel(diff > 0 ? 1 : -1);
-                        }
+                    // Threshold 35px: Sensitive enough for short swipes
+                    if (Math.abs(diff) > 35) {
+                        e.preventDefault(); // Prevent click-throughs
+                        wasDragging = true;
+                        navigateCarousel(diff > 0 ? 1 : -1);
                         // Keep 'wasDragging' true until animation lock clears (500ms)
-                        setTimeout(() => { window.wasDragging = false; }, 500);
+                        setTimeout(() => { wasDragging = false; }, 500);
                     }
 
                     // Reset touch flag after a delay to allow mouse emulation AND momentum to pass safely
@@ -2819,9 +2813,9 @@
                     const diff = startX - e.clientX;
 
                     if (hasDragged && Math.abs(diff) > 50) {
-                        window.wasDragging = true;
+                        wasDragging = true;
                         navigateCarousel(diff > 0 ? 1 : -1);
-                        setTimeout(() => { window.wasDragging = false; }, 100);
+                        setTimeout(() => { wasDragging = false; }, 100);
                     }
                 });
             }
