@@ -431,7 +431,7 @@ class UnifiedSearch {
                         <div class="card-meta">
                             <span><i data-lucide="calendar" style="width:12px;height:12px;"></i> ${report.date}</span>
                         </div>
-                        <a href="/${report.slug}" class="card-cta">Read</a>
+                        <a href="/${report.slug}" class="card-cta" onclick="if(window.unifiedSearch?.wasDragging){event.preventDefault();event.stopPropagation();return false;}">Read</a>
                     </div>
                 </div>
             `;
