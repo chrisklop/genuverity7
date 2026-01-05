@@ -1413,24 +1413,17 @@
             gap: 6px;
             padding: 8px 16px;
             background: var(--accent-blue);
-            border: none;
             border-radius: 8px;
             color: white;
             font-size: 0.8rem;
             font-weight: 600;
-            font-family: inherit;
             text-decoration: none;
-            cursor: pointer;
             transition: all 0.3s;
         }
 
         .card-cta:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-        }
-
-        .card-cta:active {
-            transform: translateY(0);
         }
 
         /* Carousel Navigation */
@@ -2561,7 +2554,8 @@
 
             let currentCardIndex = 0;
             const totalCards = reports.length;
-            let wasDragging = false;
+            // Global flag to prevent anchor clicks during swipe - MUST be on window for onclick access
+            window.wasDragging = false;
 
             // Initialize after shared components are ready
             window.addEventListener('gv:componentsReady', () => {
@@ -2631,27 +2625,18 @@
                                 <span><i data-lucide="calendar" style="width:12px;height:12px;"></i> ${report.date}</span>
                                 <span><i data-lucide="clock" style="width:12px;height:12px;"></i> ${report.readTime}</span>
                             </div>
-                            <button class="card-cta" data-href="/${report.slug}" role="link" tabindex="0">
+                            <a href="/${report.slug}" class="card-cta" onclick="if(window.wasDragging){event.preventDefault();event.stopPropagation();return false;}">
                                 Read <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 `;
 
-                    // Add Read button click handler
-                    const readButton = card.querySelector('.card-cta');
-                    readButton.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        if (!wasDragging) {
-                            window.location.href = e.currentTarget.dataset.href;
-                        }
-                    });
-
-                    // Add card click handler
+                    // Add click handler
                     card.addEventListener('click', (e) => {
                         if (e.target.closest('.card-cta')) return;
-                        if (wasDragging) {
-                            wasDragging = false;
+                        if (window.wasDragging) {
+                            window.wasDragging = false;
                             return;
                         }
                         const cardIndex = parseInt(card.dataset.index);
@@ -2755,11 +2740,7 @@
             function initSwipeGestures() {
                 const container = document.querySelector('.carousel-container');
                 let startX = 0;
-                let startY = 0;
-                let currentX = 0;
-                let currentY = 0;
                 let isDragging = false;
-                let isSwiping = false;
                 let lastWheelTime = 0;
                 let isTouch = false;
 
@@ -2786,27 +2767,19 @@
                 container.addEventListener('touchstart', (e) => {
                     isTouch = true;
                     startX = e.touches[0].clientX;
-                    startY = e.touches[0].clientY;
-                    currentX = startX;
-                    currentY = startY;
                     isDragging = true;
-                    isSwiping = false;
+                    window.wasDragging = false; // Reset at start of new touch
                 }, { passive: true });
 
+                // Track movement during touch - set wasDragging early to block anchor clicks
                 container.addEventListener('touchmove', (e) => {
                     if (!isDragging) return;
-
-                    currentX = e.touches[0].clientX;
-                    currentY = e.touches[0].clientY;
-
-                    const diffX = Math.abs(currentX - startX);
-                    const diffY = Math.abs(currentY - startY);
-
-                    // Detect horizontal swipe (more X movement than Y)
-                    if (diffX > 10 && diffX > diffY) {
-                        isSwiping = true;
-                        // Prevent default to stop navigation on links
-                        e.preventDefault();
+                    const currentX = e.touches[0].clientX;
+                    const diff = Math.abs(startX - currentX);
+                    // If moved more than 10px, this is a swipe not a tap
+                    if (diff > 10) {
+                        window.wasDragging = true;
+                        e.preventDefault(); // Prevent scroll and click synthesis
                     }
                 }, { passive: false });
 
@@ -2819,18 +2792,11 @@
                     // Threshold 35px: Sensitive enough for short swipes
                     if (Math.abs(diff) > 35) {
                         e.preventDefault(); // Prevent click-throughs
-                        wasDragging = true;
+                        window.wasDragging = true;
                         navigateCarousel(diff > 0 ? 1 : -1);
-                        // Keep 'wasDragging' true until animation lock clears (500ms)
-                        setTimeout(() => { wasDragging = false; }, 550);
-                    } else if (isSwiping) {
-                        // User started swiping but didn't meet threshold - still block clicks
-                        wasDragging = true;
-                        setTimeout(() => { wasDragging = false; }, 100);
+                        // Keep 'wasDragging' true longer to block delayed click events (600ms)
+                        setTimeout(() => { window.wasDragging = false; }, 600);
                     }
-
-                    // Reset flags
-                    isSwiping = false;
 
                     // Reset touch flag after a delay to allow mouse emulation AND momentum to pass safely
                     setTimeout(() => { isTouch = false; }, 800);
@@ -2861,9 +2827,9 @@
                     const diff = startX - e.clientX;
 
                     if (hasDragged && Math.abs(diff) > 50) {
-                        wasDragging = true;
+                        window.wasDragging = true;
                         navigateCarousel(diff > 0 ? 1 : -1);
-                        setTimeout(() => { wasDragging = false; }, 100);
+                        setTimeout(() => { window.wasDragging = false; }, 100);
                     }
                 });
             }
@@ -3308,4 +3274,4 @@
         </script>
 </body>
 
-</html>/* Deployment trigger: 1767629670 */
+</html>
