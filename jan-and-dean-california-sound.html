@@ -179,6 +179,70 @@
             display: block;
         }
 
+        .music-facts {
+            padding: 12px 14px;
+            max-height: 180px;
+            overflow-y: auto;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .music-facts::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .music-facts::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .music-facts::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+
+        .song-section {
+            margin-bottom: 14px;
+        }
+
+        .song-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .song-name {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .song-year {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .song-fact {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            padding-left: 10px;
+            border-left: 2px solid var(--border-subtle);
+        }
+
+        .song-fact:last-child {
+            margin-bottom: 0;
+        }
+
+        .fact-highlight {
+            color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
         /* ═══════════════════════════════════════════════════════════════
            DEDICATION
            ═══════════════════════════════════════════════════════════════ */
@@ -1114,6 +1178,21 @@
                 mozallowfullscreen="true"
                 allowfullscreen>
             </iframe>
+            <div class="music-facts">
+                <div class="song-section">
+                    <div class="song-name">Surf City <span class="song-year">1963</span></div>
+                    <p class="song-fact"><span class="fact-highlight">Brian Wilson's first #1 hit</span> — a full year before the Beach Boys topped the charts with "I Get Around"</p>
+                    <p class="song-fact">Wilson originally titled it "Goody Connie Won't You Come Back Home" — Jan Berry rewrote it into the surf anthem we know</p>
+                    <p class="song-fact">Brian Wilson's father Murry called Jan a <span class="fact-highlight">"record pirate"</span> for "stealing" his son's song</p>
+                    <p class="song-fact">Recorded with the legendary Wrecking Crew: Glen Campbell, Hal Blaine, and Earl Palmer on dual drums</p>
+                </div>
+                <div class="song-section">
+                    <div class="song-name">She's My Summer Girl <span class="song-year">1963</span></div>
+                    <p class="song-fact">B-side to Surf City — written by Don Altfeld, Jan Berry, and Brian Wilson</p>
+                    <p class="song-fact">Features the duo's signature <span class="fact-highlight">doo-wop backing vocals</span> layered over a piano-driven arrangement</p>
+                    <p class="song-fact">Never charted as a single but became a fan favorite on Jan and Dean anthologies</p>
+                </div>
+            </div>
         </div>
     </div>
 
