@@ -310,13 +310,27 @@ class UnifiedSearch {
         let startX = 0;
         let startY = 0;
         let isHorizontalSwipe = null; // null = undetermined, true/false after threshold
+        let isEdgeSwipe = false; // iOS reserves screen edges for back/forward gestures
+
+        // iOS edge detection - first 40px from screen edges are reserved for iOS gestures
+        const EDGE_THRESHOLD = 40;
+        const isNearEdge = (x) => x < EDGE_THRESHOLD || x > window.innerWidth - EDGE_THRESHOLD;
 
         // TOUCH START
         this.carouselContainer.addEventListener('touchstart', (e) => {
             if (state !== 'idle') return;
 
+            const touchX = e.touches[0].clientX;
+
+            // Let iOS handle edge swipes (back/forward navigation)
+            if (isNearEdge(touchX)) {
+                isEdgeSwipe = true;
+                return; // Don't start carousel drag
+            }
+            isEdgeSwipe = false;
+
             state = 'dragging';
-            startX = e.touches[0].clientX;
+            startX = touchX;
             startY = e.touches[0].clientY;
             isHorizontalSwipe = null;
             this.startX = startX;
@@ -331,7 +345,7 @@ class UnifiedSearch {
 
         // TOUCH MOVE
         this.carouselContainer.addEventListener('touchmove', (e) => {
-            if (state !== 'dragging') return;
+            if (state !== 'dragging' || isEdgeSwipe) return;
 
             const currentX = e.touches[0].clientX;
             const currentY = e.touches[0].clientY;

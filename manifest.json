@@ -3,7 +3,7 @@
   "short_name": "GenuVerity",
   "description": "AI-powered investigative journalism with Sources First verification. Truth is Now.",
   "start_url": "/",
-  "display": "standalone",
+  "display": "browser",
   "background_color": "#0a0a12",
   "theme_color": "#0a0a12",
   "orientation": "any",
