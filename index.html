@@ -2554,8 +2554,7 @@
 
             let currentCardIndex = 0;
             const totalCards = reports.length;
-            // Global flag to prevent anchor clicks during swipe - MUST be on window for onclick access
-            window.wasDragging = false;
+            let wasDragging = false;
 
             // Initialize after shared components are ready
             window.addEventListener('gv:componentsReady', () => {
@@ -2625,7 +2624,7 @@
                                 <span><i data-lucide="calendar" style="width:12px;height:12px;"></i> ${report.date}</span>
                                 <span><i data-lucide="clock" style="width:12px;height:12px;"></i> ${report.readTime}</span>
                             </div>
-                            <a href="/${report.slug}" class="card-cta" onclick="if(window.wasDragging){event.preventDefault();event.stopPropagation();return false;}">
+                            <a href="/${report.slug}" class="card-cta" onclick="event.stopPropagation();">
                                 Read <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
                             </a>
                         </div>
@@ -2635,8 +2634,8 @@
                     // Add click handler
                     card.addEventListener('click', (e) => {
                         if (e.target.closest('.card-cta')) return;
-                        if (window.wasDragging) {
-                            window.wasDragging = false;
+                        if (wasDragging) {
+                            wasDragging = false;
                             return;
                         }
                         const cardIndex = parseInt(card.dataset.index);
@@ -2768,20 +2767,7 @@
                     isTouch = true;
                     startX = e.touches[0].clientX;
                     isDragging = true;
-                    window.wasDragging = false; // Reset at start of new touch
                 }, { passive: true });
-
-                // Track movement during touch - set wasDragging early to block anchor clicks
-                container.addEventListener('touchmove', (e) => {
-                    if (!isDragging) return;
-                    const currentX = e.touches[0].clientX;
-                    const diff = Math.abs(startX - currentX);
-                    // If moved more than 10px, this is a swipe not a tap
-                    if (diff > 10) {
-                        window.wasDragging = true;
-                        e.preventDefault(); // Prevent scroll and click synthesis
-                    }
-                }, { passive: false });
 
                 container.addEventListener('touchend', (e) => {
                     if (!isDragging) return;
@@ -2792,10 +2778,10 @@
                     // Threshold 35px: Sensitive enough for short swipes
                     if (Math.abs(diff) > 35) {
                         e.preventDefault(); // Prevent click-throughs
-                        window.wasDragging = true;
+                        wasDragging = true;
                         navigateCarousel(diff > 0 ? 1 : -1);
-                        // Keep 'wasDragging' true longer to block delayed click events (600ms)
-                        setTimeout(() => { window.wasDragging = false; }, 600);
+                        // Keep 'wasDragging' true until animation lock clears (500ms)
+                        setTimeout(() => { wasDragging = false; }, 500);
                     }
 
                     // Reset touch flag after a delay to allow mouse emulation AND momentum to pass safely
@@ -2827,9 +2813,9 @@
                     const diff = startX - e.clientX;
 
                     if (hasDragged && Math.abs(diff) > 50) {
-                        window.wasDragging = true;
+                        wasDragging = true;
                         navigateCarousel(diff > 0 ? 1 : -1);
-                        setTimeout(() => { window.wasDragging = false; }, 100);
+                        setTimeout(() => { wasDragging = false; }, 100);
                     }
                 });
             }
