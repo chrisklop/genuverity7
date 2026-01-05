@@ -299,55 +299,105 @@ class UnifiedSearch {
         window.requestAnimationFrame(step);
     }
 
-    // --- CAROUSEL PHYSICS ENGINE ---
+    // --- CAROUSEL PHYSICS ENGINE (REBUILT FOR MOBILE) ---
 
     initCarousel() {
         this.renderCarousel();
         if (!this.carouselContainer) return;
 
-        // Ghost event prevention: On mobile, touch events trigger ghost mouse events
-        // This flag blocks mouse handlers for 100ms after touch ends
-        let touchActive = false;
+        // STATE MACHINE: idle | dragging | settling
+        let state = 'idle';
+        let startX = 0;
+        let startY = 0;
+        let isHorizontalSwipe = null; // null = undetermined, true/false after threshold
 
-        // Unified Pointer Events (Mouse + Touch)
-        const startDrag = (x) => {
-            this.isDragging = true;
-            this.startX = x;
-            this.currentX = x;
+        // Store anchor hrefs - we'll remove them during drag to prevent iOS navigation
+        const storedHrefs = new Map();
+
+        // Disable all anchors (prevents iOS tap-to-navigate during swipe)
+        const disableAnchors = () => {
+            this.carouselContainer.querySelectorAll('a.card-cta').forEach(a => {
+                if (!storedHrefs.has(a)) {
+                    storedHrefs.set(a, a.getAttribute('href'));
+                }
+                a.removeAttribute('href');
+                a.style.pointerEvents = 'none';
+            });
+        };
+
+        // Re-enable anchors after drag completes
+        const enableAnchors = () => {
+            storedHrefs.forEach((href, a) => {
+                a.setAttribute('href', href);
+                a.style.pointerEvents = '';
+            });
+        };
+
+        // TOUCH START
+        this.carouselContainer.addEventListener('touchstart', (e) => {
+            if (state !== 'idle') return;
+
+            state = 'dragging';
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            isHorizontalSwipe = null;
+            this.startX = startX;
             this.dragOffset = 0;
             this.wasDragging = false;
-            this.carouselContainer.style.cursor = 'grabbing';
-            // Disable transitions during drag for 1:1 feel
-            const cards = this.carouselContainer.querySelectorAll('.carousel-card');
-            cards.forEach(c => c.style.transition = 'none');
-        };
 
-        const moveDrag = (x) => {
-            if (!this.isDragging) return;
-            const diff = x - this.startX;
-            // Resistance at edges
-            if ((this.currentCardIndex === 0 && diff > 0) ||
-                (this.currentCardIndex === this.filteredReports.length - 1 && diff < 0)) {
-                this.dragOffset = diff * 0.4;
-            } else {
-                this.dragOffset = diff;
+            // Immediately disable anchors to prevent any tap-through
+            disableAnchors();
+
+            // Disable card transitions for 1:1 drag feel
+            this.carouselContainer.querySelectorAll('.carousel-card').forEach(c => {
+                c.style.transition = 'none';
+            });
+        }, { passive: true });
+
+        // TOUCH MOVE
+        this.carouselContainer.addEventListener('touchmove', (e) => {
+            if (state !== 'dragging') return;
+
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+            const diffX = currentX - startX;
+            const diffY = currentY - startY;
+
+            // Determine swipe direction on first significant movement
+            if (isHorizontalSwipe === null && (Math.abs(diffX) > 10 || Math.abs(diffY) > 10)) {
+                isHorizontalSwipe = Math.abs(diffX) > Math.abs(diffY);
             }
 
-            if (Math.abs(diff) > 10) this.wasDragging = true;
-            this.updateCarousel(); // Real-time update
-        };
+            // Only handle horizontal swipes
+            if (isHorizontalSwipe === true) {
+                e.preventDefault(); // Prevent scroll and any navigation
+                this.wasDragging = true;
 
-        const endDrag = (x) => {
-            if (!this.isDragging) return;
-            this.isDragging = false;
-            this.carouselContainer.style.cursor = 'grab';
+                // Apply resistance at edges
+                if ((this.currentCardIndex === 0 && diffX > 0) ||
+                    (this.currentCardIndex === this.filteredReports.length - 1 && diffX < 0)) {
+                    this.dragOffset = diffX * 0.3;
+                } else {
+                    this.dragOffset = diffX;
+                }
 
-            // Re-enable transitions
-            const cards = this.carouselContainer.querySelectorAll('.carousel-card');
-            cards.forEach(c => c.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)');
+                this.updateCarousel();
+            }
+        }, { passive: false }); // MUST be non-passive to preventDefault
 
-            // Snap logic - require 40% swipe to change card (less sensitive)
-            const threshold = this.getCardWidth() * 0.4;
+        // TOUCH END
+        this.carouselContainer.addEventListener('touchend', (e) => {
+            if (state !== 'dragging') return;
+
+            state = 'settling';
+
+            // Re-enable transitions for snap animation
+            this.carouselContainer.querySelectorAll('.carousel-card').forEach(c => {
+                c.style.transition = 'all 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+            });
+
+            // Snap logic - 30% threshold for card change
+            const threshold = this.getCardWidth() * 0.3;
             if (this.dragOffset > threshold && this.currentCardIndex > 0) {
                 this.currentCardIndex--;
             } else if (this.dragOffset < -threshold && this.currentCardIndex < this.filteredReports.length - 1) {
@@ -356,39 +406,86 @@ class UnifiedSearch {
 
             this.dragOffset = 0;
             this.updateCarousel();
-        };
 
-        // Touch Listeners (set touchActive flag to block ghost mouse events)
-        this.carouselContainer.addEventListener('touchstart', (e) => {
-            touchActive = true;
-            startDrag(e.touches[0].clientX);
+            // Re-enable anchors AFTER a delay (blocks synthesized clicks)
+            setTimeout(() => {
+                enableAnchors();
+                state = 'idle';
+                // Keep wasDragging true a bit longer to block any late click events
+                setTimeout(() => { this.wasDragging = false; }, 100);
+            }, 400);
         }, { passive: true });
 
-        this.carouselContainer.addEventListener('touchmove', (e) => {
-            moveDrag(e.touches[0].clientX);
+        // TOUCH CANCEL (e.g., incoming call)
+        this.carouselContainer.addEventListener('touchcancel', () => {
+            state = 'idle';
+            this.dragOffset = 0;
+            this.wasDragging = false;
+            enableAnchors();
+            this.updateCarousel();
         }, { passive: true });
 
-        this.carouselContainer.addEventListener('touchend', (e) => {
-            endDrag(e.changedTouches[0].clientX);
-            // Keep touchActive true briefly to block ghost mouse events
-            setTimeout(() => { touchActive = false; }, 100);
-        }, { passive: true });
+        // MOUSE SUPPORT (Desktop)
+        let mouseActive = false;
 
-        // Mouse Listeners (blocked if touch was just used)
         this.carouselContainer.addEventListener('mousedown', (e) => {
-            if (touchActive) return; // Block ghost event
-            startDrag(e.clientX);
+            if (state !== 'idle') return;
+            mouseActive = true;
+            state = 'dragging';
+            startX = e.clientX;
+            this.startX = startX;
+            this.dragOffset = 0;
+            this.wasDragging = false;
+            this.carouselContainer.style.cursor = 'grabbing';
+
+            this.carouselContainer.querySelectorAll('.carousel-card').forEach(c => {
+                c.style.transition = 'none';
+            });
         });
+
         window.addEventListener('mousemove', (e) => {
-            if (touchActive) return; // Block ghost event
-            if (this.isDragging) {
-                e.preventDefault(); // Prevent selection
-                moveDrag(e.clientX);
+            if (!mouseActive || state !== 'dragging') return;
+
+            const diffX = e.clientX - startX;
+            if (Math.abs(diffX) > 5) {
+                this.wasDragging = true;
+                e.preventDefault();
             }
+
+            if ((this.currentCardIndex === 0 && diffX > 0) ||
+                (this.currentCardIndex === this.filteredReports.length - 1 && diffX < 0)) {
+                this.dragOffset = diffX * 0.3;
+            } else {
+                this.dragOffset = diffX;
+            }
+
+            this.updateCarousel();
         });
-        window.addEventListener('mouseup', (e) => {
-            if (touchActive) return; // Block ghost event
-            if (this.isDragging) endDrag(e.clientX);
+
+        window.addEventListener('mouseup', () => {
+            if (!mouseActive || state !== 'dragging') return;
+            mouseActive = false;
+            state = 'settling';
+            this.carouselContainer.style.cursor = 'grab';
+
+            this.carouselContainer.querySelectorAll('.carousel-card').forEach(c => {
+                c.style.transition = 'all 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+            });
+
+            const threshold = this.getCardWidth() * 0.3;
+            if (this.dragOffset > threshold && this.currentCardIndex > 0) {
+                this.currentCardIndex--;
+            } else if (this.dragOffset < -threshold && this.currentCardIndex < this.filteredReports.length - 1) {
+                this.currentCardIndex++;
+            }
+
+            this.dragOffset = 0;
+            this.updateCarousel();
+
+            setTimeout(() => {
+                state = 'idle';
+                this.wasDragging = false;
+            }, 100);
         });
     }
 
