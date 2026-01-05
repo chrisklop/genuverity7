@@ -83,6 +83,110 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
+           MUSIC PLAYER
+           ═══════════════════════════════════════════════════════════════ */
+        .music-player {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px 12px 12px;
+            background: rgba(10, 10, 20, 0.9);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .music-player:hover {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+        }
+
+        .music-player.playing {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+        }
+
+        .music-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--california-sunset);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .music-label {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .music-player.playing .music-label {
+            color: var(--accent-gold);
+        }
+
+        /* Pulsing animation when playing */
+        @keyframes music-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+        }
+
+        .music-player.playing .music-btn {
+            animation: music-pulse 2s ease-in-out infinite;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           DEDICATION
+           ═══════════════════════════════════════════════════════════════ */
+        .hero-dedication {
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .dedication-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .dedication-divider span {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+        }
+
+        .dedication-text {
+            font-family: var(--font-body);
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--accent-gold);
+            margin-bottom: 8px;
+        }
+
+        .dedication-subtitle {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
            LOADING SCREEN
            ═══════════════════════════════════════════════════════════════ */
         .loading-screen {
@@ -711,81 +815,192 @@
         }
 
         .sources-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .sources-header {
+            text-align: center;
+            margin-bottom: 50px;
         }
 
         .sources-title {
             font-family: var(--font-display);
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 30px;
-            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .sources-subtitle {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .sources-subtitle .count {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        /* Category filters */
+        .source-filters {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .source-filter-btn {
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            color: var(--text-muted);
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .source-filter-btn:hover,
+        .source-filter-btn.active {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
         }
 
         .sources-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
         }
 
         .source-card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            border-radius: 10px;
-            padding: 16px;
+            border-radius: 12px;
+            padding: 20px;
             text-decoration: none;
             color: var(--text-primary);
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .source-card:hover {
             border-color: var(--accent-gold);
             transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.1);
+        }
+
+        .source-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
         }
 
         .source-number {
             font-family: var(--font-mono);
             font-size: 0.75rem;
             color: var(--accent-gold);
-            margin-bottom: 8px;
+            background: rgba(245, 158, 11, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .source-category {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
         }
 
         .source-title {
             font-family: var(--font-display);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .source-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
         }
 
         .source-domain {
             font-size: 0.75rem;
-            color: var(--text-muted);
+            color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: auto;
+        }
+
+        .source-domain::before {
+            content: '↗';
         }
 
         /* ═══════════════════════════════════════════════════════════════
            FOOTER
            ═══════════════════════════════════════════════════════════════ */
         .experience-footer {
-            padding: 60px;
+            padding: 80px 60px;
             text-align: center;
             background: var(--bg-void);
             border-top: 1px solid var(--border-subtle);
         }
 
+        .footer-dedication-block {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            padding: 40px;
+            background: rgba(245, 158, 11, 0.03);
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            border-radius: 20px;
+        }
+
         .footer-quote {
+            font-family: var(--font-body);
+            font-size: 1.8rem;
+            font-style: italic;
+            color: var(--accent-gold);
+            margin-bottom: 30px;
+        }
+
+        .footer-dedication-text {
+            text-align: center;
+        }
+
+        .footer-dedication-main {
             font-family: var(--font-body);
             font-size: 1.5rem;
             font-style: italic;
-            color: var(--accent-gold);
-            margin-bottom: 24px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
         }
 
-        .footer-dedication {
+        .footer-dedication-sub {
             font-family: var(--font-display);
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 30px;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-dedication-thanks {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--accent-gold);
         }
 
         .footer-branding {
@@ -849,6 +1064,14 @@
     <!-- Navbar -->
     <div id="navbar-placeholder"></div>
 
+    <!-- Music Player (minimalist) -->
+    <div class="music-player" id="musicPlayer">
+        <button class="music-btn" id="musicBtn" title="Play Jan and Dean instrumentals">
+            <i data-lucide="play" id="playIcon" style="width:18px;height:18px;"></i>
+        </button>
+        <span class="music-label" id="musicLabel">Play Music</span>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero-section" id="hero">
         <div class="hero-content">
@@ -861,6 +1084,15 @@
                 A Comprehensive Historiography of Jan and Dean
             </p>
             <p class="hero-tagline">"Two Guys for Every Tune"</p>
+
+            <!-- Dedication -->
+            <div class="hero-dedication">
+                <div class="dedication-divider">
+                    <span>✦</span>
+                </div>
+                <p class="dedication-text" id="dedicationText">For Dad</p>
+                <p class="dedication-subtitle" id="dedicationSubtitle">who taught me that the best music never really fades away</p>
+            </div>
 
             <div class="hero-meta">
                 <div class="hero-meta-item">
@@ -909,19 +1141,41 @@
     <!-- Sources Section -->
     <section class="sources-section" id="sourcesSection">
         <div class="sources-container">
-            <h2 class="sources-title">Works Cited</h2>
+            <div class="sources-header">
+                <h2 class="sources-title">Works Cited & Further Reading</h2>
+                <p class="sources-subtitle">
+                    Explore <span class="count" id="sourceCount">27</span> sources spanning official archives,
+                    music databases, major publications, and historical analysis
+                </p>
+            </div>
+            <div class="source-filters" id="sourceFilters">
+                <button class="source-filter-btn active" data-filter="all">All Sources</button>
+                <!-- Filters generated by JS -->
+            </div>
             <div class="sources-grid" id="sourcesGrid"></div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="experience-footer">
-        <p class="footer-quote">"Surf's up - forever."</p>
-        <p class="footer-dedication">For the fans who never stopped surfing the sound waves</p>
+        <div class="footer-dedication-block">
+            <p class="footer-quote">"Surf's up - forever."</p>
+            <div class="footer-dedication-text">
+                <p class="footer-dedication-main" id="footerDedication">For Dad</p>
+                <p class="footer-dedication-sub">who taught me that the best music never really fades away,<br>just waits for the next generation to discover it.</p>
+                <p class="footer-dedication-thanks">Thank you for the soundtrack of your life.</p>
+            </div>
+        </div>
         <p class="footer-branding">
             Built with love by <a href="/">GenuVerity</a>
         </p>
     </footer>
+
+    <!-- Hidden audio element for background music -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+        <!-- Fallback: This is a royalty-free surf-style track. Replace with actual Jan and Dean instrumental if licensed -->
+    </audio>
 
     <script>
         // Wait for data to load
@@ -1001,17 +1255,62 @@
             // GENERATE SOURCES
             // ═══════════════════════════════════════════════════════════════
             const sourcesGrid = document.getElementById('sourcesGrid');
+            const sourceFilters = document.getElementById('sourceFilters');
+            const sourceCount = document.getElementById('sourceCount');
 
-            data.sources.forEach(source => {
-                const domain = new URL(source.url).hostname.replace('www.', '');
-                sourcesGrid.innerHTML += `
-                    <a href="${source.url}" target="_blank" rel="noopener" class="source-card">
-                        <div class="source-number">[${source.id}]</div>
-                        <div class="source-title">${source.title}</div>
-                        <div class="source-domain">${domain}</div>
-                    </a>
-                `;
+            // Update source count
+            sourceCount.textContent = data.sources.length;
+
+            // Get unique categories
+            const categories = [...new Set(data.sources.map(s => s.category))];
+
+            // Generate filter buttons
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'source-filter-btn';
+                btn.dataset.filter = cat;
+                btn.textContent = cat;
+                btn.addEventListener('click', () => filterSources(cat));
+                sourceFilters.appendChild(btn);
             });
+
+            // Initial render
+            renderSources(data.sources);
+
+            function renderSources(sources) {
+                sourcesGrid.innerHTML = '';
+                sources.forEach(source => {
+                    const domain = new URL(source.url).hostname.replace('www.', '');
+                    sourcesGrid.innerHTML += `
+                        <a href="${source.url}" target="_blank" rel="noopener" class="source-card" data-category="${source.category}">
+                            <div class="source-header">
+                                <span class="source-number">[${source.id}]</span>
+                                <span class="source-category">${source.category}</span>
+                            </div>
+                            <div class="source-title">${source.title}</div>
+                            ${source.description ? `<p class="source-description">${source.description}</p>` : ''}
+                            <div class="source-domain">${domain}</div>
+                        </a>
+                    `;
+                });
+            }
+
+            function filterSources(category) {
+                // Update active button
+                document.querySelectorAll('.source-filter-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.filter === category || (category === 'all' && btn.dataset.filter === 'all'));
+                });
+
+                // Filter sources
+                if (category === 'all') {
+                    renderSources(data.sources);
+                } else {
+                    renderSources(data.sources.filter(s => s.category === category));
+                }
+            }
+
+            // Add click handler for "All" button
+            document.querySelector('[data-filter="all"]').addEventListener('click', () => filterSources('all'));
 
             // ═══════════════════════════════════════════════════════════════
             // CHART
@@ -1076,8 +1375,9 @@
                 gsap.to('.hero-title', { opacity: 1, y: 0, duration: 1, delay: 0.5 });
                 gsap.to('.hero-subtitle', { opacity: 1, y: 0, duration: 0.8, delay: 0.7 });
                 gsap.to('.hero-tagline', { opacity: 1, y: 0, duration: 0.8, delay: 0.9 });
-                gsap.to('.hero-meta', { opacity: 1, y: 0, duration: 0.8, delay: 1.1 });
-                gsap.to('.hero-scroll-hint', { opacity: 1, y: 0, duration: 0.8, delay: 1.3 });
+                gsap.to('.hero-dedication', { opacity: 1, y: 0, duration: 1, delay: 1.1 });
+                gsap.to('.hero-meta', { opacity: 1, y: 0, duration: 0.8, delay: 1.5 });
+                gsap.to('.hero-scroll-hint', { opacity: 1, y: 0, duration: 0.8, delay: 1.7 });
 
                 // Show timeline nav after scroll
                 ScrollTrigger.create({
@@ -1153,6 +1453,38 @@
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
+
+            // ═══════════════════════════════════════════════════════════════
+            // MUSIC PLAYER
+            // ═══════════════════════════════════════════════════════════════
+            const musicBtn = document.getElementById('musicBtn');
+            const musicPlayer = document.getElementById('musicPlayer');
+            const musicLabel = document.getElementById('musicLabel');
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            const playIcon = document.getElementById('playIcon');
+
+            let isPlaying = false;
+
+            // Set volume
+            backgroundMusic.volume = 0.3;
+
+            musicBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    backgroundMusic.pause();
+                    playIcon.setAttribute('data-lucide', 'play');
+                    musicLabel.textContent = 'Play Music';
+                    musicPlayer.classList.remove('playing');
+                } else {
+                    backgroundMusic.play().catch(e => {
+                        console.log('Audio playback requires user interaction');
+                    });
+                    playIcon.setAttribute('data-lucide', 'pause');
+                    musicLabel.textContent = 'Now Playing';
+                    musicPlayer.classList.add('playing');
+                }
+                isPlaying = !isPlaying;
+                lucide.createIcons();
+            });
         });
     </script>
 </body>

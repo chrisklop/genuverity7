@@ -20,7 +20,8 @@ const JAN_AND_DEAN_DATA = {
         readTime: "10 min experience",
         totalEvents: 25,
         version: "1.0",
-        dedication: "For the fans who never stopped surfing the sound waves"
+        dedication: "For Dad — who taught me that the best music never really fades away, just waits for the next generation to discover it.",
+        dedicationSubtitle: "Thank you for the soundtrack of your life."
     },
 
     // Visual theme configuration - California golden hour vibes
@@ -479,16 +480,49 @@ const JAN_AND_DEAN_DATA = {
         producers: ["Jan Berry", "Lou Adler", "Herb Alpert"]
     },
 
-    // Academic sources (from the historiography)
+    // Comprehensive sources collection
     sources: [
-        { id: 1, title: "Jan and Dean - Wikipedia", url: "https://en.wikipedia.org/wiki/Jan_and_Dean" },
-        { id: 2, title: "Jan Berry Official Site", url: "https://jananddean-janberry.com/" },
-        { id: 3, title: "Jan Berry and Brian Wilson", url: "https://jananddean-janberry.com/jan-berry-at-a-glance/jan-berry-and-brian-wilson/" },
-        { id: 4, title: "History 1990-2004", url: "https://jananddean-janberry.com/history/history-1990-2004/" },
-        { id: 5, title: "SFGATE: Jan Berry Obituary", url: "https://www.sfgate.com/bayarea/article/jan-berry-half-of-60s-pop-duo-2802620.php" },
-        { id: 6, title: "The Truth About Jan and Dean", url: "https://soulrideblog.com/2019/06/12/the-truth-about-jan-and-dean/" },
-        { id: 7, title: "Rock Music Wiki", url: "https://rock.fandom.com/wiki/Jan_and_Dean" },
-        { id: 8, title: "The Guardian: Jan Berry", url: "https://www.theguardian.com/news/2004/apr/02/guardianobituaries.artsobituaries" },
-        { id: 16, title: "TeachRock: Dead Man's Curve", url: "https://teachrock.org/article/jan-and-dean-you-dont-come-back-from-dead-mans-curve/" }
+        // Official & Primary Sources
+        { id: 1, category: "Official", title: "Jan Berry Official Site", url: "https://jananddean-janberry.com/", description: "The official Jan Berry website with biography, discography, and rare photos" },
+        { id: 2, category: "Official", title: "Surf City All-Stars / Jan & Dean Official", url: "https://www.surfcityallstars.com/jananddean/", description: "Dean Torrence's official Jan & Dean site with complete discography and timeline" },
+        { id: 3, category: "Official", title: "Jan Berry and Brian Wilson Collaboration", url: "https://jananddean-janberry.com/jan-berry-at-a-glance/jan-berry-and-brian-wilson/", description: "Detailed account of the Jan Berry - Brian Wilson creative partnership" },
+        { id: 4, category: "Official", title: "Dead Man's Curve: The Rock 'n' Roll Life of Jan Berry", url: "https://jananddean-janberry.com/dead-mans-curve/", description: "Official biography page about Jan Berry's life and the fateful crash" },
+
+        // Music Industry Sources
+        { id: 5, category: "Music", title: "AllMusic: Jan & Dean Biography", url: "https://www.allmusic.com/artist/jan-dean-mn0000213165/biography", description: "Professional music database with complete discography and critical analysis" },
+        { id: 6, category: "Music", title: "AllMusic: Dean Torrence Solo", url: "https://www.allmusic.com/artist/dean-torrence-mn0000190973", description: "Dean Torrence's solo career and design work documentation" },
+        { id: 7, category: "Music", title: "Discogs: Surf City / Dead Man's Curve", url: "https://www.discogs.com/release/5497124-Jan-Dean-Surf-City-Dead-Mans-Curve", description: "Complete release information and discography tracking" },
+        { id: 8, category: "Music", title: "Rate Your Music: Jan & Dean Discography", url: "https://rateyourmusic.com/artist/jan-and-dean", description: "Comprehensive album ratings and listening guide" },
+        { id: 9, category: "Music", title: "Apple Music: Jan & Dean", url: "https://music.apple.com/us/artist/jan-dean/14077453", description: "Official streaming catalog and 2025 reissues" },
+
+        // Major Publications
+        { id: 10, category: "News", title: "Rolling Stone: Surf Legend Jan Berry Dies", url: "https://www.rollingstone.com/music/music-news/surf-legend-jan-berry-dies-254999/", description: "Rolling Stone's obituary for Jan Berry (2004)" },
+        { id: 11, category: "News", title: "Rolling Stone: Dean Remembers Jan", url: "https://www.rollingstone.com/music/news/dean-remembers-jan-20040402", description: "Dean Torrence's tribute to his partner after Jan's death" },
+        { id: 12, category: "News", title: "SFGATE: Jan Berry Obituary", url: "https://www.sfgate.com/bayarea/article/jan-berry-half-of-60s-pop-duo-2802620.php", description: "San Francisco Chronicle's comprehensive obituary" },
+        { id: 13, category: "News", title: "The Guardian: Jan Berry Obituary", url: "https://www.theguardian.com/news/2004/apr/02/guardianobituaries.artsobituaries", description: "British perspective on Jan Berry's life and legacy" },
+
+        // Film & Television
+        { id: 14, category: "Film", title: "IMDb: Deadman's Curve (1978)", url: "https://www.imdb.com/title/tt0077406/", description: "The 1978 CBS TV movie starring Richard Hatch and Bruce Davison" },
+        { id: 15, category: "Film", title: "Rotten Tomatoes: Deadman's Curve", url: "https://www.rottentomatoes.com/m/deadmans_curve", description: "Critical reception of the Jan & Dean biographical film" },
+        { id: 16, category: "Film", title: "IMDb: Dean Torrence Biography", url: "https://www.imdb.com/name/nm0868457/bio/", description: "Dean Torrence's film and television appearances" },
+
+        // Educational & Analysis
+        { id: 17, category: "Education", title: "TeachRock: Dead Man's Curve Analysis", url: "https://teachrock.org/article/jan-and-dean-you-dont-come-back-from-dead-mans-curve/", description: "Educational resource examining the prophetic song and its legacy" },
+        { id: 18, category: "Education", title: "500 Songs Podcast: Surf City Episode", url: "https://500songs.com/podcast/episode-107-surf-city-by-jan-and-dean/", description: "Deep-dive podcast episode on the making of 'Surf City'" },
+        { id: 19, category: "Education", title: "Encyclopedia.com: Jan & Dean", url: "https://www.encyclopedia.com/education/news-wires-white-papers-and-books/jan-dean", description: "Encyclopedic overview of the duo's career and cultural impact" },
+
+        // Fan & Community Sources
+        { id: 20, category: "Community", title: "The Truth About Jan and Dean", url: "https://soulrideblog.com/2019/06/12/the-truth-about-jan-and-dean/", description: "In-depth fan analysis of the duo's complicated history" },
+        { id: 21, category: "Community", title: "Rock Music Wiki: Jan and Dean", url: "https://rock.fandom.com/wiki/Jan_and_Dean", description: "Community-maintained wiki with detailed career information" },
+        { id: 22, category: "Community", title: "Musician Guide: Jan & Dean Biography", url: "https://musicianguide.com/biographies/1608002884/Jan-amp-Dean.html", description: "Detailed biographical resource for music enthusiasts" },
+
+        // Historical Context
+        { id: 23, category: "History", title: "Jan & Dean History: 1990-2004", url: "https://jananddean-janberry.com/history/history-1990-2004/", description: "The final years of the partnership" },
+        { id: 24, category: "History", title: "Deadman's Curve: 1978 TV Movie Analysis", url: "https://drunktv.net/2017/06/18/deadmans-curve-the-story-of-jan-and-dean-a-true-rock-tragedy/", description: "Analysis of the TV movie that revived their careers" },
+        { id: 25, category: "History", title: "Richard Hatch's Finest Moment", url: "https://moviesanddrinks.com/2017/06/28/deadmans-curve-the-story-of-jan-dean-1978-richard-hatchs-finest-moment/", description: "Critical appreciation of Richard Hatch's portrayal of Jan Berry" },
+
+        // Reference
+        { id: 26, category: "Reference", title: "Wikipedia: Jan and Dean", url: "https://en.wikipedia.org/wiki/Jan_and_Dean", description: "General encyclopedia entry with extensive footnotes" },
+        { id: 27, category: "Reference", title: "Wikipedia: Surf City (song)", url: "https://en.wikipedia.org/wiki/Surf_City_(song)", description: "Detailed history of their biggest hit" }
     ]
 };
