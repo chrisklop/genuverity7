@@ -83,7 +83,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
-           MUSIC PLAYER - Spotify Embed
+           MUSIC PLAYER - Custom Snazzy Player
            ═══════════════════════════════════════════════════════════════ */
         .music-player {
             position: fixed;
@@ -93,8 +93,8 @@
         }
 
         .music-toggle-btn {
-            width: 50px;
-            height: 50px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             background: var(--california-sunset);
             border: none;
@@ -104,12 +104,18 @@
             justify-content: center;
             color: white;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+            box-shadow: 0 4px 25px rgba(245, 158, 11, 0.4);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 4px 25px rgba(245, 158, 11, 0.4); }
+            50% { box-shadow: 0 4px 35px rgba(245, 158, 11, 0.6); }
         }
 
         .music-toggle-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 6px 30px rgba(245, 158, 11, 0.5);
+            box-shadow: 0 6px 40px rgba(245, 158, 11, 0.7);
         }
 
         .music-player.open .music-toggle-btn {
@@ -121,16 +127,16 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 380px;
-            background: rgba(10, 10, 20, 0.85);
-            border: 1px solid var(--accent-gold);
-            border-radius: 16px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            width: 340px;
+            background: rgba(10, 10, 20, 0.92);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            border-radius: 20px;
+            backdrop-filter: blur(25px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(245, 158, 11, 0.1);
             opacity: 0;
             transform: translateY(20px) scale(0.9);
             pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             overflow: hidden;
         }
 
@@ -144,20 +150,22 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border-subtle);
+            padding: 14px 18px;
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, transparent 100%);
         }
 
         .music-title {
             font-family: var(--font-display);
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            color: var(--accent-gold);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .music-close {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             background: transparent;
             border: 1px solid var(--border-subtle);
@@ -170,78 +178,264 @@
         }
 
         .music-close:hover {
-            background: rgba(239, 68, 68, 0.1);
+            background: rgba(239, 68, 68, 0.15);
             border-color: var(--accent-red);
             color: var(--accent-red);
         }
 
-        .music-panel iframe {
-            display: block;
-            margin-bottom: -8px;
+        /* Vinyl + Track Display */
+        .player-display {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 18px;
         }
 
-        .music-facts {
-            padding: 8px 14px;
-            max-height: 180px;
-            overflow-y: auto;
-            border-top: 1px solid var(--border-subtle);
+        .vinyl-container {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            flex-shrink: 0;
         }
 
-        .music-facts::-webkit-scrollbar {
-            width: 4px;
+        .vinyl {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at center, #1a1a1a 0%, #1a1a1a 15%, transparent 15.5%),
+                radial-gradient(circle at center, transparent 35%, rgba(40,40,40,0.8) 35.5%, rgba(40,40,40,0.8) 36%, transparent 36.5%),
+                radial-gradient(circle at center, transparent 48%, rgba(50,50,50,0.6) 48.5%, rgba(50,50,50,0.6) 49%, transparent 49.5%),
+                conic-gradient(from 0deg, #2a2a2a, #1a1a1a, #2a2a2a, #1a1a1a, #2a2a2a, #1a1a1a, #2a2a2a, #1a1a1a, #2a2a2a);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4), inset 0 0 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
         }
 
-        .music-facts::-webkit-scrollbar-track {
+        .vinyl-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--california-sunset);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 0.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .music-player.playing .vinyl {
+            animation: spin-vinyl 3s linear infinite;
+        }
+
+        @keyframes spin-vinyl {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .track-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .track-name {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .track-artist {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 2px;
+        }
+
+        .track-year {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            padding: 0 18px 12px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--california-sunset);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s linear;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.8);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .progress-bar:hover .progress-fill::after {
+            opacity: 1;
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        /* Controls */
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 8px 18px 16px;
+        }
+
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             background: transparent;
+            border: 1px solid var(--border-subtle);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
         }
 
-        .music-facts::-webkit-scrollbar-thumb {
+        .control-btn:hover {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            transform: scale(1.05);
+        }
+
+        .play-btn {
+            width: 56px;
+            height: 56px;
+            background: var(--california-sunset);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(245, 158, 11, 0.6);
+            background: var(--california-sunset);
+            color: white;
+        }
+
+        /* Equalizer */
+        .equalizer {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 3px;
+            height: 20px;
+            margin-left: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .music-player.playing .equalizer {
+            opacity: 1;
+        }
+
+        .eq-bar {
+            width: 3px;
             background: var(--accent-gold);
             border-radius: 2px;
         }
 
-        .song-section {
-            margin-bottom: 14px;
+        .music-player.playing .eq-bar {
+            animation: eq-dance 0.5s ease-in-out infinite alternate;
         }
 
-        .song-section:last-child {
-            margin-bottom: 0;
+        .eq-bar:nth-child(1) { height: 30%; animation-delay: 0s; }
+        .eq-bar:nth-child(2) { height: 60%; animation-delay: 0.1s; }
+        .eq-bar:nth-child(3) { height: 40%; animation-delay: 0.2s; }
+        .eq-bar:nth-child(4) { height: 80%; animation-delay: 0.15s; }
+        .eq-bar:nth-child(5) { height: 50%; animation-delay: 0.25s; }
+
+        @keyframes eq-dance {
+            0% { transform: scaleY(0.3); }
+            100% { transform: scaleY(1); }
         }
 
-        .song-name {
-            font-family: var(--font-display);
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--accent-gold);
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        /* Song Facts */
+        .song-facts {
+            padding: 14px 18px;
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid var(--border-subtle);
         }
 
-        .song-year {
-            font-size: 0.7rem;
-            font-weight: 400;
-            color: var(--text-muted);
+        .facts-content {
+            opacity: 1;
+            transition: opacity 0.3s ease;
         }
 
-        .song-fact {
+        .facts-content.fade-out {
+            opacity: 0;
+        }
+
+        .fact-item {
             font-family: var(--font-body);
-            font-size: 0.75rem;
-            line-height: 1.5;
+            font-size: 0.8rem;
+            line-height: 1.6;
             color: var(--text-secondary);
-            margin-bottom: 6px;
-            padding-left: 10px;
-            border-left: 2px solid var(--border-subtle);
+            margin-bottom: 8px;
+            padding-left: 12px;
+            border-left: 2px solid var(--accent-gold);
         }
 
-        .song-fact:last-child {
+        .fact-item:last-child {
             margin-bottom: 0;
         }
 
         .fact-highlight {
             color: var(--accent-cyan);
-            font-weight: 500;
+            font-weight: 600;
         }
 
         /* ═══════════════════════════════════════════════════════════════
@@ -1158,43 +1352,73 @@
     <!-- Navbar -->
     <div id="navbar-placeholder"></div>
 
-    <!-- Spotify Music Player -->
+    <!-- Custom Music Player -->
     <div class="music-player" id="musicPlayer">
         <button class="music-toggle-btn" id="musicToggleBtn" title="Play Jan and Dean">
-            <i data-lucide="music" id="musicIcon" style="width:20px;height:20px;"></i>
+            <i data-lucide="music" style="width:22px;height:22px;"></i>
         </button>
         <div class="music-panel" id="musicPanel">
             <div class="music-header">
-                <span class="music-title">Jan and Dean Classics</span>
+                <span class="music-title">Now Playing</span>
                 <button class="music-close" id="musicClose">
                     <i data-lucide="x" style="width:14px;height:14px;"></i>
                 </button>
             </div>
-            <iframe
-                src="https://archive.org/embed/ka-jan-and-dean"
-                width="100%"
-                height="60"
-                frameborder="0"
-                webkitallowfullscreen="true"
-                mozallowfullscreen="true"
-                allowfullscreen>
-            </iframe>
-            <div class="music-facts">
-                <div class="song-section">
-                    <div class="song-name">Surf City <span class="song-year">1963</span></div>
-                    <p class="song-fact"><span class="fact-highlight">Brian Wilson's first #1 hit</span> — a full year before the Beach Boys topped the charts with "I Get Around"</p>
-                    <p class="song-fact">Wilson originally titled it "Goody Connie Won't You Come Back Home" — Jan Berry rewrote it into the surf anthem we know</p>
-                    <p class="song-fact">Brian Wilson's father Murry called Jan a <span class="fact-highlight">"record pirate"</span> for "stealing" his son's song</p>
-                    <p class="song-fact">Recorded with the legendary Wrecking Crew: Glen Campbell, Hal Blaine, and Earl Palmer on dual drums</p>
+
+            <!-- Vinyl + Track Info -->
+            <div class="player-display">
+                <div class="vinyl-container">
+                    <div class="vinyl"></div>
+                    <div class="vinyl-label">J&D</div>
                 </div>
-                <div class="song-section">
-                    <div class="song-name">She's My Summer Girl <span class="song-year">1963</span></div>
-                    <p class="song-fact">B-side to Surf City — written by Don Altfeld, Jan Berry, and Brian Wilson</p>
-                    <p class="song-fact">Features the duo's signature <span class="fact-highlight">doo-wop backing vocals</span> layered over a piano-driven arrangement</p>
-                    <p class="song-fact">Never charted as a single but became a fan favorite on Jan and Dean anthologies</p>
+                <div class="track-info">
+                    <div class="track-name" id="trackName">Surf City</div>
+                    <div class="track-artist">Jan and Dean</div>
+                    <div class="track-year" id="trackYear">1963</div>
+                </div>
+                <div class="equalizer">
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="time-display">
+                    <span id="currentTime">0:00</span>
+                    <span id="duration">0:00</span>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="player-controls">
+                <button class="control-btn" id="prevBtn" title="Previous">
+                    <i data-lucide="skip-back" style="width:18px;height:18px;"></i>
+                </button>
+                <button class="control-btn play-btn" id="playBtn" title="Play">
+                    <i data-lucide="play" id="playIcon" style="width:24px;height:24px;"></i>
+                </button>
+                <button class="control-btn" id="nextBtn" title="Next">
+                    <i data-lucide="skip-forward" style="width:18px;height:18px;"></i>
+                </button>
+            </div>
+
+            <!-- Dynamic Song Facts -->
+            <div class="song-facts">
+                <div class="facts-content" id="factsContent">
+                    <!-- Populated by JS -->
                 </div>
             </div>
         </div>
+
+        <!-- Hidden Audio Element -->
+        <audio id="audioPlayer" preload="metadata"></audio>
     </div>
 
     <!-- Hero Section -->
@@ -1574,11 +1798,146 @@
         });
 
         // ═══════════════════════════════════════════════════════════════
-        // SPOTIFY MUSIC PLAYER
+        // CUSTOM MUSIC PLAYER
         // ═══════════════════════════════════════════════════════════════
+        const PLAYLIST = [
+            {
+                title: "Surf City",
+                year: 1963,
+                src: "https://archive.org/download/ka-jan-and-dean/jan%20and%20dean%20-%20surf%20city.mp3",
+                facts: [
+                    `<span class="fact-highlight">Brian Wilson's first #1 hit</span> — a full year before the Beach Boys topped charts with "I Get Around"`,
+                    `Wilson originally titled it "Goody Connie Won't You Come Back Home" — Jan Berry transformed it into the surf anthem`,
+                    `Brian's father Murry called Jan a <span class="fact-highlight">"record pirate"</span> for "stealing" his son's song`,
+                    `Recorded with the legendary Wrecking Crew: Glen Campbell, Hal Blaine & Earl Palmer on dual drums`
+                ]
+            },
+            {
+                title: "She's My Summer Girl",
+                year: 1963,
+                src: "https://archive.org/download/ka-jan-and-dean/jan%20and%20dean%20-%20she%27s%20my%20summer%20girl.mp3",
+                facts: [
+                    `B-side to Surf City — co-written by <span class="fact-highlight">Don Altfeld, Jan Berry, and Brian Wilson</span>`,
+                    `Features the duo's signature <span class="fact-highlight">doo-wop backing vocals</span> over a piano-driven arrangement`,
+                    `Never charted but became a fan favorite — the hidden gem of the California Sound era`
+                ]
+            }
+        ];
+
+        let currentTrack = 0;
+        let isPlaying = false;
+
+        // DOM Elements
         const musicPlayer = document.getElementById('musicPlayer');
         const musicToggleBtn = document.getElementById('musicToggleBtn');
         const musicClose = document.getElementById('musicClose');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playBtn');
+        const playIcon = document.getElementById('playIcon');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const trackName = document.getElementById('trackName');
+        const trackYear = document.getElementById('trackYear');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const factsContent = document.getElementById('factsContent');
+
+        // Format time
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Load track
+        function loadTrack(index) {
+            const track = PLAYLIST[index];
+            audioPlayer.src = track.src;
+            trackName.textContent = track.title;
+            trackYear.textContent = track.year;
+
+            // Fade out facts, update, fade in
+            factsContent.classList.add('fade-out');
+            setTimeout(() => {
+                factsContent.innerHTML = track.facts.map(f =>
+                    `<p class="fact-item">${f}</p>`
+                ).join('');
+                factsContent.classList.remove('fade-out');
+            }, 300);
+
+            progressFill.style.width = '0%';
+            currentTimeEl.textContent = '0:00';
+        }
+
+        // Play/Pause
+        function togglePlay() {
+            if (isPlaying) {
+                audioPlayer.pause();
+            } else {
+                audioPlayer.play();
+            }
+        }
+
+        // Update play state
+        audioPlayer.addEventListener('play', () => {
+            isPlaying = true;
+            musicPlayer.classList.add('playing');
+            playIcon.setAttribute('data-lucide', 'pause');
+            lucide.createIcons();
+        });
+
+        audioPlayer.addEventListener('pause', () => {
+            isPlaying = false;
+            musicPlayer.classList.remove('playing');
+            playIcon.setAttribute('data-lucide', 'play');
+            lucide.createIcons();
+        });
+
+        // Update progress
+        audioPlayer.addEventListener('timeupdate', () => {
+            const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            progressFill.style.width = `${progress}%`;
+            currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
+        });
+
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(audioPlayer.duration);
+        });
+
+        // Track ended - auto next
+        audioPlayer.addEventListener('ended', () => {
+            currentTrack = (currentTrack + 1) % PLAYLIST.length;
+            loadTrack(currentTrack);
+            audioPlayer.play();
+        });
+
+        // Seek
+        progressBar.addEventListener('click', (e) => {
+            const rect = progressBar.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audioPlayer.currentTime = percent * audioPlayer.duration;
+        });
+
+        // Next/Prev
+        function nextTrack() {
+            currentTrack = (currentTrack + 1) % PLAYLIST.length;
+            loadTrack(currentTrack);
+            if (isPlaying) audioPlayer.play();
+        }
+
+        function prevTrack() {
+            currentTrack = (currentTrack - 1 + PLAYLIST.length) % PLAYLIST.length;
+            loadTrack(currentTrack);
+            if (isPlaying) audioPlayer.play();
+        }
+
+        // Event listeners
+        playBtn.addEventListener('click', togglePlay);
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', prevTrack);
 
         musicToggleBtn.addEventListener('click', () => {
             musicPlayer.classList.add('open');
@@ -1594,6 +1953,9 @@
                 musicPlayer.classList.remove('open');
             }
         });
+
+        // Initialize first track
+        loadTrack(0);
     </script>
 </body>
 </html>
