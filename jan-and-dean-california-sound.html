@@ -83,7 +83,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
-           MUSIC PLAYER
+           MUSIC PLAYER - YouTube Playlist
            ═══════════════════════════════════════════════════════════════ */
         .music-player {
             position: fixed;
@@ -91,29 +91,41 @@
             left: 30px;
             z-index: 1000;
             display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 20px 12px 12px;
-            background: rgba(10, 10, 20, 0.9);
+            flex-direction: column;
+            align-items: flex-start;
+            background: rgba(10, 10, 20, 0.95);
             border: 1px solid var(--border-subtle);
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            border-radius: 16px;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            max-width: 60px;
         }
 
-        .music-player:hover {
+        .music-player:hover,
+        .music-player.expanded {
+            max-width: 320px;
             border-color: var(--accent-gold);
-            box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.2);
         }
 
         .music-player.playing {
             border-color: var(--accent-gold);
-            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Main button row */
+        .music-main {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            width: 100%;
         }
 
         .music-btn {
             width: 40px;
             height: 40px;
+            min-width: 40px;
             border-radius: 50%;
             background: var(--california-sunset);
             border: none;
@@ -129,25 +141,239 @@
             transform: scale(1.1);
         }
 
-        .music-label {
+        .music-info {
+            flex: 1;
+            min-width: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            overflow: hidden;
+        }
+
+        .music-player:hover .music-info,
+        .music-player.expanded .music-info {
+            opacity: 1;
+        }
+
+        .music-track {
             font-family: var(--font-display);
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .music-artist {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
             color: var(--text-muted);
         }
 
-        .music-player.playing .music-label {
+        .music-player.playing .music-track {
+            color: var(--accent-gold);
+        }
+
+        /* Playlist controls */
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .music-player:hover .music-controls,
+        .music-player.expanded .music-controls {
+            opacity: 1;
+        }
+
+        .control-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--border-subtle);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        /* Video panel */
+        .music-video-panel {
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+            transition: height 0.4s ease;
+            background: var(--bg-void);
+        }
+
+        .music-player.video-open .music-video-panel {
+            height: 180px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Playlist dropdown */
+        .music-playlist {
+            width: 100%;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .music-player.playlist-open .music-playlist {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .playlist-item:hover {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .playlist-item.active {
+            background: rgba(245, 158, 11, 0.15);
+        }
+
+        .playlist-item.active .playlist-title {
+            color: var(--accent-gold);
+        }
+
+        .playlist-num {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            width: 18px;
+        }
+
+        .playlist-title {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            flex: 1;
+        }
+
+        .playlist-year {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        /* Toggle buttons row */
+        .music-toggles {
+            display: flex;
+            gap: 8px;
+            padding: 8px 10px;
+            width: 100%;
+            border-top: 1px solid var(--border-subtle);
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .music-player:hover .music-toggles,
+        .music-player.expanded .music-toggles {
+            opacity: 1;
+            height: auto;
+            padding: 8px 10px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 6px 10px;
+            background: transparent;
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .toggle-btn:hover,
+        .toggle-btn.active {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--accent-gold);
             color: var(--accent-gold);
         }
 
         /* Pulsing animation when playing */
         @keyframes music-pulse {
             0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
-            50% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+            50% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
         }
 
         .music-player.playing .music-btn {
             animation: music-pulse 2s ease-in-out infinite;
+        }
+
+        /* Equalizer animation */
+        .equalizer {
+            display: none;
+            align-items: flex-end;
+            gap: 2px;
+            height: 16px;
+            margin-left: 8px;
+        }
+
+        .music-player.playing .equalizer {
+            display: flex;
+        }
+
+        .eq-bar {
+            width: 3px;
+            background: var(--accent-gold);
+            border-radius: 1px;
+            animation: eq-dance 0.5s ease-in-out infinite alternate;
+        }
+
+        .eq-bar:nth-child(1) { height: 40%; animation-delay: 0s; }
+        .eq-bar:nth-child(2) { height: 70%; animation-delay: 0.1s; }
+        .eq-bar:nth-child(3) { height: 50%; animation-delay: 0.2s; }
+        .eq-bar:nth-child(4) { height: 90%; animation-delay: 0.3s; }
+
+        @keyframes eq-dance {
+            0% { transform: scaleY(0.3); }
+            100% { transform: scaleY(1); }
         }
 
         /* ═══════════════════════════════════════════════════════════════
@@ -1064,12 +1290,56 @@
     <!-- Navbar -->
     <div id="navbar-placeholder"></div>
 
-    <!-- Music Player (minimalist) -->
+    <!-- YouTube Music Player -->
     <div class="music-player" id="musicPlayer">
-        <button class="music-btn" id="musicBtn" title="Play Jan and Dean instrumentals">
-            <i data-lucide="play" id="playIcon" style="width:18px;height:18px;"></i>
-        </button>
-        <span class="music-label" id="musicLabel">Play Music</span>
+        <!-- Main control row -->
+        <div class="music-main">
+            <button class="music-btn" id="musicBtn" title="Play Jan and Dean">
+                <i data-lucide="play" id="playIcon" style="width:18px;height:18px;"></i>
+            </button>
+            <div class="music-info">
+                <div class="music-track" id="trackTitle">Dead Man's Curve</div>
+                <div class="music-artist">Jan and Dean</div>
+            </div>
+            <div class="equalizer">
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+            </div>
+            <div class="music-controls">
+                <button class="control-btn" id="prevBtn" title="Previous">
+                    <i data-lucide="skip-back" style="width:14px;height:14px;"></i>
+                </button>
+                <button class="control-btn" id="nextBtn" title="Next">
+                    <i data-lucide="skip-forward" style="width:14px;height:14px;"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Toggle buttons -->
+        <div class="music-toggles">
+            <button class="toggle-btn" id="playlistToggle">
+                <i data-lucide="list-music" style="width:12px;height:12px;"></i>
+                Playlist
+            </button>
+            <button class="toggle-btn" id="videoToggle">
+                <i data-lucide="tv" style="width:12px;height:12px;"></i>
+                Video
+            </button>
+        </div>
+
+        <!-- Playlist panel -->
+        <div class="music-playlist" id="playlistPanel">
+            <!-- Generated by JS -->
+        </div>
+
+        <!-- Video panel -->
+        <div class="music-video-panel" id="videoPanel">
+            <div class="video-wrapper">
+                <div id="youtubePlayer"></div>
+            </div>
+        </div>
     </div>
 
     <!-- Hero Section -->
@@ -1171,11 +1441,8 @@
         </p>
     </footer>
 
-    <!-- Hidden audio element for background music -->
-    <audio id="backgroundMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
-        <!-- Fallback: This is a royalty-free surf-style track. Replace with actual Jan and Dean instrumental if licensed -->
-    </audio>
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
         // Wait for data to load
@@ -1453,38 +1720,194 @@
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
+        });
 
-            // ═══════════════════════════════════════════════════════════════
-            // MUSIC PLAYER
-            // ═══════════════════════════════════════════════════════════════
-            const musicBtn = document.getElementById('musicBtn');
-            const musicPlayer = document.getElementById('musicPlayer');
-            const musicLabel = document.getElementById('musicLabel');
-            const backgroundMusic = document.getElementById('backgroundMusic');
-            const playIcon = document.getElementById('playIcon');
+        // ═══════════════════════════════════════════════════════════════
+        // YOUTUBE MUSIC PLAYER
+        // ═══════════════════════════════════════════════════════════════
 
-            let isPlaying = false;
+        // Jan and Dean playlist - YouTube video IDs
+        const PLAYLIST = [
+            { id: 'gOLDNXjD7Es', title: "Dead Man's Curve", year: 1964 },
+            { id: 'kFxOQphRsLQ', title: "Surf City", year: 1963 },
+            { id: 'U8mF_bhqvYk', title: "The Little Old Lady (from Pasadena)", year: 1964 },
+            { id: 'E5JRrK9H1c8', title: "Drag City", year: 1963 },
+            { id: 'qJN5IqKsmOg', title: "Ride the Wild Surf", year: 1964 },
+            { id: '1eHdQMnIK4Q', title: "Sidewalk Surfin'", year: 1964 },
+            { id: '_6xxjH8cVao', title: "Baby Talk", year: 1959 },
+            { id: 'H7pPf8PXPQ8', title: "Honolulu Lulu", year: 1963 }
+        ];
 
-            // Set volume
-            backgroundMusic.volume = 0.3;
+        let player = null;
+        let currentTrack = 0;
+        let isPlaying = false;
+        let playerReady = false;
+        let fadeInterval = null;
 
-            musicBtn.addEventListener('click', () => {
-                if (isPlaying) {
-                    backgroundMusic.pause();
-                    playIcon.setAttribute('data-lucide', 'play');
-                    musicLabel.textContent = 'Play Music';
-                    musicPlayer.classList.remove('playing');
-                } else {
-                    backgroundMusic.play().catch(e => {
-                        console.log('Audio playback requires user interaction');
-                    });
-                    playIcon.setAttribute('data-lucide', 'pause');
-                    musicLabel.textContent = 'Now Playing';
-                    musicPlayer.classList.add('playing');
-                }
-                isPlaying = !isPlaying;
-                lucide.createIcons();
+        // DOM elements
+        const musicPlayer = document.getElementById('musicPlayer');
+        const musicBtn = document.getElementById('musicBtn');
+        const playIcon = document.getElementById('playIcon');
+        const trackTitle = document.getElementById('trackTitle');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const playlistToggle = document.getElementById('playlistToggle');
+        const videoToggle = document.getElementById('videoToggle');
+        const playlistPanel = document.getElementById('playlistPanel');
+
+        // Generate playlist HTML
+        function renderPlaylist() {
+            playlistPanel.innerHTML = PLAYLIST.map((track, i) => `
+                <div class="playlist-item ${i === currentTrack ? 'active' : ''}" data-index="${i}">
+                    <span class="playlist-num">${i + 1}</span>
+                    <span class="playlist-title">${track.title}</span>
+                    <span class="playlist-year">${track.year}</span>
+                </div>
+            `).join('');
+
+            // Add click handlers
+            playlistPanel.querySelectorAll('.playlist-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const index = parseInt(item.dataset.index);
+                    playTrack(index);
+                });
             });
+        }
+
+        // YouTube API callback
+        window.onYouTubeIframeAPIReady = function() {
+            player = new YT.Player('youtubePlayer', {
+                height: '100%',
+                width: '100%',
+                videoId: PLAYLIST[0].id,
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 1,
+                    'rel': 0,
+                    'showinfo': 0,
+                    'modestbranding': 1,
+                    'playsinline': 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        };
+
+        function onPlayerReady(event) {
+            playerReady = true;
+            player.setVolume(0); // Start silent for fade-in
+            renderPlaylist();
+            updateTrackDisplay();
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                musicPlayer.classList.add('playing');
+                updatePlayButton();
+            } else if (event.data === YT.PlayerState.PAUSED) {
+                isPlaying = false;
+                musicPlayer.classList.remove('playing');
+                updatePlayButton();
+            } else if (event.data === YT.PlayerState.ENDED) {
+                // Auto-advance to next track
+                nextTrack();
+            }
+        }
+
+        function updatePlayButton() {
+            playIcon.setAttribute('data-lucide', isPlaying ? 'pause' : 'play');
+            lucide.createIcons();
+        }
+
+        function updateTrackDisplay() {
+            trackTitle.textContent = PLAYLIST[currentTrack].title;
+            // Update playlist active state
+            playlistPanel.querySelectorAll('.playlist-item').forEach((item, i) => {
+                item.classList.toggle('active', i === currentTrack);
+            });
+        }
+
+        // Fade in audio
+        function fadeIn(duration = 2000) {
+            if (fadeInterval) clearInterval(fadeInterval);
+            let volume = 0;
+            const step = 50 / (duration / 50); // Target 50% volume
+            fadeInterval = setInterval(() => {
+                volume = Math.min(volume + step, 50);
+                player.setVolume(volume);
+                if (volume >= 50) {
+                    clearInterval(fadeInterval);
+                }
+            }, 50);
+        }
+
+        // Play specific track
+        function playTrack(index) {
+            currentTrack = index;
+            if (playerReady && player) {
+                player.loadVideoById(PLAYLIST[index].id);
+                fadeIn();
+                updateTrackDisplay();
+            }
+        }
+
+        // Next track
+        function nextTrack() {
+            currentTrack = (currentTrack + 1) % PLAYLIST.length;
+            playTrack(currentTrack);
+        }
+
+        // Previous track
+        function prevTrack() {
+            currentTrack = (currentTrack - 1 + PLAYLIST.length) % PLAYLIST.length;
+            playTrack(currentTrack);
+        }
+
+        // Toggle play/pause
+        function togglePlay() {
+            if (!playerReady) return;
+
+            if (isPlaying) {
+                player.pauseVideo();
+            } else {
+                player.playVideo();
+                fadeIn();
+            }
+        }
+
+        // Event listeners
+        musicBtn.addEventListener('click', togglePlay);
+        prevBtn.addEventListener('click', prevTrack);
+        nextBtn.addEventListener('click', nextTrack);
+
+        playlistToggle.addEventListener('click', () => {
+            musicPlayer.classList.toggle('playlist-open');
+            musicPlayer.classList.remove('video-open');
+            playlistToggle.classList.toggle('active');
+            videoToggle.classList.remove('active');
+        });
+
+        videoToggle.addEventListener('click', () => {
+            musicPlayer.classList.toggle('video-open');
+            musicPlayer.classList.remove('playlist-open');
+            videoToggle.classList.toggle('active');
+            playlistToggle.classList.remove('active');
+        });
+
+        // Keep player expanded when interacting
+        musicPlayer.addEventListener('mouseenter', () => {
+            musicPlayer.classList.add('expanded');
+        });
+
+        musicPlayer.addEventListener('mouseleave', () => {
+            // Only collapse if no panels are open
+            if (!musicPlayer.classList.contains('playlist-open') &&
+                !musicPlayer.classList.contains('video-open')) {
+                musicPlayer.classList.remove('expanded');
+            }
         });
     </script>
 </body>
