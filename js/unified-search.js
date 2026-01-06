@@ -299,167 +299,56 @@ class UnifiedSearch {
         window.requestAnimationFrame(step);
     }
 
-    // --- CAROUSEL PHYSICS ENGINE (REBUILT FOR MOBILE) ---
+    // --- CAROUSEL PHYSICS ENGINE ---
+    // Restored from working commit 92bb1a0
 
     initCarousel() {
         this.renderCarousel();
         if (!this.carouselContainer) return;
 
-        // STATE MACHINE: idle | dragging | settling
-        let state = 'idle';
-        let startX = 0;
-        let startY = 0;
-        let isHorizontalSwipe = null; // null = undetermined, true/false after threshold
-        let isEdgeSwipe = false; // iOS reserves screen edges for back/forward gestures
+        // Ghost event prevention: On mobile, touch events trigger ghost mouse events
+        // This flag blocks mouse handlers for 100ms after touch ends
+        let touchActive = false;
 
-        // iOS edge detection - first 40px from screen edges are reserved for iOS gestures
-        const EDGE_THRESHOLD = 40;
-        const isNearEdge = (x) => x < EDGE_THRESHOLD || x > window.innerWidth - EDGE_THRESHOLD;
-
-        // TOUCH START
-        this.carouselContainer.addEventListener('touchstart', (e) => {
-            if (state !== 'idle') return;
-
-            const touchX = e.touches[0].clientX;
-
-            // Let iOS handle edge swipes (back/forward navigation)
-            if (isNearEdge(touchX)) {
-                isEdgeSwipe = true;
-                return; // Don't start carousel drag
-            }
-            isEdgeSwipe = false;
-
-            state = 'dragging';
-            startX = touchX;
-            startY = e.touches[0].clientY;
-            isHorizontalSwipe = null;
-            this.startX = startX;
-            this.dragOffset = 0;
-            this.wasDragging = false;
-
-            // Disable card transitions for 1:1 drag feel
-            this.carouselContainer.querySelectorAll('.carousel-card').forEach(c => {
-                c.style.transition = 'none';
-            });
-        }, { passive: true });
-
-        // TOUCH MOVE
-        this.carouselContainer.addEventListener('touchmove', (e) => {
-            if (state !== 'dragging' || isEdgeSwipe) return;
-
-            const currentX = e.touches[0].clientX;
-            const currentY = e.touches[0].clientY;
-            const diffX = currentX - startX;
-            const diffY = currentY - startY;
-
-            // Determine swipe direction on first significant movement
-            if (isHorizontalSwipe === null && (Math.abs(diffX) > 10 || Math.abs(diffY) > 10)) {
-                isHorizontalSwipe = Math.abs(diffX) > Math.abs(diffY);
-            }
-
-            // Only handle horizontal swipes (not edge swipes)
-            if (isHorizontalSwipe === true) {
-                // Don't preventDefault - let browser handle it naturally with touch-action CSS
-                this.wasDragging = true;
-
-                // Apply resistance at edges
-                if ((this.currentCardIndex === 0 && diffX > 0) ||
-                    (this.currentCardIndex === this.filteredReports.length - 1 && diffX < 0)) {
-                    this.dragOffset = diffX * 0.3;
-                } else {
-                    this.dragOffset = diffX;
-                }
-
-                this.updateCarousel();
-            }
-        }, { passive: true }); // Passive for better performance and iOS compatibility
-
-        // TOUCH END
-        this.carouselContainer.addEventListener('touchend', (e) => {
-            if (state !== 'dragging') return;
-
-            state = 'settling';
-
-            // Re-enable transitions for snap animation
-            this.carouselContainer.querySelectorAll('.carousel-card').forEach(c => {
-                c.style.transition = 'all 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
-            });
-
-            // Snap logic - 30% threshold for card change
-            const threshold = this.getCardWidth() * 0.3;
-            if (this.dragOffset > threshold && this.currentCardIndex > 0) {
-                this.currentCardIndex--;
-            } else if (this.dragOffset < -threshold && this.currentCardIndex < this.filteredReports.length - 1) {
-                this.currentCardIndex++;
-            }
-
-            this.dragOffset = 0;
-            this.updateCarousel();
-
-            // Brief delay before allowing new interactions
-            // NOTE: Do NOT reset wasDragging here - it blocks iOS synthesized clicks
-            // wasDragging is reset in touchstart when user begins a new gesture
-            setTimeout(() => {
-                state = 'idle';
-            }, 100);
-        }, { passive: true });
-
-        // TOUCH CANCEL (e.g., incoming call)
-        // NOTE: Do NOT reset wasDragging - blocks iOS synthesized clicks
-        this.carouselContainer.addEventListener('touchcancel', () => {
-            state = 'idle';
-            this.dragOffset = 0;
-            this.updateCarousel();
-        }, { passive: true });
-
-        // MOUSE SUPPORT (Desktop)
-        let mouseActive = false;
-
-        this.carouselContainer.addEventListener('mousedown', (e) => {
-            if (state !== 'idle') return;
-            mouseActive = true;
-            state = 'dragging';
-            startX = e.clientX;
-            this.startX = startX;
+        // Unified Pointer Events (Mouse + Touch)
+        const startDrag = (x) => {
+            this.isDragging = true;
+            this.startX = x;
+            this.currentX = x;
             this.dragOffset = 0;
             this.wasDragging = false;
             this.carouselContainer.style.cursor = 'grabbing';
+            // Disable transitions during drag for 1:1 feel
+            const cards = this.carouselContainer.querySelectorAll('.carousel-card');
+            cards.forEach(c => c.style.transition = 'none');
+        };
 
-            this.carouselContainer.querySelectorAll('.carousel-card').forEach(c => {
-                c.style.transition = 'none';
-            });
-        });
-
-        window.addEventListener('mousemove', (e) => {
-            if (!mouseActive || state !== 'dragging') return;
-
-            const diffX = e.clientX - startX;
-            if (Math.abs(diffX) > 5) {
-                this.wasDragging = true;
-                e.preventDefault();
-            }
-
-            if ((this.currentCardIndex === 0 && diffX > 0) ||
-                (this.currentCardIndex === this.filteredReports.length - 1 && diffX < 0)) {
-                this.dragOffset = diffX * 0.3;
+        const moveDrag = (x) => {
+            if (!this.isDragging) return;
+            const diff = x - this.startX;
+            // Resistance at edges
+            if ((this.currentCardIndex === 0 && diff > 0) ||
+                (this.currentCardIndex === this.filteredReports.length - 1 && diff < 0)) {
+                this.dragOffset = diff * 0.4;
             } else {
-                this.dragOffset = diffX;
+                this.dragOffset = diff;
             }
 
-            this.updateCarousel();
-        });
+            if (Math.abs(diff) > 10) this.wasDragging = true;
+            this.updateCarousel(); // Real-time update
+        };
 
-        window.addEventListener('mouseup', () => {
-            if (!mouseActive || state !== 'dragging') return;
-            mouseActive = false;
-            state = 'settling';
+        const endDrag = (x) => {
+            if (!this.isDragging) return;
+            this.isDragging = false;
             this.carouselContainer.style.cursor = 'grab';
 
-            this.carouselContainer.querySelectorAll('.carousel-card').forEach(c => {
-                c.style.transition = 'all 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
-            });
+            // Re-enable transitions
+            const cards = this.carouselContainer.querySelectorAll('.carousel-card');
+            cards.forEach(c => c.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)');
 
-            const threshold = this.getCardWidth() * 0.3;
+            // Snap logic - require 40% swipe to change card (less sensitive)
+            const threshold = this.getCardWidth() * 0.4;
             if (this.dragOffset > threshold && this.currentCardIndex > 0) {
                 this.currentCardIndex--;
             } else if (this.dragOffset < -threshold && this.currentCardIndex < this.filteredReports.length - 1) {
@@ -468,10 +357,39 @@ class UnifiedSearch {
 
             this.dragOffset = 0;
             this.updateCarousel();
+        };
 
-            setTimeout(() => {
-                state = 'idle';
-            }, 100);
+        // Touch Listeners (set touchActive flag to block ghost mouse events)
+        this.carouselContainer.addEventListener('touchstart', (e) => {
+            touchActive = true;
+            startDrag(e.touches[0].clientX);
+        }, { passive: true });
+
+        this.carouselContainer.addEventListener('touchmove', (e) => {
+            moveDrag(e.touches[0].clientX);
+        }, { passive: true });
+
+        this.carouselContainer.addEventListener('touchend', (e) => {
+            endDrag(e.changedTouches[0].clientX);
+            // Keep touchActive true briefly to block ghost mouse events
+            setTimeout(() => { touchActive = false; }, 100);
+        }, { passive: true });
+
+        // Mouse Listeners (blocked if touch was just used)
+        this.carouselContainer.addEventListener('mousedown', (e) => {
+            if (touchActive) return; // Block ghost event
+            startDrag(e.clientX);
+        });
+        window.addEventListener('mousemove', (e) => {
+            if (touchActive) return; // Block ghost event
+            if (this.isDragging) {
+                e.preventDefault(); // Prevent selection
+                moveDrag(e.clientX);
+            }
+        });
+        window.addEventListener('mouseup', (e) => {
+            if (touchActive) return; // Block ghost event
+            if (this.isDragging) endDrag(e.clientX);
         });
     }
 
