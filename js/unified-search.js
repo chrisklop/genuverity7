@@ -361,7 +361,8 @@ class UnifiedSearch {
         const moveDrag = (x) => {
             if (!this.isDragging) return;
             const diff = x - this.startX;
-            const maxIndex = this.getCarouselReports().length - 1;
+            // +1 for the "More Reports" card at the end
+            const maxIndex = this.getCarouselReports().length;
 
             // Resistance at edges
             if ((this.currentCardIndex === 0 && diff > 0) ||
@@ -386,7 +387,8 @@ class UnifiedSearch {
 
             // Snap logic - require 40% swipe to change card (less sensitive)
             const threshold = this.getCardWidth() * 0.4;
-            const maxIndex = this.getCarouselReports().length - 1;
+            // +1 for the "More Reports" card at the end
+            const maxIndex = this.getCarouselReports().length;
 
             if (this.dragOffset > threshold && this.currentCardIndex > 0) {
                 this.currentCardIndex--;
