@@ -367,8 +367,11 @@ class UnifiedSearch {
         }, { passive: true });
 
         this.carouselContainer.addEventListener('touchmove', (e) => {
+            if (this.isDragging && e.cancelable) {
+                e.preventDefault(); // Prevent native scrolling/gestures while dragging
+            }
             moveDrag(e.touches[0].clientX);
-        }, { passive: true });
+        }, { passive: false }); // CRITICAL: Must be false to allow preventDefault
 
         this.carouselContainer.addEventListener('touchend', (e) => {
             endDrag(e.changedTouches[0].clientX);
@@ -416,8 +419,9 @@ class UnifiedSearch {
                          alt="Chart Preview"
                          class="card-preview-img"
                          loading="lazy"
+                         draggable="false"
                          onerror="this.style.display='none'; this.parentElement.querySelector('.chart-container-wrapper').style.display='block';"
-                         style="width:100%; height:100%; object-fit:cover; display:block;"
+                         style="width:100%; height:100%; object-fit:cover; display:block; user-select:none; -webkit-user-drag:none;"
                     >
                     <div class="chart-container-wrapper" style="display:none; width:100%; height:100%;">
                         ${chartHTML}
@@ -434,7 +438,7 @@ class UnifiedSearch {
                         <div class="card-meta">
                             <span><i data-lucide="calendar" style="width:12px;height:12px;"></i> ${report.date}</span>
                         </div>
-                        <a href="javascript:void(0)" class="card-cta" data-slug="${report.slug}">Read</a>
+                        <button type="button" class="card-cta" data-slug="${report.slug}">Read</button>
                     </div>
                 </div>
             `;
