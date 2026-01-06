@@ -153,30 +153,34 @@ class UnifiedSearch {
             // Use deltaX for horizontal scroll, fallback to deltaY for vertical scroll wheels
             const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
 
-            // Ignore tiny movements
-            if (Math.abs(delta) < 2) return;
+            // Ignore tiny movements (noise)
+            if (Math.abs(delta) < 1) return;
 
             e.preventDefault();
 
-            // Accumulate delta for smooth feel
+            // Accumulate delta
             accumulatedDelta += delta;
 
-            // Debounce: wait for gesture to settle before snapping
+            const maxIndex = this.getCarouselReports().length; // +1 for More Reports card
+            // Lower threshold for "snappier" feel (was 50)
+            const threshold = 25;
+
+            // IMMEDIATE TRIGGER: Don't wait for user to stop swiping
+            if (accumulatedDelta > threshold && this.currentCardIndex < maxIndex) {
+                this.currentCardIndex++;
+                this.updateCarousel();
+                accumulatedDelta = 0; // Reset immediately to allow continuous swiping
+            } else if (accumulatedDelta < -threshold && this.currentCardIndex > 0) {
+                this.currentCardIndex--;
+                this.updateCarousel();
+                accumulatedDelta = 0; // Reset immediately
+            }
+
+            // Cleanup: If user stops swiping without triggering, clear the accumulator
             clearTimeout(wheelTimeout);
             wheelTimeout = setTimeout(() => {
-                const maxIndex = this.getCarouselReports().length; // +1 for More Reports card
-                const threshold = 50; // Pixels of scroll to trigger card change
-
-                if (accumulatedDelta > threshold && this.currentCardIndex < maxIndex) {
-                    this.currentCardIndex++;
-                    this.updateCarousel();
-                } else if (accumulatedDelta < -threshold && this.currentCardIndex > 0) {
-                    this.currentCardIndex--;
-                    this.updateCarousel();
-                }
-
                 accumulatedDelta = 0;
-            }, 100);
+            }, 50); // Short timeout to clear stale deltas
         }, { passive: false });
     }
 
