@@ -196,17 +196,20 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
-           SECTION NAVIGATION
+           SECTION NAVIGATION - Attached to navbar
            ═══════════════════════════════════════════════════════════════ */
         .section-nav {
             position: sticky;
             top: 72px;
             z-index: 100;
-            background: rgba(10, 10, 20, 0.95);
-            backdrop-filter: blur(20px);
+            background: rgba(5, 10, 20, 0.98);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-top: 1px solid var(--border-subtle);
             border-bottom: 1px solid var(--border-subtle);
-            padding: 16px 0;
+            padding: 12px 0;
             overflow-x: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .section-nav-inner {
@@ -832,7 +835,7 @@
 </head>
 <body>
     <!-- Shared Navigation -->
-    <div id="shared-nav"></div>
+    <div id="navbar-placeholder" data-page-type="experience"></div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -971,7 +974,7 @@
     </footer>
 
     <!-- Shared Footer -->
-    <div id="shared-footer"></div>
+    <div id="footer-placeholder"></div>
 
     <script>
         // Initialize Lucide icons
