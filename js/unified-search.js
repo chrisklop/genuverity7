@@ -30,6 +30,7 @@ class UnifiedSearch {
         this.startX = 0;
         this.currentX = 0;
         this.wasDragging = false;    // Distinguish click vs drag
+        this.lastTouchEnd = 0;       // Timestamp for iOS synthesized click protection
 
         this.init();
     }
@@ -371,6 +372,7 @@ class UnifiedSearch {
 
         this.carouselContainer.addEventListener('touchend', (e) => {
             endDrag(e.changedTouches[0].clientX);
+            this.lastTouchEnd = Date.now(); // Track for iOS synthesized click protection
             // Keep touchActive true briefly to block ghost mouse events
             setTimeout(() => { touchActive = false; }, 100);
         }, { passive: true });
@@ -439,6 +441,13 @@ class UnifiedSearch {
 
             // Direct onclick to bypass potential listener conflicts
             card.onclick = (e) => {
+                // Block iOS synthesized clicks (fired ~300ms after touch)
+                if (Date.now() - this.lastTouchEnd < 400) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+
                 if (this.wasDragging) {
                     e.preventDefault();
                     e.stopPropagation();
