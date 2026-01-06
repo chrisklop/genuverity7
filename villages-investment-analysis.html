@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Investment Analysis: The Villages, FL | GenuVerity</title>
+    <meta name="description" content="Comprehensive investment intelligence for short-term rental acquisition in The Villages, Florida. Regulatory matrix, financial architecture, and operational framework.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Strategic Investment Analysis: The Villages, FL">
+    <meta property="og:description" content="Investment intelligence for Florida's Friendliest Hometown">
+    <meta property="og:type" content="website">
+
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/villages-investment-data.js"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Shared Components -->
+    <script src="js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="css/shared-components.css?v=1735600000">
+
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           CSS VARIABLES - Florida Investment Theme
+           ═══════════════════════════════════════════════════════════════ */
+        :root {
+            --bg-void: #000000;
+            --bg-primary: #0a0a14;
+            --bg-secondary: #0f0f1a;
+            --bg-card: #1a1a2e;
+            --text-primary: #f0f0f0;
+            --text-secondary: #c0c0c8;
+            --text-muted: #6b7280;
+            --accent-emerald: #10b981;
+            --accent-cyan: #06b6d4;
+            --accent-amber: #f59e0b;
+            --accent-blue: #3b82f6;
+            --accent-red: #ef4444;
+            --glow-emerald: rgba(16, 185, 129, 0.5);
+            --glow-cyan: rgba(6, 182, 212, 0.5);
+            --glow-amber: rgba(245, 158, 11, 0.5);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --font-display: 'Inter', -apple-system, sans-serif;
+            --font-body: 'Crimson Pro', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --florida-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #f59e0b 100%);
+        }
+
+        /* Reset */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-emerald) var(--bg-primary);
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-void);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--accent-emerald);
+            color: black;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           HERO SECTION
+           ═══════════════════════════════════════════════════════════════ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 30% at 20% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 50px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-emerald);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: var(--florida-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            max-width: 600px;
+        }
+
+        .hero-tagline {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            opacity: 0.8;
+            margin-bottom: 48px;
+        }
+
+        /* Dedication Box */
+        .dedication-box {
+            max-width: 500px;
+            padding: 32px;
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 16px;
+            margin-bottom: 48px;
+        }
+
+        .dedication-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .dedication-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SECTION NAVIGATION
+           ═══════════════════════════════════════════════════════════════ */
+        .section-nav {
+            position: sticky;
+            top: 72px;
+            z-index: 100;
+            background: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 16px 0;
+            overflow-x: auto;
+        }
+
+        .section-nav-inner {
+            display: flex;
+            gap: 8px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .section-nav-item:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .section-nav-item.active {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--accent-emerald);
+            color: var(--accent-emerald);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           CONTENT SECTIONS
+           ═══════════════════════════════════════════════════════════════ */
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-icon {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            color: var(--accent-emerald);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           KEY METRICS DASHBOARD
+           ═══════════════════════════════════════════════════════════════ */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            border-color: var(--accent-emerald);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .metric-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .metric-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 10px;
+            color: var(--accent-emerald);
+        }
+
+        .metric-name {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .metric-formula {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .metric-target {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent-emerald);
+        }
+
+        .metric-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 12px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           JURISDICTION MAP
+           ═══════════════════════════════════════════════════════════════ */
+        .jurisdiction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .jurisdiction-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .jurisdiction-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .jurisdiction-card.legal::before { background: var(--accent-emerald); }
+        .jurisdiction-card.prohibited::before { background: var(--accent-red); }
+        .jurisdiction-card.complex::before { background: var(--accent-amber); }
+
+        .jurisdiction-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .jurisdiction-card.legal .jurisdiction-status {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-emerald);
+        }
+
+        .jurisdiction-card.prohibited .jurisdiction-status {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--accent-red);
+        }
+
+        .jurisdiction-card.complex .jurisdiction-status {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--accent-amber);
+        }
+
+        .jurisdiction-name {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .jurisdiction-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.9rem;
+        }
+
+        .jurisdiction-detail:last-of-type {
+            border-bottom: none;
+        }
+
+        .jurisdiction-label {
+            color: var(--text-muted);
+        }
+
+        .jurisdiction-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .jurisdiction-recommendation {
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           RISK MATRIX
+           ═══════════════════════════════════════════════════════════════ */
+        .risk-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .risk-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 20px;
+            padding: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            align-items: start;
+        }
+
+        .risk-severity {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .risk-severity.critical {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-red);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .risk-severity.high {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-amber);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .risk-severity.medium {
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .risk-content h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .risk-content p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .risk-mitigation {
+            padding: 12px 16px;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--accent-emerald);
+            max-width: 300px;
+        }
+
+        .risk-mitigation::before {
+            content: 'Mitigation: ';
+            font-weight: 600;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           TENANT SEGMENTS
+           ═══════════════════════════════════════════════════════════════ */
+        .segment-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .segment-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .segment-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .segment-header {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .segment-icon {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+        }
+
+        .segment-card:nth-child(1) .segment-icon { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+        .segment-card:nth-child(2) .segment-icon { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); }
+        .segment-card:nth-child(3) .segment-icon { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); }
+
+        .segment-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .segment-season {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .segment-body {
+            padding: 0 24px 24px;
+        }
+
+        .segment-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .segment-stat {
+            text-align: center;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+
+        .segment-stat-value {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-emerald);
+        }
+
+        .segment-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .segment-requirements {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .segment-req {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: var(--accent-emerald);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           RECOMMENDATION SECTION
+           ═══════════════════════════════════════════════════════════════ */
+        .recommendation-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+        }
+
+        .recommendation-title {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--accent-emerald);
+        }
+
+        .recommendation-summary {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            max-width: 700px;
+            margin: 0 auto 32px;
+            line-height: 1.8;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .calendar-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .calendar-quarter {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+        }
+
+        .calendar-strategy {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .calendar-revenue {
+            font-size: 0.9rem;
+            color: var(--accent-emerald);
+        }
+
+        .priorities-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .priority-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--accent-emerald);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SOURCES SECTION
+           ═══════════════════════════════════════════════════════════════ */
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 12px;
+        }
+
+        .source-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .source-item:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        .source-number {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            flex-shrink: 0;
+        }
+
+        .source-title {
+            font-size: 0.85rem;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .source-trust {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-emerald);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════════════════════════ */
+        .experience-footer {
+            text-align: center;
+            padding: 60px 24px;
+            border-top: 1px solid var(--border-subtle);
+            background: rgba(10, 10, 20, 0.5);
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer-logo span:first-child { color: var(--text-primary); }
+        .footer-logo span:last-child { color: var(--accent-emerald); }
+
+        .footer-tagline {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════════════════════════ */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 100px 20px 60px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .risk-item {
+                grid-template-columns: 1fr;
+            }
+
+            .risk-mitigation {
+                max-width: 100%;
+            }
+
+            .recommendation-box {
+                padding: 32px 20px;
+            }
+
+            .sources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Shared Navigation -->
+    <div id="shared-nav"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">
+            <i data-lucide="trending-up" style="width: 14px; height: 14px;"></i>
+            Investment Intelligence Dossier
+        </div>
+
+        <h1 class="hero-title">Strategic Investment Analysis</h1>
+        <p class="hero-subtitle">Short-Term Rental Acquisition & Operational Framework in The Villages, FL</p>
+        <p class="hero-tagline">"Florida's Friendliest Hometown"</p>
+
+        <div class="dedication-box">
+            <p class="dedication-text">"For Laura — your next chapter starts with the right foundation."</p>
+            <p class="dedication-subtitle">Smart investing is the art of finding opportunity where others see complexity.</p>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>Scroll to Explore</span>
+            <i data-lucide="chevron-down" style="width: 20px; height: 20px;"></i>
+        </div>
+    </section>
+
+    <!-- Section Navigation -->
+    <nav class="section-nav">
+        <div class="section-nav-inner" id="sectionNav">
+            <!-- Populated by JS -->
+        </div>
+    </nav>
+
+    <!-- Executive Summary Section -->
+    <section class="content-section" id="section-executive">
+        <div class="section-header">
+            <div class="section-icon">
+                <i data-lucide="briefcase" style="width: 32px; height: 32px;"></i>
+            </div>
+            <h2 class="section-title">Executive Intelligence</h2>
+            <p class="section-subtitle">The Villages represents a distinct asset class that behaves differently from standard residential markets due to its master-planned nature and age-restricted governance.</p>
+        </div>
+
+        <div class="metrics-grid" id="metricsGrid">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <!-- Jurisdiction Section -->
+    <section class="content-section" id="section-zoning" style="background: rgba(15, 15, 26, 0.5);">
+        <div class="section-header">
+            <div class="section-icon" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: var(--accent-red);">
+                <i data-lucide="scale" style="width: 32px; height: 32px;"></i>
+            </div>
+            <h2 class="section-title">Regulatory Matrix</h2>
+            <p class="section-subtitle">The community spans three counties with dramatically different STR regulations. Location determines legality.</p>
+        </div>
+
+        <div class="jurisdiction-grid" id="jurisdictionGrid">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <!-- Risk Matrix Section -->
+    <section class="content-section" id="section-risks">
+        <div class="section-header">
+            <div class="section-icon" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: var(--accent-amber);">
+                <i data-lucide="alert-triangle" style="width: 32px; height: 32px;"></i>
+            </div>
+            <h2 class="section-title">Risk Assessment</h2>
+            <p class="section-subtitle">Critical risk factors and their mitigations for successful STR operations.</p>
+        </div>
+
+        <div class="risk-list" id="riskList">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <!-- Tenant Segments Section -->
+    <section class="content-section" id="section-tenants" style="background: rgba(15, 15, 26, 0.5);">
+        <div class="section-header">
+            <div class="section-icon" style="background: rgba(6, 182, 212, 0.1); border-color: rgba(6, 182, 212, 0.3); color: var(--accent-cyan);">
+                <i data-lucide="users" style="width: 32px; height: 32px;"></i>
+            </div>
+            <h2 class="section-title">Market Segments</h2>
+            <p class="section-subtitle">Three distinct tenant demographics with seasonal optimization strategies.</p>
+        </div>
+
+        <div class="segment-cards" id="segmentCards">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <!-- Recommendation Section -->
+    <section class="content-section" id="section-recommendation">
+        <div class="section-header">
+            <div class="section-icon">
+                <i data-lucide="target" style="width: 32px; height: 32px;"></i>
+            </div>
+            <h2 class="section-title">Strategic Recommendation</h2>
+        </div>
+
+        <div class="recommendation-box">
+            <h3 class="recommendation-title">The Optimal Strategy</h3>
+            <p class="recommendation-summary" id="recommendationSummary"></p>
+
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Populated by JS -->
+            </div>
+
+            <h4 style="margin-bottom: 16px; color: var(--text-secondary);">Dashboard Priorities</h4>
+            <div class="priorities-list" id="prioritiesList">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sources Section -->
+    <section class="content-section" id="section-sources" style="background: rgba(15, 15, 26, 0.5);">
+        <div class="section-header">
+            <div class="section-icon" style="background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); color: var(--accent-blue);">
+                <i data-lucide="book-open" style="width: 32px; height: 32px;"></i>
+            </div>
+            <h2 class="section-title">Intelligence Sources</h2>
+            <p class="section-subtitle">25 verified sources supporting this analysis.</p>
+        </div>
+
+        <div class="sources-grid" id="sourcesGrid">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="experience-footer">
+        <div class="footer-logo">
+            <span>Genu</span><span>Verity</span>
+        </div>
+        <p class="footer-tagline">Investment Intelligence You Can Trust</p>
+    </footer>
+
+    <!-- Shared Footer -->
+    <div id="shared-footer"></div>
+
+    <script>
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            const data = VILLAGES_INVESTMENT_DATA;
+
+            // Populate Section Navigation
+            const sectionNav = document.getElementById('sectionNav');
+            const sections = [
+                { id: 'section-executive', name: 'Summary', icon: 'briefcase' },
+                { id: 'section-zoning', name: 'Zoning', icon: 'scale' },
+                { id: 'section-risks', name: 'Risks', icon: 'alert-triangle' },
+                { id: 'section-tenants', name: 'Tenants', icon: 'users' },
+                { id: 'section-recommendation', name: 'Strategy', icon: 'target' },
+                { id: 'section-sources', name: 'Sources', icon: 'book-open' }
+            ];
+
+            sections.forEach(section => {
+                const btn = document.createElement('button');
+                btn.className = 'section-nav-item';
+                btn.innerHTML = `<i data-lucide="${section.icon}" style="width: 14px; height: 14px;"></i> ${section.name}`;
+                btn.onclick = () => document.getElementById(section.id).scrollIntoView({ behavior: 'smooth' });
+                sectionNav.appendChild(btn);
+            });
+
+            // Populate Key Metrics
+            const metricsGrid = document.getElementById('metricsGrid');
+            data.keyMetrics.forEach(metric => {
+                metricsGrid.innerHTML += `
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon">
+                                <i data-lucide="${metric.icon}" style="width: 20px; height: 20px;"></i>
+                            </div>
+                            <div class="metric-name">${metric.name}</div>
+                        </div>
+                        <div class="metric-formula">${metric.formula}</div>
+                        <div class="metric-target">
+                            <i data-lucide="target" style="width: 14px; height: 14px;"></i>
+                            Target: ${metric.target}
+                        </div>
+                        <p class="metric-description">${metric.description}</p>
+                    </div>
+                `;
+            });
+
+            // Populate Jurisdictions
+            const jurisdictionGrid = document.getElementById('jurisdictionGrid');
+            data.jurisdictions.forEach(j => {
+                const statusClass = j.status === 'legal' ? 'legal' : j.status === 'prohibited' ? 'prohibited' : 'complex';
+                const statusText = j.status === 'legal' ? 'STR Legal' : j.status === 'prohibited' ? 'STR Prohibited' : 'Complex';
+                jurisdictionGrid.innerHTML += `
+                    <div class="jurisdiction-card ${statusClass}">
+                        <div class="jurisdiction-status">
+                            <i data-lucide="${j.status === 'legal' ? 'check' : j.status === 'prohibited' ? 'x' : 'alert-circle'}" style="width: 12px; height: 12px;"></i>
+                            ${statusText}
+                        </div>
+                        <h3 class="jurisdiction-name">${j.name}</h3>
+                        <div class="jurisdiction-detail">
+                            <span class="jurisdiction-label">Min Rental</span>
+                            <span class="jurisdiction-value">${j.minRental}</span>
+                        </div>
+                        <div class="jurisdiction-detail">
+                            <span class="jurisdiction-label">Tax Rate</span>
+                            <span class="jurisdiction-value">${j.taxRate}</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 12px;">${j.notes}</p>
+                        <div class="jurisdiction-recommendation" style="color: ${j.color};">${j.recommendation}</div>
+                    </div>
+                `;
+            });
+
+            // Populate Risks
+            const riskList = document.getElementById('riskList');
+            data.riskFactors.forEach(risk => {
+                riskList.innerHTML += `
+                    <div class="risk-item">
+                        <div class="risk-severity ${risk.severity}">
+                            ${risk.severity.charAt(0).toUpperCase()}
+                        </div>
+                        <div class="risk-content">
+                            <h4>${risk.name}</h4>
+                            <p>${risk.description}</p>
+                        </div>
+                        <div class="risk-mitigation">${risk.mitigation}</div>
+                    </div>
+                `;
+            });
+
+            // Populate Tenant Segments
+            const segmentCards = document.getElementById('segmentCards');
+            data.tenantSegments.forEach(seg => {
+                segmentCards.innerHTML += `
+                    <div class="segment-card">
+                        <div class="segment-header">
+                            <div class="segment-icon">
+                                <i data-lucide="${seg.icon}" style="width: 28px; height: 28px;"></i>
+                            </div>
+                            <div>
+                                <h3 class="segment-title">${seg.name}</h3>
+                                <p class="segment-season">${seg.season}</p>
+                            </div>
+                        </div>
+                        <div class="segment-body">
+                            <div class="segment-stats">
+                                <div class="segment-stat">
+                                    <div class="segment-stat-value">${seg.monthlyRate}</div>
+                                    <div class="segment-stat-label">Monthly Rate</div>
+                                </div>
+                                <div class="segment-stat">
+                                    <div class="segment-stat-value">${seg.avgStay}</div>
+                                    <div class="segment-stat-label">Avg Stay</div>
+                                </div>
+                            </div>
+                            <div class="segment-requirements">
+                                ${seg.requirements.map(r => `<span class="segment-req"><i data-lucide="check" style="width: 10px; height: 10px;"></i> ${r}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Populate Recommendation
+            document.getElementById('recommendationSummary').textContent = data.recommendation.summary;
+
+            const calendarGrid = document.getElementById('calendarGrid');
+            data.recommendation.calendar.forEach(cal => {
+                calendarGrid.innerHTML += `
+                    <div class="calendar-item">
+                        <div class="calendar-quarter">${cal.quarter}</div>
+                        <div class="calendar-strategy">${cal.strategy}</div>
+                        <div class="calendar-revenue">${cal.revenue}</div>
+                    </div>
+                `;
+            });
+
+            const prioritiesList = document.getElementById('prioritiesList');
+            data.recommendation.dashboardPriorities.forEach(p => {
+                prioritiesList.innerHTML += `
+                    <div class="priority-item">
+                        <i data-lucide="check-circle" style="width: 16px; height: 16px;"></i>
+                        ${p}
+                    </div>
+                `;
+            });
+
+            // Populate Sources
+            const sourcesGrid = document.getElementById('sourcesGrid');
+            data.sources.forEach(source => {
+                sourcesGrid.innerHTML += `
+                    <a href="${source.url}" target="_blank" rel="noopener" class="source-item">
+                        <div class="source-number">${source.id}</div>
+                        <span class="source-title">${source.title}</span>
+                        <span class="source-trust">${source.trust}%</span>
+                    </a>
+                `;
+            });
+
+            // Re-initialize icons after dynamic content
+            lucide.createIcons();
+
+            // GSAP Animations
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 0.8, delay: 0.2 });
+            gsap.from('.hero-title', { opacity: 0, y: 30, duration: 0.8, delay: 0.4 });
+            gsap.from('.hero-subtitle', { opacity: 0, y: 30, duration: 0.8, delay: 0.6 });
+            gsap.from('.dedication-box', { opacity: 0, y: 30, duration: 0.8, delay: 0.8 });
+
+            // Animate cards on scroll
+            gsap.utils.toArray('.metric-card, .jurisdiction-card, .risk-item, .segment-card').forEach(card => {
+                gsap.from(card, {
+                    opacity: 0,
+                    y: 40,
+                    duration: 0.6,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
