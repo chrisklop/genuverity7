@@ -436,6 +436,40 @@ class UnifiedSearch {
             if (touchActive) return; // Block ghost event
             if (this.isDragging) endDrag(e.clientX);
         });
+
+        // Trackpad/Mouse Wheel Support (two-finger swipe on macOS)
+        let wheelTimeout = null;
+        let accumulatedDelta = 0;
+
+        this.carouselContainer.addEventListener('wheel', (e) => {
+            // Use deltaX for horizontal scroll, fallback to deltaY for vertical scroll wheels
+            const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+
+            // Ignore tiny movements
+            if (Math.abs(delta) < 2) return;
+
+            e.preventDefault();
+
+            // Accumulate delta for smooth feel
+            accumulatedDelta += delta;
+
+            // Debounce: wait for gesture to settle before snapping
+            clearTimeout(wheelTimeout);
+            wheelTimeout = setTimeout(() => {
+                const maxIndex = this.getCarouselReports().length; // +1 for More Reports card
+                const threshold = 50; // Pixels of scroll to trigger card change
+
+                if (accumulatedDelta > threshold && this.currentCardIndex < maxIndex) {
+                    this.currentCardIndex++;
+                    this.updateCarousel();
+                } else if (accumulatedDelta < -threshold && this.currentCardIndex > 0) {
+                    this.currentCardIndex--;
+                    this.updateCarousel();
+                }
+
+                accumulatedDelta = 0;
+            }, 100);
+        }, { passive: false });
     }
 
     renderCarousel() {
