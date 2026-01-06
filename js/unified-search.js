@@ -41,6 +41,12 @@ class UnifiedSearch {
         return window.innerWidth <= 768 ? 300 : 360;
     }
 
+    // CRITICAL: Limit carousel items to prevent iOS crash (out of memory)
+    getCarouselReports() {
+        // Limit to 15 items maximum for 3D performance
+        return this.filteredReports.slice(0, 15);
+    }
+
     init() {
         this.cacheDOM();
         this.bindEvents();
@@ -327,9 +333,11 @@ class UnifiedSearch {
         const moveDrag = (x) => {
             if (!this.isDragging) return;
             const diff = x - this.startX;
+            const maxIndex = this.getCarouselReports().length - 1;
+
             // Resistance at edges
             if ((this.currentCardIndex === 0 && diff > 0) ||
-                (this.currentCardIndex === this.filteredReports.length - 1 && diff < 0)) {
+                (this.currentCardIndex === maxIndex && diff < 0)) {
                 this.dragOffset = diff * 0.4;
             } else {
                 this.dragOffset = diff;
@@ -350,9 +358,11 @@ class UnifiedSearch {
 
             // Snap logic - require 40% swipe to change card (less sensitive)
             const threshold = this.getCardWidth() * 0.4;
+            const maxIndex = this.getCarouselReports().length - 1;
+
             if (this.dragOffset > threshold && this.currentCardIndex > 0) {
                 this.currentCardIndex--;
-            } else if (this.dragOffset < -threshold && this.currentCardIndex < this.filteredReports.length - 1) {
+            } else if (this.dragOffset < -threshold && this.currentCardIndex < maxIndex) {
                 this.currentCardIndex++;
             }
 
@@ -403,7 +413,9 @@ class UnifiedSearch {
         this.carouselTrack.innerHTML = '';
         if (this.carouselDots) this.carouselDots.innerHTML = '';
 
-        this.filteredReports.forEach((report, index) => {
+        const displayReports = this.getCarouselReports();
+
+        displayReports.forEach((report, index) => {
             const card = document.createElement('div');
             card.className = 'carousel-card';
             card.dataset.index = index;
@@ -539,7 +551,9 @@ class UnifiedSearch {
 
     navigateCarousel(direction) {
         const newIndex = this.currentCardIndex + direction;
-        if (newIndex >= 0 && newIndex < this.filteredReports.length) {
+        const maxIndex = this.getCarouselReports().length;
+
+        if (newIndex >= 0 && newIndex < maxIndex) {
             this.currentCardIndex = newIndex;
             this.updateCarousel();
         }
