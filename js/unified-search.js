@@ -432,7 +432,7 @@ class UnifiedSearch {
                         <div class="card-meta">
                             <span><i data-lucide="calendar" style="width:12px;height:12px;"></i> ${report.date}</span>
                         </div>
-                        <a href="/${report.slug}" class="card-cta">Read</a>
+                        <a href="javascript:void(0)" class="card-cta" data-slug="${report.slug}">Read</a>
                     </div>
                 </div>
             `;
@@ -457,17 +457,6 @@ class UnifiedSearch {
                     }
                 }
             };
-
-            // Block anchor clicks during drag (mobile touch synthesis fix)
-            const anchor = card.querySelector('.card-cta');
-            if (anchor) {
-                anchor.addEventListener('click', (e) => {
-                    if (this.wasDragging) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                    }
-                }, { capture: true }); // Capture phase to run before bubbling
-            }
 
             this.carouselTrack.appendChild(card);
 
