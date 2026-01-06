@@ -85,12 +85,21 @@ server.py
 | Type | Template | Output | Use For |
 |------|----------|--------|---------|
 | **Report** | `docs/report-template-2025.html` | `localreports/*.html` | Fact-checks, verdicts |
-| **Experience** | `timeline.html` + `js/timeline-data.js` | Timeline updates | Historical narratives |
+| **Experience** | `jan-and-dean-california-sound.html` + `js/[name]-data.js` | Root-level `*.html` | Immersive narratives |
 
 **Quick Decision:**
 - Single claim → Report
-- Historical topic/evolution → Experience
+- Historical topic/evolution/dossier → Experience
 - User says "timeline" or "journey" → Experience
+
+### Experience Structure (CRITICAL)
+Experiences are **narrative-driven**, not dashboards. Each experience must have:
+1. **Era/Section-based structure** - like chapters in a book
+2. **Rich prose summaries** - each event needs 3-5 sentence paragraphs, not bullet points
+3. **Inline citations** - reference sources within the narrative text
+4. **Data file** - `js/[experience-name]-data.js` with comprehensive content
+
+**See `jan-and-dean-california-sound.html` and `js/jan-and-dean-data.js` as the canonical template.**
 
 ---
 
@@ -120,6 +129,20 @@ server.py
 - ❌ Gradient on cards
 - ❌ Purple colors
 - ❌ Navigation without leading `/` - ALWAYS use `'/' + report.slug` not `report.slug`
+
+### Auto-Inject Navbar/Footer (IMPORTANT)
+`shared-components.js` **automatically injects** navbar and footer placeholders if they don't exist in the HTML.
+
+**You do NOT need to add placeholder divs manually.** Just include:
+```html
+<script src="js/shared-components.js" defer></script>
+<link rel="stylesheet" href="css/shared-components.css">
+```
+
+The script will:
+- Create `#navbar-placeholder` and prepend to body if missing
+- Create `#footer-placeholder` and append to body if missing
+- Detect page type from body class or `.hero-search` presence
 
 ### Navigation Pattern (MANDATORY)
 ```javascript

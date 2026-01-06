@@ -196,6 +196,278 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
+           ERA SECTIONS - Narrative Content (Jan & Dean style)
+           ═══════════════════════════════════════════════════════════════ */
+        .era-section {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 100px 60px;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .era-section {
+                padding: 60px 20px;
+            }
+        }
+
+        .era-bg-gradient {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .era-section.active .era-bg-gradient {
+            opacity: 1;
+        }
+
+        .era-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 1024px) {
+            .era-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        .era-section:nth-child(even) .era-container {
+            direction: rtl;
+        }
+
+        .era-section:nth-child(even) .era-container > * {
+            direction: ltr;
+        }
+
+        .era-content {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .era-section:nth-child(even) .era-content {
+            transform: translateX(50px);
+        }
+
+        .era-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-bottom: 24px;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .era-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .era-years {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .era-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .era-summary {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .era-tagline {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--accent-cyan);
+            margin-bottom: 30px;
+            padding-left: 16px;
+            border-left: 3px solid var(--accent-cyan);
+        }
+
+        .era-easter-egg {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-emerald);
+            background: rgba(16, 185, 129, 0.1);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .era-easter-egg::before {
+            content: '💡 ';
+        }
+
+        .era-stats {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .era-stat {
+            text-align: left;
+        }
+
+        .era-stat-value {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .era-stat-label {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Era Visual Panel - Event Cards */
+        .era-visual {
+            position: relative;
+            min-height: 450px;
+            opacity: 0;
+            transform: translateX(50px) scale(0.95);
+        }
+
+        .era-section:nth-child(even) .era-visual {
+            transform: translateX(-50px) scale(0.95);
+        }
+
+        .visual-frame {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+            padding: 24px;
+        }
+
+        .visual-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Event Cards */
+        .event-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            height: 100%;
+            overflow-y: auto;
+            max-height: 600px;
+        }
+
+        .event-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            border-color: var(--accent-emerald);
+            transform: translateY(-2px);
+        }
+
+        .event-card.highlight {
+            border-color: var(--accent-emerald);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .event-card.tragedy {
+            border-color: var(--accent-red);
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .event-card-year {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+
+        .event-card-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .event-card-summary {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .event-card-impact {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--accent-emerald);
+            margin-top: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .event-card-sources {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .event-card-sources a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .event-card-sources a:hover {
+            text-decoration: underline;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
            SECTION NAVIGATION - Attached to navbar
            ═══════════════════════════════════════════════════════════════ */
         .section-nav {
@@ -865,14 +1137,19 @@
         </div>
     </nav>
 
-    <!-- Executive Summary Section -->
-    <section class="content-section" id="section-executive">
+    <!-- Era Sections - Main Narrative Content -->
+    <div id="erasContainer">
+        <!-- Populated by JS from data.eras -->
+    </div>
+
+    <!-- Quick Reference: Key Metrics -->
+    <section class="content-section" id="section-metrics" style="background: rgba(15, 15, 26, 0.5);">
         <div class="section-header">
             <div class="section-icon">
-                <i data-lucide="briefcase" style="width: 32px; height: 32px;"></i>
+                <i data-lucide="calculator" style="width: 32px; height: 32px;"></i>
             </div>
-            <h2 class="section-title">Executive Intelligence</h2>
-            <p class="section-subtitle">The Villages represents a distinct asset class that behaves differently from standard residential markets due to its master-planned nature and age-restricted governance.</p>
+            <h2 class="section-title">Key Investment Metrics</h2>
+            <p class="section-subtitle">The formulas that separate profitable Villages investments from money pits.</p>
         </div>
 
         <div class="metrics-grid" id="metricsGrid">
@@ -880,14 +1157,14 @@
         </div>
     </section>
 
-    <!-- Jurisdiction Section -->
-    <section class="content-section" id="section-zoning" style="background: rgba(15, 15, 26, 0.5);">
+    <!-- Quick Reference: Jurisdictions -->
+    <section class="content-section" id="section-jurisdictions">
         <div class="section-header">
             <div class="section-icon" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: var(--accent-red);">
-                <i data-lucide="scale" style="width: 32px; height: 32px;"></i>
+                <i data-lucide="map" style="width: 32px; height: 32px;"></i>
             </div>
-            <h2 class="section-title">Regulatory Matrix</h2>
-            <p class="section-subtitle">The community spans three counties with dramatically different STR regulations. Location determines legality.</p>
+            <h2 class="section-title">Jurisdiction Quick Reference</h2>
+            <p class="section-subtitle">At-a-glance guide to STR legality by county.</p>
         </div>
 
         <div class="jurisdiction-grid" id="jurisdictionGrid">
@@ -895,14 +1172,14 @@
         </div>
     </section>
 
-    <!-- Risk Matrix Section -->
-    <section class="content-section" id="section-risks">
+    <!-- Quick Reference: Risk Matrix -->
+    <section class="content-section" id="section-risks" style="background: rgba(15, 15, 26, 0.5);">
         <div class="section-header">
             <div class="section-icon" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: var(--accent-amber);">
                 <i data-lucide="alert-triangle" style="width: 32px; height: 32px;"></i>
             </div>
-            <h2 class="section-title">Risk Assessment</h2>
-            <p class="section-subtitle">Critical risk factors and their mitigations for successful STR operations.</p>
+            <h2 class="section-title">Risk Matrix</h2>
+            <p class="section-subtitle">Critical risks and mitigations at a glance.</p>
         </div>
 
         <div class="risk-list" id="riskList">
@@ -910,14 +1187,14 @@
         </div>
     </section>
 
-    <!-- Tenant Segments Section -->
-    <section class="content-section" id="section-tenants" style="background: rgba(15, 15, 26, 0.5);">
+    <!-- Quick Reference: Tenant Segments -->
+    <section class="content-section" id="section-tenants">
         <div class="section-header">
             <div class="section-icon" style="background: rgba(6, 182, 212, 0.1); border-color: rgba(6, 182, 212, 0.3); color: var(--accent-cyan);">
                 <i data-lucide="users" style="width: 32px; height: 32px;"></i>
             </div>
-            <h2 class="section-title">Market Segments</h2>
-            <p class="section-subtitle">Three distinct tenant demographics with seasonal optimization strategies.</p>
+            <h2 class="section-title">Tenant Segment Quick Reference</h2>
+            <p class="section-subtitle">Your three revenue streams at a glance.</p>
         </div>
 
         <div class="segment-cards" id="segmentCards">
@@ -925,17 +1202,17 @@
         </div>
     </section>
 
-    <!-- Recommendation Section -->
-    <section class="content-section" id="section-recommendation">
+    <!-- Strategic Recommendation -->
+    <section class="content-section" id="section-recommendation" style="background: rgba(15, 15, 26, 0.5);">
         <div class="section-header">
             <div class="section-icon">
                 <i data-lucide="target" style="width: 32px; height: 32px;"></i>
             </div>
-            <h2 class="section-title">Strategic Recommendation</h2>
+            <h2 class="section-title">The Bottom Line</h2>
         </div>
 
         <div class="recommendation-box">
-            <h3 class="recommendation-title">The Optimal Strategy</h3>
+            <h3 class="recommendation-title">Strategic Recommendation</h3>
             <p class="recommendation-summary" id="recommendationSummary"></p>
 
             <div class="calendar-grid" id="calendarGrid">
@@ -969,7 +1246,7 @@
         <div class="footer-logo">
             <span>Genu</span><span>Verity</span>
         </div>
-        <p class="footer-tagline">Investment Intelligence You Can Trust</p>
+        <p class="footer-tagline">A GenuVerity Experience</p>
     </footer>
 
     <!-- Footer auto-injected by shared-components.js -->
@@ -981,18 +1258,91 @@
 
             const data = VILLAGES_INVESTMENT_DATA;
 
-            // Populate Section Navigation
+            // ═══════════════════════════════════════════════════════════════
+            // GENERATE ERA SECTIONS (Main narrative content)
+            // ═══════════════════════════════════════════════════════════════
+            const erasContainer = document.getElementById('erasContainer');
+
+            data.eras.forEach((era, index) => {
+                // Build source references for events
+                const buildSourceRefs = (refs) => {
+                    if (!refs || refs.length === 0) return '';
+                    const links = refs.map(refId => {
+                        const source = data.sources.find(s => s.id === refId);
+                        if (source) {
+                            return `<a href="${source.url}" target="_blank" rel="noopener">[${refId}]</a>`;
+                        }
+                        return `[${refId}]`;
+                    }).join(' ');
+                    return `<div class="event-card-sources">Sources: ${links}</div>`;
+                };
+
+                const eraHtml = `
+                    <section class="era-section" data-era="${era.id}" id="${era.id}">
+                        <div class="era-bg-gradient" style="background: radial-gradient(ellipse at ${index % 2 === 0 ? '30%' : '70%'} 50%, ${era.colorAlpha} 0%, transparent 60%);"></div>
+                        <div class="era-container">
+                            <div class="era-content">
+                                <div class="era-badge" style="background: ${era.colorAlpha}; border: 1px solid ${era.color};">
+                                    <span class="dot" style="background: ${era.color};"></span>
+                                    <span style="color: ${era.color};">${era.shortName}</span>
+                                </div>
+                                <div class="era-years" style="color: ${era.color};">${era.years}</div>
+                                <h2 class="era-title">${era.name}</h2>
+                                <p class="era-summary">${era.summary}</p>
+                                <p class="era-tagline">${era.tagline}</p>
+                                ${era.easterEgg ? `<div class="era-easter-egg">${era.easterEgg}</div>` : ''}
+                                <div class="era-stats">
+                                    ${era.stats.map(stat => `
+                                        <div class="era-stat">
+                                            <div class="era-stat-value" style="color: ${era.color};">${stat.value}</div>
+                                            <div class="era-stat-label">${stat.label}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            <div class="era-visual">
+                                <div class="visual-frame">
+                                    <div class="event-cards">
+                                        ${era.events.map(event => `
+                                            <div class="event-card ${event.highlight ? 'highlight' : ''} ${event.tragedy ? 'tragedy' : ''}">
+                                                <div class="event-card-year" style="color: ${era.color};">${event.year}${event.date ? ' • ' + event.date : ''}</div>
+                                                <div class="event-card-title">${event.title}</div>
+                                                <p class="event-card-summary">${event.summary}</p>
+                                                ${event.impact ? `<div class="event-card-impact">${event.impact}</div>` : ''}
+                                                ${buildSourceRefs(event.sourceRefs)}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+                erasContainer.innerHTML += eraHtml;
+            });
+
+            // ═══════════════════════════════════════════════════════════════
+            // SECTION NAVIGATION
+            // ═══════════════════════════════════════════════════════════════
             const sectionNav = document.getElementById('sectionNav');
-            const sections = [
-                { id: 'section-executive', name: 'Summary', icon: 'briefcase' },
-                { id: 'section-zoning', name: 'Zoning', icon: 'scale' },
-                { id: 'section-risks', name: 'Risks', icon: 'alert-triangle' },
-                { id: 'section-tenants', name: 'Tenants', icon: 'users' },
+
+            // Add era nav items first
+            data.eras.forEach(era => {
+                const btn = document.createElement('button');
+                btn.className = 'section-nav-item';
+                btn.innerHTML = `<i data-lucide="${era.icon}" style="width: 14px; height: 14px;"></i> ${era.shortName}`;
+                btn.onclick = () => document.getElementById(era.id).scrollIntoView({ behavior: 'smooth' });
+                sectionNav.appendChild(btn);
+            });
+
+            // Add reference section nav items
+            const referenceSections = [
+                { id: 'section-metrics', name: 'Metrics', icon: 'calculator' },
                 { id: 'section-recommendation', name: 'Strategy', icon: 'target' },
                 { id: 'section-sources', name: 'Sources', icon: 'book-open' }
             ];
 
-            sections.forEach(section => {
+            referenceSections.forEach(section => {
                 const btn = document.createElement('button');
                 btn.className = 'section-nav-item';
                 btn.innerHTML = `<i data-lucide="${section.icon}" style="width: 14px; height: 14px;"></i> ${section.name}`;
@@ -1139,12 +1489,58 @@
             // GSAP Animations
             gsap.registerPlugin(ScrollTrigger);
 
+            // Hero animations
             gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 0.8, delay: 0.2 });
             gsap.from('.hero-title', { opacity: 0, y: 30, duration: 0.8, delay: 0.4 });
             gsap.from('.hero-subtitle', { opacity: 0, y: 30, duration: 0.8, delay: 0.6 });
             gsap.from('.dedication-box', { opacity: 0, y: 30, duration: 0.8, delay: 0.8 });
 
-            // Animate cards on scroll
+            // Era section animations
+            document.querySelectorAll('.era-section').forEach((section, index) => {
+                const content = section.querySelector('.era-content');
+                const visual = section.querySelector('.era-visual');
+                const eventCards = section.querySelectorAll('.event-card');
+                const isEven = index % 2 === 1;
+
+                // Create timeline for each era section
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 70%',
+                        end: 'bottom 30%',
+                        toggleActions: 'play none none none',
+                        onEnter: () => section.classList.add('active'),
+                    }
+                });
+
+                // Animate content
+                tl.to(content, {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.8,
+                    ease: 'power3.out'
+                });
+
+                // Animate visual panel
+                tl.to(visual, {
+                    opacity: 1,
+                    x: 0,
+                    scale: 1,
+                    duration: 0.8,
+                    ease: 'power3.out'
+                }, '-=0.5');
+
+                // Animate event cards staggered
+                tl.to(eventCards, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    stagger: 0.15,
+                    ease: 'power2.out'
+                }, '-=0.3');
+            });
+
+            // Animate reference section cards
             gsap.utils.toArray('.metric-card, .jurisdiction-card, .risk-item, .segment-card').forEach(card => {
                 gsap.from(card, {
                     opacity: 0,
@@ -1157,6 +1553,30 @@
                     }
                 });
             });
+
+            // Update navigation active state on scroll
+            const updateNavActive = () => {
+                const sections = document.querySelectorAll('.era-section, .content-section');
+                const navItems = document.querySelectorAll('.section-nav-item');
+
+                let currentSection = '';
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= 200 && rect.bottom >= 200) {
+                        currentSection = section.id;
+                    }
+                });
+
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.textContent.toLowerCase().includes(currentSection.replace('section-', '').split('-')[0]) ||
+                        item.textContent.toLowerCase().includes(document.getElementById(currentSection)?.dataset?.era?.split('-')[0])) {
+                        item.classList.add('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', updateNavActive);
         });
     </script>
 </body>
