@@ -472,26 +472,26 @@ class UnifiedSearch {
         });
 
     }
-}
 
-renderCarousel() {
-    if (!this.carouselTrack) return;
-    this.carouselTrack.innerHTML = '';
-    if (this.carouselDots) this.carouselDots.innerHTML = '';
 
-    const displayReports = this.getCarouselReports();
+    renderCarousel() {
+        if (!this.carouselTrack) return;
+        this.carouselTrack.innerHTML = '';
+        if (this.carouselDots) this.carouselDots.innerHTML = '';
 
-    displayReports.forEach((report, index) => {
-        const card = document.createElement('div');
-        card.className = 'carousel-card';
-        card.dataset.index = index;
+        const displayReports = this.getCarouselReports();
 
-        // USE DYNAMIC CHART GENERATOR (Fallback)
-        const chartHTML = generateChartForReport(report);
-        const slugBase = report.slug.split('/').pop().replace('.html', '');
-        const thumbPath = `images/thumbnails/${slugBase}.webp?v=1766960197`; // Cache bust thumbnails too
+        displayReports.forEach((report, index) => {
+            const card = document.createElement('div');
+            card.className = 'carousel-card';
+            card.dataset.index = index;
 
-        card.innerHTML = `
+            // USE DYNAMIC CHART GENERATOR (Fallback)
+            const chartHTML = generateChartForReport(report);
+            const slugBase = report.slug.split('/').pop().replace('.html', '');
+            const thumbPath = `images/thumbnails/${slugBase}.webp?v=1766960197`; // Cache bust thumbnails too
+
+            card.innerHTML = `
                 <div class="card-preview">
                     <img src="${thumbPath}" 
                          alt="Chart Preview"
@@ -521,49 +521,49 @@ renderCarousel() {
                 </div>
             `;
 
-        // Direct onclick to bypass potential listener conflicts
-        card.onclick = (e) => {
-            // Block iOS synthesized clicks (fired ~300ms after touch)
-            if (Date.now() - this.lastTouchEnd < 400) {
-                e.preventDefault();
-                e.stopPropagation();
-                return;
-            }
-
-            if (this.wasDragging) {
-                e.preventDefault();
-                e.stopPropagation();
-                return;
-            }
-
-            // Click to center functionality
-            if (index !== this.currentCardIndex) {
-                e.preventDefault();
-                this.goToCard(index);
-            } else {
-                // It's the center card, allow navigation if clicking content
-                // The main card click will bubble up if we don't handle it
-                if (e.target.closest('.card-cta') || e.target.closest('.card-content') || e.target.closest('.carousel-card')) {
-                    window.location.href = '/' + report.slug;
+            // Direct onclick to bypass potential listener conflicts
+            card.onclick = (e) => {
+                // Block iOS synthesized clicks (fired ~300ms after touch)
+                if (Date.now() - this.lastTouchEnd < 400) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
                 }
+
+                if (this.wasDragging) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+
+                // Click to center functionality
+                if (index !== this.currentCardIndex) {
+                    e.preventDefault();
+                    this.goToCard(index);
+                } else {
+                    // It's the center card, allow navigation if clicking content
+                    // The main card click will bubble up if we don't handle it
+                    if (e.target.closest('.card-cta') || e.target.closest('.card-content') || e.target.closest('.carousel-card')) {
+                        window.location.href = '/' + report.slug;
+                    }
+                }
+            };
+
+            this.carouselTrack.appendChild(card);
+
+            if (this.carouselDots) {
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot';
+                dot.addEventListener('click', () => this.goToCard(index));
+                this.carouselDots.appendChild(dot);
             }
-        };
+        });
 
-        this.carouselTrack.appendChild(card);
-
-        if (this.carouselDots) {
-            const dot = document.createElement('div');
-            dot.className = 'carousel-dot';
-            dot.addEventListener('click', () => this.goToCard(index));
-            this.carouselDots.appendChild(dot);
-        }
-    });
-
-    // Add "More Reports" card at the end
-    const moreCard = document.createElement('div');
-    moreCard.className = 'carousel-card more-reports-card';
-    moreCard.dataset.index = displayReports.length;
-    moreCard.innerHTML = `
+        // Add "More Reports" card at the end
+        const moreCard = document.createElement('div');
+        moreCard.className = 'carousel-card more-reports-card';
+        moreCard.dataset.index = displayReports.length;
+        moreCard.innerHTML = `
             <div class="card-preview" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1)); display: flex; align-items: center; justify-content: center;">
                 <div style="text-align: center;">
                     <i data-lucide="library" style="width: 64px; height: 64px; color: var(--accent-cyan); opacity: 0.8;"></i>
@@ -576,100 +576,100 @@ renderCarousel() {
             </div>
         `;
 
-    moreCard.onclick = (e) => {
-        if (Date.now() - this.lastTouchEnd < 400) return;
-        if (this.wasDragging) return;
+        moreCard.onclick = (e) => {
+            if (Date.now() - this.lastTouchEnd < 400) return;
+            if (this.wasDragging) return;
 
-        const moreIndex = displayReports.length;
-        if (moreIndex !== this.currentCardIndex) {
-            e.preventDefault();
-            this.goToCard(moreIndex);
-        } else {
-            // Navigate to reports page or switch to list view
-            this.toggleViewMode();
-        }
-    };
+            const moreIndex = displayReports.length;
+            if (moreIndex !== this.currentCardIndex) {
+                e.preventDefault();
+                this.goToCard(moreIndex);
+            } else {
+                // Navigate to reports page or switch to list view
+                this.toggleViewMode();
+            }
+        };
 
-    this.carouselTrack.appendChild(moreCard);
+        this.carouselTrack.appendChild(moreCard);
 
-    // Add dot for "More Reports" card
-    if (this.carouselDots) {
-        const moreDot = document.createElement('div');
-        moreDot.className = 'carousel-dot';
-        moreDot.addEventListener('click', () => this.goToCard(displayReports.length));
-        this.carouselDots.appendChild(moreDot);
-    }
-
-    if (typeof lucide !== 'undefined') lucide.createIcons();
-    this.updateCarousel();
-}
-
-updateCarousel() {
-    const cards = document.querySelectorAll('.carousel-card');
-    const dots = document.querySelectorAll('.carousel-dot');
-    const dragShift = this.dragOffset; // Pixels to shift
-
-    cards.forEach((card, index) => {
-        // Calculate distance including drag offset
-        // Standard offset: index - currentIndex (e.g., -1, 0, 1)
-        // Convert pixels to index-units for transform calculation
-        const dragIndexShift = dragShift / this.getCardWidth();
-        const offset = (index - this.currentCardIndex) + dragIndexShift;
-
-        const absOffset = Math.abs(offset);
-
-        const translateX = offset * this.getCardWidth();
-        const translateZ = -150 - (absOffset * 50); // Base Z pushback
-        const rotateY = offset * -25;
-
-        // Custom scale logic to keep center large
-        const scale = Math.max(0.7, 1 - (absOffset * 0.15));
-        const opacity = Math.max(0.3, 1 - (absOffset * 0.25));
-        // Strict Z-Index Layering to prevent overlap hijacking
-        let zIndex = 50;
-        if (absOffset < 0.5) zIndex = 100; // Center (Active)
-        else if (absOffset < 1.5) zIndex = 90; // Immediate neighbors
-        else zIndex = 100 - Math.round(absOffset * 10); // Others
-
-        // Special handling for the "center" card (approximate)
-        if (absOffset < 0.5) {
-            card.classList.add('active');
-            card.style.zIndex = zIndex;
-            card.style.transform = `translateX(${translateX}px) translateZ(${Math.abs(offset) * -100}px) rotateY(${rotateY}deg) scale(${scale})`;
-        } else {
-            card.classList.remove('active');
-            card.style.zIndex = zIndex;
-            card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+        // Add dot for "More Reports" card
+        if (this.carouselDots) {
+            const moreDot = document.createElement('div');
+            moreDot.className = 'carousel-dot';
+            moreDot.addEventListener('click', () => this.goToCard(displayReports.length));
+            this.carouselDots.appendChild(moreDot);
         }
 
-        card.style.opacity = opacity > 0 ? opacity : 0;
-        // Enable pointer events for click-to-center on visible side cards
-        card.style.pointerEvents = opacity > 0.3 ? 'auto' : 'none';
-    });
-
-    dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === this.currentCardIndex);
-    });
-
-    if (this.currentIndexDisplay) {
-        this.currentIndexDisplay.textContent = this.currentCardIndex + 1;
-    }
-}
-
-navigateCarousel(direction) {
-    const newIndex = this.currentCardIndex + direction;
-    const maxIndex = this.getCarouselReports().length;
-
-    if (newIndex >= 0 && newIndex < maxIndex) {
-        this.currentCardIndex = newIndex;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
         this.updateCarousel();
     }
-}
 
-goToCard(index) {
-    this.currentCardIndex = index;
-    this.updateCarousel();
-}
+    updateCarousel() {
+        const cards = document.querySelectorAll('.carousel-card');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const dragShift = this.dragOffset; // Pixels to shift
+
+        cards.forEach((card, index) => {
+            // Calculate distance including drag offset
+            // Standard offset: index - currentIndex (e.g., -1, 0, 1)
+            // Convert pixels to index-units for transform calculation
+            const dragIndexShift = dragShift / this.getCardWidth();
+            const offset = (index - this.currentCardIndex) + dragIndexShift;
+
+            const absOffset = Math.abs(offset);
+
+            const translateX = offset * this.getCardWidth();
+            const translateZ = -150 - (absOffset * 50); // Base Z pushback
+            const rotateY = offset * -25;
+
+            // Custom scale logic to keep center large
+            const scale = Math.max(0.7, 1 - (absOffset * 0.15));
+            const opacity = Math.max(0.3, 1 - (absOffset * 0.25));
+            // Strict Z-Index Layering to prevent overlap hijacking
+            let zIndex = 50;
+            if (absOffset < 0.5) zIndex = 100; // Center (Active)
+            else if (absOffset < 1.5) zIndex = 90; // Immediate neighbors
+            else zIndex = 100 - Math.round(absOffset * 10); // Others
+
+            // Special handling for the "center" card (approximate)
+            if (absOffset < 0.5) {
+                card.classList.add('active');
+                card.style.zIndex = zIndex;
+                card.style.transform = `translateX(${translateX}px) translateZ(${Math.abs(offset) * -100}px) rotateY(${rotateY}deg) scale(${scale})`;
+            } else {
+                card.classList.remove('active');
+                card.style.zIndex = zIndex;
+                card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+            }
+
+            card.style.opacity = opacity > 0 ? opacity : 0;
+            // Enable pointer events for click-to-center on visible side cards
+            card.style.pointerEvents = opacity > 0.3 ? 'auto' : 'none';
+        });
+
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === this.currentCardIndex);
+        });
+
+        if (this.currentIndexDisplay) {
+            this.currentIndexDisplay.textContent = this.currentCardIndex + 1;
+        }
+    }
+
+    navigateCarousel(direction) {
+        const newIndex = this.currentCardIndex + direction;
+        const maxIndex = this.getCarouselReports().length;
+
+        if (newIndex >= 0 && newIndex < maxIndex) {
+            this.currentCardIndex = newIndex;
+            this.updateCarousel();
+        }
+    }
+
+    goToCard(index) {
+        this.currentCardIndex = index;
+        this.updateCarousel();
+    }
 }
 
 // Global toggle functions for buttons
