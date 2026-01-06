@@ -16,7 +16,7 @@ const SHARED_NAV_HTML = `
         <div class="navbar-center" id="navSearchContainer">
             <div class="navbar-search-container">
                 <i data-lucide="search" style="width:16px; color:var(--accent-cyan);"></i>
-                <input type="text" class="navbar-search-input" placeholder="Search Intelligence..." id="navSearchInput">
+                <input type="text" class="navbar-search-input" placeholder="Search Intel..." id="navSearchInput">
                 <!-- Dropdown for autocomplete -->
                 <div class="nexus-dropdown" id="navSearchDropdown"></div>
             </div>

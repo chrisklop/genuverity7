@@ -71,6 +71,7 @@ class UnifiedSearch {
 
         // View Toggles
         this.viewToggleBtn = document.getElementById('viewToggleBtn');
+        this.listViewLink = document.getElementById('listViewLink');
         this.listView = document.getElementById('listView');
         this.carouselSection = document.getElementById('carouselSection');
     }
@@ -131,9 +132,17 @@ class UnifiedSearch {
             });
         }
 
-        // View Toggle
+        // View Toggle (button in top-right, if present)
         if (this.viewToggleBtn) {
             this.viewToggleBtn.addEventListener('click', () => this.toggleViewMode());
+        }
+
+        // List View Link (in carousel footer)
+        if (this.listViewLink) {
+            this.listViewLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.toggleViewMode();
+            });
         }
     }
 
@@ -164,21 +173,18 @@ class UnifiedSearch {
 
     toggleViewMode() {
         this.isListView = !this.isListView;
-        const icon = this.viewToggleBtn.querySelector('i');
 
         if (this.isListView) {
             this.carouselSection.style.display = 'none';
             this.listView.style.display = 'block';
             this.listView.classList.add('active');
-            this.viewToggleBtn.classList.add('active');
-            if (icon) icon.setAttribute('data-lucide', 'layers');
+            if (this.listViewLink) this.listViewLink.textContent = 'CAROUSEL VIEW';
             this.renderListView();
         } else {
             this.carouselSection.style.display = 'block';
             this.listView.style.display = 'none';
             this.listView.classList.remove('active');
-            this.viewToggleBtn.classList.remove('active');
-            if (icon) icon.setAttribute('data-lucide', 'list');
+            if (this.listViewLink) this.listViewLink.textContent = 'LIST VIEW';
             this.renderCarousel();
         }
 
@@ -189,8 +195,30 @@ class UnifiedSearch {
         if (!this.listView) return;
         this.listView.innerHTML = '';
 
+        // Add header with carousel toggle
+        const header = document.createElement('div');
+        header.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--border-color);';
+        header.innerHTML = `
+            <div style="font-size:1.1rem; color:var(--text-primary); font-weight:600;">
+                <span style="color:var(--accent-cyan);">${this.filteredReports.length}</span> Reports
+            </div>
+            <a href="javascript:void(0)" id="carouselViewLink" style="color:var(--accent-cyan); text-decoration:none; font-size:0.85rem; display:flex; align-items:center; gap:6px;">
+                <i data-lucide="layers" style="width:14px;height:14px;"></i> Carousel View
+            </a>
+        `;
+        this.listView.appendChild(header);
+
+        // Bind carousel link
+        const carouselLink = header.querySelector('#carouselViewLink');
+        if (carouselLink) {
+            carouselLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.toggleViewMode();
+            });
+        }
+
         if (this.filteredReports.length === 0) {
-            this.listView.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-muted);">No reports found matching your criteria.</div>';
+            this.listView.innerHTML += '<div style="text-align:center; padding:40px; color:var(--text-muted);">No reports found matching your criteria.</div>';
             return;
         }
 
@@ -492,6 +520,47 @@ class UnifiedSearch {
                 this.carouselDots.appendChild(dot);
             }
         });
+
+        // Add "More Reports" card at the end
+        const moreCard = document.createElement('div');
+        moreCard.className = 'carousel-card more-reports-card';
+        moreCard.dataset.index = displayReports.length;
+        moreCard.innerHTML = `
+            <div class="card-preview" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1)); display: flex; align-items: center; justify-content: center;">
+                <div style="text-align: center;">
+                    <i data-lucide="library" style="width: 64px; height: 64px; color: var(--accent-cyan); opacity: 0.8;"></i>
+                </div>
+            </div>
+            <div class="card-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                <h3 class="card-title" style="font-size: 1.5rem;">More Reports</h3>
+                <p class="card-excerpt">Browse our complete archive of ${this.filteredReports.length} fact-check reports</p>
+                <button type="button" class="card-cta" style="margin-top: 16px;">View All</button>
+            </div>
+        `;
+
+        moreCard.onclick = (e) => {
+            if (Date.now() - this.lastTouchEnd < 400) return;
+            if (this.wasDragging) return;
+
+            const moreIndex = displayReports.length;
+            if (moreIndex !== this.currentCardIndex) {
+                e.preventDefault();
+                this.goToCard(moreIndex);
+            } else {
+                // Navigate to reports page or switch to list view
+                this.toggleViewMode();
+            }
+        };
+
+        this.carouselTrack.appendChild(moreCard);
+
+        // Add dot for "More Reports" card
+        if (this.carouselDots) {
+            const moreDot = document.createElement('div');
+            moreDot.className = 'carousel-dot';
+            moreDot.addEventListener('click', () => this.goToCard(displayReports.length));
+            this.carouselDots.appendChild(moreDot);
+        }
 
         if (typeof lucide !== 'undefined') lucide.createIcons();
         this.updateCarousel();
