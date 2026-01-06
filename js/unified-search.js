@@ -396,18 +396,19 @@ class UnifiedSearch {
             this.dragOffset = 0;
             this.updateCarousel();
 
-            // Brief delay before allowing clicks again
+            // Brief delay before allowing new interactions
+            // NOTE: Do NOT reset wasDragging here - it blocks iOS synthesized clicks
+            // wasDragging is reset in touchstart when user begins a new gesture
             setTimeout(() => {
                 state = 'idle';
-                this.wasDragging = false;
             }, 100);
         }, { passive: true });
 
         // TOUCH CANCEL (e.g., incoming call)
+        // NOTE: Do NOT reset wasDragging - blocks iOS synthesized clicks
         this.carouselContainer.addEventListener('touchcancel', () => {
             state = 'idle';
             this.dragOffset = 0;
-            this.wasDragging = false;
             this.updateCarousel();
         }, { passive: true });
 
@@ -470,7 +471,6 @@ class UnifiedSearch {
 
             setTimeout(() => {
                 state = 'idle';
-                this.wasDragging = false;
             }, 100);
         });
     }
