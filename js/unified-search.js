@@ -471,8 +471,8 @@ class UnifiedSearch {
             if (this.isDragging) endDrag(e.clientX);
         });
 
-    }, { passive: false });
     }
+}
 
 renderCarousel() {
     if (!this.carouselTrack) return;
