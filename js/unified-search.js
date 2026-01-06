@@ -148,6 +148,7 @@ class UnifiedSearch {
         // Trackpad/Mouse Wheel Support (two-finger swipe on macOS)
         let wheelTimeout = null;
         let accumulatedDelta = 0;
+        let gestureLocked = false; // LOCK: One card per swipe gesture
 
         this.carouselContainer.addEventListener('wheel', (e) => {
             // Use deltaX for horizontal scroll, fallback to deltaY for vertical scroll wheels
@@ -162,25 +163,27 @@ class UnifiedSearch {
             accumulatedDelta += delta;
 
             const maxIndex = this.getCarouselReports().length; // +1 for More Reports card
-            // Lower threshold for "snappier" feel (was 50)
-            const threshold = 25;
+            const threshold = 30; // Moderate threshold
 
-            // IMMEDIATE TRIGGER: Don't wait for user to stop swiping
-            if (accumulatedDelta > threshold && this.currentCardIndex < maxIndex) {
-                this.currentCardIndex++;
-                this.updateCarousel();
-                accumulatedDelta = 0; // Reset immediately to allow continuous swiping
-            } else if (accumulatedDelta < -threshold && this.currentCardIndex > 0) {
-                this.currentCardIndex--;
-                this.updateCarousel();
-                accumulatedDelta = 0; // Reset immediately
+            // LOGIC: Only trigger if NOT locked
+            if (!gestureLocked) {
+                if (accumulatedDelta > threshold && this.currentCardIndex < maxIndex) {
+                    this.currentCardIndex++;
+                    this.updateCarousel();
+                    gestureLocked = true; // LOCK IT: No more moves until swipe ends
+                } else if (accumulatedDelta < -threshold && this.currentCardIndex > 0) {
+                    this.currentCardIndex--;
+                    this.updateCarousel();
+                    gestureLocked = true; // LOCK IT
+                }
             }
 
-            // Cleanup: If user stops swiping without triggering, clear the accumulator
+            // Cleanup: Reset everything when swipe stops
             clearTimeout(wheelTimeout);
             wheelTimeout = setTimeout(() => {
                 accumulatedDelta = 0;
-            }, 50); // Short timeout to clear stale deltas
+                gestureLocked = false; // UNLOCK
+            }, 60); // fast reset to allow rapid distinct swipes
         }, { passive: false });
     }
 
