@@ -176,8 +176,29 @@ function initializeSearchAutocomplete() {
 }
 
 function injectSharedComponents() {
-    const navPlaceholder = document.getElementById('navbar-placeholder');
-    const footerPlaceholder = document.getElementById('footer-placeholder');
+    let navPlaceholder = document.getElementById('navbar-placeholder');
+    let footerPlaceholder = document.getElementById('footer-placeholder');
+
+    // AUTO-INJECT: If placeholders don't exist, create them automatically
+    // This ensures navbar/footer appear on EVERY page without manual setup
+    if (!navPlaceholder) {
+        navPlaceholder = document.createElement('div');
+        navPlaceholder.id = 'navbar-placeholder';
+        // Detect page type from body class or default to 'page'
+        const bodyClasses = document.body.className;
+        if (bodyClasses.includes('landing') || document.querySelector('.hero-search')) {
+            navPlaceholder.setAttribute('data-page-type', 'landing');
+        } else {
+            navPlaceholder.setAttribute('data-page-type', 'page');
+        }
+        document.body.insertBefore(navPlaceholder, document.body.firstChild);
+    }
+
+    if (!footerPlaceholder) {
+        footerPlaceholder = document.createElement('div');
+        footerPlaceholder.id = 'footer-placeholder';
+        document.body.appendChild(footerPlaceholder);
+    }
 
     // Inject reports data script if not already loaded
     if (typeof REPORTS_DATA === 'undefined' && !document.querySelector('script[src*="reports-data.js"]')) {
