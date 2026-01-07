@@ -3,6 +3,27 @@
 
 const EXPERIENCES_DATA = [
     {
+        id: 4,
+        title: "Strategic Investment Analysis: The Villages, FL",
+        subtitle: "Short-Term Rental Acquisition & Operational Framework",
+        slug: "villages-investment-analysis.html",
+        category: "Investment Intelligence",
+        tagClass: "tag-green",
+        catClass: "cat-experience",
+        icon: "trending-up",
+        date: "Jan 2026",
+        events: "25 Sources",
+        duration: "15 min",
+        excerpt: "Comprehensive investment dossier for short-term rental acquisition in Florida's Friendliest Hometown. Regulatory matrix, financial architecture, and strategic recommendations for maximizing ROI.",
+        features: ["Jurisdiction Map", "Risk Matrix", "Tenant Segments", "Dashboard Metrics"],
+        preview: {
+            type: "bar",
+            color: "#10b981",
+            data: [18, 23, 6, 4]
+        },
+        status: "live"
+    },
+    {
         id: 3,
         title: "The Architecture of the California Sound",
         subtitle: "A Comprehensive Historiography of Jan and Dean",
