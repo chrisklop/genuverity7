@@ -1,8 +1,15 @@
 /**
- * GenuVerity Chart Defaults v4.0
+ * GenuVerity Chart Defaults v5.0 - Clean Minimal Style
  * Centralized Chart.js configuration for all reports
- * 
- * Usage: 
+ *
+ * Design Philosophy:
+ * - No gridlines or axis labels (data speaks for itself)
+ * - Generous border radius (8px)
+ * - No legends (rely on tooltips and context)
+ * - Gradient fills for area/line charts
+ * - Smooth curves and animations
+ *
+ * Usage:
  *   <script src="../js/chart-defaults.js"></script>
  *   const chart = createGVChart(ctx, 'line', data, customOptions);
  */
@@ -15,43 +22,45 @@ const GV_CHART_DEFAULTS = {
         success: '#10b981',    // Green
         warning: '#f59e0b',    // Amber
         danger: '#ef4444',     // Red
-        grid: '#1e293b',       // Dark grid lines
-        text: '#cbd5e1',       // Light text
         muted: '#64748b',      // Muted text
-        background: '#111827'  // Card background
+        background: '#0f172a', // Card background
+        tooltipBg: 'rgba(15, 23, 42, 0.95)'
     },
 
     // Typography
     fontFamily: "'Inter', system-ui, sans-serif",
 
-    // Standard options applied to all charts
+    // Clean minimal options - NO gridlines, NO axes, NO legend
     options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
+        animation: {
+            duration: 750,
+            easing: 'easeOutQuart'
+        },
         plugins: {
             legend: {
-                labels: {
-                    color: '#cbd5e1',
-                    font: {
-                        family: "'Inter', system-ui, sans-serif",
-                        size: 12
-                    }
-                }
+                display: false  // No legends - rely on tooltips
             },
             tooltip: {
-                backgroundColor: '#1e293b',
+                enabled: true,
+                backgroundColor: 'rgba(15, 23, 42, 0.95)',
                 titleColor: '#ffffff',
-                bodyColor: '#cbd5e1',
-                borderColor: '#3b82f6',
+                bodyColor: '#94a3b8',
+                borderColor: 'rgba(255, 255, 255, 0.1)',
                 borderWidth: 1,
                 padding: 12,
                 cornerRadius: 8,
+                displayColors: true,
+                boxPadding: 4,
                 titleFont: {
                     family: "'Inter', system-ui, sans-serif",
-                    weight: 600
+                    weight: 600,
+                    size: 13
                 },
                 bodyFont: {
-                    family: "'Inter', system-ui, sans-serif"
+                    family: "'Inter', system-ui, sans-serif",
+                    size: 12
                 }
             },
             watermark: {
@@ -60,34 +69,64 @@ const GV_CHART_DEFAULTS = {
         },
         scales: {
             y: {
-                beginAtZero: true,
-                grid: {
-                    color: '#1e293b'
-                },
-                ticks: {
-                    color: '#cbd5e1',
-                    font: {
-                        family: "'Inter', system-ui, sans-serif",
-                        size: 11
-                    }
-                }
+                display: false,  // Hide Y axis entirely
+                beginAtZero: true
             },
             x: {
-                grid: {
-                    color: '#1e293b',
-                    display: false
-                },
-                ticks: {
-                    color: '#cbd5e1',
-                    font: {
-                        family: "'Inter', system-ui, sans-serif",
-                        size: 11
-                    }
-                }
+                display: false   // Hide X axis entirely
             }
+        },
+        interaction: {
+            intersect: false,
+            mode: 'index'
+        }
+    },
+
+    // Type-specific defaults
+    typeDefaults: {
+        bar: {
+            borderRadius: 8,
+            barThickness: 'flex',
+            maxBarThickness: 50,
+            borderSkipped: false
+        },
+        doughnut: {
+            cutout: '70%',
+            borderWidth: 3,
+            hoverOffset: 8,
+            borderColor: '#0a0a0f'
+        },
+        line: {
+            tension: 0.4,
+            borderWidth: 3,
+            pointRadius: 0,
+            pointHoverRadius: 6,
+            pointHoverBorderWidth: 2,
+            pointHoverBorderColor: '#ffffff',
+            fill: true
+        },
+        pie: {
+            borderWidth: 3,
+            hoverOffset: 8,
+            borderColor: '#0a0a0f'
         }
     }
 };
+
+/**
+ * Create a gradient for line/area charts
+ * @param {CanvasRenderingContext2D} ctx - Canvas context
+ * @param {string} color - Base color (hex)
+ * @param {number} height - Canvas height
+ * @returns {CanvasGradient}
+ */
+function createGVGradient(ctx, color, height = 300) {
+    const gradient = ctx.createLinearGradient(0, 0, 0, height);
+    gradient.addColorStop(0, hexToRgba(color, 0.35));
+    gradient.addColorStop(0.5, hexToRgba(color, 0.15));
+    gradient.addColorStop(1, hexToRgba(color, 0));
+    return gradient;
+}
 
 /**
  * Create a GenuVerity-styled chart
@@ -99,17 +138,21 @@ const GV_CHART_DEFAULTS = {
  */
 function createGVChart(ctx, type, data, customOptions = {}) {
     // Get context if canvas element passed
+    let canvasCtx = ctx;
     if (ctx instanceof HTMLCanvasElement) {
-        ctx = ctx.getContext('2d');
+        canvasCtx = ctx.getContext('2d');
     }
 
-    // Deep merge options
-    const mergedOptions = deepMerge(
-        JSON.parse(JSON.stringify(GV_CHART_DEFAULTS.options)),
-        customOptions
-    );
+    // Start with base options
+    const baseOptions = JSON.parse(JSON.stringify(GV_CHART_DEFAULTS.options));
 
-    // Apply default styling to datasets if not specified
+    // Add type-specific defaults
+    const typeDefaults = GV_CHART_DEFAULTS.typeDefaults[type] || {};
+
+    // Deep merge options
+    const mergedOptions = deepMerge(baseOptions, customOptions);
+
+    // Apply default styling to datasets
     if (data.datasets) {
         data.datasets = data.datasets.map((dataset, index) => {
             const defaultColors = [
@@ -122,17 +165,34 @@ function createGVChart(ctx, type, data, customOptions = {}) {
 
             const color = dataset.borderColor || dataset.backgroundColor || defaultColors[index % defaultColors.length];
 
-            return {
-                borderWidth: 2,
-                tension: 0.4,
-                ...dataset,
-                borderColor: dataset.borderColor || color,
-                backgroundColor: dataset.backgroundColor || (type === 'line' ? hexToRgba(color, 0.1) : color)
+            // Build dataset with type defaults
+            const styledDataset = {
+                ...typeDefaults,
+                ...dataset
             };
+
+            // Line charts get gradient fill
+            if (type === 'line' && !dataset.backgroundColor) {
+                styledDataset.backgroundColor = createGVGradient(canvasCtx, color);
+                styledDataset.borderColor = color;
+                styledDataset.pointHoverBackgroundColor = color;
+            }
+            // Bar charts get consistent styling
+            else if (type === 'bar') {
+                styledDataset.borderRadius = dataset.borderRadius || 8;
+                styledDataset.backgroundColor = dataset.backgroundColor || color;
+            }
+            // Doughnut/Pie get proper border
+            else if (type === 'doughnut' || type === 'pie') {
+                styledDataset.borderColor = dataset.borderColor || '#0a0a0f';
+                styledDataset.borderWidth = dataset.borderWidth || 3;
+            }
+
+            return styledDataset;
         });
     }
 
-    return new Chart(ctx, {
+    return new Chart(canvasCtx, {
         type,
         data,
         options: mergedOptions
@@ -166,5 +226,5 @@ function hexToRgba(hex, alpha) {
 
 // Export for use in modules (optional)
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { GV_CHART_DEFAULTS, createGVChart };
+    module.exports = { GV_CHART_DEFAULTS, createGVChart, createGVGradient, hexToRgba };
 }

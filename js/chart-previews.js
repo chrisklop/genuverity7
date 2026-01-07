@@ -1,8 +1,15 @@
 /**
- * Unified Chart Preview Module for GenuVerity
+ * Unified Chart Preview Module for GenuVerity v2.0
+ * Clean Minimal Style - Matching chart-defaults.js v5.0
  *
  * This module generates mini-chart previews for report cards.
  * Used by: index.html, newsfeed.html, reports.html
+ *
+ * Design Philosophy:
+ * - Clean, minimal aesthetic
+ * - Generous border radius
+ * - Smooth gradients and curves
+ * - No clutter, just beautiful data
  *
  * Chart types: bar, line, donut, network, hbar, timeline
  */
@@ -34,24 +41,27 @@ const ChartPreviews = (function() {
         return colorPalettes.primary;
     }
 
-    // Bar chart (vertical bars)
+    // Bar chart (vertical bars) - Clean minimal style
     function generateBarChart(color, data) {
-        const rawBars = data || Array.from({ length: 8 }, () => Math.random() * 80 + 20);
+        const rawBars = data || Array.from({ length: 6 }, () => Math.random() * 80 + 20);
         const bars = normalizeData(rawBars, 20, 95);
-        const colors = Array.isArray(color) ? color : getPalette(color);
+        const singleColor = Array.isArray(color) ? color[0] : color;
+        const barWidth = Math.min(12, 80 / bars.length);
 
-        return `<div class="chart-container"><div class="chart-bars">${bars.map((h, i) =>
-            `<div class="bar" style="height: ${h}%; background: ${colors[i % colors.length]};"></div>`
+        return `<div class="chart-container"><div class="chart-bars" style="gap: ${Math.max(4, 8 - bars.length)}px;">${bars.map((h) =>
+            `<div class="bar" style="height: ${h}%; background: ${singleColor}; border-radius: 6px; min-width: ${barWidth}px;"></div>`
         ).join('')}</div></div>`;
     }
 
-    // Line chart with gradient fill
+    // Line chart with smooth gradient fill - Clean minimal style
     function generateLineChart(color, data) {
         const rawPoints = data || Array.from({ length: 6 }, () => 20 + Math.random() * 60);
         const pointsData = normalizeData(rawPoints, 15, 85);
         const step = 100 / (pointsData.length - 1);
         const points = pointsData.map((y, i) => ({ x: i * step, y }));
-        const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${100 - p.y}`).join(' ');
+
+        // Generate smooth bezier curve path
+        const pathD = generateSmoothPath(points);
         const areaD = pathD + ` L 100 100 L 0 100 Z`;
         const gradientId = `gradient-${Math.random().toString(36).substr(2, 9)}`;
 
@@ -60,30 +70,58 @@ const ChartPreviews = (function() {
                 <defs>
                     <linearGradient id="${gradientId}" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" style="stop-color:${color};stop-opacity:0.4" />
-                        <stop offset="100%" style="stop-color:${color};stop-opacity:0.05" />
+                        <stop offset="50%" style="stop-color:${color};stop-opacity:0.15" />
+                        <stop offset="100%" style="stop-color:${color};stop-opacity:0" />
                     </linearGradient>
                 </defs>
                 <path class="area" d="${areaD}" fill="url(#${gradientId})"/>
-                <path d="${pathD}" stroke="${color}" stroke-width="3"/>
+                <path d="${pathD}" stroke="${color}" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div></div>`;
     }
 
-    // Donut/Pie chart - supports multi-segment data arrays
+    // Generate smooth bezier curve path for line charts
+    function generateSmoothPath(points) {
+        if (points.length < 2) return '';
+
+        let path = `M ${points[0].x} ${100 - points[0].y}`;
+
+        for (let i = 0; i < points.length - 1; i++) {
+            const p0 = points[Math.max(0, i - 1)];
+            const p1 = points[i];
+            const p2 = points[i + 1];
+            const p3 = points[Math.min(points.length - 1, i + 2)];
+
+            // Catmull-Rom to Bezier conversion
+            const tension = 0.3;
+            const cp1x = p1.x + (p2.x - p0.x) * tension;
+            const cp1y = 100 - (p1.y + (p2.y - p0.y) * tension);
+            const cp2x = p2.x - (p3.x - p1.x) * tension;
+            const cp2y = 100 - (p2.y - (p3.y - p1.y) * tension);
+
+            path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${100 - p2.y}`;
+        }
+
+        return path;
+    }
+
+    // Donut/Pie chart - Clean minimal style with larger cutout
     function generateDonutChart(data, color, colors) {
-        const circumference = 2 * Math.PI * 40;
+        const circumference = 2 * Math.PI * 38; // Slightly smaller radius for thicker ring appearance
 
         // Handle both single percentage (legacy) and array data
         if (typeof data === 'number') {
             // Legacy single-percentage mode
             const offset = circumference * (1 - data / 100);
-            const bgColor = 'rgba(100, 116, 139, 0.2)';
+            const bgColor = 'rgba(100, 116, 139, 0.15)';
             return `<div class="chart-container" style="justify-content: center; align-items: center;">
                 <div class="chart-donut">
                     <svg viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="40" stroke="${bgColor}" stroke-width="12"/>
-                        <circle cx="50" cy="50" r="40" stroke="${color}"
-                            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" stroke-width="12"/>
+                        <circle cx="50" cy="50" r="38" stroke="${bgColor}" stroke-width="14" fill="none"/>
+                        <circle cx="50" cy="50" r="38" stroke="${color}"
+                            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"
+                            stroke-width="14" fill="none" stroke-linecap="round"
+                            style="transform: rotate(-90deg); transform-origin: center;"/>
                     </svg>
                     <span class="donut-label">${data}%</span>
                 </div>
@@ -93,43 +131,34 @@ const ChartPreviews = (function() {
         // Multi-segment donut chart
         const dataArray = Array.isArray(data) ? data : [50, 50];
         const total = dataArray.reduce((a, b) => a + b, 0);
-        const defaultColors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#06b6d4'];
+        const defaultColors = ['#3b82f6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444'];
         const segmentColors = colors && colors.length > 0 ? colors : defaultColors;
 
-        // Generate SVG path segments for pie/donut
+        // Generate SVG segments
         let segments = [];
-        let currentAngle = -90; // Start from top
+        let currentAngle = -90;
 
         dataArray.forEach((value, i) => {
             const percentage = (value / total) * 100;
             const angle = (percentage / 100) * 360;
             const segmentColor = segmentColors[i % segmentColors.length];
-
-            // Calculate arc path
-            const startAngle = currentAngle * (Math.PI / 180);
-            const endAngle = (currentAngle + angle) * (Math.PI / 180);
-
-            const x1 = 50 + 40 * Math.cos(startAngle);
-            const y1 = 50 + 40 * Math.sin(startAngle);
-            const x2 = 50 + 40 * Math.cos(endAngle);
-            const y2 = 50 + 40 * Math.sin(endAngle);
-
-            const largeArc = angle > 180 ? 1 : 0;
-
-            // Create arc segment using stroke-dasharray trick for donut
             const segmentLength = (percentage / 100) * circumference;
             const segmentOffset = ((currentAngle + 90) / 360) * circumference;
 
-            segments.push(`<circle cx="50" cy="50" r="40"
-                stroke="${segmentColor}" stroke-width="12" fill="none"
-                stroke-dasharray="${segmentLength} ${circumference - segmentLength}"
-                stroke-dashoffset="${-segmentOffset}"
+            // Add small gap between segments for cleaner look
+            const gap = 2;
+            const adjustedLength = Math.max(0, segmentLength - gap);
+
+            segments.push(`<circle cx="50" cy="50" r="38"
+                stroke="${segmentColor}" stroke-width="14" fill="none"
+                stroke-dasharray="${adjustedLength} ${circumference - adjustedLength}"
+                stroke-dashoffset="${-segmentOffset - gap/2}"
+                stroke-linecap="round"
                 style="transform-origin: center;"/>`);
 
             currentAngle += angle;
         });
 
-        // Show largest segment percentage in center
         const maxValue = Math.max(...dataArray);
         const maxPercent = Math.round((maxValue / total) * 100);
 
@@ -143,19 +172,19 @@ const ChartPreviews = (function() {
         </div>`;
     }
 
-    // Network graph with nodes and connections
+    // Network graph with nodes and connections - Refined style
     function generateNetworkChart(nodeColor, lineColor, data) {
         const count = (data && data.nodes) ? data.nodes : 10;
         const nodes = Array.from({ length: count }, () => ({
             x: 10 + Math.random() * 80,
             y: 10 + Math.random() * 80,
-            size: 5 + Math.random() * 8
+            size: 6 + Math.random() * 6
         }));
 
-        const nodeColors = [nodeColor, `${nodeColor}cc`, `${nodeColor}99`, `${nodeColor}66`];
+        const nodeColors = [nodeColor, `${nodeColor}dd`, `${nodeColor}bb`, `${nodeColor}99`];
 
         const nodesHTML = nodes.map((n, i) =>
-            `<div class="node" style="left: ${n.x}%; top: ${n.y}%; width: ${n.size}px; height: ${n.size}px; background: ${nodeColors[i % nodeColors.length]}; animation-delay: ${i * 0.15}s;"></div>`
+            `<div class="node" style="left: ${n.x}%; top: ${n.y}%; width: ${n.size}px; height: ${n.size}px; background: ${nodeColors[i % nodeColors.length]}; box-shadow: 0 0 12px ${nodeColors[i % nodeColors.length]}; animation-delay: ${i * 0.15}s;"></div>`
         ).join('');
 
         const linesHTML = nodes.slice(0, Math.floor(count / 2)).map((n, i) => {
@@ -164,40 +193,41 @@ const ChartPreviews = (function() {
             const dy = target.y - n.y;
             const length = Math.sqrt(dx * dx + dy * dy);
             const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-            return `<div class="line" style="left: ${n.x}%; top: ${n.y}%; width: ${length}%; transform: rotate(${angle}deg); background: ${lineColor}; opacity: 0.2;"></div>`;
+            return `<div class="line" style="left: ${n.x}%; top: ${n.y}%; width: ${length}%; transform: rotate(${angle}deg); background: linear-gradient(90deg, ${lineColor}40, ${lineColor}15); height: 2px; border-radius: 1px;"></div>`;
         }).join('');
 
         return `<div class="chart-container"><div class="chart-network">${linesHTML}${nodesHTML}</div></div>`;
     }
 
-    // Horizontal bar chart with labels
+    // Horizontal bar chart - Clean minimal style
     function generateHBarChart(data, colors, labels) {
         const defaultColors = ['#ef4444', '#f59e0b', '#3b82f6', '#10b981', '#06b6d4'];
         const barColors = colors && colors.length > 0 ? colors : defaultColors;
 
-        // Normalize to percentage scale - handle both object and array formats
+        // Normalize to percentage scale
         const maxVal = Math.max(...data.map(d => typeof d === 'object' ? d.value : d));
         const normalizedData = data.map((d, i) => {
             const value = typeof d === 'object' ? d.value : d;
             const label = typeof d === 'object' ? d.label : (labels && labels[i] ? labels[i] : '');
-            return { label, value: (value / maxVal) * 100 };
+            return { label, value: Math.max(8, (value / maxVal) * 100) }; // Min 8% for visibility
         });
 
-        return `<div class="chart-container" style="align-items: center;"><div class="chart-hbars">${normalizedData.map((d, i) =>
-            `<div class="hbar-row">
-                ${d.label ? `<span class="hbar-label">${d.label.replace('\\n', ' ')}</span>` : ''}
-                <div class="hbar" style="width: ${d.value}%; background: ${barColors[i % barColors.length]};"></div>
+        const barHeight = Math.min(24, 70 / normalizedData.length);
+
+        return `<div class="chart-container" style="align-items: center; padding: 8px 0;"><div class="chart-hbars" style="gap: ${Math.max(6, 12 - normalizedData.length * 2)}px;">${normalizedData.map((d, i) =>
+            `<div class="hbar-row" style="height: ${barHeight}px;">
+                <div class="hbar" style="width: ${d.value}%; background: ${barColors[i % barColors.length]}; border-radius: 6px; height: 100%;"></div>
             </div>`
         ).join('')}</div></div>`;
     }
 
-    // Timeline chart with points
+    // Timeline chart with points - Refined style
     function generateTimelineChart(points, color) {
         const colors = [color, `${color}dd`, `${color}bb`, `${color}99`, `${color}77`];
 
         return `<div class="chart-container" style="align-items: center;"><div class="chart-timeline">
-            <div class="timeline-line" style="background: linear-gradient(90deg, ${color}22 0%, ${color} 50%, ${color}22 100%);">
-                ${points.map((p, i) => `<div class="timeline-point" style="left: ${p}%; background: ${colors[i % colors.length]}; box-shadow: 0 0 8px ${colors[i % colors.length]};"></div>`).join('')}
+            <div class="timeline-line" style="background: linear-gradient(90deg, transparent 0%, ${color}30 10%, ${color}50 50%, ${color}30 90%, transparent 100%); height: 3px; border-radius: 2px;">
+                ${points.map((p, i) => `<div class="timeline-point" style="left: ${p}%; background: ${colors[i % colors.length]}; box-shadow: 0 0 10px ${colors[i % colors.length]}; width: 10px; height: 10px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2);"></div>`).join('')}
             </div>
         </div></div>`;
     }
@@ -211,7 +241,6 @@ const ChartPreviews = (function() {
         if (!report.chart) return generateBarChart('#3b82f6');
 
         const c = report.chart;
-        // Defensive fallback: ensure color exists
         const color = c.color || c.colors?.[0] || '#3b82f6';
 
         switch (c.type) {
