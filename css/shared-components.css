@@ -520,7 +520,7 @@
 
     .navbar-search-container {
         max-width: calc(100% - 48px);
-        min-width: 180px;
+        min-width: 200px;
         margin: 0 8px;
     }
 }
