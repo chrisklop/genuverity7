@@ -17,6 +17,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ---
 
+## 🚨 ARCHITECTURAL INVARIANTS (DO NOT CHANGE)
+
+**These are FIXED limits that protect iOS from crashing. NEVER modify:**
+
+| Component | Limit | Why |
+|-----------|-------|-----|
+| **Carousel cards** | 15 max | iOS Safari crashes with 3D transforms on 50+ items |
+| `getCarouselReports()` | `slice(0, 15)` | Hard limit in `unified-search.js:44-47` |
+| **More Reports card** | 16th position | Shows "View All" link to list view |
+
+**Content additions (reports, experiences) must NEVER affect:**
+- `js/unified-search.js` - carousel/search architecture
+- `js/shared-components.js` - navbar/footer injection
+- `index.html` - landing page structure
+
+**If you add 1000 reports, the carousel still shows 15. This is BY DESIGN.**
+
+---
+
 ## ⚠️ PRE-FLIGHT CHECKLIST
 
 ```
@@ -28,6 +47,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 □ Charts: Chart.js with Midnight Tech colors
 □ CHART THUMBNAILS: Run `node tools/sync-chart-configs.js` after creating/editing reports
 □ TESTING: Run npm run test:preview before merging to main
+□ CAROUSEL: Confirm getCarouselReports() still returns slice(0, 15)
 ```
 
 **Shorthand triggers:**
