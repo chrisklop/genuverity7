@@ -479,6 +479,65 @@ class UnifiedSearch {
             }
         });
 
+        // Add "More Reports" card if we have more reports than shown
+        if (this.filteredReports.length > 15) {
+            const moreCard = document.createElement('div');
+            moreCard.className = 'carousel-card more-reports-card';
+            moreCard.dataset.index = displayReports.length;
+
+            const remainingCount = this.filteredReports.length - 15;
+
+            moreCard.innerHTML = `
+                <div class="card-preview more-reports-preview">
+                    <div class="more-reports-icon">
+                        <i data-lucide="layers" style="width:48px;height:48px;color:#06b6d4;"></i>
+                    </div>
+                    <div class="more-reports-count">${remainingCount}+</div>
+                </div>
+                <div class="card-content">
+                    <span class="card-tag tag-cyan">
+                        <i data-lucide="list" style="width:12px;height:12px;"></i>
+                        All Reports
+                    </span>
+                    <h3 class="card-title">View All Reports</h3>
+                    <p class="card-excerpt">Browse our complete archive of ${this.filteredReports.length} fact-checks, investigations, and analyses in list view.</p>
+                    <div class="card-footer">
+                        <div class="card-meta">
+                            <span><i data-lucide="archive" style="width:12px;height:12px;"></i> ${this.filteredReports.length} Total</span>
+                        </div>
+                        <span class="card-cta">Browse All</span>
+                    </div>
+                </div>
+            `;
+
+            moreCard.onclick = (e) => {
+                if (this.wasDragging) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+
+                const cardIndex = displayReports.length;
+                if (cardIndex !== this.currentCardIndex) {
+                    e.preventDefault();
+                    this.goToCard(cardIndex);
+                } else {
+                    // Switch to list view
+                    this.toggleViewMode();
+                }
+            };
+
+            this.carouselTrack.appendChild(moreCard);
+
+            // Add dot for More Reports card
+            if (this.carouselDots) {
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot more-dot';
+                dot.addEventListener('click', () => this.goToCard(displayReports.length));
+                this.carouselDots.appendChild(dot);
+            }
+        }
+
         if (typeof lucide !== 'undefined') lucide.createIcons();
         this.updateCarousel();
     }
@@ -537,7 +596,9 @@ class UnifiedSearch {
 
     navigateCarousel(direction) {
         const newIndex = this.currentCardIndex + direction;
-        const maxIndex = this.getCarouselReports().length;
+        // Include "More Reports" card in count if we have more than 15 reports
+        const hasMoreCard = this.filteredReports.length > 15;
+        const maxIndex = this.getCarouselReports().length + (hasMoreCard ? 1 : 0);
 
         if (newIndex >= 0 && newIndex < maxIndex) {
             this.currentCardIndex = newIndex;

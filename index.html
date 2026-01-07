@@ -1426,6 +1426,54 @@
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
         }
 
+        /* More Reports Card - Special styling */
+        .more-reports-card .more-reports-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-bottom: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .more-reports-card .more-reports-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(6, 182, 212, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .more-reports-card .more-reports-count {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            font-family: var(--font-mono);
+        }
+
+        .more-reports-card .card-cta {
+            background: var(--accent-cyan);
+        }
+
+        .more-reports-card .card-cta:hover {
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+        }
+
+        .carousel-dot.more-dot {
+            background: var(--accent-cyan);
+            opacity: 0.5;
+        }
+
+        .carousel-dot.more-dot.active {
+            background: var(--accent-cyan);
+            opacity: 1;
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
         /* Carousel Navigation */
         .carousel-nav {
             display: flex;
