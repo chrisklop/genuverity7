@@ -1008,6 +1008,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/minneapolis-ice-shooting-what-we-know.html",
+      "destination": "/minneapolis-ice-shooting-what-we-know",
+      "permanent": true
+    },
+    {
+      "source": "/minneapolis-ice-shooting-what-we-know.html",
+      "destination": "/minneapolis-ice-shooting-what-we-know",
+      "permanent": true
+    },
+    {
       "source": "/localreports/minnesota-fraud-investigation-2025.html",
       "destination": "/minnesota-fraud-investigation-2025",
       "permanent": true
@@ -2317,6 +2327,10 @@
     {
       "source": "/mike-lee-marxist-claim-2025",
       "destination": "/localreports/mike-lee-marxist-claim-2025.html"
+    },
+    {
+      "source": "/minneapolis-ice-shooting-what-we-know",
+      "destination": "/localreports/minneapolis-ice-shooting-what-we-know.html"
     },
     {
       "source": "/minnesota-fraud-investigation-2025",

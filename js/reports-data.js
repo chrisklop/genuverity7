@@ -4,6 +4,21 @@
 const REPORTS_DATA = [
     {
         id: 0,
+        title: "Minneapolis ICE Shooting: What We Know So Far",
+        slug: "minneapolis-ice-shooting-what-we-know",
+        category: "U.S. Politics & Policy",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Jan 9, 2026",
+        sources: "24 Sources",
+        readTime: "18 min",
+        verdict: "context",
+        excerpt: "DEVELOPING: Renee Nicole Good, 37, was killed by ICE Agent Jonathan Ross on January 7, 2026. Video evidence contradicts federal claims she 'ran over' the agent. FBI has blocked state investigators. Analysis of confirmed facts, disputed claims, and the federal-state jurisdictional conflict.",
+        chart: {"type":"hbar","color":"#f59e0b","data":[-80,-70,95,85],"labels":["Fed: Ran over agent","Fed: Agent pinned","State: FBI blocking","State: Vehicle away"],"colors":["#ef4444","#ef4444","#10b981","#10b981"]}
+    },
+    {
+        id: 1,
         title: "Quality Audit: Fact-Checking the Fact-Checker",
         slug: "quality-audit-jan-2026",
         category: "Media & Journalism",
@@ -18,7 +33,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#0a0a0f","data":[40,25,20,15],"colors":["#3b82f6","#06b6d4","#10b981","#f59e0b"]}
     },
     {
-        id: 1,
+        id: 2,
         title: "Biden Military Situation Room Image: AI-Generated Political Deepfake",
         slug: "biden-situation-room-image-2025",
         category: "AI & Deepfakes",
@@ -33,7 +48,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[97,94,91,88],"labels":["Hive Moderation","Google AI or Not","Illuminarty","FotoForensics ELA"],"colors":["#ef4444","#ef4444","#ef4444","#ef4444"]}
     },
     {
-        id: 2,
+        id: 3,
         title: "Google AI Overviews Misinformation: When Search Goes Wrong",
         slug: "google-lens-ai-overviews-2025",
         category: "AI & Deepfakes",
@@ -48,7 +63,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[34,28,22,10,6],"labels":["Health/Safety","Factual Errors","Sourcing Issues","Fabrications","Outdated Info"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
-        id: 3,
+        id: 4,
         title: "NATO 'Troops in Coffins': Russian Disinformation Campaign Debunked",
         slug: "nato-troops-coffins-2025",
         category: "Foreign Influence",
@@ -63,7 +78,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[38,27,18,12,5],"labels":["Recycled Photos","AI-Generated Images","Fake Documents","Misattributed Video","Fabricated Quotes"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
-        id: 4,
+        id: 5,
         title: "Sean Combs Trial Misinformation: Separating Fact from Fiction",
         slug: "sean-combs-trial-misinfo-2025",
         category: "Media & Journalism",
@@ -78,7 +93,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#0f172a","data":[58,27,15],"colors":["#ef4444","#f59e0b","#10b981"]}
     },
     {
-        id: 5,
+        id: 6,
         title: "Target 'Satanic' Campaign: How Viral Claims Misrepresented Products",
         slug: "target-satanic-campaign-2025",
         category: "Conspiracy & Hoaxes",
@@ -93,7 +108,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[160,155,148,140,135,132,130]}
     },
     {
-        id: 6,
+        id: 7,
         title: "UK Christmas Decoration Tax: Viral Hoax Debunked",
         slug: "uk-christmas-decoration-tax-2025",
         category: "International",
@@ -108,7 +123,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[2,1,1,1,1,1,1,1,3,15,85,120]}
     },
     {
-        id: 7,
+        id: 8,
         title: "AI 'Obituary Pirates'",
         slug: "ai-obituary-pirates-2025",
         category: "Platform & Tech",
@@ -123,7 +138,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#3b82f6","data":[12,45,89,156,287,412,389,298]}
     },
     {
-        id: 8,
+        id: 9,
         title: "Trump / Bill Clinton Crotch Pat Video Exposed as Deepfake",
         slug: "trump-clinton-crotch-pat-2025",
         category: "AI & Deepfakes",
@@ -138,7 +153,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[94,87,82,78,91],"labels":["Frame Splicing","Compression Artifacts","Motion Inconsistency","Audio Desync","AI Signatures"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#ef4444"]}
     },
     {
-        id: 9,
+        id: 10,
         title: "British Budget Details Misinfo",
         slug: "british-budget-misinfo-2025",
         category: "International Affairs",

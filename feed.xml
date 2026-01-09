@@ -5,8 +5,15 @@
     <link>https://www.genuverity.com</link>
     <description>AI-powered fact-checking platform investigating misinformation, disinformation, and viral claims with source-first methodology.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 21:53:11 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 20:34:31 GMT</lastBuildDate>
     <atom:link href="https://www.genuverity.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Minneapolis ICE Shooting: What We Know So Far</title>
+      <link>https://www.genuverity.com/minneapolis-ice-shooting-what-we-know</link>
+      <guid isPermaLink="true">https://www.genuverity.com/minneapolis-ice-shooting-what-we-know</guid>
+      <pubDate>Fri, 09 Jan 2026 06:00:00 GMT</pubDate>
+      <description>Minneapolis ICE Shooting: What We Know So Far</description>
+    </item>
     <item>
       <title>Quality Audit: Fact-Checking the Fact-Checker</title>
       <link>https://www.genuverity.com/quality-audit-jan-2026</link>
@@ -209,13 +216,6 @@
       <guid isPermaLink="true">https://www.genuverity.com/meta-tpfc-exit-2025</guid>
       <pubDate>Fri, 02 Jan 2026 06:00:00 GMT</pubDate>
       <description>Pete Hegseth Signalgate: Security Concerns vs. Precedent</description>
-    </item>
-    <item>
-      <title>D.C. Murder Rate Comparison: Cherry-Picked Statistics</title>
-      <link>https://www.genuverity.com/hegseth-signalgate-2025</link>
-      <guid isPermaLink="true">https://www.genuverity.com/hegseth-signalgate-2025</guid>
-      <pubDate>Fri, 02 Jan 2026 06:00:00 GMT</pubDate>
-      <description>D.C. Murder Rate Comparison: Cherry-Picked Statistics</description>
     </item>
   </channel>
 </rss>
