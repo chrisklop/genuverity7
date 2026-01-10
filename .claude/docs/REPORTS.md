@@ -476,3 +476,66 @@ Standard categories for the distribution chart:
 - Health Misinformation
 - Geopolitical Propaganda
 - Extremist Content
+
+---
+
+## Preserving Structured Data (Tables)
+
+**If the seed research contains tables, the report MUST include them.**
+
+### When to Add Tables
+
+Tables should be added when seed data contains:
+- Claim vs. reality comparisons (numbers, dates, facts)
+- Exaggeration factors (e.g., "$100M claimed vs $4M actual")
+- Side-by-side fact breakdowns
+- Structured statistics or metrics
+
+### Table Format
+
+Use the standard `data-table` classes:
+
+```html
+<div class="data-table-container copyable-section">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Aspect</th>
+                <th>Viral Claim</th>
+                <th>Verified Reality</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Amount</td>
+                <td style="color: var(--accent-red);">$100 million</td>
+                <td style="color: var(--accent-green);">~$4 million</td>
+            </tr>
+            <tr>
+                <td>Exaggeration factor</td>
+                <td colspan="2" style="text-align: center;"><strong>25x inflated</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+```
+
+### Color Coding
+
+- **Red** (`var(--accent-red)`) for false/inflated claims
+- **Green** (`var(--accent-green)`) for verified facts
+- **Bold** for exaggeration factors and key findings
+
+### Common Table Types
+
+| Table Type | When to Use |
+|------------|-------------|
+| **Claim vs Reality** | Numerical exaggerations (crowd sizes, dollar amounts) |
+| **Summary Table** | Roundups with multiple campaigns |
+| **Timeline** | Events with disputed dates/sequences |
+| **Source Comparison** | Conflicting reports from different outlets |
+
+### Placement
+
+- **Summary tables**: At top of report, after executive summary
+- **Claim vs reality tables**: Within the relevant campaign section, after the narrative explains both sides
