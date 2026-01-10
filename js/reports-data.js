@@ -4,7 +4,7 @@
 const REPORTS_DATA = [
     {
         id: 0,
-        title: "Disinformation Roundup: Week of January 10, 2026",
+        title: "Disinformation Roundup: Week Ending January 10, 2026",
         slug: "disinformation-roundup-jan-2026",
         category: "Platform & Tech",
         tagClass: "tag-cyan",
