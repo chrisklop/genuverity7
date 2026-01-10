@@ -5,8 +5,15 @@
     <link>https://www.genuverity.com</link>
     <description>AI-powered fact-checking platform investigating misinformation, disinformation, and viral claims with source-first methodology.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 20:34:31 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 17:56:28 GMT</lastBuildDate>
     <atom:link href="https://www.genuverity.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Disinformation Roundup: January 2026</title>
+      <link>https://www.genuverity.com/disinformation-roundup-jan-2026</link>
+      <guid isPermaLink="true">https://www.genuverity.com/disinformation-roundup-jan-2026</guid>
+      <pubDate>Sat, 10 Jan 2026 06:00:00 GMT</pubDate>
+      <description>Disinformation Roundup: January 2026</description>
+    </item>
     <item>
       <title>Minneapolis ICE Shooting: What We Know So Far</title>
       <link>https://www.genuverity.com/minneapolis-ice-shooting-what-we-know</link>
@@ -209,13 +216,6 @@
       <guid isPermaLink="true">https://www.genuverity.com/southport-stabbing-misinfo-2025</guid>
       <pubDate>Fri, 02 Jan 2026 06:00:00 GMT</pubDate>
       <description>Meta Third-Party Fact-Check Exit: What Actually Changed</description>
-    </item>
-    <item>
-      <title>Pete Hegseth Signalgate: Security Concerns vs. Precedent</title>
-      <link>https://www.genuverity.com/meta-tpfc-exit-2025</link>
-      <guid isPermaLink="true">https://www.genuverity.com/meta-tpfc-exit-2025</guid>
-      <pubDate>Fri, 02 Jan 2026 06:00:00 GMT</pubDate>
-      <description>Pete Hegseth Signalgate: Security Concerns vs. Precedent</description>
     </item>
   </channel>
 </rss>

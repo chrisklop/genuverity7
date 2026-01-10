@@ -368,6 +368,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/disinformation-roundup-jan-2026.html",
+      "destination": "/disinformation-roundup-jan-2026",
+      "permanent": true
+    },
+    {
+      "source": "/disinformation-roundup-jan-2026.html",
+      "destination": "/disinformation-roundup-jan-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/doge-gaza-condom-claim-2025.html",
       "destination": "/doge-gaza-condom-claim-2025",
       "permanent": true
@@ -2071,6 +2081,10 @@
     {
       "source": "/disinformation-architecture-2025",
       "destination": "/localreports/disinformation-architecture-2025.html"
+    },
+    {
+      "source": "/disinformation-roundup-jan-2026",
+      "destination": "/localreports/disinformation-roundup-jan-2026.html"
     },
     {
       "source": "/doge-gaza-condom-claim-2025",
