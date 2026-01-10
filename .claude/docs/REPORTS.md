@@ -393,3 +393,86 @@ AFTER ALL:
 ```
 
 **Time: 10-15 minutes per quality report. Don't rush.**
+
+---
+
+## Roundup Reports (Weekly Disinformation Summary)
+
+Roundup reports compile multiple misinformation campaigns into a single analysis. They require a different approach than single-claim reports.
+
+### Key Differences from Standard Reports
+
+| Aspect | Standard Report | Roundup Report |
+|--------|-----------------|----------------|
+| Scope | Single claim | 10-15 campaigns |
+| Depth | Full investigation | Mini-report per campaign |
+| Sources | 8-12 focused | 20-30 across campaigns |
+| Title | Claim-focused | "Week Ending [Date]" |
+
+### Structure Requirements
+
+**Each campaign section MUST include:**
+1. **Verdict box** - FALSE/MISLEADING/etc with 1-sentence summary
+2. **Context paragraph** - What the claim was, where it appeared
+3. **Detection paragraph** - How it was identified as false (forensics, source verification, etc.)
+4. **Spread paragraph** - Platform origin, reach, amplification pattern
+5. **Significance paragraph** - Why it matters, real-world risk
+
+**NOT acceptable:** Verdict boxes with 2-3 bullet points. That's a checklist, not a report.
+
+### Title Convention
+
+```
+CORRECT:   "Disinformation Roundup: Week Ending January 10, 2026"
+WRONG:     "Disinformation Roundup: January 2026" (implies monthly)
+WRONG:     "Disinformation Roundup: Week of January 10" (ambiguous)
+```
+
+### Chart Placement
+
+Charts in roundups must have surrounding text to flow properly:
+
+```html
+<!-- CORRECT: Chart with surrounding text -->
+<section>
+    <h2>Patterns and Predictions</h2>
+
+    <figure class="float-figure">
+        <div class="chart-wrapper">...</div>
+    </figure>
+
+    <p>Across the 12 campaigns documented...</p>  <!-- Text flows around chart -->
+
+    <div class="info-box">...</div>
+</section>
+
+<!-- WRONG: Chart alone in section -->
+<section>
+    <figure class="float-figure">...</figure>  <!-- Empty space to left -->
+</section>
+```
+
+### Source Requirements
+
+- Minimum 2 sources per campaign (fact-checker + primary)
+- Plus methodology/reference sources (CDC, official sites, etc.)
+- Total should be 20-30 for a 10-12 campaign roundup
+
+### Pre-Generation Checklist
+
+```
+□ Confirm scope with user: weekly or monthly?
+□ Get exact date for title: "Week Ending [date]"
+□ Collect 2+ sources per campaign before writing
+□ Plan which campaigns get charts (usually 2 charts total)
+```
+
+### Campaign Categories (for chart)
+
+Standard categories for the distribution chart:
+- AI Deepfakes
+- Miscaptioned Media
+- Political Manipulation
+- Health Misinformation
+- Geopolitical Propaganda
+- Extremist Content
