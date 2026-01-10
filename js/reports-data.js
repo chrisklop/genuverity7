@@ -4,7 +4,7 @@
 const REPORTS_DATA = [
     {
         id: 0,
-        title: "Disinformation Roundup: January 2026",
+        title: "Disinformation Roundup: Week of January 10, 2026",
         slug: "disinformation-roundup-jan-2026",
         category: "Platform & Tech",
         tagClass: "tag-cyan",
@@ -14,7 +14,7 @@ const REPORTS_DATA = [
         sources: "26 Sources",
         readTime: "25 min",
         verdict: "context",
-        excerpt: "MONTHLY ROUNDUP: 15 viral misinformation campaigns including AI deepfakes (Venezuela, Grok-generated images), miscaptioned media (Marinera tanker, Renee Good misidentification), health hoaxes (72 vaccines myth), and extremist content trends. Analysis of platform spread patterns.",
+        excerpt: "WEEKLY ROUNDUP: 12 viral misinformation campaigns including AI deepfakes (Venezuela, Grok-generated images), miscaptioned media (Marinera tanker, Renee Good misidentification), health hoaxes (72 vaccines myth), and extremist content trends.",
         chart: {"type":"donut","color":"#0a0a0f","data":[3,3,3,2,2,1],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4","#64748b"]}
     },
     {
