@@ -71,7 +71,30 @@ if ! grep -q "sources-sidebar" "$FILE"; then
     ((ERRORS++))
 fi
 
-# 7. Check for unique IDs (Basic check for duplicate source IDs)
+# 7. Check for Canonical URL (CRITICAL for SEO/indexing)
+if ! grep -q 'rel="canonical"' "$FILE"; then
+    echo "❌ FAIL: Missing canonical URL tag. Required for Google indexing."
+    echo "   Add: <link rel=\"canonical\" href=\"https://www.genuverity.com/SLUG\">"
+    ((ERRORS++))
+fi
+
+# 8. Check canonical URL format matches clean URL pattern
+CANONICAL_URL=$(grep -o 'rel="canonical" href="[^"]*"' "$FILE" | head -1)
+if [ ! -z "$CANONICAL_URL" ]; then
+    if echo "$CANONICAL_URL" | grep -q "localreports/\|\.html"; then
+        echo "❌ FAIL: Canonical URL should use clean URL, not file path."
+        echo "   Found: $CANONICAL_URL"
+        echo "   Should be: https://www.genuverity.com/slug-name (no .html, no localreports/)"
+        ((ERRORS++))
+    fi
+fi
+
+# 9. Check for og:url meta tag
+if ! grep -q 'property="og:url"' "$FILE"; then
+    echo "⚠️  WARNING: Missing og:url meta tag (recommended for social sharing)."
+fi
+
+# 10. Check for unique IDs (Basic check for duplicate source IDs)
 DUPLICATES=$(grep -o 'id="source-[0-9]*"' "$FILE" | sort | uniq -d)
 if [ ! -z "$DUPLICATES" ]; then
     echo "❌ FAIL: Duplicate source IDs found:"

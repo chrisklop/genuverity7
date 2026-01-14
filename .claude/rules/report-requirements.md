@@ -17,7 +17,28 @@ Applies to: `*.html` files (except index.html, reports.html, methods.html, compa
 - **ALLOWED**: #3b82f6 (blue), #06b6d4 (cyan), #10b981 (green), #f59e0b (amber), #ef4444 (red)
 - **FORBIDDEN**: #8b5cf6, #a855f7, #9333ea, #7c3aed (purple shades) - NEVER use these colors
 
-### 3. Standard Categories (USE ONLY THESE)
+### 3. SEO / Canonical URL (CRITICAL FOR INDEXING)
+
+**Every report MUST have a canonical tag** pointing to the clean URL:
+
+```html
+<link rel="canonical" href="https://www.genuverity.com/SLUG">
+```
+
+**URL format rules:**
+- ✅ `https://www.genuverity.com/fednow-freeze` (clean URL)
+- ❌ `https://www.genuverity.com/localreports/fednow-freeze.html` (file path)
+- ❌ `https://www.genuverity.com/fednow-freeze.html` (with .html)
+
+**Also required:**
+- `<meta property="og:url" content="https://www.genuverity.com/SLUG">`
+- `<meta property="twitter:url" content="https://www.genuverity.com/SLUG">`
+
+**Why:** Without canonical tags, Google sees both `/slug` and `/localreports/slug.html` as duplicates and may not index either.
+
+The `./validate-report.sh` script checks for this automatically.
+
+### 4. Standard Categories (USE ONLY THESE)
 | Category | Use For |
 |----------|---------|
 | Fact Check | Standard claim verification |
@@ -33,7 +54,7 @@ Applies to: `*.html` files (except index.html, reports.html, methods.html, compa
 
 **DO NOT create new categories** - use the closest existing one above.
 
-### 4. Mandatory Verdict Assignment
+### 5. Mandatory Verdict Assignment
 Every report MUST have one of these verdicts:
 | Verdict | When to Use |
 |---------|-------------|
@@ -45,7 +66,7 @@ Every report MUST have one of these verdicts:
 
 **NEVER use `undefined`** - always assign a verdict.
 
-### 5. Specific Expert Citations (NO VAGUE AUTHORITY)
+### 6. Specific Expert Citations (NO VAGUE AUTHORITY)
 
 **NEVER use vague authority appeals:**
 
@@ -58,19 +79,19 @@ Every report MUST have one of these verdicts:
 
 Always name the specific expert, institution, or study and link to the source.
 
-### 6. Counter-Argument Requirement
+### 7. Counter-Argument Requirement
 
 For `false` or `misleading` verdicts, **MUST include** a "Why This Claim Spread" section:
 - Explain what makes the claim believable
 - Address legitimate underlying concerns
 - Avoid dismissive tone toward believers
 
-### 7. Visualizations
+### 8. Visualizations
 - Include 1-2 Chart.js charts when applicable
 - Use GenuVerity watermark plugin
 - Follow Midnight Tech color scheme
 
-### 8. Structure
+### 9. Structure
 - Hero section with verdict/title
 - Executive summary
 - Detailed analysis with inline citations
@@ -114,6 +135,8 @@ After creating ANY report HTML file:
 
 | Mistake | Prevention |
 |---------|------------|
+| **Missing canonical tag** | ALWAYS include `<link rel="canonical">` with clean URL (no .html) |
+| **Wrong canonical URL format** | Use `genuverity.com/slug` NOT `genuverity.com/localreports/slug.html` |
 | Report not on landing page | ALWAYS update js/reports-data.js after creating report |
 | ID syntax errors | NEVER use perl/sed - manually increment IDs |
 | Dead links | ALWAYS WebFetch URLs before including |

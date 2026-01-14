@@ -42,6 +42,8 @@ Complete guide for creating GenuVerity fact-check reports.
 
 | Element | Requirement |
 |---------|-------------|
+| **Canonical URL** | `<link rel="canonical" href="https://www.genuverity.com/SLUG">` **(CRITICAL)** |
+| **og:url** | `<meta property="og:url" content="https://www.genuverity.com/SLUG">` |
 | **Sources Sidebar** | Left column, sticky, `<aside class="sources-sidebar">` |
 | **Trust Scores** | 0-100 per source |
 | **Inline Citations** | Linked text throughout body |
@@ -191,9 +193,52 @@ pre-existing beliefs about [Y]...</p>
 
 ---
 
-## Phase 5: Post-Generation Checklist
+## Phase 5: SEO Requirements (CRITICAL)
+
+**Without these, Google won't index the page properly.**
+
+### Required Meta Tags
+
+```html
+<!-- In <head>, BEFORE og:url -->
+<link rel="canonical" href="https://www.genuverity.com/SLUG">
+
+<!-- Open Graph -->
+<meta property="og:url" content="https://www.genuverity.com/SLUG">
+<meta property="twitter:url" content="https://www.genuverity.com/SLUG">
+```
+
+### URL Rules
+
+| Element | Format | Example |
+|---------|--------|---------|
+| **Canonical** | Clean URL only | `https://www.genuverity.com/fednow-freeze` |
+| **og:url** | Clean URL only | `https://www.genuverity.com/fednow-freeze` |
+| **File path** | localreports/ | `localreports/fednow-freeze.html` |
+
+**NEVER use file paths in canonical or og:url:**
+- ❌ `https://www.genuverity.com/localreports/fednow-freeze.html`
+- ❌ `https://www.genuverity.com/fednow-freeze.html`
+- ✅ `https://www.genuverity.com/fednow-freeze`
+
+### Why This Matters
+
+Without canonical tags, Google sees two URLs for the same content:
+1. `/slug-name` (clean URL via Vercel rewrite)
+2. `/localreports/slug-name.html` (actual file)
+
+This causes:
+- "Duplicate without user-selected canonical" errors
+- "Discovered - currently not indexed" status
+- Poor or no search visibility
+
+---
+
+## Phase 6: Post-Generation Checklist
 
 ```
+□ Canonical URL present and uses clean URL format
+□ og:url and twitter:url match canonical
 □ Sources Banner functional (toggle works)
 □ At least 8 sources with trust scores
 □ Reading progress bar + JS
@@ -204,11 +249,12 @@ pre-existing beliefs about [Y]...</p>
 □ No purple colors (#8b5cf6)
 □ All URLs verified accessible
 □ Verdict badge matches conclusion
+□ Run ./validate-report.sh (checks canonical)
 ```
 
 ---
 
-## Phase 6: Integration
+## Phase 7: Integration
 
 ```
 □ Add to js/reports-data.js (ID 0, increment others)
@@ -222,7 +268,7 @@ pre-existing beliefs about [Y]...</p>
 
 ---
 
-## Phase 7: Testing Before Merge (REQUIRED)
+## Phase 8: Testing Before Merge (REQUIRED)
 
 ```
 □ Wait for Vercel preview deployment (~30 seconds)
