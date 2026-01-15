@@ -9,7 +9,7 @@
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>/Users/klop/projects/genuverity7/automation/scripts/trigger-phase1.sh</string>
+        <string>/Users/klop/GenuVerity7/automation/scripts/trigger-phase1.sh</string>
     </array>
 
     <key>StartCalendarInterval</key>
@@ -21,10 +21,10 @@
     </dict>
 
     <key>StandardOutPath</key>
-    <string>/Users/klop/projects/genuverity7/automation/logs/phase1-stdout.log</string>
+    <string>/Users/klop/GenuVerity7/automation/logs/phase1-stdout.log</string>
 
     <key>StandardErrorPath</key>
-    <string>/Users/klop/projects/genuverity7/automation/logs/phase1-stderr.log</string>
+    <string>/Users/klop/GenuVerity7/automation/logs/phase1-stderr.log</string>
 
     <key>RunAtLoad</key>
     <false/>
