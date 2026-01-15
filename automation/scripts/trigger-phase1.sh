@@ -4,7 +4,7 @@
 
 set -e
 
-LOG_DIR="/Users/klop/projects/genuverity7/automation/logs"
+LOG_DIR="/Users/klop/GenuVerity7/automation/logs"
 DATE=$(date +%Y-%m-%d)
 LOG_FILE="$LOG_DIR/$DATE-phase1.log"
 
