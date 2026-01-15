@@ -177,8 +177,17 @@
                     <p>During his CMS confirmation process, Dr. Mehmet Oz stated on Fox News that 'by federal law, if you sign someone up for Medicaid, you also give them the right to vote.' This is a distortion of the National Voter Registration Act of 1993 ('Motor Voter'), which requires offering registration forms at public assistance offices but does not automatically register anyone or confer voting rights on non-citizens. The claim mutated on Truth Social and Telegram into allegations that 'Democrats are auto-registering millions of illegals.'</p>
                 </div>
 
-
-
+                <figure class="float-figure copyable-section" id="velocityChart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">Claim Viral Spread (First 12 Hours)</div>
+                        </div>
+                        <div style="height: 280px; position: relative;">
+                            <canvas id="velocityChart"></canvas>
+                        </div>
+                    </div>
+                    <figcaption>Reach after Fox News broadcast and social media amplification</figcaption>
+                </figure>
 
                 <section class="copyable-section">
                     <h2>Background</h2>
@@ -275,7 +284,31 @@
         }
 
         // Chart configurations
-
+        new Chart(document.getElementById('velocityChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['0h', '2h', '4h', '6h', '8h', '10h', '12h'],
+                datasets: [{
+                    label: 'Reach',
+                    data: [1000, 8000, 22000, 45000, 68000, 82000, 92000],
+                    borderColor: '#ef4444',
+                    backgroundColor: '#ef444433',
+                    fill: true,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: { display: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#64748b' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
     </script>
 </body>
 

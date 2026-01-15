@@ -30,7 +30,7 @@ const REPORTS_DATA = [
         readTime: "10 min",
         verdict: "misleading",
         excerpt: "A House GOP report questioning FireAid's fund distribution was distorted into viral claims that $100 million was stolen to fund 'illegal aliens.' Independent audit confirmed grants were distributed.",
-        chart: {"type":"donut","color":"#0a0a0f","data":[40,30,30],"colors":["#ef4444","#f59e0b","#10b981"]}
+        chart: {"type":"line","color":"#0a0a0f","data":[500,3000,12000,35000,58000,75000,85000],"labels":["0h","2h","4h","6h","8h","10h","12h"],"colors":["#f59e0b"]}
     },
     {
         id: -3,
@@ -45,7 +45,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Dr. Oz claimed Medicaid enrollment automatically registers people to vote. The NVRA requires offering forms, not automatic registration. Non-citizen voting remains illegal.",
-        chart: {"type":"donut","color":"#0a0a0f","data":[100],"colors":["#ef4444"]}
+        chart: {"type":"line","color":"#0a0a0f","data":[1000,8000,22000,45000,68000,82000,92000],"labels":["0h","2h","4h","6h","8h","10h","12h"],"colors":["#ef4444"]}
     },
     {
         id: -2,
@@ -60,7 +60,7 @@ const REPORTS_DATA = [
         readTime: "9 min",
         verdict: "misleading",
         excerpt: "HHS Secretary RFK Jr. unveiled an 'Inverted Food Pyramid' demonizing seed oils as the 'Hateful Eight.' Claims that seed oils are 'industrial poisons' are pseudoscience rejected by major health organizations.",
-        chart: {"type":"donut","color":"#0a0a0f","data":[50,30,20],"colors":["#ef4444","#f59e0b","#10b981"]}
+        chart: {"type":"bar","color":"#0a0a0f","data":[11,5,3,3,1,2,4,8,6,4],"labels":["Grains (Old)","Veg (Old)","Meat (Old)","Dairy (Old)","Fats (Old)","Grains (New)","Veg (New)","Meat (New)","Dairy (New)","Fats (New)"],"colors":["#3b82f6","#3b82f6","#3b82f6","#3b82f6","#3b82f6","#ef4444","#ef4444","#ef4444","#ef4444","#ef4444"]}
     },
     {
         id: -1,
@@ -75,7 +75,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Rumors spreading through WhatsApp claim Green Card holders from 75 countries will be deported. The actual policy suspends NEW visa processing abroad, not resident status.",
-        chart: {"type":"line","color":"#0a0a0f","data":[100,2000,10000,50000,95000],"colors":["#ef4444"]}
+        chart: {"type":"line","color":"#0a0a0f","data":[500,5000,18000,42000,68000,85000,95000],"labels":["0h","2h","4h","6h","8h","10h","12h"],"colors":["#ef4444"]}
     },
     {
         id: 0,

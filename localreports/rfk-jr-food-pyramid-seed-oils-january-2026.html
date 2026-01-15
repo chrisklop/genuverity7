@@ -177,8 +177,17 @@
                     <p>On January 7, 2026, HHS Secretary Robert F. Kennedy Jr. announced the 'most significant reset of federal nutrition policy in history'—an inverted food pyramid prioritizing red meat, full-fat dairy, and eggs while demoting seed oils. This policy change has been amplified by TikTok influencers promoting the 'Hateful Eight' conspiracy, which claims seed oils are industrial poisons designed to keep Americans sick. Major health organizations reject these claims as pseudoscience.</p>
                 </div>
 
-
-
+                <figure class="float-figure copyable-section" id="pyramidChart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">Food Pyramid Priority Shift</div>
+                        </div>
+                        <div style="height: 280px; position: relative;">
+                            <canvas id="pyramidChart"></canvas>
+                        </div>
+                    </div>
+                    <figcaption>Recommended daily servings: 1992 USDA vs 2026 RFK Jr. guidelines</figcaption>
+                </figure>
 
                 <section class="copyable-section">
                     <h2>Background</h2>
@@ -275,7 +284,32 @@
         }
 
         // Chart configurations
-
+        new Chart(document.getElementById('pyramidChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Grains', 'Vegetables', 'Meat/Protein', 'Dairy', 'Fats/Oils'],
+                datasets: [{
+                    label: '1992 USDA',
+                    data: [11, 5, 3, 3, 1],
+                    backgroundColor: '#3b82f6'
+                }, {
+                    label: '2026 RFK Jr.',
+                    data: [2, 4, 8, 6, 4],
+                    backgroundColor: '#ef4444'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: { display: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#64748b' }, title: { display: true, text: 'Recommended Servings', color: '#94a3b8' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
     </script>
 </body>
 
