@@ -144,3 +144,90 @@ automation/
 - `.claude/skills/batch-report-generator/INPUT_SCHEMA.md` - JSON schema
 - `.claude/skills/batch-report-generator/GEMINI_DEEP_RESEARCH_PROMPT.md` - Full prompt
 - `docs/report-template-2025.html` - HTML template
+
+---
+
+## Lessons Learned (January 15, 2026)
+
+**Critical guidelines from first successful pipeline run:**
+
+### 1. Gemini Output: JSON is NOT Guaranteed
+
+Gemini Deep Research often outputs essay format only, even when the prompt requests JSON. **Always be prepared to:**
+- Extract the full markdown/text response first
+- Generate JSON structure manually from the essay content
+- Use the forensics data embedded in the prose
+
+### 2. Charts: Every Report MUST Have One
+
+Charts serve double duty:
+- **In-report visualization** (Chart.js in the HTML)
+- **Portal card thumbnails** (reports-data.js config)
+
+**If Gemini doesn't provide chart data:**
+- Auto-generate velocity charts from `forensics.velocity_12h`
+- Create estimated hourly spread: `[start, 10%, 25%, 45%, 70%, 88%, 100%]` of velocity_12h
+- Use bar charts for comparison tables (old vs new, claim vs reality)
+
+### 3. Output File Organization
+
+Save ALL artifacts with date stamps:
+```
+automation/output/
+├── gemini-chat-url-YYYY-MM-DD.txt     # For returning to chat
+├── gemini-deep-research-YYYY-MM-DD.md  # Raw extracted text
+└── gemini-output-YYYY-MM-DD.json       # Structured JSON
+```
+
+### 4. Browser Automation Reliability
+
+The Claude in Chrome extension may disconnect. Fallback options:
+- Use `osascript` to execute JavaScript directly in Chrome
+- Extract page text via: `osascript -e 'tell app "Chrome" to execute front window's active tab javascript "document.body.innerText"'`
+- Save chat URL immediately after Phase 1 for easy return
+
+### 5. Pre-Generation Checklist
+
+Before running the generator, verify:
+- [ ] JSON has all expected reports (typically 5)
+- [ ] Each report has minimum 8 sources (ideally 10-15)
+- [ ] Each report has chart data OR forensics data for auto-generation
+- [ ] Verdicts are valid: FALSE, TRUE, MISLEADING, MIXED, CONTEXT
+- [ ] Categories match the allowed list
+- [ ] No Wikipedia URLs in sources
+
+### 6. reports-data.js Chart Format
+
+Portal cards need this exact format:
+```javascript
+chart: {
+    "type": "line",           // line, bar, donut, hbar
+    "color": "#0a0a0f",       // background
+    "data": [100, 500, ...],  // values
+    "labels": ["0h", "2h"],   // optional for line/bar
+    "colors": ["#ef4444"]     // bar colors
+}
+```
+
+### 7. Post-Generation Steps
+
+After HTML generation, always:
+1. Run `./validate-report.sh` on each new report
+2. Run `node tools/generate-sitemaps.js` to update SEO
+3. Run `node tools/sync-chart-configs.js` to sync carousel thumbnails ← **CRITICAL**
+4. Verify vercel.json has clean URL rewrites
+5. Open reports in browser to visually verify charts render
+
+### 8. Chart Thumbnail Sync (MANDATORY)
+
+The carousel card thumbnails on the homepage are generated from `js/reports-data.js`. After creating reports with Chart.js charts in HTML, you MUST sync the configs:
+
+```bash
+node tools/sync-chart-configs.js
+```
+
+This extracts chart data from each HTML report and updates `reports-data.js` so thumbnails match actual charts. **Without this step, carousel cards show wrong/blank previews.**
+
+---
+
+*Last updated: January 15, 2026*

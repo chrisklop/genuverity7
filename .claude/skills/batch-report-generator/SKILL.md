@@ -114,8 +114,9 @@ Use one of these category values:
 3. **Generates** HTML from `docs/report-template-2025.html`
 4. **Creates** Chart.js visualization based on data
 5. **Adds** entry to `js/reports-data.js`
-6. **Runs** `./validate-report.sh` to verify
-7. **Commits** to feature branch
+6. **Syncs** chart thumbnails via `node tools/sync-chart-configs.js`
+7. **Runs** `./validate-report.sh` to verify
+8. **Commits** to feature branch
 
 ## CRITICAL: Chart Height Constraint
 
@@ -171,6 +172,25 @@ For each report:
 - `localreports/{slug}.html` - The report HTML
 - Entry in `js/reports-data.js` with chart config
 - Updated sitemaps via `node tools/generate-sitemaps.js`
+- Synced chart thumbnails via `node tools/sync-chart-configs.js`
+
+## CRITICAL: Chart Thumbnail Sync (MANDATORY)
+
+After creating ANY new reports, **ALWAYS** run:
+
+```bash
+node tools/sync-chart-configs.js
+```
+
+This syncs the chart configs in `js/reports-data.js` to match the actual charts in each HTML report. Without this step, carousel cards show wrong/blank chart previews.
+
+**Post-generation checklist:**
+1. ✅ Create HTML reports in `localreports/`
+2. ✅ Add entries to `js/reports-data.js`
+3. ✅ Run: `node tools/generate-sitemaps.js`
+4. ✅ Run: `node tools/sync-chart-configs.js` ← **MANDATORY**
+5. ✅ Run: `./validate-report.sh` on each report
+6. ✅ Commit and push
 
 ## Example Workflow
 

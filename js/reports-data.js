@@ -15,7 +15,7 @@ const REPORTS_DATA = [
         readTime: "12 min",
         verdict: "misleading",
         excerpt: "AI-generated images of Maduro in custody went viral within minutes of the Venezuela raid. A fabricated 'hot mic' audio used Sora 2 technology. The 4-6 hour 'verification lag' created a window for synthetic content to dominate.",
-        chart: {"type":"line","color":"#0a0a0f","data":[100,5000,15000,25000,30000,28000,22000],"labels":["0h","1h","2h","4h","6h","8h","12h"],"colors":["#ef4444"]}
+        chart: {"type":"line","color":"#ef4444","data":[100,5000,15000,25000,30000,28000,22000]}
     },
     {
         id: -4,
@@ -30,7 +30,7 @@ const REPORTS_DATA = [
         readTime: "10 min",
         verdict: "misleading",
         excerpt: "A House GOP report questioning FireAid's fund distribution was distorted into viral claims that $100 million was stolen to fund 'illegal aliens.' Independent audit confirmed grants were distributed.",
-        chart: {"type":"line","color":"#0a0a0f","data":[500,3000,12000,35000,58000,75000,85000],"labels":["0h","2h","4h","6h","8h","10h","12h"],"colors":["#f59e0b"]}
+        chart: {"type":"line","color":"#f59e0b","data":[500,3000,12000,35000,58000,75000,85000]}
     },
     {
         id: -3,
@@ -45,7 +45,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Dr. Oz claimed Medicaid enrollment automatically registers people to vote. The NVRA requires offering forms, not automatic registration. Non-citizen voting remains illegal.",
-        chart: {"type":"line","color":"#0a0a0f","data":[1000,8000,22000,45000,68000,82000,92000],"labels":["0h","2h","4h","6h","8h","10h","12h"],"colors":["#ef4444"]}
+        chart: {"type":"line","color":"#ef4444","data":[1000,8000,22000,45000,68000,82000,92000]}
     },
     {
         id: -2,
@@ -60,7 +60,7 @@ const REPORTS_DATA = [
         readTime: "9 min",
         verdict: "misleading",
         excerpt: "HHS Secretary RFK Jr. unveiled an 'Inverted Food Pyramid' demonizing seed oils as the 'Hateful Eight.' Claims that seed oils are 'industrial poisons' are pseudoscience rejected by major health organizations.",
-        chart: {"type":"bar","color":"#0a0a0f","data":[11,5,3,3,1,2,4,8,6,4],"labels":["Grains (Old)","Veg (Old)","Meat (Old)","Dairy (Old)","Fats (Old)","Grains (New)","Veg (New)","Meat (New)","Dairy (New)","Fats (New)"],"colors":["#3b82f6","#3b82f6","#3b82f6","#3b82f6","#3b82f6","#ef4444","#ef4444","#ef4444","#ef4444","#ef4444"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[11,5,3,3,1]}
     },
     {
         id: -1,
@@ -75,7 +75,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Rumors spreading through WhatsApp claim Green Card holders from 75 countries will be deported. The actual policy suspends NEW visa processing abroad, not resident status.",
-        chart: {"type":"line","color":"#0a0a0f","data":[500,5000,18000,42000,68000,85000,95000],"labels":["0h","2h","4h","6h","8h","10h","12h"],"colors":["#ef4444"]}
+        chart: {"type":"line","color":"#ef4444","data":[500,5000,18000,42000,68000,85000,95000]}
     },
     {
         id: 0,
@@ -90,7 +90,7 @@ const REPORTS_DATA = [
         readTime: "25 min",
         verdict: "context",
         excerpt: "WEEKLY ROUNDUP: 12 viral misinformation campaigns including AI deepfakes (Venezuela, Grok-generated images), miscaptioned media (Marinera tanker, Renee Good misidentification), health hoaxes (72 vaccines myth), and extremist content trends.",
-        chart: {"type":"donut","color":"#0a0a0f","data":[3,3,3,2,2,1],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4","#64748b"]}
+        chart: {"type":"donut","color":"#ef4444","data":[3,3,3,1,2,1],"colors":["#ef4444","#f59e0b","#3b82f6","#10b981","#06b6d4","#64748b"]}
     },
     {
         id: 1,
@@ -105,7 +105,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "context",
         excerpt: "DEVELOPING: Renee Nicole Good, 37, was killed by ICE Agent Jonathan Ross on January 7, 2026. Video evidence contradicts federal claims she 'ran over' the agent. FBI has blocked state investigators. Analysis of confirmed facts, disputed claims, and the federal-state jurisdictional conflict.",
-        chart: {"type":"hbar","color":"#f59e0b","data":[-80,-70,95,85],"labels":["Fed: Ran over agent","Fed: Agent pinned","State: FBI blocking","State: Vehicle away"],"colors":["#ef4444","#ef4444","#10b981","#10b981"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[-80,-70,-50,95,85,95],"labels":["Fed: ",", ","Agent pinned",", ","Domestic terrorist",", ",", ",", "],"colors":["#ef4444","#ef4444","#f59e0b","#10b981","#10b981","#10b981"]}
     },
     {
         id: 2,
