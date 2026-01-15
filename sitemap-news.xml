@@ -2,6 +2,61 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://www.genuverity.com/caracas-mirage-ai-deepfakes-january-2026</loc>
+    <news:news>
+      <news:publication>
+        <news:name>GenuVerity</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-01-15</news:publication_date>
+      <news:title>The Caracas Mirage: AI-Generated Images Fuel Disinformation After Maduro Capture</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/fireaid-charity-conspiracy-january-2026</loc>
+    <news:news>
+      <news:publication>
+        <news:name>GenuVerity</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-01-15</news:publication_date>
+      <news:title>The FireAid Laundering Complex: Wildfire Charity Funds Falsely Linked to </news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/medicaid-voter-registration-dr-oz-january-2026</loc>
+    <news:news>
+      <news:publication>
+        <news:name>GenuVerity</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-01-15</news:publication_date>
+      <news:title>The Medicaid-Voter Nexus: Dr. Oz</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/rfk-jr-food-pyramid-seed-oils-january-2026</loc>
+    <news:news>
+      <news:publication>
+        <news:name>GenuVerity</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-01-15</news:publication_date>
+      <news:title>The Lipid War: RFK Jr.</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/visa-ban-green-card-panic-january-2026</loc>
+    <news:news>
+      <news:publication>
+        <news:name>GenuVerity</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-01-15</news:publication_date>
+      <news:title>The Visa Ban Panic: False Claims of Mass Green Card Revocations Spread Through WhatsApp</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://www.genuverity.com/disinformation-roundup-jan-2026</loc>
     <news:news>
       <news:publication>
@@ -274,61 +329,6 @@
       </news:publication>
       <news:publication_date>2026-01-02</news:publication_date>
       <news:title>Hollywood Sign AI Fire Image: Viral Fake During LA Wildfires</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://www.genuverity.com/hollywood-sign-ai-fire-2025</loc>
-    <news:news>
-      <news:publication>
-        <news:name>GenuVerity</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2026-01-02</news:publication_date>
-      <news:title>Syria Assad Underground Photo: AI-Generated Images Exposed</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://www.genuverity.com/syria-assad-underground-photo-2025</loc>
-    <news:news>
-      <news:publication>
-        <news:name>GenuVerity</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2026-01-02</news:publication_date>
-      <news:title>NSF Grant Termination Claims: Policy vs. Conspiracy</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://www.genuverity.com/nsf-grant-termination-2025</loc>
-    <news:news>
-      <news:publication>
-        <news:name>GenuVerity</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2026-01-02</news:publication_date>
-      <news:title>JD Vance </news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://www.genuverity.com/vance-misinformation-comments-2025</loc>
-    <news:news>
-      <news:publication>
-        <news:name>GenuVerity</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2026-01-02</news:publication_date>
-      <news:title>Southport Stabbing Riots: How False Claims Fueled Violence</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://www.genuverity.com/southport-stabbing-misinfo-2025</loc>
-    <news:news>
-      <news:publication>
-        <news:name>GenuVerity</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2026-01-02</news:publication_date>
-      <news:title>Meta Third-Party Fact-Check Exit: What Actually Changed</news:title>
     </news:news>
   </url>
 </urlset>

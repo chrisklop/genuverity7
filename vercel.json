@@ -258,6 +258,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/caracas-mirage-ai-deepfakes-january-2026.html",
+      "destination": "/caracas-mirage-ai-deepfakes-january-2026",
+      "permanent": true
+    },
+    {
+      "source": "/caracas-mirage-ai-deepfakes-january-2026.html",
+      "destination": "/caracas-mirage-ai-deepfakes-january-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/cdc-hepatitis-b-vaccine-2025.html",
       "destination": "/cdc-hepatitis-b-vaccine-2025",
       "permanent": true
@@ -545,6 +555,16 @@
     {
       "source": "/fednow-freeze.html",
       "destination": "/fednow-freeze",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/fireaid-charity-conspiracy-january-2026.html",
+      "destination": "/fireaid-charity-conspiracy-january-2026",
+      "permanent": true
+    },
+    {
+      "source": "/fireaid-charity-conspiracy-january-2026.html",
+      "destination": "/fireaid-charity-conspiracy-january-2026",
       "permanent": true
     },
     {
@@ -978,6 +998,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/medicaid-voter-registration-dr-oz-january-2026.html",
+      "destination": "/medicaid-voter-registration-dr-oz-january-2026",
+      "permanent": true
+    },
+    {
+      "source": "/medicaid-voter-registration-dr-oz-january-2026.html",
+      "destination": "/medicaid-voter-registration-dr-oz-january-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/menopausal-hormone-therapy-2025.html",
       "destination": "/menopausal-hormone-therapy-2025",
       "permanent": true
@@ -1365,6 +1395,16 @@
     {
       "source": "/rfk-antidepressants-target-2025.html",
       "destination": "/rfk-antidepressants-target-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/rfk-jr-food-pyramid-seed-oils-january-2026.html",
+      "destination": "/rfk-jr-food-pyramid-seed-oils-january-2026",
+      "permanent": true
+    },
+    {
+      "source": "/rfk-jr-food-pyramid-seed-oils-january-2026.html",
+      "destination": "/rfk-jr-food-pyramid-seed-oils-january-2026",
       "permanent": true
     },
     {
@@ -1818,6 +1858,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/visa-ban-green-card-panic-january-2026.html",
+      "destination": "/visa-ban-green-card-panic-january-2026",
+      "permanent": true
+    },
+    {
+      "source": "/visa-ban-green-card-panic-january-2026.html",
+      "destination": "/visa-ban-green-card-panic-january-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/warrior-dividend-analysis.html",
       "destination": "/warrior-dividend-analysis",
       "permanent": true
@@ -2039,6 +2089,10 @@
       "destination": "/localreports/cambridge-analytica-2016.html"
     },
     {
+      "source": "/caracas-mirage-ai-deepfakes-january-2026",
+      "destination": "/localreports/caracas-mirage-ai-deepfakes-january-2026.html"
+    },
+    {
       "source": "/cdc-hepatitis-b-vaccine-2025",
       "destination": "/localreports/cdc-hepatitis-b-vaccine-2025.html"
     },
@@ -2153,6 +2207,10 @@
     {
       "source": "/fednow-freeze",
       "destination": "/localreports/fednow-freeze.html"
+    },
+    {
+      "source": "/fireaid-charity-conspiracy-january-2026",
+      "destination": "/localreports/fireaid-charity-conspiracy-january-2026.html"
     },
     {
       "source": "/gaza-ceasefire-attribution-2025",
@@ -2327,6 +2385,10 @@
       "destination": "/localreports/measles-natural-cures-2025.html"
     },
     {
+      "source": "/medicaid-voter-registration-dr-oz-january-2026",
+      "destination": "/localreports/medicaid-voter-registration-dr-oz-january-2026.html"
+    },
+    {
       "source": "/menopausal-hormone-therapy-2025",
       "destination": "/localreports/menopausal-hormone-therapy-2025.html"
     },
@@ -2481,6 +2543,10 @@
     {
       "source": "/rfk-antidepressants-target-2025",
       "destination": "/localreports/rfk-antidepressants-target-2025.html"
+    },
+    {
+      "source": "/rfk-jr-food-pyramid-seed-oils-january-2026",
+      "destination": "/localreports/rfk-jr-food-pyramid-seed-oils-january-2026.html"
     },
     {
       "source": "/rob-reiner-misinformation-2025",
@@ -2661,6 +2727,10 @@
     {
       "source": "/vance-musk-fake-audio-2025",
       "destination": "/localreports/vance-musk-fake-audio-2025.html"
+    },
+    {
+      "source": "/visa-ban-green-card-panic-january-2026",
+      "destination": "/localreports/visa-ban-green-card-panic-january-2026.html"
     },
     {
       "source": "/warrior-dividend-analysis",
