@@ -42,7 +42,13 @@ const ChartPreviews = (function() {
     }
 
     // Bar chart (vertical bars) - Clean minimal style
-    function generateBarChart(color, data) {
+    // Now supports grouped bars via datasets parameter
+    function generateBarChart(color, data, datasets) {
+        // If we have multiple datasets, render as grouped bar chart
+        if (datasets && datasets.length > 1) {
+            return generateGroupedBarChart(datasets);
+        }
+
         const rawBars = data || Array.from({ length: 6 }, () => Math.random() * 80 + 20);
         const bars = normalizeData(rawBars, 20, 95);
         const singleColor = Array.isArray(color) ? color[0] : color;
@@ -51,6 +57,54 @@ const ChartPreviews = (function() {
         return `<div class="chart-container"><div class="chart-bars" style="gap: ${Math.max(4, 8 - bars.length)}px;">${bars.map((h) =>
             `<div class="bar" style="height: ${h}%; background: ${singleColor}; border-radius: 6px; min-width: ${barWidth}px;"></div>`
         ).join('')}</div></div>`;
+    }
+
+    // Grouped bar chart for multi-dataset comparisons
+    function generateGroupedBarChart(datasets) {
+        if (!datasets || datasets.length < 2) return generateBarChart('#3b82f6');
+
+        const numGroups = datasets[0].data.length;
+        const numSeries = datasets.length;
+
+        // Find max across all datasets for normalization
+        const allValues = datasets.flatMap(ds => ds.data);
+        const maxVal = Math.max(...allValues);
+        const minVal = Math.min(...allValues);
+
+        // Generate grouped bars
+        const groupGap = 8;
+        const barGap = 2;
+        const groupWidth = 100 / numGroups;
+
+        let barsHTML = '';
+
+        for (let g = 0; g < numGroups; g++) {
+            const groupLeft = g * groupWidth;
+            const barWidth = (groupWidth - groupGap) / numSeries - barGap;
+
+            for (let s = 0; s < numSeries; s++) {
+                const value = datasets[s].data[g];
+                const normalizedHeight = 15 + ((value - minVal) / (maxVal - minVal)) * 80;
+                const barLeft = groupLeft + (groupGap / 2) + s * (barWidth + barGap);
+                const barColor = datasets[s].color || ['#3b82f6', '#ef4444', '#10b981'][s % 3];
+
+                barsHTML += `<div class="bar" style="
+                    position: absolute;
+                    left: ${barLeft}%;
+                    bottom: 0;
+                    width: ${barWidth}%;
+                    height: ${normalizedHeight}%;
+                    background: ${barColor};
+                    border-radius: 4px 4px 0 0;
+                "></div>`;
+            }
+        }
+
+        return `<div class="chart-container">
+            <div class="chart-bars" style="position: relative; height: 100%; width: 100%;">
+                ${barsHTML}
+            </div>
+        </div>`;
     }
 
     // Line chart with smooth gradient fill - Clean minimal style
@@ -249,7 +303,8 @@ const ChartPreviews = (function() {
             case 'timeline':
                 return generateTimelineChart(c.data, color);
             case 'bar':
-                return generateBarChart(color, c.data);
+                // Pass datasets for grouped bar chart support
+                return generateBarChart(color, c.data, c.datasets);
             case 'donut':
                 return generateDonutChart(c.data, color, c.colors);
             case 'network':
@@ -265,6 +320,7 @@ const ChartPreviews = (function() {
     return {
         generateChart,
         generateBarChart,
+        generateGroupedBarChart,
         generateLineChart,
         generateDonutChart,
         generateNetworkChart,

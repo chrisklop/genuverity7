@@ -102,6 +102,13 @@ if [ ! -z "$DUPLICATES" ]; then
     ((ERRORS++))
 fi
 
+# 11. Check for Chart.js charts and remind about sync
+if grep -q "new Chart(" "$FILE"; then
+    echo "📊 INFO: Report contains Chart.js chart(s)"
+    echo "   REMINDER: Run 'node tools/sync-chart-configs.js' to sync chart thumbnails"
+    echo "   Without this, carousel cards will show wrong/placeholder chart previews"
+fi
+
 if [ $ERRORS -eq 0 ]; then
     echo "✅ PASS: Report meets all architectural standards."
     exit 0

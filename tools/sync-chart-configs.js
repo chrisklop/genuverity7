@@ -44,7 +44,102 @@ function extractFullChartConfig(htmlContent) {
 }
 
 /**
+ * Extract ALL datasets from a Chart.js config string
+ * Returns array of {data: [...], color: '...'}
+ */
+function extractAllDatasets(configStr) {
+    const datasets = [];
+
+    // Find the datasets array
+    const datasetsStart = configStr.indexOf('datasets');
+    if (datasetsStart === -1) return datasets;
+
+    // Find the opening bracket of the datasets array
+    const arrayStart = configStr.indexOf('[', datasetsStart);
+    if (arrayStart === -1) return datasets;
+
+    // Extract content between datasets: [ ... ]
+    let depth = 0;
+    let arrayEnd = -1;
+    for (let i = arrayStart; i < configStr.length; i++) {
+        if (configStr[i] === '[') depth++;
+        if (configStr[i] === ']') depth--;
+        if (depth === 0) {
+            arrayEnd = i + 1;
+            break;
+        }
+    }
+    if (arrayEnd === -1) return datasets;
+
+    const datasetsStr = configStr.substring(arrayStart, arrayEnd);
+
+    // Parse each dataset object {...}
+    let objDepth = 0;
+    let objStart = -1;
+
+    for (let i = 0; i < datasetsStr.length; i++) {
+        if (datasetsStr[i] === '{') {
+            if (objDepth === 0) objStart = i;
+            objDepth++;
+        }
+        if (datasetsStr[i] === '}') {
+            objDepth--;
+            if (objDepth === 0 && objStart !== -1) {
+                const datasetStr = datasetsStr.substring(objStart, i + 1);
+
+                // Extract data array from this dataset
+                const dataMatch = datasetStr.match(/"?data"?\s*:\s*\[([\d.,\s-]+)\]/);
+                let dataArray = null;
+                if (dataMatch) {
+                    dataArray = dataMatch[1].split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+                }
+
+                // Extract backgroundColor (could be string or array)
+                let color = null;
+
+                // First try single string: backgroundColor: '#fff' or backgroundColor: "#fff"
+                const singleColorMatch = datasetStr.match(/"?backgroundColor"?\s*:\s*['"]([#\w]+)['"]/);
+                if (singleColorMatch && singleColorMatch[1].startsWith('#')) {
+                    color = singleColorMatch[1];
+                }
+
+                // Then try array: backgroundColor: ['#fff', '#000']
+                if (!color) {
+                    const colorArrayMatch = datasetStr.match(/"?backgroundColor"?\s*:\s*\[([\s\S]*?)\]/);
+                    if (colorArrayMatch) {
+                        const colors = colorArrayMatch[1].match(/#[0-9a-fA-F]{6}/g);
+                        if (colors && colors.length > 0) {
+                            color = colors; // Keep as array for multi-color
+                        }
+                    }
+                }
+
+                // Fallback to borderColor
+                if (!color) {
+                    const borderMatch = datasetStr.match(/"?borderColor"?\s*:\s*['"]([#\w]+)['"]/);
+                    if (borderMatch && borderMatch[1].startsWith('#')) {
+                        color = borderMatch[1];
+                    }
+                }
+
+                if (dataArray && dataArray.length > 0) {
+                    datasets.push({
+                        data: dataArray,
+                        color: color || '#3b82f6'
+                    });
+                }
+
+                objStart = -1;
+            }
+        }
+    }
+
+    return datasets;
+}
+
+/**
  * Parse chart configuration from the extracted config string
+ * Now handles multi-dataset charts properly
  */
 function parseChartConfig(configStr) {
     if (!configStr) return null;
@@ -64,14 +159,10 @@ function parseChartConfig(configStr) {
         chartType = 'donut';
     }
 
-    // Extract data array from datasets[0].data (supports both JS and JSON formats)
-    let data = null;
-    const dataMatch = configStr.match(/"?datasets"?\s*:\s*\[\s*\{[\s\S]*?"?data"?\s*:\s*\[([\d.,\s-]+)\]/);
-    if (dataMatch) {
-        data = dataMatch[1].split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
-    }
+    // Extract ALL datasets
+    const allDatasets = extractAllDatasets(configStr);
 
-    // Extract labels (supports both JS and JSON formats)
+    // Extract labels (supports both JS and JSON formats) - ALWAYS include for all types
     let labels = null;
     const labelsMatch = configStr.match(/"?labels"?\s*:\s*\[([\s\S]*?)\]/);
     if (labelsMatch) {
@@ -85,24 +176,21 @@ function parseChartConfig(configStr) {
         if (labels.length === 0) labels = null;
     }
 
-    // Extract colors (backgroundColor array) - supports both JS and JSON formats
-    let colors = null;
-    const colorsMatch = configStr.match(/"?backgroundColor"?\s*:\s*\[([\s\S]*?)\]/);
-    if (colorsMatch) {
-        const colorsStr = colorsMatch[1];
-        colors = colorsStr.match(/#[0-9a-fA-F]{6}/g);
-    }
-
-    // Extract single color (borderColor or backgroundColor string) - supports both JS and JSON formats
+    // Determine primary color
     let color = '#3b82f6'; // default
-    const borderColorMatch = configStr.match(/"?borderColor"?\s*:\s*['"]([#\w]+)['"]/);
-    const bgColorSingleMatch = configStr.match(/"?backgroundColor"?\s*:\s*['"]([#\w]+)['"]/);
-    if (borderColorMatch && borderColorMatch[1].startsWith('#')) {
-        color = borderColorMatch[1];
-    } else if (bgColorSingleMatch && bgColorSingleMatch[1].startsWith('#')) {
-        color = bgColorSingleMatch[1];
-    } else if (colors && colors.length > 0) {
-        color = colors[0];
+    let colors = null;
+
+    if (allDatasets.length > 0) {
+        // Use first dataset's color as primary
+        const firstColor = allDatasets[0].color;
+        color = Array.isArray(firstColor) ? firstColor[0] : firstColor;
+
+        // Collect all colors for multi-series charts
+        if (allDatasets.length > 1) {
+            colors = allDatasets.map(ds => Array.isArray(ds.color) ? ds.color[0] : ds.color);
+        } else if (Array.isArray(allDatasets[0].color)) {
+            colors = allDatasets[0].color;
+        }
     }
 
     // Build the config
@@ -111,17 +199,25 @@ function parseChartConfig(configStr) {
         color: color
     };
 
-    if (data && data.length > 0) {
-        // Always preserve full data array - chart-previews.js handles all types
-        config.data = data;
+    // Handle data based on number of datasets
+    if (allDatasets.length === 1) {
+        // Single dataset - simple data array
+        config.data = allDatasets[0].data;
+    } else if (allDatasets.length > 1) {
+        // Multi-dataset - store as datasets array for grouped rendering
+        config.data = allDatasets[0].data; // Keep first for backward compat
+        config.datasets = allDatasets.map(ds => ({
+            data: ds.data,
+            color: Array.isArray(ds.color) ? ds.color[0] : ds.color
+        }));
     }
 
-    // Include labels for hbar charts (critical for matching the report)
-    if (labels && labels.length > 0 && chartType === 'hbar') {
+    // Include labels for ALL chart types (not just hbar)
+    if (labels && labels.length > 0) {
         config.labels = labels;
     }
 
-    // Include colors for multi-segment charts (donut, bar, hbar)
+    // Include colors for multi-segment/multi-series charts
     if (colors && colors.length > 1) {
         config.colors = colors;
     }

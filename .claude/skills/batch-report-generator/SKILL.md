@@ -114,9 +114,18 @@ Use one of these category values:
 3. **Generates** HTML from `docs/report-template-2025.html`
 4. **Creates** Chart.js visualization based on data
 5. **Adds** entry to `js/reports-data.js`
-6. **Syncs** chart thumbnails via `node tools/sync-chart-configs.js`
+6. **REQUIRES MANUAL RUN**: `node tools/sync-chart-configs.js` (see warning below)
 7. **Runs** `./validate-report.sh` to verify
 8. **Commits** to feature branch
+
+> **WARNING: CHART SYNC IS NOT AUTOMATIC**
+>
+> After generating reports, you MUST manually run:
+> ```bash
+> node tools/sync-chart-configs.js
+> ```
+> Without this, carousel thumbnails will show wrong/placeholder data.
+> This step extracts chart data from HTML and updates reports-data.js.
 
 ## CRITICAL: Chart Height Constraint
 

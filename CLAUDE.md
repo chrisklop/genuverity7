@@ -278,47 +278,65 @@ git checkout main && git merge report/slug-name && git push origin main
 
 ---
 
-## 📊 CHART THUMBNAILS
+## 📊 CHART THUMBNAILS (MANDATORY - NOT AUTOMATIC)
 
 Report cards on `index.html` and `newsfeed.html` display mini-chart previews.
 **Thumbnails MUST match the actual charts inside each report.**
 
-### ⚠️ CRITICAL: Sync After Every Report
+> **⚠️ WARNING: THIS STEP IS NOT AUTOMATIC**
+>
+> After creating or editing ANY report with charts, you MUST run:
+> ```bash
+> node tools/sync-chart-configs.js
+> ```
+> **IF YOU SKIP THIS: Thumbnails show generic/wrong charts on the carousel.**
 
-**ALWAYS run this after creating or editing ANY report:**
-```bash
-node tools/sync-chart-configs.js
-```
+### Why This Matters
 
-This tool:
-1. Reads each report's HTML to find Chart.js charts
-2. Extracts the actual chart type, data, and colors
-3. Updates `js/reports-data.js` with matching configs
-4. Ensures thumbnails accurately preview the report's charts
+The sync tool:
+1. Reads each report's HTML to find Chart.js `new Chart()` calls
+2. Extracts chart type, data arrays, labels, and colors
+3. Handles multi-dataset charts (e.g., grouped bar comparisons)
+4. Updates `js/reports-data.js` with matching configs
+5. Ensures thumbnails accurately preview the report's charts
 
-**If you skip this step, thumbnails will show generic/wrong charts!**
+### When to Run
+
+| Situation | Action |
+|-----------|--------|
+| After creating a report | Run sync tool |
+| After editing a chart in HTML | Run sync tool |
+| After batch-report skill | Run sync tool |
+| `validate-report.sh` shows chart reminder | Run sync tool |
 
 ### Architecture
-- **Sync tool**: `tools/sync-chart-configs.js` - extracts chart data from HTML
-- **Renderer**: `js/chart-previews.js` - renders mini previews on cards
-- **Config storage**: `chart` property in `js/reports-data.js`
+
+| Component | File | Purpose |
+|-----------|------|---------|
+| Sync Tool | `tools/sync-chart-configs.js` | Extracts chart data from HTML |
+| Renderer | `js/chart-previews.js` | Renders mini previews on cards |
+| Config Storage | `js/reports-data.js` | `chart` property per report |
 
 ### Chart Config Format
+
 ```javascript
 chart: {
-    type: "hbar",           // bar, line, donut, hbar, network, timeline
-    color: "#ef4444",       // Primary color
-    data: [5, 400],         // Data values (format varies by type)
-    labels: ["A", "B"],     // Optional: for hbar charts
-    colors: ["#ef4444", "#10b981"]  // Optional: multiple colors
+    type: "bar",            // bar, line, donut, hbar, network, timeline
+    color: "#3b82f6",       // Primary color
+    data: [11, 5, 3, 3, 1], // Data values (first dataset for backward compat)
+    labels: ["A", "B"],     // Labels for all chart types
+    colors: ["#3b82f6", "#ef4444"],  // Colors for multi-series
+    datasets: [             // Multi-dataset support (e.g., grouped bars)
+        { data: [11, 5, 3, 3, 1], color: "#3b82f6" },
+        { data: [2, 4, 8, 6, 4], color: "#ef4444" }
+    ]
 }
 ```
 
-### Validation
-```bash
-node tools/generate-sitemaps.js
-# Will warn if reports have Chart.js but no reports-data.js chart config
-```
+### Enforcement
+
+- `validate-report.sh` reminds you if report has charts
+- `generate-sitemaps.js` warns if reports have Chart.js but no chart config
 
 ---
 
