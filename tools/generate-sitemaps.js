@@ -488,6 +488,18 @@ async function main() {
     const reports = parseReportsData();
     console.log(`   Found ${reports.length} report entries\n`);
 
+    // VALIDATION: Check for duplicate IDs in reports-data.js
+    console.log('🔢 Checking for duplicate IDs...');
+    const reportsDataContent = fs.readFileSync(REPORTS_DATA_PATH, 'utf8');
+    const idMatches = [...reportsDataContent.matchAll(/\bid:\s*(\d+)/g)].map(m => parseInt(m[1]));
+    const duplicateIds = idMatches.filter((id, idx) => idMatches.indexOf(id) !== idx);
+    if (duplicateIds.length > 0) {
+        console.error(`\n   ❌ DUPLICATE IDs FOUND: ${[...new Set(duplicateIds)].join(', ')}`);
+        console.error('      This will cause bugs! Fix js/reports-data.js before continuing.\n');
+        process.exit(1);
+    }
+    console.log('   ✅ No duplicate IDs\n');
+
     // VALIDATION: Check for mismatches between files and data
     console.log('🔍 Validating consistency...');
     const reportSlugs = new Set(reports.map(r => r.slug));
@@ -520,7 +532,6 @@ async function main() {
 
     // VALIDATION: Check for missing chart configs
     console.log('📊 Checking chart configurations...');
-    const reportsDataContent = fs.readFileSync(REPORTS_DATA_PATH, 'utf8');
     const missingCharts = checkMissingChartConfigs(reportsDataContent, allSlugs);
 
     if (missingCharts.length > 0) {

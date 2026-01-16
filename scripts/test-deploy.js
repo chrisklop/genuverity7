@@ -254,7 +254,43 @@ async function runTests() {
         }
 
         // =====================
-        // TEST 7: No critical console errors
+        // TEST 7: Search functionality (if present)
+        // =====================
+        try {
+            await page.setViewportSize({ width: 1280, height: 720 }); // Reset to desktop
+            await page.goto(`${BASE_URL}/`, { timeout: 30000 });
+
+            // Look for search input with various selectors
+            const searchInput = page.locator('#search-input, .search-input, [type="search"], input[placeholder*="earch"]').first();
+            const searchExists = await searchInput.count() > 0;
+
+            if (searchExists) {
+                // Clear any existing errors before search test
+                const errorsBefore = consoleErrors.length;
+
+                await searchInput.fill('test');
+                await page.waitForTimeout(500); // Wait for search to process
+
+                // Check no new JS errors occurred during search
+                const errorsAfter = consoleErrors.length;
+                const newErrors = consoleErrors.slice(errorsBefore).filter(e =>
+                    !e.includes('favicon') && !e.includes('404')
+                );
+
+                if (newErrors.length === 0) {
+                    pass('Search functionality works');
+                } else {
+                    fail('Search functionality works', `JS error during search: ${newErrors[0]}`);
+                }
+            } else {
+                pass('Search functionality (skipped - no search input found)');
+            }
+        } catch (e) {
+            fail('Search functionality', e);
+        }
+
+        // =====================
+        // TEST 8: No critical console errors
         // =====================
         const criticalErrors = consoleErrors.filter(e =>
             !e.includes('favicon') &&

@@ -6,7 +6,7 @@
         "build": "chmod +x bust-cache.sh && ./bust-cache.sh",
         "thumbnails": "node scripts/generate-thumbnails.js",
         "radar": "node scripts/radar.js",
-        "test": "node scripts/test-deploy.js",
+        "test": "node -c js/reports-data.js && node -c js/unified-search.js && node -c js/chart-previews.js && node scripts/test-deploy.js",
         "test:local": "node scripts/test-deploy.js http://localhost:8000",
         "test:preview": "node scripts/test-deploy.js",
         "pretest": "echo 'Running pre-deploy tests...'"
