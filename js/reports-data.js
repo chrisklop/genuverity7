@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -6,
+        title: "365 WINS IN 365 DAYS: Comprehensive Fact-Check",
+        slug: "365-wins-factcheck-2026",
+        category: "Fact Check",
+        tagClass: "tag-cyan",
+        catClass: "cat-factcheck",
+        icon: "clipboard-check",
+        date: "Jan 22, 2026",
+        sources: "26 Sources",
+        readTime: "45 min",
+        verdict: "mixed",
+        excerpt: "Line-by-line verification of all 365 claims from the Trump Administration's first-year anniversary document. The most comprehensive fact-check in GenuVerity history analyzing border policy, economic claims, foreign policy, and more.",
+        chart: {"type":"donut","color":"#10b981","data":[180,65,50,15,5],"labels":["True (180)","Mostly True (65)","Needs Context (50)","Misleading (15)","False (5)"],"colors":["#10b981","#06b6d4","#3b82f6","#f59e0b","#ef4444"]}
+    },
+    {
         id: -5,
         title: "The Caracas Mirage: AI-Generated Images Fuel Disinformation After Maduro Capture",
         slug: "caracas-mirage-ai-deepfakes-january-2026",
