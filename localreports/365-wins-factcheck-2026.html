@@ -280,8 +280,20 @@
             margin: 2rem 0;
         }
         @media (max-width: 768px) {
+            .section-nav {
+                position: relative; /* NOT sticky on mobile - it covers too much */
+                top: 0;
+                background: #1a1a2e; /* Solid dark background, not transparent variable */
+                margin-bottom: 1.5rem;
+            }
             .section-nav-links {
-                flex-direction: column;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 0.4rem;
+            }
+            .section-nav-link {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
             }
             .claims-section {
                 padding: 1rem;
