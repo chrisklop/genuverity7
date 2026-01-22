@@ -15,7 +15,7 @@ const REPORTS_DATA = [
         readTime: "45 min",
         verdict: "mixed",
         excerpt: "Line-by-line verification of all 365 claims from the Trump Administration's first-year anniversary document. The most comprehensive fact-check in GenuVerity history analyzing border policy, economic claims, foreign policy, and more.",
-        chart: {"type":"donut","color":"#10b981","data":[180,65,50,15,5],"labels":["True (180)","Mostly True (65)","Needs Context (50)","Misleading (15)","False (5)"],"colors":["#10b981","#06b6d4","#3b82f6","#f59e0b","#ef4444"]}
+        chart: {"type":"donut","color":"#3b82f6","data":[171,65,57,17,5],"labels":["True (171)","Mostly True (65)","Context (57)","Misleading (17)","False (5)"],"colors":["#10b981","#06b6d4","#3b82f6","#f59e0b","#ef4444"]}
     },
     {
         id: -5,

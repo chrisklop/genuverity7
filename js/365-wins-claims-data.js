@@ -11,13 +11,14 @@ const WINS_365_DATA = {
         totalClaims: 365,
         sourceDocument: "https://www.whitehouse.gov/articles/2026/01/365-wins-in-365-days-president-trumps-return-marks-new-era-of-success-prosperity/",
         verdictSummary: {
-            true: 180,
+            true: 171,
             mostlyTrue: 65,
-            needsContext: 50,
-            misleading: 15,
+            needsContext: 57,
+            misleading: 17,
             false: 5,
             tbd: 50
-        }
+        },
+        contextNote: "Many claims rated 'NEEDS CONTEXT' are literally true but imply credit where external factors (market forces, prior administration policies, foreign cooperation) were primary drivers."
     },
 
     sections: [
@@ -27,7 +28,7 @@ const WINS_365_DATA = {
             icon: "shield",
             claimRange: "1-52",
             claimCount: 52,
-            verdictBreakdown: { true: 35, mostlyTrue: 8, context: 6, misleading: 2, false: 1 },
+            verdictBreakdown: { true: 32, mostlyTrue: 8, context: 9, misleading: 2, false: 1 },
             claims: [
                 {
                     id: 1,
@@ -80,20 +81,45 @@ const WINS_365_DATA = {
                 {
                     id: 6,
                     whiteHouseText: "Reduced illegal border crossings to the lowest level since the 1970s.",
-                    verdict: "true",
-                    rating: 5,
-                    analysis: "CBP data confirms historic lows in border encounters.",
+                    verdict: "context",
+                    rating: 3,
+                    analysis: "CBP data confirms historic lows - 8,300 apprehensions in February 2025, lowest since late 1960s. However, the decline began in 2024 under Biden: crossings fell 53% between December 2023 and May 2024. Mexico's enforcement is a major factor - Mexican authorities recorded MORE encounters than US Border Patrol every month from May 2024 to March 2025. President Sheinbaum (October 2024) deployed 10,000 National Guard troops. Both administrations share credit.",
+                    externalFactors: [
+                        "Decline began under Biden: 53% drop Dec 2023 to May 2024 before Trump took office",
+                        "Mexico recorded more encounters than US every month May 2024 - March 2025",
+                        "Mexico deployed 10,000 National Guard troops under Sheinbaum (Oct 2024)",
+                        "Mexico began visa restrictions for Venezuela/South America in 2021",
+                        "Regional variation: 83% increase in Arizona July-Sept 2025"
+                    ],
+                    governmentRole: "Trump policies (Remain in Mexico, border emergency, wall construction) reinforced and accelerated existing decline. However, Mexican cooperation and enforcement - which began under Biden - is a critical factor often unacknowledged.",
+                    attributionScore: 50,
                     sources: [6],
-                    keyFact: "CBP data confirms historic low crossings"
+                    keyFact: "Decline began in 2024 under Biden; Mexican enforcement is a major factor",
+                    contextSources: [
+                        {name: "Pew Research: Sharp Fall in Crossings", url: "https://www.pewresearch.org/short-reads/2024/10/01/migrant-encounters-at-u-s-mexico-border-have-fallen-sharply-in-2024/"},
+                        {name: "Migration Policy Institute: Can Low Levels Be Sustained?", url: "https://www.migrationpolicy.org/news/low-migrant-encounters-border-trump"},
+                        {name: "American Immigration Council: Why Low Crossings?", url: "https://www.americanimmigrationcouncil.org/blog/why-are-border-crossings-lowest-level-in-four-years/"}
+                    ]
                 },
                 {
                     id: 7,
                     whiteHouseText: "Cut fentanyl trafficking at the southern border by 56%.",
-                    verdict: "true",
-                    rating: 5,
-                    analysis: "CBP seizure data confirms significant reduction in fentanyl trafficking.",
+                    verdict: "context",
+                    rating: 3,
+                    analysis: "CBP seizure data confirms significant reduction. However, fentanyl seizures began declining in 2024 under Biden as part of the broader border crossing decline. Mexican enforcement cooperation - 10,000 National Guard deployed, cartel pressure - contributed substantially. Reduced border crossings naturally reduce trafficking attempts at official ports of entry. Causation is shared between US enforcement, Mexican cooperation, and cartel supply chain adjustments.",
+                    externalFactors: [
+                        "Border crossing decline began in 2024 under Biden administration",
+                        "Mexican enforcement cooperation (10,000 National Guard)",
+                        "Cartel supply chain adjustments to avoid detection",
+                        "Fewer crossing attempts = fewer seizure opportunities"
+                    ],
+                    governmentRole: "Designation of cartels as Foreign Terrorist Organizations and enhanced border enforcement contributed. However, Mexican cooperation and the broader border decline (which began under Biden) are co-factors.",
+                    attributionScore: 50,
                     sources: [6],
-                    keyFact: "CBP seizure data confirms 56% reduction"
+                    keyFact: "Decline correlates with broader border crossing reduction that began in 2024",
+                    contextSources: [
+                        {name: "Migration Policy Institute", url: "https://www.migrationpolicy.org/article/top-10-migration-issues-2025"}
+                    ]
                 },
                 {
                     id: 8,
@@ -161,11 +187,22 @@ const WINS_365_DATA = {
                 {
                     id: 15,
                     whiteHouseText: "99% collapse of Darien Gap migration traffic.",
-                    verdict: "true",
-                    rating: 5,
-                    analysis: "Attributed to diplomatic pressure on Panama; migration data confirms dramatic decline.",
+                    verdict: "context",
+                    rating: 4,
+                    analysis: "Migration Policy Institute confirms crossings plummeted from 520,000 in 2023 to fewer than 3,000 in first 9 months of 2025. However, Panama began restricting crossings in 2024 under pressure from previous administration. Additionally, 18,000+ migrants (mostly Venezuelan) have passed through Panama SOUTHBOUND in reverse flow - migrants stranded by US policy changes are returning home. The decline reflects policy from both administrations plus Panama cooperation.",
+                    externalFactors: [
+                        "Panama began restricting crossings in 2024 (before Trump took office)",
+                        "18,000+ migrants passing through southbound in reverse migration",
+                        "Mexico's visa restrictions for Venezuelans began in 2021",
+                        "Many migrants stranded in Mexico putting down roots"
+                    ],
+                    governmentRole: "Trump administration's threat of tariffs and diplomatic pressure accelerated Panama's enforcement. However, the cooperation framework began under Biden. Both administrations share credit for the diplomatic approach.",
+                    attributionScore: 60,
                     sources: [6],
-                    keyFact: "Panama border crossing data confirms"
+                    keyFact: "Decline began in 2024; Panama cooperation started under Biden",
+                    contextSources: [
+                        {name: "Migration Policy Institute: Top 10 Issues 2025", url: "https://www.migrationpolicy.org/article/top-10-migration-issues-2025"}
+                    ]
                 },
                 {
                     id: 16,
@@ -752,7 +789,7 @@ const WINS_365_DATA = {
             icon: "trending-up",
             claimRange: "79-106",
             claimCount: 28,
-            verdictBreakdown: { true: 20, mostlyTrue: 4, context: 3, misleading: 1, false: 0 },
+            verdictBreakdown: { true: 15, mostlyTrue: 4, context: 7, misleading: 2, false: 0 },
             claims: [
                 {
                     id: 79,
@@ -838,11 +875,25 @@ const WINS_365_DATA = {
                 {
                     id: 88,
                     whiteHouseText: "Stock market hit record highs.",
-                    verdict: "true",
-                    rating: 5,
-                    analysis: "Market data confirms multiple record highs.",
+                    verdict: "context",
+                    rating: 3,
+                    analysis: "S&P 500 closed at 6,845 on Dec 31, 2025 - a record high. However, this is year 3 of a bull market that began in October 2022 (Biden administration). The S&P 500 gained 57.8% under Biden vs 17.9% in 2025. The market crashed 19% in April 2025 due to tariff announcements, then recovered when tariffs were walked back. Market analysts attribute gains to the 'AI bull market' (NVIDIA, Microsoft, Meta), not policy changes.",
+                    externalFactors: [
+                        "Bull market began October 2022 - this is year 3 of pre-existing trend",
+                        "S&P 500 gained 57.8% under Biden vs 17.9% in 2025",
+                        "Market crashed 19% in April 2025 due to tariff announcements",
+                        "Recovery occurred when tariffs were walked back",
+                        "Seven AI stocks drove over half of 2025 gains (NVIDIA, Alphabet, Microsoft, etc.)"
+                    ],
+                    governmentRole: "Markets recovered after administration walked back severe tariff proposals. Deregulation sentiment contributed to some gains. However, long-term trends like AI innovation matter more than who's in office.",
+                    attributionScore: 25,
                     sources: [5],
-                    keyFact: "Market indices confirm records"
+                    keyFact: "Bull market started Oct 2022 under Biden; 2025 is continuation, not new trend",
+                    contextSources: [
+                        {name: "Yahoo Finance: Biden vs Trump Markets", url: "https://finance.yahoo.com/news/stock-market-under-biden-compares-183241147.html"},
+                        {name: "Morgan Stanley: Bull Market Outlook", url: "https://www.morganstanley.com/insights/articles/stock-market-outlook-bull-market-risks-2026"},
+                        {name: "CNN: Trump's Stock Market Victory", url: "https://www.cnn.com/2025/11/04/markets/us-stock-market"}
+                    ]
                 },
                 {
                     id: 89,
@@ -903,20 +954,46 @@ const WINS_365_DATA = {
                 {
                     id: 95,
                     whiteHouseText: "Wholesale egg prices down 89%.",
-                    verdict: "true",
-                    rating: 5,
-                    analysis: "USDA data confirms: $8/dozen to ~$1.15/dozen.",
+                    verdict: "context",
+                    rating: 3,
+                    analysis: "USDA data confirms prices dropped from $8/dozen (Feb 2025 peak) to ~$1.15/dozen. However, the peak was caused by the worst avian flu outbreak in U.S. history - over 40 million egg-laying chickens died in 2024 (13% of national flock), with 18.3 million birds affected in December 2024 alone. The price decline primarily reflects flock recovery from the epidemic, not economic policy.",
+                    externalFactors: [
+                        "2024-2025 avian flu outbreak killed 40+ million egg-laying chickens",
+                        "December 2024 saw 18.3 million birds affected - worst single month",
+                        "February 2025 wholesale prices hit all-time record ($8/dozen) due to supply shortage",
+                        "Price decline reflects flock repopulation and supply recovery"
+                    ],
+                    governmentRole: "USDA invested $1 billion in February 2025 to combat avian flu, including $500M for biosecurity and $400M for farmer relief. This accelerated flock recovery but the primary driver was natural epidemic resolution.",
+                    attributionScore: 25,
                     sources: [5],
-                    keyFact: "USDA price data confirms dramatic decline"
+                    keyFact: "Prices dropped because avian flu epidemic subsided, not economic policy",
+                    contextSources: [
+                        {name: "USDA Press Release", url: "https://www.usda.gov/about-usda/news/press-releases/2025/02/26/usda-invests-1-billion-combat-avian-flu-and-reduce-egg-prices"},
+                        {name: "USAFacts: Bird Flu Impact", url: "https://usafacts.org/articles/is-the-bird-flu-impacting-egg-prices/"},
+                        {name: "PBS News: Bird Flu Prices", url: "https://www.pbs.org/newshour/show/why-a-deadly-strain-of-bird-flu-is-making-egg-prices-soar-nationwide"}
+                    ]
                 },
                 {
                     id: 96,
                     whiteHouseText: "Trade deficit at lowest since 2009.",
-                    verdict: "true",
-                    rating: 5,
-                    analysis: "BEA data confirms $29.4B deficit in October 2025.",
+                    verdict: "context",
+                    rating: 3,
+                    analysis: "BEA data confirms the October 2025 deficit of $29.4B. However, economists attribute this primarily to 'tariff front-loading' - importers rushed to stockpile goods before tariffs took effect in Q1 2025, then dramatically reduced imports afterward. The low deficit reflects depleted inventories and reduced import orders, not sustainable trade balance improvement. Economic fundamentals (national savings vs. investment) actually drive trade balances, not tariff policy.",
+                    externalFactors: [
+                        "Tariff front-loading: Importers stockpiled goods in Q1 2025 to beat tariffs",
+                        "Inventory depletion: Replenishment orders not coming in after front-loading",
+                        "Gold trade boom affecting financial markets",
+                        "AI-driven investment patterns shifting import composition"
+                    ],
+                    governmentRole: "Tariffs did reduce imports, but primarily through demand destruction and front-loading effects rather than structural reshoring. Yale Budget Lab notes 17% effective tariff rate is highest since 1935.",
+                    attributionScore: 40,
                     sources: [25],
-                    keyFact: "BEA: $29.4B October 2025 deficit"
+                    keyFact: "Deficit drop largely reflects tariff front-loading effect, not structural improvement",
+                    contextSources: [
+                        {name: "CNBC: Trade Deficit Analysis", url: "https://www.cnbc.com/2025/06/05/big-drop-trade-deficit-inside-us-supply-chain-economy.html"},
+                        {name: "Intereconomics: Tariff Analysis", url: "https://www.intereconomics.eu/contents/year/2025/number/4/article/the-trade-deficit-delusion-why-tariffs-will-not-make-america-great-again.html"},
+                        {name: "American Action Forum", url: "https://www.americanactionforum.org/insight/what-the-u-s-trade-deficit-really-means/"}
+                    ]
                 },
                 {
                     id: 97,
@@ -939,11 +1016,24 @@ const WINS_365_DATA = {
                 {
                     id: 99,
                     whiteHouseText: "Increased tariff revenue by $300 billion.",
-                    verdict: "true",
-                    rating: 5,
-                    analysis: "Treasury data confirms revenue increase.",
+                    verdict: "misleading",
+                    rating: 2,
+                    analysis: "Treasury data confirms tariff revenue rose from ~$100B (2024) to ~$300B (2025). However, the claim implies foreign countries are paying these tariffs. Economic research shows 80% of tariff costs are borne by US businesses (40%) and US consumers (40%), with only 20% falling on foreign exporters. The tariffs function as a tax on American importers passed to consumers, not a payment from foreign nations.",
+                    externalFactors: [
+                        "Tariff incidence: 40% paid by US consumers, 40% by US businesses, 20% by foreign exporters (Goldman Sachs)",
+                        "Factory employment dropped 40,000+ jobs since April 2025",
+                        "ISM manufacturing index fell in October 2025",
+                        "Legal challenges: Courts ruled IEEPA tariffs unconstitutional; Supreme Court appeal pending"
+                    ],
+                    governmentRole: "Administration implemented tariffs, but the revenue represents a tax on American importers and consumers, not foreign payments. If Supreme Court upholds lower court rulings, government may have to refund collected revenue.",
+                    attributionScore: 100,
                     sources: [1, 16],
-                    keyFact: "Treasury revenue data confirms"
+                    keyFact: "80% of tariff costs paid by US businesses and consumers, not foreign countries",
+                    contextSources: [
+                        {name: "PIIE: Who Pays Tariffs", url: "https://www.piie.com/blogs/realtime-economics/2025/who-paying-trumps-tariffs-so-far-its-us-businesses"},
+                        {name: "Yale Budget Lab: Tariff Effects", url: "https://budgetlab.yale.edu/research/short-run-effects-2025-tariffs-so-far"},
+                        {name: "NPR: Tariff Economic Costs", url: "https://www.npr.org/2025/11/05/nx-s1-5596488/tariffs-trump-economy-inflation"}
+                    ]
                 },
                 {
                     id: 100,
@@ -966,11 +1056,24 @@ const WINS_365_DATA = {
                 {
                     id: 102,
                     whiteHouseText: "Increased domestic oil production.",
-                    verdict: "true",
-                    rating: 5,
-                    analysis: "EIA production data confirms.",
+                    verdict: "context",
+                    rating: 3,
+                    analysis: "EIA confirms record production of 13.6 million barrels/day in 2025. However, US oil production has been on an upward trajectory since the shale revolution began in the mid-2000s. The US became the world's top oil producer in 2018 (first Trump term) and top natural gas producer in 2011 (Obama). Production averaged 12.2M bpd under Biden vs 11.0M bpd under Trump's first term. Current records continue a pre-existing multi-year trend driven by industry investment cycles, not short-term policy changes.",
+                    externalFactors: [
+                        "Shale revolution began mid-2000s with horizontal drilling and hydraulic fracturing",
+                        "US became world's top oil producer in 2018, top gas producer in 2011",
+                        "Production under Biden averaged 12.2M bpd vs Trump first term 11.0M bpd",
+                        "Drilling is multi-year business: Trump-era leasing feeds current production"
+                    ],
+                    governmentRole: "Executive orders accelerated permitting and LNG exports. However, energy investments take years to materialize - much current production stems from decisions made in prior administrations. Industry wants policy stability more than sweeping announcements.",
+                    attributionScore: 30,
                     sources: [5],
-                    keyFact: "EIA data confirms production increase"
+                    keyFact: "Record production continues multi-decade shale revolution trend, not 2025 policy",
+                    contextSources: [
+                        {name: "Cipher News: Fossil Fuels Booming", url: "https://www.ciphernews.com/articles/fossil-fuels-are-already-booming/"},
+                        {name: "The Conversation: Oil Industry View", url: "https://theconversation.com/us-oil-industry-doesnt-see-profit-in-trumps-pro-petroleum-moves-270518"},
+                        {name: "Factually: Biden vs Trump Production", url: "https://factually.co/fact-checks/energy/us-crude-production-biden-vs-trump-impact-on-gas-prices-dde204"}
+                    ]
                 },
                 {
                     id: 103,
@@ -1016,10 +1119,10 @@ const WINS_365_DATA = {
             icon: "hard-hat",
             claimRange: "107-191",
             claimCount: 85,
-            verdictBreakdown: { true: 50, mostlyTrue: 15, context: 12, misleading: 5, false: 3 },
+            verdictBreakdown: { true: 49, mostlyTrue: 15, context: 12, misleading: 6, false: 3 },
             claims: [
                 { id: 107, whiteHouseText: "Protected American manufacturing through tariffs.", verdict: "mostlyTrue", rating: 4, analysis: "Tariffs implemented; economic impact debated.", sources: [25], keyFact: "Tariffs documented; trade-offs exist" },
-                { id: 108, whiteHouseText: "Brought back manufacturing jobs.", verdict: "true", rating: 5, analysis: "BLS data shows manufacturing job growth.", sources: [5], keyFact: "BLS confirms manufacturing job gains" },
+                { id: 108, whiteHouseText: "Brought back manufacturing jobs.", verdict: "misleading", rating: 2, analysis: "Contradicted by data: Factory employment DROPPED 40,000+ jobs since April 2025. ISM manufacturing index fell in October 2025. While some sectors gained, overall manufacturing employment declined due to tariff-induced economic disruption.", sources: [5], keyFact: "Factory employment DOWN 40,000+ jobs since April 2025", externalFactors: ["Tariffs raised input costs for domestic manufacturers", "ISM manufacturing index declined", "Many manufacturers rely on imported components"], attributionScore: 20 },
                 { id: 109, whiteHouseText: "Secured investment commitments from major companies.", verdict: "true", rating: 5, analysis: "Corporate announcements documented.", sources: [5], keyFact: "Investment announcements verified" },
                 { id: 110, whiteHouseText: "Renegotiated auto manufacturing agreements.", verdict: "true", rating: 5, analysis: "Trade agreements modified.", sources: [25], keyFact: "USTR confirms renegotiation" },
                 { id: 111, whiteHouseText: "Protected steel industry.", verdict: "true", rating: 5, analysis: "Steel tariffs maintained and expanded.", sources: [25], keyFact: "Tariff policy verified" },
