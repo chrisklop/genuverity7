@@ -11,10 +11,10 @@ const WINS_365_DATA = {
         totalClaims: 365,
         sourceDocument: "https://www.whitehouse.gov/articles/2026/01/365-wins-in-365-days-president-trumps-return-marks-new-era-of-success-prosperity/",
         verdictSummary: {
-            true: 171,
-            mostlyTrue: 65,
-            needsContext: 57,
-            misleading: 17,
+            true: 169,
+            mostlyTrue: 64,
+            needsContext: 59,
+            misleading: 18,
             false: 5,
             tbd: 50
         },
@@ -545,16 +545,30 @@ const WINS_365_DATA = {
             icon: "shield-check",
             claimRange: "53-78",
             claimCount: 26,
-            verdictBreakdown: { true: 18, mostlyTrue: 5, context: 2, misleading: 1, false: 0 },
+            verdictBreakdown: { true: 16, mostlyTrue: 5, context: 4, misleading: 1, false: 0 },
             claims: [
                 {
                     id: 53,
                     whiteHouseText: "Delivered the largest one-year decline in homicides in U.S. history by launching targeted federal crime crackdowns.",
-                    verdict: "true",
-                    rating: 5,
-                    analysis: "FBI UCR data for 2025 indicates 14.9% nationwide decrease in murder. Council on Criminal Justice reports 25% decline compared to 2019 in major cities.",
+                    verdict: "context",
+                    rating: 3,
+                    analysis: "The ~20% homicide decline in 2025 is real and historic. However, this CONTINUES a trend that began BEFORE Trump took office: 2023 saw 13% decline, 2024 saw 14.9% decline (then the largest on record) - both under Biden. Crime experts attribute the decline to post-pandemic normalization, increased police funding, and local initiatives. The 2025 decline accelerated an existing trajectory rather than starting a new one.",
+                    externalFactors: [
+                        "Homicide decline began in 2023 under Biden administration (13% drop)",
+                        "2024 saw 14.9% decline - then-largest on record - also under Biden",
+                        "Post-pandemic crime normalization (2020 spike was +30%)",
+                        "Local police funding increases across major cities",
+                        "Chicago, DC, Philadelphia, Baltimore declines predate Jan 2025"
+                    ],
+                    governmentRole: "Federal crime crackdowns and DOJ initiatives contributed to the 2025 decline. However, the trend began 2 years before Trump took office. Both administrations share credit for sustaining and accelerating the decline.",
+                    attributionScore: 35,
                     sources: [4, 13],
-                    keyFact: "FBI confirms largest single-year homicide drop on record"
+                    keyFact: "Decline began in 2023 under Biden; 2025 continues existing trend",
+                    contextSources: [
+                        {name: "FBI 2024 Crimes Report", url: "https://www.fbi.gov/news/press-releases/fbi-releases-2024-reported-crimes-in-the-nation-statistics"},
+                        {name: "ABC News: Historic Homicide Drop", url: "https://abcnews.go.com/US/us-poised-end-2025-largest-year-drop-homicides/story?id=128646976"},
+                        {name: "Jeff Asher Crime Analysis", url: "https://jasher.substack.com/p/2025-year-in-review-a-remarkable"}
+                    ]
                 },
                 {
                     id: 54,
@@ -568,11 +582,24 @@ const WINS_365_DATA = {
                 {
                     id: 55,
                     whiteHouseText: "Cut overdose deaths by 21%.",
-                    verdict: "true",
-                    rating: 5,
-                    analysis: "CDC WONDER data confirms significant reduction.",
+                    verdict: "context",
+                    rating: 3,
+                    analysis: "CDC data confirms ~21% decline in overdose deaths. However, this continues a trend that began in LATE 2023 under Biden. 2024 saw a 27% decline (Biden administration). CDC credits 'public health interventions' broadly. The 2025 decline accelerates an existing trend rather than starting a new one. Young adults (under 35) saw 46% reduction - decline began before January 2025.",
+                    externalFactors: [
+                        "Decline began late 2023 under Biden administration",
+                        "2024 saw 27% decline (largest on record) - under Biden",
+                        "CDC credits public health interventions, not specific policies",
+                        "Fentanyl overdose deaths peaked in 2022 and declined through 2023-2024",
+                        "Most states saw declines regardless of political leadership"
+                    ],
+                    governmentRole: "Border enforcement and fentanyl seizures contributed. However, CDC attributes decline to broad 'public health interventions' including expanded naloxone access, treatment programs, and supply chain disruption that began under Biden. Both administrations share credit.",
+                    attributionScore: 40,
                     sources: [4],
-                    keyFact: "CDC mortality data confirms decline"
+                    keyFact: "Decline began late 2023 under Biden; 2024 saw 27% drop",
+                    contextSources: [
+                        {name: "CDC: 27% Decrease in 2024", url: "https://www.cdc.gov/nchs/pressroom/releases/20250514.html"},
+                        {name: "CDC: 24% Decline Report", url: "https://www.cdc.gov/media/releases/2025/2025-cdc-reports-decline-in-us-drug-overdose-deaths.html"}
+                    ]
                 },
                 {
                     id: 56,
@@ -1171,7 +1198,31 @@ const WINS_365_DATA = {
                 { id: 154, whiteHouseText: "Supported hospitality workers.", verdict: "context", rating: 3, analysis: "Limited direct federal policy impact.", sources: [5], keyFact: "Direct impact limited" },
                 { id: 155, whiteHouseText: "Protected entertainment industry workers.", verdict: "context", rating: 3, analysis: "Limited direct federal policy impact.", sources: [5], keyFact: "Direct impact limited" },
                 { id: 156, whiteHouseText: "Brokered peace between India and Pakistan.", verdict: "false", rating: 2, analysis: "India's MEA directly refuted any U.S.-brokered deal. PBS: 'India disputes Trump's claim that U.S. trade incentives led to ceasefire.'", sources: [8, 21], keyFact: "India MEA denies any U.S.-brokered agreement", disputed: true, criticalNote: "India categorically denies third-party mediation" },
-                { id: 157, whiteHouseText: "Ended Israel-Hamas war.", verdict: "mostlyTrue", rating: 4, analysis: "Ceasefire agreement reached October 2025 under 'Comprehensive Plan to End Gaza Conflict.' Long-term stability uncertain.", sources: [8], keyFact: "Ceasefire achieved; long-term outcome uncertain" },
+                {
+                    id: 157,
+                    whiteHouseText: "Ended Israel-Hamas war.",
+                    verdict: "misleading",
+                    rating: 2,
+                    analysis: "MISLEADING: A ceasefire was achieved October 10, 2025, and Phase 2 began January 14, 2026. However, saying the war 'ended' is inaccurate. Since the ceasefire: 477 Palestinians have been killed, 1,300+ violations recorded according to Gaza Media Office (78 according to IDF). Israel banned 30+ aid groups from Gaza on January 1, 2026. Only 43% of promised aid trucks have entered. The situation remains fragile with ongoing violence and Trump himself threatening Hamas would be 'blown away very quickly' if demands aren't met (Davos, January 21, 2026).",
+                    externalFactors: [
+                        "Ceasefire violations by both parties continue",
+                        "477 Palestinians killed since ceasefire began",
+                        "1,300+ violations recorded (Palestinian sources) / 78 (Israeli sources)",
+                        "30+ aid groups banned from Gaza January 2026",
+                        "Only 43% of promised humanitarian aid delivered"
+                    ],
+                    governmentRole: "The Trump administration brokered the 'Comprehensive Plan to End Gaza Conflict' which achieved a ceasefire and hostage release. However, claiming the war 'ended' overstates the outcome when violence and deaths continue.",
+                    attributionScore: 65,
+                    sources: [8],
+                    keyFact: "Ceasefire achieved but 477 killed since; violence continues",
+                    contextSources: [
+                        {name: "Al Jazeera: Phase Two of Gaza Ceasefire", url: "https://www.aljazeera.com/news/2026/1/16/us-declares-phase-two-of-gaza-ceasefire-but-what-did-phase-one-deliver"},
+                        {name: "Al Jazeera: Ceasefire Violation Numbers", url: "https://www.aljazeera.com/news/2025/11/11/how-many-times-has-israel-violated-the-gaza-ceasefire-here-are-the-numbers"},
+                        {name: "Security Council Report: January 2026", url: "https://www.securitycouncilreport.org/monthly-forecast/2026-01/the-middle-east-including-the-palestinian-question-23.php"}
+                    ],
+                    disputed: true,
+                    criticalNote: "War not 'ended' - ceasefire fragile with ongoing deaths and violations"
+                },
                 { id: 158, whiteHouseText: "Brokered Armenia-Azerbaijan peace (TRIPP).", verdict: "true", rating: 5, analysis: "TRIPP signed August 8, 2025, normalizing relations and establishing Zangezur corridor.", sources: [18], keyFact: "Atlantic Council and State Dept confirm TRIPP agreement" },
                 { id: 159, whiteHouseText: "Brokered Cambodia-Thailand peace.", verdict: "context", rating: 3, analysis: "Kuala Lumpur Peace Accords signed October 26, 2025, but fighting resumed December 2025 per Al Jazeera.", sources: [23], keyFact: "Deal signed but fighting resumed within weeks", disputed: true, criticalNote: "Peace proved fragile - renewed fighting in December" },
                 { id: 160, whiteHouseText: "Strengthened NATO alliance.", verdict: "context", rating: 3, analysis: "NATO relationships complex; some allies report friction.", sources: [8], keyFact: "Mixed assessment from allies" },
@@ -1324,11 +1375,13 @@ const WINS_365_DATA = {
                 {
                     id: 287,
                     whiteHouseText: "Saved $215 billion ($1,335 per taxpayer).",
-                    verdict: "context",
-                    rating: 3,
-                    analysis: "DOGE claims documented but independent verification limited.",
+                    verdict: "false",
+                    rating: 1,
+                    analysis: "FALSE: Independent analyses by PolitiFact, WSJ, NYT, and the conservative AEI found DOGE tallies 'flawed.' Two 'canceled' $8B DoD contracts are still being paid. Government spending INCREASED nearly 6% ($7.135T to $7.558T) under DOGE. CBO found spending exceeded pre-DOGE projections. The IRS estimates $500B+ revenue LOSS from DOGE cuts. Musk himself said DOGE was only 'a little bit successful.'",
                     sources: [1],
-                    keyFact: "DOGE claims require independent verification"
+                    keyFact: "Spending INCREASED 6% under DOGE; independent analyses debunked savings claims",
+                    externalFactors: ["Entitlements (Social Security, Medicare) on autopilot - DOGE can't cut them", "Interest payments up $100B+ in 2025", "Federal workforce is only 8% of spending"],
+                    contextSources: [{name: "Yahoo Finance: Spending Up Under DOGE", url: "https://finance.yahoo.com/news/elon-musks-doge-tally-the-federal-workforce-is-down-while-government-spending-is-up-192850019.html"}, {name: "Al Jazeera: Has DOGE saved $180B?", url: "https://www.aljazeera.com/news/2025/6/6/has-doge-really-saved-the-us-government-180bn"}]
                 },
                 { id: 288, whiteHouseText: "Signed 228 executive orders.", verdict: "true", rating: 5, analysis: "Federal Register confirms.", sources: [6], keyFact: "Federal Register verified" },
                 { id: 289, whiteHouseText: "Eliminated DEI offices.", verdict: "true", rating: 5, analysis: "Executive Order documented.", sources: [6], keyFact: "Executive Order verified" },
@@ -1353,13 +1406,13 @@ const WINS_365_DATA = {
                 { id: 298, whiteHouseText: "Most Favored Nation drug pricing with 16 pharma companies.", verdict: "true", rating: 5, analysis: "HHS announcements document agreements.", sources: [10], keyFact: "Drug pricing agreements verified" },
                 { id: 299, whiteHouseText: "Revamped President's Council on Sports, Fitness.", verdict: "true", rating: 5, analysis: "Executive Order documented.", sources: [6], keyFact: "Council restructured" },
                 { id: 300, whiteHouseText: "Signed Whole Milk for Healthy Kids Act.", verdict: "true", rating: 5, analysis: "S. 222 signed January 14, 2026.", sources: [6], keyFact: "Public law verified" },
-                { id: 301, whiteHouseText: "Phased out eight artificial food dyes.", verdict: "true", rating: 5, analysis: "FDA announcement documented.", sources: [10], keyFact: "FDA action verified" },
+                { id: 301, whiteHouseText: "Phased out eight artificial food dyes.", verdict: "misleading", rating: 2, analysis: "MISLEADING: FDA announced a phaseout PLAN on April 22, 2025, but compliance is VOLUNTARY. Only Red 3 was actually banned (Jan 2025). Two minor dyes (Orange B, Citrus Red 2) are being revoked. The major dyes (Red 40, Blue 1, Yellow 5, Yellow 6, Blue 2, Green 3) are subject to voluntary industry phaseout by end of 2026 - industry has NOT pledged to comply.", sources: [10], keyFact: "Only 1 dye banned; others are voluntary phaseout request, not action", contextSources: [{name: "CBS News: FDA stops short of ban", url: "https://www.cbsnews.com/news/fda-artificial-food-dyes-rfk-jr/"}] },
                 { id: 302, whiteHouseText: "40% of food industry eliminating dyes.", verdict: "true", rating: 5, analysis: "Industry agreements documented.", sources: [10], keyFact: "Industry commitments verified" },
-                { id: 303, whiteHouseText: "Launched Great Healthcare Plan.", verdict: "true", rating: 5, analysis: "Framework announced January 15, 2026.", sources: [10], keyFact: "Framework verified" },
+                { id: 303, whiteHouseText: "Launched Great Healthcare Plan.", verdict: "context", rating: 3, analysis: "Plan announced January 15, 2026, but it requires Congressional action to implement. No timeline for implementation provided. Experts note it 'largely restates previous proposals' and 'could do away with pre-existing condition protections.' A proposal, not an implemented policy.", sources: [10], keyFact: "Plan announced but requires Congressional action - not implemented", contextSources: [{name: "Al Jazeera: No clear funding", url: "https://www.aljazeera.com/economy/2026/1/15/trump-unveils-healthcare-plan-without-clear-funding-or-execution-timeline"}] },
                 { id: 304, whiteHouseText: "Operation Stork Speed for infant formula.", verdict: "true", rating: 5, analysis: "HHS initiative documented.", sources: [10], keyFact: "Operation verified" },
-                { id: 305, whiteHouseText: "Marijuana reclassified to Schedule III.", verdict: "true", rating: 5, analysis: "DEA scheduling change documented.", sources: [10], keyFact: "Reclassification verified" },
+                { id: 305, whiteHouseText: "Marijuana reclassified to Schedule III.", verdict: "false", rating: 1, analysis: "FALSE: Trump signed an EO on Dec 18, 2025 directing DOJ to expedite rescheduling, but the EO does NOT reschedule marijuana. The DEA rulemaking process is ongoing. Marijuana remains Schedule I as of January 2026. Rescheduling expected sometime in 2026.", sources: [10], keyFact: "Marijuana remains Schedule I - EO only directs process, not actual rescheduling", disputed: true, contextSources: [{name: "DLA Piper Analysis", url: "https://www.dlapiper.com/en-us/insights/publications/2025/12/eo-accelerates-marijuana-rescheduling-framework-for-hemp-derived-cannabinoids"}] },
                 { id: 306, whiteHouseText: "Modernized foster care system.", verdict: "true", rating: 5, analysis: "Executive Order documented.", sources: [6], keyFact: "Foster care EO verified" },
-                { id: 307, whiteHouseText: "Revised childhood vaccine recommendations.", verdict: "true", rating: 5, analysis: "CDC guidance update documented.", sources: [10], keyFact: "CDC guidance verified" },
+                { id: 307, whiteHouseText: "Revised childhood vaccine recommendations.", verdict: "context", rating: 3, analysis: "TRUE but highly controversial: CDC reduced schedule from 17 to 11 diseases on Jan 5, 2026. American Academy of Pediatrics was NOT consulted. Sen. Cassidy (R-La, physician): 'Changing the pediatric vaccine schedule based on no scientific input on safety risks...will make America sicker.' Former ACIP members were fired and replaced with vaccine skeptics.", sources: [10], keyFact: "Revised without AAP consultation; criticized by medical community", contextSources: [{name: "NBC News: RFK Jr overhauls vaccines", url: "https://www.nbcnews.com/health/health-news/rfk-jr-vaccines-overhaul-kids-denmark-fewer-childhood-shots-rcna250055"}] },
                 { id: 308, whiteHouseText: "Expanded IVF access.", verdict: "true", rating: 5, analysis: "Executive Order documented.", sources: [6], keyFact: "IVF EO verified" },
                 { id: 309, whiteHouseText: "Doubled childhood cancer data initiative.", verdict: "true", rating: 5, analysis: "NIH funding documented.", sources: [10], keyFact: "NIH funding verified" },
                 { id: 310, whiteHouseText: "$50 million autism data science initiative.", verdict: "true", rating: 5, analysis: "HHS announcement documented.", sources: [10], keyFact: "Autism initiative verified" },
