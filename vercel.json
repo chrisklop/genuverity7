@@ -378,13 +378,13 @@
       "permanent": true
     },
     {
-      "source": "/localreports/disinformation-analysis-january-2026.html",
-      "destination": "/disinformation-analysis-january-2026",
+      "source": "/localreports/disinformation-analysis-january-26-2026.html",
+      "destination": "/disinformation-analysis-january-26-2026",
       "permanent": true
     },
     {
-      "source": "/disinformation-analysis-january-2026.html",
-      "destination": "/disinformation-analysis-january-2026",
+      "source": "/disinformation-analysis-january-26-2026.html",
+      "destination": "/disinformation-analysis-january-26-2026",
       "permanent": true
     },
     {
@@ -2157,8 +2157,8 @@
       "destination": "/localreports/deepseek-chatbot-accuracy-2025.html"
     },
     {
-      "source": "/disinformation-analysis-january-2026",
-      "destination": "/localreports/disinformation-analysis-january-2026.html"
+      "source": "/disinformation-analysis-january-26-2026",
+      "destination": "/localreports/disinformation-analysis-january-26-2026.html"
     },
     {
       "source": "/disinformation-architecture-2025",
