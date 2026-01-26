@@ -3,6 +3,36 @@
 
 const REPORTS_DATA = [
     {
+        id: -7,
+        title: "Institutionalized Narrative Combat: A 2026 Global Disinformation Analysis",
+        slug: "disinformation-analysis-january-2026",
+        category: "Investigation",
+        tagClass: "tag-cyan",
+        catClass: "cat-investigation",
+        icon: "shield-alert",
+        date: "Jan 26, 2026",
+        sources: "42 Sources",
+        readTime: "35 min",
+        verdict: "mixed",
+        excerpt: "Comprehensive analysis of the five most prevalent disinformation topics of January 2026: the '72 injections' vaccine hoax, the $2,000 tariff dividend fraud, state-origin narrative inversion in the Minneapolis shooting, AI hallucination failures, and foreign 'vibe coding' campaigns. The state has emerged as a primary architect of narrative distortion.",
+        chart: {"type":"bar","color":"#3b82f6","data":[37,23,35,45,60],"datasets":[{"data":[37,23,35,45,60],"color":"#3b82f6"},{"data":[64,31,55,60,85],"color":"#ef4444"}],"labels":["AI Tool Security","Public Sector Gap","AI Content Share","Social as Search","Cyber-Fraud Priority"],"colors":["#3b82f6","#ef4444"]}
+    },
+    {
+        id: -6,
+        title: "365 WINS IN 365 DAYS: Comprehensive Fact-Check",
+        slug: "365-wins-factcheck-2026",
+        category: "Fact Check",
+        tagClass: "tag-cyan",
+        catClass: "cat-factcheck",
+        icon: "clipboard-check",
+        date: "Jan 22, 2026",
+        sources: "26 Sources",
+        readTime: "45 min",
+        verdict: "mixed",
+        excerpt: "Line-by-line verification of all 365 claims from the Trump Administration's first-year anniversary document. The most comprehensive fact-check in GenuVerity history analyzing border policy, economic claims, foreign policy, and more.",
+        chart: {"type":"donut","color":"#10b981","data":[169,64,59,18,5],"labels":["True (169)","Mostly True (64)","Needs Context (59)","Misleading (18)","False (5)"],"colors":["#10b981","#06b6d4","#3b82f6","#f59e0b","#ef4444"]}
+    },
+    {
         id: -5,
         title: "The Caracas Mirage: AI-Generated Images Fuel Disinformation After Maduro Capture",
         slug: "caracas-mirage-ai-deepfakes-january-2026",

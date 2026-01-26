@@ -2,6 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://www.genuverity.com/disinformation-analysis-january-2026</loc>
+    <news:news>
+      <news:publication>
+        <news:name>GenuVerity</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-01-26</news:publication_date>
+      <news:title>Institutionalized Narrative Combat: A 2026 Global Disinformation Analysis</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://www.genuverity.com/365-wins-factcheck-2026</loc>
+    <news:news>
+      <news:publication>
+        <news:name>GenuVerity</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-01-22</news:publication_date>
+      <news:title>365 WINS IN 365 DAYS: Comprehensive Fact-Check</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://www.genuverity.com/caracas-mirage-ai-deepfakes-january-2026</loc>
     <news:news>
       <news:publication>
@@ -307,28 +329,6 @@
       </news:publication>
       <news:publication_date>2026-01-02</news:publication_date>
       <news:title>SA Zulu King Salary Claims: Royal Funding vs. Exaggerated Figures</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://www.genuverity.com/sa-zulu-king-salary-2025</loc>
-    <news:news>
-      <news:publication>
-        <news:name>GenuVerity</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2026-01-02</news:publication_date>
-      <news:title>IDF Soldier Captivity Image: AI-Generated Propaganda Exposed</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://www.genuverity.com/idf-soldier-captivity-image-2025</loc>
-    <news:news>
-      <news:publication>
-        <news:name>GenuVerity</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2026-01-02</news:publication_date>
-      <news:title>Hollywood Sign AI Fire Image: Viral Fake During LA Wildfires</news:title>
     </news:news>
   </url>
 </urlset>

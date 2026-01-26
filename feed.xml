@@ -5,8 +5,22 @@
     <link>https://www.genuverity.com</link>
     <description>AI-powered fact-checking platform investigating misinformation, disinformation, and viral claims with source-first methodology.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Jan 2026 20:16:18 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 26 Jan 2026 22:18:39 GMT</lastBuildDate>
     <atom:link href="https://www.genuverity.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Institutionalized Narrative Combat: A 2026 Global Disinformation Analysis</title>
+      <link>https://www.genuverity.com/disinformation-analysis-january-2026</link>
+      <guid isPermaLink="true">https://www.genuverity.com/disinformation-analysis-january-2026</guid>
+      <pubDate>Mon, 26 Jan 2026 00:00:00 GMT</pubDate>
+      <description>Institutionalized Narrative Combat: A 2026 Global Disinformation Analysis</description>
+    </item>
+    <item>
+      <title>365 WINS IN 365 DAYS: Comprehensive Fact-Check</title>
+      <link>https://www.genuverity.com/365-wins-factcheck-2026</link>
+      <guid isPermaLink="true">https://www.genuverity.com/365-wins-factcheck-2026</guid>
+      <pubDate>Thu, 22 Jan 2026 00:00:00 GMT</pubDate>
+      <description>365 WINS IN 365 DAYS: Comprehensive Fact-Check</description>
+    </item>
     <item>
       <title>The Caracas Mirage: AI-Generated Images Fuel Disinformation After Maduro Capture</title>
       <link>https://www.genuverity.com/caracas-mirage-ai-deepfakes-january-2026</link>
@@ -202,20 +216,6 @@
       <guid isPermaLink="true">https://www.genuverity.com/ebola-vaccine-sterility-2025</guid>
       <pubDate>Fri, 02 Jan 2026 00:00:00 GMT</pubDate>
       <description>SA Zulu King Salary Claims: Royal Funding vs. Exaggerated Figures</description>
-    </item>
-    <item>
-      <title>IDF Soldier Captivity Image: AI-Generated Propaganda Exposed</title>
-      <link>https://www.genuverity.com/sa-zulu-king-salary-2025</link>
-      <guid isPermaLink="true">https://www.genuverity.com/sa-zulu-king-salary-2025</guid>
-      <pubDate>Fri, 02 Jan 2026 00:00:00 GMT</pubDate>
-      <description>IDF Soldier Captivity Image: AI-Generated Propaganda Exposed</description>
-    </item>
-    <item>
-      <title>Hollywood Sign AI Fire Image: Viral Fake During LA Wildfires</title>
-      <link>https://www.genuverity.com/idf-soldier-captivity-image-2025</link>
-      <guid isPermaLink="true">https://www.genuverity.com/idf-soldier-captivity-image-2025</guid>
-      <pubDate>Fri, 02 Jan 2026 00:00:00 GMT</pubDate>
-      <description>Hollywood Sign AI Fire Image: Viral Fake During LA Wildfires</description>
     </item>
   </channel>
 </rss>
