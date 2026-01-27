@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -8,
+        title: "DHS Biometrics Expansion: DNA, Social Media, and the End of Privacy",
+        slug: "dhs-biometrics-dna-social-media-2026",
+        category: "U.S. Politics & Policy",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "fingerprint",
+        date: "Jan 27, 2026",
+        sources: "10 Sources",
+        readTime: "15 min",
+        verdict: "context",
+        excerpt: "New DHS rules would require DNA from infants, mandatory social media disclosure, and biometric collection from U.S. citizens who sponsor family members. As of January 2026, these are proposed rules facing significant Fourth Amendment challenges.",
+        chart: {"type":"bar","color":"#3b82f6","data":[1,1,0,0,0,0],"datasets":[{"data":[1,1,0,0,0,0],"color":"#3b82f6"},{"data":[1,1,1,1,1,1],"color":"#ef4444"}],"labels":["Fingerprints","Photos","DNA","Iris Scans","Voice Prints","Palm Prints"],"colors":["#3b82f6","#ef4444"]}
+    },
+    {
         id: -7,
         title: "Institutionalized Narrative Combat: A 2026 Global Disinformation Analysis",
         slug: "disinformation-analysis-january-26-2026",

@@ -378,6 +378,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/dhs-biometrics-dna-social-media-2026.html",
+      "destination": "/dhs-biometrics-dna-social-media-2026",
+      "permanent": true
+    },
+    {
+      "source": "/dhs-biometrics-dna-social-media-2026.html",
+      "destination": "/dhs-biometrics-dna-social-media-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/disinformation-analysis-january-26-2026.html",
       "destination": "/disinformation-analysis-january-26-2026",
       "permanent": true
@@ -2155,6 +2165,10 @@
     {
       "source": "/deepseek-chatbot-accuracy-2025",
       "destination": "/localreports/deepseek-chatbot-accuracy-2025.html"
+    },
+    {
+      "source": "/dhs-biometrics-dna-social-media-2026",
+      "destination": "/localreports/dhs-biometrics-dna-social-media-2026.html"
     },
     {
       "source": "/disinformation-analysis-january-26-2026",
