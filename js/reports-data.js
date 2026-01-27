@@ -11,7 +11,7 @@ const REPORTS_DATA = [
         catClass: "cat-factcheck",
         icon: "fingerprint",
         date: "Jan 27, 2026",
-        sources: "10 Sources",
+        sources: "12 Sources",
         readTime: "15 min",
         verdict: "context",
         excerpt: "New DHS rules would require DNA from infants, mandatory social media disclosure, and biometric collection from U.S. citizens who sponsor family members. As of January 2026, these are proposed rules facing significant Fourth Amendment challenges.",
