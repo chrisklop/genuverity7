@@ -18,6 +18,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/365-wins-factcheck-2026.html",
+      "destination": "/365-wins-factcheck-2026",
+      "permanent": true
+    },
+    {
+      "source": "/365-wins-factcheck-2026.html",
+      "destination": "/365-wins-factcheck-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/abrego-garcia-ms13-tattoos-2025.html",
       "destination": "/abrego-garcia-ms13-tattoos-2025",
       "permanent": true
@@ -1878,6 +1888,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/wellness-grifting-pseudoscience-2026.html",
+      "destination": "/wellness-grifting-pseudoscience-2026",
+      "permanent": true
+    },
+    {
+      "source": "/wellness-grifting-pseudoscience-2026.html",
+      "destination": "/wellness-grifting-pseudoscience-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/wire-service-amplification.html",
       "destination": "/wire-service-amplification",
       "permanent": true
@@ -1991,6 +2011,10 @@
     {
       "source": "/225-executive-orders-2025",
       "destination": "/localreports/225-executive-orders-2025.html"
+    },
+    {
+      "source": "/365-wins-factcheck-2026",
+      "destination": "/localreports/365-wins-factcheck-2026.html"
     },
     {
       "source": "/abrego-garcia-ms13-tattoos-2025",
@@ -2735,6 +2759,10 @@
     {
       "source": "/warrior-dividend-analysis",
       "destination": "/localreports/warrior-dividend-analysis.html"
+    },
+    {
+      "source": "/wellness-grifting-pseudoscience-2026",
+      "destination": "/localreports/wellness-grifting-pseudoscience-2026.html"
     },
     {
       "source": "/wire-service-amplification",

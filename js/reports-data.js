@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -6,
+        title: "Wellness Grifting: The $4.5 Trillion Industry Built on Pseudoscience",
+        slug: "wellness-grifting-pseudoscience-2026",
+        category: "Health & Science",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "heart-pulse",
+        date: "Jan 28, 2026",
+        sources: "12 Sources",
+        readTime: "18 min",
+        verdict: "context",
+        excerpt: "Investigation of wellness industry grifters from Gwyneth Paltrow's Goop to RFK Jr.'s anti-vaccine crusade. Profiles tactics, documented harms, and the unprecedented institutional capture with wellness figures now leading federal health policy.",
+        chart: {"type":"donut","color":"#3b82f6","data":[955,946,738,651,413,131,666],"labels":["Personal Care & Beauty","Healthy Eating & Nutrition","Physical Activity","Wellness Tourism","Traditional Medicine","Mental Wellness","Other"],"colors":["#3b82f6","#10b981","#f59e0b","#06b6d4","#ef4444","#64748b","#334155"]}
+    },
+    {
         id: -5,
         title: "The Caracas Mirage: AI-Generated Images Fuel Disinformation After Maduro Capture",
         slug: "caracas-mirage-ai-deepfakes-january-2026",
