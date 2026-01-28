@@ -4,7 +4,7 @@
 const REPORTS_DATA = [
     {
         id: -6,
-        title: "Wellness Grifting: The $4.5 Trillion Industry Built on Pseudoscience",
+        title: "Wellness Grifting: The $6.3 Trillion Industry Built on Pseudoscience",
         slug: "wellness-grifting-pseudoscience-2026",
         category: "Health & Science",
         tagClass: "tag-amber",
