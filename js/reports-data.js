@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -7,
+        title: "Is Tim Walz Responsible for Minnesota's Massive Pandemic Fraud?",
+        slug: "walz-minnesota-fraud-responsibility-2026",
+        category: "U.S. Politics & Policy",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "landmark",
+        date: "Jan 30, 2026",
+        sources: "12 Sources",
+        readTime: "14 min",
+        verdict: "mixed",
+        excerpt: "Governor Walz bears significant administrative responsibility for oversight failures enabling $1+ billion in fraud. State audits document fabricated records and ignored warnings. However, claims of sole or criminal responsibility are misleading—amplified by coordinated disinformation campaigns.",
+        chart: {"type":"bar","color":"#3b82f6","data":[300,104,425,14,50],"labels":["FOF","Housing","BHA Grants","Autism","Other"]}
+    },
+    {
         id: -6,
         title: "Wellness Grifting: The $6.3 Trillion Industry Built on Pseudoscience",
         slug: "wellness-grifting-pseudoscience-2026",

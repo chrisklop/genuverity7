@@ -1878,6 +1878,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/walz-minnesota-fraud-responsibility-2026.html",
+      "destination": "/walz-minnesota-fraud-responsibility-2026",
+      "permanent": true
+    },
+    {
+      "source": "/walz-minnesota-fraud-responsibility-2026.html",
+      "destination": "/walz-minnesota-fraud-responsibility-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/warrior-dividend-analysis.html",
       "destination": "/warrior-dividend-analysis",
       "permanent": true
@@ -2755,6 +2765,10 @@
     {
       "source": "/visa-ban-green-card-panic-january-2026",
       "destination": "/localreports/visa-ban-green-card-panic-january-2026.html"
+    },
+    {
+      "source": "/walz-minnesota-fraud-responsibility-2026",
+      "destination": "/localreports/walz-minnesota-fraud-responsibility-2026.html"
     },
     {
       "source": "/warrior-dividend-analysis",
