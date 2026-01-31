@@ -11,11 +11,11 @@ const REPORTS_DATA = [
         catClass: "cat-factcheck",
         icon: "file-search",
         date: "Jan 31, 2026",
-        sources: "12 Sources",
-        readTime: "12 min",
+        sources: "18 Sources",
+        readTime: "18 min",
         verdict: "context",
-        excerpt: "Analysis of the DOJ's January 30, 2026 release of 3.5 million Epstein documents, 180,000 images, and 2,000 videos. Key revelations include a 2007 draft indictment with 32 counts and verified email exchanges with billionaires—but millions of pages contain unverified tips. Being mentioned does not equal wrongdoing.",
-        chart: {"type":"bar","color":"#3b82f6","data":[3.5,180,2],"labels":["Documents (M)","Images (K)","Videos"],"colors":["#3b82f6","#06b6d4","#10b981"]}
+        excerpt: "Comprehensive analysis of the DOJ's January 30, 2026 Epstein files release. Verified: Musk 'wildest party' email, Bannon's hundreds of texts and jet offers, Lutnick Christmas island plans, Ruemmler 'Uncle Jeffrey' emails, Melania-Maxwell 'Love' exchange, Gates allegations in draft emails, new Clinton photos. But millions of pages are unverified FBI tips.",
+        chart: {"type":"bar","color":"#3b82f6","data":[3.5,2.5,180,2],"labels":["Released","Withheld","Images (K)","Videos"],"colors":["#3b82f6","#64748b","#06b6d4","#10b981"]}
     },
     {
         id: -7,
