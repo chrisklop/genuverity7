@@ -3,7 +3,7 @@
 
 const REPORTS_DATA = [
     {
-        id: -9,
+        id: -11,
         title: "Epstein Files 2026: What the 3.5 Million DOJ Documents Actually Reveal",
         slug: "epstein-files-2026-revelations",
         category: "U.S. Politics & Policy",
@@ -18,7 +18,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[3.5,2.5,180,2],"labels":["Released","Withheld","Images (K)","Videos"],"colors":["#3b82f6","#64748b","#06b6d4","#10b981"]}
     },
     {
-        id: -8,
+        id: -10,
         title: "Is Tim Walz Responsible for Minnesota's Massive Pandemic Fraud?",
         slug: "walz-minnesota-fraud-responsibility-2026",
         category: "U.S. Politics & Policy",
@@ -33,7 +33,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[300,104,425,14,50],"labels":["FOF","Housing","BHA Grants","Autism","Other"]}
     },
     {
-        id: -7,
+        id: -9,
         title: "Wellness Grifting: The $6.3 Trillion Industry Built on Pseudoscience",
         slug: "wellness-grifting-pseudoscience-2026",
         category: "Health & Science",
@@ -48,6 +48,36 @@ const REPORTS_DATA = [
         chart: {"type":"donut","color":"#3b82f6","data":[955,946,738,651,413,131,666],"labels":["Personal Care & Beauty","Healthy Eating & Nutrition","Physical Activity","Wellness Tourism","Traditional Medicine","Mental Wellness","Other"],"colors":["#3b82f6","#10b981","#f59e0b","#06b6d4","#ef4444","#64748b","#334155"]}
     },
     {
+        id: -8,
+        title: "DHS Biometrics Expansion: DNA, Social Media, and the End of Privacy",
+        slug: "dhs-biometrics-dna-social-media-2026",
+        category: "U.S. Politics & Policy",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "fingerprint",
+        date: "Jan 27, 2026",
+        sources: "12 Sources",
+        readTime: "15 min",
+        verdict: "context",
+        excerpt: "New DHS rules would require DNA from infants, mandatory social media disclosure, and biometric collection from U.S. citizens who sponsor family members. As of January 2026, these are proposed rules facing significant Fourth Amendment challenges.",
+        chart: {"type":"bar","color":"#3b82f6","data":[1,1,0,0,0,0],"datasets":[{"data":[1,1,0,0,0,0],"color":"#3b82f6"},{"data":[1,1,1,1,1,1],"color":"#ef4444"}],"labels":["Fingerprints","Photos","DNA","Iris Scans","Voice Prints","Palm Prints"],"colors":["#3b82f6","#ef4444"]}
+    },
+    {
+        id: -7,
+        title: "Institutionalized Narrative Combat: A 2026 Global Disinformation Analysis",
+        slug: "disinformation-analysis-january-26-2026",
+        category: "Foreign Influence",
+        tagClass: "tag-cyan",
+        catClass: "cat-factcheck",
+        icon: "shield-alert",
+        date: "Jan 26, 2026",
+        sources: "19 Sources",
+        readTime: "35 min",
+        verdict: "mixed",
+        excerpt: "Comprehensive analysis of the five most prevalent disinformation topics of January 2026: the '72 injections' vaccine hoax, the $2,000 tariff dividend fraud, state-origin narrative inversion in the Minneapolis shooting, AI hallucination failures, and foreign 'vibe coding' campaigns. The state has emerged as a primary architect of narrative distortion.",
+        chart: {"type":"bar","color":"#3b82f6","data":[37,23,35,45,60],"datasets":[{"data":[37,23,35,45,60],"color":"#3b82f6"},{"data":[64,31,55,60,85],"color":"#ef4444"}],"labels":["AI Tool Security","Public Sector Gap","AI Content Share","Social as Search","Cyber-Fraud Priority"],"colors":["#3b82f6","#ef4444"]}
+    },
+    {
         id: -6,
         title: "365 WINS IN 365 DAYS: Comprehensive Fact-Check",
         slug: "365-wins-factcheck-2026",
@@ -60,7 +90,7 @@ const REPORTS_DATA = [
         readTime: "45 min",
         verdict: "mixed",
         excerpt: "Line-by-line verification of all 365 claims from the Trump Administration's first-year anniversary document. The most comprehensive fact-check in GenuVerity history analyzing border policy, economic claims, foreign policy, and more.",
-        chart: {"type":"donut","color":"#3b82f6","data":[169,64,59,18,5],"labels":["True (169)","Mostly True (64)","Context (59)","Misleading (18)","False (5)"],"colors":["#10b981","#06b6d4","#3b82f6","#f59e0b","#ef4444"]}
+        chart: {"type":"donut","color":"#10b981","data":[169,64,59,18,5],"labels":["True (169)","Mostly True (64)","Needs Context (59)","Misleading (18)","False (5)"],"colors":["#10b981","#06b6d4","#3b82f6","#f59e0b","#ef4444"]}
     },
     {
         id: -5,
