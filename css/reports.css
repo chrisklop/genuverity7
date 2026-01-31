@@ -152,12 +152,19 @@ body.verdict-false .verdict-glow {
     box-sizing: border-box;
 }
 
+html {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
 body {
     font-family: var(--font-body);
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: var(--line-height-body);
     overflow-x: hidden;
+    max-width: 100%;
+    position: relative;
 }
 
 /* === LAYOUT === */

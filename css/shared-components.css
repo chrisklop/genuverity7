@@ -506,6 +506,12 @@
 }
 
 @media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+        width: 100%;
+    }
+
     .logo-text {
         display: none;
     }
@@ -522,5 +528,18 @@
         max-width: calc(100% - 48px);
         min-width: 200px;
         margin: 0 8px;
+    }
+}
+
+@media (max-width: 400px) {
+    .navbar {
+        padding: 0 12px;
+        gap: 8px;
+    }
+
+    .navbar-search-container {
+        max-width: calc(100% - 32px);
+        min-width: 160px;
+        margin: 0 4px;
     }
 }
