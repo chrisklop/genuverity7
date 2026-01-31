@@ -486,6 +486,19 @@
             opacity: 0;
         }
 
+        /* === STAGGERED REVEAL SYSTEM === */
+        /* Below-fold sections start hidden and fade in with coordinated timing */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .reveal-section.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .hero-cursor {
             display: inline-block;
             width: 3px;
@@ -2214,9 +2227,9 @@
                 </h1>
                 <div class="hero-motto-badge">
                     <span class="motto-text">
-                        <span class="slam-word" style="display:inline-block; opacity:0;">TRUTH</span>
-                        <span class="slam-word" style="display:inline-block; opacity:0;">IS</span>
-                        <span class="slam-word" style="display:inline-block; opacity:0;">NOW.</span>
+                        <span class="slam-word" style="display:inline-block;">TRUTH</span>
+                        <span class="slam-word" style="display:inline-block;">IS</span>
+                        <span class="slam-word" style="display:inline-block;">NOW.</span>
                     </span>
                 </div>
                 <!-- Inline Search Box -->
@@ -2261,7 +2274,7 @@
                     </div>
 
                     <!-- 3D Carousel Section -->
-                    <div class="carousel-section" id="carouselSection">
+                    <div class="carousel-section reveal-section" id="carouselSection">
                         <div class="carousel-container">
                             <div class="carousel-track" id="carouselTrack">
                                 <!-- Cards Injected JS -->
@@ -2296,7 +2309,7 @@
             </section>
 
             <!-- THEMATIC ZIG-ZAG LAYOUT -->
-            <section class="thematic-section">
+            <section class="thematic-section reveal-section">
                 <!-- Feature 1: Verification (Graphic Right) -->
                 <div class="feature-block trigger-1">
                     <div class="feature-text">
@@ -2362,7 +2375,7 @@
 
 
             <!-- BENEFITS / PROCESS REDESIGN (Zig Zag) -->
-            <section class="thematic-section" style="padding-top: 0;">
+            <section class="thematic-section reveal-section" style="padding-top: 0;">
 
                 <!-- Block 4: The Process (Zig) -->
                 <div class="feature-block reverse trigger-4">
@@ -3142,13 +3155,12 @@
                 // A. Navbar Search Expand
                 gsap.registerPlugin(ScrollTrigger);
 
-                // Initial "Slam" Animation for Motto
+                // Initial "Slam" Animation for Motto (scale only - text visible by default)
                 const mottoSlam = gsap.timeline({ delay: 0.2 });
                 mottoSlam.to(".slam-word", {
                     duration: 0.15,
-                    opacity: 1,
                     scale: 1,
-                    startAt: { scale: 4, opacity: 0 },
+                    startAt: { scale: 4 },
                     ease: "power2.out",
                     stagger: 0.15
                 });

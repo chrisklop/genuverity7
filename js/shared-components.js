@@ -331,6 +331,16 @@ function injectSharedComponents() {
     // Dispatch "Ready" event for local scripts
     window.gvComponentsReady = true;  // Set flag for late-loading scripts
     window.dispatchEvent(new CustomEvent('gv:componentsReady'));
+
+    // Staggered reveal of below-fold sections
+    // Delay allows hero animation to complete first
+    const revealSections = document.querySelectorAll('.reveal-section');
+    if (revealSections.length > 0) {
+        revealSections.forEach((el, i) => {
+            setTimeout(() => el.classList.add('revealed'), 300 + (i * 100));
+        });
+        console.log(`[GV Reveal] ✅ Staggered reveal triggered for ${revealSections.length} sections`);
+    }
 }
 
 /**
