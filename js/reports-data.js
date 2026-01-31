@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -8,
+        title: "Epstein Files 2026: What the 3.5 Million DOJ Documents Actually Reveal",
+        slug: "epstein-files-2026-revelations",
+        category: "U.S. Politics & Policy",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "file-search",
+        date: "Jan 31, 2026",
+        sources: "12 Sources",
+        readTime: "12 min",
+        verdict: "context",
+        excerpt: "Analysis of the DOJ's January 30, 2026 release of 3.5 million Epstein documents, 180,000 images, and 2,000 videos. Key revelations include a 2007 draft indictment with 32 counts and verified email exchanges with billionaires—but millions of pages contain unverified tips. Being mentioned does not equal wrongdoing.",
+        chart: {"type":"bar","color":"#3b82f6","data":[3.5,180,2],"labels":["Documents (M)","Images (K)","Videos"],"colors":["#3b82f6","#06b6d4","#10b981"]}
+    },
+    {
         id: -7,
         title: "Is Tim Walz Responsible for Minnesota's Massive Pandemic Fraud?",
         slug: "walz-minnesota-fraud-responsibility-2026",

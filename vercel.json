@@ -528,6 +528,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/epstein-files-2026-revelations.html",
+      "destination": "/epstein-files-2026-revelations",
+      "permanent": true
+    },
+    {
+      "source": "/epstein-files-2026-revelations.html",
+      "destination": "/epstein-files-2026-revelations",
+      "permanent": true
+    },
+    {
       "source": "/localreports/epstein-files-fabrication-2025.html",
       "destination": "/epstein-files-fabrication-2025",
       "permanent": true
@@ -2225,6 +2235,10 @@
     {
       "source": "/epstein-documents-2025",
       "destination": "/localreports/epstein-documents-2025.html"
+    },
+    {
+      "source": "/epstein-files-2026-revelations",
+      "destination": "/localreports/epstein-files-2026-revelations.html"
     },
     {
       "source": "/epstein-files-fabrication-2025",
