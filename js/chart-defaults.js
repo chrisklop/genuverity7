@@ -59,6 +59,19 @@ function registerChartDefaults() {
     // Legend - HIDDEN by default
     Chart.defaults.plugins.legend.display = false;
 
+    // Datalabels plugin - HIDDEN by default (enabled during copy for donut/pie)
+    // Only configure if plugin is loaded
+    if (typeof ChartDataLabels !== 'undefined') {
+        Chart.register(ChartDataLabels);
+        Chart.defaults.plugins.datalabels = {
+            display: false,  // Hidden by default
+            color: '#e2e8f0',
+            font: { weight: 'bold', size: 11 },
+            anchor: 'center',
+            align: 'center'
+        };
+    }
+
     // Tooltip - Clean dark style
     Chart.defaults.plugins.tooltip.enabled = true;
     Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(15, 23, 42, 0.95)';
@@ -80,11 +93,30 @@ function registerChartDefaults() {
     Chart.defaults.scales.linear.beginAtZero = true;
     Chart.defaults.scales.category.display = false;
 
-    // If scales ARE shown, use clean styling
+    // If scales ARE shown (e.g., during copy), use dark theme styling
     Chart.defaults.scales.linear.grid = { display: false };
-    Chart.defaults.scales.linear.ticks = { display: false };
+    Chart.defaults.scales.linear.ticks = {
+        display: false,
+        color: '#94a3b8',       // Muted text for axis labels
+        font: { size: 11 }
+    };
     Chart.defaults.scales.category.grid = { display: false };
-    Chart.defaults.scales.category.ticks = { display: false };
+    Chart.defaults.scales.category.ticks = {
+        display: false,
+        color: '#94a3b8',       // Muted text for axis labels
+        font: { size: 11 }
+    };
+
+    // Legend styling for when enabled during copy
+    Chart.defaults.plugins.legend.labels = {
+        color: '#e2e8f0',       // Light text for legend
+        font: { size: 12 },
+        padding: 16,
+        boxWidth: 16,
+        boxHeight: 16,
+        useBorderRadius: true,
+        borderRadius: 4
+    };
 
     // === ELEMENTS ===
 
@@ -125,6 +157,18 @@ function registerChartDefaults() {
 
     console.log('GenuVerity Chart Defaults v5.0 applied');
 }
+
+/**
+ * Plugin that tracks Chart.js instances on their canvas elements
+ * This allows copyable-sections.js to access and modify charts when copying
+ */
+const GVInstanceTracker = {
+    id: 'gvInstanceTracker',
+    afterInit(chart) {
+        // Store chart instance on canvas for copy system access
+        chart.canvas.__chartInstance = chart;
+    }
+};
 
 /**
  * Plugin that enforces clean style on ALL charts
@@ -170,15 +214,17 @@ const GVCleanStylePlugin = {
     }
 };
 
-// Register defaults and plugin immediately if Chart.js is loaded
+// Register defaults and plugins immediately if Chart.js is loaded
 if (typeof Chart !== 'undefined') {
     registerChartDefaults();
+    Chart.register(GVInstanceTracker);
     Chart.register(GVCleanStylePlugin);
 } else {
     // Wait for Chart.js to load
     document.addEventListener('DOMContentLoaded', function() {
         if (typeof Chart !== 'undefined') {
             registerChartDefaults();
+            Chart.register(GVInstanceTracker);
             Chart.register(GVCleanStylePlugin);
         }
     });

@@ -180,10 +180,78 @@
         // Show loading spinner
         triggerBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-2" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`;
 
+        // Track chart instance and original options for restoration
+        let chartInstance = null;
+        let originalOptions = null;
+
         try {
             // 1. Prepare DOM
             const wrapper = element.querySelector('.copy-wrapper');
             if (wrapper) wrapper.style.display = 'none'; // Hide UI for capture
+
+            // 1.5. Enable chart labels temporarily for capture
+            const chartCanvas = element.querySelector('canvas');
+            if (chartCanvas && chartCanvas.__chartInstance) {
+                chartInstance = chartCanvas.__chartInstance;
+                const chartType = chartInstance.config.type;
+                const isDonut = chartType === 'doughnut' || chartType === 'pie';
+
+                // Store original options for restoration
+                originalOptions = {
+                    legendDisplay: chartInstance.options.plugins?.legend?.display,
+                    xTicksDisplay: chartInstance.options.scales?.x?.ticks?.display,
+                    yTicksDisplay: chartInstance.options.scales?.y?.ticks?.display,
+                    xDisplay: chartInstance.options.scales?.x?.display,
+                    yDisplay: chartInstance.options.scales?.y?.display,
+                    datalabelsDisplay: chartInstance.options.plugins?.datalabels?.display
+                };
+
+                // Enable legend for all chart types
+                if (!chartInstance.options.plugins) chartInstance.options.plugins = {};
+                if (!chartInstance.options.plugins.legend) chartInstance.options.plugins.legend = {};
+                chartInstance.options.plugins.legend.display = true;
+                chartInstance.options.plugins.legend.position = 'bottom';
+
+                if (!isDonut) {
+                    // Bar/line charts: show axis labels
+                    if (!chartInstance.options.scales) chartInstance.options.scales = {};
+
+                    // X-axis
+                    if (!chartInstance.options.scales.x) chartInstance.options.scales.x = {};
+                    chartInstance.options.scales.x.display = true;
+                    if (!chartInstance.options.scales.x.ticks) chartInstance.options.scales.x.ticks = {};
+                    chartInstance.options.scales.x.ticks.display = true;
+
+                    // Y-axis
+                    if (!chartInstance.options.scales.y) chartInstance.options.scales.y = {};
+                    chartInstance.options.scales.y.display = true;
+                    if (!chartInstance.options.scales.y.ticks) chartInstance.options.scales.y.ticks = {};
+                    chartInstance.options.scales.y.ticks.display = true;
+                } else {
+                    // Donut/pie: enable datalabels plugin if available
+                    if (typeof ChartDataLabels !== 'undefined') {
+                        if (!chartInstance.options.plugins.datalabels) {
+                            chartInstance.options.plugins.datalabels = {};
+                        }
+                        chartInstance.options.plugins.datalabels.display = true;
+                        chartInstance.options.plugins.datalabels.color = '#e2e8f0';
+                        chartInstance.options.plugins.datalabels.font = { weight: 'bold', size: 11 };
+                        chartInstance.options.plugins.datalabels.formatter = (value, ctx) => {
+                            const label = ctx.chart.data.labels[ctx.dataIndex];
+                            // Format large numbers
+                            const formatted = value >= 1000000
+                                ? (value / 1000000).toFixed(1) + 'M'
+                                : value >= 1000
+                                    ? (value / 1000).toFixed(1) + 'K'
+                                    : value;
+                            return `${label}: ${formatted}`;
+                        };
+                    }
+                }
+
+                // Update chart without animation
+                chartInstance.update('none');
+            }
 
             // Add temp watermark
             const watermark = document.createElement('div');
@@ -203,6 +271,39 @@
             // 3. Cleanup DOM
             watermark.remove();
             if (wrapper) wrapper.style.display = '';
+
+            // 3.5. Restore chart to original minimal style
+            if (chartInstance && originalOptions) {
+                const chartType = chartInstance.config.type;
+                const isDonut = chartType === 'doughnut' || chartType === 'pie';
+
+                // Restore legend
+                chartInstance.options.plugins.legend.display = originalOptions.legendDisplay ?? false;
+
+                if (!isDonut) {
+                    // Restore axis visibility
+                    if (chartInstance.options.scales?.x) {
+                        chartInstance.options.scales.x.display = originalOptions.xDisplay ?? false;
+                        if (chartInstance.options.scales.x.ticks) {
+                            chartInstance.options.scales.x.ticks.display = originalOptions.xTicksDisplay ?? false;
+                        }
+                    }
+                    if (chartInstance.options.scales?.y) {
+                        chartInstance.options.scales.y.display = originalOptions.yDisplay ?? false;
+                        if (chartInstance.options.scales.y.ticks) {
+                            chartInstance.options.scales.y.ticks.display = originalOptions.yTicksDisplay ?? false;
+                        }
+                    }
+                } else {
+                    // Restore datalabels
+                    if (chartInstance.options.plugins?.datalabels) {
+                        chartInstance.options.plugins.datalabels.display = originalOptions.datalabelsDisplay ?? false;
+                    }
+                }
+
+                // Update chart without animation
+                chartInstance.update('none');
+            }
 
             // 4. Convert to blob
             const blob = await new Promise((resolve, reject) => {
@@ -242,6 +343,35 @@
         } catch (err) {
             console.error('[GV Copy] Capture Failed:', err);
             triggerBtn.innerHTML = originalIcon;
+
+            // Restore chart even on error
+            if (chartInstance && originalOptions) {
+                const chartType = chartInstance.config.type;
+                const isDonut = chartType === 'doughnut' || chartType === 'pie';
+
+                chartInstance.options.plugins.legend.display = originalOptions.legendDisplay ?? false;
+
+                if (!isDonut) {
+                    if (chartInstance.options.scales?.x) {
+                        chartInstance.options.scales.x.display = originalOptions.xDisplay ?? false;
+                        if (chartInstance.options.scales.x.ticks) {
+                            chartInstance.options.scales.x.ticks.display = originalOptions.xTicksDisplay ?? false;
+                        }
+                    }
+                    if (chartInstance.options.scales?.y) {
+                        chartInstance.options.scales.y.display = originalOptions.yDisplay ?? false;
+                        if (chartInstance.options.scales.y.ticks) {
+                            chartInstance.options.scales.y.ticks.display = originalOptions.yTicksDisplay ?? false;
+                        }
+                    }
+                } else {
+                    if (chartInstance.options.plugins?.datalabels) {
+                        chartInstance.options.plugins.datalabels.display = originalOptions.datalabelsDisplay ?? false;
+                    }
+                }
+
+                chartInstance.update('none');
+            }
 
             // Show error state
             triggerBtn.style.borderColor = '#ef4444';
