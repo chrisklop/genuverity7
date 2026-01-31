@@ -3,7 +3,7 @@
 
 const REPORTS_DATA = [
     {
-        id: -8,
+        id: -9,
         title: "Epstein Files 2026: What the 3.5 Million DOJ Documents Actually Reveal",
         slug: "epstein-files-2026-revelations",
         category: "U.S. Politics & Policy",
@@ -18,7 +18,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[3.5,2.5,180,2],"labels":["Released","Withheld","Images (K)","Videos"],"colors":["#3b82f6","#64748b","#06b6d4","#10b981"]}
     },
     {
-        id: -7,
+        id: -8,
         title: "Is Tim Walz Responsible for Minnesota's Massive Pandemic Fraud?",
         slug: "walz-minnesota-fraud-responsibility-2026",
         category: "U.S. Politics & Policy",
@@ -33,7 +33,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#3b82f6","data":[300,104,425,14,50],"labels":["FOF","Housing","BHA Grants","Autism","Other"]}
     },
     {
-        id: -6,
+        id: -7,
         title: "Wellness Grifting: The $6.3 Trillion Industry Built on Pseudoscience",
         slug: "wellness-grifting-pseudoscience-2026",
         category: "Health & Science",
@@ -46,6 +46,21 @@ const REPORTS_DATA = [
         verdict: "context",
         excerpt: "Investigation of wellness industry grifters from Gwyneth Paltrow's Goop to RFK Jr.'s anti-vaccine crusade. Profiles tactics, documented harms, and the unprecedented institutional capture with wellness figures now leading federal health policy.",
         chart: {"type":"donut","color":"#3b82f6","data":[955,946,738,651,413,131,666],"labels":["Personal Care & Beauty","Healthy Eating & Nutrition","Physical Activity","Wellness Tourism","Traditional Medicine","Mental Wellness","Other"],"colors":["#3b82f6","#10b981","#f59e0b","#06b6d4","#ef4444","#64748b","#334155"]}
+    },
+    {
+        id: -6,
+        title: "365 WINS IN 365 DAYS: Comprehensive Fact-Check",
+        slug: "365-wins-factcheck-2026",
+        category: "Fact Check",
+        tagClass: "tag-cyan",
+        catClass: "cat-factcheck",
+        icon: "clipboard-check",
+        date: "Jan 22, 2026",
+        sources: "26 Sources",
+        readTime: "45 min",
+        verdict: "mixed",
+        excerpt: "Line-by-line verification of all 365 claims from the Trump Administration's first-year anniversary document. The most comprehensive fact-check in GenuVerity history analyzing border policy, economic claims, foreign policy, and more.",
+        chart: {"type":"donut","color":"#3b82f6","data":[169,64,59,18,5],"labels":["True (169)","Mostly True (64)","Context (59)","Misleading (18)","False (5)"],"colors":["#10b981","#06b6d4","#3b82f6","#f59e0b","#ef4444"]}
     },
     {
         id: -5,
