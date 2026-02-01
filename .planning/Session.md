@@ -1,8 +1,8 @@
 # GenuVerity Session Context
 
 > **Last Updated:** 2026-02-01
-> **Status:** MCP infrastructure ready, planning Hub interface
-> **Current Milestone:** Epstein Files Hub - Phase 1 Planning
+> **Status:** Phase 1 Hub UI complete - landing and search pages live
+> **Current Milestone:** Epstein Files Hub - Phase 1 Complete
 
 ---
 
@@ -37,38 +37,42 @@ GenuVerity is a fact-checking platform (190+ reports) using source-first methodo
 - [x] Defined technical architecture
 - [x] Defined badge system (Admiralty-style A-F / 1-6)
 - [x] Installed epstein-rag MCP (20K+ docs via Qdrant semantic search)
+- [x] **Created `/epstein-files/index.html`** - Hub landing page with stats, search, features, revelations grid
+- [x] **Created `/epstein-files/search.html`** - Document search with badge filters and misinfo alerts
+- [x] **Created `/css/epstein-hub.css`** - Hub styling with badge colors (A-F)
+- [x] **Created `/js/epstein-hub-data.js`** - Static data (revelations, misinfo alerts, stats)
+- [x] **Updated navbar/footer** - Added "Epstein Files" link to navigation
 
 ---
 
 ## What's Next (Pending)
 
-### Phase 1: Archive Infrastructure
-1. [ ] Set up WARC capture pipeline
-2. [ ] Configure ChangeDetection.io for DOJ pages
-3. [ ] Mirror all 12 DOJ data sets
-4. [ ] Obtain COURIER/Pinpoint deleted files
-5. [ ] Create diff log system for tracking changes
+### Phase 2: Supabase Integration
+1. [ ] Create Supabase migration for new tables (epstein_documents, epstein_entities, etc.)
+2. [ ] Build document ingestion script (hash → store)
+3. [ ] Wire search.html to `epstein-rag` MCP for real semantic search
+4. [ ] Display badges from Supabase metadata
 
-### Phase 2: Processing Pipeline
-6. [ ] OCR pipeline for non-searchable docs
-7. [ ] spaCy NER + alias dictionary setup
-8. [ ] Evidence classifier (badge assignment)
-9. [ ] Splink entity resolution
-10. [ ] Vector embeddings generation
+### Phase 3: Misinformation Layer
+5. [ ] Seed `epstein_misinfo` table with known false claims
+6. [ ] Create dynamic alert component in search.html
+7. [ ] Link alerts to existing fact-check reports
 
-### Phase 3: Knowledge Layer
-11. [ ] Misinformation database (seed with known claims)
-12. [ ] ClaimReview integration
-13. [ ] Entity graph construction
-14. [ ] "What's New" delta engine
+### Phase 4: Visualizations
+8. [ ] Create `network.html` with Cytoscape.js
+9. [ ] Create `timeline.html` for chronological browsing
+10. [ ] Create `releases.html` for DOJ release tracking
 
-### Phase 4: Interface
-15. [ ] Search UI with verification badges
-16. [ ] Misinformation alert system
-17. [ ] Network visualization (Cytoscape.js/Sigma.js)
-18. [ ] Timeline view
-19. [ ] Release tracker
-20. [ ] Document viewer with provenance panel
+### Phase 5: Automation
+11. [ ] Create delta detection script for new releases
+12. [ ] Build revelation ranking algorithm
+13. [ ] Create report generation pipeline
+14. [ ] Set up ChangeDetection.io for DOJ monitoring
+
+### Archive Infrastructure (Backlog)
+- [ ] Set up WARC capture pipeline
+- [ ] Mirror all 12 DOJ data sets
+- [ ] Obtain COURIER/Pinpoint deleted files
 
 ---
 
@@ -77,8 +81,11 @@ GenuVerity is a fact-checking platform (190+ reports) using source-first methodo
 | File | Purpose |
 |------|---------|
 | `.planning/Session.md` | This file - session tracking |
-| `.planning/epstein-files-research-brief.md` | Research brief for Deep Research |
 | `.planning/EPSTEIN-HUB-ROADMAP.md` | Detailed technical roadmap |
+| `/epstein-files/index.html` | Hub landing page |
+| `/epstein-files/search.html` | Document search page |
+| `/css/epstein-hub.css` | Hub-specific styles |
+| `/js/epstein-hub-data.js` | Static hub data |
 | `localreports/epstein-files-2026-revelations.html` | Current Epstein report |
 
 ---
@@ -87,6 +94,10 @@ GenuVerity is a fact-checking platform (190+ reports) using source-first methodo
 
 **Badge System:**
 - A (Court Record) → B (Gov Record) → C (Verified External) → D (Unverified) → E (News Clipping) → F (Flagged/Debunked)
+
+**Hub URLs:**
+- `/epstein-files/` - Landing page
+- `/epstein-files/search.html` - Document search
 
 **Key Tools Identified:**
 - Archive: WARC, ChangeDetection.io, Perma.cc, Save Page Now

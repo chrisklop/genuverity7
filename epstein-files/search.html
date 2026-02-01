@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <title>Search Documents | Epstein Files Hub | GenuVerity</title>
+    <meta name="description"
+        content="Search 3.5 million verified Epstein documents. Filter by credibility badge, entity, or date. Every source rated for reliability.">
+    <meta property="og:title" content="Search Documents | Epstein Files Hub">
+    <meta property="og:description" content="Search 3.5 million verified Epstein documents with credibility ratings.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#0a0a12">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/epstein-hub-data.js?v=1738400000"></script>
+    <script src="../js/shared-components.js" defer></script>
+    <link rel="stylesheet" href="../css/shared-components.css?v=1738400000">
+    <link rel="stylesheet" href="../css/epstein-hub.css?v=1738400000">
+    <!-- Vercel Analytics -->
+    <script defer src="/_vercel/insights/script.js"></script>
+</head>
+
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <!-- Shared Navbar -->
+    <div id="navbar-placeholder" data-page-type="epstein-hub"></div>
+
+    <!-- Search Page Content -->
+    <div class="search-page-container">
+        <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 8px; color: var(--text-primary);">
+            Search Epstein Documents
+        </h1>
+        <p style="color: var(--text-secondary); margin-bottom: 24px;">
+            Query 3.5 million DOJ documents with credibility ratings and misinformation alerts.
+        </p>
+
+        <!-- Search Box -->
+        <div class="search-input-wrapper">
+            <i data-lucide="search" style="width:20px;height:20px;color:var(--hub-accent);"></i>
+            <input type="text" id="searchInput" placeholder="Search documents, entities, or topics..." autocomplete="off">
+            <button class="search-btn" onclick="performSearch()">Search</button>
+        </div>
+
+        <!-- Badge Filters -->
+        <div class="search-filters">
+            <button class="filter-btn active" data-badge="all">All Sources</button>
+            <button class="filter-btn" data-badge="A" style="border-color: var(--badge-A); color: var(--badge-A);">
+                <span style="width:8px;height:8px;background:var(--badge-A);border-radius:50%;display:inline-block;margin-right:4px;"></span>
+                Court Records
+            </button>
+            <button class="filter-btn" data-badge="B" style="border-color: var(--badge-B); color: var(--badge-B);">
+                <span style="width:8px;height:8px;background:var(--badge-B);border-radius:50%;display:inline-block;margin-right:4px;"></span>
+                Government
+            </button>
+            <button class="filter-btn" data-badge="C" style="border-color: var(--badge-C); color: var(--badge-C);">
+                <span style="width:8px;height:8px;background:var(--badge-C);border-radius:50%;display:inline-block;margin-right:4px;"></span>
+                Verified Media
+            </button>
+            <button class="filter-btn" data-badge="D" style="border-color: var(--badge-D); color: var(--badge-D);">
+                <span style="width:8px;height:8px;background:var(--badge-D);border-radius:50%;display:inline-block;margin-right:4px;"></span>
+                Unverified
+            </button>
+        </div>
+
+        <!-- Misinformation Alert (contextual) -->
+        <div class="misinfo-alert" id="contextualAlert" style="display:none;">
+            <div class="misinfo-alert-icon">
+                <i data-lucide="alert-triangle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="misinfo-alert-content">
+                <h4 id="alertTitle">Misinformation Alert</h4>
+                <p id="alertText">This topic has known false claims circulating.</p>
+                <a href="#" class="misinfo-alert-link" id="alertLink">
+                    Read our fact-check <i data-lucide="arrow-right" style="width:14px;height:14px;display:inline;vertical-align:middle;"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Search Results -->
+        <div class="search-results" id="searchResults">
+            <div class="empty-state" id="emptyState">
+                <i data-lucide="file-search" style="width:48px;height:48px;"></i>
+                <h3>Enter a search query</h3>
+                <p>Search for names, locations, dates, or topics to explore the documents.</p>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading-spinner" id="loadingState" style="display:none;">
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <!-- Shared Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // State
+        let currentFilter = 'all';
+        let searchResults = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            setupFilters();
+            checkUrlParams();
+        });
+
+        // Setup filter buttons
+        function setupFilters() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.badge;
+                    filterResults();
+                });
+            });
+        }
+
+        // Check URL params for initial query
+        function checkUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const query = params.get('q');
+            if (query) {
+                document.getElementById('searchInput').value = query;
+                performSearch();
+            }
+        }
+
+        // Perform search
+        async function performSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) return;
+
+            // Update URL
+            window.history.replaceState({}, '', `?q=${encodeURIComponent(query)}`);
+
+            // Show loading
+            document.getElementById('loadingState').style.display = 'flex';
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('searchResults').innerHTML = '';
+
+            // Check for misinformation alerts
+            checkMisinfoAlert(query);
+
+            // Simulate search (in Phase 2, this will call epstein-rag MCP)
+            try {
+                searchResults = await simulateSearch(query);
+                renderResults(searchResults);
+            } catch (error) {
+                console.error('Search error:', error);
+                showError();
+            }
+
+            document.getElementById('loadingState').style.display = 'none';
+        }
+
+        // Simulate search (placeholder for MCP integration)
+        async function simulateSearch(query) {
+            // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 800));
+
+            const queryLower = query.toLowerCase();
+
+            // Sample results based on query
+            const sampleResults = [
+                {
+                    id: 1,
+                    title: 'FBI Memo: Subject Communications Log',
+                    excerpt: `Document containing reference to "${query}" found in batch 1 of DOJ release. Contains email headers and partial transcripts.`,
+                    badge: 'B',
+                    date: '2026-01-30',
+                    source: 'DOJ Release Batch 1',
+                    relevance: 95
+                },
+                {
+                    id: 2,
+                    title: 'Deposition Transcript - Florida Case',
+                    excerpt: `Court testimony mentioning "${query}" in context of travel records and meeting schedules from 2008-2010.`,
+                    badge: 'A',
+                    date: '2024-01-03',
+                    source: 'Maxwell Trial Records',
+                    relevance: 88
+                },
+                {
+                    id: 3,
+                    title: 'Email Chain - Financial Records',
+                    excerpt: `Internal communications discussing financial arrangements. Search term "${query}" appears in subject line.`,
+                    badge: 'B',
+                    date: '2026-01-30',
+                    source: 'DOJ Release Batch 1',
+                    relevance: 82
+                },
+                {
+                    id: 4,
+                    title: 'Flight Log Entry Analysis',
+                    excerpt: `Compiled flight records cross-referencing "${query}" with known travel dates and destinations.`,
+                    badge: 'C',
+                    date: '2025-12-15',
+                    source: 'Verified Media Compilation',
+                    relevance: 75
+                },
+                {
+                    id: 5,
+                    title: 'Unverified Tip - Anonymous Source',
+                    excerpt: `Anonymous tip regarding "${query}". Note: This document has NOT been verified against primary sources.`,
+                    badge: 'D',
+                    date: '2026-01-28',
+                    source: 'Tips Database',
+                    relevance: 45
+                }
+            ];
+
+            // Filter based on query keywords
+            if (queryLower.includes('musk')) {
+                sampleResults[0].title = 'FBI Record: Musk Island Visit 2012';
+                sampleResults[0].excerpt = 'FBI documentation of Elon Musk visit to Little St. James in 2012. Records indicate tech philanthropy discussion.';
+            } else if (queryLower.includes('gates')) {
+                sampleResults[0].title = 'Gates Foundation Meeting Records';
+                sampleResults[0].excerpt = 'Calendar entries and email confirmations for Gates-Epstein meetings 2011-2014. Focus on charitable initiatives.';
+            } else if (queryLower.includes('clinton')) {
+                sampleResults[0].title = 'Flight Log - Clinton Entries';
+                sampleResults[0].excerpt = 'Compiled flight log entries showing Bill Clinton travel on Epstein aircraft. Multiple destinations documented.';
+            } else if (queryLower.includes('trump')) {
+                sampleResults[0].title = 'Photo Archive - Mar-a-Lago Events';
+                sampleResults[0].excerpt = 'Event photos from 1990s-2000s showing Trump-Epstein interactions at various social events.';
+            }
+
+            return sampleResults;
+        }
+
+        // Filter results by badge
+        function filterResults() {
+            renderResults(searchResults);
+        }
+
+        // Render search results
+        function renderResults(results) {
+            const container = document.getElementById('searchResults');
+            const badges = window.BADGE_DEFINITIONS || {};
+
+            // Filter by badge if not "all"
+            let filteredResults = results;
+            if (currentFilter !== 'all') {
+                filteredResults = results.filter(r => r.badge === currentFilter);
+            }
+
+            if (filteredResults.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i data-lucide="search-x" style="width:48px;height:48px;"></i>
+                        <h3>No results found</h3>
+                        <p>Try adjusting your search terms or filters.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            container.innerHTML = filteredResults.map(result => {
+                const badgeInfo = badges[result.badge] || { label: 'Unknown' };
+                return `
+                    <div class="search-result-item">
+                        <div class="result-header">
+                            <span class="result-title">${result.title}</span>
+                            <span class="credibility-badge badge-${result.badge}">${badgeInfo.label}</span>
+                        </div>
+                        <p class="result-excerpt">${result.excerpt}</p>
+                        <div class="result-meta">
+                            <span><i data-lucide="calendar" style="width:12px;height:12px;"></i> ${result.date}</span>
+                            <span><i data-lucide="folder" style="width:12px;height:12px;"></i> ${result.source}</span>
+                            <span><i data-lucide="target" style="width:12px;height:12px;"></i> ${result.relevance}% match</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        // Check for misinformation alerts
+        function checkMisinfoAlert(query) {
+            const alerts = window.MISINFO_ALERTS || [];
+            const alertEl = document.getElementById('contextualAlert');
+            const queryLower = query.toLowerCase();
+
+            // Check if query matches any misinformation topics
+            const matchedAlert = alerts.find(alert => {
+                const claimWords = alert.claim.toLowerCase().split(' ');
+                return claimWords.some(word => queryLower.includes(word)) ||
+                       queryLower.includes('list') ||
+                       queryLower.includes('names') ||
+                       queryLower.includes('166');
+            });
+
+            if (matchedAlert) {
+                document.getElementById('alertTitle').textContent = `Warning: "${matchedAlert.claim}" - ${matchedAlert.status}`;
+                document.getElementById('alertText').textContent = matchedAlert.description;
+                document.getElementById('alertLink').href = matchedAlert.factCheckUrl;
+                alertEl.style.display = 'flex';
+            } else {
+                alertEl.style.display = 'none';
+            }
+        }
+
+        // Show error state
+        function showError() {
+            const container = document.getElementById('searchResults');
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i data-lucide="alert-circle" style="width:48px;height:48px;color:var(--accent-red);"></i>
+                    <h3>Search Error</h3>
+                    <p>Unable to complete search. Please try again.</p>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        // Enter key triggers search
+        document.getElementById('searchInput')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    </script>
+</body>
+
+</html>
