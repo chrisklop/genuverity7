@@ -1,4 +1,38 @@
-# Environment.env.env.local.env.*.local# Python__pycache__/*.py[cod]*$py.class*.so.Pythonvenv/env/.venv/# Cache directoriesarticle_cache/user_usage.json# IDE.idea/.vscode/*.swp*.swo# OS.DS_StoreThumbs.db# Vercel.vercel# Node (if any)node_modules/.env*.local
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+
+# Cache directories
+article_cache/
+user_usage.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel
+
+# Node (if any)
+node_modules/
+.env*.local
 
 # AI Assistant files
 CLAUDE.md
@@ -6,5 +40,9 @@ CLAUDE.md.backup
 .claude/
 GEMINI.md
 AGENT.md
+IDE-AGENT.md
 .agent/
 .mcp.json
+
+# Automation seeds/output (Deep Research files)
+automation/output/
