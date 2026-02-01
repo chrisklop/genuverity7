@@ -1,7 +1,7 @@
 # GenuVerity Session Context
 
 > **Last Updated:** 2026-02-01
-> **Status:** Planning Epstein Files Hub expansion
+> **Status:** MCP infrastructure ready, planning Hub interface
 > **Current Milestone:** Epstein Files Hub - Phase 1 Planning
 
 ---
@@ -36,6 +36,7 @@ GenuVerity is a fact-checking platform (190+ reports) using source-first methodo
 - [x] Analyzed Deep Research results
 - [x] Defined technical architecture
 - [x] Defined badge system (Admiralty-style A-F / 1-6)
+- [x] Installed epstein-rag MCP (20K+ docs via Qdrant semantic search)
 
 ---
 
@@ -99,6 +100,8 @@ GenuVerity is a fact-checking platform (190+ reports) using source-first methodo
 ## Notes
 
 - MCP server installed: `epstein-email-explorer` (2,322 emails)
-- MCP server available: `epstein_rag_mcp` (20K docs via Qdrant)
+- MCP server installed: `epstein-rag` (20K+ docs via Qdrant) - Requires Docker running
+- Qdrant storage: `~/qdrant_storage`
+- Qdrant container: `docker start qdrant` if not running
 - Production revert point: `3f35110` (before today's merges)
 - Current main: `5deb616` (includes mobile fix)
