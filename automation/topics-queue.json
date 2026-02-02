@@ -1,0 +1,139 @@
+{
+  "version": "1.1",
+  "last_updated": "2026-02-02",
+  "description": "GenuVerity research topics queue - historical disinformation + trending viral claims",
+  "available_templates": [
+    {
+      "id": "default",
+      "name": "Standard Forensic Analysis",
+      "file": "prompts/default.md"
+    },
+    {
+      "id": "historical-conspiracy",
+      "name": "Historical Conspiracy Deep Dive",
+      "file": "prompts/historical-conspiracy.md"
+    },
+    {
+      "id": "state-actor",
+      "name": "Foreign Influence / State Actor",
+      "file": "prompts/state-actor.md"
+    },
+    {
+      "id": "health-misinfo",
+      "name": "Health & Medical Misinformation",
+      "file": "prompts/health-misinfo.md"
+    }
+  ],
+  "topics": [
+    {
+      "slug": "pizzagate-origin-feb-2026",
+      "name": "Pizzagate conspiracy theory - origins and spread analysis",
+      "template": "historical-conspiracy",
+      "category": "historical",
+      "priority": "high",
+      "status": "processing",
+      "added_date": "2026-02-02",
+      "notes": "Classic case study of how conspiracy theories spread from fringe to mainstream",
+      "processed_date": "2026-02-02"
+    },
+    {
+      "slug": "5g-covid-conspiracy-feb-2026",
+      "name": "5G towers causing COVID-19 - the anatomy of a pandemic hoax",
+      "template": "health-misinfo",
+      "category": "historical",
+      "priority": "high",
+      "status": "failed",
+      "added_date": "2026-02-02",
+      "notes": "International spread, resulted in physical attacks on infrastructure",
+      "processed_date": "2026-02-02"
+    },
+    {
+      "slug": "election-machine-fraud-feb-2026",
+      "name": "Dominion voting machine fraud claims - forensic debunking",
+      "template": "historical-conspiracy",
+      "category": "historical",
+      "priority": "high",
+      "status": "completed",
+      "added_date": "2026-02-02",
+      "notes": "Led to billion-dollar defamation lawsuits",
+      "processed_date": "2026-02-02",
+      "chat_url": "https://gemini.google.com/app/fbb456930378095d",
+      "verdict": "FALSE",
+      "completed_date": "2026-02-02"
+    },
+    {
+      "slug": "ivermectin-covid-cure-feb-2026",
+      "name": "Ivermectin as COVID cure - medical misinformation analysis",
+      "template": "health-misinfo",
+      "category": "historical",
+      "priority": "medium",
+      "status": "researching",
+      "added_date": "2026-02-02",
+      "notes": "Spread despite FDA warnings, poison control spike",
+      "processed_date": "2026-02-02",
+      "chat_url": "https://gemini.google.com/app/39a76e86dca9d896"
+    },
+    {
+      "slug": "qanon-prophecies-feb-2026",
+      "name": "QAnon predictions - tracking failed prophecies and true believers",
+      "template": "historical-conspiracy",
+      "category": "historical",
+      "priority": "medium",
+      "status": "pending",
+      "added_date": "2026-02-02",
+      "notes": "From 4chan to mainstream politics"
+    },
+    {
+      "slug": "great-replacement-theory-feb-2026",
+      "name": "Great Replacement Theory - from fringe to Fox News",
+      "template": "historical-conspiracy",
+      "category": "historical",
+      "priority": "high",
+      "status": "pending",
+      "added_date": "2026-02-02",
+      "notes": "Linked to multiple mass shootings"
+    },
+    {
+      "slug": "sandy-hook-denial-feb-2026",
+      "name": "Sandy Hook denial movement - crisis actor conspiracy analysis",
+      "template": "historical-conspiracy",
+      "category": "historical",
+      "priority": "high",
+      "status": "pending",
+      "added_date": "2026-02-02",
+      "notes": "Alex Jones defamation case"
+    },
+    {
+      "slug": "flat-earth-resurgence-feb-2026",
+      "name": "Flat Earth movement - why it persists in the information age",
+      "template": "historical-conspiracy",
+      "category": "historical",
+      "priority": "low",
+      "status": "pending",
+      "added_date": "2026-02-02",
+      "notes": "Case study in epistemological breakdown"
+    }
+  ],
+  "trending_sources": [
+    {
+      "name": "Snopes Latest",
+      "url": "https://www.snopes.com/fact-check/",
+      "type": "factcheck"
+    },
+    {
+      "name": "PolitiFact",
+      "url": "https://www.politifact.com/",
+      "type": "factcheck"
+    },
+    {
+      "name": "AP Fact Check",
+      "url": "https://apnews.com/hub/ap-fact-check",
+      "type": "news"
+    },
+    {
+      "name": "Reuters Fact Check",
+      "url": "https://www.reuters.com/fact-check/",
+      "type": "news"
+    }
+  ]
+}

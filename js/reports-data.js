@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -12,
+        title: "Top 5 Global Disinformation Campaigns: May 2024",
+        slug: "top-disinformation-campaigns-may-2024",
+        category: "Foreign Influence",
+        tagClass: "tag-cyan",
+        catClass: "cat-factcheck",
+        icon: "shield-alert",
+        date: "May 20, 2024",
+        sources: "15 Sources",
+        readTime: "25 min",
+        verdict: "context",
+        excerpt: "Analysis of the five most prevalent disinformation campaigns from May 13-20, 2024: AI-generated migrant videos (45-60M reach), campus protest deepfakes (38-52M), Ukraine defeat narratives (32-45M), health misinformation resurgence (28-40M), and election interference in India/Mexico (25-35M). AI adoption increased 42% with 14.7-hour detection lag.",
+        chart: {"type":"doughnut","color":"#0088CC","data":[32,28,18,11,6,3,2],"labels":["Telegram","X/Twitter","Facebook","TikTok","YouTube","Instagram","Reddit"],"colors":["#0088CC","#1DA1F2","#1877F2","#000000","#FF0000","#E4405F","#FF4500"]}
+    },
+    {
         id: -11,
         title: "Epstein Files 2026: What the 3.5 Million DOJ Documents Actually Reveal",
         slug: "epstein-files-2026-revelations",

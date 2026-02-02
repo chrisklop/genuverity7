@@ -1,149 +1,192 @@
-# GenuVerity Daily Automation
+# GenuVerity Automation Pipeline
 
-Automated daily fact-check report generation using Gemini Deep Research and Claude Cowork.
+Automated daily research pipeline using Gemini Deep Research + Claude Report Generation.
 
 ## Overview
 
-This automation runs in two phases:
-
-| Phase | Time | Description |
-|-------|------|-------------|
-| **Phase 1** | 5:00 AM | Submit research prompt to Gemini Deep Research |
-| **Phase 2** | 6:00 AM | Extract results, generate HTML reports, commit to branch |
-
-## Setup
-
-```bash
-# Install the daily schedule
-./scripts/setup.sh
-
-# This will:
-# - Install launchd agents for 5 AM and 6 AM triggers
-# - Create log directories
-# - Make scripts executable
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│  Topics Queue   │───▶│  Gemini Deep     │───▶│ Report Launcher │
+│  (JSON file)    │    │  Research        │    │ (Claude Code)   │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+        │                       │                       │
+    5:00 AM               5-15 min                  Manual/
+    launchd              research                  Auto-trigger
 ```
 
-## How It Works
+## Quick Start
 
-### Phase 1: Submit Research (5:00 AM)
+### 1. Install Dependencies
 
-1. Opens Gemini in Chrome (using your logged-in session)
-2. Clicks "Tools" → "Deep Research"
-3. Submits the forensic intelligence prompt
-4. Confirms the research plan
-5. Saves the chat URL for Phase 2
+```bash
+# Python packages
+pip install playwright requests beautifulsoup4
 
-**Prompt location**: `GEMINI_DEEP_RESEARCH_PROMPT.md`
+# Playwright browsers
+playwright install chromium
+```
 
-### Phase 2: Extract & Generate (6:00 AM)
+### 2. First-Time Setup
 
-1. Returns to the Gemini chat from Phase 1
-2. Extracts the JSON output from Gemini's response
-3. Validates the JSON against `INPUT_SCHEMA.md`
-4. Runs `/batch-report` to generate HTML files
-5. Commits to a daily feature branch
-6. Sends notification for manual review
+```bash
+# Make sure Chrome for Claude is logged into Google/Gemini
+open -a "Chrome for Claude"
+# Navigate to gemini.google.com and log in
 
-## Directory Structure
+# Test the queue
+cd ~/GenuVerity7/automation
+python scripts/queue-manager.py list
+
+# Test Gemini research (interactive)
+python scripts/gemini-deep-research.py --topic "Test topic"
+```
+
+### 3. Install Daily Scheduler
+
+```bash
+./scripts/setup-scheduler.sh
+```
+
+## Scripts
+
+### `gemini-deep-research.py`
+
+Automates Gemini Deep Research using Playwright.
+
+```bash
+# Interactive mode
+python scripts/gemini-deep-research.py
+
+# Specific topic
+python scripts/gemini-deep-research.py --topic "5G COVID conspiracy analysis"
+
+# From queue
+python scripts/gemini-deep-research.py --from-queue
+
+# Background mode
+python scripts/gemini-deep-research.py --from-queue --headless
+```
+
+### `queue-manager.py`
+
+Manage the research topics queue.
+
+```bash
+# List all topics
+python scripts/queue-manager.py list
+
+# List only pending
+python scripts/queue-manager.py list --pending
+
+# Add new topic
+python scripts/queue-manager.py add "Great Replacement Theory analysis" --priority high --category historical
+
+# See next topic
+python scripts/queue-manager.py next
+
+# Mark topic status
+python scripts/queue-manager.py mark topic-slug-feb-2026 completed
+
+# Fetch trending from fact-check sites
+python scripts/queue-manager.py fetch-trending
+
+# Queue statistics
+python scripts/queue-manager.py stats
+```
+
+### `daily-runner.py`
+
+Orchestrates the daily pipeline (triggered by launchd at 5:00 AM).
+
+```bash
+# Dry run - see what would happen
+python scripts/daily-runner.py --dry-run
+
+# Run now (manual trigger)
+python scripts/daily-runner.py --now
+```
+
+## File Structure
 
 ```
 automation/
-├── README.md                    # This file
-├── phase1-submit-research.md    # Phase 1 instructions
-├── phase2-extract-generate.md   # Phase 2 instructions
-├── launchd/
-│   ├── com.genuverity.phase1.plist
-│   └── com.genuverity.phase2.plist
+├── README.md                 # This file
+├── topics-queue.json         # Research topics queue
+├── phase1-submit-research.md # Research prompt docs
+├── phase2-extract-generate.md # Extraction docs
+├── input/                    # Input files for Report Launcher
+├── output/                   # Generated content
+├── logs/                     # Execution logs
 ├── scripts/
-│   ├── setup.sh                 # Install automation
-│   ├── uninstall.sh             # Remove automation
-│   ├── trigger-phase1.sh        # Manual Phase 1 trigger
-│   └── trigger-phase2.sh        # Manual Phase 2 trigger
-├── output/
-│   └── gemini-output-YYYY-MM-DD.json
-└── logs/
-    └── YYYY-MM-DD-phase[1|2].log
+│   ├── gemini-deep-research.py   # Playwright automation
+│   ├── queue-manager.py          # Queue management
+│   ├── daily-runner.py           # Daily orchestrator
+│   └── setup-scheduler.sh        # Install launchd job
+└── launchd/
+    └── com.genuverity.daily-research.plist
 ```
 
-## Manual Testing
+## Topics Queue
+
+The queue (`topics-queue.json`) supports:
+
+- **Categories**: `historical`, `trending`, `general`
+- **Priorities**: `high`, `medium`, `low`
+- **Statuses**: `pending`, `processing`, `completed`, `failed`
+
+### Sample Topics
+
+| Category   | Topic |
+|------------|-------|
+| Historical | Pizzagate origins |
+| Historical | 5G COVID conspiracy |
+| Historical | Election machine fraud |
+| Historical | QAnon prophecies |
+| Trending   | Current viral claims (auto-fetched) |
+
+## Scheduler
+
+The daily scheduler runs at **5:00 AM**:
 
 ```bash
-# Test Phase 1 (submit to Gemini)
-./scripts/trigger-phase1.sh
+# Check status
+launchctl list | grep genuverity
 
-# Test Phase 2 (extract and generate)
-./scripts/trigger-phase2.sh
+# Uninstall
+launchctl unload ~/Library/LaunchAgents/com.genuverity.daily-research.plist
+rm ~/Library/LaunchAgents/com.genuverity.daily-research.plist
 ```
 
-## Uninstall
+## Integration with Report Launcher
 
-```bash
-./scripts/uninstall.sh
-```
+After Gemini research completes:
 
-## Requirements
-
-- **Chrome**: Logged into Google account with Gemini Pro
-- **Claude Desktop** or **Claude Cowork**: For browser automation
-- **Claude in Chrome extension**: For controlling Chrome
-
-## Workflow
-
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                        DAILY AUTOMATION PIPELINE                         │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                          │
-│  5:00 AM                              6:00 AM                            │
-│  ────────                             ────────                           │
-│  launchd triggers Phase 1             launchd triggers Phase 2           │
-│           │                                    │                         │
-│           ▼                                    ▼                         │
-│  Claude Cowork opens Gemini           Claude Cowork returns to chat      │
-│           │                                    │                         │
-│           ▼                                    ▼                         │
-│  Submits Deep Research prompt         Extracts JSON output               │
-│           │                                    │                         │
-│           ▼                                    ▼                         │
-│  Confirms research plan               Validates against schema           │
-│           │                                    │                         │
-│           ▼                                    ▼                         │
-│  Saves chat URL                       Runs /batch-report                 │
-│           │                                    │                         │
-│           ▼                                    ▼                         │
-│  [Gemini researches ~45 min]          Generates HTML reports             │
-│                                                │                         │
-│                                                ▼                         │
-│                                       Commits to feature branch          │
-│                                                │                         │
-│                                                ▼                         │
-│                                       Notifies user for review           │
-│                                                                          │
-└─────────────────────────────────────────────────────────────────────────┘
-```
+1. Extract JSON output from Gemini chat
+2. Save to `automation/input/`
+3. Use Report Launcher (`⌘⇧R`) or:
+   - Claude Code: `cd ~/GenuVerity7 && claude --chrome`
+   - Run: `/generate-report automation/input/filename.json`
 
 ## Troubleshooting
 
-### Phase 1 fails
-- Check if Chrome is running with your Google account logged in
-- Verify Claude in Chrome extension is connected
-- Check logs: `automation/logs/YYYY-MM-DD-phase1.log`
+### "Not logged in" error
+Open Chrome for Claude and log into Gemini manually first.
 
-### Phase 2 fails to find JSON
-- Gemini may still be researching (wait and retry)
-- Check if the chat URL was saved correctly
-- Manually extract JSON from Gemini if needed
+### Playwright not finding elements
+Gemini's UI may have changed. Update selectors in `gemini-deep-research.py`.
 
-### Reports fail validation
-- Check `./validate-report.sh` output
-- Review the generated HTML for issues
-- Check logs: `automation/logs/YYYY-MM-DD-phase2.log`
+### Scheduler not running
+```bash
+# Check if loaded
+launchctl list | grep genuverity
 
-## Related Files
+# Check logs
+cat ~/GenuVerity7/automation/logs/daily-runner-stdout.log
+```
 
-- `.claude/skills/batch-report-generator/INPUT_SCHEMA.md` - JSON schema
-- `.claude/skills/batch-report-generator/GEMINI_DEEP_RESEARCH_PROMPT.md` - Full prompt
-- `docs/report-template-2025.html` - HTML template
+## Backup
+
+Old scripts backed up in `.backup-YYYYMMDD/` folders.
 
 ---
 
@@ -230,4 +273,4 @@ This extracts chart data from each HTML report and updates `reports-data.js` so 
 
 ---
 
-*Last updated: January 15, 2026*
+*Last updated: February 2, 2026*
