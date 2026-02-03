@@ -296,64 +296,125 @@ def run_chatgpt_research(topic: str, template_id: str = "default", headless: boo
             
             sleep(3)  # Let rendering finish
             page.screenshot(path=str(LOGS_DIR / f"{today}-chatgpt-{slug}-03-complete.png"))
+
+            # Export Deep Research report via UI menu
+            log("Exporting Deep Research report via menu...", log_file)
+
+            # First, click on the report card to expand it (click on title area)
+            try:
+                report_card = page.locator('article').last
+                if report_card.count() > 0:
+                    report_card.click()
+                    sleep(2)
+                    log("Expanded report card", log_file)
+            except Exception as e:
+                log(f"Could not expand report: {e}", log_file)
+
+            # Look for the export/download icon (document icon in header)
+            # This is typically near the title bar of the expanded report
+            export_clicked = False
+            try:
+                # Try various selectors for the export button
+                export_selectors = [
+                    'button[aria-label*="export"]',
+                    'button[aria-label*="download"]',
+                    'button[aria-label*="options"]',
+                    '[data-testid*="export"]',
+                    '[data-testid*="download"]'
+                ]
+
+                for sel in export_selectors:
+                    btn = page.locator(sel).first
+                    if btn.count() > 0:
+                        btn.click()
+                        export_clicked = True
+                        log(f"Clicked export via: {sel}", log_file)
+                        break
+
+                if not export_clicked:
+                    # Fallback: click by coordinates (export icon position)
+                    # In expanded Deep Research view, export is near top right
+                    page.mouse.click(968, 18)
+                    export_clicked = True
+                    log("Clicked export via coordinates", log_file)
+
+                sleep(1)
+                page.screenshot(path=str(LOGS_DIR / f"{today}-chatgpt-{slug}-04-export-menu.png"))
+
+                # Click "Export to Markdown"
+                markdown_btn = page.locator('text="Export to Markdown"').first
+                if markdown_btn.count() > 0:
+                    markdown_btn.click()
+                    log("Clicked 'Export to Markdown'", log_file)
+                    sleep(3)  # Wait for download
+                else:
+                    log("Could not find 'Export to Markdown' option", log_file)
+
+            except Exception as e:
+                log(f"Export menu error: {e}", log_file)
+
+            # Move downloaded file from Downloads to output directory
+            downloads_file = Path.home() / "Downloads" / "deep-research-report.md"
+            output_file = OUTPUT_DIR / f"{slug}.md"
+
+            # Wait for download to complete (check for file)
+            for i in range(10):
+                if downloads_file.exists():
+                    # Check if file is still being written
+                    size1 = downloads_file.stat().st_size
+                    sleep(1)
+                    size2 = downloads_file.stat().st_size
+                    if size1 == size2 and size1 > 1000:
+                        break
+                sleep(1)
+
+            if downloads_file.exists():
+                import shutil
+                shutil.move(str(downloads_file), str(output_file))
+                log(f"Moved download to: {output_file}", log_file)
+                response_text = output_file.read_text()
+            else:
+                log("WARNING: Download file not found, trying page scrape fallback", log_file)
+                # Fallback to page scraping
+                response_text = ""
+                response_selectors = [
+                    '[data-message-author-role="assistant"]',
+                    '.markdown',
+                    '.prose'
+                ]
+                for selector in response_selectors:
+                    try:
+                        elements = page.locator(selector)
+                        if elements.count() > 0:
+                            response_text = elements.last.inner_text()
+                            if len(response_text) > 500:
+                                break
+                    except:
+                        continue
             
-            # Extract response
-            log("Extracting response...", log_file)
-            response_text = ""
-            
-            # Try to get the assistant's response
-            response_selectors = [
-                '[data-message-author-role="assistant"]',
-                '.markdown',
-                '.prose',
-                '[class*="agent-turn"]'
-            ]
-            
-            for selector in response_selectors:
-                try:
-                    elements = page.locator(selector)
-                    if elements.count() > 0:
-                        # Get the last (most recent) response
-                        response_text = elements.last.inner_text()
-                        if len(response_text) > 500:
-                            log(f"Found response with {len(response_text)} chars", log_file)
-                            break
-                except:
-                    continue
-            
-            if len(response_text) < 100:
-                log("WARNING: Response too short, trying full page scrape", log_file)
-                response_text = page.locator('main').inner_text()
-            
-            # Extract source URLs
-            log("Extracting sources...", log_file)
+            # Extract source URLs from the markdown content
+            log("Extracting sources from markdown...", log_file)
             sources = []
             try:
-                links = page.evaluate("""
-                    () => {
-                        const links = document.querySelectorAll('a[href]');
-                        const sources = [];
-                        for (const link of links) {
-                            const href = link.href;
-                            const text = link.innerText || '';
-                            if (href && !href.includes('chatgpt.com') && 
-                                !href.includes('openai.com') &&
-                                (href.startsWith('http://') || href.startsWith('https://'))) {
-                                sources.push({url: href, title: text.substring(0, 200).trim()});
-                            }
-                        }
-                        return sources;
-                    }
-                """)
-                sources = links if links else []
-                log(f"Found {len(sources)} sources", log_file)
+                # Parse URLs from markdown content
+                import re as regex
+                url_pattern = r'https?://[^\s\)\]\"\'<>]+'
+                found_urls = regex.findall(url_pattern, response_text)
+                seen = set()
+                for url in found_urls:
+                    clean_url = url.rstrip('.,;:')
+                    if clean_url not in seen and 'chatgpt.com' not in clean_url:
+                        sources.append({"url": clean_url, "title": ""})
+                        seen.add(clean_url)
+                log(f"Found {len(sources)} sources in markdown", log_file)
             except Exception as e:
                 log(f"Source extraction error: {e}", log_file)
-            
-            # Save outputs
+
+            # Ensure output file exists (might already be there from export)
             md_file = OUTPUT_DIR / f"{slug}.md"
-            md_file.write_text(response_text)
-            log(f"Saved: {md_file} ({len(response_text)} chars)", log_file)
+            if not md_file.exists():
+                md_file.write_text(response_text)
+            log(f"Output: {md_file} ({len(response_text)} chars)", log_file)
             
             if sources:
                 sources_file = OUTPUT_DIR / f"{slug}-sources.json"
