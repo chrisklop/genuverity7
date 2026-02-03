@@ -67,11 +67,13 @@
       "template": "health-misinfo",
       "category": "historical",
       "priority": "medium",
-      "status": "researching",
+      "status": "completed",
       "added_date": "2026-02-02",
       "notes": "Spread despite FDA warnings, poison control spike",
       "processed_date": "2026-02-02",
-      "chat_url": "https://gemini.google.com/app/39a76e86dca9d896"
+      "chat_url": "https://gemini.google.com/app/39a76e86dca9d896",
+      "verdict": "FALSE",
+      "completed_date": "2026-02-02"
     },
     {
       "slug": "qanon-prophecies-feb-2026",
@@ -79,9 +81,12 @@
       "template": "historical-conspiracy",
       "category": "historical",
       "priority": "medium",
-      "status": "pending",
+      "status": "failed",
       "added_date": "2026-02-02",
-      "notes": "From 4chan to mainstream politics"
+      "notes": "From 4chan to mainstream politics",
+      "processed_date": "2026-02-02",
+      "chat_url": "https://gemini.google.com/app/80198b219dcda18e",
+      "error": "Gemini returned error - possible content filter or rate limit"
     },
     {
       "slug": "great-replacement-theory-feb-2026",
@@ -89,9 +94,11 @@
       "template": "historical-conspiracy",
       "category": "historical",
       "priority": "high",
-      "status": "pending",
+      "status": "researching",
       "added_date": "2026-02-02",
-      "notes": "Linked to multiple mass shootings"
+      "notes": "Linked to multiple mass shootings",
+      "processed_date": "2026-02-02",
+      "chat_url": "https://gemini.google.com/app/59e5309651e40b08"
     },
     {
       "slug": "sandy-hook-denial-feb-2026",
@@ -99,9 +106,10 @@
       "template": "historical-conspiracy",
       "category": "historical",
       "priority": "high",
-      "status": "pending",
+      "status": "completed",
       "added_date": "2026-02-02",
-      "notes": "Alex Jones defamation case"
+      "notes": "Alex Jones defamation case",
+      "processed_date": "2026-02-02"
     },
     {
       "slug": "flat-earth-resurgence-feb-2026",
@@ -109,9 +117,12 @@
       "template": "historical-conspiracy",
       "category": "historical",
       "priority": "low",
-      "status": "pending",
+      "status": "processing",
       "added_date": "2026-02-02",
-      "notes": "Case study in epistemological breakdown"
+      "notes": "Case study in epistemological breakdown",
+      "processed_date": "2026-02-03",
+      "chat_url": "https://chatgpt.com/c/69814fca-f8ec-832e-a408-6119da2666cc",
+      "provider": "chatgpt-deep-research"
     }
   ],
   "trending_sources": [

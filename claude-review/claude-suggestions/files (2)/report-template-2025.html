@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} | GenuVerity</title>
+    <meta name="description" content="{{META_DESCRIPTION}}">
+
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/chart-watermark.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js" defer></script>
+
+    <!-- Fonts (Standard Pack) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* === CORE VARIABLES === */
+        :root {
+            --bg-primary: #050A14;
+            --bg-secondary: #0a0f1a;
+            --bg-tertiary: #0d1424;
+            --bg-card: #111827;
+            --border-color: rgba(59, 130, 246, 0.15);
+            --border-subtle: rgba(59, 130, 246, 0.15);
+            --border-glow: rgba(59, 130, 246, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --verdict-true: #10b981;
+            --verdict-false: #ef4444;
+            --verdict-mixed: #f59e0b;
+        }
+
+        /* === RESET & BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* === NAV HEADER (Standardized) === */
+        .nav-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(5, 10, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .nav-brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-back-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .logo-genu {
+            color: #ffffff;
+        }
+
+        .logo-verity {
+            color: var(--accent-blue);
+        }
+
+        /* === LAYOUT UTILS === */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+            padding-top: 80px;
+        }
+
+        .report-meta {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .meta-tag {
+            padding: 4px 12px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 6px;
+            color: var(--accent-blue);
+        }
+
+        .meta-tag.red {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+        }
+
+        .report-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .report-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        /* === GRID LAYOUT === */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* === SIDEBAR (SOURCES) === */
+        .sources-sidebar {
+            position: sticky;
+            top: 100px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .sources-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sources-title {
+            font-weight: 700;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sources-count {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .sources-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .source-card {
+            background: var(--bg-tertiary);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            font-size: 0.85rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .source-card:hover {
+            border-color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.05);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .source-ref {
+            color: var(--accent-green);
+            font-weight: 700;
+            min-width: 20px;
+        }
+
+        /* === MAIN ARTICLE === */
+        .article-content {
+            font-size: 1.1rem;
+            color: #d1d5db;
+        }
+
+        .article-content h2 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin: 50px 0 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .article-content h3 {
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin: 40px 0 20px;
+        }
+
+        .article-content p {
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .article-content ul {
+            margin-bottom: 25px;
+            padding-left: 25px;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* === DATA TABLES === */
+        .data-table-container {
+            margin: 40px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* === INFO BOXES === */
+        .info-box {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 30px 0;
+        }
+
+        .info-box.red {
+            background: rgba(239, 68, 68, 0.05);
+            border-color: var(--accent-red);
+        }
+
+        .info-box.amber {
+            background: rgba(245, 158, 11, 0.05);
+            border-color: var(--accent-amber);
+        }
+
+        .info-box.green {
+            background: rgba(16, 185, 129, 0.05);
+            border-color: var(--accent-green);
+        }
+
+        .info-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .info-box.red .info-title {
+            color: var(--accent-red);
+        }
+
+        .info-box.amber .info-title {
+            color: var(--accent-amber);
+        }
+
+        .info-box.green .info-title {
+            color: var(--accent-green);
+        }
+
+        /* === CHART CONTAINERS === */
+        .chart-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 40px 0;
+        }
+
+        .chart-header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* === INTERACTIVE CITATIONS === */
+        .citation-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .citation-link:hover {
+            color: var(--accent-cyan);
+            text-decoration: underline;
+        }
+
+        @keyframes flash-highlight {
+            0% {
+                background: rgba(245, 158, 11, 0.4);
+                border-color: var(--accent-amber);
+                transform: scale(1.02);
+            }
+
+            100% {
+                background: var(--bg-tertiary);
+                border-color: transparent;
+                transform: scale(1);
+            }
+        }
+
+        .source-card.highlight {
+            animation: flash-highlight 1.5s ease-out;
+        }
+
+        /* === MEDIA & VISUALS (Magazine Style) === */
+        .float-figure {
+            float: right;
+            width: 45%;
+            max-width: 450px;
+            margin: 5px 0 20px 25px;
+            clear: right;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.27);
+            cursor: zoom-in;
+            z-index: 10;
+            background: var(--bg-card);
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .float-figure:hover {
+            transform: scale(1.6) translateX(-15%);
+            z-index: 1000;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border-color: var(--accent-blue);
+        }
+
+        .float-figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .float-figure figcaption {
+            margin-top: 8px;
+            padding: 0 4px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        /* === MOBILE === */
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sources-sidebar {
+                display: none;
+            }
+
+            .report-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .float-figure {
+                float: none;
+                width: 100%;
+                max-width: none;
+                margin: 24px 0;
+            }
+
+            .float-figure:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- STANDARD NAV HEADER -->
+    <nav class="nav-header">
+        <a href="../index.html" class="nav-brand">
+            <span class="logo-genu">Genu</span><span class="logo-verity">Verity</span>
+        </a>
+        <a href="../index.html" class="nav-back-link">
+            <i data-lucide="arrow-left" style="width:16px;"></i>
+            Back to Intelligence
+        </a>
+    </nav>
+
+    <div class="container">
+        <!-- REPORT HEADER -->
+        <div class="report-meta">
+            <span class="meta-tag">{{CATEGORY}}</span>
+            <span class="meta-tag red">{{SUBCATEGORY}}</span>
+            <span class="meta-tag"><i data-lucide="clock"
+                    style="width:12px; display:inline-block; vertical-align:middle;"></i> {{READ_TIME}} MIN READ</span>
+        </div>
+
+        <h1 class="report-title">{{TITLE}}</h1>
+        <h2 class="report-subtitle">{{SUBTITLE}}</h2>
+
+        <!-- MAIN LAYOUT GRID -->
+        <div class="content-grid">
+            <!-- SIDEBAR: SOURCES FIRST -->
+            <aside class="sources-sidebar">
+                <div class="sources-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
+                    <span class="sources-count">{{SOURCE_COUNT}}</span>
+                </div>
+                <div class="sources-list" id="sourcesList">
+                    <!-- {{SOURCE_CARDS}} -->
+                    <!-- TEMPLATE FOR EACH SOURCE:
+                    <a href="{{SOURCE_URL}}" target="_blank" class="source-card" id="source-{{N}}">
+                        <span class="source-ref">{{N}}</span>
+                        <div>
+                            <div>{{SOURCE_TITLE}}</div>
+                            <div style="font-size:0.7em; opacity:0.7;">{{SOURCE_DOMAIN}}</div>
+                        </div>
+                    </a>
+                    -->
+                </div>
+            </aside>
+
+            <!-- MAIN ARTICLE CONTENT -->
+            <article class="article-content">
+
+                <!-- EXECUTIVE SUMMARY (Copyable) -->
+                <div class="info-box copyable-section" id="executive-summary">
+                    <div class="info-title"><i data-lucide="file-text"></i>Executive Summary</div>
+                    <p>{{EXECUTIVE_SUMMARY}}</p>
+                </div>
+
+                <!-- {{ARTICLE_SECTIONS}} -->
+                <!-- TEMPLATE FOR EACH SECTION:
+                <h2>{{SECTION_TITLE}}</h2>
+                <p>{{SECTION_CONTENT}} <a href="#source-N" class="citation-link" onclick="highlightSource(event, 'source-N')">[N]</a></p>
+                -->
+
+                <!-- TEMPLATE FOR CHART:
+                <div class="chart-wrapper copyable-section" id="{{CHART_ID}}-wrapper">
+                    <div class="chart-header">
+                        <div class="chart-title">{{CHART_TITLE}}</div>
+                    </div>
+                    <canvas id="{{CHART_ID}}" height="300"></canvas>
+                </div>
+                -->
+
+                <!-- TEMPLATE FOR TABLE:
+                <div class="data-table-container copyable-section">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>{{HEADER_1}}</th>
+                                <th>{{HEADER_2}}</th>
+                                <th>{{HEADER_3}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{CELL_1}}</td>
+                                <td>{{CELL_2}}</td>
+                                <td>{{CELL_3}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                -->
+
+                <!-- TEMPLATE FOR FIGURE:
+                <figure class="float-figure copyable-section">
+                    <img src="{{IMAGE_URL}}" alt="{{IMAGE_ALT}}">
+                    <figcaption>
+                        <strong style="color:var(--accent-red);">EXHIBIT {{LETTER}}:</strong>
+                        {{CAPTION_TEXT}} (Source: {{SOURCE_NAME}})
+                    </figcaption>
+                </figure>
+                -->
+
+                <!-- TEMPLATE FOR ALERT BOX:
+                <div class="info-box {{ALERT_COLOR}} copyable-section">
+                    <div class="info-title"><i data-lucide="{{ALERT_ICON}}"></i>{{ALERT_TITLE}}</div>
+                    <p>{{ALERT_CONTENT}}</p>
+                </div>
+                -->
+
+            </article>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Interactive Citation Highlighting
+        function highlightSource(event, id) {
+            event.preventDefault();
+            const element = document.getElementById(id);
+
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                element.classList.remove('highlight');
+                void element.offsetWidth; // trigger reflow
+                element.classList.add('highlight');
+            }
+        }
+
+        // {{CHART_JS_CONFIGS}}
+        // TEMPLATE FOR CHART CONFIG:
+        // new Chart(document.getElementById('{{CHART_ID}}').getContext('2d'), {
+        //     type: '{{CHART_TYPE}}',
+        //     data: {
+        //         labels: [{{LABELS}}],
+        //         datasets: [{
+        //             label: '{{DATASET_LABEL}}',
+        //             data: [{{DATA_VALUES}}],
+        //             borderColor: '{{COLOR}}',
+        //             backgroundColor: '{{COLOR_ALPHA}}',
+        //             fill: true,
+        //             tension: 0.2
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         plugins: {
+        //             legend: {
+        //                 display: true,
+        //                 labels: { color: '#94a3b8' }
+        //             }
+        //         },
+        //         scales: {
+        //             y: {
+        //                 display: true,
+        //                 grid: { color: 'rgba(255,255,255,0.05)' },
+        //                 ticks: { color: '#64748b' }
+        //             },
+        //             x: {
+        //                 grid: { color: 'rgba(255,255,255,0.05)' },
+        //                 ticks: { color: '#94a3b8' }
+        //             }
+        //         }
+        //     }
+        // });
+    </script>
+</body>
+
+</html>

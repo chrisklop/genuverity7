@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 """
-GenuVerity Daily Runner
-Orchestrates the daily research pipeline:
+GenuVerity Daily Runner - FULLY AUTOMATED PIPELINE
+Orchestrates the complete daily research-to-report pipeline:
 1. Pull next topic from queue
-2. Submit to Gemini Deep Research
-3. Notify user via macOS notification
-4. (Future) Auto-extract and generate report
+2. Run ChatGPT Deep Research (PRIMARY) or Gemini (FALLBACK)
+3. Run Claude PASS 1 (browser automation) → JSON extraction
+4. Run PASS 2 → HTML generation from template
+5. Auto-commit to feature branch
+6. Notify user when ready
 
 This is triggered by launchd at 5:00 AM daily.
 
 Usage:
-    python daily-runner.py              # Normal run
+    python daily-runner.py              # Full automated pipeline
     python daily-runner.py --dry-run    # Show what would happen
-    python daily-runner.py --now        # Run immediately (ignore schedule)
+    python daily-runner.py --research-only  # Only do research, skip report generation
 """
 
 import argparse
@@ -27,6 +29,7 @@ GENUVERITY_ROOT = Path.home() / "GenuVerity7"
 AUTOMATION_DIR = GENUVERITY_ROOT / "automation"
 SCRIPTS_DIR = AUTOMATION_DIR / "scripts"
 LOGS_DIR = AUTOMATION_DIR / "logs"
+OUTPUT_DIR = AUTOMATION_DIR / "output"
 QUEUE_FILE = AUTOMATION_DIR / "topics-queue.json"
 
 
@@ -176,23 +179,111 @@ def check_for_completed_research() -> list:
     return completed
 
 
-def notify_report_ready(jobs: list):
-    """Notify user that research is ready for report generation."""
-    if not jobs:
-        return
+def run_claude_pass1(slug: str, dry_run: bool = False) -> bool:
+    """Run Claude PASS 1 (JSON extraction) via browser automation."""
+    log(f"PASS 1: Running Claude.ai browser automation for: {slug}")
 
-    for job in jobs:
-        topic = job.get("topic", "Unknown")
-        slug = job.get("slug", "")
-        log(f"Report ready for generation: {topic}")
-        notify("GenuVerity Report Ready",
-               f"'{topic[:30]}...' is ready. Run report-generator.py or paste into Claude.")
+    if dry_run:
+        log("[DRY RUN] Would run claude-pass1.py")
+        return True
+
+    pass1_script = SCRIPTS_DIR / "claude-pass1.py"
+
+    try:
+        result = subprocess.run(
+            [sys.executable, str(pass1_script), "--slug", slug],
+            capture_output=True,
+            text=True,
+            timeout=600  # 10 minute timeout for Claude
+        )
+
+        if result.returncode == 0:
+            log("Claude PASS 1 completed - JSON extracted")
+            return True
+        else:
+            log(f"Claude PASS 1 failed: {result.stderr}")
+            return False
+
+    except subprocess.TimeoutExpired:
+        log("Claude PASS 1 timed out")
+        return False
+    except Exception as e:
+        log(f"Claude PASS 1 error: {e}")
+        return False
+
+
+def run_pass2_report_gen(slug: str, dry_run: bool = False) -> bool:
+    """Run PASS 2 (HTML generation) and auto-commit."""
+    log(f"PASS 2: Generating HTML report for: {slug}")
+
+    if dry_run:
+        log("[DRY RUN] Would run report-generator.py with --commit")
+        return True
+
+    report_script = SCRIPTS_DIR / "report-generator.py"
+
+    try:
+        result = subprocess.run(
+            [sys.executable, str(report_script), "--slug", slug, "--commit"],
+            capture_output=True,
+            text=True,
+            timeout=120  # 2 minute timeout
+        )
+
+        if result.returncode == 0:
+            log("PASS 2 completed - Report generated and committed")
+            return True
+        else:
+            log(f"PASS 2 failed: {result.stderr}")
+            return False
+
+    except Exception as e:
+        log(f"PASS 2 error: {e}")
+        return False
+
+
+def run_full_pipeline(slug: str, dry_run: bool = False) -> bool:
+    """Run the complete pipeline: PASS 1 (JSON) → PASS 2 (HTML) → Commit."""
+    log("")
+    log("=" * 60)
+    log("FULL PIPELINE: Research → JSON → HTML → Git")
+    log("=" * 60)
+
+    # Check if JSON already exists (PASS 1 already done)
+    json_file = OUTPUT_DIR / f"{slug}.json"
+
+    if not json_file.exists():
+        # Run PASS 1
+        if not run_claude_pass1(slug, dry_run):
+            log("Pipeline failed at PASS 1")
+            return False
+
+    # Run PASS 2 + commit
+    if not run_pass2_report_gen(slug, dry_run):
+        log("Pipeline failed at PASS 2")
+        return False
+
+    log("")
+    log("=" * 60)
+    log("✓ FULL PIPELINE COMPLETE")
+    log("=" * 60)
+    log(f"Report branch: report/{slug}")
+
+    return True
+
+
+def notify_report_ready(slug: str, topic: str):
+    """Notify user that report is ready in feature branch."""
+    log(f"Report ready: {topic}")
+    notify("GenuVerity Report Ready",
+           f"'{topic[:30]}...' committed to branch report/{slug}")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="GenuVerity Daily Runner")
+    parser = argparse.ArgumentParser(description="GenuVerity Daily Runner - Full Pipeline")
     parser.add_argument("--dry-run", action="store_true", help="Show what would happen")
-    parser.add_argument("--now", action="store_true", help="Run immediately")
+    parser.add_argument("--research-only", action="store_true", help="Only do research, skip report generation")
+    parser.add_argument("--slug", help="Process specific slug (skip research)")
     args = parser.parse_args()
 
     # Setup logging
@@ -206,11 +297,19 @@ def main():
         sys.stderr = sys.stdout
 
     log("=" * 60)
-    log("GenuVerity Daily Runner Started")
+    log("GenuVerity Daily Runner - FULL AUTOMATION")
     log("=" * 60)
 
     if args.dry_run:
         log("DRY RUN MODE - no changes will be made")
+
+    # If specific slug provided, just run the pipeline for it
+    if args.slug:
+        log(f"Processing specific slug: {args.slug}")
+        success = run_full_pipeline(args.slug, dry_run=args.dry_run)
+        if success:
+            notify_report_ready(args.slug, args.slug)
+        return
 
     # Load queue
     queue = load_queue()
@@ -224,31 +323,51 @@ def main():
 
     if not topic:
         log("No pending topics in queue")
-        notify("GenuVerity", "No topics to research today. Add more to the queue!")
+
+        # Check for completed research that needs report generation
+        completed = check_for_completed_research()
+        if completed:
+            log(f"Found {len(completed)} completed research items")
+            for job in completed:
+                slug = job.get("slug", "")
+                if slug:
+                    log(f"Running full pipeline for: {slug}")
+                    if run_full_pipeline(slug, dry_run=args.dry_run):
+                        notify_report_ready(slug, job.get("topic", slug))
+        else:
+            notify("GenuVerity", "No topics to research today. Add more to the queue!")
         return
 
     log(f"Next topic: {topic.get('name')}")
     log(f"Priority: {topic.get('priority')}")
     log(f"Category: {topic.get('category')}")
 
-    # Run research (ChatGPT PRIMARY, Gemini FALLBACK)
-    success = run_chatgpt_research(topic, dry_run=args.dry_run)
+    slug = topic.get("slug", "")
 
-    if success and not args.dry_run:
-        log("Research complete!")
-        log("Output saved to: automation/output/")
-        log("")
-        log("NEXT STEPS for report generation:")
-        log("1. Review output in automation/output/")
-        log("2. Run: python3 report-generator.py --slug <slug>")
-        log("   OR paste output into Claude for PASS 1 + PASS 2")
-        log("3. Commit to feature branch")
+    # STEP 1: Run research (ChatGPT PRIMARY, Gemini FALLBACK)
+    research_success = run_chatgpt_research(topic, dry_run=args.dry_run)
 
-    # Check for any other completed research ready for reports
-    completed = check_for_completed_research()
-    if completed:
-        log(f"Found {len(completed)} research items ready for report generation")
-        notify_report_ready(completed)
+    if not research_success:
+        log("Research failed - aborting pipeline")
+        notify("GenuVerity Error", f"Research failed for: {topic.get('name', '')[:30]}...")
+        return
+
+    log("Research complete!")
+
+    # If research-only mode, stop here
+    if args.research_only:
+        log("Research-only mode - stopping before report generation")
+        notify("GenuVerity", f"Research complete: {topic.get('name', '')[:30]}...")
+        return
+
+    # STEP 2-4: Run full pipeline (PASS 1 → PASS 2 → Commit)
+    if not args.dry_run:
+        pipeline_success = run_full_pipeline(slug, dry_run=args.dry_run)
+
+        if pipeline_success:
+            notify_report_ready(slug, topic.get("name", ""))
+        else:
+            notify("GenuVerity Error", f"Pipeline failed for: {topic.get('name', '')[:30]}...")
 
     log("=" * 60)
     log("Daily Runner Complete")

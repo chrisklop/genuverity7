@@ -1,20 +1,19 @@
 #!/usr/bin/env python3
 """
-GenuVerity Report Generator
+GenuVerity Report Generator - PASS 2 ONLY
 
-Transforms research output into final HTML reports using the two-pass system:
-- PASS 1: Raw research → Structured JSON
-- PASS 2: JSON → HTML using golden template
+Transforms structured JSON into final HTML reports using golden template.
+PASS 1 (JSON extraction) is handled by claude-pass1.py via browser automation.
 
 Usage:
-    # Process research output (manual JSON extraction)
-    python3 report-generator.py --slug flat-earth-resurgence-feb-2026
-
-    # Process with pre-generated JSON (PASS 2 only)
-    python3 report-generator.py --json report-data.json
+    # Generate HTML from JSON
+    python3 report-generator.py --json automation/output/slug.json
 
     # List completed research ready for processing
     python3 report-generator.py --list
+
+    # Auto-commit after generation
+    python3 report-generator.py --json automation/output/slug.json --commit
 """
 
 import argparse
@@ -24,7 +23,6 @@ import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
-from shutil import copy2
 
 GENUVERITY_ROOT = Path.home() / "GenuVerity7"
 AUTOMATION_DIR = GENUVERITY_ROOT / "automation"
@@ -90,42 +88,6 @@ def load_research_output(slug: str) -> dict:
     }
 
     return result
-
-
-def generate_pass1_instructions(research: dict) -> str:
-    """Generate instructions for PASS 1 (Claude extracts JSON)."""
-    content = research.get("content", "")
-    job = research.get("job", {})
-    topic = job.get("topic", "Unknown Topic")
-
-    instructions = f"""
-================================================================================
-PASS 1: Extract Structured JSON from Research
-================================================================================
-
-TOPIC: {topic}
-SLUG: {research['slug']}
-CONTENT LENGTH: {len(content):,} characters
-
-INSTRUCTIONS:
-1. Copy the research content below
-2. Paste into Claude with this prompt:
-
----BEGIN PROMPT---
-You are doing PASS 1 of the GenuVerity report pipeline.
-
-Convert this research into the structured JSON format. Output ONLY valid JSON.
-
-RESEARCH CONTENT:
-{content[:50000]}  {"[TRUNCATED]" if len(content) > 50000 else ""}
----END PROMPT---
-
-3. Save Claude's JSON output to: automation/output/{research['slug']}.json
-4. Then run: python3 report-generator.py --json automation/output/{research['slug']}.json
-
-================================================================================
-"""
-    return instructions
 
 
 def validate_json_schema(data: dict) -> list:
@@ -270,40 +232,72 @@ def generate_sources_html(sources: list) -> str:
     return "\n".join(html_parts)
 
 
-def update_reports_data(json_data: dict):
-    """Update js/reports-data.js with new report entry."""
+def update_reports_data(json_data: dict) -> bool:
+    """Update js/reports-data.js with new report entry - AUTOMATED."""
     if not REPORTS_DATA_FILE.exists():
         log(f"WARNING: reports-data.js not found: {REPORTS_DATA_FILE}")
-        return
+        return False
 
     meta = json_data.get("meta", {})
     verdict = json_data.get("verdict", {})
+    slug = meta.get("slug", "")
 
-    new_entry = {
-        "id": 0,
-        "title": meta.get("title", ""),
-        "slug": meta.get("slug", ""),
-        "category": meta.get("category", "ANALYSIS"),
-        "subcategory": meta.get("subcategory", ""),
-        "date": datetime.now().strftime("%Y-%m-%d"),
-        "readTime": f"{meta.get('read_time', 10)} min",
-        "verdict": verdict.get("label", "UNVERIFIED"),
-        "verdictClass": verdict.get("class", "mixed"),
-        "summary": json_data.get("executive_summary", "")[:200],
-        "chart": {
-            "type": "bar",
-            "color": "#3b82f6",
-            "data": [20, 40, 60, 80]
-        }
-    }
+    # Read current file
+    content = REPORTS_DATA_FILE.read_text()
 
-    log(f"New reports-data.js entry prepared:")
-    log(json.dumps(new_entry, indent=2))
-    log("")
-    log("MANUAL STEP REQUIRED:")
-    log(f"1. Open {REPORTS_DATA_FILE}")
-    log("2. Add entry above to TOP of REPORTS_DATA array")
-    log("3. Increment ALL existing IDs by +1")
+    # Check if this report already exists
+    if f'slug: "{slug}"' in content or f"slug: '{slug}'" in content:
+        log(f"Report {slug} already exists in reports-data.js")
+        return True
+
+    # Escape quotes for JS
+    title_escaped = meta.get('title', '').replace('"', '\\"')
+    summary_escaped = json_data.get('executive_summary', '')[:200].replace('"', '\\"')
+
+    new_entry = f'''{{
+    id: 0,
+    title: "{title_escaped}",
+    slug: "{slug}",
+    category: "{meta.get('category', 'ANALYSIS')}",
+    subcategory: "{meta.get('subcategory', '')}",
+    date: "{datetime.now().strftime('%Y-%m-%d')}",
+    readTime: "{meta.get('read_time', 10)} min",
+    verdict: "{verdict.get('label', 'UNVERIFIED')}",
+    verdictClass: "{verdict.get('class', 'mixed')}",
+    summary: "{summary_escaped}",
+    chart: {{
+        type: "bar",
+        color: "#3b82f6",
+        data: [20, 40, 60, 80]
+    }}
+}}'''
+
+    # Find REPORTS_DATA array and insert at top
+    # Pattern: const REPORTS_DATA = [
+    pattern = r'(const\s+REPORTS_DATA\s*=\s*\[)'
+
+    if not re.search(pattern, content):
+        log("ERROR: Could not find REPORTS_DATA array")
+        return False
+
+    # Insert new entry after opening bracket
+    new_content = re.sub(pattern, f'\\1\n{new_entry},', content)
+
+    # Increment all existing IDs
+    def increment_id(match):
+        old_id = int(match.group(1))
+        return f'id: {old_id + 1}'
+
+    # Only increment IDs that come after our new entry (id: 0)
+    # Split at our new entry and only modify the rest
+    parts = new_content.split(new_entry, 1)
+    if len(parts) == 2:
+        rest = re.sub(r'id:\s*(\d+)', increment_id, parts[1])
+        new_content = parts[0] + new_entry + rest
+
+    REPORTS_DATA_FILE.write_text(new_content)
+    log(f"Updated reports-data.js with new entry (id: 0)")
+    return True
 
 
 def save_report(html: str, slug: str):
@@ -325,11 +319,66 @@ def mark_report_generated(slug: str):
         job_file.write_text(json.dumps(job, indent=2))
 
 
+def git_commit_report(slug: str, title: str) -> bool:
+    """Commit the generated report to a feature branch."""
+    import os
+    os.chdir(GENUVERITY_ROOT)
+
+    try:
+        # Create feature branch name
+        today = datetime.now().strftime("%Y-%m-%d")
+        branch_name = f"report/{slug}"
+
+        # Check current branch
+        result = subprocess.run(
+            ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+            capture_output=True, text=True
+        )
+        current_branch = result.stdout.strip()
+        log(f"Current branch: {current_branch}")
+
+        # Create and checkout feature branch (or switch if exists)
+        subprocess.run(["git", "checkout", "-B", branch_name], capture_output=True)
+        log(f"Switched to branch: {branch_name}")
+
+        # Stage only allowed files
+        report_file = LOCALREPORTS_DIR / f"{slug}.html"
+        if report_file.exists():
+            subprocess.run(["git", "add", str(report_file)], capture_output=True)
+
+        subprocess.run(["git", "add", str(REPORTS_DATA_FILE)], capture_output=True)
+
+        # Check if there are changes to commit
+        result = subprocess.run(
+            ["git", "diff", "--cached", "--quiet"],
+            capture_output=True
+        )
+
+        if result.returncode == 0:
+            log("No changes to commit")
+            return True
+
+        # Commit with descriptive message
+        commit_msg = f"Add report: {title}\n\nAutomated report generation for: {slug}\nGenerated: {datetime.now().isoformat()}"
+        subprocess.run(
+            ["git", "commit", "-m", commit_msg],
+            capture_output=True
+        )
+        log(f"Committed changes to {branch_name}")
+
+        return True
+
+    except Exception as e:
+        log(f"Git commit error: {e}")
+        return False
+
+
 def main():
-    parser = argparse.ArgumentParser(description="GenuVerity Report Generator")
-    parser.add_argument("--slug", help="Process research by slug")
-    parser.add_argument("--json", help="Process from JSON file (PASS 2 only)")
+    parser = argparse.ArgumentParser(description="GenuVerity Report Generator - PASS 2")
+    parser.add_argument("--json", help="Process from JSON file")
+    parser.add_argument("--slug", help="Process by slug (looks for {slug}.json)")
     parser.add_argument("--list", action="store_true", help="List completed research")
+    parser.add_argument("--commit", action="store_true", help="Auto-commit to feature branch")
 
     args = parser.parse_args()
 
@@ -337,77 +386,72 @@ def main():
         list_completed_research()
         return
 
+    # Determine JSON file path
+    json_file = None
     if args.json:
-        # PASS 2 only - JSON to HTML
         json_file = Path(args.json)
-        if not json_file.exists():
-            log(f"ERROR: JSON file not found: {json_file}")
-            sys.exit(1)
-
-        log(f"Loading JSON: {json_file}")
-        json_data = json.loads(json_file.read_text())
-
-        # Validate
-        errors = validate_json_schema(json_data)
-        if errors:
-            log("JSON validation errors:")
-            for err in errors:
-                log(f"  • {err}")
-            sys.exit(1)
-
-        log("JSON validated successfully")
-
-        # Generate HTML
-        log("Generating HTML from template...")
-        html = generate_html_from_json(json_data)
-
-        if html:
-            slug = json_data.get("meta", {}).get("slug", "report")
-            output_file = save_report(html, slug)
-            update_reports_data(json_data)
-            mark_report_generated(slug)
-
-            log("")
-            log("=" * 50)
-            log("REPORT GENERATION COMPLETE")
-            log("=" * 50)
-            log(f"HTML: {output_file}")
-            log("")
-            log("NEXT STEPS:")
-            log("1. Review the generated HTML")
-            log("2. Update js/reports-data.js (see above)")
-            log("3. Commit changes:")
-            log(f"   git add localreports/{slug}.html js/reports-data.js")
-            log("   git commit -m 'Add report: {title}'")
-
-        return
-
-    if args.slug:
-        # Full pipeline - load research and show PASS 1 instructions
-        research = load_research_output(args.slug)
-        if not research:
-            sys.exit(1)
-
-        log(f"Loaded research for: {args.slug}")
-        log(f"Content: {len(research['content']):,} characters")
-        log("")
-
-        # Check if JSON already exists
+    elif args.slug:
         json_file = OUTPUT_DIR / f"{args.slug}.json"
-        if json_file.exists():
-            log(f"Found existing JSON: {json_file}")
-            log("Running PASS 2 (JSON → HTML)...")
-            # Rerun with JSON
-            subprocess.run([sys.executable, __file__, "--json", str(json_file)])
-        else:
-            # Show PASS 1 instructions
-            instructions = generate_pass1_instructions(research)
-            print(instructions)
 
+    if not json_file:
+        parser.print_help()
         return
 
-    # No args - show help
-    parser.print_help()
+    if not json_file.exists():
+        log(f"ERROR: JSON file not found: {json_file}")
+        log("Run claude-pass1.py first to generate JSON from research.")
+        sys.exit(1)
+
+    log(f"Loading JSON: {json_file}")
+    json_data = json.loads(json_file.read_text())
+
+    # Validate
+    errors = validate_json_schema(json_data)
+    if errors:
+        log("JSON validation errors:")
+        for err in errors:
+            log(f"  • {err}")
+        sys.exit(1)
+
+    log("JSON validated successfully")
+
+    # Generate HTML
+    log("Generating HTML from template...")
+    html = generate_html_from_json(json_data)
+
+    if not html:
+        log("ERROR: HTML generation failed")
+        sys.exit(1)
+
+    slug = json_data.get("meta", {}).get("slug", "report")
+    title = json_data.get("meta", {}).get("title", "Untitled Report")
+
+    output_file = save_report(html, slug)
+    update_reports_data(json_data)
+    mark_report_generated(slug)
+
+    log("")
+    log("=" * 50)
+    log("PASS 2 COMPLETE - HTML Generated")
+    log("=" * 50)
+    log(f"HTML: {output_file}")
+
+    # Auto-commit if requested
+    if args.commit:
+        log("")
+        log("Committing to feature branch...")
+        if git_commit_report(slug, title):
+            log("✓ Report committed successfully")
+            log(f"  Branch: report/{slug}")
+        else:
+            log("✗ Git commit failed")
+            sys.exit(1)
+    else:
+        log("")
+        log("To commit manually:")
+        log(f"  git checkout -B report/{slug}")
+        log(f"  git add localreports/{slug}.html js/reports-data.js")
+        log(f"  git commit -m 'Add report: {title}'")
 
 
 if __name__ == "__main__":
