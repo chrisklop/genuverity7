@@ -1908,6 +1908,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/venezuela-aftermath-analysis-2026.html",
+      "destination": "/venezuela-aftermath-analysis-2026",
+      "permanent": true
+    },
+    {
+      "source": "/venezuela-aftermath-analysis-2026.html",
+      "destination": "/venezuela-aftermath-analysis-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/walz-minnesota-fraud-responsibility-2026.html",
       "destination": "/walz-minnesota-fraud-responsibility-2026",
       "permanent": true
@@ -2807,6 +2817,10 @@
     {
       "source": "/visa-ban-green-card-panic-january-2026",
       "destination": "/localreports/visa-ban-green-card-panic-january-2026.html"
+    },
+    {
+      "source": "/venezuela-aftermath-analysis-2026",
+      "destination": "/localreports/venezuela-aftermath-analysis-2026.html"
     },
     {
       "source": "/walz-minnesota-fraud-responsibility-2026",
