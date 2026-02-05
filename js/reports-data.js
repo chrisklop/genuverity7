@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -12,
+        title: "The Institutional Dissolution of Venezuela: A Geopolitical Analysis (2024-2026)",
+        slug: "venezuela-aftermath-analysis-2026",
+        category: "International",
+        tagClass: "tag-blue",
+        catClass: "cat-factcheck",
+        icon: "globe",
+        date: "Feb 5, 2026",
+        sources: "35 Sources",
+        readTime: "20 min",
+        verdict: "context",
+        excerpt: "Data-driven analysis of Venezuela's transformation from the contested 2024 election through Operation Absolute Resolve. Covers electoral fraud, Operation Tun-Tun repression, digital authoritarianism, 682% hyperinflation, 7.9M refugee crisis, and the January 2026 US military intervention that captured Maduro.",
+        chart: {"type":"bar","color":"#ef4444","data":[51.95,68.74],"labels":["CNE Official (Maduro)","ConVzla Verified (González)"],"colors":["#ef4444","#10b981"]}
+    },
+    {
         id: -11,
         title: "Epstein Files 2026: What the 3.5 Million DOJ Documents Actually Reveal",
         slug: "epstein-files-2026-revelations",
