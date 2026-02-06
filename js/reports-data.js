@@ -45,7 +45,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "mixed",
         excerpt: "Governor Walz bears significant administrative responsibility for oversight failures enabling $1+ billion in fraud. State audits document fabricated records and ignored warnings. However, claims of sole or criminal responsibility are misleading—amplified by coordinated disinformation campaigns.",
-        chart: {"type":"bar","color":"#3b82f6","data":[300,104,425,14,50],"labels":["FOF","Housing","BHA Grants","Autism","Other"]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[425,300,104,50,14],"labels":["BHA Grants","FOF","Housing","Other","Autism"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
         id: -9,
@@ -210,7 +210,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "context",
         excerpt: "DEVELOPING: Renee Nicole Good, 37, was killed by ICE Agent Jonathan Ross on January 7, 2026. Video evidence contradicts federal claims she 'ran over' the agent. FBI has blocked state investigators. Analysis of confirmed facts, disputed claims, and the federal-state jurisdictional conflict.",
-        chart: {"type":"hbar","color":"#ef4444","data":[-80,-70,-50,95,85,95],"labels":["Fed: ",", ","Agent pinned",", ","Domestic terrorist",", ",", ",", "],"colors":["#ef4444","#ef4444","#f59e0b","#10b981","#10b981","#10b981"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[95,85,80,70,50],"labels":["Video Evidence","Witness Accounts","Fed Claims Disputed","State Investigation","Jurisdictional Conflict"],"colors":["#10b981","#06b6d4","#ef4444","#f59e0b","#3b82f6"]}
     },
     {
         id: 2,
@@ -240,7 +240,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: A viral image purportedly showing President Biden in a military situation room was AI-generated. Digital forensics revealed synthetic artifacts.",
-        chart: {"type":"hbar","color":"#ef4444","data":[97,94,91,88],"labels":["Hive Moderation","Google AI or Not","Illuminarty","FotoForensics ELA"],"colors":["#ef4444","#ef4444","#ef4444","#ef4444"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[97,94,91,88],"labels":["Hive Moderation","Google AI or Not","Illuminarty","FotoForensics ELA"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4"]}
     },
     {
         id: 4,
@@ -390,7 +390,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "misleading",
         excerpt: "MISLEADING: RFK Jr.'s claims about antidepressants as targets for removal misrepresented medical consensus. Major psychiatric associations and FDA data contradict the characterization. Experts warned statements could discourage needed mental health treatment.",
-        chart: {"type":"hbar","color":"#10b981","data":[2.13,1.97,1.89,1.69,1.52,1],"labels":["Amitriptyline","Escitalopram","Venlafaxine","Sertraline","Fluoxetine","Placebo"],"colors":["#10b981","#10b981","#3b82f6","#3b82f6","#3b82f6","#64748b"]}
+        chart: {"type":"hbar","color":"#10b981","data":[2.13,1.97,1.89,1.69,1.52,1],"labels":["Amitriptyline","Escitalopram","Venlafaxine","Sertraline","Fluoxetine","Placebo"],"colors":["#10b981","#06b6d4","#3b82f6","#f59e0b","#ef4444","#64748b"]}
     },
     {
         id: 12,
