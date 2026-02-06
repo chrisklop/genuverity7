@@ -15,7 +15,7 @@ const REPORTS_DATA = [
         readTime: "20 min",
         verdict: "context",
         excerpt: "Data-driven analysis of Venezuela's transformation from the contested 2024 election through Operation Absolute Resolve. Covers electoral fraud, Operation Tun-Tun repression, digital authoritarianism, 682% hyperinflation, 7.9M refugee crisis, and the January 2026 US military intervention that captured Maduro.",
-        chart: {"type":"bar","color":"#ef4444","data":[51.95,68.74],"labels":["CNE Official (Maduro)","ConVzla Verified (González)"],"colors":["#ef4444","#10b981"]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[2.83,1.66,0.73,0.67,0.44,0.17,0.11],"labels":["Colombia","Peru","Brazil","Chile","Ecuador","Argentina","Mexico"],"colors":["#3b82f6","#06b6d4","#10b981","#f59e0b","#ef4444","#64748b","#334155"]}
     },
     {
         id: -11,
