@@ -678,6 +678,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/great-replacement-conspiracy-2026.html",
+      "destination": "/great-replacement-conspiracy-2026",
+      "permanent": true
+    },
+    {
+      "source": "/great-replacement-conspiracy-2026.html",
+      "destination": "/great-replacement-conspiracy-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/grocery-prices-claim.html",
       "destination": "/grocery-prices-claim",
       "permanent": true
@@ -2315,6 +2325,10 @@
     {
       "source": "/great-reset-wef",
       "destination": "/localreports/great-reset-wef.html"
+    },
+    {
+      "source": "/great-replacement-conspiracy-2026",
+      "destination": "/localreports/great-replacement-conspiracy-2026.html"
     },
     {
       "source": "/grocery-prices-claim",

@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -12,
+        title: "The Great Replacement: Forensic Intelligence Report on the Stratigraphy of a Conspiracy",
+        slug: "great-replacement-conspiracy-2026",
+        category: "Conspiracy Analysis",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Feb 6, 2026",
+        sources: "32 Sources",
+        readTime: "22 min",
+        verdict: "false",
+        excerpt: "Deep forensic excavation of the Great Replacement theory—from 19th-century antisemitism through Renaud Camus's 2011 synthesis to Fox News mainstreaming. Documents the fringe-to-mainstream pipeline, lethal terror attacks (Christchurch, Buffalo, El Paso), and the cognitive defenses against conspiratorial belief.",
+        chart: {"type":"bar","color":"#ef4444","data":[77,51,23,11,10,9],"labels":["Oslo/Utøya","Christchurch","El Paso","Pittsburgh","Buffalo","Charleston"],"colors":["#ef4444","#ef4444","#ef4444","#ef4444","#ef4444","#ef4444"]}
+    },
+    {
         id: -11,
         title: "Epstein Files 2026: What the 3.5 Million DOJ Documents Actually Reveal",
         slug: "epstein-files-2026-revelations",
