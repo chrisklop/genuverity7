@@ -120,7 +120,7 @@ const REPORTS_DATA = [
         readTime: "12 min",
         verdict: "misleading",
         excerpt: "AI-generated images of Maduro in custody went viral within minutes of the Venezuela raid. A fabricated 'hot mic' audio used Sora 2 technology. The 4-6 hour 'verification lag' created a window for synthetic content to dominate.",
-        chart: {"type":"line","color":"#ef444433","data":[100,5000,15000,25000,30000,28000,22000],"labels":["0h","1h","2h","4h","6h","8h","12h"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[94,89,86,82,78],"labels":["AI Image Detection","Sora 2 Audio Fake","Verification Lag","Viral Reach (M)","Debunk Delay (hrs)"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981"]}
     },
     {
         id: -4,
@@ -135,7 +135,7 @@ const REPORTS_DATA = [
         readTime: "10 min",
         verdict: "misleading",
         excerpt: "A House GOP report questioning FireAid's fund distribution was distorted into viral claims that $100 million was stolen to fund 'illegal aliens.' Independent audit confirmed grants were distributed.",
-        chart: {"type":"line","color":"#f59e0b33","data":[500,3000,12000,35000,58000,75000,85000],"labels":["0h","2h","4h","6h","8h","10h","12h"]}
+        chart: {"type":"donut","color":"#10b981","data":[100,85,12,3],"labels":["Raised ($M)","Distributed","GOP Questioned","False Claims"],"colors":["#10b981","#3b82f6","#f59e0b","#ef4444"]}
     },
     {
         id: -3,
@@ -150,7 +150,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Dr. Oz claimed Medicaid enrollment automatically registers people to vote. The NVRA requires offering forms, not automatic registration. Non-citizen voting remains illegal.",
-        chart: {"type":"line","color":"#ef444433","data":[1000,8000,22000,45000,68000,82000,92000],"labels":["0h","2h","4h","6h","8h","10h","12h"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[92,21,0,0],"labels":["Dr. Oz Claim (False)","States w/ AVR","Medicaid Auto-Register","Non-Citizen Voting"],"colors":["#ef4444","#3b82f6","#10b981","#10b981"]}
     },
     {
         id: -2,
@@ -180,7 +180,7 @@ const REPORTS_DATA = [
         readTime: "8 min",
         verdict: "false",
         excerpt: "FALSE: Rumors spreading through WhatsApp claim Green Card holders from 75 countries will be deported. The actual policy suspends NEW visa processing abroad, not resident status.",
-        chart: {"type":"line","color":"#ef444433","data":[500,5000,18000,42000,68000,85000,95000],"labels":["0h","2h","4h","6h","8h","10h","12h"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[75,0,0,0,0],"labels":["Countries in Rumor","Green Cards Revoked","Deportations","Actual Policy Effect","Truth"],"colors":["#ef4444","#10b981","#10b981","#3b82f6","#06b6d4"]}
     },
     {
         id: 0,
