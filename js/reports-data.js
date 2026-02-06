@@ -15,7 +15,7 @@ const REPORTS_DATA = [
         readTime: "22 min",
         verdict: "false",
         excerpt: "Deep forensic excavation of the Great Replacement theory—from 19th-century antisemitism through Renaud Camus's 2011 synthesis to Fox News mainstreaming. Documents the fringe-to-mainstream pipeline, lethal terror attacks (Christchurch, Buffalo, El Paso), and the cognitive defenses against conspiratorial belief.",
-        chart: {"type":"bar","color":"#ef4444","data":[77,51,23,11,10,9],"labels":["Oslo/Utøya","Christchurch","El Paso","Pittsburgh","Buffalo","Charleston"],"colors":["#ef4444","#ef4444","#ef4444","#ef4444","#ef4444","#ef4444"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[77,51,23,11,10,9],"labels":["Oslo/Utøya","Christchurch","El Paso","Pittsburgh","Buffalo","Charleston"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981","#64748b"]}
     },
     {
         id: -11,
