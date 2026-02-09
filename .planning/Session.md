@@ -1,118 +1,75 @@
-# GenuVerity Session Context
+# Session Context
 
-> **Last Updated:** 2026-02-01
-> **Status:** Phase 1 Hub UI complete - landing and search pages live
-> **Current Milestone:** Epstein Files Hub - Phase 1 Complete
-
----
-
-## What Is This Project?
-
-GenuVerity is a fact-checking platform (190+ reports) using source-first methodology. Stack: Static HTML, Chart.js, FastAPI, Vercel.
-
-**New Initiative:** Epstein Files Hub - a fact-checked document explorer for the DOJ's 3.5M+ page Epstein release.
+> **Last Saved:** 2026-02-09
+> **Project:** GenuVerity7 (fact-checking platform with 198+ reports)
 
 ---
 
-## Current Milestone: Epstein Files Hub
+## TL;DR (Read This First)
 
-**Unique Value Proposition:** "Search with truth indicators" - the only platform combining document access with verification badges and misinformation alerts.
-
-### Why This Matters
-- DOJ warns files include "fake or falsely submitted" content
-- 16+ files already removed after release
-- No existing tool distinguishes FBI evidence from anonymous tips
-- Viral misinformation spreads faster than verification
+GenuVerity is a static fact-checking site (HTML/JS/CSS on Vercel). We published two new Deep Research reports today: Venezuela Aftermath Analysis and Great Replacement Conspiracy. The main work this session was fixing recurring issues with report publishing: missing Vercel rewrites (links redirect to index), float-figures placed after paragraphs (no text wrap), and card preview charts using boring monotone colors or generic viral-spread data instead of meaningful, colorful visualizations.
 
 ---
 
-## What's Completed
+## Current State
 
-- [x] Expanded Epstein Files 2026 report (18 sources)
-- [x] Merged 6 report branches to main
-- [x] Fixed mobile horizontal scroll issue
-- [x] Installed epstein-email-explorer MCP (2,322 emails)
-- [x] Wrote research brief for Deep Research
-- [x] Analyzed Deep Research results
-- [x] Defined technical architecture
-- [x] Defined badge system (Admiralty-style A-F / 1-6)
-- [x] Installed epstein-rag MCP (20K+ docs via Qdrant semantic search)
-- [x] **Created `/epstein-files/index.html`** - Hub landing page with stats, search, features, revelations grid
-- [x] **Created `/epstein-files/search.html`** - Document search with badge filters and misinfo alerts
-- [x] **Created `/css/epstein-hub.css`** - Hub styling with badge colors (A-F)
-- [x] **Created `/js/epstein-hub-data.js`** - Static data (revelations, misinfo alerts, stats)
-- [x] **Updated navbar/footer** - Added "Epstein Files" link to navigation
+**Working On:** Two report branches ready for PR merge
+**Blocked By:** None - awaiting Klop's review
+**Next Step:** Merge `report/venezuela-aftermath-2026` and `report/great-replacement-conspiracy-2026` to main
 
 ---
 
-## What's Next (Pending)
+## Recent Decisions & Context
 
-### Phase 2: Supabase Integration
-1. [ ] Create Supabase migration for new tables (epstein_documents, epstein_entities, etc.)
-2. [ ] Build document ingestion script (hash → store)
-3. [ ] Wire search.html to `epstein-rag` MCP for real semantic search
-4. [ ] Display badges from Supabase metadata
-
-### Phase 3: Misinformation Layer
-5. [ ] Seed `epstein_misinfo` table with known false claims
-6. [ ] Create dynamic alert component in search.html
-7. [ ] Link alerts to existing fact-check reports
-
-### Phase 4: Visualizations
-8. [ ] Create `network.html` with Cytoscape.js
-9. [ ] Create `timeline.html` for chronological browsing
-10. [ ] Create `releases.html` for DOJ release tracking
-
-### Phase 5: Automation
-11. [ ] Create delta detection script for new releases
-12. [ ] Build revelation ranking algorithm
-13. [ ] Create report generation pipeline
-14. [ ] Set up ChangeDetection.io for DOJ monitoring
-
-### Archive Infrastructure (Backlog)
-- [ ] Set up WARC capture pipeline
-- [ ] Mirror all 12 DOJ data sets
-- [ ] Obtain COURIER/Pinpoint deleted files
+- **Card preview charts must use varied colors** — Each bar needs a different color from the rainbow palette, not all the same. This makes cards visually distinctive.
+- **Chart type selection matters** — Use `hbar` for ranked data, `donut` for proportions, `line` for trends. Don't default to generic line charts with viral spread timestamps.
+- **Float figures go BEFORE paragraphs** — CSS `float: right` only wraps content that comes AFTER the floated element. Place charts immediately after `<h2>`, before `<p>` tags.
+- **Three files for every new report** — (1) HTML in localreports/, (2) entry in reports-data.js, (3) Vercel rewrites in vercel.json. Miss any one and links break.
+- **Never commit source seeds** — The Deep Research markdown files stay in Downloads, only converted HTML goes to repo.
 
 ---
 
-## Key Files
+## Key Files Changed
 
-| File | Purpose |
-|------|---------|
-| `.planning/Session.md` | This file - session tracking |
-| `.planning/EPSTEIN-HUB-ROADMAP.md` | Detailed technical roadmap |
-| `/epstein-files/index.html` | Hub landing page |
-| `/epstein-files/search.html` | Document search page |
-| `/css/epstein-hub.css` | Hub-specific styles |
-| `/js/epstein-hub-data.js` | Static hub data |
-| `localreports/epstein-files-2026-revelations.html` | Current Epstein report |
+- `localreports/venezuela-aftermath-analysis-2026.html` - New 35-source report on Venezuela 2024-2026
+- `localreports/great-replacement-conspiracy-2026.html` - New 32-source conspiracy deep dive
+- `js/reports-data.js` - Added 2 new reports, fixed 8 chart previews with varied colors
+- `vercel.json` - Added rewrites for both new reports
+- `~/.claude/projects/-Users-klop/memory/MEMORY.md` - Documented all three recurring mistakes
 
 ---
 
-## Quick Reference
+## Pending Tasks
 
-**Badge System:**
-- A (Court Record) → B (Gov Record) → C (Verified External) → D (Unverified) → E (News Clipping) → F (Flagged/Debunked)
-
-**Hub URLs:**
-- `/epstein-files/` - Landing page
-- `/epstein-files/search.html` - Document search
-
-**Key Tools Identified:**
-- Archive: WARC, ChangeDetection.io, Perma.cc, Save Page Now
-- NER: spaCy + EntityRuler
-- Entity Resolution: Splink
-- Visualization: Cytoscape.js (rich), Sigma.js (large scale)
-- Misinformation: ClaimReview, Google Fact Check Explorer
+- [ ] Merge Venezuela report PR
+- [ ] Merge Great Replacement report PR
+- [ ] Epstein Files Hub Phase 2 (Supabase integration) - backlog
+- [x] Venezuela report published with proper charts
+- [x] Great Replacement report published
+- [x] Fixed 8 total chart previews across older reports
+- [x] Documented chart preview, vercel rewrite, and float-figure rules in MEMORY.md
 
 ---
 
-## Notes
+## Session Log
 
-- MCP server installed: `epstein-email-explorer` (2,322 emails)
-- MCP server installed: `epstein-rag` (20K+ docs via Qdrant) - Requires Docker running
-- Qdrant storage: `~/qdrant_storage`
-- Qdrant container: `docker start qdrant` if not running
-- Production revert point: `3f35110` (before today's merges)
-- Current main: `5deb616` (includes mobile fix)
+### 2026-02-09
+- Started in wrong directory (/Users/klop), moved to GenuVerity7
+- Published Venezuela Aftermath Analysis report (35 sources, 6 charts)
+- Discovered missing vercel.json rewrites — links redirected to index.html
+- Fixed and documented in MEMORY.md
+- Discovered float-figures placed after paragraphs — no text wrap
+- Fixed all 5 charts in Venezuela report, documented in MEMORY.md
+- Published Great Replacement Conspiracy report (32 sources, 5 charts)
+- Audited 25 reports, found 8 with bad chart previews:
+  - Monotone colors (all same red)
+  - Generic viral-spread line data (0h, 2h, 4h...)
+  - Missing colors arrays
+- Fixed all 8: Walz, Biden Situation Room, Minneapolis ICE, RFK Antidepressants, Caracas Mirage, FireAid, Medicaid-Voter, Visa Ban
+- Documented chart preview requirements in MEMORY.md
+- Both report branches pushed and ready for review
+
+### Previous (2026-02-01)
+- Epstein Hub Phase 1 was completed then scaled back to preview page
+- search.html and epstein-hub-data.js were removed
+- Hub is now a "coming soon" page pending Phase 2 Supabase work
