@@ -396,6 +396,11 @@ const REPORTS_DATA = [
         id: -37,
         title: "Trump's EPA Endangerment Finding Revocation: False Scientific Claims Exposed",
         slug: "epa-endangerment-finding-revoked-2026",
+    },
+    {
+        id: -48,
+        title: "The US Murder Rate Debate: Red States, Blue Cities, and the Data They Both Ignore",
+        slug: "us-murder-rate-politics-2026",
         category: "U.S. Politics & Policy",
         tagClass: "tag-red",
         catClass: "cat-factcheck",
@@ -505,7 +510,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[128.8,130,140.5,60.3,71.5,65,58,52,48.1,29.2,56.8],"labels":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov"]}
     },
     {
-        id: -48,
+        id: -67,
         title: "The Paid Protesters Craigslist Hoax: When a Prank Became Proof",
         slug: "paid-protesters-craigslist-hoax-2026",
         category: "U.S. Politics & Policy",
@@ -726,6 +731,14 @@ const REPORTS_DATA = [
         verdict: "misleading",
         excerpt: "CNN exclusive reveals DHS admits its immigrant showcase website was full of errors. 73.6% of ICE detainees have no criminal conviction. The 'worst of the worst' framing was used to justify aggressive enforcement while geographic manipulation counted routine prison transfers as arrests.",
         chart: {"type":"donut","data":[73.6,18.4,8],"labels":["No Criminal Conviction","Non-Violent Conviction","Violent Conviction"],"colors":["#22c55e","#f97316","#ef4444"]}
+    },
+    {
+        date: "Feb 10, 2026",
+        sources: "22 Sources",
+        readTime: "20 min",
+        verdict: "context",
+        excerpt: "Both 'Red State Murder Problem' and 'Blue City Murder Problem' narratives contain partial truths but fundamentally mislead. Red states have higher aggregate rates every year since 2000—even after removing their largest cities. But 27 of 30 highest-murder cities have Democratic mayors. When demographic controls are applied, partisan correlation vanishes. Poverty, inequality, and social mobility predict violence far better than party affiliation.",
+        chart: {"type":"bar","color":"#3b82f6","data":[8.99,6.75,8.51,6.40],"labels":["Red '21","Blue '21","Red '22","Blue '22"],"colors":["#ef4444","#3b82f6","#ef4444","#3b82f6"]}
     },
     {
         id: -11,
