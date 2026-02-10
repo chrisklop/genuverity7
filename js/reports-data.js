@@ -15,7 +15,7 @@ const REPORTS_DATA = [
         readTime: "20 min",
         verdict: "context",
         excerpt: "Both 'Red State Murder Problem' and 'Blue City Murder Problem' narratives contain partial truths but fundamentally mislead. Red states have higher aggregate rates every year since 2000—even after removing their largest cities. But 27 of 30 highest-murder cities have Democratic mayors. When demographic controls are applied, partisan correlation vanishes. Poverty, inequality, and social mobility predict violence far better than party affiliation.",
-        chart: {"type":"bar","color":"#3b82f6","data":[8.99,6.75,8.51,6.40],"labels":["Red '21","Blue '21","Red '22","Blue '22"],"colors":["#ef4444","#3b82f6","#ef4444","#3b82f6"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[8.99,6.75,8.51,6.40],"datasets":[{"data":[8.99,8.51],"color":"#ef4444"},{"data":[6.75,6.40],"color":"#3b82f6"}],"labels":["2021","2022"]}
     },
     {
         id: -11,
