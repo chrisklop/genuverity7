@@ -15,7 +15,7 @@ const REPORTS_DATA = [
         readTime: "20 min",
         verdict: "context",
         excerpt: "Both 'Red State Murder Problem' and 'Blue City Murder Problem' narratives contain partial truths but fundamentally mislead. Red states have higher aggregate rates every year since 2000—even after removing their largest cities. But 27 of 30 highest-murder cities have Democratic mayors. When demographic controls are applied, partisan correlation vanishes. Poverty, inequality, and social mobility predict violence far better than party affiliation.",
-        chart: {"type":"bar","color":"#3b82f6","data":[8.99,6.75,8.51,6.40],"datasets":[{"data":[8.99,8.51],"color":"#ef4444"},{"data":[6.75,6.40],"color":"#3b82f6"}],"labels":["2021","2022"]}
+        chart: {"type":"hbar","data":[6.38,2.27,1.31,0.99,0.55,0.23],"labels":["US","Canada","France","UK","Italy","Japan"],"colors":["#ef4444","#64748b","#64748b","#64748b","#64748b","#10b981"]}
     },
     {
         id: -11,
@@ -30,7 +30,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "context",
         excerpt: "Comprehensive analysis of the DOJ's January 30, 2026 Epstein files release. Verified: Musk 'wildest party' email, Bannon's hundreds of texts and jet offers, Lutnick Christmas island plans, Ruemmler 'Uncle Jeffrey' emails, Melania-Maxwell 'Love' exchange, Gates allegations in draft emails, new Clinton photos. But millions of pages are unverified FBI tips.",
-        chart: {"type":"bar","color":"#3b82f6","data":[3.5,2.5,180,2],"labels":["Released","Withheld","Images (K)","Videos"],"colors":["#3b82f6","#64748b","#06b6d4","#10b981"]}
+        chart: {"type":"donut","data":[2.5,2.0,1.5],"colors":["#64748b","#3b82f6","#f59e0b"]}
     },
     {
         id: -10,
@@ -45,7 +45,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "mixed",
         excerpt: "Governor Walz bears significant administrative responsibility for oversight failures enabling $1+ billion in fraud. State audits document fabricated records and ignored warnings. However, claims of sole or criminal responsibility are misleading—amplified by coordinated disinformation campaigns.",
-        chart: {"type":"bar","color":"#3b82f6","data":[300,104,425,14,50],"labels":["FOF","Housing","BHA Grants","Autism","Other"]}
+        chart: {"type":"hbar","data":[425,300,104,50,14],"labels":["BHA Grants","FOF","Housing","Other","Autism"],"colors":["#3b82f6","#ef4444","#f59e0b","#64748b","#06b6d4"]}
     },
     {
         id: -9,
