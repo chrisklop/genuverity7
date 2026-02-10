@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -12,
+        title: "TPUSA Halftime Show: Did a Million Bots Inflate the Viewership?",
+        slug: "tpusa-bot-accusation-2026",
+        category: "U.S. Politics & Policy",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "scan",
+        date: "Feb 9, 2026",
+        sources: "22 Sources",
+        readTime: "18 min",
+        verdict: "mixed",
+        excerpt: "Digital forensic analysis of the TPUSA All-American Halftime Show viewership controversy. Anomalous spikes—4.8M to 5.7M in 20 seconds—suggest bot injection. Post-stream math and low chat engagement further undermine the 6.1M peak. But allegations are entangled with the Owens vs. Kirk internal power struggle after Charlie Kirk's assassination.",
+        chart: {"type":"hbar","color":"#3b82f6","data":[5.7,3.0,1.0,0.22,0.2],"labels":["TPUSA YouTube","X (Pre-block)","Kirk YouTube","Rumble","Magno News"],"colors":["#ef4444","#3b82f6","#06b6d4","#10b981","#f59e0b"]}
+    },
+    {
         id: -11,
         title: "Epstein Files 2026: What the 3.5 Million DOJ Documents Actually Reveal",
         slug: "epstein-files-2026-revelations",

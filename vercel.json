@@ -1658,6 +1658,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/tpusa-bot-accusation-2026.html",
+      "destination": "/tpusa-bot-accusation-2026",
+      "permanent": true
+    },
+    {
+      "source": "/tpusa-bot-accusation-2026.html",
+      "destination": "/tpusa-bot-accusation-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/treasury-leverage.html",
       "destination": "/treasury-leverage",
       "permanent": true
@@ -2707,6 +2717,10 @@
     {
       "source": "/trade-war-tariffs-2025",
       "destination": "/localreports/trade-war-tariffs-2025.html"
+    },
+    {
+      "source": "/tpusa-bot-accusation-2026",
+      "destination": "/localreports/tpusa-bot-accusation-2026.html"
     },
     {
       "source": "/treasury-leverage",
