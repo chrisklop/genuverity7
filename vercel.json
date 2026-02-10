@@ -2238,6 +2238,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/us-murder-rate-politics-2026.html",
+      "destination": "/us-murder-rate-politics-2026",
+      "permanent": true
+    },
+    {
+      "source": "/us-murder-rate-politics-2026.html",
+      "destination": "/us-murder-rate-politics-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/us-vaccine-schedule-global-2025.html",
       "destination": "/us-vaccine-schedule-global-2025",
       "permanent": true
@@ -3335,6 +3345,10 @@
     {
       "source": "/us-recession-analysis-2025",
       "destination": "/localreports/us-recession-analysis-2025.html"
+    },
+    {
+      "source": "/us-murder-rate-politics-2026",
+      "destination": "/localreports/us-murder-rate-politics-2026.html"
     },
     {
       "source": "/us-vaccine-schedule-global-2025",
