@@ -365,6 +365,21 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[85,42,28,15,20,55,18,35,100,78,62,45],"labels":["May 2023","Aug 2023","Nov 2023","Feb 2024","May 2024","Aug 2024","Nov 2024","Feb 2025","May 2025","Aug 2025","Nov 2025","Feb 2026"]}
     },
     {
+        id: -69,
+        title: "The Dual Citizenship Hoax: How an April Fools' Prank Panicked 25 Million Americans",
+        slug: "trump-dual-citizenship-hoax-2026",
+        category: "Fact-Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-off",
+        date: "Feb 14, 2026",
+        sources: "18 Sources",
+        readTime: "15 min",
+        verdict: "false",
+        excerpt: "A fabricated Trump Truth Social screenshot claiming he would revoke dual citizenship went viral in April 2025 with 3.9M views. Eight fact-checkers confirmed it false. The creator admitted it was an April Fools' prank — but the hoax exploited real immigration fears and a genuine bill with zero cosponsors.",
+        chart: {"type":"donut","data":[3,97],"labels":["Chance of Passage","Chance of Failure"],"colors":["#ef4444","#64748b"]}
+    },
+    {
         id: -13,
         title: "Trump's Factory Construction Claim: Cherry-Picking Biden-Era Growth",
         slug: "trump-factory-construction-claim-2026",

@@ -2148,6 +2148,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/trump-dual-citizenship-hoax-2026.html",
+      "destination": "/trump-dual-citizenship-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-dual-citizenship-hoax-2026.html",
+      "destination": "/trump-dual-citizenship-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/tylenol-autism-claims-2025.html",
       "destination": "/tylenol-autism-claims-2025",
       "permanent": true
@@ -3319,6 +3329,10 @@
     {
       "source": "/trump-walker-image-2025",
       "destination": "/localreports/trump-walker-image-2025.html"
+    },
+    {
+      "source": "/trump-dual-citizenship-hoax-2026",
+      "destination": "/localreports/trump-dual-citizenship-hoax-2026.html"
     },
     {
       "source": "/tylenol-autism-claims-2025",
