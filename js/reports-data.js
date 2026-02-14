@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -13,
+        title: "Viral News Under the Microscope: Five Stories Exposed",
+        slug: "viral-news-forensic-analysis-2026",
+        category: "Media & Disinformation",
+        tagClass: "tag-orange",
+        catClass: "cat-investigation",
+        icon: "microscope",
+        date: "Feb 13, 2026",
+        sources: "37 Sources",
+        readTime: "25 min",
+        verdict: "mixed",
+        excerpt: "Five viral narratives forensically dissected: the DHS shutdown is real but politically weaponized; Kurt Cobain 'new evidence' is entirely AI-fabricated; James Van Der Beek's cancer death was hijacked by anti-vaxxers; Pennsylvania voter fraud claims distort real court rulings; Springfield child trafficking conspiracy was manufactured by TikTok 'conflict tourists.'",
+        chart: {"type":"donut","data":[1,2,1,1],"labels":["Verified","Fabricated","Hijacked","Zombie"],"colors":["#10b981","#ef4444","#f59e0b","#64748b"]}
+    },
+    {
         id: -12,
         title: "The US Murder Rate Debate: Red States, Blue Cities, and the Data They Both Ignore",
         slug: "us-murder-rate-politics-2026",
