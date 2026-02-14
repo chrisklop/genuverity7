@@ -314,6 +314,21 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","data":[2400000,1500000,63000,44000],"labels":["Epstein 'knew too much'","Cruise vs Pitt rooftop","Cruise & Pitt vs robot","Pitt vs zombie ninja"],"colors":["#ef4444","#f59e0b","#06b6d4","#10b981"]}
     },
     {
+        id: -70,
+        title: "Can Your AI Doctor Lie? The Alarming Study That Says Yes",
+        slug: "ai-medical-misinformation-lancet-2026",
+        category: "Health & Science",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "brain",
+        date: "Feb 14, 2026",
+        sources: "20 Sources",
+        readTime: "18 min",
+        verdict: "true",
+        excerpt: "A Lancet Digital Health study tested 20 AI models with 1 million prompts and found they believed false medical claims 32% of the time. Medical fine-tuned models performed worse (63.6%) than general ones. ChatGPT-4o was best at 10%. ECRI named AI chatbot misuse the #1 health tech hazard for 2026.",
+        chart: {"type":"hbar","data":[10,10.4,32,60,63.6],"labels":["GPT-4o","Large General","Average","Small Models","Medical Fine-Tuned"],"colors":["#10b981","#10b981","#f59e0b","#ef4444","#ef4444"]}
+    },
+    {
         id: -14,
         title: "WHO Lockdown Powers Claims After US Exit: Evidence-Based Analysis",
         slug: "who-lockdown-claims-debunked-2026",
