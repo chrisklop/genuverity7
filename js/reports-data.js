@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -14,
+        title: "The Dual Citizenship Hoax: How an April Fools' Prank Panicked 25 Million Americans",
+        slug: "trump-dual-citizenship-hoax-2026",
+        category: "Fact-Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-off",
+        date: "Feb 14, 2026",
+        sources: "18 Sources",
+        readTime: "15 min",
+        verdict: "false",
+        excerpt: "A fabricated Trump Truth Social screenshot claiming he would revoke dual citizenship went viral in April 2025 with 3.9M views. Eight fact-checkers confirmed it false. The creator admitted it was an April Fools' prank — but the hoax exploited real immigration fears and a genuine bill with zero cosponsors.",
+        chart: {"type":"donut","data":[3,97],"labels":["Chance of Passage","Chance of Failure"],"colors":["#ef4444","#64748b"]}
+    },
+    {
         id: -13,
         title: "Viral News Under the Microscope: Five Stories Exposed",
         slug: "viral-news-forensic-analysis-2026",
