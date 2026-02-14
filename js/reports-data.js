@@ -380,6 +380,21 @@ const REPORTS_DATA = [
         chart: {"type":"bar","datasets":[{"data":[75.5,100,202,235.6,226.1],"backgroundColor":["rgba(6,182,212,0.8)","rgba(6,182,212,0.8)","rgba(6,182,212,0.8)","rgba(6,182,212,0.8)","rgba(239,68,68,0.8)"]}],"labels":["2021 (Biden)","2022 (Biden)","2023 (Biden)","2024 (Biden)","2025 (Trump)"]}
     },
     {
+        id: -68,
+        title: "Viral News Under the Microscope: Five Stories Exposed",
+        slug: "viral-news-forensic-analysis-2026",
+        category: "Media & Disinformation",
+        tagClass: "tag-orange",
+        catClass: "cat-investigation",
+        icon: "microscope",
+        date: "Feb 13, 2026",
+        sources: "37 Sources",
+        readTime: "25 min",
+        verdict: "mixed",
+        excerpt: "Five viral narratives forensically dissected: the DHS shutdown is real but politically weaponized; Kurt Cobain 'new evidence' is entirely AI-fabricated; James Van Der Beek's cancer death was hijacked by anti-vaxxers; Pennsylvania voter fraud claims distort real court rulings; Springfield child trafficking conspiracy was manufactured by TikTok 'conflict tourists.'",
+        chart: {"type":"donut","data":[1,2,1,1],"labels":["Verified","Fabricated","Hijacked","Zombie"],"colors":["#10b981","#ef4444","#f59e0b","#64748b"]}
+    },
+    {
         id: -12,
         title: "Somali Daycare Fraud Campaign: Viral Video, State Inspectors, and 140M Views of Disinformation",
         slug: "somali-daycare-fraud-influencers-2026",
