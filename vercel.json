@@ -558,6 +558,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/epa-endangerment-finding-revoked-2026.html",
+      "destination": "/epa-endangerment-finding-revoked-2026",
+      "permanent": true
+    },
+    {
+      "source": "/epa-endangerment-finding-revoked-2026.html",
+      "destination": "/epa-endangerment-finding-revoked-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/epstein-166-name-list-fake.html",
       "destination": "/epstein-166-name-list-fake",
       "permanent": true
@@ -575,6 +585,16 @@
     {
       "source": "/epstein-air-logistics.html",
       "destination": "/epstein-air-logistics",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/epstein-alive-ai-hoax-2026.html",
+      "destination": "/epstein-alive-ai-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/epstein-alive-ai-hoax-2026.html",
+      "destination": "/epstein-alive-ai-hoax-2026",
       "permanent": true
     },
     {
@@ -1115,6 +1135,16 @@
     {
       "source": "/marijuana-rescheduling.html",
       "destination": "/marijuana-rescheduling",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/measles-outbreak-antivax-2026.html",
+      "destination": "/measles-outbreak-antivax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/measles-outbreak-antivax-2026.html",
+      "destination": "/measles-outbreak-antivax-2026",
       "permanent": true
     },
     {
@@ -1725,6 +1755,16 @@
     {
       "source": "/southport-stabbing-misinfo-2025.html",
       "destination": "/southport-stabbing-misinfo-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/springfield-trafficking-conspiracy-2026.html",
+      "destination": "/springfield-trafficking-conspiracy-2026",
+      "permanent": true
+    },
+    {
+      "source": "/springfield-trafficking-conspiracy-2026.html",
+      "destination": "/springfield-trafficking-conspiracy-2026",
       "permanent": true
     },
     {
@@ -2489,12 +2529,20 @@
       "destination": "/localreports/election-deepfakes-2025.html"
     },
     {
+      "source": "/epa-endangerment-finding-revoked-2026",
+      "destination": "/localreports/epa-endangerment-finding-revoked-2026.html"
+    },
+    {
       "source": "/epstein-166-name-list-fake",
       "destination": "/localreports/epstein-166-name-list-fake.html"
     },
     {
       "source": "/epstein-air-logistics",
       "destination": "/localreports/epstein-air-logistics.html"
+    },
+    {
+      "source": "/epstein-alive-ai-hoax-2026",
+      "destination": "/localreports/epstein-alive-ai-hoax-2026.html"
     },
     {
       "source": "/epstein-archive-photos-2025",
@@ -2711,6 +2759,10 @@
     {
       "source": "/marijuana-rescheduling",
       "destination": "/localreports/marijuana-rescheduling.html"
+    },
+    {
+      "source": "/measles-outbreak-antivax-2026",
+      "destination": "/localreports/measles-outbreak-antivax-2026.html"
     },
     {
       "source": "/maui-weather-weapons-2025",
@@ -2955,6 +3007,10 @@
     {
       "source": "/southport-stabbing-misinfo-2025",
       "destination": "/localreports/southport-stabbing-misinfo-2025.html"
+    },
+    {
+      "source": "/springfield-trafficking-conspiracy-2026",
+      "destination": "/localreports/springfield-trafficking-conspiracy-2026.html"
     },
     {
       "source": "/starmer-curfew-fake-video-2025",
