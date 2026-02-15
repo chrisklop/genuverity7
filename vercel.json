@@ -1548,6 +1548,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/somali-daycare-fraud-influencers-2026.html",
+      "destination": "/somali-daycare-fraud-influencers-2026",
+      "permanent": true
+    },
+    {
+      "source": "/somali-daycare-fraud-influencers-2026.html",
+      "destination": "/somali-daycare-fraud-influencers-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/southport-stabbing-misinfo-2025.html",
       "destination": "/southport-stabbing-misinfo-2025",
       "permanent": true
@@ -2663,6 +2673,10 @@
     {
       "source": "/smishing-surge-2025",
       "destination": "/localreports/smishing-surge-2025.html"
+    },
+    {
+      "source": "/somali-daycare-fraud-influencers-2026",
+      "destination": "/localreports/somali-daycare-fraud-influencers-2026.html"
     },
     {
       "source": "/southport-stabbing-misinfo-2025",

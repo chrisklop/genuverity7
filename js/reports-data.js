@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -12,
+        title: "Somali Daycare Fraud Campaign: Viral Video, State Inspectors, and 140M Views of Disinformation",
+        slug: "somali-daycare-fraud-influencers-2026",
+        category: "Disinformation & Fact-Checks",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Feb 15, 2026",
+        sources: "16 Sources",
+        readTime: "16 min",
+        verdict: "false",
+        excerpt: "23-year-old MAGA YouTuber Nick Shirley claimed Somali daycares were defrauding government of $100M+. State inspectors found facilities 'operating as expected.' Video generated 140M+ views, bomb threats, and Tim Walz's withdrawal from reelection.",
+        chart: {"type":"hbar","data":[100,6,250,1000],"labels":["Shirley's Daycare Claim","Documented Daycare Fraud (2014-2019)","Feeding Our Future (actual case)","All MN Fraud Programs (federal estimate)"],"colors":["#ef4444","#06b6d4","#fbbf24","#06b6d4"]}
+    },
+    {
         id: -11,
         title: "Epstein Files 2026: What the 3.5 Million DOJ Documents Actually Reveal",
         slug: "epstein-files-2026-revelations",
