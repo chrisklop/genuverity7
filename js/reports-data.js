@@ -3,6 +3,27 @@
 
 const REPORTS_DATA = [
     {
+        id: -12,
+        title: "Alfredo Rodriguez: Epstein's 'Whistleblower' Butler Who Served More Time Than His Boss",
+        slug: "alfredo-rodriguez-epstein-whistleblower",
+        category: "Epstein Files",
+        tagClass: "tag-red",
+        catClass: "cat-investigation",
+        icon: "user-x",
+        date: "Feb 17, 2026",
+        sources: "15 Sources",
+        readTime: "14 min",
+        verdict: "Mixed",
+        verdictClass: "verdict-mixed",
+        excerpt: "Rodriguez witnessed crimes and preserved Epstein's black book, but he lied to the FBI and tried to sell it for $50,000. He served 18 months — more than Epstein.",
+        chart: {
+            type: "hbar",
+            data: [13, 18, 240, 0],
+            labels: ["Epstein (2008)", "Rodriguez", "Maxwell (2022)", "Others in Book"],
+            colors: ["#ef4444", "#f59e0b", "#dc2626", "#6b7280"]
+        }
+    },
+    {
         id: -11,
         title: "Epstein Files 2026: What the 3.5 Million DOJ Documents Actually Reveal",
         slug: "epstein-files-2026-revelations",

@@ -88,6 +88,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/alfredo-rodriguez-epstein-whistleblower.html",
+      "destination": "/alfredo-rodriguez-epstein-whistleblower",
+      "permanent": true
+    },
+    {
+      "source": "/alfredo-rodriguez-epstein-whistleblower.html",
+      "destination": "/alfredo-rodriguez-epstein-whistleblower",
+      "permanent": true
+    },
+    {
       "source": "/localreports/american-disinformation-timeline.html",
       "destination": "/american-disinformation-timeline",
       "permanent": true
@@ -2079,6 +2089,10 @@
     {
       "source": "/ai-slop-fake-local-news",
       "destination": "/localreports/ai-slop-fake-local-news.html"
+    },
+    {
+      "source": "/alfredo-rodriguez-epstein-whistleblower",
+      "destination": "/localreports/alfredo-rodriguez-epstein-whistleblower.html"
     },
     {
       "source": "/american-disinformation-timeline",
