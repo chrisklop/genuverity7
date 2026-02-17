@@ -566,7 +566,7 @@ const REPORTS_DATA = [
     },
     {
         id: -52,
-        title: ""Americans Need Dramatically More Protein" — 2025-2030 Dietary Guidelines Fact Check",
+        title: "'Americans Need Dramatically More Protein' — 2025-2030 Dietary Guidelines Fact Check",
         slug: "dietary-guidelines-protein-claim-2026",
         category: "Health & Science",
         tagClass: "tag-amber",
