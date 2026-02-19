@@ -568,6 +568,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/epstein-government-lies-timeline.html",
+      "destination": "/epstein-government-lies-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/epstein-government-lies-timeline.html",
+      "destination": "/epstein-government-lies-timeline",
+      "permanent": true
+    },
+    {
       "source": "/localreports/fairness-doctrine-history.html",
       "destination": "/fairness-doctrine-history",
       "permanent": true
@@ -2271,6 +2281,10 @@
     {
       "source": "/epstein-files-fabrication-2025",
       "destination": "/localreports/epstein-files-fabrication-2025.html"
+    },
+    {
+      "source": "/epstein-government-lies-timeline",
+      "destination": "/localreports/epstein-government-lies-timeline.html"
     },
     {
       "source": "/fairness-doctrine-history",

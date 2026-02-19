@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -12,
+        title: "Every Government Lie About the Epstein Files: A 20-Year Timeline of Obstruction",
+        slug: "epstein-government-lies-timeline",
+        category: "Epstein Files",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-alert",
+        date: "Feb 19, 2026",
+        sources: "42 Sources",
+        readTime: "45 min",
+        verdict: "mixed",
+        excerpt: "Forensic timeline documenting every false statement, destroyed evidence, and cover-up from 2005-2026. From Acosta's secret NPA (ruled illegal in 2019) to Bondi's fake 'client list' to FBI's destroyed jail footage—a complete record of 20 years of institutional failure in the Jeffrey Epstein case.",
+        chart: {"type":"hbar","data":[13,18,240,0],"labels":["Epstein (2008)","Rodriguez","Maxwell","Guards"],"colors":["#fbbf24","#06b6d4","#ef4444","#22c55e"]}
+    },
+    {
         id: -11,
         title: "Epstein Files 2026: What the 3.5 Million DOJ Documents Actually Reveal",
         slug: "epstein-files-2026-revelations",
