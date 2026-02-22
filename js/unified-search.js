@@ -210,6 +210,7 @@ class UnifiedSearch {
                         <span>${report.date}</span>
                         <span>•</span>
                         <span>${report.readTime}</span>
+                        ${report.series && typeof SERIES_DATA !== 'undefined' && SERIES_DATA[report.series] ? `<span>•</span><span style="color:#a855f7;font-weight:600;">Series</span>` : ''}
                     </div>
                     <div class="list-item-title">${report.title}</div>
                     <div class="list-item-excerpt">${report.excerpt}</div>
@@ -420,8 +421,9 @@ class UnifiedSearch {
             const thumbPath = `images/thumbnails/${slugBase}.webp?v=1766960197`; // Cache bust thumbnails too
 
             card.innerHTML = `
+                ${report.series && typeof SERIES_DATA !== 'undefined' && SERIES_DATA[report.series] ? `<div class="card-series-badge">Series</div>` : ''}
                 <div class="card-preview">
-                    <img src="${thumbPath}" 
+                    <img src="${thumbPath}"
                          alt="Chart Preview"
                          class="card-preview-img"
                          loading="lazy"

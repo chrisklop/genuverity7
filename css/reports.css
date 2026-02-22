@@ -681,6 +681,122 @@ section::after {
         justify-content: center;
     }
 }
+/* === SERIES COMPONENTS === */
+.series-banner {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(168, 85, 247, 0.05));
+    border-left: 4px solid #a855f7;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.series-banner .series-part {
+    color: #a855f7;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.series-banner .series-title {
+    color: #94a3b8;
+    font-size: 14px;
+    margin-left: 12px;
+}
+
+.series-nav {
+    background: var(--bg-card);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 60px;
+}
+
+.series-nav h3 {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #a855f7;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.series-toc {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.series-toc li {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+}
+
+.series-toc li a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+}
+
+.series-toc li a:hover {
+    color: #a855f7;
+}
+
+.series-toc li.current {
+    background: rgba(168, 85, 247, 0.1);
+    color: #a855f7;
+    font-weight: 600;
+}
+
+.series-arrows {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+}
+
+.series-arrows a {
+    color: #a855f7;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.series-arrows a:hover {
+    background: rgba(168, 85, 247, 0.1);
+}
+
+.series-arrows a.disabled {
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .series-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .series-banner .series-title {
+        margin-left: 0;
+    }
+}
+
 /* === SOCIAL SHARING === */
 .share-section {
     margin-bottom: 20px;
