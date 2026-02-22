@@ -1,118 +1,91 @@
-# GenuVerity Session Context
+# Session Context
 
-> **Last Updated:** 2026-02-01
-> **Status:** Phase 1 Hub UI complete - landing and search pages live
-> **Current Milestone:** Epstein Files Hub - Phase 1 Complete
-
----
-
-## What Is This Project?
-
-GenuVerity is a fact-checking platform (190+ reports) using source-first methodology. Stack: Static HTML, Chart.js, FastAPI, Vercel.
-
-**New Initiative:** Epstein Files Hub - a fact-checked document explorer for the DOJ's 3.5M+ page Epstein release.
+> **Last Saved:** 2026-02-22
+> **Project:** GenuVerity7 — Fact-checking platform
 
 ---
 
-## Current Milestone: Epstein Files Hub
+## TL;DR (Read This First)
 
-**Unique Value Proposition:** "Search with truth indicators" - the only platform combining document access with verification badges and misinformation alerts.
-
-### Why This Matters
-- DOJ warns files include "fake or falsely submitted" content
-- 16+ files already removed after release
-- No existing tool distinguishes FBI evidence from anonymous tips
-- Viral misinformation spreads faster than verification
+GenuVerity is a fact-checking website (190+ reports) deployed on Vercel. We just finished updating all 7 reports in the "AI Manipulation Playbook" series to ensure every model name, benchmark, and factual claim is current as of Feb 22, 2026. The edits are done across 7 files but NOT yet committed. They're on branch `report/ai-manipulation-series`. User needs to confirm before commit+push.
 
 ---
 
-## What's Completed
+## Current State
 
-- [x] Expanded Epstein Files 2026 report (18 sources)
-- [x] Merged 6 report branches to main
-- [x] Fixed mobile horizontal scroll issue
-- [x] Installed epstein-email-explorer MCP (2,322 emails)
-- [x] Wrote research brief for Deep Research
-- [x] Analyzed Deep Research results
-- [x] Defined technical architecture
-- [x] Defined badge system (Admiralty-style A-F / 1-6)
-- [x] Installed epstein-rag MCP (20K+ docs via Qdrant semantic search)
-- [x] **Created `/epstein-files/index.html`** - Hub landing page with stats, search, features, revelations grid
-- [x] **Created `/epstein-files/search.html`** - Document search with badge filters and misinfo alerts
-- [x] **Created `/css/epstein-hub.css`** - Hub styling with badge colors (A-F)
-- [x] **Created `/js/epstein-hub-data.js`** - Static data (revelations, misinfo alerts, stats)
-- [x] **Updated navbar/footer** - Added "Epstein Files" link to navigation
+**Working On:** Updating 7 AI Manipulation Playbook reports with verified-current model names and corrected factual errors
+**Blocked By:** Waiting for user to confirm commit+push
+**Next Step:** Commit all changes to `report/ai-manipulation-series` branch and push to trigger Vercel preview
 
 ---
 
-## What's Next (Pending)
+## Recent Decisions & Context
 
-### Phase 2: Supabase Integration
-1. [ ] Create Supabase migration for new tables (epstein_documents, epstein_entities, etc.)
-2. [ ] Build document ingestion script (hash → store)
-3. [ ] Wire search.html to `epstein-rag` MCP for real semantic search
-4. [ ] Display badges from Supabase metadata
-
-### Phase 3: Misinformation Layer
-5. [ ] Seed `epstein_misinfo` table with known false claims
-6. [ ] Create dynamic alert component in search.html
-7. [ ] Link alerts to existing fact-check reports
-
-### Phase 4: Visualizations
-8. [ ] Create `network.html` with Cytoscape.js
-9. [ ] Create `timeline.html` for chronological browsing
-10. [ ] Create `releases.html` for DOJ release tracking
-
-### Phase 5: Automation
-11. [ ] Create delta detection script for new releases
-12. [ ] Build revelation ranking algorithm
-13. [ ] Create report generation pipeline
-14. [ ] Set up ChangeDetection.io for DOJ monitoring
-
-### Archive Infrastructure (Backlog)
-- [ ] Set up WARC capture pipeline
-- [ ] Mirror all 12 DOJ data sets
-- [ ] Obtain COURIER/Pinpoint deleted files
+- Decision: Research-first approach — Reason: User was angry that initial edits were made by blindly trusting the plan's model name lookup table without WebSearch verification. ALL changes were reverted and re-done with web-verified data. Added "Research-First Rule" to MEMORY.md.
+- Decision: Category A/B classification for model names — Reason: Benchmark citations (Cat B) keep original model names with "(now succeeded by X)" notes because the data was measured on those specific models. Direct recommendations (Cat A) get updated to current models.
+- Decision: Keep FMTI scores as-is — Reason: Pre-response vs post-response scores create ambiguity. Report uses "~" approximations which are defensible.
+- Decision: Don't change Vectara chart DATA, only add context — Reason: Old benchmark numbers (0.7%-10.1%) are accurate for the models tested. New HHEM-2.3 methodology is incomparable. Added extensive figcaptions explaining this.
 
 ---
 
-## Key Files
+## Key Files Changed
 
-| File | Purpose |
-|------|---------|
-| `.planning/Session.md` | This file - session tracking |
-| `.planning/EPSTEIN-HUB-ROADMAP.md` | Detailed technical roadmap |
-| `/epstein-files/index.html` | Hub landing page |
-| `/epstein-files/search.html` | Document search page |
-| `/css/epstein-hub.css` | Hub-specific styles |
-| `/js/epstein-hub-data.js` | Static hub data |
-| `localreports/epstein-files-2026-revelations.html` | Current Epstein report |
+- `localreports/ai-data-poisoning-attacks-2026.html` — MCPTox date fix (Jul→Aug), attribution fix (Lakera→Wang et al.)
+- `localreports/synthetic-content-farms-model-collapse-2026.html` — C2PA v2.1→v2.3, tense fix
+- `localreports/llm-vulnerability-ranking-2026.html` — 13 edits: Beiermeister characterization, breach separation, FLI grade, Constitutional Classifiers misattribution, model succession notes, recommendations
+- `localreports/ai-political-media-control-2026.html` — SpaceX xAI acquisition context
+- `localreports/llm-defense-mechanisms-2026.html` — Claude 3.7 successor context note
+- `localreports/protect-yourself-ai-misinformation-2026.html` — TL;DR rewrite, table headers, benchmark methodology caveat, chart labels
+- `js/reports-data.js` — Updated excerpt + chart preview labels
+
+---
+
+## Pending Tasks
+
+- [ ] Commit + push all 7-file update to `report/ai-manipulation-series` (awaiting user confirmation)
+- [ ] Create PR for the branch
+
+---
+
+## Current Model Landscape (Verified Feb 22, 2026)
+
+| Old Model | Current Model |
+|-----------|--------------|
+| GPT-4o (retired Feb 13) | GPT-5.2 |
+| Claude 3.7 Sonnet / 3 Opus | Claude Sonnet 4.6 / Opus 4.6 |
+| Gemini 2.0 Flash | Gemini 3.1 Pro |
+| Grok-2 / Grok-3 | Grok 4.20 Beta |
+| Llama 3.x | Llama 4 Scout/Maverick |
+
+---
+
+## Session Log
+
+### 2026-02-22 — AI Manipulation Series Update
+- Started with plan to update model names across 7 reports
+- First attempt: blindly executed plan's lookup table without verification — user called this out as unacceptable for a fact-checking site
+- Reverted ALL changes via `git checkout`
+- Launched 3 deep research agents in parallel to verify every claim
+- Research found critical errors beyond model names: Beiermeister mischaracterization, ChatGPT breach conflation, FLI grade bug, Constitutional Classifiers misattribution, Vectara benchmark methodology change
+- Re-executed all edits using research-verified data: 7 files, 35 insertions, 35 deletions
+- Added "Research-First Rule" to MEMORY.md
+- Awaiting user confirmation to commit+push
+
+### 2026-02-01 — Epstein Files Hub Phase 1
+- Completed Hub landing page and search page
+- Created badge system (A-F)
+- Set up MCP servers for email and document search
+
+---
+
+## Epstein Hub Status (Paused)
+
+Phase 1 complete (landing + search pages). Phase 2 (Supabase integration) not started. See `EPSTEIN-HUB-ROADMAP.md` for full plan.
 
 ---
 
 ## Quick Reference
 
-**Badge System:**
-- A (Court Record) → B (Gov Record) → C (Verified External) → D (Unverified) → E (News Clipping) → F (Flagged/Debunked)
-
-**Hub URLs:**
-- `/epstein-files/` - Landing page
-- `/epstein-files/search.html` - Document search
-
-**Key Tools Identified:**
-- Archive: WARC, ChangeDetection.io, Perma.cc, Save Page Now
-- NER: spaCy + EntityRuler
-- Entity Resolution: Splink
-- Visualization: Cytoscape.js (rich), Sigma.js (large scale)
-- Misinformation: ClaimReview, Google Fact Check Explorer
-
----
-
-## Notes
-
-- MCP server installed: `epstein-email-explorer` (2,322 emails)
-- MCP server installed: `epstein-rag` (20K+ docs via Qdrant) - Requires Docker running
-- Qdrant storage: `~/qdrant_storage`
-- Qdrant container: `docker start qdrant` if not running
-- Production revert point: `3f35110` (before today's merges)
-- Current main: `5deb616` (includes mobile fix)
+**Badge System (Epstein):** A (Court) → B (Gov) → C (Verified) → D (Unverified) → E (News) → F (Flagged)
+**Branch:** `report/ai-manipulation-series`
+**MCP Servers:** `epstein-email-explorer`, `epstein-rag` (requires Docker)
