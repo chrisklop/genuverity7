@@ -321,7 +321,7 @@
                 <div class="info-box blue copyable-section" id="tldr">
                     <div class="info-title"><i data-lucide="zap"></i>TL;DR</div>
                     <p><strong>Guide</strong></p>
-                    <p>AI hallucination rates vary dramatically by model: Gemini-2.0-Flash at 0.7%, GPT-4o at 1.5%, Claude at 3-4.4%. In 2024, 47% of enterprise AI users made major business decisions based on hallucinated content. Human accuracy in identifying deepfakes is only 24.5%, yet 60% believe they can spot them. This guide provides practical frameworks (SIFT method), prompt techniques, verification tools, and a 12-point survival checklist backed by research from 50+ sources.</p>
+                    <p>AI hallucination rates vary dramatically by model and benchmark methodology. Under the original Vectara HHEM methodology (Q4 2025), predecessor models ranged from 0.7% (Gemini 2.0 Flash) to 10.1% (Claude 3 Opus). A revamped Vectara benchmark (HHEM-2.3) using 7,700+ articles shows significantly higher rates across current-generation models — including GPT-5.2 at 10.8% and Claude Opus 4.5 at 10.9%. In 2024, 47% of enterprise AI users made major business decisions based on hallucinated content. Human accuracy in identifying deepfakes is only 24.5%, yet 60% believe they can spot them. This guide provides practical frameworks (SIFT method), prompt techniques, verification tools, and a 12-point survival checklist backed by research from 50+ sources.</p>
                 </div>
 
                 <!-- EXECUTIVE SUMMARY (Copyable) -->
@@ -358,12 +358,12 @@
                                 <canvas id="hallucination-rates"></canvas>
                             </div>
                         </div>
-                        <figcaption>Benchmark rates vary by task type and methodology. Gemini-2.0-Flash leads on summarization accuracy; Claude refuses to answer more often than fabricating. Source: All About AI, Visual Capitalist, Vectara Hallucination Leaderboard</figcaption>
+                        <figcaption>Data from Vectara HHEM leaderboard, Q4 2025. Important: These rates were measured on predecessor models (GPT-4o, Gemini 2.0 Flash, Claude 3.7 Sonnet, etc.) using the original HHEM methodology. A revamped benchmark (HHEM-2.3) on current-generation models shows significantly higher rates and is not directly comparable. Source: Vectara Hallucination Leaderboard, Visual Capitalist</figcaption>
                     </figure>
 
                     <p>Large language models don't "know" facts in any human sense. They predict the next word based on statistical patterns learned from massive datasets. When training data is sparse, contradictory, or absent for a particular topic, the model fills the gap with something that looks plausible — a confident-sounding fabrication known as a hallucination <a href="#source-18" class="citation-link" onclick="highlightSource(event, 'source-18')">[18]</a>.</p>
 
-                    <p>Hallucination rates vary dramatically by model and benchmark. According to the Vectara Hallucination Leaderboard and multiple industry analyses, Gemini-2.0-Flash has the lowest measured hallucination rate at approximately 0.7% on summarization tasks, followed by GPT-4o at 1.5% <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a><a href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a>. Claude Sonnet records a higher rate at 3-4.4%, though research shows Claude is significantly more likely to refuse to answer ("I don't know") rather than fabricate — a critical distinction <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>.</p>
+                    <p>Hallucination rates vary dramatically by model, benchmark, and methodology. Under the original Vectara HHEM methodology (Q4 2025), Gemini 2.0 Flash had the lowest measured hallucination rate at approximately 0.7% on summarization tasks, followed by GPT-4o at 1.5% <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a><a href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a>. Claude Sonnet recorded a higher rate at 3-4.4%, though research shows Claude is significantly more likely to refuse to answer ("I don't know") rather than fabricate — a critical distinction <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>. Note: These predecessor models have since been replaced by GPT-5.2, Gemini 3.1 Pro, and Claude Sonnet 4.6/Opus 4.6 respectively. A revamped Vectara benchmark (HHEM-2.3) using 7,700+ articles and stricter evaluation shows significantly higher rates across all models — including GPT-5.2 at 10.8% and Claude Opus 4.5 at 10.9% — suggesting the original methodology substantially understated hallucination in real-world usage.</p>
 
                     <p>These numbers reflect controlled benchmark tests. Real-world hallucination rates for open-ended questions are typically higher. The broader context matters: a model that hallucinates 1.5% of the time still generates thousands of false statements when deployed at scale. If 100 million people query ChatGPT daily, that 1.5% error rate translates to 1.5 million fabricated responses every day.</p>
 
@@ -624,9 +624,9 @@
                             <thead>
                                 <tr>
                                     <th>Category</th>
-                                    <th>ChatGPT (GPT-4o/5)</th>
-                                    <th>Claude (Sonnet/Opus)</th>
-                                    <th>Gemini (2.0/2.5)</th>
+                                    <th>ChatGPT (GPT-5.2)</th>
+                                    <th>Claude (Sonnet 4.6/Opus 4.6)</th>
+                                    <th>Gemini (3.1 Pro)</th>
                                     <th>Perplexity</th>
                                 </tr>
                             </thead>
@@ -812,7 +812,7 @@
         new Chart(document.getElementById('hallucination-rates').getContext('2d'), {
             type: 'bar',
             data: {
-                labels: ['Gemini-2.0-Flash', 'GPT-4o', 'Claude Sonnet', 'Claude Opus', 'Gemini 3 Pro'],
+                labels: ['Gemini 2.0 Flash*', 'GPT-4o*', 'Claude Sonnet*', 'Claude Opus*', 'Gemini 3 Pro*'],
                 datasets: [{
                     label: 'Hallucination Rate (%)',
                     data: [0.7, 1.5, 3.5, 10.1, 6.0],

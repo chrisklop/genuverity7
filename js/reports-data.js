@@ -34,8 +34,8 @@ const REPORTS_DATA = [
         readTime: "52 min",
         verdict: "guide",
         series: "ai-manipulation-playbook",
-        excerpt: "AI hallucination rates vary dramatically: Gemini-2.0-Flash at 0.7%, GPT-4o at 1.5%, Claude at 3-4.4%. In 2024, 47% of enterprise users made major decisions based on hallucinated content. Human deepfake detection accuracy is only 24.5%. This practical guide provides the SIFT method, prompt engineering techniques, verification tools, cross-model checking strategies, and a 12-point survival checklist backed by 50+ research sources.",
-        chart: {"type":"hbar","data":[0.7,1.5,3.5,10.1,6.0],"labels":["Gemini-2.0-Flash","GPT-4o","Claude Sonnet","Claude Opus","Gemini 3 Pro"],"colors":["#06b6d4","#3b82f6","#f59e0b","#f472b6","#22c55e"]}
+        excerpt: "AI hallucination rates vary dramatically by model and benchmark methodology. Under the original Vectara benchmark, predecessor models ranged from 0.7% to 10.1%; a revamped methodology (HHEM-2.3) shows rates of 10-15% for current-generation models like GPT-5.2 and Claude Opus 4.6. In 2024, 47% of enterprise users made major decisions based on hallucinated content. This guide provides the SIFT method, prompt engineering techniques, verification tools, and a 12-point survival checklist backed by 50+ research sources.",
+        chart: {"type":"hbar","data":[0.7,1.5,3.5,10.1,6.0],"labels":["Gemini 2.0 Flash*","GPT-4o*","Claude Sonnet*","Claude Opus*","Gemini 3 Pro*"],"colors":["#06b6d4","#3b82f6","#f59e0b","#f472b6","#22c55e"]}
     },
     {
         id: -22,
