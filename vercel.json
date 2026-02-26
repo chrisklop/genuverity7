@@ -388,6 +388,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/dhs-worst-immigrants-website-errors.html",
+      "destination": "/dhs-worst-immigrants-website-errors",
+      "permanent": true
+    },
+    {
+      "source": "/dhs-worst-immigrants-website-errors.html",
+      "destination": "/dhs-worst-immigrants-website-errors",
+      "permanent": true
+    },
+    {
       "source": "/localreports/disinformation-analysis-january-26-2026.html",
       "destination": "/disinformation-analysis-january-26-2026",
       "permanent": true
@@ -455,6 +465,16 @@
     {
       "source": "/doppelganger-analysis.html",
       "destination": "/doppelganger-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/earth-gravity-hoax-2026.html",
+      "destination": "/earth-gravity-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/earth-gravity-hoax-2026.html",
+      "destination": "/earth-gravity-hoax-2026",
       "permanent": true
     },
     {
@@ -605,6 +625,16 @@
     {
       "source": "/fireaid-charity-conspiracy-january-2026.html",
       "destination": "/fireaid-charity-conspiracy-january-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/florida-election-myths-2026.html",
+      "destination": "/florida-election-myths-2026",
+      "permanent": true
+    },
+    {
+      "source": "/florida-election-myths-2026.html",
+      "destination": "/florida-election-myths-2026",
       "permanent": true
     },
     {
@@ -1758,6 +1788,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/trump-sotu-2026-factcheck.html",
+      "destination": "/trump-sotu-2026-factcheck",
+      "permanent": true
+    },
+    {
+      "source": "/trump-sotu-2026-factcheck.html",
+      "destination": "/trump-sotu-2026-factcheck",
+      "permanent": true
+    },
+    {
       "source": "/localreports/trump-walker-image-2025.html",
       "destination": "/trump-walker-image-2025",
       "permanent": true
@@ -1895,6 +1935,16 @@
     {
       "source": "/vance-musk-fake-audio-2025.html",
       "destination": "/vance-musk-fake-audio-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/vance-olympics-deepfake-2026.html",
+      "destination": "/vance-olympics-deepfake-2026",
+      "permanent": true
+    },
+    {
+      "source": "/vance-olympics-deepfake-2026.html",
+      "destination": "/vance-olympics-deepfake-2026",
       "permanent": true
     },
     {
@@ -2201,6 +2251,10 @@
       "destination": "/localreports/dhs-biometrics-dna-social-media-2026.html"
     },
     {
+      "source": "/dhs-worst-immigrants-website-errors",
+      "destination": "/localreports/dhs-worst-immigrants-website-errors.html"
+    },
+    {
       "source": "/disinformation-analysis-january-26-2026",
       "destination": "/localreports/disinformation-analysis-january-26-2026.html"
     },
@@ -2227,6 +2281,10 @@
     {
       "source": "/doppelganger-analysis",
       "destination": "/localreports/doppelganger-analysis.html"
+    },
+    {
+      "source": "/earth-gravity-hoax-2026",
+      "destination": "/localreports/earth-gravity-hoax-2026.html"
     },
     {
       "source": "/ebola-organ-theft-2025",
@@ -2287,6 +2345,10 @@
     {
       "source": "/fireaid-charity-conspiracy-january-2026",
       "destination": "/localreports/fireaid-charity-conspiracy-january-2026.html"
+    },
+    {
+      "source": "/florida-election-myths-2026",
+      "destination": "/localreports/florida-election-myths-2026.html"
     },
     {
       "source": "/gaza-ceasefire-attribution-2025",
@@ -2749,6 +2811,10 @@
       "destination": "/localreports/trump-speech-factcheck.html"
     },
     {
+      "source": "/trump-sotu-2026-factcheck",
+      "destination": "/localreports/trump-sotu-2026-factcheck.html"
+    },
+    {
       "source": "/trump-walker-image-2025",
       "destination": "/localreports/trump-walker-image-2025.html"
     },
@@ -2803,6 +2869,10 @@
     {
       "source": "/vance-musk-fake-audio-2025",
       "destination": "/localreports/vance-musk-fake-audio-2025.html"
+    },
+    {
+      "source": "/vance-olympics-deepfake-2026",
+      "destination": "/localreports/vance-olympics-deepfake-2026.html"
     },
     {
       "source": "/visa-ban-green-card-panic-january-2026",
