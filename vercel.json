@@ -48,6 +48,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/ai-data-poisoning-attacks-2026.html",
+      "destination": "/ai-data-poisoning-attacks-2026",
+      "permanent": true
+    },
+    {
+      "source": "/ai-data-poisoning-attacks-2026.html",
+      "destination": "/ai-data-poisoning-attacks-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/ai-deepfakes-2025.html",
       "destination": "/ai-deepfakes-2025",
       "permanent": true
@@ -75,6 +85,16 @@
     {
       "source": "/ai-obituary-pirates-2025.html",
       "destination": "/ai-obituary-pirates-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/ai-political-media-control-2026.html",
+      "destination": "/ai-political-media-control-2026",
+      "permanent": true
+    },
+    {
+      "source": "/ai-political-media-control-2026.html",
+      "destination": "/ai-political-media-control-2026",
       "permanent": true
     },
     {
@@ -988,6 +1008,36 @@
       "permanent": true
     },
     {
+      "source": "/localreports/llm-defense-mechanisms-2026.html",
+      "destination": "/llm-defense-mechanisms-2026",
+      "permanent": true
+    },
+    {
+      "source": "/llm-defense-mechanisms-2026.html",
+      "destination": "/llm-defense-mechanisms-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/llm-vulnerability-ranking-2026.html",
+      "destination": "/llm-vulnerability-ranking-2026",
+      "permanent": true
+    },
+    {
+      "source": "/llm-vulnerability-ranking-2026.html",
+      "destination": "/llm-vulnerability-ranking-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/llmo-geo-search-manipulation-2026.html",
+      "destination": "/llmo-geo-search-manipulation-2026",
+      "permanent": true
+    },
+    {
+      "source": "/llmo-geo-search-manipulation-2026.html",
+      "destination": "/llmo-geo-search-manipulation-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/maduro-surrender-video-2025.html",
       "destination": "/maduro-surrender-video-2025",
       "permanent": true
@@ -1418,6 +1468,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/protect-yourself-ai-misinformation-2026.html",
+      "destination": "/protect-yourself-ai-misinformation-2026",
+      "permanent": true
+    },
+    {
+      "source": "/protect-yourself-ai-misinformation-2026.html",
+      "destination": "/protect-yourself-ai-misinformation-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/protocols-elders-zion.html",
       "destination": "/protocols-elders-zion",
       "permanent": true
@@ -1605,6 +1665,16 @@
     {
       "source": "/storm-1516-russian-campaigns-2025.html",
       "destination": "/storm-1516-russian-campaigns-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/synthetic-content-farms-model-collapse-2026.html",
+      "destination": "/synthetic-content-farms-model-collapse-2026",
+      "permanent": true
+    },
+    {
+      "source": "/synthetic-content-farms-model-collapse-2026.html",
+      "destination": "/synthetic-content-farms-model-collapse-2026",
       "permanent": true
     },
     {
@@ -2123,8 +2193,16 @@
       "destination": "/localreports/ai-deportation-videos.html"
     },
     {
+      "source": "/ai-data-poisoning-attacks-2026",
+      "destination": "/localreports/ai-data-poisoning-attacks-2026.html"
+    },
+    {
       "source": "/ai-obituary-pirates-2025",
       "destination": "/localreports/ai-obituary-pirates-2025.html"
+    },
+    {
+      "source": "/ai-political-media-control-2026",
+      "destination": "/localreports/ai-political-media-control-2026.html"
     },
     {
       "source": "/ai-slop-fake-local-news",
@@ -2491,6 +2569,18 @@
       "destination": "/localreports/liberation-day-address-2025.html"
     },
     {
+      "source": "/llm-defense-mechanisms-2026",
+      "destination": "/localreports/llm-defense-mechanisms-2026.html"
+    },
+    {
+      "source": "/llm-vulnerability-ranking-2026",
+      "destination": "/localreports/llm-vulnerability-ranking-2026.html"
+    },
+    {
+      "source": "/llmo-geo-search-manipulation-2026",
+      "destination": "/localreports/llmo-geo-search-manipulation-2026.html"
+    },
+    {
       "source": "/maduro-surrender-video-2025",
       "destination": "/localreports/maduro-surrender-video-2025.html"
     },
@@ -2663,6 +2753,10 @@
       "destination": "/localreports/project-2025-military-orders.html"
     },
     {
+      "source": "/protect-yourself-ai-misinformation-2026",
+      "destination": "/localreports/protect-yourself-ai-misinformation-2026.html"
+    },
+    {
       "source": "/protocols-elders-zion",
       "destination": "/localreports/protocols-elders-zion.html"
     },
@@ -2737,6 +2831,10 @@
     {
       "source": "/storm-1516-russian-campaigns-2025",
       "destination": "/localreports/storm-1516-russian-campaigns-2025.html"
+    },
+    {
+      "source": "/synthetic-content-farms-model-collapse-2026",
+      "destination": "/localreports/synthetic-content-farms-model-collapse-2026.html"
     },
     {
       "source": "/syria-assad-underground-photo-2025",
