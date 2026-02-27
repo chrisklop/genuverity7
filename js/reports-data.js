@@ -1,6 +1,25 @@
 // Shared reports data - Single source of truth for all pages
 // When adding a new report, add it here and it will update everywhere
 
+// Series definitions — groups of related reports shown together
+const SERIES_DATA = {
+    "ai-manipulation-playbook": {
+        title: "The AI Manipulation Playbook",
+        slug: "ai-manipulation-playbook",
+        description: "A 7-part investigation into how AI systems are being poisoned, gamed, and weaponized — and what you can do about it.",
+        color: "#a855f7",
+        reportSlugs: [
+            "ai-data-poisoning-attacks-2026",
+            "llmo-geo-search-manipulation-2026",
+            "synthetic-content-farms-model-collapse-2026",
+            "llm-vulnerability-ranking-2026",
+            "ai-political-media-control-2026",
+            "llm-defense-mechanisms-2026",
+            "protect-yourself-ai-misinformation-2026"
+        ]
+    }
+};
+
 const REPORTS_DATA = [
     {
         id: -28,
