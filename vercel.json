@@ -608,6 +608,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/epstein-google-search-suppression-2026.html",
+      "destination": "/epstein-google-search-suppression-2026",
+      "permanent": true
+    },
+    {
+      "source": "/epstein-google-search-suppression-2026.html",
+      "destination": "/epstein-google-search-suppression-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/fairness-doctrine-history.html",
       "destination": "/fairness-doctrine-history",
       "permanent": true
@@ -2407,6 +2417,10 @@
     {
       "source": "/epstein-files-fabrication-2025",
       "destination": "/localreports/epstein-files-fabrication-2025.html"
+    },
+    {
+      "source": "/epstein-google-search-suppression-2026",
+      "destination": "/localreports/epstein-google-search-suppression-2026.html"
     },
     {
       "source": "/fairness-doctrine-history",

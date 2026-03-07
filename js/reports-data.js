@@ -22,6 +22,21 @@ const SERIES_DATA = {
 
 const REPORTS_DATA = [
     {
+        id: -29,
+        title: "Did Google Help Cover Up for Epstein? The Al Seckel SEO Operation",
+        slug: "epstein-google-search-suppression-2026",
+        category: "Investigation",
+        tagClass: "tag-orange",
+        catClass: "cat-investigation",
+        icon: "search",
+        date: "Mar 7, 2026",
+        sources: "14 Sources",
+        readTime: "18 min",
+        verdict: "misleading",
+        excerpt: "Viral claims say 'Google helped cover up for Epstein.' DOJ documents reveal Al Seckel — Ghislaine Maxwell's brother-in-law — ran a $25K operation using Philippines-based link farms, fake websites, and Wikipedia hacking to suppress negative search results. But the evidence shows Epstein's team exploited Google's algorithm through SEO tactics — not that Google the company was complicit. The real scandal: standard SEO tools can be weaponized to bury documented sex crimes.",
+        chart: {"type":"hbar","data":[200000,105500,25000,25000,10000,2449],"labels":["Howard Rubenstein","Reputation Changer","Al Seckel Operation","Michael Keesling","Dan Klores","Integrity Defenders"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#10b981","#64748b"]}
+    },
+    {
         id: -28,
         title: "Florida 2026 Midterm Election Myths: 39 Claims Debunked",
         slug: "florida-election-myths-2026",
