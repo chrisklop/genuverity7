@@ -1348,6 +1348,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/obama-ica-russia-assessment-2026.html",
+      "destination": "/obama-ica-russia-assessment-2026",
+      "permanent": true
+    },
+    {
+      "source": "/obama-ica-russia-assessment-2026.html",
+      "destination": "/obama-ica-russia-assessment-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/operation-mockingbird-cia.html",
       "destination": "/operation-mockingbird-cia",
       "permanent": true
@@ -2713,6 +2723,10 @@
     {
       "source": "/nsf-grant-termination-2025",
       "destination": "/localreports/nsf-grant-termination-2025.html"
+    },
+    {
+      "source": "/obama-ica-russia-assessment-2026",
+      "destination": "/localreports/obama-ica-russia-assessment-2026.html"
     },
     {
       "source": "/operation-mockingbird-cia",

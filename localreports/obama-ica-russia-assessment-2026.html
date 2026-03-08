@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral Video Claims Obama 'Manufactured' the Russia Intelligence Assessment. Here's What the Evidence Actually Shows. | GenuVerity</title>
+    <meta name="description" content="A viral 6-minute video claims declassified documents prove Obama manufactured the 2017 Russia ICA. We checked 13 claims against primary sources. Verdict: MISLEADING.">
+    <meta name="keywords" content="Obama, Russia, ICA, Intelligence Community Assessment, Brennan, Gabbard, declassified, HPSCI, tradecraft review, Putin, Trump, fact-check">
+    <meta name="author" content="GenuVerity Intelligence">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../favicon.png">
+
+    <!-- Canonical URL (REQUIRED for SEO) -->
+    <link rel="canonical" href="https://www.genuverity.com/obama-ica-russia-assessment-2026">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.genuverity.com/obama-ica-russia-assessment-2026">
+    <meta property="og:title" content="Viral Video Claims Obama 'Manufactured' the Russia Intelligence Assessment. Here's What the Evidence Actually Shows. | GenuVerity">
+    <meta property="og:description" content="A viral 6-minute video claims declassified documents prove Obama manufactured the 2017 Russia ICA. We checked 13 claims against primary sources. Verdict: MISLEADING.">
+    <meta property="og:image" content="https://www.genuverity.com/images/thumbnails/obama-ica-russia-assessment-2026.webp">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.genuverity.com/obama-ica-russia-assessment-2026">
+    <meta property="twitter:title" content="Viral Video Claims Obama 'Manufactured' the Russia Intelligence Assessment. Here's What the Evidence Actually Shows. | GenuVerity">
+    <meta property="twitter:description" content="A viral 6-minute video claims declassified documents prove Obama manufactured the 2017 Russia ICA. We checked 13 claims against primary sources. Verdict: MISLEADING.">
+    <meta property="twitter:image" content="https://www.genuverity.com/images/thumbnails/obama-ica-russia-assessment-2026.webp">
+
+    <!-- Structured Data (JSON-LD) for NewsArticle -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": "Viral Video Claims Obama 'Manufactured' the Russia Intelligence Assessment. Here's What the Evidence Actually Shows.",
+      "description": "A viral 6-minute video claims declassified documents prove Obama manufactured the 2017 Russia ICA. We checked 13 claims against primary sources. Verdict: MISLEADING.",
+      "image": ["https://www.genuverity.com/images/thumbnails/obama-ica-russia-assessment-2026.webp"],
+      "datePublished": "2026-03-08",
+      "dateModified": "2026-03-08",
+      "author": {
+        "@type": "Organization",
+        "name": "GenuVerity",
+        "url": "https://www.genuverity.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GenuVerity",
+        "url": "https://www.genuverity.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.genuverity.com/favicon.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.genuverity.com/obama-ica-russia-assessment-2026"
+      },
+      "articleSection": "Fact-Check",
+      "keywords": "Obama, Russia, ICA, Intelligence Community Assessment, Brennan, Gabbard, declassified, HPSCI, tradecraft review, Putin, Trump, fact-check"
+    }
+    </script>
+
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <script src="../js/chart-watermark.js"></script>
+    <script src="../js/chart-defaults.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/copyable-sections.js?v=4.0" defer></script>
+    <script src="../js/shared-components.js?v=4.0" defer></script>
+
+    <!-- Fonts (2-Font System: Crimson Pro + Inter) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/shared-components.css?v=4.0">
+    <link rel="stylesheet" href="../css/reports.css?v=4.0">
+
+    <style>
+        /* Claim verdict cards */
+        .claim-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .claim-card .claim-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .claim-card .claim-number {
+            background: rgba(6, 182, 212, 0.15);
+            color: #06b6d4;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .claim-card .claim-quote {
+            font-style: italic;
+            color: var(--text-secondary, #94a3b8);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .claim-card .claim-verdict-badge {
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        .badge-true { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .badge-misleading { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+        .badge-false { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .badge-mixed { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+        .badge-unverified { background: rgba(100, 116, 139, 0.15); color: #94a3b8; }
+        .claim-card .claim-evidence {
+            color: var(--text-secondary, #cbd5e1);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Summary verdict table */
+        .verdict-summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        .verdict-summary-table th {
+            text-align: left;
+            padding: 0.6rem 0.8rem;
+            border-bottom: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .verdict-summary-table td {
+            padding: 0.5rem 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85rem;
+            color: var(--text-secondary, #cbd5e1);
+        }
+        .verdict-summary-table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Shared Navbar Placeholder -->
+    <div id="navbar-placeholder" data-page-type="report"></div>
+
+    <div class="container">
+        <!-- REPORT HEADER -->
+        <div class="report-meta">
+            <span class="meta-tag">Fact-Check</span>
+            <span class="meta-tag"><i data-lucide="clock"
+                    style="width:12px; display:inline-block; vertical-align:middle;"></i> 22 MIN READ</span>
+        </div>
+
+        <h1 class="report-title">Viral Video Claims Obama &lsquo;Manufactured&rsquo; the Russia Intelligence Assessment. Here&rsquo;s What the Evidence Actually Shows.</h1>
+        <h2 class="report-subtitle">A 6-minute video says declassified documents prove the 2017 ICA was fabricated. We checked 13 specific claims against the CIA&rsquo;s own tradecraft review, the bipartisan Senate report, and the Mueller investigation. The video mixes real procedural failures with conclusions the evidence does not support.</h2>
+
+        <!-- MAIN LAYOUT GRID -->
+        <div class="content-grid">
+            <!-- SIDEBAR: SOURCES FIRST -->
+            <aside class="sources-sidebar">
+                <!-- Social Sharing Buttons -->
+                <div class="share-section">
+                    <div class="share-buttons">
+                        <button onclick="shareToTwitter()" class="share-btn share-twitter">
+                            <i data-lucide="twitter"></i>
+                            <span class="share-label">X</span>
+                            <i data-lucide="share" class="share-icon"></i>
+                        </button>
+                        <button onclick="shareToFacebook()" class="share-btn share-facebook">
+                            <i data-lucide="facebook"></i>
+                            <span class="share-label">Facebook</span>
+                            <i data-lucide="share" class="share-icon"></i>
+                        </button>
+                        <button onclick="shareToLinkedIn()" class="share-btn share-linkedin">
+                            <i data-lucide="linkedin"></i>
+                            <span class="share-label">LinkedIn</span>
+                            <i data-lucide="share" class="share-icon"></i>
+                        </button>
+                        <button onclick="copyShareLink()" class="share-btn share-copy" id="copyLinkBtn">
+                            <i data-lucide="link"></i>
+                            <span class="share-label">Copy Link</span>
+                            <i data-lucide="share" class="share-icon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sources header is clickable on mobile to expand/collapse -->
+                <div class="sources-header">
+                    <div class="sources-title"><i data-lucide="database" style="width:18px;"></i>Sources First</div>
+                    <span class="sources-count">18</span>
+                </div>
+                <div class="sources-list" id="sourcesList">
+                    <a href="https://www.dni.gov" target="_blank" class="source-card" id="source-1">
+                        <span class="source-ref">1</span>
+                        <div>
+                            <div>DNI.gov: Declassified HPSCI Report on the Manufactured Russia Hoax (July 2025)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">dni.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.cia.gov" target="_blank" class="source-card" id="source-2">
+                        <span class="source-ref">2</span>
+                        <div>
+                            <div>CIA.gov: Tradecraft Review &mdash; 2016 ICA on Election Interference (June 2025)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">cia.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.cia.gov" target="_blank" class="source-card" id="source-3">
+                        <span class="source-ref">3</span>
+                        <div>
+                            <div>CIA.gov: Director Ratcliffe Declassifies Internal Tradecraft Review (June 2025)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">cia.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.intelligence.senate.gov" target="_blank" class="source-card" id="source-4">
+                        <span class="source-ref">4</span>
+                        <div>
+                            <div>Senate Intelligence Committee: Report on the 2017 ICA (April 2020)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">intelligence.senate.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.nbcnews.com" target="_blank" class="source-card" id="source-5">
+                        <span class="source-ref">5</span>
+                        <div>
+                            <div>NBC News: CIA Review Criticizes Procedures but Not Conclusions (June 2025)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">nbcnews.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.bloomberg.com" target="_blank" class="source-card" id="source-6">
+                        <span class="source-ref">6</span>
+                        <div>
+                            <div>Bloomberg: Trump&rsquo;s CIA Backs 2016 Assessment That Putin Wanted Him to Win (July 2025)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">bloomberg.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.justice.gov/archives/sco/file/1373816/dl" target="_blank" class="source-card" id="source-7">
+                        <span class="source-ref">7</span>
+                        <div>
+                            <div>Mueller Report: Investigation into Russian Interference (April 2019)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">justice.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.pbs.org" target="_blank" class="source-card" id="source-8">
+                        <span class="source-ref">8</span>
+                        <div>
+                            <div>PBS: Intel Report &mdash; Putin Directly Ordered Effort to Influence Election (January 2017)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">pbs.org</div>
+                        </div>
+                    </a>
+                    <a href="https://www.npr.org" target="_blank" class="source-card" id="source-9">
+                        <span class="source-ref">9</span>
+                        <div>
+                            <div>NPR: Mueller Report Findings &mdash; No Conspiracy Established (March 2019)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">npr.org</div>
+                        </div>
+                    </a>
+                    <a href="https://judiciary.house.gov" target="_blank" class="source-card" id="source-10">
+                        <span class="source-ref">10</span>
+                        <div>
+                            <div>House Judiciary Committee: Criminal Referral of John Brennan to DOJ (2025)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">judiciary.house.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.foxnews.com" target="_blank" class="source-card" id="source-11">
+                        <span class="source-ref">11</span>
+                        <div>
+                            <div>Fox News: Bondi Confirms DOJ Received Brennan Criminal Referral (2025)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">foxnews.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.politifact.com" target="_blank" class="source-card" id="source-12">
+                        <span class="source-ref">12</span>
+                        <div>
+                            <div>PolitiFact: Fact-checking Gabbard&rsquo;s Attacks on Obama and Russia ICA (July 2025)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">politifact.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.aljazeera.com" target="_blank" class="source-card" id="source-13">
+                        <span class="source-ref">13</span>
+                        <div>
+                            <div>Al Jazeera: Can Obama Be Prosecuted Over Russian Interference Intelligence? (July 2025)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">aljazeera.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.realclearinvestigations.com" target="_blank" class="source-card" id="source-14">
+                        <span class="source-ref">14</span>
+                        <div>
+                            <div>RealClearInvestigations: How Brennan Overruled Dissenting Analysts (September 2020)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">realclearinvestigations.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.intelligence.senate.gov" target="_blank" class="source-card" id="source-15">
+                        <span class="source-ref">15</span>
+                        <div>
+                            <div>Senate Vice Chairman Warner: Statement on HPSCI Report Release (July 2025)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">intelligence.senate.gov</div>
+                        </div>
+                    </a>
+                    <a href="https://www.washingtonexaminer.com" target="_blank" class="source-card" id="source-16">
+                        <span class="source-ref">16</span>
+                        <div>
+                            <div>Washington Examiner: Christopher Steele Frustrated Dossier in ICA Annex (2020)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">washingtonexaminer.com</div>
+                        </div>
+                    </a>
+                    <a href="https://today.yougov.com" target="_blank" class="source-card" id="source-17">
+                        <span class="source-ref">17</span>
+                        <div>
+                            <div>YouGov/Economist Poll: Democrat Beliefs on Russian Vote Hacking (2017)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">today.yougov.com</div>
+                        </div>
+                    </a>
+                    <a href="https://www.foxnews.com" target="_blank" class="source-card" id="source-18">
+                        <span class="source-ref">18</span>
+                        <div>
+                            <div>Fox News: Obama Officials Admitted No Empirical Evidence of Collusion (May 2020)</div>
+                            <div style="font-size:0.7em; opacity:0.7;">foxnews.com</div>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- MAIN ARTICLE CONTENT -->
+            <article class="article-content">
+
+                <!-- TL;DR VERDICT (Copyable) -->
+                <div class="info-box amber copyable-section" id="tldr">
+                    <div class="info-title"><i data-lucide="zap"></i>TL;DR</div>
+                    <p><strong class="verdict-misleading">MISLEADING</strong></p>
+                    <p>The video mixes genuine procedural concerns confirmed by the CIA&rsquo;s own 2025 tradecraft review with conclusions those documents do not support. Key claims about Brennan overruling analysts and tradecraft violations are TRUE. But the central thesis &mdash; that the entire Russia interference finding was fabricated &mdash; is contradicted by multiple independent investigations, including Trump&rsquo;s own CIA Director backing the core conclusion in 2025.</p>
+                </div>
+
+                <!-- SOURCE VIDEO EMBED -->
+                <div class="report-section" style="margin-bottom: 2rem;">
+                    <div style="background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; padding: 1.5rem; text-align: center;">
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.75rem;">
+                            <i data-lucide="play-circle" style="width:16px; height:16px; display:inline-block; vertical-align:middle;"></i>
+                            Source Video Under Analysis
+                        </p>
+                        <a href="https://x.com/wardaniel47/status/2030594025934176549" target="_blank" rel="noopener noreferrer" style="color: var(--cyan); font-weight: 600; text-decoration: none; font-size: 1.1rem;">
+                            View Original Video on X (formerly Twitter) &rarr;
+                        </a>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem;">
+                            Posted by @warDaniel47 &middot; 6-minute political commentary &middot; Claim-by-claim analysis below
+                        </p>
+                    </div>
+                </div>
+
+                <!-- SECTION 01: Executive Summary (Copyable) -->
+                <div class="info-box copyable-section" id="executive-summary">
+                    <div class="info-title"><i data-lucide="file-text"></i>Executive Summary</div>
+                    <p>A viral 6-minute video claims that DNI Tulsi Gabbard declassified a bombshell report proving Barack Obama &ldquo;manufactured&rdquo; the 2017 Intelligence Community Assessment on Russian election interference. The video asserts that Obama ordered CIA Director John Brennan to fabricate intelligence showing Putin preferred Trump, that the Steele dossier was central to the ICA&rsquo;s conclusions, and that the entire Russia investigation was built on lies. We examined 13 specific claims against primary documents &mdash; including the declassified HPSCI report itself, the CIA&rsquo;s 2025 internal tradecraft review, the bipartisan Senate Intelligence Committee findings, and the Mueller Report. Our verdict: the video weaves genuine procedural concerns into a narrative the underlying evidence does not support.</p>
+                </div>
+
+                <!-- SECTION 02: What the Video Claims -->
+                <section class="copyable-section">
+                    <h2>02. What the Video Claims &mdash; The Claim Chain</h2>
+                    <p>The video makes over a dozen factual assertions in six minutes. We grouped them into three categories based on what they address:</p>
+
+                    <h3 style="color: #06b6d4; margin-top: 1.5rem;">Process Claims (How the ICA Was Created)</h3>
+                    <ul>
+                        <li>Obama personally ordered the CIA to create a new intelligence assessment</li>
+                        <li>Brennan handpicked five CIA analysts and siloed them from the broader intelligence community</li>
+                        <li>The assessment was rushed to publish before Trump&rsquo;s inauguration</li>
+                        <li>Senior CIA officers objected but were overruled</li>
+                    </ul>
+
+                    <h3 style="color: #f59e0b; margin-top: 1.5rem;">Substance Claims (What the ICA Got Wrong)</h3>
+                    <ul>
+                        <li>There was no reliable intelligence that Putin wanted Trump to win</li>
+                        <li>The Steele dossier was used as a basis for the ICA&rsquo;s conclusions</li>
+                        <li>Intelligence was cherry-picked to support a predetermined narrative</li>
+                        <li>60% of Democrats believed Russians hacked voting machines because of the ICA</li>
+                    </ul>
+
+                    <h3 style="color: #ef4444; margin-top: 1.5rem;">Consequence Claims (What Should Happen)</h3>
+                    <ul>
+                        <li>Brennan committed perjury before Congress</li>
+                        <li>Obama knew the assessment was false and pushed it anyway</li>
+                        <li>Mueller found &ldquo;no collusion,&rdquo; vindicating Trump completely</li>
+                        <li>People should &ldquo;pay the price&rdquo;</li>
+                    </ul>
+
+                    <p>We fact-checked 13 of these claims individually. The results follow.</p>
+                </section>
+
+                <!-- Chart 1: Claim Verdicts Breakdown -->
+                <figure class="float-figure copyable-section" id="verdicts-chart-wrapper">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">Claim Verdicts Breakdown (13 Claims)</div>
+                        </div>
+                        <div style="height: 280px; position: relative;">
+                            <canvas id="verdictsChart"></canvas>
+                        </div>
+                    </div>
+                    <figcaption>Distribution of verdicts across the 13 specific factual claims examined. TRUE includes qualified verdicts (e.g., &ldquo;TRUE with context&rdquo;).</figcaption>
+                </figure>
+
+                <!-- SECTION 03: Claim-by-Claim Verdicts -->
+                <section class="copyable-section">
+                    <h2>03. Claim-by-Claim Verdicts</h2>
+
+                    <!-- Claim 1 -->
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-number">CLAIM 1</span>
+                            <span class="claim-quote">&ldquo;Gabbard got her hands on a House intel report locked in a CIA vault for almost a decade&rdquo;</span>
+                        </div>
+                        <span class="claim-verdict-badge badge-misleading">MISLEADING</span>
+                        <div class="claim-evidence">
+                            <p>The report is real &mdash; it&rsquo;s the HPSCI Majority Staff Report from September 2020, produced under Chairman Devin Nunes. Gabbard declassified it July 22, 2025. But it was locked for ~4.5 years, not &ldquo;almost a decade,&rdquo; and it wasn&rsquo;t in a &ldquo;CIA vault&rdquo; &mdash; it was a classified congressional oversight document. Critically, it&rsquo;s a Republican majority staff report, not a bipartisan finding &mdash; the bipartisan Senate Intelligence Committee reached different conclusions on the same evidence <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a> <a href="#source-4" class="citation-link" onclick="highlightSource(event, 'source-4')">[4]</a> <a href="#source-15" class="citation-link" onclick="highlightSource(event, 'source-15')">[15]</a>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Claim 2 -->
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-number">CLAIM 2</span>
+                            <span class="claim-quote">&ldquo;Obama ordered the CIA to create a new assessment&rdquo;</span>
+                        </div>
+                        <span class="claim-verdict-badge badge-true">TRUE (with context)</span>
+                        <div class="claim-evidence">
+                            <p>On December 6&ndash;9, 2016, Obama directed DNI Clapper to conduct a comprehensive review. This is documented in declassified emails. However, post-election intelligence reviews of foreign interference are standard practice, not inherently unusual. The direction went through the DNI&rsquo;s office, not directly to the CIA <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a> <a href="#source-8" class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Claim 3 -->
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-number">CLAIM 3</span>
+                            <span class="claim-quote">&ldquo;Brennan handpicked five CIA analysts, siloed them, one drafted it&rdquo;</span>
+                        </div>
+                        <span class="claim-verdict-badge badge-mixed">MIXED</span>
+                        <div class="claim-evidence">
+                            <p>The &ldquo;handpicked small group&rdquo; element has documentary basis in the HPSCI report and is echoed in the CIA tradecraft review. The &ldquo;only five&rdquo; figure is disputed &mdash; the bipartisan SSCI described &ldquo;two dozen or so seasoned experts.&rdquo; The &ldquo;one drafted it&rdquo; claim is unverified. The CIA tradecraft review confirms anomalous process without confirming the specific &ldquo;five&rdquo; figure <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a> <a href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a> <a href="#source-4" class="citation-link" onclick="highlightSource(event, 'source-4')">[4]</a>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Claim 4 -->
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-number">CLAIM 4</span>
+                            <span class="claim-quote">&ldquo;It was a rushed job to publish before Trump was sworn in&rdquo;</span>
+                        </div>
+                        <span class="claim-verdict-badge badge-true">TRUE (on timeline)</span>
+                        <div class="claim-evidence">
+                            <p>The ICA was ordered Dec 6&ndash;9 and published Jan 5&ndash;6 &mdash; roughly four weeks for a major assessment. The CIA&rsquo;s own 2025 tradecraft review explicitly listed the &ldquo;compressed timeline&rdquo; as a procedural anomaly. Whether &ldquo;rushed&rdquo; implies improper intent is where evidence runs out and interpretation begins <a href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a> <a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Claim 5 -->
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-number">CLAIM 5</span>
+                            <span class="claim-quote">&ldquo;There was no reliable intelligence Putin wanted Trump to win&rdquo;</span>
+                        </div>
+                        <span class="claim-verdict-badge badge-false">FALSE</span>
+                        <div class="claim-evidence">
+                            <p>The CIA and FBI assessed with high confidence that Putin preferred Trump. The NSA gave moderate confidence &mdash; reflecting limited sourcing, not disagreement with the direction. Even the critical 2025 CIA tradecraft review did not overturn this conclusion. Trump&rsquo;s own CIA Director Ratcliffe, while releasing the critical review, acknowledged the CIA still backs the core finding. Bloomberg reported in July 2025: &ldquo;Trump&rsquo;s CIA Backs 2016 Assessment That Putin Wanted Him to Win&rdquo; <a href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a> <a href="#source-6" class="citation-link" onclick="highlightSource(event, 'source-6')">[6]</a> <a href="#source-8" class="citation-link" onclick="highlightSource(event, 'source-8')">[8]</a>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Claim 6 -->
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-number">CLAIM 6</span>
+                            <span class="claim-quote">&ldquo;The Steele dossier was used as basis for the ICA&rdquo;</span>
+                        </div>
+                        <span class="claim-verdict-badge badge-misleading">MISLEADING</span>
+                        <div class="claim-evidence">
+                            <p>The dossier was included in a separate classified annex, largely at FBI Director Comey&rsquo;s insistence. It did not inform any of the ICA&rsquo;s analytical judgments or conclusions. The Senate Intelligence Committee confirmed unanimously: &ldquo;The dossier did not in any way inform the analysis in the ICA.&rdquo; Saying it was &ldquo;used as a basis&rdquo; conflates the annex with the assessment itself <a href="#source-4" class="citation-link" onclick="highlightSource(event, 'source-4')">[4]</a> <a href="#source-12" class="citation-link" onclick="highlightSource(event, 'source-12')">[12]</a> <a href="#source-16" class="citation-link" onclick="highlightSource(event, 'source-16')">[16]</a>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Claim 7 -->
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-number">CLAIM 7</span>
+                            <span class="claim-quote">&ldquo;Russians had Clinton &lsquo;psycho-emotional problems&rsquo; and &lsquo;tranquilizer&rsquo; dirt&rdquo;</span>
+                        </div>
+                        <span class="claim-verdict-badge badge-unverified">UNVERIFIED</span>
+                        <div class="claim-evidence">
+                            <p>The document containing these claims exists in the declassified HPSCI report. But this is Russian SVR intelligence reporting &mdash; what Russian spies <em>claimed</em> they found. Russian intelligence routinely fabricates or distorts kompromat. There is no corroboration from any U.S. medical or intelligence source. The video presents this as established fact about Clinton&rsquo;s health when it is unverified foreign intelligence of unknown provenance <a href="#source-1" class="citation-link" onclick="highlightSource(event, 'source-1')">[1]</a>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Claim 8 -->
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-number">CLAIM 8</span>
+                            <span class="claim-quote">&ldquo;60% of Democrats believed Russians hacked voting machines&rdquo;</span>
+                        </div>
+                        <span class="claim-verdict-badge badge-true">TRUE</span>
+                        <div class="claim-evidence">
+                            <p>A 2017 YouGov/Economist poll found 59% of Democrats believed Russia changed vote tallies &mdash; the IC consensus explicitly stated no votes were changed. The video&rsquo;s point about media-driven false beliefs is well-supported by polling data <a href="#source-17" class="citation-link" onclick="highlightSource(event, 'source-17')">[17]</a>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Claim 9 -->
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-number">CLAIM 9</span>
+                            <span class="claim-quote">&ldquo;Brennan committed perjury&rdquo;</span>
+                        </div>
+                        <span class="claim-verdict-badge badge-unverified">UNRESOLVED</span>
+                        <div class="claim-evidence">
+                            <p>There are documented contradictions between Brennan&rsquo;s testimony (&ldquo;the dossier was not used as a basis&rdquo;) and the documentary record (Brennan personally decided to include dossier material in the annex). The House Judiciary Committee referred him to DOJ for prosecution in 2025. AG Bondi confirmed receipt. But as of March 2026, no indictment has been filed. Stating he &ldquo;committed perjury&rdquo; as settled fact goes beyond what any court has determined <a href="#source-10" class="citation-link" onclick="highlightSource(event, 'source-10')">[10]</a> <a href="#source-11" class="citation-link" onclick="highlightSource(event, 'source-11')">[11]</a> <a href="#source-14" class="citation-link" onclick="highlightSource(event, 'source-14')">[14]</a>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Claim 10 -->
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-number">CLAIM 10</span>
+                            <span class="claim-quote">&ldquo;Obama was still pushing a hoax he knew wasn&rsquo;t true&rdquo;</span>
+                        </div>
+                        <span class="claim-verdict-badge badge-false">FALSE as stated</span>
+                        <div class="claim-evidence">
+                            <p>&ldquo;Knowing it wasn&rsquo;t true&rdquo; requires evidence of knowledge of falsity, which has not been established. Obama officials&rsquo; testimony that they had no personal &ldquo;empirical evidence&rdquo; of coordination is real but is not the same as knowing the underlying intelligence was fabricated. Multiple independent investigations confirmed Russian interference occurred <a href="#source-7" class="citation-link" onclick="highlightSource(event, 'source-7')">[7]</a> <a href="#source-13" class="citation-link" onclick="highlightSource(event, 'source-13')">[13]</a> <a href="#source-18" class="citation-link" onclick="highlightSource(event, 'source-18')">[18]</a>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Claim 11 -->
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-number">CLAIM 11</span>
+                            <span class="claim-quote">&ldquo;Mueller found no collusion&rdquo;</span>
+                        </div>
+                        <span class="claim-verdict-badge badge-misleading">MISLEADING</span>
+                        <div class="claim-evidence">
+                            <p>Mueller&rsquo;s exact finding: &ldquo;The investigation did not establish that members of the Trump campaign conspired or coordinated with the Russian government.&rdquo; This is true. But the report also documented &ldquo;numerous links between the Russian government and the Trump Campaign,&rdquo; found Russia interfered &ldquo;in sweeping and systematic fashion,&rdquo; and was limited by witnesses who deleted evidence or lied. &ldquo;No collusion&rdquo; is accurate on the legal conspiracy question but misleading as commonly deployed <a href="#source-7" class="citation-link" onclick="highlightSource(event, 'source-7')">[7]</a> <a href="#source-9" class="citation-link" onclick="highlightSource(event, 'source-9')">[9]</a>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Claim 12 -->
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-number">CLAIM 12</span>
+                            <span class="claim-quote">&ldquo;CIA officials refused but were overruled by Brennan and Comey&rdquo;</span>
+                        </div>
+                        <span class="claim-verdict-badge badge-true">TRUE</span>
+                        <div class="claim-evidence">
+                            <p>This is confirmed by multiple sources including the CIA&rsquo;s own 2025 tradecraft review. Two senior &ldquo;Russia House&rdquo; managers told Brennan they agreed with NSA&rsquo;s lower confidence &mdash; he overruled them. Senior CIA officers objected to dossier inclusion &mdash; overruled. Brennan&rsquo;s response to concerns: &ldquo;Yes, but doesn&rsquo;t it ring true?&rdquo; <a href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a> <a href="#source-3" class="citation-link" onclick="highlightSource(event, 'source-3')">[3]</a> <a href="#source-14" class="citation-link" onclick="highlightSource(event, 'source-14')">[14]</a>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Claim 13 -->
+                    <div class="claim-card">
+                        <div class="claim-header">
+                            <span class="claim-number">CLAIM 13</span>
+                            <span class="claim-quote">&ldquo;Rank and file CIA admitted tradecraft violations&rdquo;</span>
+                        </div>
+                        <span class="claim-verdict-badge badge-true">TRUE (on the violations)</span>
+                        <div class="claim-evidence">
+                            <p>The CIA&rsquo;s 2025 internal tradecraft review &mdash; released by Trump&rsquo;s own CIA Director &mdash; confirms compressed timeline, uneven access, marginalization of the National Intelligence Council, and excessive involvement of agency heads. However, the same review explicitly states these procedural failures do not invalidate the underlying conclusion <a href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a> <a href="#source-3" class="citation-link" onclick="highlightSource(event, 'source-3')">[3]</a> <a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Summary Verdict Table -->
+                    <div class="info-box copyable-section" style="border-left-color: #06b6d4; margin-top: 2rem;">
+                        <div class="info-title"><i data-lucide="list-checks"></i>Summary Verdict Table</div>
+                        <table class="verdict-summary-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Claim</th>
+                                    <th>Verdict</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Report locked in CIA vault for a decade</td>
+                                    <td><span class="claim-verdict-badge badge-misleading" style="font-size:0.7rem;">MISLEADING</span></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Obama ordered the CIA assessment</td>
+                                    <td><span class="claim-verdict-badge badge-true" style="font-size:0.7rem;">TRUE*</span></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Brennan handpicked five analysts</td>
+                                    <td><span class="claim-verdict-badge badge-mixed" style="font-size:0.7rem;">MIXED</span></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Rushed job before inauguration</td>
+                                    <td><span class="claim-verdict-badge badge-true" style="font-size:0.7rem;">TRUE*</span></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>No intelligence Putin preferred Trump</td>
+                                    <td><span class="claim-verdict-badge badge-false" style="font-size:0.7rem;">FALSE</span></td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Steele dossier was basis for ICA</td>
+                                    <td><span class="claim-verdict-badge badge-misleading" style="font-size:0.7rem;">MISLEADING</span></td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Russian dirt on Clinton health</td>
+                                    <td><span class="claim-verdict-badge badge-unverified" style="font-size:0.7rem;">UNVERIFIED</span></td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>60% of Democrats believed vote hacking</td>
+                                    <td><span class="claim-verdict-badge badge-true" style="font-size:0.7rem;">TRUE</span></td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>Brennan committed perjury</td>
+                                    <td><span class="claim-verdict-badge badge-unverified" style="font-size:0.7rem;">UNRESOLVED</span></td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>Obama knew it was false</td>
+                                    <td><span class="claim-verdict-badge badge-false" style="font-size:0.7rem;">FALSE</span></td>
+                                </tr>
+                                <tr>
+                                    <td>11</td>
+                                    <td>Mueller found no collusion</td>
+                                    <td><span class="claim-verdict-badge badge-misleading" style="font-size:0.7rem;">MISLEADING</span></td>
+                                </tr>
+                                <tr>
+                                    <td>12</td>
+                                    <td>CIA officials overruled by Brennan</td>
+                                    <td><span class="claim-verdict-badge badge-true" style="font-size:0.7rem;">TRUE</span></td>
+                                </tr>
+                                <tr>
+                                    <td>13</td>
+                                    <td>CIA admitted tradecraft violations</td>
+                                    <td><span class="claim-verdict-badge badge-true" style="font-size:0.7rem;">TRUE*</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">* TRUE with qualification &mdash; factual core is accurate but context or framing in the video overstates the implication.</p>
+                    </div>
+                </section>
+
+                <!-- SECTION 04: The Bigger Picture -->
+                <section class="copyable-section">
+                    <h2>04. The Bigger Picture &mdash; What&rsquo;s Real vs. What&rsquo;s Spin</h2>
+                    <p>The video&rsquo;s core technique: take documented procedural failures (which are real) and present them as proof the conclusions were fabricated (which the evidence does not support).</p>
+
+                    <div class="info-box copyable-section" style="border-left-color: #10b981;">
+                        <div class="info-title"><i data-lucide="check-circle"></i>What IS Supported by Evidence</div>
+                        <ul>
+                            <li>The ICA process was anomalously structured</li>
+                            <li>Brennan overruled dissenting senior analysts</li>
+                            <li>The timeline was compressed &mdash; four weeks for a major assessment</li>
+                            <li>The Steele dossier annex was improperly included</li>
+                            <li>Some Obama officials promoted a stronger narrative than their testimony supported</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box red copyable-section" style="margin-top: 1rem;">
+                        <div class="info-title"><i data-lucide="x-circle"></i>What Is NOT Supported</div>
+                        <ul>
+                            <li>That Russian interference didn&rsquo;t happen (confirmed by Mueller, SSCI, and CIA&rsquo;s own 2025 review)</li>
+                            <li>That the ICA&rsquo;s core conclusions were fabricated (even the critical tradecraft review doesn&rsquo;t say this)</li>
+                            <li>That Obama &ldquo;knew&rdquo; the assessment was false (no evidence of this)</li>
+                            <li>That Brennan has been found guilty of perjury (no charges filed as of March 2026)</li>
+                        </ul>
+                    </div>
+
+                    <p style="margin-top: 1rem;">The gap between &ldquo;the process had problems&rdquo; and &ldquo;the whole thing was manufactured&rdquo; is where this video&rsquo;s claims break down. Procedural failures are serious and worth documenting. But they are not the same as fabrication &mdash; and conflating the two is how misinformation works.</p>
+                </section>
+
+                <!-- Chart 2: Source Document Reliability -->
+                <figure class="float-figure copyable-section" id="reliability-chart-wrapper" style="clear: both;">
+                    <div class="chart-wrapper">
+                        <div class="chart-header">
+                            <div class="chart-title">Source Document Reliability Ranking</div>
+                        </div>
+                        <div style="height: 280px; position: relative;">
+                            <canvas id="reliabilityChart"></canvas>
+                        </div>
+                    </div>
+                    <figcaption>Authority rating of key source documents used in this analysis. Primary government sources rank highest; secondary commentary ranks lowest.</figcaption>
+                </figure>
+
+                <!-- SECTION 05: Source Primacy Analysis -->
+                <section class="copyable-section">
+                    <h2>05. Source Primacy Analysis</h2>
+
+                    <div class="data-table-container copyable-section">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Source Document</th>
+                                    <th>Type</th>
+                                    <th>Reliability</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CIA 2025 Tradecraft Review</td>
+                                    <td>Primary, Government</td>
+                                    <td style="color: #10b981; font-weight: 600;">Highest</td>
+                                    <td>CIA&rsquo;s own internal review. Released by Trump appointee Ratcliffe.</td>
+                                </tr>
+                                <tr>
+                                    <td>Senate Intelligence Committee 2020</td>
+                                    <td>Primary, Bipartisan</td>
+                                    <td style="color: #10b981; font-weight: 600;">Very High</td>
+                                    <td>Found ICA tradecraft &ldquo;sound&rdquo; and conclusions &ldquo;well-supported.&rdquo;</td>
+                                </tr>
+                                <tr>
+                                    <td>Mueller Report 2019</td>
+                                    <td>Primary, DOJ</td>
+                                    <td style="color: #10b981; font-weight: 600;">Very High</td>
+                                    <td>Documented interference, prosecuted Russian nationals.</td>
+                                </tr>
+                                <tr>
+                                    <td>HPSCI Majority Staff Report 2020</td>
+                                    <td>Primary, Partisan</td>
+                                    <td style="color: #f59e0b; font-weight: 600;">Moderate</td>
+                                    <td>Republican majority product. Contradicted by bipartisan SSCI.</td>
+                                </tr>
+                                <tr>
+                                    <td>Viral Video Commentary</td>
+                                    <td>Secondary, Opinion</td>
+                                    <td style="color: #ef4444; font-weight: 600;">Low</td>
+                                    <td>Selectively cites primary sources; omits contradicting findings.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- SECTION 06: Conclusion -->
+                <div class="info-box amber copyable-section" style="clear: both;">
+                    <div class="info-title"><i data-lucide="scale"></i>Final Verdict</div>
+                    <p><strong class="verdict-misleading">MISLEADING</strong></p>
+                </div>
+                <section class="copyable-section">
+                    <h2>06. Conclusion</h2>
+                    <p>The video correctly identifies real procedural irregularities in the 2017 ICA &mdash; Brennan&rsquo;s unusual authority over the process, the compressed timeline, and the improper dossier inclusion. These are now confirmed by the CIA&rsquo;s own internal review. But it then makes a logical leap the evidence does not support: that these procedural failures mean the entire Russia interference finding was fabricated <a href="#source-2" class="citation-link" onclick="highlightSource(event, 'source-2')">[2]</a> <a href="#source-5" class="citation-link" onclick="highlightSource(event, 'source-5')">[5]</a>.</p>
+                    <p>Even Trump&rsquo;s own CIA Director, while releasing the critical tradecraft review, acknowledged the CIA still backs the core finding <a href="#source-6" class="citation-link" onclick="highlightSource(event, 'source-6')">[6]</a>. The bipartisan Senate Intelligence Committee &mdash; including Republican members &mdash; found the ICA&rsquo;s conclusions &ldquo;well-supported&rdquo; <a href="#source-4" class="citation-link" onclick="highlightSource(event, 'source-4')">[4]</a>. Mueller&rsquo;s investigation documented Russian interference &ldquo;in sweeping and systematic fashion&rdquo; and prosecuted Russian nationals for it <a href="#source-7" class="citation-link" onclick="highlightSource(event, 'source-7')">[7]</a>.</p>
+                    <p>The distinction between &ldquo;the process was flawed&rdquo; and &ldquo;the conclusion was manufactured&rdquo; is the line this video crosses without evidence. Real accountability for procedural failures is important. But accountability requires precision &mdash; not the same kind of overreach the video accuses the intelligence community of committing.</p>
+                </section>
+
+            </article>
+        </div>
+    </div>
+
+    <!-- Shared Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Initialize Lucide Icons
+        window.addEventListener('gv:componentsReady', () => {
+            lucide.createIcons();
+        });
+
+        // Interactive Citation Highlighting
+        function highlightSource(event, id) {
+            event.preventDefault();
+            const element = document.getElementById(id);
+
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                element.classList.remove('highlight');
+                void element.offsetWidth; // trigger reflow
+                element.classList.add('highlight');
+            }
+        }
+
+        // Social Sharing Functions
+        function shareToTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(document.title);
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
+        }
+
+        function shareToFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
+        }
+
+        function shareToLinkedIn() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank', 'width=600,height=600');
+        }
+
+        function copyShareLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const btn = document.getElementById('copyLinkBtn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i data-lucide="check"></i> Copied!';
+                btn.classList.add('copied');
+                lucide.createIcons({ nodes: [btn] });
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('copied');
+                    lucide.createIcons({ nodes: [btn] });
+                }, 2000);
+            });
+        }
+
+        // Chart 1: Claim Verdicts Breakdown (Horizontal Bar)
+        new Chart(document.getElementById('verdictsChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['TRUE', 'MISLEADING', 'FALSE', 'MIXED', 'UNVERIFIED/UNRESOLVED'],
+                datasets: [{
+                    label: 'Number of Claims',
+                    data: [5, 3, 2, 1, 2],
+                    backgroundColor: ['#10b981', '#f59e0b', '#ef4444', '#3b82f6', '#64748b'],
+                    borderColor: ['#10b981', '#f59e0b', '#ef4444', '#3b82f6', '#64748b'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    datalabels: {
+                        color: '#e2e8f0',
+                        anchor: 'end',
+                        align: 'right',
+                        formatter: function(value) {
+                            return value + ' claims';
+                        },
+                        font: {
+                            size: 11,
+                            weight: '600'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: {
+                            color: '#64748b',
+                            stepSize: 1
+                        },
+                        max: 6
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8', font: { size: 11 } }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Source Document Reliability (Horizontal Bar)
+        new Chart(document.getElementById('reliabilityChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['CIA Tradecraft Review 2025', 'Senate Intel Committee 2020', 'Mueller Report 2019', 'HPSCI Staff Report 2020', 'Viral Video Commentary'],
+                datasets: [{
+                    label: 'Reliability Score',
+                    data: [95, 90, 90, 70, 25],
+                    backgroundColor: '#06b6d4',
+                    borderColor: '#06b6d4',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    datalabels: {
+                        color: '#e2e8f0',
+                        anchor: 'end',
+                        align: 'right',
+                        formatter: function(value) {
+                            return value + '/100';
+                        },
+                        font: {
+                            size: 11,
+                            weight: '600'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: {
+                            color: '#64748b'
+                        },
+                        max: 100
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8', font: { size: 11 } }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
