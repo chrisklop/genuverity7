@@ -229,6 +229,32 @@
                 </div>
                 -->
 
+                <!-- TEMPLATE FOR VIDEO EMBED (YouTube/Rumble — iframe):
+                <figure class="video-embed">
+                    <span class="video-source-badge youtube">YouTube</span>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+                                allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy"
+                                title="{{VIDEO_DESCRIPTION}}"></iframe>
+                    </div>
+                    <figcaption>{{CAPTION}} <a href="#source-N" class="citation-link" onclick="highlightSource(event, 'source-N')">[N]</a></figcaption>
+                </figure>
+                -->
+
+                <!-- TEMPLATE FOR VIDEO FALLBACK (TikTok/X/deleted — link card):
+                <figure class="video-embed">
+                    <span class="video-source-badge tiktok">TikTok</span>
+                    <a href="{{VIDEO_URL}}" target="_blank" rel="noopener" class="video-fallback">
+                        <div class="fallback-text">
+                            <i data-lucide="play-circle"></i>
+                            <span>Watch on TikTok</span>
+                        </div>
+                    </a>
+                    <figcaption>{{CAPTION}} <a href="#source-N" class="citation-link" onclick="highlightSource(event, 'source-N')">[N]</a></figcaption>
+                </figure>
+                -->
+
             </article>
         </div>
     </div>
