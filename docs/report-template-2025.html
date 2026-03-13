@@ -230,7 +230,16 @@
                 -->
 
                 <!-- TEMPLATE FOR VIDEO EMBED (YouTube/Rumble — iframe):
+
+                CONTEXT BANNERS — Add one of these BEFORE the source badge when the video needs context:
+                  fact-check (green):     <div class="video-context-banner fact-check"><i data-lucide="shield-check"></i> FACT-CHECK — {{description}}</div>
+                  misinfo-source (red):   <div class="video-context-banner misinfo-source"><i data-lucide="alert-triangle"></i> MISINFO SOURCE — {{description}}</div>
+                  primary-source (purple): <div class="video-context-banner primary-source"><i data-lucide="mic"></i> PRIMARY SOURCE — {{description of speech/statement}}</div>
+
+                BADGE OPTIONS: youtube | rumble | tiktok | x | cspan | speech | statement
+
                 <figure class="video-embed">
+                    <div class="video-context-banner fact-check"><i data-lucide="shield-check"></i> FACT-CHECK — {{short context}}</div>
                     <span class="video-source-badge youtube">YouTube</span>
                     <div class="video-container">
                         <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID"

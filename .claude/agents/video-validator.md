@@ -76,8 +76,10 @@ VIDEO 1: {URL}
   Gate 3 (Visual): PASS|FAIL|SKIP — content_relevant: {yes|no}, quality: {good|poor}, branding: {yes|no}
   Gate 4 (Embed): PASS|FAIL — oEmbed: {valid|invalid}, title: "{title}"
   VERDICT: PASS|FAIL
+  CATEGORY: fact-check|misinfo-source|primary-source|none
   REASON: {one-line explanation}
   RECOMMENDED CAPTION: "{suggested caption based on transcript + visual analysis}"
+  BANNER TEXT: "{text for the context banner, or 'none'}"
 
 VIDEO 2: {URL}
   ...
@@ -97,6 +99,30 @@ If the sora-decompiler MCP server is unavailable (tools not found):
 3. For non-YouTube sources, PASS with a warning that deep verification was skipped
 4. Do NOT block the pipeline — videos proceed with reduced confidence
 
+## Video Content Categories
+
+Every embedded video MUST be classified into one of these categories. The category determines the context banner shown above the embed:
+
+| Category | Banner Class | When to Use |
+|----------|-------------|-------------|
+| `fact-check` | Green | News org or fact-checker debunking the claim (Euronews, Snopes, PolitiFact, etc.) |
+| `misinfo-source` | Red | The actual false/misleading content being fact-checked (game footage shared as real, manipulated video, etc.) |
+| `primary-source` | Purple | Official statements, speeches, press conferences, testimony — the original words of a person or org |
+| (no banner) | None | General educational/explainer content that adds context |
+
+### Rules for each category:
+
+**Fact-check videos** — Preferred. Educational content from credible sources that explains what's true and what's false.
+
+**Misinfo-source videos** — Allowed and valuable for showing readers exactly what the false claim looks like, BUT must always have the red `misinfo-source` banner with a clear explanation (e.g., "This is the original video game footage that was falsely shared as real war footage").
+
+**Primary-source videos** — Highly valuable. Speeches, official statements, press conferences, congressional testimony, interviews where the subject makes specific claims that the report fact-checks. These let readers hear the actual words rather than relying on secondhand reporting. Use the purple `primary-source` banner.
+
+**No banner** — Expert analysis, educational explainers, background context. Must still be factual and from credible sources.
+
+### Content Balance Rule
+A report should NOT embed only misinfo-source videos. Every misinfo-source embed should be balanced by at least one fact-check or primary-source embed in the same report.
+
 ## Critical Rules
 
 - **Language mismatch is a hard reject** — an English report must not embed a Hindi/Spanish/etc video unless it has English subtitles (check transcript for mixed-language content)
@@ -104,6 +130,8 @@ If the sora-decompiler MCP server is unavailable (tools not found):
 - **Visual check is subjective** — err on the side of PASS unless the content is clearly wrong
 - **Never block on MCP server issues** — fallback gracefully, the pipeline must not stop because a video can't be analyzed
 - **Cache results** — if `analysis_id` is returned, note it so re-runs don't re-download
+- **Always assign a content category** — include the category in the validation report so the report generator knows which banner to apply
+- **Prioritize primary sources** — if a report involves someone making a public statement or speech, actively search for that video. Readers hearing the actual words is more powerful than reading a summary.
 
 ## Tools
 mcp__sora-decompiler__get_metadata, mcp__sora-decompiler__extract_audio, mcp__sora-decompiler__extract_frames, mcp__sora-decompiler__full_decompile, WebFetch, Read

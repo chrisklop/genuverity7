@@ -643,6 +643,36 @@ section::after {
 .video-source-badge.tiktok { background: #000; color: #fff; border: 1px solid rgba(255,255,255,0.2); }
 .video-source-badge.x { background: #1d9bf0; color: #fff; }
 .video-source-badge.cspan { background: #182778; color: #fff; }
+.video-source-badge.speech { background: #8b5cf6; color: #fff; }
+.video-source-badge.statement { background: #8b5cf6; color: #fff; }
+
+/* Misinfo source warning overlay */
+.video-context-banner {
+    padding: 8px 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.video-context-banner.misinfo-source {
+    background: linear-gradient(135deg, #7f1d1d, #991b1b);
+    color: #fca5a5;
+    border-bottom: 1px solid #dc2626;
+}
+.video-context-banner.fact-check {
+    background: linear-gradient(135deg, #064e3b, #065f46);
+    color: #6ee7b7;
+    border-bottom: 1px solid #10b981;
+}
+.video-context-banner.primary-source {
+    background: linear-gradient(135deg, #1e1b4b, #312e81);
+    color: #a5b4fc;
+    border-bottom: 1px solid #6366f1;
+}
 
 /* --- Rich link preview card (fallback for non-embeddable sources) --- */
 .video-fallback {
