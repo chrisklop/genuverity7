@@ -68,6 +68,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/ai-deepfake-ceo-stock-scam-2026.html",
+      "destination": "/ai-deepfake-ceo-stock-scam-2026",
+      "permanent": true
+    },
+    {
+      "source": "/ai-deepfake-ceo-stock-scam-2026.html",
+      "destination": "/ai-deepfake-ceo-stock-scam-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/ai-deportation-videos.html",
       "destination": "/ai-deportation-videos",
       "permanent": true
@@ -908,6 +918,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/iran-war-fake-videos-2026.html",
+      "destination": "/iran-war-fake-videos-2026",
+      "permanent": true
+    },
+    {
+      "source": "/iran-war-fake-videos-2026.html",
+      "destination": "/iran-war-fake-videos-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/irs-social-security-payment-hoax-2025.html",
       "destination": "/irs-social-security-payment-hoax-2025",
       "permanent": true
@@ -1338,6 +1358,26 @@
       "permanent": true
     },
     {
+      "source": "/localreports/ohare-detention-hoax-2026.html",
+      "destination": "/ohare-detention-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/ohare-detention-hoax-2026.html",
+      "destination": "/ohare-detention-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/operation-invisible-pump-hoax-2026.html",
+      "destination": "/operation-invisible-pump-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/operation-invisible-pump-hoax-2026.html",
+      "destination": "/operation-invisible-pump-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/operation-mockingbird-cia.html",
       "destination": "/operation-mockingbird-cia",
       "permanent": true
@@ -1565,6 +1605,16 @@
     {
       "source": "/ruby-bradley-quote.html",
       "destination": "/ruby-bradley-quote",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/russell-brand-death-hoax-2026.html",
+      "destination": "/russell-brand-death-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/russell-brand-death-hoax-2026.html",
+      "destination": "/russell-brand-death-hoax-2026",
       "permanent": true
     },
     {
@@ -2189,6 +2239,10 @@
       "destination": "/localreports/ai-deepfakes-2025.html"
     },
     {
+      "source": "/ai-deepfake-ceo-stock-scam-2026",
+      "destination": "/localreports/ai-deepfake-ceo-stock-scam-2026.html"
+    },
+    {
       "source": "/ai-deportation-videos",
       "destination": "/localreports/ai-deportation-videos.html"
     },
@@ -2529,6 +2583,10 @@
       "destination": "/localreports/iran-nuclear-crisis.html"
     },
     {
+      "source": "/iran-war-fake-videos-2026",
+      "destination": "/localreports/iran-war-fake-videos-2026.html"
+    },
+    {
       "source": "/irs-social-security-payment-hoax-2025",
       "destination": "/localreports/irs-social-security-payment-hoax-2025.html"
     },
@@ -2701,6 +2759,14 @@
       "destination": "/localreports/nsf-grant-termination-2025.html"
     },
     {
+      "source": "/ohare-detention-hoax-2026",
+      "destination": "/localreports/ohare-detention-hoax-2026.html"
+    },
+    {
+      "source": "/operation-invisible-pump-hoax-2026",
+      "destination": "/localreports/operation-invisible-pump-hoax-2026.html"
+    },
+    {
       "source": "/operation-mockingbird-cia",
       "destination": "/localreports/operation-mockingbird-cia.html"
     },
@@ -2791,6 +2857,10 @@
     {
       "source": "/ruby-bradley-quote",
       "destination": "/localreports/ruby-bradley-quote.html"
+    },
+    {
+      "source": "/russell-brand-death-hoax-2026",
+      "destination": "/localreports/russell-brand-death-hoax-2026.html"
     },
     {
       "source": "/sa-illegal-migrants-claim-2025",
