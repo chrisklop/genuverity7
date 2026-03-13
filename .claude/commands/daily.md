@@ -360,7 +360,21 @@ Task tool:
     Build data tables where appropriate
     Verdict box class: green (true/mostly true), amber (mixed/context), red (false/misleading)
 
-    ### 4.5. Insert video embeds (from research file's `## Embeddable Media` section)
+    ### 4.4. Video Verification (HARD GATE — uses sora-decompiler MCP)
+    Before embedding any video, validate it using the video-validator agent.
+
+    For each candidate video in the research file's `## Embeddable Media` section:
+    1. Call `mcp__sora-decompiler__get_metadata` — check duration, embeddability, language hint
+    2. Call `mcp__sora-decompiler__extract_audio` — verify language matches report (English), check transcript
+    3. Call `mcp__sora-decompiler__extract_frames` — visually verify content matches topic (multimodal)
+    4. Verify oEmbed works for YouTube videos
+
+    **Only videos that PASS all gates get embedded.** Failed videos are logged with reasons.
+
+    If sora-decompiler MCP is unavailable, fall back to oEmbed-only verification (non-blocking).
+    See `.claude/agents/video-validator.md` for full protocol.
+
+    ### 4.5. Insert video embeds (from PASSED videos only)
     For each video/preview found during research, insert an embed at the most relevant point in the article.
 
     **YouTube videos** — use iframe embed:
