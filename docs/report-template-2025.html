@@ -229,6 +229,46 @@
                 </div>
                 -->
 
+                <!-- TEMPLATE FOR VIDEO EMBED (YouTube/Rumble — iframe):
+
+                CONTEXT BANNERS — Add one of these BEFORE the source badge when the video needs context:
+                  fact-check (green):     <div class="video-context-banner fact-check"><i data-lucide="shield-check"></i> FACT-CHECK — {{description}}</div>
+                  misinfo-source (red):   <div class="video-context-banner misinfo-source"><i data-lucide="alert-triangle"></i> MISINFO SOURCE — {{description}}</div>
+                  primary-source (purple): <div class="video-context-banner primary-source"><i data-lucide="mic"></i> PRIMARY SOURCE — {{description of speech/statement}}</div>
+
+                BADGE OPTIONS: youtube | rumble | tiktok | x | cspan | speech | statement
+
+                <figure class="video-embed">
+                    <div class="video-context-banner fact-check"><i data-lucide="shield-check"></i> FACT-CHECK — {{short context}}</div>
+                    <span class="video-source-badge youtube">YouTube</span>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+                                allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy"
+                                title="{{VIDEO_DESCRIPTION}}"></iframe>
+                    </div>
+                    <figcaption>{{CAPTION}} <a href="#source-N" class="citation-link" onclick="highlightSource(event, 'source-N')">[N]</a></figcaption>
+                </figure>
+                -->
+
+                <!-- TEMPLATE FOR RICH LINK PREVIEW (X posts, articles, non-embeddable sources):
+                <figure class="video-embed">
+                    <span class="video-source-badge x">X</span>
+                    <a href="{{ARTICLE_URL}}" target="_blank" rel="noopener" class="video-fallback">
+                        <div class="link-preview-thumb">
+                            <img src="{{OG_IMAGE_URL}}" alt="{{ALT_TEXT}}" loading="lazy">
+                        </div>
+                        <div class="link-preview-body">
+                            <div class="link-preview-source"><i data-lucide="at-sign"></i> {{DOMAIN}}</div>
+                            <div class="link-preview-title">{{HEADLINE}}</div>
+                            <div class="link-preview-excerpt">{{SHORT_EXCERPT}}</div>
+                            <div class="link-preview-cta"><i data-lucide="external-link"></i> Read more</div>
+                        </div>
+                    </a>
+                    <figcaption>{{CAPTION}} <a href="#source-N" class="citation-link" onclick="highlightSource(event, 'source-N')">[N]</a></figcaption>
+                </figure>
+                -->
+
             </article>
         </div>
     </div>

@@ -1,118 +1,63 @@
 # GenuVerity Session Context
 
-> **Last Updated:** 2026-02-01
-> **Status:** Phase 1 Hub UI complete - landing and search pages live
-> **Current Milestone:** Epstein Files Hub - Phase 1 Complete
+> **Last Updated:** 2026-03-13
+> **Status:** Video embed system built + pipeline integrated. Waiting for MCP server from sora-remix.
+> **Branch:** `report/daily-2026-03-13` (3 commits ahead of main, pushed)
 
 ---
 
-## What Is This Project?
+## What Was Done This Session
 
-GenuVerity is a fact-checking platform (190+ reports) using source-first methodology. Stack: Static HTML, Chart.js, FastAPI, Vercel.
+### 1. Video Embed System (COMPLETE)
+Built a full video embed system for reports:
+- **CSS** (`css/reports.css`): 150+ lines — responsive 16:9 iframes, source badges (YouTube/Rumble/TikTok/X/C-SPAN), rich link preview cards with OG images
+- **Template** (`docs/report-template-2025.html`): YouTube iframe + rich link preview card patterns
+- **6 embeds across 3 reports:**
+  - `iran-war-fake-videos-2026.html`: Euronews debunk (`O_x2pxnvv80`) + original Arma 3 gameplay (`QI6XU-xnp6Q`)
+  - `ai-deepfake-ceo-stock-scam-2026.html`: BSE India warning (`plwarWTtsxI`) + CNBC analysis (`P5N087Hdsc0`)
+  - `russell-brand-death-hoax-2026.html`: 2 rich link preview cards (Reality Tea + TMZ) with OG images
+- O'Hare + Operation Invisible Pump: no videos found (too recent/niche)
 
-**New Initiative:** Epstein Files Hub - a fact-checked document explorer for the DOJ's 3.5M+ page Epstein release.
+### 2. Pipeline Integration (COMPLETE)
+Updated all pipeline files to include video embeds in every future report:
+- **`.claude/commands/daily.md`**: Research Round 5 (video discovery), Depth Expansion Pass B (video enrichment), Generation Step 4.5 (embed insertion), QA T12 (embed validation), quality targets updated
+- **`.claude/commands/generate-report.md`**: Pass 1.5 video discovery + oEmbed verification
+- **`.claude/agents/report-generator.md`**: Pass 1.5 video discovery + Pass 2 embed insertion
+- **`.claude/agents/qa-validator.md`**: T12 video embed structural check
 
----
-
-## Current Milestone: Epstein Files Hub
-
-**Unique Value Proposition:** "Search with truth indicators" - the only platform combining document access with verification badges and misinformation alerts.
-
-### Why This Matters
-- DOJ warns files include "fake or falsely submitted" content
-- 16+ files already removed after release
-- No existing tool distinguishes FBI evidence from anonymous tips
-- Viral misinformation spreads faster than verification
-
----
-
-## What's Completed
-
-- [x] Expanded Epstein Files 2026 report (18 sources)
-- [x] Merged 6 report branches to main
-- [x] Fixed mobile horizontal scroll issue
-- [x] Installed epstein-email-explorer MCP (2,322 emails)
-- [x] Wrote research brief for Deep Research
-- [x] Analyzed Deep Research results
-- [x] Defined technical architecture
-- [x] Defined badge system (Admiralty-style A-F / 1-6)
-- [x] Installed epstein-rag MCP (20K+ docs via Qdrant semantic search)
-- [x] **Created `/epstein-files/index.html`** - Hub landing page with stats, search, features, revelations grid
-- [x] **Created `/epstein-files/search.html`** - Document search with badge filters and misinfo alerts
-- [x] **Created `/css/epstein-hub.css`** - Hub styling with badge colors (A-F)
-- [x] **Created `/js/epstein-hub-data.js`** - Static data (revelations, misinfo alerts, stats)
-- [x] **Updated navbar/footer** - Added "Epstein Files" link to navigation
+### 3. Rich Link Preview Cards (COMPLETE)
+Upgraded fallback link cards from empty boxes to Slack/Discord-style rich previews:
+- Thumbnail from OG image, headline, excerpt, source domain, cyan CTA
+- Responsive: side-by-side on desktop, stacked on mobile
 
 ---
 
-## What's Next (Pending)
+## NEXT SESSION: Test Sora-Decompiler MCP + Fix Hindi Video
 
-### Phase 2: Supabase Integration
-1. [ ] Create Supabase migration for new tables (epstein_documents, epstein_entities, etc.)
-2. [ ] Build document ingestion script (hash → store)
-3. [ ] Wire search.html to `epstein-rag` MCP for real semantic search
-4. [ ] Display badges from Supabase metadata
+### What's Already Done (DO NOT REDO)
+- MCP config added to `~/.mcp.json` — `sora-decompiler` entry pointing to `/Users/klop/sora-remix/sora_remix/mcp_server.py`
+- Video validator agent built at `.claude/agents/video-validator.md`
+- Pipeline updated with Step 4.4 (video verification hard gate) in `.claude/commands/daily.md`
+- All pipeline files updated (daily.md, generate-report.md, report-generator.md, qa-validator.md)
 
-### Phase 3: Misinformation Layer
-5. [ ] Seed `epstein_misinfo` table with known false claims
-6. [ ] Create dynamic alert component in search.html
-7. [ ] Link alerts to existing fact-check reports
-
-### Phase 4: Visualizations
-8. [ ] Create `network.html` with Cytoscape.js
-9. [ ] Create `timeline.html` for chronological browsing
-10. [ ] Create `releases.html` for DOJ release tracking
-
-### Phase 5: Automation
-11. [ ] Create delta detection script for new releases
-12. [ ] Build revelation ranking algorithm
-13. [ ] Create report generation pipeline
-14. [ ] Set up ChangeDetection.io for DOJ monitoring
-
-### Archive Infrastructure (Backlog)
-- [ ] Set up WARC capture pipeline
-- [ ] Mirror all 12 DOJ data sets
-- [ ] Obtain COURIER/Pinpoint deleted files
+### After Restart, Do This:
+1. **Verify MCP tools are available**: Check that `mcp__sora-decompiler__get_metadata`, `mcp__sora-decompiler__extract_audio`, `mcp__sora-decompiler__extract_frames`, `mcp__sora-decompiler__full_decompile` show up
+2. **Test on the Hindi BSE video**: Run `mcp__sora-decompiler__extract_audio` on `https://www.youtube.com/watch?v=plwarWTtsxI` — should return `language: "hi"` confirming the validator would catch it
+3. **Fix the Hindi BSE video** in `localreports/ai-deepfake-ceo-stock-scam-2026.html`:
+   - Either find an English alternative (try Bloomberg `uwQS7mdsgyc` — validate language first)
+   - Or remove the BSE embed and keep only the CNBC embed in Section 5
+4. **Commit + push** the fix
 
 ---
 
-## Key Files
+## Git State
+- **Branch:** `report/daily-2026-03-13`
+- **Commits:** 3 ahead of main (daily batch + video embeds + rich previews + pipeline updates)
+- **Pushed:** Yes, Vercel preview is live
+- **PR:** Not yet created — waiting for review
 
-| File | Purpose |
-|------|---------|
-| `.planning/Session.md` | This file - session tracking |
-| `.planning/EPSTEIN-HUB-ROADMAP.md` | Detailed technical roadmap |
-| `/epstein-files/index.html` | Hub landing page |
-| `/epstein-files/search.html` | Document search page |
-| `/css/epstein-hub.css` | Hub-specific styles |
-| `/js/epstein-hub-data.js` | Static hub data |
-| `localreports/epstein-files-2026-revelations.html` | Current Epstein report |
-
----
-
-## Quick Reference
-
-**Badge System:**
-- A (Court Record) → B (Gov Record) → C (Verified External) → D (Unverified) → E (News Clipping) → F (Flagged/Debunked)
-
-**Hub URLs:**
-- `/epstein-files/` - Landing page
-- `/epstein-files/search.html` - Document search
-
-**Key Tools Identified:**
-- Archive: WARC, ChangeDetection.io, Perma.cc, Save Page Now
-- NER: spaCy + EntityRuler
-- Entity Resolution: Splink
-- Visualization: Cytoscape.js (rich), Sigma.js (large scale)
-- Misinformation: ClaimReview, Google Fact Check Explorer
-
----
-
-## Notes
-
-- MCP server installed: `epstein-email-explorer` (2,322 emails)
-- MCP server installed: `epstein-rag` (20K+ docs via Qdrant) - Requires Docker running
-- Qdrant storage: `~/qdrant_storage`
-- Qdrant container: `docker start qdrant` if not running
-- Production revert point: `3f35110` (before today's merges)
-- Current main: `5deb616` (includes mobile fix)
+## Key File Locations
+- Video embed CSS: `css/reports.css` lines 583-780
+- Report template patterns: `docs/report-template-2025.html` lines 229-270
+- Pipeline with video steps: `.claude/commands/daily.md`
+- QA with T12: `.claude/agents/qa-validator.md`
