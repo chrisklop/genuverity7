@@ -1008,6 +1008,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/india-military-deepfakes-2026.html",
+      "destination": "/india-military-deepfakes-2026",
+      "permanent": true
+    },
+    {
+      "source": "/india-military-deepfakes-2026.html",
+      "destination": "/india-military-deepfakes-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/india-pakistan-karachi-invasion-2025.html",
       "destination": "/india-pakistan-karachi-invasion-2025",
       "permanent": true
@@ -1458,6 +1468,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/netanyahu-death-hoax-2026.html",
+      "destination": "/netanyahu-death-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/netanyahu-death-hoax-2026.html",
+      "destination": "/netanyahu-death-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/netanyahu-no-starvation-gaza-2025.html",
       "destination": "/netanyahu-no-starvation-gaza-2025",
       "permanent": true
@@ -1705,6 +1725,16 @@
     {
       "source": "/project-2025-military-orders.html",
       "destination": "/project-2025-military-orders",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/pro-iran-disinfo-flood-2026.html",
+      "destination": "/pro-iran-disinfo-flood-2026",
+      "permanent": true
+    },
+    {
+      "source": "/pro-iran-disinfo-flood-2026.html",
+      "destination": "/pro-iran-disinfo-flood-2026",
       "permanent": true
     },
     {
@@ -2945,6 +2975,10 @@
       "destination": "/localreports/india-digital-arrest-scam-2025.html"
     },
     {
+      "source": "/india-military-deepfakes-2026",
+      "destination": "/localreports/india-military-deepfakes-2026.html"
+    },
+    {
       "source": "/india-pakistan-karachi-invasion-2025",
       "destination": "/localreports/india-pakistan-karachi-invasion-2025.html"
     },
@@ -3125,6 +3159,10 @@
       "destination": "/localreports/nc-wireless-driving-ban-2025.html"
     },
     {
+      "source": "/netanyahu-death-hoax-2026",
+      "destination": "/localreports/netanyahu-death-hoax-2026.html"
+    },
+    {
       "source": "/netanyahu-no-starvation-gaza-2025",
       "destination": "/localreports/netanyahu-no-starvation-gaza-2025.html"
     },
@@ -3223,6 +3261,10 @@
     {
       "source": "/project-2025-military-orders",
       "destination": "/localreports/project-2025-military-orders.html"
+    },
+    {
+      "source": "/pro-iran-disinfo-flood-2026",
+      "destination": "/localreports/pro-iran-disinfo-flood-2026.html"
     },
     {
       "source": "/protect-yourself-ai-misinformation-2026",
