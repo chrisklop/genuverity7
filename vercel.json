@@ -1068,6 +1068,26 @@
       "permanent": true
     },
     {
+      "source": "/localreports/iran-school-bombing-factcheck-2026.html",
+      "destination": "/iran-school-bombing-factcheck-2026",
+      "permanent": true
+    },
+    {
+      "source": "/iran-school-bombing-factcheck-2026.html",
+      "destination": "/iran-school-bombing-factcheck-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/iran-target-list-hoax-2026.html",
+      "destination": "/iran-target-list-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/iran-target-list-hoax-2026.html",
+      "destination": "/iran-target-list-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/iran-war-fake-videos-2026.html",
       "destination": "/iran-war-fake-videos-2026",
       "permanent": true
@@ -1988,6 +2008,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/sydney-ai-police-image-2026.html",
+      "destination": "/sydney-ai-police-image-2026",
+      "permanent": true
+    },
+    {
+      "source": "/sydney-ai-police-image-2026.html",
+      "destination": "/sydney-ai-police-image-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/syria-assad-underground-photo-2025.html",
       "destination": "/syria-assad-underground-photo-2025",
       "permanent": true
@@ -2260,6 +2290,16 @@
     {
       "source": "/localreports/tylenol-autism-claims-2025.html",
       "destination": "/tylenol-autism-claims-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/turbo-cancer-mrna-myth-2026.html",
+      "destination": "/turbo-cancer-mrna-myth-2026",
+      "permanent": true
+    },
+    {
+      "source": "/turbo-cancer-mrna-myth-2026.html",
+      "destination": "/turbo-cancer-mrna-myth-2026",
       "permanent": true
     },
     {
@@ -2999,6 +3039,14 @@
       "destination": "/localreports/iran-nuclear-crisis.html"
     },
     {
+      "source": "/iran-school-bombing-factcheck-2026",
+      "destination": "/localreports/iran-school-bombing-factcheck-2026.html"
+    },
+    {
+      "source": "/iran-target-list-hoax-2026",
+      "destination": "/localreports/iran-target-list-hoax-2026.html"
+    },
+    {
       "source": "/iran-war-fake-videos-2026",
       "destination": "/localreports/iran-war-fake-videos-2026.html"
     },
@@ -3365,6 +3413,10 @@
     {
       "source": "/synthetic-content-farms-model-collapse-2026",
       "destination": "/localreports/synthetic-content-farms-model-collapse-2026.html"
+    },
+    {
+      "source": "/sydney-ai-police-image-2026",
+      "destination": "/localreports/sydney-ai-police-image-2026.html"
     },
     {
       "source": "/syria-assad-underground-photo-2025",

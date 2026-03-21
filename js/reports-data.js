@@ -70,6 +70,25 @@ const REPORTS_DATA = [
         id: -35,
         title: "Netanyahu Is Not Dead: Anatomy of a State-Backed Death Hoax",
         slug: "netanyahu-death-hoax-2026",
+    },
+    {
+        title: "Who Bombed the Iranian School? 8 Weapons Experts Say America — Trump Says Iran",
+        slug: "iran-school-bombing-factcheck-2026",
+        category: "Political Disinformation",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-x",
+        date: "Mar 17, 2026",
+        sources: "33 Sources",
+        readTime: "26 min",
+        verdict: "false",
+        excerpt: "On February 28, 2026, a US Tomahawk cruise missile struck the Shajareh Tayyebeh elementary school in Minab, Iran, killing 168 people — including 110+ children aged 7–12. Video geolocated by Bellingcat and BBC Verify, physical missile fragments, satellite imagery showing 8+ strike points, and confirmation by eight independent munitions experts all identify an American UGM-109 Tomahawk. Iran possesses zero Tomahawk missiles. A US military preliminary investigation confirmed responsibility due to outdated DIA targeting data. Trump claimed Iran bombed its own school — a claim contradicted by his own military's findings.",
+        chart: {"type":"donut","data":[110,26,4,95],"labels":["Schoolchildren (7–12)","Teachers","Parents/Adults","Injured (survived)"],"colors":["#ef4444","#f97316","#eab308","#06b6d4"]}
+    },
+    {
+        id: -84,
+        title: "Messi's $1.5M Israel Donation: How a Parody Post Became a Global Misinformation Event",
+        slug: "messi-israel-donation-hoax-2026",
         category: "Viral Misinformation",
         tagClass: "tag-red",
         catClass: "cat-factcheck",
@@ -95,6 +114,59 @@ const REPORTS_DATA = [
         verdict: "misleading",
         excerpt: "The NRSC released an 85-second AI deepfake of Democratic Senate nominee James Talarico just 8 days after his primary win — blending real tweets with fabricated commentary. A near-invisible disclosure, a Texas law loophole (30-day window), and a four-way federal regulatory vacuum (FEC, FCC, S.1213, NO FAKES Act) left no legal recourse. UC Berkeley's Hany Farid: \"hyper-realistic...I don't think most people would immediately know it is fake.\"",
         chart: {"type":"hbar","data":[196,321,245],"labels":["Schumer Deepfake (Oct 2025)","Mills Deepfake (Dec 2025)","Talarico Deepfake (Mar 2026)"],"colors":["#f97316","#f97316","#ef4444"]}
+    },
+    {
+        date: "Mar 17, 2026",
+        sources: "20 Sources",
+        readTime: "18 min",
+        verdict: "false",
+        excerpt: "A parody X account named @FabrizioRonald0 published a fabricated claim on March 8, 2026 that Lionel Messi donated $1.5 million to Israel — three days after Messi's controversial White House appearance where Trump delivered a live Iran war briefing. The hoax spread across X, TikTok, Facebook, and WhatsApp before Snopes formally debunked it on March 13. It mirrors an identical 2014 hoax seeded via an Algerian parody site into Iranian state media. Platform parody labels failed when screenshots crossed to other platforms, where all context disappeared.",
+        chart: {"type":"hbar","data":[45,25,18,8,4],"labels":["X (Twitter)","TikTok","Facebook","WhatsApp","Instagram"],"colors":["#06b6d4","#7c3aed","#3b82f6","#10b981","#f59e0b"]}
+    },
+    {
+        id: -87,
+        title: "AI-Generated Armed Police Image Triggers Real Panic at Sydney Shopping Centre",
+        slug: "sydney-ai-police-image-2026",
+        category: "AI Threats",
+        tagClass: "tag-cyan",
+        catClass: "cat-ai",
+        icon: "image-off",
+        date: "Mar 17, 2026",
+        sources: "24 Sources",
+        readTime: "20 min",
+        verdict: "fabricated",
+        excerpt: "An AI-generated image of armed tactical police at Westfield Hurstville shopping centre in Sydney caused real public panic on March 13, 2026. The underlying event was a routine active offender alarm test. NSW Police confirmed no active incident — but the official denial didn't arrive until 225 minutes after the alarm. The fake spread across Facebook, TikTok, and X with consumer AI detectors unable to identify it. No Australian law specifically criminalises AI imagery used to manufacture public safety panics.",
+        chart: {"type":"hbar","data":[0.5,30,90,225],"labels":["AI image generated","10K views (est.)","Secondary news sites","NSW Police denial"],"colors":["#22c55e","#ef4444","#f97316","#6b7280"]}
+    },
+    {
+        id: -88,
+        title: "The 'Turbo Cancer' Myth: How Anti-Vaccine Misinformation Is Threatening Lifesaving Cancer Vaccines",
+        slug: "turbo-cancer-mrna-myth-2026",
+        category: "Health Misinformation",
+        tagClass: "tag-red",
+        catClass: "cat-health",
+        icon: "shield-x",
+        date: "Mar 17, 2026",
+        sources: "34 Sources",
+        readTime: "24 min",
+        verdict: "false",
+        excerpt: "The debunked 'turbo cancer' conspiracy claims mRNA COVID vaccines cause aggressive cancers. It has now driven $500M in federal mRNA research funding cuts and a 31% NCI budget reduction — while the technology it attacks just demonstrated a 49% sustained reduction in melanoma recurrence across a 5-year trial. Key spreader William Makis lost his medical license in 2018 and faces a permanent 2026 court injunction banning him from using the title 'oncologist.' Yale CIDMA projects the funding cuts could cause ~49,000 preventable cancer deaths and $75.44B in economic losses over 3 years.",
+        chart: {"type":"hbar","data":[20075,18947,6613,3691],"labels":["Pancreatic Cancer","NSCLC (Lung)","Renal Cell","Melanoma"],"colors":["#ef4444","#f97316","#eab308","#84cc16"]}
+    },
+    {
+        id: -85,
+        title: "Iran's '11 City Target List': How Recycled Nuclear Maps Became a Viral War Hoax",
+        slug: "iran-target-list-hoax-2026",
+        category: "Viral Misinformation",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "map-pin-off",
+        date: "Mar 17, 2026",
+        sources: "27 Sources",
+        readTime: "22 min",
+        verdict: "false",
+        excerpt: "Viral posts claimed Iran released a target list of 11 US cities for imminent missile strikes. The graphics were recycled from a January 2026 IBTimes 'World War 3 hypothetical' article using NUKEMAP simulator data. Iran's Shahab/Ghadr missiles max out at ~2,000 miles — every US target on the list requires 6,000+ miles. DIA projects Iran is a decade away from ICBM capability. Debunked by PolitiFact (March 6) and Poynter (~March 12), but not before real cities diverted security resources to a physically impossible threat.",
+        chart: {"type":"hbar","data":[45,30,15,7,3],"labels":["TikTok","Instagram","Facebook","X (Twitter)","Telegram"],"colors":["#ef4444","#f97316","#3b82f6","#06b6d4","#22c55e"]}
     },
     {
         id: -33,
@@ -588,7 +660,7 @@ const REPORTS_DATA = [
         category: "Disinformation & Fact-Checks",
     },
     {
-        id: -34,
+        id: -91,
         title: "Trump's \"Unheard Of\" Economic Growth Claims Debunked",
         slug: "trump-economic-growth-claims-2026",
         category: "U.S. Politics & Policy",
@@ -603,7 +675,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","data":[3.8,4.4,4.7,4.9,34.9,7.3,16.7],"labels":["Trump Q2 2025","Trump Q3 2025","Biden Q3 2023","Biden Q3 2021","Post-COVID Peak","Reagan Peak","Pre-Pandemic Record"],"colors":["#f59e0b","#f59e0b","#06b6d4","#06b6d4","#10b981","#ef4444","#ef4444"]}
     },
     {
-        id: -35,
+        id: -92,
         title: "AI-Generated Image of Jeffrey Epstein Alive in Tel Aviv Goes Viral",
         slug: "epstein-alive-ai-hoax-2026",
         category: "Disinformation Analysis",
@@ -618,7 +690,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","data":[15000000,3500000,2500000,1500000,800000,250000],"labels":["X/Twitter","TikTok","Facebook","Instagram","Threads","Reddit"],"colors":["#1DA1F2","#000000","#4267B2","#C13584","#000000","#FF4500"]}
     },
     {
-        id: -36,
+        id: -93,
         title: "2026 Measles Outbreak and Anti-Vaccine Misinformation Surge",
         slug: "measles-outbreak-antivax-2026",
         category: "Public Health",
@@ -691,7 +763,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","data":[689,14,30],"labels":["Unvaccinated/Unknown (94%)","One dose only (2%)","Fully vaccinated (4%)"],"colors":["#dc2626","#f59e0b","#10b981"]}
     },
     {
-        id: -37,
+        id: -95,
         title: "Trump's EPA Endangerment Finding Revocation: False Scientific Claims Exposed",
         slug: "epa-endangerment-finding-revoked-2026",
     },
@@ -711,7 +783,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","datasets":[{"label":"2009 Evidence","data":[70,55,65,60,58,45,40],"backgroundColor":"#94a3b8"},{"label":"2025 Evidence","data":[95,92,94,90,88,85,82],"backgroundColor":"#06b6d4"}],"labels":["Heat Waves","Wildfires","Sea Level","Precipitation","Agriculture","Disease","Conflict"]}
     },
     {
-        id: -38,
+        id: -96,
         title: "Springfield Child Trafficking Conspiracy Exposed",
         slug: "springfield-trafficking-conspiracy-2026",
         category: "Disinformation Analysis",
