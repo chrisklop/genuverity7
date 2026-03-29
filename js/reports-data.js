@@ -1,25 +1,6 @@
 // Shared reports data - Single source of truth for all pages
 // When adding a new report, add it here and it will update everywhere
 
-// Series definitions — groups of related reports shown together
-const SERIES_DATA = {
-    "ai-manipulation-playbook": {
-        title: "The AI Manipulation Playbook",
-        slug: "ai-manipulation-playbook",
-        description: "A 7-part investigation into how AI systems are being poisoned, gamed, and weaponized — and what you can do about it.",
-        color: "#a855f7",
-        reportSlugs: [
-            "ai-data-poisoning-attacks-2026",
-            "llmo-geo-search-manipulation-2026",
-            "synthetic-content-farms-model-collapse-2026",
-            "llm-vulnerability-ranking-2026",
-            "ai-political-media-control-2026",
-            "llm-defense-mechanisms-2026",
-            "protect-yourself-ai-misinformation-2026"
-        ]
-    }
-};
-
 const REPORTS_DATA = [
     {
         id: -34,
@@ -34,7 +15,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "misleading",
         excerpt: "The viral claim that Trump can serve a third term via a 22nd Amendment 'loophole' is constitutionally implausible: the 12th Amendment bars anyone ineligible for the presidency from serving as VP, collapsing the 'Vance succession' scheme. Constitutional scholars 10-to-2 call it 'impossible' or 'implausible.' Trump has oscillated six times between 'there are methods' and 'pretty clear I can't run' — selling $50 'Trump 2028' hats throughout.",
-        chart: {"type":"hbar","data":[1,2,2,3,5,8,9],"labels":["Bruce Fein: Zero methods","David Super: Implausible","Barry Burden: 12th Amdt","Paul Gowder: Defeats intent","Brian Kalt: Theoretical","Akhil Reed Amar: Possible","Laurence Tribe: Loophole"],"colors":["#ef4444","#ef4444","#ef4444","#f59e0b","#f59e0b","#3b82f6","#06b6d4"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[1,2,2,2,3,5,8,9],"labels":["Bruce Fein","David A. Super","Barry Burden","James Sample","Paul Gowder","Brian Kalt","Akhil Reed Amar","Laurence Tribe"],"colors":["#ef4444","#ef4444","#ef4444","#ef4444","#f59e0b","#f59e0b","#3b82f6","#06b6d4"]}
     },
     {
         id: -33,
@@ -49,7 +30,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "false",
         excerpt: "A deepfake video impersonating Sundararaman Ramamurthy, CEO of the Bombay Stock Exchange, is AI-fabricated. BSE confirmed it in two official advisories (January 12 and March 8, 2026). The scam follows a five-stage pipeline linked to a China-backed syndicate responsible for ₹400 crore in losses across 640 complaints. Deepfake production costs have collapsed 99.95% since 2022 — a CEO impersonation video now costs $5 on dark web markets.",
-        chart: {"type":"hbar","data":[10000,500,50,5],"labels":["2022 Professional","2023 Consumer Tools","2024 AI Platforms","2026 DaaS/Dark Market"],"colors":["#94a3b8","#f59e0b","#f97316","#ef4444"]}
+        chart: {"type":"bar","color":"#ef444488","data":[110,240,360,1100,8000],"labels":["2022","2023","2024","2025 (Global)","2027 (Projected)"]}
     },
     {
         id: -32,
@@ -64,7 +45,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "false",
         excerpt: "Russell Brand is alive. Dan Bongino's ambiguous Charlie Kirk tribute post on March 10, 2026 — featuring Brand prominently in the photo with no name in the caption — was misidentified by X user @JacksonClarke, triggering a cascade that spawned a Facebook RIP page with nearly one million likes. Brand shut it down the next morning: \"I actually feel quite well. Not suicidal, FYI.\" A textbook structural hoax requiring zero fabrication.",
-        chart: {"type":"hbar","data":[100,100,100,100,95,85],"labels":["Grief-coded caption (no name)","Visual prominence of wrong subject","High-reach origin account (7M+ followers)","Platform speed bias (X)","Controversial subject (legal/political)","Concurrent Facebook amplification"],"colors":["#ef4444","#ef4444","#f97316","#f97316","#eab308","#eab308"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[100,100,100,100,95,85],"labels":["Grief-coded caption (no name)","Visual prominence of wrong subject","High-reach origin account (7M+ followers)","Platform speed bias (X)","Controversial subject (legal/political)","Concurrent Facebook amplification"],"colors":["#ef4444","#ef4444","#f97316","#f97316","#eab308","#eab308"]}
     },
     {
         id: -31,
@@ -79,7 +60,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "misleading",
         excerpt: "Sundas Naqvi's viral claim of a 30-48 hour multi-state detention by ICE is contradicted by DHS surveillance footage (56 minutes in secondary inspection), five independent institutional denials, and SAP SE confirming she was never an employee. The Dodge County Sheriff found no jail records. Chicago Department of Aviation found no incident records. Cook County Sheriff found no Broadview records. Yet DHS refused to release the full video, and both sides are manipulating the story.",
-        chart: {"type":"hbar","data":[1800,2880,56,81],"labels":["Claimed min (30 hrs)","Claimed max (48 hrs)","DHS surveillance (56 min)","DHS total stated (81 min)"],"colors":["#f97316","#ef4444","#22c55e","#06b6d4"]}
+        chart: {"type":"hbar","color":"#f97316","data":[1800,2880,56,81],"labels":["Naqvi claim (minimum, 30 hrs)","Naqvi claim (maximum, 48 hrs)","DHS: Secondary inspection (surveillance)","DHS: Total CBP processing (stated)"],"colors":["#f97316","#ef4444","#22c55e","#06b6d4"]}
     },
     {
         id: -30,
@@ -94,7 +75,7 @@ const REPORTS_DATA = [
         readTime: "15 min",
         verdict: "false",
         excerpt: "A Facebook post by \"Zeke Sky\" claimed Trump signed an executive order called \"Operation Invisible Pump\" mandating removal of all digital gas price signs nationwide. No such order exists on WhiteHouse.gov, the Federal Register, or any government database. Gas price signs are regulated by state law — a president has never had statutory authority over them. The hoax landed on March 10 at the exact peak of public pain: Brent crude had touched $119.50/barrel and national gas prices had surged nearly 70 cents per gallon in under two weeks following the U.S.-Israeli strike on Iran.",
-        chart: {"type":"hbar","data":[48,31,14,7],"labels":["Trump Admin Policies","The Iran War","Oil Companies","Global Market Forces"],"colors":["#ef4444","#f97316","#06b6d4","#64748b"]}
+        chart: {"type":"line","color":"#ef4444","data":[2.81,2.85,2.88,2.95,2.94,3.25,3.5,3.598,3.63],"labels":["Jan 2026","Feb 1","Feb 14","Feb 24\\n(SOTU)","Mar 1","Mar 5","Mar 9","Mar 12","Mar 13"]}
     },
     {
         id: -29,
@@ -109,7 +90,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "misleading",
         excerpt: "BBC Verify documented three top AI-generated videos accumulating over 100 million combined views in under two weeks. A War Thunder WWII game clip was shared by Texas Governor Greg Abbott as real combat footage. Arma 3 footage of a 'sinking aircraft carrier' hit 20M+ views. Three state actors — Iran, an Israeli-backed network called PRISONBREAK, and Russia's Operation Overload — flooded the information environment from opposite directions while X's own AI chatbot, Grok, falsely confirmed at least one fake video as real.",
-        chart: {"type":"donut","data":[5,4,2,1],"labels":["AI-Generated","Recycled Archival","Video Game Footage","Misattributed Real"],"colors":["#ef4444","#f97316","#06b6d4","#64748b"]}
+        chart: {"type":"donut","color":"#ef4444","data":[5,4,2,1],"labels":["AI-Generated","Recycled Archival","Video Game Footage","Misattributed Real"],"colors":["#ef4444","#f97316","#06b6d4","#64748b"]}
     },
     {
         id: -28,
@@ -124,7 +105,7 @@ const REPORTS_DATA = [
         readTime: "40 min",
         verdict: "false",
         excerpt: "ClickOrlando debunked 39 Florida election myths five days before Trump's 2026 SOTU told 30 million viewers that 'cheating is rampant.' The Heritage Foundation's own database records only 85 alleged noncitizen votes across 2 billion ballots — a rate of 0.000004%. CISA's post-2024 assessment: 'Our election infrastructure has never been more secure.' Florida's audit of all 67 counties found zero tabulation problems. The myths are not disputed by evidence; they are refuted by it.",
-        chart: {"type":"donut","data":[13,8,7,6,5],"labels":["Procedural/eligibility myths","Machine/hacking myths","Noncitizen voting myths","Mail ballot fraud myths","Voter roll myths"],"colors":["#06b6d4","#ef4444","#f59e0b","#0284c7","#64748b"]}
+        chart: {"type":"donut","color":"#06b6d4","data":[13,8,7,6,5],"labels":["Procedural/eligibility myths (13)","Machine/hacking myths (8)","Noncitizen/immigration myths (7)","Mail ballot fraud myths (6)","Voter roll manipulation myths (5)"],"colors":["#06b6d4","#ef4444","#f59e0b","#0284c7","#64748b"]}
     },
     {
         id: -27,
@@ -139,7 +120,7 @@ const REPORTS_DATA = [
         readTime: "35 min",
         verdict: "false",
         excerpt: "A fabricated Instagram post claiming Earth would lose gravity for 7 seconds on August 12, 2026 — citing a secret NASA 'Project Anchor' program with an $89 billion budget and 40–60 million casualty projections — spread across 8 platforms in under 3 weeks. LIGO has confirmed 250+ real gravitational wave events, none of which produced any measurable effect on Earth's gravity. The only real event on August 12, 2026 is a total solar eclipse with zero gravitational effect.",
-        chart: {"type":"hbar","data":[0.1,1.2,15],"labels":["1976 BBC Prank","2015 Zero Gravity Day","2026 Project Anchor"],"colors":["#64748b","#0ea5e9","#ef4444"]}
+        chart: {"type":"hbar","color":"#64748b","data":[3,11,76,250],"labels":["O1 (2015–16)","O2 (2017)","O3 (2019–20)","O4 (2023–25, complete)"],"colors":["#64748b","#0ea5e9","#06b6d4","#06b6d4"]}
     },
     {
         id: -26,
@@ -154,7 +135,7 @@ const REPORTS_DATA = [
         readTime: "38 min",
         verdict: "fabricated",
         excerpt: "A €12 AI deepfake animated from a still photo of JD Vance spread to 4+ million views on X — while authentic footage of the real booing at the Milano Cortina 2026 opening ceremony was removed via DMCA copyright takedown. Sensity AI identified five forensic markers: reverse-playback artifacts, disappearing pupils, unnatural eye movement, source photograph mismatch, and background inconsistencies. The incident is the third deepfake targeting Vance or his family in under one year.",
-        chart: {"type":"bar","color":"#06b6d4","labels":["2019","2020","2021","2022","2023","2024","2025"],"data":[14678,85047,145000,220000,500000,2500000,8000000]}
+        chart: {"type":"hbar","color":"#06b6d4","data":[98,96,91,90,24.5],"labels":["Sensity AI","Intel FakeCatcher\\n(lab)","Intel FakeCatcher\\n(wild)","Resemble Detect\\n(audio)","Human\\nInspection"],"colors":["#06b6d4","#06b6d4","#22c55e","#22c55e","#ef4444"]}
     },
     {
         id: -25,
@@ -169,7 +150,7 @@ const REPORTS_DATA = [
         readTime: "42 min",
         verdict: "misleading",
         excerpt: "DHS's 'Worst of the Worst' immigrant database (wow.dhs.gov) was found rife with errors — hundreds of individuals listed under incorrect crimes. DHS called it a '5% glitch.' Independent TRAC data shows 73.6% of ICE detainees had no criminal conviction, contradicting Noem's '70% violent criminals' claim. The Minneapolis ICE shooting case ended with charges dismissed after agents were found to have made 'untruthful statements' under oath. The 1.6–2 million self-deportation claim has no data support — verified deportations were approximately 350,000.",
-        chart: {"type":"donut","data":[73.6,21.4,5.0],"labels":["No criminal conviction","Non-violent conviction","Violent crime conviction"],"colors":["#06b6d4","#f59e0b","#ef4444"]}
+        chart: {"type":"donut","color":"#06b6d4","data":[73.6,21.4,5],"labels":["No criminal conviction (73.6%)","Non-violent conviction (21.4%)","Violent crime conviction (5.0%)"],"colors":["#06b6d4","#f59e0b","#ef4444"]}
     },
     {
         id: -24,
@@ -184,7 +165,7 @@ const REPORTS_DATA = [
         readTime: "45 min",
         verdict: "false",
         excerpt: "Trump's record 108-minute SOTU contained at least 15 false or misleading claims. Gas prices: claimed below $2.30 (actual: $2.95 national average). Tariffs: claimed paid by foreign countries (NY Fed found US consumers bore 94%). Iran: claimed nuclear program 'obliterated' while administration weighed new strikes within 24 hours. Jobs: claimed 70,000 construction jobs (BLS data: 44,000). Investment: claimed $18 trillion in commitments (White House own site: $9.7 trillion). At least 14 major news organizations published concurrent fact-checks.",
-        chart: {"type":"hbar","data":[18,70,60,100],"labels":["Investment ($T) Claimed","Construction Jobs (K) Claimed","Egg Price Drop (%) Claimed","Tariff Burden on Foreign Countries (%) Claimed"],"colors":["#ef4444","#ef4444","#f59e0b","#ef4444"]}
+        chart: {"type":"bar","color":"#06b6d4","data":[23.7,14,9.1,2.9,3,2.4],"labels":["All-Time Peak (1920)","1980s Peak","Biden Peak (Jun 2022)","Biden Final (Dec 2024)","Trump Inauguration (Jan 2025)","Latest (Jan 2026)"]}
     },
     {
         id: -23,
@@ -198,9 +179,8 @@ const REPORTS_DATA = [
         sources: "24 Sources",
         readTime: "52 min",
         verdict: "guide",
-        series: "ai-manipulation-playbook",
         excerpt: "AI hallucination rates vary dramatically by model and benchmark methodology. Under the original Vectara benchmark, predecessor models ranged from 0.7% to 10.1%; a revamped methodology (HHEM-2.3) shows rates of 8–14% for current-generation models like GPT-5.2 and Claude Opus 4.5. In 2024, 47% of enterprise users made major decisions based on hallucinated content. This guide provides the SIFT method, prompt engineering techniques, verification tools, and a 12-point survival checklist backed by 50+ research sources.",
-        chart: {"type":"hbar","data":[3.3,4.1,4.5,8.4,12.0,13.6],"labels":["Gemini 2.5 Flash Lite","Llama 3.3 70B","Mistral Large","GPT-5.2 (Low)","Claude Sonnet 4.5","Gemini 3 Pro"],"colors":["#06b6d4","#22c55e","#3b82f6","#f59e0b","#f472b6","#ef4444"]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[3.3,4.1,4.5,11,11,13.6],"labels":["Gemini 2.5 Flash Lite","Llama 3.3 70B","Mistral Large","Claude Sonnet 4.5","GPT-5","Gemini 3 Pro"]}
     },
     {
         id: -22,
@@ -214,9 +194,8 @@ const REPORTS_DATA = [
         sources: "25 Sources",
         readTime: "48 min",
         verdict: "investigation",
-        series: "ai-manipulation-playbook",
         excerpt: "All 12 tested AI defenses were broken by adaptive attacks (95-100% bypass rates). RLHF rewards style over substance. Constitutional AI represents a paradigm shift to reason-based alignment. RAG reduces hallucinations 3-5x but still fails 17-33% of the time. Just 250 poisoned documents can backdoor any LLM. C2PA watermarking has government backing. The honest verdict: layered defenses are essential, single-method security is dead, capabilities have outpaced safety design.",
-        chart: {"type":"bar","datasets":[{"label":"RLHF","data":[100,85,80],"color":"#06b6d4"},{"label":"DPO","data":[35,83,77],"color":"#f59e0b"}],"labels":["Training Cost","Alignment Quality","Out-of-Domain"]}
+        chart: {"type":"bar","color":"#06b6d4","data":[100,85,80],"datasets":[{"data":[100,85,80],"color":"#06b6d4"},{"data":[35,83,77],"color":"#f59e0b"}],"labels":["Training Cost","Alignment Quality","Out-of-Domain Performance"],"colors":["#06b6d4","#f59e0b"]}
     },
     {
         id: -21,
@@ -230,9 +209,8 @@ const REPORTS_DATA = [
         sources: "24 Sources",
         readTime: "42 min",
         verdict: "investigation",
-        series: "ai-manipulation-playbook",
         excerpt: "Three companies control 88% of enterprise AI — more concentrated than legacy media ever was. OpenAI's lobbying increased 1,050% since 2023. Altman donated $1M to Trump's inauguration, then joined the White House Stargate announcement ($500B). Brockman gave $25M to MAGA Inc. super PAC. Anthropic countered with $20M to pro-regulation PAC. Deepfakes surged from 500K (2023) to 8M files (2025), flooding elections worldwide. China uses AI for state propaganda. The U.S. has no federal AI law. This is regulatory capture by design.",
-        chart: {"type":"donut","data":[40,27,21,12],"labels":["Anthropic","OpenAI","Google","Others"],"colors":["#06b6d4","#3b82f6","#f59e0b","#64748b"]}
+        chart: {"type":"donut","color":"#06b6d4","data":[40,27,21,12],"labels":["Anthropic","OpenAI","Google","Others"],"colors":["#06b6d4","#3b82f6","#f59e0b","#64748b"]}
     },
     {
         id: -20,
@@ -246,9 +224,8 @@ const REPORTS_DATA = [
         sources: "32 Sources",
         readTime: "36 min",
         verdict: "investigation",
-        series: "ai-manipulation-playbook",
         excerpt: "Every AI model breaks. UK's 1.8M attack red-teaming challenge proved 100% failure rates at 10 queries. A single prompt strips safety from 15 open-weight models. Anthropic leads on governance but has 10.1% hallucination rate. OpenAI disbanded its safety team. xAI got an F grade and generated 3M illegal deepfakes. Chinese state actors used Claude to orchestrate the first AI cyberattack at scale. Transparency scores collapsed 31% in one year. All models are left-leaning. None are safe.",
-        chart: {"type":"hbar","data":[2.67,2.31,2.08,1.17,1.10],"labels":["Anthropic (C+)","OpenAI (C+)","Google (C)","xAI (D)","Meta (D)"],"colors":["#22c55e","#10b981","#fb923c","#ef4444","#dc2626"]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[2.67,2.31,2.08,1.17,1.1,1.02],"labels":["Anthropic","OpenAI","Google DeepMind","xAI","Meta","DeepSeek"]}
     },
     {
         id: -19,
@@ -262,9 +239,8 @@ const REPORTS_DATA = [
         sources: "25 Sources",
         readTime: "28 min",
         verdict: "investigation",
-        series: "ai-manipulation-playbook",
         excerpt: "74% of new webpages contain AI content. Bots surpassed humans for the first time in 2024 (51%). Model collapse is real, irreversible, and accelerating—a landmark Nature study proves AI trained on AI output degrades into useless noise. NewsGuard tracks 2,089 undisclosed AI news sites. Stack Overflow question volume collapsed 78% YoY. Training data exhaustion projected 2026-2032. The feedback loop has already begun.",
-        chart: {"type":"hbar","data":[74.2,54,50,14.7,23.7],"labels":["New Webpages (%)","LinkedIn Posts (%)","New Articles (%)","Reddit Posts (%)","Zillow Reviews (%)"],"colors":["#a855f7","#fb923c","#fbbf24","#22c55e","#ef4444"]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[74.2,54,50,14.7,23.7],"labels":["New Webpages\\n(Ahrefs)","LinkedIn\\nLong Posts","New English\\nArticles","Reddit\\nPosts","Zillow\\nReviews (2025)"]}
     },
     {
         id: -18,
@@ -278,9 +254,8 @@ const REPORTS_DATA = [
         sources: "24 Sources",
         readTime: "32 min",
         verdict: "investigation",
-        series: "ai-manipulation-playbook",
         excerpt: "Wall Street Journal, Harvard, and Microsoft investigations reveal businesses paying thousands to manipulate ChatGPT through hidden prompts, fake domains, and memory poisoning. 50+ companies across 14 industries caught planting 'brand authority statements.' Harvard proves near-gibberish text can game any recommendation. OpenAI admits prompt injection 'may never be fully solved.' AI referrals exploded from <1M to 230M+ monthly—and you can't tell what's been bought.",
-        chart: {"type":"hbar","data":[61,68,13,40],"labels":["Organic CTR Drop (%)","Paid CTR Drop (%)","Zero-Click Rise (%)","GEO Visibility Boost (%)"],"colors":["#ef4444","#fb923c","#fbbf24","#a855f7"]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[4,23],"labels":["Traditional SEO","AI Search (LLMO/GEO)"]}
     },
     {
         id: -17,
@@ -294,9 +269,8 @@ const REPORTS_DATA = [
         sources: "25 Sources",
         readTime: "35 min",
         verdict: "investigation",
-        series: "ai-manipulation-playbook",
         excerpt: "How 250 documents can compromise any AI model. Anthropic, CMU, and Nature Medicine studies prove vanishingly small data contamination can backdoor LLMs while evading benchmarks. 11 million Glaze/Nightshade downloads make artist-driven poisoning the largest coordinated campaign in history — but LightShed defeats protections with 99.98% accuracy. The arms race has no end in sight.",
-        chart: {"type":"hbar","data":[250,100,0.1,0.001],"labels":["Anthropic Study (docs)","Insufficient (docs)","CMU Study (%)","Medical (%)"],"colors":["#ef4444","#f97316","#fbbf24","#a855f7"]}
+        chart: {"type":"hbar","color":"#ef4444","data":[250,0.1,0.001,100],"labels":["Anthropic (docs)","CMU (% data)","Nature Med (% tokens)","JMIR (samples)"],"colors":["#ef4444","#f97316","#fbbf24","#a855f7"]}
     },
     {
         id: -16,
@@ -311,7 +285,7 @@ const REPORTS_DATA = [
         readTime: "25 min",
         verdict: "false",
         excerpt: "Trump and Musk amplify debunked Pennsylvania mail-in ballot claims while their RNC simultaneously runs 'Bank Your Vote' campaign promoting mail-in voting. Data shows 0.00001% fraud rate.",
-        chart: {"type":"hbar","data":[0.00001,0.000043,0.0001,0.00001],"labels":["Oregon 2000-present (100M+ ballots)","National 2016-2022 (all mail ballots)","Heritage Foundation Database (decades)","Lightning strike risk comparison"],"colors":["#06b6d4","#06b6d4","#f59e0b","#10b981"]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[0.00001,0.000043,0.0001,0.00001],"labels":["Oregon\\n2000-present\\n(100M+ ballots)","National\\n2016-2022\\n(all mail ballots)","Heritage Foundation\\nDatabase\\n(decades)","Lightning strike\\nrisk comparison"]}
     },
     {
         id: -15,
@@ -326,13 +300,22 @@ const REPORTS_DATA = [
         readTime: "20 min",
         verdict: "investigation",
         excerpt: "ByteDance's Seedance 2.0 generated viral celebrity deepfakes without consent, sparking Disney cease-and-desist, MPA condemnation, and SAG-AFTRA outcry. Tom Cruise vs Brad Pitt deepfake hit 2.4M views within 24 hours.",
-        chart: {"type":"hbar","data":[2400000,1500000,63000,44000],"labels":["Epstein 'knew too much'","Cruise vs Pitt rooftop","Cruise & Pitt vs robot","Pitt vs zombie ninja"],"colors":["#ef4444","#f59e0b","#06b6d4","#10b981"]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[2400000,1500000,63000,44000],"labels":["Epstein ",", ",", ",", "]}
     },
     {
         id: -14,
         title: "WHO Lockdown Powers Claims After US Exit: Evidence-Based Analysis",
         slug: "who-lockdown-claims-debunked-2026",
         category: "Disinformation & Fact-Checks",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-x",
+        date: "Feb 15, 2026",
+        sources: "17 Sources",
+        readTime: "22 min",
+        verdict: "false",
+        excerpt: "Following US withdrawal from WHO, viral claims resurface alleging treaty grants lockdown powers. WHO Pandemic Agreement Article 22 explicitly prohibits such authority. Patient zero: UK MP Esther McVey, May 2023.",
+        chart: {"type":"line","color":"#ef4444","data":[85,42,28,15,20,55,18,35,100,78,62,45],"labels":["May 2023","Aug 2023","Nov 2023","Feb 2024","May 2024","Aug 2024","Nov 2024","Feb 2025","May 2025","Aug 2025","Nov 2025","Feb 2026"]}
     },
     {
         id: -34,
@@ -347,7 +330,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "false",
         excerpt: "Trump claimed Q2-Q3 2025 GDP growth (3.8%, 4.4%) represented 'numbers unheard of' and 'never had before.' Reality: Biden's Q3 2023 was 4.7%, higher than Trump's best 2025 quarter. He inherited unemployment at 4.0-4.1%, inflation at 2.4-2.7%—not a catastrophe. Tariffs reduced GDP growth by 0.5pp.",
-        chart: {"type":"hbar","data":[3.8,4.4,4.7,4.9,34.9,7.3,16.7],"labels":["Trump Q2 2025","Trump Q3 2025","Biden Q3 2023","Biden Q3 2021","Post-COVID Peak","Reagan Peak","Pre-Pandemic Record"],"colors":["#f59e0b","#f59e0b","#06b6d4","#06b6d4","#10b981","#ef4444","#ef4444"]}
+        chart: {"type":"hbar","color":"#f59e0b","data":[3.8,4.4,4.7,4.9,34.9,7.3,16.7],"labels":["Trump Q2 2025","Trump Q3 2025","Biden Q3 2023","Biden Q3 2021","Post-COVID Peak\\n(Q3 2020)","Reagan Peak\\nQuarter","Pre-Pandemic\\nRecord (Q1 1950)"],"colors":["#f59e0b","#f59e0b","#06b6d4","#06b6d4","#10b981","#ef4444","#ef4444"]}
     },
     {
         id: -35,
@@ -362,7 +345,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "false",
         excerpt: "AI-generated image created on Reddit Feb 1 using Google Gemini accumulates 23+ million views after watermark removal. Exploited DOJ's Jan 30 release of 3.5M Epstein file pages, fueling antisemitic conspiracy theories claiming Israel faked his death. Multiple AI detection tools confirm 99.7-99.9% fabrication probability.",
-        chart: {"type":"hbar","data":[15000000,3500000,2500000,1500000,800000,250000],"labels":["X/Twitter","TikTok","Facebook","Instagram","Threads","Reddit"],"colors":["#1DA1F2","#000000","#4267B2","#C13584","#000000","#FF4500"]}
+        chart: {"type":"hbar","color":"#1DA1F2","data":[15000000,3500000,2500000,1500000,800000,250000],"labels":["X/Twitter","TikTok","Facebook","Instagram","Threads","Reddit"],"colors":["#1DA1F2","#000000","#4267B2","#C13584","#000000","#FF4500"]}
     },
     {
         id: -36,
@@ -376,8 +359,8 @@ const REPORTS_DATA = [
         sources: "17 Sources",
         readTime: "22 min",
         verdict: "false",
-        excerpt: "Following US withdrawal from WHO, viral claims resurface alleging treaty grants lockdown powers. WHO Pandemic Agreement Article 22 explicitly prohibits such authority. Patient zero: UK MP Esther McVey, May 2023.",
-        chart: {"type":"line","color":"#ef4444","data":[85,42,28,15,20,55,18,35,100,78,62,45],"labels":["May 2023","Aug 2023","Nov 2023","Feb 2024","May 2024","Aug 2024","Nov 2024","Feb 2025","May 2025","Aug 2025","Nov 2025","Feb 2026"]}
+        excerpt: "910 cases in 6 weeks—33-year high. Declining vaccination (92.5%, below 95% threshold) amid RFK Jr.'s firing of vaccine advisors. False MMR-autism claims resurge. 94% of cases unvaccinated. Measles kills 1-3 per 1,000, yet one in six adults believe vaccine is more dangerous.",
+        chart: {"type":"bar","color":"#f59e0b","data":[450,588,733,910],"labels":["Week of Jan 22","Week of Jan 29","Week of Feb 5","Week of Feb 12"],"colors":["#f59e0b","#f59e0b","#dc2626","#dc2626"]}
     },
     {
         id: -13,
@@ -392,20 +375,22 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "misleading",
         excerpt: "Trump claims manufacturing construction is up 41-42%, but Census Bureau data shows the boom peaked under Biden in August 2024, followed by nine consecutive months of decline after Trump took office in January 2025.",
-        chart: {"type":"bar","datasets":[{"data":[75.5,100,202,235.6,226.1],"backgroundColor":["rgba(6,182,212,0.8)","rgba(6,182,212,0.8)","rgba(6,182,212,0.8)","rgba(6,182,212,0.8)","rgba(239,68,68,0.8)"]}],"labels":["2021 (Biden)","2022 (Biden)","2023 (Biden)","2024 (Biden)","2025 (Trump)"]}
+        chart: {"type":"bar","color":"#3b82f6","data":[75.5,100,202,235.6,226.1],"labels":["2021\\n(Biden)","2022\\n(Biden)","2023\\n(Biden)","2024\\n(Biden)","2025\\n(Trump)"]}
     },
     {
         id: -12,
         title: "Somali Daycare Fraud Campaign: Viral Video, State Inspectors, and 140M Views of Disinformation",
         slug: "somali-daycare-fraud-influencers-2026",
         category: "Disinformation & Fact-Checks",
-    },
-    {
-        sources: "30 Sources",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "alert-triangle",
+        date: "Feb 15, 2026",
+        sources: "16 Sources",
         readTime: "16 min",
         verdict: "false",
-        excerpt: "910 cases in 6 weeks—33-year high. Declining vaccination (92.5%, below 95% threshold) amid RFK Jr.'s firing of vaccine advisors. False MMR-autism claims resurge. 94% of cases unvaccinated. Measles kills 1-3 per 1,000, yet one in six adults believe vaccine is more dangerous.",
-        chart: {"type":"donut","data":[689,14,30],"labels":["Unvaccinated/Unknown (94%)","One dose only (2%)","Fully vaccinated (4%)"],"colors":["#dc2626","#f59e0b","#10b981"]}
+        excerpt: "23-year-old MAGA YouTuber Nick Shirley claimed Somali daycares were defrauding government of $100M+. State inspectors found facilities 'operating as expected.' Video generated 140M+ views, bomb threats, and Tim Walz's withdrawal from reelection.",
+        chart: {"type":"line","color":"#ef4444","data":[0,129,140],"labels":["Day 1 (Dec 26)","Day 4 (Dec 30)","Late January"]}
     },
     {
         id: -37,
@@ -420,7 +405,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "false",
         excerpt: "Trump claimed EPA's 2009 endangerment finding 'had no basis in fact' and 'no basis in law.' Both demonstrably false—mandated by Supreme Court, based on decades of peer-reviewed science, upheld by federal courts. Scientific evidence has only strengthened since 2009.",
-        chart: {"type":"bar","datasets":[{"label":"2009 Evidence","data":[70,55,65,60,58,45,40],"backgroundColor":"#94a3b8"},{"label":"2025 Evidence","data":[95,92,94,90,88,85,82],"backgroundColor":"#06b6d4"}],"labels":["Heat Waves","Wildfires","Sea Level","Precipitation","Agriculture","Disease","Conflict"]}
+        chart: {"type":"hbar","color":"#94a3b8","data":[70,55,65,60,58,45,40],"datasets":[{"data":[70,55,65,60,58,45,40],"color":"#94a3b8"},{"data":[95,92,94,90,88,85,82],"color":"#06b6d4"}],"labels":["Heat Waves & Deaths","Wildfire Severity","Sea Level Rise","Extreme Precipitation","Agricultural Impacts","Disease & Health","Economic & Conflict"],"colors":["#94a3b8","#06b6d4"]}
     },
     {
         id: -38,
@@ -435,9 +420,17 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "false",
         excerpt: "23-year-old MAGA YouTuber Nick Shirley claimed Somali daycares were defrauding government of $100M+. State inspectors found facilities 'operating as expected.' Video generated 140M+ views, bomb threats, and Tim Walz's withdrawal from reelection.",
-        chart: {"type":"hbar","data":[100,6,250,1000],"labels":["Shirley's Daycare Claim","Documented Daycare Fraud (2014-2019)","Feeding Our Future (actual case)","All MN Fraud Programs (federal estimate)"],"colors":["#ef4444","#06b6d4","#fbbf24","#06b6d4"]}
+        chart: {"type":"hbar","color":"#3b82f6","data":[0,2,5,6],"labels":["TikTokers Arrive","First Videos Posted","Pastor Receives Threats","Bomb Threats Close Schools"],"colors":["#3b82f6","#f59e0b","#ef4444","#dc2626"]}
     },
     {
+        id: undefined,
+        title: "",
+        slug: "",
+        category: "",
+        tagClass: "",
+        catClass: "",
+        icon: "",
+        date: "",
         sources: "13 Sources",
         readTime: "16 min",
         verdict: "false",
@@ -457,7 +450,7 @@ const REPORTS_DATA = [
         readTime: "22 min",
         verdict: "mixture",
         excerpt: "Viral claims that ICE pays bounty hunters to capture immigrants spread in 2025. While fact-checkers called it false, ICE awarded $1.2B in performance-based contracts to private trackers and paid police up to $1,000 quarterly bonuses. The hoax became policy.",
-        chart: {"type":"hbar","data":[365,200,121,55,32],"colors":["#06b6d4","#06b6d4","#ef4444","#06b6d4","#06b6d4"],"labels":["Capgemini","Bluehawk","BI Inc (GEO)","Govt Support","Gravitas"]}
+        chart: {"type":"bar","color":"#06b6d4","data":[135,1001],"labels":["January 2025","September 2025"]}
     },
     {
         id: -41,
@@ -472,7 +465,7 @@ const REPORTS_DATA = [
         readTime: "16 min",
         verdict: "fabricated",
         excerpt: "AI-generated image falsely depicting Attorney General Pam Bondi as a 14-year-old with Trump and Epstein went viral in February 2026. Forensic analysis confirms fabrication through SynthID watermarks, timeline impossibilities, and visual artifacts. Part of coordinated wave generating 21+ million views.",
-        chart: {"type":"donut","data":[21000000,5000000,3000000,1000000],"colors":["#1da1f2","#4267B2","#000000","#9ca3af"],"labels":["X (Twitter)","Facebook","Threads","Other"]}
+        chart: {"type":"bar","color":"#06b6d4","data":[0,1,1,2,5,12,14],"labels":["Jan 30: Files Released","Jan 31: AI Image Posted","Jan 31: Rapaport Shares","Feb 1: Jones Shares","Feb 4: Bondi Confirmed","Feb 11: Hearing","Feb 13: Fact-Check"]}
     },
     {
         id: -42,
@@ -487,7 +480,7 @@ const REPORTS_DATA = [
         readTime: "19 min",
         verdict: "satire",
         excerpt: "Satirical White House graphic claiming Trump proposed 15-year car loans went viral in November 2025. Created by @TheRealThelmaJohnson, amplified by AF Post, it fooled thousands because it emerged one day after Trump's genuine 50-year mortgage proposal and resonated with the auto affordability crisis.",
-        chart: {"type":"line","data":[150,500,1000,2000],"color":"#06b6d4","labels":["Nov 9, 5:01 AM","Nov 10","Nov 11","Nov 14"]}
+        chart: {"type":"line","color":"#06b6d4","data":[150,500,1000,2000],"labels":["Nov 9, 5:01 AM","Nov 10","Nov 11","Nov 14"]}
     },
     {
         id: -43,
@@ -502,7 +495,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "confirmed",
         excerpt: "White House confirmed posting AI-altered image depicting civil rights attorney Nekima Levy Armstrong crying during arrest. Original unaltered photo existed and was posted 33 minutes earlier by DHS Secretary, revealing deliberate manipulation with racial implications.",
-        chart: {"type":"hbar","data":[21,12,3,14,19.4,14.6],"colors":["#06b6d4","#3b82f6","#f59e0b","#f59e0b","#ef4444","#ec4899"],"labels":["Truth Social: Self-Glorification","Truth Social: Attack Opponents","Truth Social: Policy Messaging","White House X: Total AI Posts","Most Shared (Jeffries/Schumer)","Second Most Shared (FAFO)"]}
+        chart: {"type":"hbar","color":"#06b6d4","data":[21,12,3,14,19.4,14.6],"labels":["Truth Social: Self-Glorification","Truth Social: Attack Opponents","Truth Social: Policy Messaging","White House X: Total AI Posts","Most Shared (Jeffries/Schumer)","Second Most Shared (FAFO)"],"colors":["#06b6d4","#3b82f6","#f59e0b","#f59e0b","#ef4444","#ec4899"]}
     },
     {
         id: -44,

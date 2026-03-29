@@ -317,17 +317,17 @@ if (added + updated === 0) {
 function formatReport(report) {
     let str = '    {\n';
     str += `        id: ${report.id},\n`;
-    str += `        title: "${report.title.replace(/"/g, '\\"')}",\n`;
-    str += `        slug: "${report.slug}",\n`;
-    str += `        category: "${report.category}",\n`;
-    str += `        tagClass: "${report.tagClass}",\n`;
-    str += `        catClass: "${report.catClass}",\n`;
-    str += `        icon: "${report.icon}",\n`;
-    str += `        date: "${report.date}",\n`;
-    str += `        sources: "${report.sources}",\n`;
-    str += `        readTime: "${report.readTime}",\n`;
-    str += `        verdict: "${report.verdict}",\n`;
-    str += `        excerpt: "${report.excerpt.replace(/"/g, '\\"')}"`;
+    str += `        title: "${(report.title || '').replace(/"/g, '\\"')}",\n`;
+    str += `        slug: "${report.slug || ''}",\n`;
+    str += `        category: "${report.category || ''}",\n`;
+    str += `        tagClass: "${report.tagClass || ''}",\n`;
+    str += `        catClass: "${report.catClass || ''}",\n`;
+    str += `        icon: "${report.icon || ''}",\n`;
+    str += `        date: "${report.date || ''}",\n`;
+    str += `        sources: "${report.sources || ''}",\n`;
+    str += `        readTime: "${report.readTime || ''}",\n`;
+    str += `        verdict: "${report.verdict || ''}",\n`;
+    str += `        excerpt: "${(report.excerpt || '').replace(/"/g, '\\"')}"`;
 
     if (report.chart) {
         str += ',\n        chart: ' + JSON.stringify(report.chart);
