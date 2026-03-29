@@ -88,6 +88,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/ai-medical-misinformation-study-2026.html",
+      "destination": "/ai-medical-misinformation-study-2026",
+      "permanent": true
+    },
+    {
+      "source": "/ai-medical-misinformation-study-2026.html",
+      "destination": "/ai-medical-misinformation-study-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/ai-obituary-pirates-2025.html",
       "destination": "/ai-obituary-pirates-2025",
       "permanent": true
@@ -285,6 +295,16 @@
     {
       "source": "/british-budget-misinfo-2025.html",
       "destination": "/british-budget-misinfo-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/bucees-ice-donation-hoax-2026.html",
+      "destination": "/bucees-ice-donation-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/bucees-ice-donation-hoax-2026.html",
+      "destination": "/bucees-ice-donation-hoax-2026",
       "permanent": true
     },
     {
@@ -805,6 +825,16 @@
     {
       "source": "/haarp-weather-control.html",
       "destination": "/haarp-weather-control",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/hank-dingle-doomsday-prediction-2026.html",
+      "destination": "/hank-dingle-doomsday-prediction-2026",
+      "permanent": true
+    },
+    {
+      "source": "/hank-dingle-doomsday-prediction-2026.html",
+      "destination": "/hank-dingle-doomsday-prediction-2026",
       "permanent": true
     },
     {
@@ -1465,6 +1495,16 @@
     {
       "source": "/paid-protesters-hoax.html",
       "destination": "/paid-protesters-hoax",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/paid-protesters-craigslist-hoax-2026.html",
+      "destination": "/paid-protesters-craigslist-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/paid-protesters-craigslist-hoax-2026.html",
+      "destination": "/paid-protesters-craigslist-hoax-2026",
       "permanent": true
     },
     {
@@ -2461,6 +2501,10 @@
       "destination": "/localreports/british-budget-misinfo-2025.html"
     },
     {
+      "source": "/bucees-ice-donation-hoax-2026",
+      "destination": "/localreports/bucees-ice-donation-hoax-2026.html"
+    },
+    {
       "source": "/cable-news-narrative-laundering",
       "destination": "/localreports/cable-news-narrative-laundering.html"
     },
@@ -2667,6 +2711,10 @@
     {
       "source": "/haarp-weather-control",
       "destination": "/localreports/haarp-weather-control.html"
+    },
+    {
+      "source": "/hank-dingle-doomsday-prediction-2026",
+      "destination": "/localreports/hank-dingle-doomsday-prediction-2026.html"
     },
     {
       "source": "/hamas-youth-support",
@@ -2931,6 +2979,10 @@
     {
       "source": "/paid-protesters-hoax",
       "destination": "/localreports/paid-protesters-hoax.html"
+    },
+    {
+      "source": "/paid-protesters-craigslist-hoax-2026",
+      "destination": "/localreports/paid-protesters-craigslist-hoax-2026.html"
     },
     {
       "source": "/palantir-panopticon",
