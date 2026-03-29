@@ -48,6 +48,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/ai-chatbots-medical-misinformation-2026.html",
+      "destination": "/ai-chatbots-medical-misinformation-2026",
+      "permanent": true
+    },
+    {
+      "source": "/ai-chatbots-medical-misinformation-2026.html",
+      "destination": "/ai-chatbots-medical-misinformation-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/ai-data-poisoning-attacks-2026.html",
       "destination": "/ai-data-poisoning-attacks-2026",
       "permanent": true
@@ -455,6 +465,16 @@
     {
       "source": "/dhs-worst-immigrants-website-errors.html",
       "destination": "/dhs-worst-immigrants-website-errors",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/dhs-false-medicaid-claims-immigrants-2026.html",
+      "destination": "/dhs-false-medicaid-claims-immigrants-2026",
+      "permanent": true
+    },
+    {
+      "source": "/dhs-false-medicaid-claims-immigrants-2026.html",
+      "destination": "/dhs-false-medicaid-claims-immigrants-2026",
       "permanent": true
     },
     {
@@ -1255,6 +1275,16 @@
     {
       "source": "/measles-natural-cures-2025.html",
       "destination": "/measles-natural-cures-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/measles-surge-antivax-misinformation-2026.html",
+      "destination": "/measles-surge-antivax-misinformation-2026",
+      "permanent": true
+    },
+    {
+      "source": "/measles-surge-antivax-misinformation-2026.html",
+      "destination": "/measles-surge-antivax-misinformation-2026",
       "permanent": true
     },
     {
@@ -2138,6 +2168,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/trump-sotu-immigration-factcheck-2026.html",
+      "destination": "/trump-sotu-immigration-factcheck-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-sotu-immigration-factcheck-2026.html",
+      "destination": "/trump-sotu-immigration-factcheck-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/trump-walker-image-2025.html",
       "destination": "/trump-walker-image-2025",
       "permanent": true
@@ -2495,6 +2535,10 @@
       "destination": "/localreports/african-vaccine-sterilization-2025.html"
     },
     {
+      "source": "/ai-chatbots-medical-misinformation-2026",
+      "destination": "/localreports/ai-chatbots-medical-misinformation-2026.html"
+    },
+    {
       "source": "/ai-deepfakes-2025",
       "destination": "/localreports/ai-deepfakes-2025.html"
     },
@@ -2653,6 +2697,10 @@
     {
       "source": "/dhs-worst-immigrants-website-errors",
       "destination": "/localreports/dhs-worst-immigrants-website-errors.html"
+    },
+    {
+      "source": "/dhs-false-medicaid-claims-immigrants-2026",
+      "destination": "/localreports/dhs-false-medicaid-claims-immigrants-2026.html"
     },
     {
       "source": "/disinformation-analysis-january-26-2026",
@@ -2973,6 +3021,10 @@
     {
       "source": "/measles-natural-cures-2025",
       "destination": "/localreports/measles-natural-cures-2025.html"
+    },
+    {
+      "source": "/measles-surge-antivax-misinformation-2026",
+      "destination": "/localreports/measles-surge-antivax-misinformation-2026.html"
     },
     {
       "source": "/medicaid-voter-registration-dr-oz-january-2026",
@@ -3325,6 +3377,10 @@
     {
       "source": "/trump-sotu-2026-factcheck",
       "destination": "/localreports/trump-sotu-2026-factcheck.html"
+    },
+    {
+      "source": "/trump-sotu-immigration-factcheck-2026",
+      "destination": "/localreports/trump-sotu-immigration-factcheck-2026.html"
     },
     {
       "source": "/trump-walker-image-2025",
