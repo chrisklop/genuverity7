@@ -1248,6 +1248,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/musk-trump-mailin-voting-pa-2026.html",
+      "destination": "/musk-trump-mailin-voting-pa-2026",
+      "permanent": true
+    },
+    {
+      "source": "/musk-trump-mailin-voting-pa-2026.html",
+      "destination": "/musk-trump-mailin-voting-pa-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/nad-alzheimers-recovery.html",
       "destination": "/nad-alzheimers-recovery",
       "permanent": true
@@ -1688,6 +1698,26 @@
       "permanent": true
     },
     {
+      "source": "/localreports/seedance-deepfake-copyright-2026.html",
+      "destination": "/seedance-deepfake-copyright-2026",
+      "permanent": true
+    },
+    {
+      "source": "/seedance-deepfake-copyright-2026.html",
+      "destination": "/seedance-deepfake-copyright-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/somali-daycare-fraud-influencers-2026.html",
+      "destination": "/somali-daycare-fraud-influencers-2026",
+      "permanent": true
+    },
+    {
+      "source": "/somali-daycare-fraud-influencers-2026.html",
+      "destination": "/somali-daycare-fraud-influencers-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/southport-stabbing-misinfo-2025.html",
       "destination": "/southport-stabbing-misinfo-2025",
       "permanent": true
@@ -1875,6 +1905,16 @@
     {
       "source": "/trump-duterte-arrest-response-2025.html",
       "destination": "/trump-duterte-arrest-response-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/trump-factory-construction-claim-2026.html",
+      "destination": "/trump-factory-construction-claim-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-factory-construction-claim-2026.html",
+      "destination": "/trump-factory-construction-claim-2026",
       "permanent": true
     },
     {
@@ -2105,6 +2145,16 @@
     {
       "source": "/wellness-grifting-pseudoscience-2026.html",
       "destination": "/wellness-grifting-pseudoscience-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/who-lockdown-claims-debunked-2026.html",
+      "destination": "/who-lockdown-claims-debunked-2026",
+      "permanent": true
+    },
+    {
+      "source": "/who-lockdown-claims-debunked-2026.html",
+      "destination": "/who-lockdown-claims-debunked-2026",
       "permanent": true
     },
     {
@@ -2715,6 +2765,10 @@
       "destination": "/localreports/musk-eu-claims.html"
     },
     {
+      "source": "/musk-trump-mailin-voting-pa-2026",
+      "destination": "/localreports/musk-trump-mailin-voting-pa-2026.html"
+    },
+    {
       "source": "/nad-alzheimers-recovery",
       "destination": "/localreports/nad-alzheimers-recovery.html"
     },
@@ -2891,6 +2945,14 @@
       "destination": "/localreports/smishing-surge-2025.html"
     },
     {
+      "source": "/seedance-deepfake-copyright-2026",
+      "destination": "/localreports/seedance-deepfake-copyright-2026.html"
+    },
+    {
+      "source": "/somali-daycare-fraud-influencers-2026",
+      "destination": "/localreports/somali-daycare-fraud-influencers-2026.html"
+    },
+    {
       "source": "/southport-stabbing-misinfo-2025",
       "destination": "/localreports/southport-stabbing-misinfo-2025.html"
     },
@@ -2965,6 +3027,10 @@
     {
       "source": "/trump-duterte-arrest-response-2025",
       "destination": "/localreports/trump-duterte-arrest-response-2025.html"
+    },
+    {
+      "source": "/trump-factory-construction-claim-2026",
+      "destination": "/localreports/trump-factory-construction-claim-2026.html"
     },
     {
       "source": "/trump-native-born-jobs-2025",
@@ -3057,6 +3123,10 @@
     {
       "source": "/wellness-grifting-pseudoscience-2026",
       "destination": "/localreports/wellness-grifting-pseudoscience-2026.html"
+    },
+    {
+      "source": "/who-lockdown-claims-debunked-2026",
+      "destination": "/localreports/who-lockdown-claims-debunked-2026.html"
     },
     {
       "source": "/wire-service-amplification",
