@@ -22,6 +22,21 @@ const SERIES_DATA = {
 
 const REPORTS_DATA = [
     {
+        id: -34,
+        title: "Trump's Third-Term 'Loophole': A Constitutional Dead End",
+        slug: "trump-third-term-loophole-claims-2026",
+        category: "Political Fact-Check",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "scale",
+        date: "Mar 29, 2026",
+        sources: "20 Sources",
+        readTime: "14 min",
+        verdict: "misleading",
+        excerpt: "The viral claim that Trump can serve a third term via a 22nd Amendment 'loophole' is constitutionally implausible: the 12th Amendment bars anyone ineligible for the presidency from serving as VP, collapsing the 'Vance succession' scheme. Constitutional scholars 10-to-2 call it 'impossible' or 'implausible.' Trump has oscillated six times between 'there are methods' and 'pretty clear I can't run' — selling $50 'Trump 2028' hats throughout.",
+        chart: {"type":"hbar","data":[1,2,2,3,5,8,9],"labels":["Bruce Fein: Zero methods","David Super: Implausible","Barry Burden: 12th Amdt","Paul Gowder: Defeats intent","Brian Kalt: Theoretical","Akhil Reed Amar: Possible","Laurence Tribe: Loophole"],"colors":["#ef4444","#ef4444","#ef4444","#f59e0b","#f59e0b","#3b82f6","#06b6d4"]}
+    },
+    {
         id: -33,
         title: "The Deepfake CEO Scam: How AI-Generated Videos Are Manipulating Stock Markets",
         slug: "ai-deepfake-ceo-stock-scam-2026",

@@ -2038,6 +2038,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/trump-third-term-loophole-claims-2026.html",
+      "destination": "/trump-third-term-loophole-claims-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-third-term-loophole-claims-2026.html",
+      "destination": "/trump-third-term-loophole-claims-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/trump-walker-image-2025.html",
       "destination": "/trump-walker-image-2025",
       "permanent": true
@@ -3159,6 +3169,10 @@
     {
       "source": "/trump-sotu-2026-factcheck",
       "destination": "/localreports/trump-sotu-2026-factcheck.html"
+    },
+    {
+      "source": "/trump-third-term-loophole-claims-2026",
+      "destination": "/localreports/trump-third-term-loophole-claims-2026.html"
     },
     {
       "source": "/trump-walker-image-2025",
