@@ -1068,6 +1068,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/jayz-apple-music-satire-hoax-2026.html",
+      "destination": "/jayz-apple-music-satire-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/jayz-apple-music-satire-hoax-2026.html",
+      "destination": "/jayz-apple-music-satire-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/john-mark-dougan-storm-1516-2025.html",
       "destination": "/john-mark-dougan-storm-1516-2025",
       "permanent": true
@@ -1988,6 +1998,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/trans-mass-shooting-myth-2026.html",
+      "destination": "/trans-mass-shooting-myth-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trans-mass-shooting-myth-2026.html",
+      "destination": "/trans-mass-shooting-myth-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/trump-25m-migrants.html",
       "destination": "/trump-25m-migrants",
       "permanent": true
@@ -2035,6 +2055,26 @@
     {
       "source": "/trump-dead-labor-day-2025.html",
       "destination": "/trump-dead-labor-day-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/trump-epstein-ai-deepfake-2026.html",
+      "destination": "/trump-epstein-ai-deepfake-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-epstein-ai-deepfake-2026.html",
+      "destination": "/trump-epstein-ai-deepfake-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/trump-drug-price-claims-2026.html",
+      "destination": "/trump-drug-price-claims-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-drug-price-claims-2026.html",
+      "destination": "/trump-drug-price-claims-2026",
       "permanent": true
     },
     {
@@ -2829,6 +2869,10 @@
       "destination": "/localreports/jeffries-ended-medical-research-2025.html"
     },
     {
+      "source": "/jayz-apple-music-satire-hoax-2026",
+      "destination": "/localreports/jayz-apple-music-satire-hoax-2026.html"
+    },
+    {
       "source": "/john-mark-dougan-storm-1516-2025",
       "destination": "/localreports/john-mark-dougan-storm-1516-2025.html"
     },
@@ -3197,6 +3241,10 @@
       "destination": "/localreports/treasury-leverage.html"
     },
     {
+      "source": "/trans-mass-shooting-myth-2026",
+      "destination": "/localreports/trans-mass-shooting-myth-2026.html"
+    },
+    {
       "source": "/trump-25m-migrants",
       "destination": "/localreports/trump-25m-migrants.html"
     },
@@ -3215,6 +3263,14 @@
     {
       "source": "/trump-dead-labor-day-2025",
       "destination": "/localreports/trump-dead-labor-day-2025.html"
+    },
+    {
+      "source": "/trump-epstein-ai-deepfake-2026",
+      "destination": "/localreports/trump-epstein-ai-deepfake-2026.html"
+    },
+    {
+      "source": "/trump-drug-price-claims-2026",
+      "destination": "/localreports/trump-drug-price-claims-2026.html"
     },
     {
       "source": "/trump-duterte-arrest-response-2025",
