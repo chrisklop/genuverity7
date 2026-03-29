@@ -58,16 +58,6 @@
       "permanent": true
     },
     {
-      "source": "/localreports/ai-deepfakes-2025.html",
-      "destination": "/ai-deepfakes-2025",
-      "permanent": true
-    },
-    {
-      "source": "/ai-deepfakes-2025.html",
-      "destination": "/ai-deepfakes-2025",
-      "permanent": true
-    },
-    {
       "source": "/localreports/ai-deepfake-ceo-stock-scam-2026.html",
       "destination": "/ai-deepfake-ceo-stock-scam-2026",
       "permanent": true
@@ -75,6 +65,16 @@
     {
       "source": "/ai-deepfake-ceo-stock-scam-2026.html",
       "destination": "/ai-deepfake-ceo-stock-scam-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/ai-deepfakes-2025.html",
+      "destination": "/ai-deepfakes-2025",
+      "permanent": true
+    },
+    {
+      "source": "/ai-deepfakes-2025.html",
+      "destination": "/ai-deepfakes-2025",
       "permanent": true
     },
     {
@@ -1168,16 +1168,6 @@
       "permanent": true
     },
     {
-      "source": "/localreports/measles-outbreak-antivax-2026.html",
-      "destination": "/measles-outbreak-antivax-2026",
-      "permanent": true
-    },
-    {
-      "source": "/measles-outbreak-antivax-2026.html",
-      "destination": "/measles-outbreak-antivax-2026",
-      "permanent": true
-    },
-    {
       "source": "/localreports/maui-weather-weapons-2025.html",
       "destination": "/maui-weather-weapons-2025",
       "permanent": true
@@ -1195,6 +1185,16 @@
     {
       "source": "/measles-natural-cures-2025.html",
       "destination": "/measles-natural-cures-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/measles-outbreak-antivax-2026.html",
+      "destination": "/measles-outbreak-antivax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/measles-outbreak-antivax-2026.html",
+      "destination": "/measles-outbreak-antivax-2026",
       "permanent": true
     },
     {
@@ -1748,16 +1748,6 @@
       "permanent": true
     },
     {
-      "source": "/localreports/smishing-surge-2025.html",
-      "destination": "/smishing-surge-2025",
-      "permanent": true
-    },
-    {
-      "source": "/smishing-surge-2025.html",
-      "destination": "/smishing-surge-2025",
-      "permanent": true
-    },
-    {
       "source": "/localreports/seedance-deepfake-copyright-2026.html",
       "destination": "/seedance-deepfake-copyright-2026",
       "permanent": true
@@ -1765,6 +1755,16 @@
     {
       "source": "/seedance-deepfake-copyright-2026.html",
       "destination": "/seedance-deepfake-copyright-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/smishing-surge-2025.html",
+      "destination": "/smishing-surge-2025",
+      "permanent": true
+    },
+    {
+      "source": "/smishing-surge-2025.html",
+      "destination": "/smishing-surge-2025",
       "permanent": true
     },
     {
@@ -1908,16 +1908,6 @@
       "permanent": true
     },
     {
-      "source": "/localreports/trump-trade-deficit-77-claim-2026.html",
-      "destination": "/trump-trade-deficit-77-claim-2026",
-      "permanent": true
-    },
-    {
-      "source": "/trump-trade-deficit-77-claim-2026.html",
-      "destination": "/trump-trade-deficit-77-claim-2026",
-      "permanent": true
-    },
-    {
       "source": "/localreports/treasury-leverage.html",
       "destination": "/treasury-leverage",
       "permanent": true
@@ -1988,6 +1978,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/trump-economic-growth-claims-2026.html",
+      "destination": "/trump-economic-growth-claims-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-economic-growth-claims-2026.html",
+      "destination": "/trump-economic-growth-claims-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/trump-factory-construction-claim-2026.html",
       "destination": "/trump-factory-construction-claim-2026",
       "permanent": true
@@ -2018,16 +2018,6 @@
       "permanent": true
     },
     {
-      "source": "/localreports/trump-speech-factcheck.html",
-      "destination": "/trump-speech-factcheck",
-      "permanent": true
-    },
-    {
-      "source": "/trump-speech-factcheck.html",
-      "destination": "/trump-speech-factcheck",
-      "permanent": true
-    },
-    {
       "source": "/localreports/trump-sotu-2026-factcheck.html",
       "destination": "/trump-sotu-2026-factcheck",
       "permanent": true
@@ -2038,6 +2028,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/trump-speech-factcheck.html",
+      "destination": "/trump-speech-factcheck",
+      "permanent": true
+    },
+    {
+      "source": "/trump-speech-factcheck.html",
+      "destination": "/trump-speech-factcheck",
+      "permanent": true
+    },
+    {
       "source": "/localreports/trump-third-term-loophole-claims-2026.html",
       "destination": "/trump-third-term-loophole-claims-2026",
       "permanent": true
@@ -2045,6 +2045,16 @@
     {
       "source": "/trump-third-term-loophole-claims-2026.html",
       "destination": "/trump-third-term-loophole-claims-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/trump-trade-deficit-77-claim-2026.html",
+      "destination": "/trump-trade-deficit-77-claim-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-trade-deficit-77-claim-2026.html",
+      "destination": "/trump-trade-deficit-77-claim-2026",
       "permanent": true
     },
     {
@@ -2238,6 +2248,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/white-house-ai-edited-photos-2026.html",
+      "destination": "/white-house-ai-edited-photos-2026",
+      "permanent": true
+    },
+    {
+      "source": "/white-house-ai-edited-photos-2026.html",
+      "destination": "/white-house-ai-edited-photos-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/who-lockdown-claims-debunked-2026.html",
       "destination": "/who-lockdown-claims-debunked-2026",
       "permanent": true
@@ -2375,20 +2395,20 @@
       "destination": "/localreports/african-vaccine-sterilization-2025.html"
     },
     {
-      "source": "/ai-deepfakes-2025",
-      "destination": "/localreports/ai-deepfakes-2025.html"
+      "source": "/ai-data-poisoning-attacks-2026",
+      "destination": "/localreports/ai-data-poisoning-attacks-2026.html"
     },
     {
       "source": "/ai-deepfake-ceo-stock-scam-2026",
       "destination": "/localreports/ai-deepfake-ceo-stock-scam-2026.html"
     },
     {
-      "source": "/ai-deportation-videos",
-      "destination": "/localreports/ai-deportation-videos.html"
+      "source": "/ai-deepfakes-2025",
+      "destination": "/localreports/ai-deepfakes-2025.html"
     },
     {
-      "source": "/ai-data-poisoning-attacks-2026",
-      "destination": "/localreports/ai-data-poisoning-attacks-2026.html"
+      "source": "/ai-deportation-videos",
+      "destination": "/localreports/ai-deportation-videos.html"
     },
     {
       "source": "/ai-obituary-pirates-2025",
@@ -2823,16 +2843,16 @@
       "destination": "/localreports/marijuana-rescheduling.html"
     },
     {
-      "source": "/measles-outbreak-antivax-2026",
-      "destination": "/localreports/measles-outbreak-antivax-2026.html"
-    },
-    {
       "source": "/maui-weather-weapons-2025",
       "destination": "/localreports/maui-weather-weapons-2025.html"
     },
     {
       "source": "/measles-natural-cures-2025",
       "destination": "/localreports/measles-natural-cures-2025.html"
+    },
+    {
+      "source": "/measles-outbreak-antivax-2026",
+      "destination": "/localreports/measles-outbreak-antivax-2026.html"
     },
     {
       "source": "/medicaid-voter-registration-dr-oz-january-2026",
@@ -3055,12 +3075,12 @@
       "destination": "/localreports/sean-combs-trial-misinfo-2025.html"
     },
     {
-      "source": "/smishing-surge-2025",
-      "destination": "/localreports/smishing-surge-2025.html"
-    },
-    {
       "source": "/seedance-deepfake-copyright-2026",
       "destination": "/localreports/seedance-deepfake-copyright-2026.html"
+    },
+    {
+      "source": "/smishing-surge-2025",
+      "destination": "/localreports/smishing-surge-2025.html"
     },
     {
       "source": "/somali-daycare-fraud-influencers-2026",
@@ -3119,10 +3139,6 @@
       "destination": "/localreports/trade-war-tariffs-2025.html"
     },
     {
-      "source": "/trump-trade-deficit-77-claim-2026",
-      "destination": "/localreports/trump-trade-deficit-77-claim-2026.html"
-    },
-    {
       "source": "/treasury-leverage",
       "destination": "/localreports/treasury-leverage.html"
     },
@@ -3151,6 +3167,10 @@
       "destination": "/localreports/trump-duterte-arrest-response-2025.html"
     },
     {
+      "source": "/trump-economic-growth-claims-2026",
+      "destination": "/localreports/trump-economic-growth-claims-2026.html"
+    },
+    {
       "source": "/trump-factory-construction-claim-2026",
       "destination": "/localreports/trump-factory-construction-claim-2026.html"
     },
@@ -3163,16 +3183,20 @@
       "destination": "/localreports/trump-shitholes-admission-2025.html"
     },
     {
-      "source": "/trump-speech-factcheck",
-      "destination": "/localreports/trump-speech-factcheck.html"
-    },
-    {
       "source": "/trump-sotu-2026-factcheck",
       "destination": "/localreports/trump-sotu-2026-factcheck.html"
     },
     {
+      "source": "/trump-speech-factcheck",
+      "destination": "/localreports/trump-speech-factcheck.html"
+    },
+    {
       "source": "/trump-third-term-loophole-claims-2026",
       "destination": "/localreports/trump-third-term-loophole-claims-2026.html"
+    },
+    {
+      "source": "/trump-trade-deficit-77-claim-2026",
+      "destination": "/localreports/trump-trade-deficit-77-claim-2026.html"
     },
     {
       "source": "/trump-walker-image-2025",
@@ -3249,6 +3273,10 @@
     {
       "source": "/wellness-grifting-pseudoscience-2026",
       "destination": "/localreports/wellness-grifting-pseudoscience-2026.html"
+    },
+    {
+      "source": "/white-house-ai-edited-photos-2026",
+      "destination": "/localreports/white-house-ai-edited-photos-2026.html"
     },
     {
       "source": "/who-lockdown-claims-debunked-2026",
