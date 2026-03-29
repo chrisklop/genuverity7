@@ -2148,6 +2148,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/trump-dual-citizenship-hoax-2026.html",
+      "destination": "/trump-dual-citizenship-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-dual-citizenship-hoax-2026.html",
+      "destination": "/trump-dual-citizenship-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/tylenol-autism-claims-2025.html",
       "destination": "/tylenol-autism-claims-2025",
       "permanent": true
@@ -2238,6 +2248,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/us-murder-rate-politics-2026.html",
+      "destination": "/us-murder-rate-politics-2026",
+      "permanent": true
+    },
+    {
+      "source": "/us-murder-rate-politics-2026.html",
+      "destination": "/us-murder-rate-politics-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/us-vaccine-schedule-global-2025.html",
       "destination": "/us-vaccine-schedule-global-2025",
       "permanent": true
@@ -2295,6 +2315,16 @@
     {
       "source": "/visa-ban-green-card-panic-january-2026.html",
       "destination": "/visa-ban-green-card-panic-january-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/viral-news-forensic-analysis-2026.html",
+      "destination": "/viral-news-forensic-analysis-2026",
+      "permanent": true
+    },
+    {
+      "source": "/viral-news-forensic-analysis-2026.html",
+      "destination": "/viral-news-forensic-analysis-2026",
       "permanent": true
     },
     {
@@ -3301,6 +3331,10 @@
       "destination": "/localreports/trump-walker-image-2025.html"
     },
     {
+      "source": "/trump-dual-citizenship-hoax-2026",
+      "destination": "/localreports/trump-dual-citizenship-hoax-2026.html"
+    },
+    {
       "source": "/tylenol-autism-claims-2025",
       "destination": "/localreports/tylenol-autism-claims-2025.html"
     },
@@ -3337,6 +3371,10 @@
       "destination": "/localreports/us-recession-analysis-2025.html"
     },
     {
+      "source": "/us-murder-rate-politics-2026",
+      "destination": "/localreports/us-murder-rate-politics-2026.html"
+    },
+    {
       "source": "/us-vaccine-schedule-global-2025",
       "destination": "/localreports/us-vaccine-schedule-global-2025.html"
     },
@@ -3359,6 +3397,10 @@
     {
       "source": "/visa-ban-green-card-panic-january-2026",
       "destination": "/localreports/visa-ban-green-card-panic-january-2026.html"
+    },
+    {
+      "source": "/viral-news-forensic-analysis-2026",
+      "destination": "/localreports/viral-news-forensic-analysis-2026.html"
     },
     {
       "source": "/walz-minnesota-fraud-responsibility-2026",

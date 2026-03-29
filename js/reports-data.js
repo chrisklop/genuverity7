@@ -314,6 +314,21 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","data":[2400000,1500000,63000,44000],"labels":["Epstein 'knew too much'","Cruise vs Pitt rooftop","Cruise & Pitt vs robot","Pitt vs zombie ninja"],"colors":["#ef4444","#f59e0b","#06b6d4","#10b981"]}
     },
     {
+        id: -70,
+        title: "Can Your AI Doctor Lie? The Alarming Study That Says Yes",
+        slug: "ai-medical-misinformation-lancet-2026",
+        category: "Health & Science",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "brain",
+        date: "Feb 14, 2026",
+        sources: "20 Sources",
+        readTime: "18 min",
+        verdict: "true",
+        excerpt: "A Lancet Digital Health study tested 20 AI models with 1 million prompts and found they believed false medical claims 32% of the time. Medical fine-tuned models performed worse (63.6%) than general ones. ChatGPT-4o was best at 10%. ECRI named AI chatbot misuse the #1 health tech hazard for 2026.",
+        chart: {"type":"hbar","data":[10,10.4,32,60,63.6],"labels":["GPT-4o","Large General","Average","Small Models","Medical Fine-Tuned"],"colors":["#10b981","#10b981","#f59e0b","#ef4444","#ef4444"]}
+    },
+    {
         id: -14,
         title: "WHO Lockdown Powers Claims After US Exit: Evidence-Based Analysis",
         slug: "who-lockdown-claims-debunked-2026",
@@ -365,6 +380,21 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef4444","data":[85,42,28,15,20,55,18,35,100,78,62,45],"labels":["May 2023","Aug 2023","Nov 2023","Feb 2024","May 2024","Aug 2024","Nov 2024","Feb 2025","May 2025","Aug 2025","Nov 2025","Feb 2026"]}
     },
     {
+        id: -69,
+        title: "The Dual Citizenship Hoax: How an April Fools' Prank Panicked 25 Million Americans",
+        slug: "trump-dual-citizenship-hoax-2026",
+        category: "Fact-Check",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-off",
+        date: "Feb 14, 2026",
+        sources: "18 Sources",
+        readTime: "15 min",
+        verdict: "false",
+        excerpt: "A fabricated Trump Truth Social screenshot claiming he would revoke dual citizenship went viral in April 2025 with 3.9M views. Eight fact-checkers confirmed it false. The creator admitted it was an April Fools' prank — but the hoax exploited real immigration fears and a genuine bill with zero cosponsors.",
+        chart: {"type":"donut","data":[3,97],"labels":["Chance of Passage","Chance of Failure"],"colors":["#ef4444","#64748b"]}
+    },
+    {
         id: -13,
         title: "Trump's Factory Construction Claim: Cherry-Picking Biden-Era Growth",
         slug: "trump-factory-construction-claim-2026",
@@ -378,6 +408,21 @@ const REPORTS_DATA = [
         verdict: "misleading",
         excerpt: "Trump claims manufacturing construction is up 41-42%, but Census Bureau data shows the boom peaked under Biden in August 2024, followed by nine consecutive months of decline after Trump took office in January 2025.",
         chart: {"type":"bar","datasets":[{"data":[75.5,100,202,235.6,226.1],"backgroundColor":["rgba(6,182,212,0.8)","rgba(6,182,212,0.8)","rgba(6,182,212,0.8)","rgba(6,182,212,0.8)","rgba(239,68,68,0.8)"]}],"labels":["2021 (Biden)","2022 (Biden)","2023 (Biden)","2024 (Biden)","2025 (Trump)"]}
+    },
+    {
+        id: -68,
+        title: "Viral News Under the Microscope: Five Stories Exposed",
+        slug: "viral-news-forensic-analysis-2026",
+        category: "Media & Disinformation",
+        tagClass: "tag-orange",
+        catClass: "cat-investigation",
+        icon: "microscope",
+        date: "Feb 13, 2026",
+        sources: "37 Sources",
+        readTime: "25 min",
+        verdict: "mixed",
+        excerpt: "Five viral narratives forensically dissected: the DHS shutdown is real but politically weaponized; Kurt Cobain 'new evidence' is entirely AI-fabricated; James Van Der Beek's cancer death was hijacked by anti-vaxxers; Pennsylvania voter fraud claims distort real court rulings; Springfield child trafficking conspiracy was manufactured by TikTok 'conflict tourists.'",
+        chart: {"type":"donut","data":[1,2,1,1],"labels":["Verified","Fabricated","Hijacked","Zombie"],"colors":["#10b981","#ef4444","#f59e0b","#64748b"]}
     },
     {
         id: -12,
@@ -396,6 +441,11 @@ const REPORTS_DATA = [
         id: -37,
         title: "Trump's EPA Endangerment Finding Revocation: False Scientific Claims Exposed",
         slug: "epa-endangerment-finding-revoked-2026",
+    },
+    {
+        id: -48,
+        title: "The US Murder Rate Debate: Red States, Blue Cities, and the Data They Both Ignore",
+        slug: "us-murder-rate-politics-2026",
         category: "U.S. Politics & Policy",
         tagClass: "tag-red",
         catClass: "cat-factcheck",
@@ -505,7 +555,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[128.8,130,140.5,60.3,71.5,65,58,52,48.1,29.2,56.8],"labels":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov"]}
     },
     {
-        id: -48,
+        id: -67,
         title: "The Paid Protesters Craigslist Hoax: When a Prank Became Proof",
         slug: "paid-protesters-craigslist-hoax-2026",
         category: "U.S. Politics & Policy",
@@ -728,6 +778,14 @@ const REPORTS_DATA = [
         chart: {"type":"donut","data":[73.6,18.4,8],"labels":["No Criminal Conviction","Non-Violent Conviction","Violent Conviction"],"colors":["#22c55e","#f97316","#ef4444"]}
     },
     {
+        date: "Feb 10, 2026",
+        sources: "22 Sources",
+        readTime: "20 min",
+        verdict: "context",
+        excerpt: "Both 'Red State Murder Problem' and 'Blue City Murder Problem' narratives contain partial truths but fundamentally mislead. Red states have higher aggregate rates every year since 2000—even after removing their largest cities. But 27 of 30 highest-murder cities have Democratic mayors. When demographic controls are applied, partisan correlation vanishes. Poverty, inequality, and social mobility predict violence far better than party affiliation.",
+        chart: {"type":"hbar","data":[6.38,2.27,1.31,0.99,0.55,0.23],"labels":["US","Canada","France","UK","Italy","Japan"],"colors":["#ef4444","#64748b","#64748b","#64748b","#64748b","#10b981"]}
+    },
+    {
         id: -11,
         title: "Epstein Files 2026: What the 3.5 Million DOJ Documents Actually Reveal",
         slug: "epstein-files-2026-revelations",
@@ -740,7 +798,7 @@ const REPORTS_DATA = [
         readTime: "18 min",
         verdict: "context",
         excerpt: "Comprehensive analysis of the DOJ's January 30, 2026 Epstein files release. Verified: Musk 'wildest party' email, Bannon's hundreds of texts and jet offers, Lutnick Christmas island plans, Ruemmler 'Uncle Jeffrey' emails, Melania-Maxwell 'Love' exchange, Gates allegations in draft emails, new Clinton photos. But millions of pages are unverified FBI tips.",
-        chart: {"type":"bar","color":"#3b82f6","data":[3.5,2.5,180,2],"labels":["Released","Withheld","Images (K)","Videos"],"colors":["#3b82f6","#64748b","#06b6d4","#10b981"]}
+        chart: {"type":"donut","data":[2.5,2.0,1.5],"colors":["#64748b","#3b82f6","#f59e0b"]}
     },
     {
         id: -10,
@@ -755,7 +813,7 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "mixed",
         excerpt: "Governor Walz bears significant administrative responsibility for oversight failures enabling $1+ billion in fraud. State audits document fabricated records and ignored warnings. However, claims of sole or criminal responsibility are misleading—amplified by coordinated disinformation campaigns.",
-        chart: {"type":"bar","color":"#3b82f6","data":[300,104,425,14,50],"labels":["FOF","Housing","BHA Grants","Autism","Other"]}
+        chart: {"type":"hbar","data":[425,300,104,50,14],"labels":["BHA Grants","FOF","Housing","Other","Autism"],"colors":["#3b82f6","#ef4444","#f59e0b","#64748b","#06b6d4"]}
     },
     {
         id: -9,

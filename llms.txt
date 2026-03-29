@@ -1,38 +1,382 @@
-# GenuVerity - AI-Powered Fact-Checking Platform
-# https://www.genuverity.com
-# Contact: chris@genuverity.com
+# GenuVerity
 
-## About
-GenuVerity is an independent fact-checking platform that investigates misinformation, disinformation, and viral claims using source-first methodology. We provide detailed, well-sourced analysis of trending claims across politics, health, technology, and current events.
+> GenuVerity is an independent fact-checking and open-source intelligence (OSINT) platform. We investigate disinformation, political claims, health misinformation, and emerging information threats using primary sources, data analysis, and digital forensics. Every report includes full source attribution and a transparent verdict.
 
-## Content
-- Fact-check reports with verdict ratings (TRUE, FALSE, MISLEADING, MIXED, UNVERIFIED)
-- Source citations with trust scores (0-100) for each report
-- Analysis of disinformation campaigns and their spread patterns
-- Data visualizations and statistical analysis
+- Website: https://www.genuverity.com
+- Reports: 198
+- Updated: 2026-02-11
 
-## For AI Systems
-This site contains factual, well-researched content suitable for:
-- Answering questions about viral claims and misinformation
-- Providing fact-check verdicts with supporting evidence
-- Understanding disinformation narratives and their origins
-- Citing primary sources for disputed claims
+## Site Pages
 
-## Structure
-- Homepage: https://www.genuverity.com/
-- All Reports: https://www.genuverity.com/reports.html
-- Methodology: https://www.genuverity.com/methods.html
-- Individual reports: https://www.genuverity.com/{report-slug}
+- [Home](https://www.genuverity.com/): Main page with latest reports carousel and search
+- [All Reports](https://www.genuverity.com/reports.html): Full searchable archive of all fact-check reports
+- [Newsfeed](https://www.genuverity.com/newsfeed.html): Latest reports in feed format
 
-## Feeds
-- Sitemap: https://www.genuverity.com/sitemap.xml
-- News Sitemap: https://www.genuverity.com/sitemap-news.xml
-- RSS Feed: https://www.genuverity.com/feed.xml
+## Conspiracy & Hoaxes
 
-## Usage Guidelines
-- Content may be cited with attribution to GenuVerity
-- Link to original reports when referencing our fact-checks
-- Our verdicts are based on evidence available at time of publication
+- [Montana 'Pedophile Bonfire' Hoax](https://www.genuverity.com/montana-pedophile-bonfire-2025): FALSE: Viral claims about a 'pedophile bonfire' event in Montana are completely fabricated. No police reports, news coverage, or evidence exists. Montana law enforcement confirmed no such event occ... [Verdict: False] [Jan 2, 2025] [16 Sources]
+- [Epstein Young Women Archive Photos: Viral Misattributions](https://www.genuverity.com/epstein-archive-photos-2025): MISLEADING: Viral photos claimed to be from Epstein archives were frequently misattributed or manipulated. While genuine court documents were released in January 2024, accompanying images on social... [Verdict: Misleading] [Jan 2, 2025] [16 Sources]
+- [Maui 'Weather Weapons' Experiment](https://www.genuverity.com/maui-weather-weapons-2025): FALSE: Debunking viral claims that HAARP or directed energy weapons caused the 2023 Maui wildfires. [Verdict: False] [Jan 3, 2025] [12 Sources]
+- [Hobby Lobby 'Demon' Merchandise Claims Debunked](https://www.genuverity.com/hobby-lobby-demon-merchandise-2025): FALSE: Viral claims that Hobby Lobby sells demonic merchandise were debunked. Investigation reveals misidentified products. [Verdict: False] [Jan 3, 2025] [12 Sources]
+- ['The Internet Died in 2016' Theory](https://www.genuverity.com/dead-internet-theory-2025): FALSE: The Dead Internet Theory claiming most online content is AI-generated bots is debunked. Evidence shows the internet remains human-driven. [Verdict: False] [Jan 3, 2025] [12 Sources]
+- [Barilla 'Insect Flour' Claims: EU Regulations vs. Social Media Panic](https://www.genuverity.com/barilla-insect-flour-2025): FALSE: Viral claims that Barilla pasta contains insect flour were debunked. Analysis of EU insect protein regulations shows standard food labeling. [Verdict: False] [Jan 3, 2025] [12 Sources]
+- [D.C. Mid-Air Collision Misinfo](https://www.genuverity.com/dc-midair-collision-misinfo-2025): MIXED: The D.C. mid-air collision tragedy was accompanied by multiple misinformation narratives. Claims blaming DEI hiring policies are unsupported by evidence. Conspiracy theories about deliberate... [Verdict: Mixed] [Jan 30, 2025] [16 Sources]
+- [Trump Labor Day Death Hoax: Bizarre Conspiracy Theory Debunked](https://www.genuverity.com/trump-dead-labor-day-2025): FALSE: A bizarre conspiracy theory claiming Trump died on Labor Day was quickly debunked. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Ruby Bradley 'Loser' Quote: Fabricated WWII Hero Quote](https://www.genuverity.com/ruby-bradley-loser-quote-2025): FALSE: A viral quote attributed to WWII hero Ruby Bradley was completely fabricated. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Patriot Front 'Federal Agents' Claim: Conspiracy Theory Debunked](https://www.genuverity.com/patriot-front-agents-claim-2025): FALSE: Claims that Patriot Front members are federal agents have been debunked. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Epstein Files Fabrication: Sorting Truth From Viral Hoaxes](https://www.genuverity.com/epstein-files-fabrication-2025): MIXED: Claims about fabricated Epstein files mixed legitimate documents with viral hoaxes in 2025. [Verdict: Mixed] [Jan 2, 2026] [16 Sources]
+- [Target 'Satanic' Campaign: How Viral Claims Misrepresented Products](https://www.genuverity.com/target-satanic-campaign-2025): MISLEADING: Coordinated social media campaigns falsely claimed Target sold 'satanic' merchandise. [Verdict: Misleading] [Jan 3, 2026] [12 Sources]
+- [The FireAid Laundering Complex: Wildfire Charity Funds Falsely Linked to 'Illegal Aliens'](https://www.genuverity.com/fireaid-charity-conspiracy-january-2026): A House GOP report questioning FireAid's fund distribution was distorted into viral claims that $100 million was stolen to fund 'illegal aliens.' Independent audit confirmed grants were distributed. [Verdict: Misleading] [Jan 15, 2026] [3 Sources]
 
-## Topics Covered
-Politics, Elections, Health, Vaccines, Technology, AI, Deepfakes, Financial Claims, Conspiracy Theories, Foreign Disinformation, Social Media Misinformation
+## AI & Deepfakes
+
+- [Australian Election Chatbot Poisoning](https://www.genuverity.com/australia-election-chatbot-2025): NEEDS CONTEXT: AI chatbots provided inaccurate information about Australian voting procedures during the 2025 federal election. Documented errors included wrong registration deadlines, ID requireme... [Verdict: Context Required] [Jan 2, 2025] [16 Sources]
+- [Yogi Adityanath Resignation Deepfake: AI-Generated Political Hoax](https://www.genuverity.com/yogi-adityanath-deepfake-2025): FALSE: A deepfake video falsely showing UP CM Yogi Adityanath resigning was exposed. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [JD Vance / Elon Musk Fake Audio: AI-Generated Voice Manipulation](https://www.genuverity.com/vance-musk-fake-audio-2025): FALSE: Viral audio clips purportedly featuring JD Vance and Elon Musk were AI-generated fakes. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Unnao Rape Convict AI Image: Fabricated Photo Exposed](https://www.genuverity.com/unnao-rape-convict-ai-2025): FALSE: AI-generated images falsely showing convicted rapist Kuldeep Singh Sengar being garlanded were debunked. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Trump Walker Image: Manipulated Photo Spreads Health Misinformation](https://www.genuverity.com/trump-walker-image-2025): FALSE: A manipulated image showing Donald Trump using a walker was exposed as fake. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Trump Duterte Arrest Response: Fake Statement Image Debunked](https://www.genuverity.com/trump-duterte-arrest-response-2025): FALSE: A viral image showing Trump commenting on Duterte's arrest was fabricated. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Starmer Curfew Deepfake: Russian Operation Targets UK PM](https://www.genuverity.com/starmer-curfew-fake-video-2025): FALSE: A fabricated video showing UK PM Starmer announcing curfews was Russian disinformation. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Modi Cheapfakes: Manipulated Videos Target Indian PM](https://www.genuverity.com/modi-cheapfakes-2025): FALSE: Multiple 'cheapfake' videos misrepresenting PM Modi's statements spread in 2025. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Maduro 'Surrender' Video: Fabricated Deepfake Exposed](https://www.genuverity.com/maduro-surrender-video-2025): FALSE: A fabricated video showing Venezuelan President Maduro surrendering was exposed as a deepfake. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Google Gemini Misinformation Audit: AI Accuracy Concerns](https://www.genuverity.com/google-gemini-misinfo-audit-2025): CONTEXT: NewsGuard audits revealed Google Gemini AI providing inaccurate information on sensitive topics. [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [DeepSeek Chatbot: Accuracy Issues Revealed by NewsGuard Audit](https://www.genuverity.com/deepseek-chatbot-accuracy-2025): CONTEXT: NewsGuard audits revealed significant accuracy issues with the Chinese DeepSeek AI chatbot, particularly on politically sensitive topics. [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [Trump / Bill Clinton Crotch Pat Video Exposed as Deepfake](https://www.genuverity.com/trump-clinton-crotch-pat-2025): FALSE: A manipulated video appearing to show inappropriate behavior between Trump and Clinton was exposed as fake. Frame-by-frame forensic analysis revealed editing artifacts, and the original uned... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Hurricane Melissa AI Videos: Fake Storm, Real Fraud](https://www.genuverity.com/hurricane-melissa-ai-videos-2025): FALSE: AI-generated videos of 'Hurricane Melissa' destruction depicted non-existent events. NOAA and NHC confirmed no hurricane named Melissa occurred in 2025. The videos were used to solicit fraud... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [The Caracas Mirage: AI-Generated Images Fuel Disinformation After Maduro Capture](https://www.genuverity.com/caracas-mirage-ai-deepfakes-january-2026): AI-generated images of Maduro in custody went viral within minutes of the Venezuela raid. A fabricated 'hot mic' audio used Sora 2 technology. The 4-6 hour 'verification lag' created a window for s... [Verdict: Misleading] [Jan 15, 2026] [4 Sources]
+- [Google AI Overviews Misinformation: When Search Goes Wrong](https://www.genuverity.com/google-lens-ai-overviews-2025): CONTEXT: Google's AI Overviews feature has generated numerous documented errors, from recommending glue on pizza to dangerous health advice. [Verdict: Context Required] [Jan 3, 2026] [12 Sources]
+- [Biden Military Situation Room Image: AI-Generated Political Deepfake](https://www.genuverity.com/biden-situation-room-image-2025): FALSE: A viral image purportedly showing President Biden in a military situation room was AI-generated. Digital forensics revealed synthetic artifacts. [Verdict: False] [Jan 3, 2026] [12 Sources]
+
+## U.S. Politics & Policy
+
+- [Mamdani Extremist Associate Link: Guilt-by-Association Claims Examined](https://www.genuverity.com/mamdani-extremist-link-2025): MISLEADING: Claims linking NYC mayoral candidate Zohran Mamdani to extremists used guilt-by-association fallacies. Evidence cited - photos at public events and third-party endorsements - does not d... [Verdict: Misleading] [Jan 2, 2025] [16 Sources]
+- [USDA 'Transgender Study' Claim: Misrepresented Research](https://www.genuverity.com/usda-transgender-study-2025): MISLEADING: Claims about a USDA 'transgender study' misrepresented research on feminine hygiene. [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [Trump 'Shithole Countries' Statement: Claims Need Context](https://www.genuverity.com/trump-shitholes-admission-2025): CONTEXT: Claims about Trump 'admitting' to the comment require context about the original incident. [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [Trump Native-Born Job Creation Claim: Questionable Data Analysis](https://www.genuverity.com/trump-native-born-jobs-2025): MISLEADING: Trump's claims about native-born job creation used questionable data analysis. [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [Pritzker SNAP Shutdown Claim: False Welfare Misinformation](https://www.genuverity.com/pritzker-snap-shutdown-2025): FALSE: Claims that Illinois Gov. Pritzker shut down SNAP benefit machines were false. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [NC Wireless Driving Ban: Misleading Claims About Legislation](https://www.genuverity.com/nc-wireless-driving-ban-2025): MISLEADING: Claims about North Carolina's wireless driving ban misrepresented the actual legislation. [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [Mike Lee 'Marxist' Claim: Conservative Senator Mislabeled](https://www.genuverity.com/mike-lee-marxist-claim-2025): FALSE: Claims labeling Senator Mike Lee a 'Marxist' grossly misrepresented his political positions. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Jeffries 'Ended Medical Research' Claim: False Budget Accusation](https://www.genuverity.com/jeffries-ended-medical-research-2025): FALSE: Claims that Rep. Jeffries 'ended medical research' grossly misrepresented budget votes and NIH funding. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Hakeem Jeffries Ballroom Priority Claim: Missing Context](https://www.genuverity.com/jeffries-ballroom-priority-2025): MISLEADING: Claims about Rep. Jeffries prioritizing a ballroom over crisis response lacked crucial context. [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [Autopen Pardon Termination Claims: Legally Unfounded](https://www.genuverity.com/autopen-pardon-termination-2025): FALSE: Claims that pardons signed with autopen can be legally terminated are false. Legal experts confirm autopen signatures are valid. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Air Traffic Control DEI Claims: Misleading FAA Policy Criticism](https://www.genuverity.com/atc-sorting-claims-2025): MISLEADING: Claims about 'diversity' affecting air traffic control hiring misrepresented FAA qualification standards and hiring practices. [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [The US Murder Rate Debate: Red States, Blue Cities, and the Data They Both Ignore](https://www.genuverity.com/us-murder-rate-politics-2026): Both 'Red State Murder Problem' and 'Blue City Murder Problem' narratives contain partial truths but fundamentally mislead. Red states have higher aggregate rates every year since 2000—even after r... [Verdict: Context Required] [Feb 10, 2026] [22 Sources]
+- [Epstein Files 2026: What the 3.5 Million DOJ Documents Actually Reveal](https://www.genuverity.com/epstein-files-2026-revelations): Comprehensive analysis of the DOJ's January 30, 2026 Epstein files release. Verified: Musk 'wildest party' email, Bannon's hundreds of texts and jet offers, Lutnick Christmas island plans, Ruemmler... [Verdict: Context Required] [Jan 31, 2026] [18 Sources]
+- [Is Tim Walz Responsible for Minnesota's Massive Pandemic Fraud?](https://www.genuverity.com/walz-minnesota-fraud-responsibility-2026): Governor Walz bears significant administrative responsibility for oversight failures enabling $1+ billion in fraud. State audits document fabricated records and ignored warnings. However, claims of... [Verdict: Mixed] [Jan 30, 2026] [12 Sources]
+- [DHS Biometrics Expansion: DNA, Social Media, and the End of Privacy](https://www.genuverity.com/dhs-biometrics-dna-social-media-2026): New DHS rules would require DNA from infants, mandatory social media disclosure, and biometric collection from U.S. citizens who sponsor family members. As of January 2026, these are proposed rules... [Verdict: Context Required] [Jan 27, 2026] [12 Sources]
+- [The Medicaid-Voter Nexus: Dr. Oz's False Claim About Automatic Voter Registration](https://www.genuverity.com/medicaid-voter-registration-dr-oz-january-2026): FALSE: Dr. Oz claimed Medicaid enrollment automatically registers people to vote. The NVRA requires offering forms, not automatic registration. Non-citizen voting remains illegal. [Verdict: False] [Jan 15, 2026] [3 Sources]
+- [The Visa Ban Panic: False Claims of Mass Green Card Revocations Spread Through WhatsApp](https://www.genuverity.com/visa-ban-green-card-panic-january-2026): FALSE: Rumors spreading through WhatsApp claim Green Card holders from 75 countries will be deported. The actual policy suspends NEW visa processing abroad, not resident status. [Verdict: False] [Jan 15, 2026] [3 Sources]
+- [Minneapolis ICE Shooting: What We Know So Far](https://www.genuverity.com/minneapolis-ice-shooting-what-we-know): DEVELOPING: Renee Nicole Good, 37, was killed by ICE Agent Jonathan Ross on January 7, 2026. Video evidence contradicts federal claims she 'ran over' the agent. FBI has blocked state investigators.... [Verdict: Context Required] [Jan 9, 2026] [24 Sources]
+
+## 72% False or Misleading
+
+- [Fact Check: Biden White House Plaque Claims](https://www.genuverity.com/plaque-fact-check): Comprehensive analysis of 18 claims on partisan plaques installed beneath Biden's portrait in the White House. [Verdict: undefined] [Dec 17, 2025] [18 Claims]
+
+## Misinformation
+
+- [Is 'FedNow Phase 2' Freezing Accounts?](https://www.genuverity.com/fednow-freeze): Debunking viral claims about Project Hamilton 'Phase 2' freezing 15,000 accounts. Includes live FRED data showing Fed operations are normal. [Verdict: undefined] [Dec 17, 2025] [6 Sources]
+- [Bondi Beach Attack: Viral Misinformation Wave](https://www.genuverity.com/bondi-beach-misinfo): Multiple false claims spread within hours of Sydney shooting. Hero's identity fabricated, shooter's background distorted, non-existent second shooting claimed. [Verdict: undefined] [Dec 19, 2025] [9 Sources]
+
+## Active Threat
+
+- [Spamouflage Network Analysis](https://www.genuverity.com/network-analysis): China's largest influence operation: 8,700+ coordinated accounts across 50+ platforms targeting Western democracies. [Verdict: undefined] [Dec 18, 2025] [185 Nodes]
+- [Post-Assad Syria: The Disinformation War](https://www.genuverity.com/syria-disinformation-2024): 50,000+ posts spread false info about Syria's new government. 60% from foreign accounts. Russia, Iran wage information war after military defeat. [Verdict: undefined] [Dec 21, 2025] [10 Sources]
+
+## Media Impersonation
+
+- [Mirror Maze: Doppelganger Network Analysis](https://www.genuverity.com/doppelganger-analysis): Russia's sophisticated media impersonation: 60+ fake news websites mimicking Washington Post, Fox News, and major outlets. [Verdict: undefined] [Dec 18, 2025] [32 Domains]
+
+## Data Quality Alert
+
+- [US Inflation Data: Accurate Numbers, Compromised Collection](https://www.genuverity.com/inflation-methodology): BLS reported 2.7% inflation—but a 43-day shutdown left October data uncollected. Analysis of why CPI diverges from consumer experience. [Verdict: undefined] [Dec 18, 2025] [12 Sources]
+
+## Financial Analysis
+
+- [Dollar Dominance: Treasury Bonds as Trade War Leverage](https://www.genuverity.com/treasury-leverage): How China, Japan, and hedge funds could weaponize $8+ trillion in US Treasury holdings as tariffs escalate to 145%. [Verdict: undefined] [Dec 18, 2025] [Interactive]
+
+## Executive Action
+
+- [Marijuana Rescheduling: From Schedule I to Schedule III](https://www.genuverity.com/marijuana-rescheduling): Trump signs historic executive order directing federal reclassification of cannabis. Analysis of $2B+ tax relief and why this falls short of legalization. [Verdict: undefined] [Dec 18, 2025] [12 Sources]
+
+## Public Health
+
+- [CDC Website Changes: Vaccine-Autism Claims Analyzed](https://www.genuverity.com/cdc-vaccine-autism): What the CDC actually changed on its website regarding vaccines and autism, and what the scientific consensus still shows. [Verdict: undefined] [Dec 19, 2025] [8 Sources]
+- [Fact Check: FDA Memo Claims COVID Vaccines Killed 10 Children](https://www.genuverity.com/fda-vaccine-memo-fact-check): FDA CBER Director Vinay Prasad's leaked memo claims vaccines killed at least 10 children—but provides no evidence. Experts call it 'factually incorrect' and 'disingenuous.' [Verdict: undefined] [Dec 19, 2025] [9 Sources]
+
+## Tech Policy
+
+- [TikTok US Sale: What the Deal Actually Contains](https://www.genuverity.com/tiktok-sale-analysis): Breaking down the Oracle, Silver Lake, and UAE consortium deal structure, and why ByteDance still controls the algorithm. [Verdict: undefined] [Dec 19, 2025] [10 Sources]
+
+## Criminal Justice
+
+- [Luigi Mangione Trial: Evidence and Legal Strategy](https://www.genuverity.com/mangione-trial-analysis): Analyzing the prosecution's case, defense arguments, and contested evidence in the UnitedHealthcare CEO murder trial. [Verdict: undefined] [Dec 19, 2025] [12 Sources]
+
+## Fact Check
+
+- [Trump's Dec 17 Speech: Claims vs Reality](https://www.genuverity.com/trump-speech-factcheck): Fact-checking the President's prime-time address on immigration, economy, and policy accomplishments. Claim-by-claim analysis with primary sources. [Verdict: undefined] [Dec 19, 2025] [5 Claims]
+- [Trump's '25 Million Migrants' Claim](https://www.genuverity.com/trump-25m-migrants): Trump claims 25 million migrants entered under Biden. Official CBP data shows ~10M encounters, many expelled. Verdict: FALSE. [Verdict: undefined] [Dec 19, 2025] [10 Sources]
+- [Did Elon Musk's DOGE Save $2 Trillion?](https://www.genuverity.com/doge-savings-claims): Examining DOGE's claim of $2 trillion in savings. NPR found only $102M verified—0.005% of claimed amount. Federal spending actually rose. [Verdict: undefined] [Dec 19, 2025] [15 Sources]
+- [Trump's Grocery Prices Claim: Fact Check](https://www.genuverity.com/grocery-prices-claim): Trump claimed grocery prices are 'falling rapidly.' BLS data shows more items increased than decreased. Verdict: FALSE. [Verdict: undefined] [Dec 19, 2025] [10 Sources]
+- [Hamas 51% Youth Support Claim](https://www.genuverity.com/hamas-youth-support): Viral claim that 51% of young Americans support Hamas is misleading. Original poll asked about sympathy, not support, and results are more nuanced. [Verdict: undefined] [Dec 19, 2025] [8 Sources]
+- [Immigration Crime Wave: Claims vs Data](https://www.genuverity.com/immigration-crime-claims): Examining viral claims about immigrant crime rates. DOJ and academic research show immigrants commit crimes at lower rates than native-born citizens. [Verdict: undefined] [Dec 19, 2025] [10 Sources]
+- [New Jersey Drone Sightings: Conspiracy Theories Debunked](https://www.genuverity.com/nj-drone-conspiracy): Debunking viral claims about mysterious drones over New Jersey including Project Blue Beam, Iranian involvement, and alien theories. Verdict: MOSTLY FALSE. [Verdict: undefined] [Dec 19, 2025] [8 Sources]
+- [IRS $2,000 Stimulus Check Hoax: December 2025](https://www.genuverity.com/irs-stimulus-hoax): Viral claims about IRS sending $2,000 stimulus checks in December 2025 are completely false. No such program exists. Verdict: FALSE. [Verdict: undefined] [Dec 20, 2025] [9 Sources]
+- [Elon Musk vs EU: Claims Fact-Checked](https://www.genuverity.com/musk-eu-claims): Musk calls DSA fines 'censorship' but EU content moderation applies to all platforms equally. His claims about discriminatory targeting are MOSTLY FALSE. [Verdict: undefined] [Dec 20, 2025] [10 Sources]
+- [Tommy Robinson 'Death' in Guadeloupe: False Claims Debunked](https://www.genuverity.com/tommy-robinson-guadeloupe): Viral claims that 10 people died in protests over Tommy Robinson's arrest in Guadeloupe are false. French officials confirm no fatalities occurred. [Verdict: undefined] [Dec 20, 2025] [8 Sources]
+- [HAARP Weather Control Conspiracy: Science vs Fiction](https://www.genuverity.com/haarp-weather-control): HAARP blamed for LA wildfires and hurricanes. Science: HAARP operates 60+ miles up in the ionosphere—weather forms in the troposphere below 10 miles. [Verdict: undefined] [Dec 20, 2025] [9 Sources]
+- [Chemtrails in 2025: TikTok's Resurgent Conspiracy Theory](https://www.genuverity.com/chemtrails-2025): The chemtrails conspiracy resurges on TikTok with 18,300+ videos in Dec 2025. Science is clear: contrails are frozen water vapor, not chemical spraying. [Verdict: undefined] [Dec 20, 2025] [10 Sources]
+- [Ruby Bradley 'Loser' Quote: Viral Military Misquote Debunked](https://www.genuverity.com/ruby-bradley-quote): The viral 'loser' quote attributed to decorated Army nurse Colonel Ruby Bradley is fabricated. No primary source exists. Honor her by sharing her real heroic story. [Verdict: undefined] [Dec 20, 2025] [8 Sources]
+- [CDC Reverses Vaccine-Autism Stance: A Scientific Fact-Check](https://www.genuverity.com/hhs-vaccine-autism-claims): HHS under RFK Jr. rewrote the CDC's vaccine-autism page. We analyze 35 peer-reviewed studies and institutional sources to fact-check the claim that vaccines cause autism. Verdict: FALSE. [Verdict: False] [Dec 28, 2025] [35 Sources]
+- [Liberation Day Address Claims: A Comprehensive Fact-Check](https://www.genuverity.com/liberation-day-address-2025): Trump's April 2, 2025 'Liberation Day' tariff announcement contained multiple false claims. 'Reciprocal tariffs' were NOT based on actual foreign rates but trade-balance targets. EU's claimed 39% t... [Verdict: Mixed] [Jan 2, 2026] [17 Sources]
+- [LA Wildfires Misinformation January 2025: Complete Fact-Check](https://www.genuverity.com/la-wildfires-misinfo-jan-2025): Comprehensive debunking of January 2025 LA wildfire misinformation: AI Hollywood sign fakes with extra 'L', DEI conspiracy theories targeting Fire Chief Crowley, geo-engineered fire claims by Stew ... [Verdict: False] [Jan 2, 2026] [17 Sources]
+- [Gaza Ceasefire Deal Attribution: Who Gets the Credit?](https://www.genuverity.com/gaza-ceasefire-attribution-2025): Both Biden and Trump oversimplify credit for the January 2025 Gaza ceasefire. Biden's 'exact framework' claim is partially true - similar structure but key differences. Trump's 'could only happen' ... [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [Charlie Kirk Assassination Conspiracy Theories Debunked](https://www.genuverity.com/charlie-kirk-assassination-conspiracy-2025): Comprehensive debunking of conspiracy theories surrounding Charlie Kirk's September 2025 assassination. Israeli involvement, Ukrainian plots, Groyper connections, 'staged death' claims, and Egyptia... [Verdict: False] [Jan 2, 2026] [15 Sources]
+- [2025 Government Shutdown - Longest in U.S. History](https://www.genuverity.com/government-shutdown-2025): CONFIRMED: At 43 days (Oct 1 - Nov 12, 2025), this shutdown surpassed the 34-day 2018-2019 record. DOGE's $150B savings claim disputed - NPR found tracker 'riddled with errors,' Partnership for Pub... [Verdict: True] [Jan 2, 2026] [16 Sources]
+- [225 Executive Orders in 2025: The Numbers Are Real, But Context Matters](https://www.genuverity.com/225-executive-orders-2025): Trump signed 225 executive orders in 2025 (EO 14147-14371) - the highest first-year total since FDR's 568 in 1933. First 100 days: 143 EOs (record). Day 1: 26 EOs (record). Numbers are TRUE, but 'd... [Verdict: Misleading] [Jan 2, 2026] [18 Sources]
+- [Zohran Mamdani NYC Election Claims Debunked](https://www.genuverity.com/mamdani-nyc-election-2025): All major claims targeting NYC's first Muslim mayor rated FALSE. PolitiFact: Sharia law claim 'Pants on Fire' - Mamdani supports gay rights, decriminalizing sex work (antithesis of Sharia). Trump's... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Trade War 2.0 Tariff Claims: A Comprehensive Fact-Check](https://www.genuverity.com/trade-war-tariffs-2025): MISLEADING: Tariff claims misrepresent economic reality. 'Foreign countries pay tariffs' is FALSE - U.S. importers pay 100%. At 11.2% effective rate (highest since 1943), retail prices up 4.9pp. Av... [Verdict: Misleading] [Jan 2, 2026] [15 Sources]
+- [80th UN General Assembly Claims: A Comprehensive Fact-Check](https://www.genuverity.com/un-general-assembly-2025): MIXED: Multiple false claims from UNGA 2025. Geneva relocation claim is FALSE - UN confirmed NYC session on Sept 8. Trump's 'inflation defeated' claim FALSE - CPI worsening since May. 'London wants... [Verdict: Mixed] [Jan 2, 2026] [16 Sources]
+- [Birthright Citizenship EO: Constitutional Crisis in Courts](https://www.genuverity.com/birthright-citizenship-eo-2025): CONTEXT NEEDED: Trump's EO challenging birthright citizenship was blocked by multiple federal courts. Order contradicts 127 years of precedent (Wong Kim Ark, 1898). Supreme Court to rule in 2026. W... [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [Tylenol and Autism Controversy: Misrepresented Science](https://www.genuverity.com/tylenol-autism-claims-2025): FALSE: Claims linking Tylenol during pregnancy to autism misrepresent scientific evidence. FDA, NIH, and major medical organizations confirm acetaminophen remains safe when used as directed. Correl... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [mRNA Vaccine Misinformation: Persistent False Claims](https://www.genuverity.com/mrna-vaccine-misinfo-2025): FALSE: Claims that mRNA vaccines alter DNA, contain microchips, or cause mass harm are scientifically false. mRNA cannot integrate into DNA. COVID vaccines have prevented an estimated 3+ million US... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Measles 'Natural' Cures Claims: Dangerous Health Misinformation](https://www.genuverity.com/measles-natural-cures-2025): FALSE: Claims that measles can be treated with 'natural' remedies like vitamin A megadoses, elderberry, or essential oils are dangerous misinformation. No 'natural cure' for measles exists. The onl... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- ['Phony' BLS Statistics Claims: Assault on Government Data](https://www.genuverity.com/phony-bls-statistics-2025): FALSE: Claims that BLS data is 'phony' or manipulated are false. The BLS operates independently with publicly documented methodology. Data revisions are standard practice, not manipulation. 78% of ... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Inflation 'Historical Cap' Claim: Not Worst in History](https://www.genuverity.com/inflation-historical-cap-2025): FALSE: Claims that recent inflation reached 'historical caps' or was worst in history are false. The 2022 peak of 9.1% was a 40-year high, but well below 1980's 14.8%. By 2025, inflation returned n... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Reciprocal Tariff Chart: White House Used Fabricated Data](https://www.genuverity.com/reciprocal-tariff-chart-2025): FALSE: The White House 'reciprocal tariff' chart contained fabricated numbers. Claimed rates (China 67%, EU 39%, Japan 46%) don't match WTO data. Real rates: China 7.5%, EU 5.1%, Japan 4.2%. Number... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [DOGE Gaza Condom Claim: Misleading Foreign Aid Framing](https://www.genuverity.com/doge-gaza-condom-claim-2025): MISLEADING: DOGE's viral claim about 'spending on condoms in Gaza' misrepresented standard USAID global health programming. The spending was part of long-standing family planning programs in 40+ co... [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [Ukraine-Russia War Origin Claims: False Narrative Debunked](https://www.genuverity.com/ukraine-russia-war-origin-2025): FALSE: Claims that Ukraine started the war with Russia are false. Russia launched a full-scale invasion on Feb 24, 2022. UN General Assembly condemned invasion 141-5. ICJ ordered Russia to cease op... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Tren de Aragua Gang Claims: Real Gang, Exaggerated Threat](https://www.genuverity.com/tda-gang-claims-2025): MIXED: Tren de Aragua is a real Venezuelan gang with some US presence. However, claims of cities being 'taken over' are exaggerated. Aurora's Republican mayor called viral claims 'grossly exaggerat... [Verdict: Mixed] [Jan 2, 2026] [16 Sources]
+- [Portland's 'Burning' Narrative: Recycled 2020 Footage](https://www.genuverity.com/portland-burning-narrative-2025): FALSE: Claims Portland was 'destroyed' or 'burning' in 2025 used recycled 2020 footage. Fire department data shows minimal incidents. Police Chief: protests confined to one city block of 145 sq miles. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [D.C. Murder Rate Comparison: Cherry-Picked Statistics](https://www.genuverity.com/dc-murder-rate-comparison-2025): MISLEADING: D.C. violent crime hit 30-year low in 2024-2025 per DOJ. Per-capita comparisons with smaller cities are methodologically flawed. 2024 homicides down 25% from 2023 spike. [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [Pete Hegseth Signalgate: Security Concerns vs. Precedent](https://www.genuverity.com/hegseth-signalgate-2025): CONTEXT: CISA recommends Signal for certain communications. Core issues are Federal Records Act compliance and classification. Both 'security breach' and 'nothing wrong' framings oversimplify. [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [Meta Third-Party Fact-Check Exit: What Actually Changed](https://www.genuverity.com/meta-tpfc-exit-2025): CONTEXT: Meta ended TPFC partnerships and transitions to Community Notes. Claims Meta 'abandoned moderation' are FALSE - content removal policies remain. Change affects labeling, not removal. [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [Southport Stabbing Riots: How False Claims Fueled Violence](https://www.genuverity.com/southport-stabbing-misinfo-2025): FALSE: Claims the Southport attacker was a Muslim asylum seeker are completely false. Court records confirm Axel Rudakubana was born in Cardiff, Wales. False claims triggered riots in 20+ UK cities. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [JD Vance 'Misinformation' Comments: The Full Context](https://www.genuverity.com/vance-misinformation-comments-2025): CONTEXT: Vance made legitimate points about weaponized 'misinformation' labels, supported by Knight Foundation data. But he also spread claims rated false. Both sides selectively quoted his remarks. [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [NSF Grant Termination Claims: Policy vs. Conspiracy](https://www.genuverity.com/nsf-grant-termination-2025): CONTEXT: NSF terminated 1,500+ grants, ~90% DEI-related per Ted Cruz's list. Claims about targeting 'climate science' mostly false. However, concerns about chilling effects on research are legitimate. [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [Syria Assad Underground Photo: AI-Generated Images Exposed](https://www.genuverity.com/syria-assad-underground-photo-2025): FALSE: Viral images claiming to show Assad's underground bunker or prison cells were AI-generated or misattributed. Some from Vietnam War museum, others showed clear AI artifacts. Real atrocities a... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Hollywood Sign AI Fire Image: Viral Fake During LA Wildfires](https://www.genuverity.com/hollywood-sign-ai-fire-2025): FALSE: AI-generated images showing the Hollywood sign engulfed in flames went viral during the January 2025 LA wildfires. The sign was never in danger. Multiple telltale AI artifacts identified, in... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [IDF Soldier Captivity Image: AI-Generated Propaganda Exposed](https://www.genuverity.com/idf-soldier-captivity-image-2025): FALSE: Images claiming to show IDF soldiers captured by Hezbollah or Hamas were AI-generated fakes. Full Fact, Reuters, and multiple fact-checkers identified obvious AI artifacts. The IDF confirmed... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [SA Zulu King Salary Claims: Royal Funding vs. Exaggerated Figures](https://www.genuverity.com/sa-zulu-king-salary-2025): MISLEADING: Claims that King Misuzulu kaZwelithini receives R66 million in annual 'salary' conflate personal stipend (~R1.8M) with Royal Household operational budget (~R65M). Africa Check confirmed... [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [Ebola Vaccine Sterility Claims: The Conspiracy That Endangers Public Health](https://www.genuverity.com/ebola-vaccine-sterility-2025): FALSE: Claims that Ebola vaccines cause infertility are dangerous misinformation with no scientific basis. Over 500,000 vaccinations administered with zero fertility-related adverse events. These c... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Nigeria Petroleum Surcharge Hoax: False Claims Cause Public Panic](https://www.genuverity.com/nigeria-petroleum-surcharge-2025): FALSE: Viral claims about new petroleum surcharges in Nigeria are completely fabricated. NNPCL, NMDPRA, and the Presidency all issued denials. TheCable FactCheck, Africa Check, and Dubawa rated the... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Ebola Outbreak 2025 (DRC): Misinformation Analysis](https://www.genuverity.com/ebola-outbreak-drc-2025): MIXED: The 2025 DRC Ebola outbreak is real and verified by WHO. However, dangerous misinformation about false cures (salt water, onions) and transmission myths has accompanied the outbreak. Communi... [Verdict: Mixed] [Jan 2, 2026] [16 Sources]
+- [Ebola Organ Theft Claims: Deadly Misinformation Debunked](https://www.genuverity.com/ebola-organ-theft-2025): FALSE: Conspiracy theories claiming Ebola was a cover for organ harvesting fueled deadly attacks on health workers in West Africa. At least 8 people were killed in Guinea. WHO, CDC, and multiple in... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Nigeria NIN-Bank Account Linking Claims: Separating Policy from Panic](https://www.genuverity.com/nigeria-nin-bank-access-2025): MISLEADING: Claims about bank account freezes due to missing NIN were exaggerated. CBN mandated NIN-BVN linking, but deadlines were extended repeatedly and no mass freezes occurred. The policy is r... [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [365 WINS IN 365 DAYS: Comprehensive Fact-Check](https://www.genuverity.com/365-wins-factcheck-2026): Line-by-line verification of all 365 claims from the Trump Administration's first-year anniversary document. The most comprehensive fact-check in GenuVerity history analyzing border policy, economi... [Verdict: Mixed] [Jan 22, 2026] [26 Sources]
+
+## Military Investigation
+
+- [Gaza Boat Strikes: Pattern of Civilian Targeting?](https://www.genuverity.com/boat-strike-investigation): Investigating IDF 'double-tap' strikes on Palestinian fishing boats and the legal questions surrounding targeting fleeing civilians. [Verdict: undefined] [Dec 19, 2025] [10 Sources]
+
+## Policy Analysis
+
+- [The $1,776 'Warrior Dividend': What It Really Is](https://www.genuverity.com/warrior-dividend-analysis): Trump's $1,776 military bonus is actually rebranded housing funds Congress already approved—not new presidential spending or tariff revenue. [Verdict: undefined] [Dec 19, 2025] [11 Sources]
+- [CDC Drops Universal Hepatitis B Vaccine for Newborns](https://www.genuverity.com/cdc-hepatitis-b-vaccine-2025): RFK Jr.'s hand-picked CDC panel votes 8-3 to end 30-year universal vaccination policy. AAP boycotts meetings, states rebel, medical community sounds alarm. [Verdict: undefined] [Dec 21, 2025] [10 Sources]
+
+## Climate Misinformation
+
+- [Climate Skeptics Misuse Ice Age Research](https://www.genuverity.com/climate-ice-age-study): Viral Breitbart headline cherry-picks legitimate climate science to mislead readers about current global warming threat. [Verdict: undefined] [Dec 19, 2025] [8 Sources]
+
+## AI & Technology
+
+- [The 2025 AI Deepfake Crisis](https://www.genuverity.com/ai-deepfakes-2025): AI-generated deepfakes targeting public figures, 93% of social videos now synthetic, and the erosion of trust in digital content. [Verdict: undefined] [Dec 19, 2025] [10 Sources]
+
+## Platform Analysis
+
+- [MAGA Accounts: Foreign Location Reveal](https://www.genuverity.com/maga-accounts-foreign): X's new location transparency feature reveals surprising foreign origins for accounts amplifying pro-Trump content. [Verdict: undefined] [Dec 19, 2025] [9 Sources]
+- [YouTube Radicalization Pipeline: Algorithmic Rabbit Holes Examined](https://www.genuverity.com/youtube-radicalization-pipeline): The 'rabbit hole' hypothesis is more contested than narratives suggest. 2025 PNAS study: algorithm has limited impact on beliefs. But off-platform viewing may drive more radicalization than YouTube... [Verdict: Mixed] [Dec 31, 2025] [12 Sources]
+
+## Conspiracy Analysis
+
+- [BlueAnon: Can Starlink Satellites Manipulate Elections?](https://www.genuverity.com/blueanon-starlink): Left-wing conspiracy theory claims Starlink can alter votes. Reality: voting machines are air-gapped and not connected to any network during elections. [Verdict: undefined] [Dec 20, 2025] [10 Sources]
+- [The Great Reset: WEF Conspiracy Theory Fact Check](https://www.genuverity.com/great-reset-wef): The Great Reset is real but conspiracy claims vastly exaggerate its scope. The WEF is a discussion forum with no power to implement policies. [Verdict: undefined] [Dec 20, 2025] [11 Sources]
+
+## Synthetic Media Alert
+
+- [AI-Generated Deportation Videos: The Sora Deepfake Crisis](https://www.genuverity.com/ai-deportation-videos): At least 47 AI-generated fake videos depicting immigration raids have gone viral in 2025, created with tools like Sora. None depict real events. [Verdict: undefined] [Dec 20, 2025] [9 Sources]
+
+## Recurring Hoax
+
+- [Paid Protesters Hoax: The Craigslist Ad Myth That Won't Die](https://www.genuverity.com/paid-protesters-hoax): Claims of Soros-funded paid protesters via Craigslist ads have been debunked after every major protest for over a decade. Zero verified instances of mass paid protesting. [Verdict: undefined] [Dec 20, 2025] [10 Sources]
+
+## Document Analysis
+
+- [Epstein Files: What December 2025 Release Actually Shows](https://www.genuverity.com/epstein-documents-2025): DOJ releases 300,000+ pages then removes 16 files including Trump photo. Bipartisan outrage over redactions. 680+ pages entirely blacked out. Updated Dec 21. [Verdict: undefined] [Dec 21, 2025] [18 Sources]
+
+## Economic Analysis
+
+- [US Inflation: A Decade of Price Changes (2015-2025)](https://www.genuverity.com/us-inflation-10-year-analysis): From pre-pandemic stability to 9.1% peak and back down to 2.7%. How COVID-19 reshaped US prices and how recovery compares to G7 peers. Interactive charts included. [Verdict: undefined] [Dec 21, 2025] [14 Sources]
+- [The 2025 Farm Crisis: Did Treasury Prioritize Argentina Over US Farmers?](https://www.genuverity.com/us-argentina-farm-crisis-2025): Forensic analysis of the $40B Argentina bailout, market displacement of US soybeans, Chapter 12 bankruptcies surging 68%, and oligopolistic market structures. [Verdict: undefined] [Dec 22, 2025] [15 Sources]
+- [Market Equilibrium and the Deceleration of United States Petroleum Costs](https://www.genuverity.com/us-gas-price-decline): The US energy landscape in late 2025 is defined by a significant reduction in retail gasoline prices, driven by record domestic production and a shift in OPEC+ strategy. [Verdict: undefined] [Dec 26, 2025] [51 Sources]
+- [Is the US Economy Headed for Recession? A Data-Driven Analysis](https://www.genuverity.com/us-recession-analysis-2025): Comprehensive analysis of US recession probability with 38 sources from government, Wall Street, and independent economists. Examining GDP, unemployment, the Sahm Rule, and government data reliabil... [Verdict: undefined] [Dec 28, 2025] [38 Sources]
+
+## Developing Story
+
+- [Pete Hegseth 'Double-Tap' Strike: What We Know](https://www.genuverity.com/hegseth-boat-strike): U.S. military strike near Venezuela killed survivors 'shirtless and struggling in the water.' Bipartisan outcry over transparency. Pentagon refuses to release video. [Verdict: undefined] [Dec 21, 2025] [9 Sources]
+
+## Disinformation Analysis
+
+- [Rob Reiner Death: Separating Fact from Fiction](https://www.genuverity.com/rob-reiner-misinformation-2025): Comprehensive analysis of viral hoaxes following Rob Reiner's murder. Trump's 'TDS' post is real, but the fake 2023 tweet and Epstein connections are fabricated. [Verdict: undefined] [Dec 21, 2025] [12 Sources]
+- [Clickbait Propaganda: 5 Case Studies in December 2025 Disinformation](https://www.genuverity.com/clickbait-propaganda-december-2025): Five viral disinformation campaigns deconstructed: Infowars 'Deep State defeat' (still owes $1.5B), Epstein photo 'hoax' framing, Minnesota daycare 'audit' filmed outside operating hours, Kirk assa... [Verdict: False] [Dec 30, 2025] [18 Sources]
+
+## Disinformation
+
+- [German Christmas Markets: Flood of Far-Right Fake News](https://www.genuverity.com/german-christmas-market-disinfo): Viral false claims about Muslim men 'storming' Christmas markets debunked. Far-right groups spread doctored videos, AI imagery, and exploit Magdeburg attack. [Verdict: undefined] [Dec 22, 2025] [10 Sources]
+
+## Disinformation Forensics
+
+- [The December 2025 Financial Disinformation Complex](https://www.genuverity.com/irs-social-security-payment-hoax-2025): Forensic investigation of viral IRS $1,390 & Social Security $4,500 hoaxes, exposing AI-driven content farms, algorithmic feedback loops, and identity theft pipelines. [Verdict: undefined] [Dec 22, 2025] [12 Sources]
+
+## Strategic Assessment
+
+- [The Golden Fleet: Assessing the Paradigm Shift](https://www.genuverity.com/golden-fleet-analysis): Historic pivot in naval doctrine: The 35,000-ton Trump-class battleship, nuclear railguns, and the industrial 'MASGA' strategy leveraging South Korean shipyards. [Verdict: undefined] [Dec 23, 2025] [35 Sources]
+
+## Surveillance State
+
+- [The Panopticon of Efficiency: Palantir & The Surveillance State](https://www.genuverity.com/palantir-panopticon): Palantir is no longer just a contractor; it is the operating system of the American government. From 'ImmigrationOS' to the 'Mega-API', we analyze the architecture of the 2025 surveillance state. [Verdict: undefined] [Dec 23, 2025] [25 Sources]
+
+## Forensic Audit
+
+- [Aerial Assets & Sovereign Logistics: A Forensic Audit](https://www.genuverity.com/epstein-air-logistics): Forensic audit of Epstein's fleet reveals a 'Sovereign Logistics Wing' rather than a private air force. New 2025 files confirm 8 Trump flights and a removed Mar-a-Lago photo. [Verdict: undefined] [Dec 23, 2025] [35 Sources]
+- [Forensic Audit: 28 Trump Accusers & The Epstein Discipline Gap](https://www.genuverity.com/trump-allegations-epstein): A 40-year forensic accounting of 28 accusers, the 'Katie Johnson' lawsuit, and the 'Disciplined for Less' paradox regarding Jes Staley, Leon Black, and Prince Andrew. [Verdict: undefined] [Dec 27, 2025] [28 Sources]
+
+## State-Sponsored Fraud
+
+- [The Silicon Sleeper Cells: Laptop Farms & The New Digital Front](https://www.genuverity.com/laptop-farms): The 'Laptop Farm' has mutated from ad fraud into critical espionage infrastructure. How DPRK and Russian operatives influence US elections from American living rooms. [Verdict: undefined] [Dec 23, 2025] [28 Sources]
+
+## Deep Dive Dossier
+
+- [Is 'FedNow Phase 2' Freezing Accounts?](https://www.genuverity.com/fednow-freeze): Debunking viral claims about FedNow 'Phase 2' freezing accounts and cash being banned by 2026. Forensic analysis reveals routine maintenance misinterpreted as systematic control. [Verdict: undefined] [Dec 25, 2025] [6 Sources]
+- [The Age of Slop: AI-Generated Disinformation in 2025](https://www.genuverity.com/ai-slop-fake-local-news): Merriam-Webster named 'Slop' Word of the Year 2025. We investigate 'Pink Slime 2.0' networks, state-sponsored AI (Russia's Doppelgänger, China's Falsos Amigos), and why detection is a losing battle. [Verdict: undefined] [Dec 26, 2025] [45 Sources]
+- [The Great Smishing Surge of Late 2025: A Forensic Deep Dive](https://www.genuverity.com/smishing-surge-2025): Forensic analysis of the post-Christmas smishing explosion, weaponizing regional toll authorities and AI-driven delivery scams. Exposing the 'Lighthouse' PhaaS infrastructure and the Smishing Triad. [Verdict: undefined] [Dec 27, 2025] [44 Sources]
+- [The Tesla Pi Phone: Anatomy of a Digital Ghost Product](https://www.genuverity.com/tesla-pi-phone-fake): Forensic deconstruction of a multi-year information operation—from ADR Studio concept art to $500M engagement economy. How belief became infrastructure, and fiction generated fortune. [Verdict: undefined] [Dec 28, 2025] [34 Sources]
+- [Project 2025's "Military Orders": Rumors vs. Reality](https://www.genuverity.com/project-2025-military-orders): Viral claims of 'secret military orders' are unproven, but the public plan to strip protections from 50,000 workers—30% of whom are veterans—is verified and specific. [Verdict: Mixed] [Dec 28, 2025] [10 Sources]
+- [American Political Disinformation: Timeline, Key Cases, and Foreign Interference](https://www.genuverity.com/american-political-disinfo): From the birther movement to Russian interference, Pizzagate violence, QAnon radicalization, and January 6—how disinformation evolved into a systematic threat to American democracy. Includes Muelle... [Verdict: True] [Dec 28, 2025] [35 Sources]
+- [Iran and the West: Nuclear Escalation, Proxy Warfare, and the Path Forward](https://www.genuverity.com/iran-nuclear-crisis): From the 2018 JCPOA withdrawal to threshold state: Iran's 60% uranium enrichment, proxy warfare from Hezbollah to Houthis, and why the non-proliferation regime is 'on the line.' Comprehensive analy... [Verdict: True] [Dec 29, 2025] [18 Sources]
+
+## Financial Forensics
+
+- [The Sovereign-Commercial Hybrid](https://www.genuverity.com/trump-admin-financial-conflicts): Unprecedented fusion of executive power and private wealth: $460B cabinet, Trump family crypto empire, systematic regulatory capture, and state-intermediated enterprise. [Verdict: undefined] [Dec 25, 2025] [29 Sources]
+
+## Forensic Fact Check
+
+- [Dominion 'Remote Access' & 'Spyder': Kraken Lawsuits Debunked](https://www.genuverity.com/dominion-voting-claims-2020): Every Dominion 'fraud' claim from the 2020 Kraken lawsuits was rejected by courts, resulting in historic $175K sanctions. The 'Military Intelligence Expert' was an IT consultant who 'kept washing o... [Verdict: undefined] [Dec 26, 2025] [21 Sources]
+
+## Medical Breakthrough
+
+- [Metabolic Resurrection: Reversing Advanced Alzheimer's via NAD+ Restoration](https://www.genuverity.com/nad-alzheimers-recovery): December 2025 breakthrough: P7C3-A20 compound achieves complete reversal of advanced Alzheimer's disease in mice through NAD+ restoration. Full cognitive recovery, BBB repair, and biomarker normali... [Verdict: undefined] [Dec 26, 2025] [38 Sources]
+
+## Viral Disinformation
+
+- [Fact-Check: The Viral "166-Name Epstein List"](https://www.genuverity.com/epstein-166-name-list-fake): Forensic analysis of the viral 166-name list reveals it is 78% fabricated, originating from a 4chan hoax mixing real names with political targets who appear in no unsealed documents. Verdict: PANTS... [Verdict: False] [Dec 28, 2025] [32 Sources]
+- [Los Angeles Wildfire Misinformation: A Forensic Analysis](https://www.genuverity.com/la-wildfire-misinformation-2025): AI-generated Hollywood sign fakes, DEI conspiracy theories, water policy lies, and FEMA funding misinformation - every major claim about the January 2025 LA wildfires debunked with 15 primary sources. [Verdict: False] [Dec 29, 2025] [15 Sources]
+
+## AI Safety Crisis
+
+- [Grok AI: The Misinformation Machine](https://www.genuverity.com/grok-ai-misinformation-crisis): Elon Musk's Grok AI chatbot has repeatedly spread dangerous misinformation during breaking news - fabricating heroes at Bondi Beach, praising Hitler, and falsely blaming a trans pilot for the DC cr... [Verdict: False] [Dec 29, 2025] [14 Sources]
+
+## Public Health Disinfo
+
+- [Bird Flu Misinformation: The H5N1 Panic Machine](https://www.genuverity.com/bird-flu-misinformation-2025): Bill Gates conspiracy theories, RFK Jr.'s $500M vaccine cuts based on false claims, 'Plandemic 2.0' narratives, and PCR test skepticism - how misinformation is undermining the H5N1 response as 66 h... [Verdict: False] [Dec 29, 2025] [15 Sources]
+
+## Platform Policy
+
+- [Meta Ends Fact-Checking: The $100 Million Retreat](https://www.genuverity.com/meta-ends-fact-checking-2025): Meta dismantles its $100M global fact-checking network spanning 90+ organizations across 119 countries. Joel Kaplan appointed, $1M donated to Trump—then fact-checking ended 5 days later. Community ... [Verdict: True] [Dec 29, 2025] [14 Sources]
+
+## Election Security
+
+- [Election Deepfakes 2025: The Year Democracy Fought Back](https://www.genuverity.com/election-deepfakes-2025): From Ireland's fabricated candidate withdrawal to Poland's €2B cyber umbrella—AI deepfakes targeted elections worldwide in 2025. $200M+ in fraud losses Q1 alone. Yet democracy adapts: Connolly won ... [Verdict: Mixed] [Dec 29, 2025] [14 Sources]
+
+## Investigation
+
+- [Minnesota Fraud Investigation: The $250 Million Scandal and Beyond](https://www.genuverity.com/minnesota-fraud-investigation-2025): The largest pandemic relief fraud in U.S. history—$250M stolen via Feeding Our Future. Federal prosecutors estimate $9B in broader Medicaid fraud; state officials say that's speculation. 82 of 92 d... [Verdict: Context Required] [Dec 30, 2025] [22 Sources]
+
+## Analysis
+
+- [The Architecture of Deception: Global Disinformation Landscape 2024-2025](https://www.genuverity.com/disinformation-architecture-2025): Forensic analysis of the industrial-grade disinformation complex: $2.6B ad revenue pipeline, 1,200+ pink slime sites, $10M Tenet Media Russian funding, and the asymmetric infrastructure between lef... [Verdict: Context Required] [Dec 30, 2025] [55 Sources]
+- [The Architecture of Perception: A History of American Media Disinformation](https://www.genuverity.com/american-disinformation-timeline): From Yellow Journalism to AI deepfakes: 130 years of manufactured reality. Tracing the evolution from the Creel Committee to Operation Mockingbird, the Fairness Doctrine to Section 230, and the ris... [Verdict: Context Required] [Dec 30, 2025] [77 Sources]
+
+## Historical Analysis
+
+- [The Protocols of the Elders of Zion: Anatomy of a Fabrication](https://www.genuverity.com/protocols-elders-zion): The most destructive antisemitic forgery in history. First exposed as plagiarism in 1921, yet still circulating today. From Tsarist Russia to Henry Ford to Hamas—how a fabricated text became infras... [Verdict: False] [Dec 30, 2025] [15 Sources]
+- [Edward Bernays: The Father of Spin](https://www.genuverity.com/edward-bernays-propaganda): Freud's nephew invented modern PR by privatizing WWI propaganda techniques. His 'Torches of Freedom' campaign convinced women smoking was feminist liberation. He later helped overthrow Guatemala's ... [Verdict: Context Required] [Dec 31, 2025] [10 Sources]
+- [Operation Mockingbird: When the CIA Controlled the Press](https://www.genuverity.com/operation-mockingbird-cia): For decades, 400+ American journalists worked as CIA assets. Frank Wisner called his network the 'Mighty Wurlitzer.' The Church Committee exposed it all—but did the practice ever truly end? [Verdict: Context Required] [Dec 31, 2025] [10 Sources]
+- [The Fairness Doctrine: How America Lost Balance in Broadcasting](https://www.genuverity.com/fairness-doctrine-history): From 1949 to 1987, the FCC required broadcasters to present balanced viewpoints. Its repeal unleashed Rush Limbaugh, Fox News, and the partisan media landscape we know today. Talk radio stations ex... [Verdict: Context Required] [Dec 31, 2025] [10 Sources]
+
+## Media Analysis
+
+- [Primetime Special Legitimization: When Networks Give Platforms](https://www.genuverity.com/primetime-special-legitimization): Networks have NO legal obligation for 'equal time'—Fairness Doctrine abolished 1987. Editorial discretion is an active choice. 94% of journalists see misinformation as major problem; only 8% think ... [Verdict: Context Required] [Dec 31, 2025] [10 Sources]
+- [Wire Service Amplification: One Story, 600 Outlets](https://www.genuverity.com/wire-service-amplification): Wire services syndicate to 500-600+ outlets simultaneously. False news reaches 1,500 people 6x faster than truth. The illusory truth effect makes repeated exposure dangerous—and syndication maximiz... [Verdict: Context Required] [Dec 31, 2025] [12 Sources]
+- [Cable News Narrative Laundering: How Fringe Becomes Mainstream](https://www.genuverity.com/cable-news-narrative-laundering): The 'attention backbone' pipeline: fringe → partisan → mainstream. Cable networks grew significantly more polarized over 10 years. Primetime is the most polarized time slot. 'Sanewashing' normalize... [Verdict: Context Required] [Dec 31, 2025] [10 Sources]
+
+## Network Analysis
+
+- [Partisan Influencer Networks: The Amplification Machine](https://www.genuverity.com/partisan-influencer-networks): False news spreads 70% more likely to be retweeted. 47% identify influencers as top misinformation threat. Analysis of parasocial trust, financial incentives, and state-sponsored influencer operati... [Verdict: Context Required] [Dec 31, 2025] [12 Sources]
+- [QAnon Network Analysis: From 4chan to Congress](https://www.genuverity.com/qanon-network-analysis): How anonymous 4chan posts became a political force with congressional representation. Tracing QAnon's spread through coordinated amplification, key influencers like MTG, and platform responses. 21%... [Verdict: Context Required] [Dec 31, 2025] [12 Sources]
+
+## Data Privacy
+
+- [Cambridge Analytica: The $5 Billion Data Scandal](https://www.genuverity.com/cambridge-analytica-2016): A personality quiz harvested 87 million Facebook profiles. Psychographic targeting delivered personalized disinformation invisible to fact-checkers. The FTC's $5 billion fine was the largest privac... [Verdict: Context Required] [Dec 31, 2025] [12 Sources]
+
+## Foreign Influence
+
+- [Internet Research Agency: Russia's Troll Farm That Reached 126 Million Americans](https://www.genuverity.com/internet-research-agency-2016): A St. Petersburg office building became the command center for the largest foreign influence operation in American history. 80,000 Facebook posts, 126 million Americans reached, real protests organ... [Verdict: Context Required] [Dec 31, 2025] [12 Sources]
+- [Storm-1516: Russian Influence Operation Campaigns in 2025](https://www.genuverity.com/storm-1516-russian-campaigns-2025): CONTEXT: Microsoft-identified Russian influence operation Storm-1516 conducted multiple campaigns in 2025. [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [Pravda Network: Russian AI-Powered Disinformation Infrastructure](https://www.genuverity.com/pravda-network-2025): CONTEXT: The Pravda disinformation network continued operations in 2025 with documented AI integration. [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [John Mark Dougan: Former Deputy Sheriff Leads Russian Disinformation](https://www.genuverity.com/john-mark-dougan-storm-1516-2025): CONTEXT: Former Florida deputy sheriff John Mark Dougan was identified as a key operative in Russian influence operation Storm-1516. [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [Institutionalized Narrative Combat: A 2026 Global Disinformation Analysis](https://www.genuverity.com/disinformation-analysis-january-26-2026): Comprehensive analysis of the five most prevalent disinformation topics of January 2026: the '72 injections' vaccine hoax, the $2,000 tariff dividend fraud, state-origin narrative inversion in the ... [Verdict: Mixed] [Jan 26, 2026] [19 Sources]
+- [NATO 'Troops in Coffins': Russian Disinformation Campaign Debunked](https://www.genuverity.com/nato-troops-coffins-2025): FALSE: Viral images of mass NATO troop casualties are fabricated Russian propaganda using AI-generated images. [Verdict: False] [Jan 3, 2026] [12 Sources]
+
+## Health & Science
+
+- [U.S. Vaccine Schedule Claims: Misleading Global Comparisons](https://www.genuverity.com/us-vaccine-schedule-global-2025): MISLEADING: Claims that the U.S. vaccine schedule is uniquely large misrepresent global data. [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [Menopausal Hormone Therapy Claims: Missing Nuance on Risks](https://www.genuverity.com/menopausal-hormone-therapy-2025): CONTEXT: Claims about menopausal hormone therapy benefits lack nuance about individual risks. [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [Wellness Grifting: The $6.3 Trillion Industry Built on Pseudoscience](https://www.genuverity.com/wellness-grifting-pseudoscience-2026): Investigation of wellness industry grifters from Gwyneth Paltrow's Goop to RFK Jr.'s anti-vaccine crusade. Profiles tactics, documented harms, and the unprecedented institutional capture with welln... [Verdict: Context Required] [Jan 28, 2026] [12 Sources]
+- [The Lipid War: RFK Jr.'s 'Inverted Food Pyramid' and the Seed Oil Conspiracy](https://www.genuverity.com/rfk-jr-food-pyramid-seed-oils-january-2026): HHS Secretary RFK Jr. unveiled an 'Inverted Food Pyramid' demonizing seed oils as the 'Hateful Eight.' Claims that seed oils are 'industrial poisons' are pseudoscience rejected by major health orga... [Verdict: Misleading] [Jan 15, 2026] [3 Sources]
+
+## International
+
+- [SA Self-Defense Law Claims: Viral Misrepresentation](https://www.genuverity.com/sa-self-defense-right-2025): MISLEADING: Viral claims about South African self-defense laws misrepresent actual legal standards. [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [SA Mozambican Woman Arrest Photo: Viral Misattribution Exposed](https://www.genuverity.com/sa-mozambican-arrest-photo-2025): FALSE: A viral photo claiming to show a Mozambican woman being arrested was from 2019. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [SA Metro Spending Claims: Political Figures Misrepresent Budgets](https://www.genuverity.com/sa-metro-spending-2025): MISLEADING: Claims about South African metropolitan spending contain significant inaccuracies. [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [SA 15 Million Illegal Migrants Claim: Evidence-Free Xenophobia](https://www.genuverity.com/sa-illegal-migrants-claim-2025): FALSE: Claims that South Africa has 15 million illegal migrants are unsupported by evidence. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Nigeria School Opening Misinformation: Viral Panic Over Fake Dates](https://www.genuverity.com/nigeria-school-opening-2025): FALSE: False claims about school resumption dates spread viral panic among Nigerian parents. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Nigeria Education Fees Hoax: Viral Panic Over Fabricated Charges](https://www.genuverity.com/nigeria-education-fees-2025): FALSE: False claims about new mandatory education fees in Nigeria spread viral panic. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [Netanyahu Gaza Starvation Claims: Contradicted by Humanitarian Reports](https://www.genuverity.com/netanyahu-no-starvation-gaza-2025): FALSE: Netanyahu's claims about no starvation in Gaza contradicted UN and humanitarian reports. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [India-Pakistan Karachi Invasion Claim: Crisis Misinformation Exposed](https://www.genuverity.com/india-pakistan-karachi-invasion-2025): FALSE: False claims about an Indian invasion of Karachi spread during the 2025 India-Pakistan crisis. [Verdict: False] [Jan 2, 2026] [16 Sources]
+- [India Digital Arrest Scam: The Rs 11,000 Crore Fraud Epidemic](https://www.genuverity.com/india-digital-arrest-scam-2025): CONTEXT: The 'digital arrest' scam targeting Indians became a major fraud trend in 2025, with PM Modi warning citizens. [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [Bangladesh Police Dipu Das Video: Misattributed Footage](https://www.genuverity.com/bangladesh-dipu-das-video-2025): MISLEADING: A video involving Bangladeshi police officer Dipu Das was taken out of context and misattributed on social media. [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [Brazil Supreme Court Bias Claims: Examining the Evidence](https://www.genuverity.com/brazil-supreme-court-bias-2025): MISLEADING: Claims of systematic bias in Brazil's STF conflate legitimate judicial actions against documented threats to democracy with political persecution. The X/Twitter ban followed established... [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [Brazil Election Integrity Claims: Debunked Fraud Allegations Persist](https://www.genuverity.com/brazil-election-integrity-2025): FALSE: Claims that Brazil's 2022 election was rigged through electronic voting machine fraud have been comprehensively debunked. The TSE, OAS, Carter Center, and Brazil's own military audit found n... [Verdict: False] [Jan 2, 2026] [16 Sources]
+- ['Premature Sexualization' Narrative: How Educational Materials Are Misrepresented](https://www.genuverity.com/premature-sexualization-narrative-2025): MISLEADING: Claims about educational materials promoting 'premature sexualization' consistently misrepresent actual content. Brazil's 'kit gay' never existed as described. Internationally, viral cl... [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+- [UK Christmas Decoration Tax: Viral Hoax Debunked](https://www.genuverity.com/uk-christmas-decoration-tax-2025): FALSE: Claims that UK homeowners must pay a 'Christmas decoration tax' are completely fabricated. [Verdict: False] [Jan 3, 2026] [12 Sources]
+
+## Immigration & Border
+
+- [Abrego Garcia MS-13 Tattoos: Misidentification in Deportation Case](https://www.genuverity.com/abrego-garcia-ms13-tattoos-2025): FALSE: Claims about Kilmar Abrego Garcia's MS-13 tattoos were debunked. The deportation case became a flashpoint for gang misidentification issues. [Verdict: False] [Jan 2, 2026] [16 Sources]
+
+## Immigration Policy
+
+- [Los Angeles ICE Raids and Riots 2025: Fact vs. Fiction](https://www.genuverity.com/la-ice-raids-riots-2025): DHS claimed 70% of June 2025 LA ICE raid arrestees were criminals; Human Rights Watch found 66% had NO criminal history. Viral videos debunked as 2020 footage. 2,000 National Guard deployed, 700 Ma... [Verdict: Mixed] [Jan 2, 2026] [18 Sources]
+
+## African Misinformation
+
+- [African Tetanus/Polio Sterilization Claims Debunked](https://www.genuverity.com/african-vaccine-sterilization-2025): FALSE: Claims that WHO and UNICEF vaccines caused mass sterilization in Africa are completely false. The 2014 Kenya Catholic bishops controversy was debunked by WHO-certified labs. These recycled c... [Verdict: False] [Jan 2, 2026] [16 Sources]
+
+## Health & Medical
+
+- [RFK Jr. Antidepressants Claims: Medical Consensus Misrepresented](https://www.genuverity.com/rfk-antidepressants-target-2025): MISLEADING: RFK Jr.'s claims about antidepressants as targets for removal misrepresented medical consensus. Major psychiatric associations and FDA data contradict the characterization. Experts warn... [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+
+## International Affairs
+
+- [British Budget Details Misinfo](https://www.genuverity.com/british-budget-misinfo-2025): MISLEADING: Claims about the UK budget contained multiple factual errors and misrepresentations. Various claims about tax increases were exaggerated or misattributed, viral posts confused proposed ... [Verdict: Misleading] [Jan 2, 2026] [16 Sources]
+
+## Platform & Tech
+
+- [AI 'Obituary Pirates'](https://www.genuverity.com/ai-obituary-pirates-2025): NEEDS CONTEXT: AI-generated obituary farms are a verified phenomenon that exploited grieving families with fabricated memorial content. NewsGuard documented 400+ such sites. However, the scope vari... [Verdict: Context Required] [Jan 2, 2026] [16 Sources]
+- [Disinformation Roundup: Week Ending January 10, 2026](https://www.genuverity.com/disinformation-roundup-jan-2026): WEEKLY ROUNDUP: 12 viral misinformation campaigns including AI deepfakes (Venezuela, Grok-generated images), miscaptioned media (Marinera tanker, Renee Good misidentification), health hoaxes (72 va... [Verdict: Context Required] [Jan 10, 2026] [26 Sources]
+
+## Media & Journalism
+
+- [Sean Combs Trial Misinformation: Separating Fact from Fiction](https://www.genuverity.com/sean-combs-trial-misinfo-2025): MIXED: Analysis of viral misinformation surrounding the Sean 'Diddy' Combs federal trial. [Verdict: Mixed] [Jan 3, 2026] [12 Sources]
+- [Quality Audit: Fact-Checking the Fact-Checker](https://www.genuverity.com/quality-audit-jan-2026): SELF-AUDIT: We audited 28 GenuVerity reports using the same standards we apply to external claims. 21% had zero concerns. Findings, methodology, and improvement commitments. [Verdict: Context Required] [Jan 4, 2026] [4 Sources]
