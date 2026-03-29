@@ -758,6 +758,26 @@
       "permanent": true
     },
     {
+      "source": "/localreports/grok-deepfakes-eu-investigation.html",
+      "destination": "/grok-deepfakes-eu-investigation",
+      "permanent": true
+    },
+    {
+      "source": "/grok-deepfakes-eu-investigation.html",
+      "destination": "/grok-deepfakes-eu-investigation",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/gravity-loss-hoax-2026.html",
+      "destination": "/gravity-loss-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/gravity-loss-hoax-2026.html",
+      "destination": "/gravity-loss-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/google-gemini-misinfo-audit-2025.html",
       "destination": "/google-gemini-misinfo-audit-2025",
       "permanent": true
@@ -2683,6 +2703,14 @@
     {
       "source": "/golden-fleet-analysis",
       "destination": "/localreports/golden-fleet-analysis.html"
+    },
+    {
+      "source": "/grok-deepfakes-eu-investigation",
+      "destination": "/localreports/grok-deepfakes-eu-investigation.html"
+    },
+    {
+      "source": "/gravity-loss-hoax-2026",
+      "destination": "/localreports/gravity-loss-hoax-2026.html"
     },
     {
       "source": "/google-gemini-misinfo-audit-2025",
