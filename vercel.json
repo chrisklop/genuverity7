@@ -248,6 +248,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/bondi-epstein-ai-image-2026.html",
+      "destination": "/bondi-epstein-ai-image-2026",
+      "permanent": true
+    },
+    {
+      "source": "/bondi-epstein-ai-image-2026.html",
+      "destination": "/bondi-epstein-ai-image-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/brazil-election-integrity-2025.html",
       "destination": "/brazil-election-integrity-2025",
       "permanent": true
@@ -648,6 +658,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/fake-car-loan-announcement-2026.html",
+      "destination": "/fake-car-loan-announcement-2026",
+      "permanent": true
+    },
+    {
+      "source": "/fake-car-loan-announcement-2026.html",
+      "destination": "/fake-car-loan-announcement-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/fda-vaccine-memo-fact-check.html",
       "destination": "/fda-vaccine-memo-fact-check",
       "permanent": true
@@ -855,6 +875,16 @@
     {
       "source": "/hurricane-melissa-ai-videos-2025.html",
       "destination": "/hurricane-melissa-ai-videos-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/ice-arrest-bounties-claim-2026.html",
+      "destination": "/ice-arrest-bounties-claim-2026",
+      "permanent": true
+    },
+    {
+      "source": "/ice-arrest-bounties-claim-2026.html",
+      "destination": "/ice-arrest-bounties-claim-2026",
       "permanent": true
     },
     {
@@ -1878,6 +1908,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/trump-trade-deficit-77-claim-2026.html",
+      "destination": "/trump-trade-deficit-77-claim-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-trade-deficit-77-claim-2026.html",
+      "destination": "/trump-trade-deficit-77-claim-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/treasury-leverage.html",
       "destination": "/treasury-leverage",
       "permanent": true
@@ -2405,6 +2445,10 @@
       "destination": "/localreports/bondi-beach-misinfo.html"
     },
     {
+      "source": "/bondi-epstein-ai-image-2026",
+      "destination": "/localreports/bondi-epstein-ai-image-2026.html"
+    },
+    {
       "source": "/brazil-election-integrity-2025",
       "destination": "/localreports/brazil-election-integrity-2025.html"
     },
@@ -2565,6 +2609,10 @@
       "destination": "/localreports/fairness-doctrine-history.html"
     },
     {
+      "source": "/fake-car-loan-announcement-2026",
+      "destination": "/localreports/fake-car-loan-announcement-2026.html"
+    },
+    {
       "source": "/fda-vaccine-memo-fact-check",
       "destination": "/localreports/fda-vaccine-memo-fact-check.html"
     },
@@ -2647,6 +2695,10 @@
     {
       "source": "/hurricane-melissa-ai-videos-2025",
       "destination": "/localreports/hurricane-melissa-ai-videos-2025.html"
+    },
+    {
+      "source": "/ice-arrest-bounties-claim-2026",
+      "destination": "/localreports/ice-arrest-bounties-claim-2026.html"
     },
     {
       "source": "/idf-soldier-captivity-image-2025",
@@ -3055,6 +3107,10 @@
     {
       "source": "/trade-war-tariffs-2025",
       "destination": "/localreports/trade-war-tariffs-2025.html"
+    },
+    {
+      "source": "/trump-trade-deficit-77-claim-2026",
+      "destination": "/localreports/trump-trade-deficit-77-claim-2026.html"
     },
     {
       "source": "/treasury-leverage",
