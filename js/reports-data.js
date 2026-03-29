@@ -320,7 +320,7 @@ const REPORTS_DATA = [
         category: "Disinformation & Fact-Checks",
     },
     {
-        id: -16,
+        id: -34,
         title: "Trump's \"Unheard Of\" Economic Growth Claims Debunked",
         slug: "trump-economic-growth-claims-2026",
         category: "U.S. Politics & Policy",
@@ -335,7 +335,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","data":[3.8,4.4,4.7,4.9,34.9,7.3,16.7],"labels":["Trump Q2 2025","Trump Q3 2025","Biden Q3 2023","Biden Q3 2021","Post-COVID Peak","Reagan Peak","Pre-Pandemic Record"],"colors":["#f59e0b","#f59e0b","#06b6d4","#06b6d4","#10b981","#ef4444","#ef4444"]}
     },
     {
-        id: -15,
+        id: -35,
         title: "AI-Generated Image of Jeffrey Epstein Alive in Tel Aviv Goes Viral",
         slug: "epstein-alive-ai-hoax-2026",
         category: "Disinformation Analysis",
@@ -350,7 +350,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","data":[15000000,3500000,2500000,1500000,800000,250000],"labels":["X/Twitter","TikTok","Facebook","Instagram","Threads","Reddit"],"colors":["#1DA1F2","#000000","#4267B2","#C13584","#000000","#FF4500"]}
     },
     {
-        id: -14,
+        id: -36,
         title: "2026 Measles Outbreak and Anti-Vaccine Misinformation Surge",
         slug: "measles-outbreak-antivax-2026",
         category: "Public Health",
@@ -393,7 +393,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","data":[689,14,30],"labels":["Unvaccinated/Unknown (94%)","One dose only (2%)","Fully vaccinated (4%)"],"colors":["#dc2626","#f59e0b","#10b981"]}
     },
     {
-        id: -13,
+        id: -37,
         title: "Trump's EPA Endangerment Finding Revocation: False Scientific Claims Exposed",
         slug: "epa-endangerment-finding-revoked-2026",
         category: "U.S. Politics & Policy",
@@ -408,7 +408,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","datasets":[{"label":"2009 Evidence","data":[70,55,65,60,58,45,40],"backgroundColor":"#94a3b8"},{"label":"2025 Evidence","data":[95,92,94,90,88,85,82],"backgroundColor":"#06b6d4"}],"labels":["Heat Waves","Wildfires","Sea Level","Precipitation","Agriculture","Disease","Conflict"]}
     },
     {
-        id: -12,
+        id: -38,
         title: "Springfield Child Trafficking Conspiracy Exposed",
         slug: "springfield-trafficking-conspiracy-2026",
         category: "Disinformation Analysis",
@@ -430,7 +430,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","data":[0,2,5,6],"labels":["TikTokers Arrive","First Videos Posted","Pastor Receives Threats","Bomb Threats Close Schools"],"datasets":[{"data":[0,2,5,6],"backgroundColor":["#3b82f6","#f59e0b","#ef4444","#dc2626"]}]}
     },
     {
-        id: -16,
+        id: -40,
         title: "ICE Arrest Bounties Claim: The Reality Behind the Hoax",
         slug: "ice-arrest-bounties-claim-2026",
         category: "U.S. Politics & Policy",
@@ -445,7 +445,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","data":[365,200,121,55,32],"colors":["#06b6d4","#06b6d4","#ef4444","#06b6d4","#06b6d4"],"labels":["Capgemini","Bluehawk","BI Inc (GEO)","Govt Support","Gravitas"]}
     },
     {
-        id: -15,
+        id: -41,
         title: "Pam Bondi \"Epstein Party Baby\" AI Image",
         slug: "bondi-epstein-ai-image-2026",
         category: "AI Disinformation",
@@ -460,7 +460,7 @@ const REPORTS_DATA = [
         chart: {"type":"donut","data":[21000000,5000000,3000000,1000000],"colors":["#1da1f2","#4267B2","#000000","#9ca3af"],"labels":["X (Twitter)","Facebook","Threads","Other"]}
     },
     {
-        id: -14,
+        id: -42,
         title: "Fake 15-Year Car Loan Announcement",
         slug: "fake-car-loan-announcement-2026",
         category: "U.S. Politics & Policy",
@@ -475,7 +475,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","data":[150,500,1000,2000],"color":"#06b6d4","labels":["Nov 9, 5:01 AM","Nov 10","Nov 11","Nov 14"]}
     },
     {
-        id: -13,
+        id: -43,
         title: "White House AI-Edited Arrest Photos: A Forensic Analysis",
         slug: "white-house-ai-edited-photos-2026",
         category: "U.S. Politics & Policy",
@@ -490,7 +490,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","data":[21,12,3,14,19.4,14.6],"colors":["#06b6d4","#3b82f6","#f59e0b","#f59e0b","#ef4444","#ec4899"],"labels":["Truth Social: Self-Glorification","Truth Social: Attack Opponents","Truth Social: Policy Messaging","White House X: Total AI Posts","Most Shared (Jeffries/Schumer)","Second Most Shared (FAFO)"]}
     },
     {
-        id: -12,
+        id: -44,
         title: "Trump's 77% Trade Deficit Claim: Forensic Analysis",
         slug: "trump-trade-deficit-77-claim-2026",
         category: "U.S. Politics & Policy",
@@ -670,7 +670,7 @@ const REPORTS_DATA = [
         chart: {"type":"line","color":"#ef444433","data":[500,5000,18000,42000,68000,85000,95000],"labels":["0h","2h","4h","6h","8h","10h","12h"]}
     },
     {
-        id: 0,
+        id: -45,
         title: "Disinformation Roundup: Week Ending January 10, 2026",
         slug: "disinformation-roundup-jan-2026",
         category: "Platform & Tech",
@@ -835,7 +835,7 @@ const REPORTS_DATA = [
         chart: {"type":"hbar","color":"#ef4444","data":[94,87,82,78,91],"labels":["Frame Splicing","Compression Artifacts","Motion Inconsistency","Audio Desync","AI Signatures"],"colors":["#ef4444","#f59e0b","#3b82f6","#06b6d4","#ef4444"]}
     },
     {
-        id: 10,
+        id: -46,
         title: "British Budget Details Misinfo",
         slug: "british-budget-misinfo-2025",
         category: "International Affairs",
@@ -850,7 +850,7 @@ const REPORTS_DATA = [
         chart: {"type":"bar","color":"#ef4444","data":[70,15,8,10],"datasets":[{"data":[70,15,8,10],"color":"#ef4444"},{"data":[40,0,0,2],"color":"#3b82f6"}],"labels":["Total Tax Increase","Income Tax Impact","Fuel Duty Increase","IHT Revenue"],"colors":["#ef4444","#3b82f6"]}
     },
     {
-        id: 10,
+        id: -47,
         title: "Hurricane Melissa AI Videos: Fake Storm, Real Fraud",
         slug: "hurricane-melissa-ai-videos-2025",
         category: "AI & Deepfakes",
@@ -3277,21 +3277,6 @@ const REPORTS_DATA = [
         readTime: "14 min",
         verdict: "undefined",
         excerpt: "China's largest influence operation: 8,700+ coordinated accounts across 50+ platforms targeting Western democracies."
-    },
-    {
-        id: 173,
-        title: "Is 'FedNow Phase 2' Freezing Accounts?",
-        slug: "fednow-freeze",
-        category: "Misinformation",
-        tagClass: "tag-red",
-        catClass: "cat-factcheck",
-        icon: "alert-triangle",
-        date: "Dec 17, 2025",
-        sources: "6 Sources",
-        readTime: "11 min",
-        verdict: "undefined",
-        excerpt: "Debunking viral claims about Project Hamilton 'Phase 2' freezing 15,000 accounts. Includes live FRED data showing Fed operations are normal.",
-        chart: {"type":"line","color":"#3b82f6"}
     },
     {
         id: 174,
