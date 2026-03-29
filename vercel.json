@@ -398,6 +398,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/climate-disinfo-national-security-2026.html",
+      "destination": "/climate-disinfo-national-security-2026",
+      "permanent": true
+    },
+    {
+      "source": "/climate-disinfo-national-security-2026.html",
+      "destination": "/climate-disinfo-national-security-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/climate-ice-age-study.html",
       "destination": "/climate-ice-age-study",
       "permanent": true
@@ -675,6 +685,16 @@
     {
       "source": "/epstein-files-2026-revelations.html",
       "destination": "/epstein-files-2026-revelations",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/epstein-files-disinformation-2026.html",
+      "destination": "/epstein-files-disinformation-2026",
+      "permanent": true
+    },
+    {
+      "source": "/epstein-files-disinformation-2026.html",
+      "destination": "/epstein-files-disinformation-2026",
       "permanent": true
     },
     {
@@ -1605,6 +1625,16 @@
     {
       "source": "/phony-bls-statistics-2025.html",
       "destination": "/phony-bls-statistics-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/pink-slime-news-2026-midterms.html",
+      "destination": "/pink-slime-news-2026-midterms",
+      "permanent": true
+    },
+    {
+      "source": "/pink-slime-news-2026-midterms.html",
+      "destination": "/pink-slime-news-2026-midterms",
       "permanent": true
     },
     {
@@ -2671,6 +2701,10 @@
       "destination": "/localreports/clickbait-propaganda-december-2025.html"
     },
     {
+      "source": "/climate-disinfo-national-security-2026",
+      "destination": "/localreports/climate-disinfo-national-security-2026.html"
+    },
+    {
       "source": "/climate-ice-age-study",
       "destination": "/localreports/climate-ice-age-study.html"
     },
@@ -2781,6 +2815,10 @@
     {
       "source": "/epstein-files-2026-revelations",
       "destination": "/localreports/epstein-files-2026-revelations.html"
+    },
+    {
+      "source": "/epstein-files-disinformation-2026",
+      "destination": "/localreports/epstein-files-disinformation-2026.html"
     },
     {
       "source": "/epstein-files-fabrication-2025",
@@ -3153,6 +3191,10 @@
     {
       "source": "/phony-bls-statistics-2025",
       "destination": "/localreports/phony-bls-statistics-2025.html"
+    },
+    {
+      "source": "/pink-slime-news-2026-midterms",
+      "destination": "/localreports/pink-slime-news-2026-midterms.html"
     },
     {
       "source": "/plaque-fact-check",
