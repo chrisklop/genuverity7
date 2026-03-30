@@ -9,7 +9,8 @@
         "test": "node scripts/test-deploy.js",
         "test:local": "node scripts/test-deploy.js http://localhost:8000",
         "test:preview": "node scripts/test-deploy.js",
-        "pretest": "echo 'Running pre-deploy tests...'"
+        "pretest": "echo 'Running pre-deploy tests...'",
+        "llms": "node scripts/generate-llms-txt.js"
     },
     "keywords": [],
     "author": "",
