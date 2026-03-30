@@ -48,6 +48,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/ai-chatbots-medical-misinformation-2026.html",
+      "destination": "/ai-chatbots-medical-misinformation-2026",
+      "permanent": true
+    },
+    {
+      "source": "/ai-chatbots-medical-misinformation-2026.html",
+      "destination": "/ai-chatbots-medical-misinformation-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/ai-data-poisoning-attacks-2026.html",
       "destination": "/ai-data-poisoning-attacks-2026",
       "permanent": true
@@ -85,6 +95,16 @@
     {
       "source": "/ai-deportation-videos.html",
       "destination": "/ai-deportation-videos",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/ai-medical-misinformation-study-2026.html",
+      "destination": "/ai-medical-misinformation-study-2026",
+      "permanent": true
+    },
+    {
+      "source": "/ai-medical-misinformation-study-2026.html",
+      "destination": "/ai-medical-misinformation-study-2026",
       "permanent": true
     },
     {
@@ -288,6 +308,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/bucees-ice-donation-hoax-2026.html",
+      "destination": "/bucees-ice-donation-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/bucees-ice-donation-hoax-2026.html",
+      "destination": "/bucees-ice-donation-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/cable-news-narrative-laundering.html",
       "destination": "/cable-news-narrative-laundering",
       "permanent": true
@@ -368,6 +398,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/climate-disinfo-national-security-2026.html",
+      "destination": "/climate-disinfo-national-security-2026",
+      "permanent": true
+    },
+    {
+      "source": "/climate-disinfo-national-security-2026.html",
+      "destination": "/climate-disinfo-national-security-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/climate-ice-age-study.html",
       "destination": "/climate-ice-age-study",
       "permanent": true
@@ -435,6 +475,16 @@
     {
       "source": "/dhs-worst-immigrants-website-errors.html",
       "destination": "/dhs-worst-immigrants-website-errors",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/dhs-false-medicaid-claims-immigrants-2026.html",
+      "destination": "/dhs-false-medicaid-claims-immigrants-2026",
+      "permanent": true
+    },
+    {
+      "source": "/dhs-false-medicaid-claims-immigrants-2026.html",
+      "destination": "/dhs-false-medicaid-claims-immigrants-2026",
       "permanent": true
     },
     {
@@ -638,6 +688,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/epstein-files-disinformation-2026.html",
+      "destination": "/epstein-files-disinformation-2026",
+      "permanent": true
+    },
+    {
+      "source": "/epstein-files-disinformation-2026.html",
+      "destination": "/epstein-files-disinformation-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/epstein-files-fabrication-2025.html",
       "destination": "/epstein-files-fabrication-2025",
       "permanent": true
@@ -738,6 +798,26 @@
       "permanent": true
     },
     {
+      "source": "/localreports/grok-deepfakes-eu-investigation.html",
+      "destination": "/grok-deepfakes-eu-investigation",
+      "permanent": true
+    },
+    {
+      "source": "/grok-deepfakes-eu-investigation.html",
+      "destination": "/grok-deepfakes-eu-investigation",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/gravity-loss-hoax-2026.html",
+      "destination": "/gravity-loss-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/gravity-loss-hoax-2026.html",
+      "destination": "/gravity-loss-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/google-gemini-misinfo-audit-2025.html",
       "destination": "/google-gemini-misinfo-audit-2025",
       "permanent": true
@@ -805,6 +885,16 @@
     {
       "source": "/haarp-weather-control.html",
       "destination": "/haarp-weather-control",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/hank-dingle-doomsday-prediction-2026.html",
+      "destination": "/hank-dingle-doomsday-prediction-2026",
+      "permanent": true
+    },
+    {
+      "source": "/hank-dingle-doomsday-prediction-2026.html",
+      "destination": "/hank-dingle-doomsday-prediction-2026",
       "permanent": true
     },
     {
@@ -918,6 +1008,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/india-military-deepfakes-2026.html",
+      "destination": "/india-military-deepfakes-2026",
+      "permanent": true
+    },
+    {
+      "source": "/india-military-deepfakes-2026.html",
+      "destination": "/india-military-deepfakes-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/india-pakistan-karachi-invasion-2025.html",
       "destination": "/india-pakistan-karachi-invasion-2025",
       "permanent": true
@@ -968,6 +1068,26 @@
       "permanent": true
     },
     {
+      "source": "/localreports/iran-school-bombing-factcheck-2026.html",
+      "destination": "/iran-school-bombing-factcheck-2026",
+      "permanent": true
+    },
+    {
+      "source": "/iran-school-bombing-factcheck-2026.html",
+      "destination": "/iran-school-bombing-factcheck-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/iran-target-list-hoax-2026.html",
+      "destination": "/iran-target-list-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/iran-target-list-hoax-2026.html",
+      "destination": "/iran-target-list-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/iran-war-fake-videos-2026.html",
       "destination": "/iran-war-fake-videos-2026",
       "permanent": true
@@ -1015,6 +1135,16 @@
     {
       "source": "/jeffries-ended-medical-research-2025.html",
       "destination": "/jeffries-ended-medical-research-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/jayz-apple-music-satire-hoax-2026.html",
+      "destination": "/jayz-apple-music-satire-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/jayz-apple-music-satire-hoax-2026.html",
+      "destination": "/jayz-apple-music-satire-hoax-2026",
       "permanent": true
     },
     {
@@ -1198,6 +1328,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/measles-surge-antivax-misinformation-2026.html",
+      "destination": "/measles-surge-antivax-misinformation-2026",
+      "permanent": true
+    },
+    {
+      "source": "/measles-surge-antivax-misinformation-2026.html",
+      "destination": "/measles-surge-antivax-misinformation-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/medicaid-voter-registration-dr-oz-january-2026.html",
       "destination": "/medicaid-voter-registration-dr-oz-january-2026",
       "permanent": true
@@ -1348,6 +1488,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/netanyahu-death-hoax-2026.html",
+      "destination": "/netanyahu-death-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/netanyahu-death-hoax-2026.html",
+      "destination": "/netanyahu-death-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/netanyahu-no-starvation-gaza-2025.html",
       "destination": "/netanyahu-no-starvation-gaza-2025",
       "permanent": true
@@ -1468,6 +1618,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/paid-protesters-craigslist-hoax-2026.html",
+      "destination": "/paid-protesters-craigslist-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/paid-protesters-craigslist-hoax-2026.html",
+      "destination": "/paid-protesters-craigslist-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/palantir-panopticon.html",
       "destination": "/palantir-panopticon",
       "permanent": true
@@ -1505,6 +1665,16 @@
     {
       "source": "/phony-bls-statistics-2025.html",
       "destination": "/phony-bls-statistics-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/pink-slime-news-2026-midterms.html",
+      "destination": "/pink-slime-news-2026-midterms",
+      "permanent": true
+    },
+    {
+      "source": "/pink-slime-news-2026-midterms.html",
+      "destination": "/pink-slime-news-2026-midterms",
       "permanent": true
     },
     {
@@ -1575,6 +1745,16 @@
     {
       "source": "/project-2025-military-orders.html",
       "destination": "/project-2025-military-orders",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/pro-iran-disinfo-flood-2026.html",
+      "destination": "/pro-iran-disinfo-flood-2026",
+      "permanent": true
+    },
+    {
+      "source": "/pro-iran-disinfo-flood-2026.html",
+      "destination": "/pro-iran-disinfo-flood-2026",
       "permanent": true
     },
     {
@@ -1828,6 +2008,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/sydney-ai-police-image-2026.html",
+      "destination": "/sydney-ai-police-image-2026",
+      "permanent": true
+    },
+    {
+      "source": "/sydney-ai-police-image-2026.html",
+      "destination": "/sydney-ai-police-image-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/syria-assad-underground-photo-2025.html",
       "destination": "/syria-assad-underground-photo-2025",
       "permanent": true
@@ -1918,6 +2108,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/trans-mass-shooting-myth-2026.html",
+      "destination": "/trans-mass-shooting-myth-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trans-mass-shooting-myth-2026.html",
+      "destination": "/trans-mass-shooting-myth-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/trump-25m-migrants.html",
       "destination": "/trump-25m-migrants",
       "permanent": true
@@ -1965,6 +2165,26 @@
     {
       "source": "/trump-dead-labor-day-2025.html",
       "destination": "/trump-dead-labor-day-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/trump-epstein-ai-deepfake-2026.html",
+      "destination": "/trump-epstein-ai-deepfake-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-epstein-ai-deepfake-2026.html",
+      "destination": "/trump-epstein-ai-deepfake-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/trump-drug-price-claims-2026.html",
+      "destination": "/trump-drug-price-claims-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-drug-price-claims-2026.html",
+      "destination": "/trump-drug-price-claims-2026",
       "permanent": true
     },
     {
@@ -2058,6 +2278,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/trump-sotu-immigration-factcheck-2026.html",
+      "destination": "/trump-sotu-immigration-factcheck-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-sotu-immigration-factcheck-2026.html",
+      "destination": "/trump-sotu-immigration-factcheck-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/trump-walker-image-2025.html",
       "destination": "/trump-walker-image-2025",
       "permanent": true
@@ -2068,8 +2298,28 @@
       "permanent": true
     },
     {
+      "source": "/localreports/trump-dual-citizenship-hoax-2026.html",
+      "destination": "/trump-dual-citizenship-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/trump-dual-citizenship-hoax-2026.html",
+      "destination": "/trump-dual-citizenship-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/tylenol-autism-claims-2025.html",
       "destination": "/tylenol-autism-claims-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/turbo-cancer-mrna-myth-2026.html",
+      "destination": "/turbo-cancer-mrna-myth-2026",
+      "permanent": true
+    },
+    {
+      "source": "/turbo-cancer-mrna-myth-2026.html",
+      "destination": "/turbo-cancer-mrna-myth-2026",
       "permanent": true
     },
     {
@@ -2158,6 +2408,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/us-murder-rate-politics-2026.html",
+      "destination": "/us-murder-rate-politics-2026",
+      "permanent": true
+    },
+    {
+      "source": "/us-murder-rate-politics-2026.html",
+      "destination": "/us-murder-rate-politics-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/us-vaccine-schedule-global-2025.html",
       "destination": "/us-vaccine-schedule-global-2025",
       "permanent": true
@@ -2215,6 +2475,16 @@
     {
       "source": "/visa-ban-green-card-panic-january-2026.html",
       "destination": "/visa-ban-green-card-panic-january-2026",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/viral-news-forensic-analysis-2026.html",
+      "destination": "/viral-news-forensic-analysis-2026",
+      "permanent": true
+    },
+    {
+      "source": "/viral-news-forensic-analysis-2026.html",
+      "destination": "/viral-news-forensic-analysis-2026",
       "permanent": true
     },
     {
@@ -2395,8 +2665,16 @@
       "destination": "/localreports/african-vaccine-sterilization-2025.html"
     },
     {
+      "source": "/ai-chatbots-medical-misinformation-2026",
+      "destination": "/localreports/ai-chatbots-medical-misinformation-2026.html"
+    },
+    {
       "source": "/ai-data-poisoning-attacks-2026",
       "destination": "/localreports/ai-data-poisoning-attacks-2026.html"
+    },
+    {
+      "source": "/ai-deepfakes-2025",
+      "destination": "/localreports/ai-deepfakes-2025.html"
     },
     {
       "source": "/ai-deepfake-ceo-stock-scam-2026",
@@ -2491,6 +2769,10 @@
       "destination": "/localreports/british-budget-misinfo-2025.html"
     },
     {
+      "source": "/bucees-ice-donation-hoax-2026",
+      "destination": "/localreports/bucees-ice-donation-hoax-2026.html"
+    },
+    {
       "source": "/cable-news-narrative-laundering",
       "destination": "/localreports/cable-news-narrative-laundering.html"
     },
@@ -2523,6 +2805,10 @@
       "destination": "/localreports/clickbait-propaganda-december-2025.html"
     },
     {
+      "source": "/climate-disinfo-national-security-2026",
+      "destination": "/localreports/climate-disinfo-national-security-2026.html"
+    },
+    {
       "source": "/climate-ice-age-study",
       "destination": "/localreports/climate-ice-age-study.html"
     },
@@ -2549,6 +2835,10 @@
     {
       "source": "/dhs-worst-immigrants-website-errors",
       "destination": "/localreports/dhs-worst-immigrants-website-errors.html"
+    },
+    {
+      "source": "/dhs-false-medicaid-claims-immigrants-2026",
+      "destination": "/localreports/dhs-false-medicaid-claims-immigrants-2026.html"
     },
     {
       "source": "/disinformation-analysis-january-26-2026",
@@ -2631,6 +2921,10 @@
       "destination": "/localreports/epstein-files-2026-revelations.html"
     },
     {
+      "source": "/epstein-files-disinformation-2026",
+      "destination": "/localreports/epstein-files-disinformation-2026.html"
+    },
+    {
       "source": "/epstein-files-fabrication-2025",
       "destination": "/localreports/epstein-files-fabrication-2025.html"
     },
@@ -2671,6 +2965,14 @@
       "destination": "/localreports/golden-fleet-analysis.html"
     },
     {
+      "source": "/grok-deepfakes-eu-investigation",
+      "destination": "/localreports/grok-deepfakes-eu-investigation.html"
+    },
+    {
+      "source": "/gravity-loss-hoax-2026",
+      "destination": "/localreports/gravity-loss-hoax-2026.html"
+    },
+    {
       "source": "/google-gemini-misinfo-audit-2025",
       "destination": "/localreports/google-gemini-misinfo-audit-2025.html"
     },
@@ -2697,6 +2999,10 @@
     {
       "source": "/haarp-weather-control",
       "destination": "/localreports/haarp-weather-control.html"
+    },
+    {
+      "source": "/hank-dingle-doomsday-prediction-2026",
+      "destination": "/localreports/hank-dingle-doomsday-prediction-2026.html"
     },
     {
       "source": "/hamas-youth-support",
@@ -2743,6 +3049,10 @@
       "destination": "/localreports/india-digital-arrest-scam-2025.html"
     },
     {
+      "source": "/india-military-deepfakes-2026",
+      "destination": "/localreports/india-military-deepfakes-2026.html"
+    },
+    {
       "source": "/india-pakistan-karachi-invasion-2025",
       "destination": "/localreports/india-pakistan-karachi-invasion-2025.html"
     },
@@ -2763,6 +3073,14 @@
       "destination": "/localreports/iran-nuclear-crisis.html"
     },
     {
+      "source": "/iran-school-bombing-factcheck-2026",
+      "destination": "/localreports/iran-school-bombing-factcheck-2026.html"
+    },
+    {
+      "source": "/iran-target-list-hoax-2026",
+      "destination": "/localreports/iran-target-list-hoax-2026.html"
+    },
+    {
       "source": "/iran-war-fake-videos-2026",
       "destination": "/localreports/iran-war-fake-videos-2026.html"
     },
@@ -2781,6 +3099,10 @@
     {
       "source": "/jeffries-ended-medical-research-2025",
       "destination": "/localreports/jeffries-ended-medical-research-2025.html"
+    },
+    {
+      "source": "/jayz-apple-music-satire-hoax-2026",
+      "destination": "/localreports/jayz-apple-music-satire-hoax-2026.html"
     },
     {
       "source": "/john-mark-dougan-storm-1516-2025",
@@ -2855,6 +3177,10 @@
       "destination": "/localreports/measles-outbreak-antivax-2026.html"
     },
     {
+      "source": "/measles-surge-antivax-misinformation-2026",
+      "destination": "/localreports/measles-surge-antivax-misinformation-2026.html"
+    },
+    {
       "source": "/medicaid-voter-registration-dr-oz-january-2026",
       "destination": "/localreports/medicaid-voter-registration-dr-oz-january-2026.html"
     },
@@ -2915,6 +3241,10 @@
       "destination": "/localreports/nc-wireless-driving-ban-2025.html"
     },
     {
+      "source": "/netanyahu-death-hoax-2026",
+      "destination": "/localreports/netanyahu-death-hoax-2026.html"
+    },
+    {
       "source": "/netanyahu-no-starvation-gaza-2025",
       "destination": "/localreports/netanyahu-no-starvation-gaza-2025.html"
     },
@@ -2963,6 +3293,10 @@
       "destination": "/localreports/paid-protesters-hoax.html"
     },
     {
+      "source": "/paid-protesters-craigslist-hoax-2026",
+      "destination": "/localreports/paid-protesters-craigslist-hoax-2026.html"
+    },
+    {
       "source": "/palantir-panopticon",
       "destination": "/localreports/palantir-panopticon.html"
     },
@@ -2977,6 +3311,10 @@
     {
       "source": "/phony-bls-statistics-2025",
       "destination": "/localreports/phony-bls-statistics-2025.html"
+    },
+    {
+      "source": "/pink-slime-news-2026-midterms",
+      "destination": "/localreports/pink-slime-news-2026-midterms.html"
     },
     {
       "source": "/plaque-fact-check",
@@ -3005,6 +3343,10 @@
     {
       "source": "/project-2025-military-orders",
       "destination": "/localreports/project-2025-military-orders.html"
+    },
+    {
+      "source": "/pro-iran-disinfo-flood-2026",
+      "destination": "/localreports/pro-iran-disinfo-flood-2026.html"
     },
     {
       "source": "/protect-yourself-ai-misinformation-2026",
@@ -3107,6 +3449,10 @@
       "destination": "/localreports/synthetic-content-farms-model-collapse-2026.html"
     },
     {
+      "source": "/sydney-ai-police-image-2026",
+      "destination": "/localreports/sydney-ai-police-image-2026.html"
+    },
+    {
       "source": "/syria-assad-underground-photo-2025",
       "destination": "/localreports/syria-assad-underground-photo-2025.html"
     },
@@ -3143,6 +3489,10 @@
       "destination": "/localreports/treasury-leverage.html"
     },
     {
+      "source": "/trans-mass-shooting-myth-2026",
+      "destination": "/localreports/trans-mass-shooting-myth-2026.html"
+    },
+    {
       "source": "/trump-25m-migrants",
       "destination": "/localreports/trump-25m-migrants.html"
     },
@@ -3161,6 +3511,14 @@
     {
       "source": "/trump-dead-labor-day-2025",
       "destination": "/localreports/trump-dead-labor-day-2025.html"
+    },
+    {
+      "source": "/trump-epstein-ai-deepfake-2026",
+      "destination": "/localreports/trump-epstein-ai-deepfake-2026.html"
+    },
+    {
+      "source": "/trump-drug-price-claims-2026",
+      "destination": "/localreports/trump-drug-price-claims-2026.html"
     },
     {
       "source": "/trump-duterte-arrest-response-2025",
@@ -3199,8 +3557,16 @@
       "destination": "/localreports/trump-trade-deficit-77-claim-2026.html"
     },
     {
+      "source": "/trump-sotu-immigration-factcheck-2026",
+      "destination": "/localreports/trump-sotu-immigration-factcheck-2026.html"
+    },
+    {
       "source": "/trump-walker-image-2025",
       "destination": "/localreports/trump-walker-image-2025.html"
+    },
+    {
+      "source": "/trump-dual-citizenship-hoax-2026",
+      "destination": "/localreports/trump-dual-citizenship-hoax-2026.html"
     },
     {
       "source": "/tylenol-autism-claims-2025",
@@ -3239,6 +3605,10 @@
       "destination": "/localreports/us-recession-analysis-2025.html"
     },
     {
+      "source": "/us-murder-rate-politics-2026",
+      "destination": "/localreports/us-murder-rate-politics-2026.html"
+    },
+    {
       "source": "/us-vaccine-schedule-global-2025",
       "destination": "/localreports/us-vaccine-schedule-global-2025.html"
     },
@@ -3261,6 +3631,10 @@
     {
       "source": "/visa-ban-green-card-panic-january-2026",
       "destination": "/localreports/visa-ban-green-card-panic-january-2026.html"
+    },
+    {
+      "source": "/viral-news-forensic-analysis-2026",
+      "destination": "/localreports/viral-news-forensic-analysis-2026.html"
     },
     {
       "source": "/walz-minnesota-fraud-responsibility-2026",
