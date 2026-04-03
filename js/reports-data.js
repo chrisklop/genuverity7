@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -92,
+        title: "Cambridge ICE Roofing Tip Hoax: Innocent Woman Harassed After Viral Misidentification",
+        slug: "cambridge-ice-roofing-tip-hoax-2026",
+        category: "Viral Misinformation",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-alert",
+        date: "Apr 3, 2026",
+        sources: "18 Sources",
+        readTime: "15 min",
+        verdict: "misleading",
+        excerpt: "ICE confirmed the arrest of six Cambridge, Maryland roofing workers on March 23, 2026 was a pre-planned targeted operation — not a homeowner tip. Cambridge police found only ~15% of the roof had been removed, debunking the 'completed job' claim. Misidentified woman Karen Trevino received 1,342+ threatening messages. A secondary fake arrest video on Threads compounded the harassment.",
+        chart: {"type":"hbar","data":[1736,22,6],"labels":["Maryland ICE arrests (2025)","Eastern Shore op (prior)","Cambridge Bayly Rd (Mar 23)"],"colors":["#ef4444","#f97316","#06b6d4"]}
+    },
+    {
         id: -91,
         title: "Thomas Massie \"Exposes\" Stephen Miller: The AI-Generated $890M Cayman Islands Fabrication",
         slug: "stephen-miller-cayman-ai-fabrication-2026",

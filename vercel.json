@@ -338,6 +338,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/cambridge-ice-roofing-tip-hoax-2026.html",
+      "destination": "/cambridge-ice-roofing-tip-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/cambridge-ice-roofing-tip-hoax-2026.html",
+      "destination": "/cambridge-ice-roofing-tip-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/caracas-mirage-ai-deepfakes-january-2026.html",
       "destination": "/caracas-mirage-ai-deepfakes-january-2026",
       "permanent": true
@@ -2799,6 +2809,10 @@
     {
       "source": "/cambridge-analytica-2016",
       "destination": "/localreports/cambridge-analytica-2016.html"
+    },
+    {
+      "source": "/cambridge-ice-roofing-tip-hoax-2026",
+      "destination": "/localreports/cambridge-ice-roofing-tip-hoax-2026.html"
     },
     {
       "source": "/caracas-mirage-ai-deepfakes-january-2026",
