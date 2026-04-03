@@ -3,6 +3,51 @@
 
 const REPORTS_DATA = [
     {
+        id: -92,
+        title: "Cambridge ICE Roofing Tip Hoax: Innocent Woman Harassed After Viral Misidentification",
+        slug: "cambridge-ice-roofing-tip-hoax-2026",
+        category: "Viral Misinformation",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-alert",
+        date: "Apr 3, 2026",
+        sources: "18 Sources",
+        readTime: "15 min",
+        verdict: "misleading",
+        excerpt: "ICE confirmed the arrest of six Cambridge, Maryland roofing workers on March 23, 2026 was a pre-planned targeted operation — not a homeowner tip. Cambridge police found only ~15% of the roof had been removed, debunking the 'completed job' claim. Misidentified woman Karen Trevino received 1,342+ threatening messages. A secondary fake arrest video on Threads compounded the harassment.",
+        chart: {"type":"hbar","data":[3308,22,6],"labels":["Maryland ICE arrests (2025)","Eastern Shore op (prior)","Cambridge Bayly Rd (Mar 23)"],"colors":["#ef4444","#f97316","#06b6d4"]}
+    },
+    {
+        id: -91,
+        title: "Thomas Massie \"Exposes\" Stephen Miller: The AI-Generated $890M Cayman Islands Fabrication",
+        slug: "stephen-miller-cayman-ai-fabrication-2026",
+        category: "AI-Generated Political Disinformation",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-x",
+        date: "Apr 3, 2026",
+        sources: "19 Sources",
+        readTime: "14 min",
+        verdict: "false",
+        excerpt: "A viral claim that Rep. Thomas Massie exposed White House adviser Stephen Miller for funneling $890 million through Cayman Islands offshore accounts is entirely AI-fabricated. Snopes traced it to a March 22, 2026 YouTube video with an 'altered or synthetic content' label, AI-synthesized narration, and repurposed unrelated footage. Massie is not a member of the House Oversight Committee, and no credible outlet reported any such investigation.",
+        chart: {"type":"line","color":"#ef4444","data":[3,6,9,14,19],"labels":["Q1 2025","Q2 2025","Q3 2025","Q4 2025","Q1 2026"]}
+    },
+    {
+        id: -90,
+        title: "Pope Leo XIV AI Hoax Double-Strike: Two Fabricated Viral Claims About the New Pope",
+        slug: "pope-leo-xiv-ai-hoaxes-2026",
+        category: "AI-Generated Misinformation",
+        tagClass: "tag-cyan",
+        catClass: "cat-ai",
+        icon: "bot",
+        date: "Apr 3, 2026",
+        sources: "18 Sources",
+        readTime: "16 min",
+        verdict: "fabricated",
+        excerpt: "Two AI-generated hoaxes about Pope Leo XIV swept Facebook in late March 2026: one falsely claiming Trump called him \"an insult to Jesus,\" another faking a 3am \"urgent message.\" Both traced to Vietnamese AI content farms using Cyrillic character substitution to evade moderation. GPTZero scored the originating blog post at 100% AI-generated. The same \"3am\" template was used against 30+ other public figures. Snopes debunked both within 10 days of seeding.",
+        chart: {"type":"hbar","data":[100,76,20],"labels":["Blog Article (GPTZero)","Facebook Caption (GPTZero)","Human Baseline (ref.)"],"colors":["#ef4444","#f97316","#22c55e"]}
+    },
+    {
         id: -89,
         title: "Trump's Third-Term 'Loophole': A Constitutional Dead End",
         slug: "trump-third-term-loophole-claims-2026",
