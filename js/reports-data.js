@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -91,
+        title: "Thomas Massie \"Exposes\" Stephen Miller: The AI-Generated $890M Cayman Islands Fabrication",
+        slug: "stephen-miller-cayman-ai-fabrication-2026",
+        category: "AI-Generated Political Disinformation",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-x",
+        date: "Apr 3, 2026",
+        sources: "19 Sources",
+        readTime: "14 min",
+        verdict: "false",
+        excerpt: "A viral claim that Rep. Thomas Massie exposed White House adviser Stephen Miller for funneling $890 million through Cayman Islands offshore accounts is entirely AI-fabricated. Snopes traced it to a March 22, 2026 YouTube video with an 'altered or synthetic content' label, AI-synthesized narration, and repurposed unrelated footage. Massie is not a member of the House Oversight Committee, and no credible outlet reported any such investigation.",
+        chart: {"type":"line","color":"#ef4444","data":[3,6,9,14,19],"labels":["Q1 2025","Q2 2025","Q3 2025","Q4 2025","Q1 2026"]}
+    },
+    {
         id: -90,
         title: "Pope Leo XIV AI Hoax Double-Strike: Two Fabricated Viral Claims About the New Pope",
         slug: "pope-leo-xiv-ai-hoaxes-2026",

@@ -1998,6 +1998,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/stephen-miller-cayman-ai-fabrication-2026.html",
+      "destination": "/stephen-miller-cayman-ai-fabrication-2026",
+      "permanent": true
+    },
+    {
+      "source": "/stephen-miller-cayman-ai-fabrication-2026.html",
+      "destination": "/stephen-miller-cayman-ai-fabrication-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/storm-1516-russian-campaigns-2025.html",
       "destination": "/storm-1516-russian-campaigns-2025",
       "permanent": true
@@ -3453,6 +3463,10 @@
     {
       "source": "/starmer-curfew-fake-video-2025",
       "destination": "/localreports/starmer-curfew-fake-video-2025.html"
+    },
+    {
+      "source": "/stephen-miller-cayman-ai-fabrication-2026",
+      "destination": "/localreports/stephen-miller-cayman-ai-fabrication-2026.html"
     },
     {
       "source": "/storm-1516-russian-campaigns-2025",
