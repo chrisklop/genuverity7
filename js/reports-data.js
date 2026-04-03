@@ -15,7 +15,7 @@ const REPORTS_DATA = [
         readTime: "15 min",
         verdict: "misleading",
         excerpt: "ICE confirmed the arrest of six Cambridge, Maryland roofing workers on March 23, 2026 was a pre-planned targeted operation — not a homeowner tip. Cambridge police found only ~15% of the roof had been removed, debunking the 'completed job' claim. Misidentified woman Karen Trevino received 1,342+ threatening messages. A secondary fake arrest video on Threads compounded the harassment.",
-        chart: {"type":"hbar","data":[1736,22,6],"labels":["Maryland ICE arrests (2025)","Eastern Shore op (prior)","Cambridge Bayly Rd (Mar 23)"],"colors":["#ef4444","#f97316","#06b6d4"]}
+        chart: {"type":"hbar","data":[3308,22,6],"labels":["Maryland ICE arrests (2025)","Eastern Shore op (prior)","Cambridge Bayly Rd (Mar 23)"],"colors":["#ef4444","#f97316","#06b6d4"]}
     },
     {
         id: -91,
