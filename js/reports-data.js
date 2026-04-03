@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -90,
+        title: "Pope Leo XIV AI Hoax Double-Strike: Two Fabricated Viral Claims About the New Pope",
+        slug: "pope-leo-xiv-ai-hoaxes-2026",
+        category: "AI-Generated Misinformation",
+        tagClass: "tag-cyan",
+        catClass: "cat-ai",
+        icon: "bot",
+        date: "Apr 3, 2026",
+        sources: "18 Sources",
+        readTime: "16 min",
+        verdict: "fabricated",
+        excerpt: "Two AI-generated hoaxes about Pope Leo XIV swept Facebook in late March 2026: one falsely claiming Trump called him \"an insult to Jesus,\" another faking a 3am \"urgent message.\" Both traced to Vietnamese AI content farms using Cyrillic character substitution to evade moderation. GPTZero scored the originating blog post at 100% AI-generated. The same \"3am\" template was used against 30+ other public figures. Snopes debunked both within 10 days of seeding.",
+        chart: {"type":"hbar","data":[100,76,20],"labels":["Blog Article (GPTZero)","Facebook Caption (GPTZero)","Human Baseline (ref.)"],"colors":["#ef4444","#f97316","#22c55e"]}
+    },
+    {
         id: -89,
         title: "Trump's Third-Term 'Loophole': A Constitutional Dead End",
         slug: "trump-third-term-loophole-claims-2026",

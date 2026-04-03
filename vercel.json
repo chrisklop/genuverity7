@@ -1688,6 +1688,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/pope-leo-xiv-ai-hoaxes-2026.html",
+      "destination": "/pope-leo-xiv-ai-hoaxes-2026",
+      "permanent": true
+    },
+    {
+      "source": "/pope-leo-xiv-ai-hoaxes-2026.html",
+      "destination": "/pope-leo-xiv-ai-hoaxes-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/portland-burning-narrative-2025.html",
       "destination": "/portland-burning-narrative-2025",
       "permanent": true
@@ -3319,6 +3329,10 @@
     {
       "source": "/plaque-fact-check",
       "destination": "/localreports/plaque-fact-check.html"
+    },
+    {
+      "source": "/pope-leo-xiv-ai-hoaxes-2026",
+      "destination": "/localreports/pope-leo-xiv-ai-hoaxes-2026.html"
     },
     {
       "source": "/portland-burning-narrative-2025",
