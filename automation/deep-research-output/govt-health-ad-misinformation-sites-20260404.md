@@ -261,3 +261,210 @@ source: Stanford University / Carnegie Mellon University, Nature (2024)
 ---
 
 *Research completed: April 4, 2026. All five protocol rounds completed. Primary source: Yale University / JAMA Network Open (DOI: 10.1001/jamanetworkopen.2026.5068). Investigation originally reported by CNN Health, April 3, 2026.*
+
+---
+
+## Additional Sources (Pass A — Depth Expansion)
+
+15. **Scientific Reports — "Measuring the monetization strategies of websites with application to pro- and anti-vaccine communities" (September 2023)**
+    Authors: David A. Broniatowski (George Washington University), Kevin T. Greene and Nilima Pisharody (Princeton University), Daniel J. Rogers (Global Disinformation Index), Jacob N. Shapiro (Princeton University)
+    URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC10520039/
+    DOI: 10.1038/s41598-023-43061-6
+    Credibility: HIGH — peer-reviewed, published in *Scientific Reports* (Nature Portfolio); NIH/PubMed indexed; multi-institution authorship including Princeton and GWU
+    Verbatim finding: "Approximately 50% of anti-vaccine site links were rated unreliable versus 0.2% of pro-vaccine links" while monetization levels between the two communities remained comparable — 96% of all analyzed domains displayed embedded advertisements. The study analyzed 412,168 URLs across 2,436 distinct domains shared by anti- and pro-vaccine Facebook pages between November 2019 and August 2021.
+    Significance: Provides independent pre-2026 confirmation that health misinformation websites are heavily monetized through advertising — regardless of content accuracy rating — corroborating the structural conditions that made the Yale/JAMA finding possible.
+
+16. **The Current (Trade Press) — "Ad tech pros slam brand-safety failures in wake of bombshell Adalytics report" (2025)**
+    URL: https://www.thecurrent.com/not-foolproof-ad-tech-pros-brand-safety-failures-adalytics-report
+    Credibility: MEDIUM-HIGH — industry trade publication covering ad tech sector; primary sourcing from named industry executives
+    Verbatim quote (Arielle Garcia, COO of Check My Ads): "It is long-past due for the industry to take a long, hard look at its failed efforts to self-regulate."
+    Verbatim quote (anonymous industry executive): "Brand-safety verification services aren't protecting anything. They only allow plausible deniability."
+    Key finding: An Adalytics investigation found that at least 80 major advertisers had their ads appear — without their knowledge — on a domain hosting child sexual abuse material between 2021 and 2025. Google AdX, Google Ad Manager, DV360, and Amazon were all implicated. Critically: "Ad tech vendors do not provide the advertisers with page-URL-level reporting," meaning brands cannot audit where ads actually landed.
+    Significance: Confirms that the brand-safety failure enabling health misinformation ad placements is not an isolated edge case — it is a systemic architectural feature of the programmatic ecosystem.
+
+17. **JAMA — "FTC Regulation of AI-Generated Medical Disinformation" (October 16, 2024)**
+    Authors: Claudia E. Haupt, PhD, JSD; Mason Marks, MD, JD
+    URL: https://jamanetwork.com/journals/jama/fullarticle/2825056
+    DOI: 10.1001/jama.2024.19971
+    Published: JAMA, Vol. 332, No. 23
+    Credibility: HIGH — peer-reviewed viewpoint in flagship JAMA journal; legal/medical co-authored analysis
+    Key argument: Large language models and deepfake technology can produce "authoritative-looking content that is false or misleading, including deceptive medical text and illustrations or persuasive but inaccurate health videos." Calls on FTC to assert regulatory authority over AI-generated medical disinformation, particularly impersonation of medical professionals and public health institutions.
+    Significance: Establishes the legal-regulatory gap context: while FTC has authority over deceptive health *advertising claims*, no federal body currently regulates the *algorithmic placement* of legitimate health advertising onto misinformation platforms — the exact vulnerability the Yale 2026 study exposed.
+
+18. **Debevoise & Plimpton — "FTC Developments Impacting Healthcare Enforcement and False Advertising Challenges" (March 2026)**
+    URL: https://www.debevoise.com/insights/publications/2026/03/ftc-developments-impacting-healthcare-enforcement
+    Credibility: HIGH — major international law firm's regulatory alert; primary-sourced from FTC actions and court decisions
+    Key regulatory developments:
+    — FTC settled with a telehealth company in December 2025 over deceptive GLP-1 weight-loss marketing (fake reviews, unsubstantiated claims of "53 pounds and 23% of body weight" weight loss, hidden 12-month commitments)
+    — FTC enforcement actions brought against digital health platforms for sharing sensitive consumer health data with third-party advertisers
+    — *Intuit v. FTC* (Fifth Circuit, March 20, 2026): Court ruled FTC cannot pursue deceptive advertising claims through its administrative process, requiring cases to go to federal court — a significant limitation on the agency's enforcement capacity going forward
+    Significance: The FTC's simultaneous expansion of health advertising enforcement AND new judicial constraints on its administrative power creates a regulatory vacuum directly relevant to the programmatic ad-on-misinformation problem.
+
+19. **Integral Ad Science (IAS) Press Release — "IAS Expands AI-Driven Total Media Quality on YouTube to Include Misinformation Measurement" (September 26, 2024)**
+    URL: https://www.prnewswire.com/news-releases/ias-expands-its-ai-driven-total-media-quality-product-on-youtube-to-include-brand-safety-and-suitability-measurement-for-misinformation-302259830.html
+    Credibility: MEDIUM — primary source from IAS, a publicly traded ad verification company (NASDAQ: IAS); represents industry's own response to the problem
+    Verbatim quote (Lisa Utzschneider, IAS CEO): "Brand safety is a top priority for marketers… [our expanded product] offers best-in-class measurement solution capabilities for detecting misinformation."
+    Key capability: Advertisers can now access "video-level insights into content adjacent to their ads" using industry-aligned misinformation definitions, covering 30+ languages for global campaigns.
+    Significance: The fact that IAS did not launch misinformation-specific measurement for YouTube advertising until September 2024 confirms that during the entire 2021–2024 study period analyzed by Yale researchers, no widely available third-party tool existed to alert advertisers when their ads appeared alongside health misinformation content.
+
+20. **KFF (Kaiser Family Foundation) — "Tracking Key HHS Public Health Policy Actions Under the Trump Administration" (continuously updated through 2026)**
+    URL: https://www.kff.org/other-health/tracking-key-hhs-public-health-policy-actions-under-the-trump-administration/
+    Credibility: VERY HIGH — KFF is the nation's leading nonpartisan health policy research organization; primary-sourced from federal records and official government actions
+    Key documented actions relevant to this story:
+    — April 1, 2025: Federal support ended for "Safe to Sleep," a 30+ year national campaign that had significantly reduced sudden infant death rates; the NICHD Office of Communications, which supported the program, was eliminated
+    — January 2025: Multiple HHS websites and federal databases containing public health information were removed following executive orders, including resources on LGBTQ health, reproductive health, and HIV/AIDS research
+    — March 17, 2025: HHS removed a 2024 Surgeon General advisory declaring gun violence a public health crisis from its website
+    — 2025: Significant staffing cuts at CDC's Injury Center and Division of Violence Prevention
+    Significance: The elimination of HHS public communications infrastructure — including the office that ran the Safe to Sleep campaign — provides direct context for why HHS's advertising practices (including the $623,000+ in misplaced programmatic ads) received so little internal oversight during 2021–2024.
+
+21. **Euronews Health — "TikTok leads social media platforms in mental health misinformation, study finds" (March 20, 2026)**
+    URL: https://www.euronews.com/health/2026/03/20/tiktok-leads-social-media-platforms-in-mental-health-misinformation-study-finds
+    Credibility: MEDIUM-HIGH — mainstream European news outlet; based on meta-analysis of 27 peer-reviewed studies; researcher Eleanor Chatburn, University of East Anglia
+    Key statistics: Up to 56% of approximately 5,000 analyzed social media posts contained inaccurate or unsubstantiated health information; TikTok showed 52% misinformation rate for ADHD content and 41% for autism content; YouTube averaged 22% misinformation (ranging 0–56.92% by topic); Facebook averaged just under 15%.
+    Significance: Published two weeks before the Yale/JAMA study, this meta-analysis demonstrates that health misinformation is not confined to the 11 "news websites" analyzed by Yale — it saturates the major social platforms where government and health organizations also run programmatic advertising campaigns.
+
+---
+
+## Evidence Deep-Dive (Pass B)
+
+### How Google DV360 Brand Safety Actually Works — and Why It Fails
+
+The primary ad-buying platform identified in the Yale study, Google's Display & Video 360 (DV360), offers advertisers multiple layers of content control. According to Google's own documentation and multiple industry analyses, these include: (1) content-category exclusions (e.g., blocking "misinformation" as a content type), (2) URL allowlists and blocklists, (3) keyword exclusion lists, and (4) integrations with third-party verification vendors Integral Ad Science (IAS) and DoubleVerify. [Pass B research]
+
+Despite this toolkit, the Yale study demonstrates sustained misplacement over four years (2021–2024) by sophisticated, well-resourced organizations including a U.S. government department and major nonprofits. Four structural reasons explain the failure:
+
+**1. Domain-level vs. page-level blindness.** The most critical architectural flaw is that ad tech vendors — including Google's own systems — "do not provide the advertisers with page-URL-level reporting." [Source 16 — The Current/Adalytics] Advertisers see only the domain (e.g., newsmax.com), not the specific article their ad ran against. An advertiser may have newsmax.com as an approved domain based on its general news traffic, while having no visibility into whether their ad ran against a vaccine-misinformation article or a sports score.
+
+**2. The verification gap (2021–2024).** IAS did not launch misinformation-specific measurement for YouTube advertising until September 2024 [Source 19 — IAS press release], and its expansion to other programmatic channels was similarly recent. During the entire 2021–2024 Yale study period, no widely deployed third-party tool existed to flag health misinformation placements in real time.
+
+**3. Plausible deniability as a feature.** An anonymous industry executive quoted in The Current stated: "Brand-safety verification services aren't protecting anything. They only allow plausible deniability." [Source 16] The Adalytics investigation of CSAM-hosting domains found that IAS had affirmatively labeled problematic sites as "safe" — meaning advertisers who purchased verification coverage received false assurance rather than genuine protection.
+
+**4. Self-regulation failures.** Check My Ads COO Arielle Garcia noted in 2025: "It is long-past due for the industry to take a long, hard look at its failed efforts to self-regulate." [Source 16] The industry's primary response to the Yale findings — organizations promising to "strengthen controls and oversight going forward" — echoes two decades of similar post-incident commitments that have not solved the structural problem.
+
+### The Named Sites: Newsmax and ZeroHedge in Context
+
+The Yale study identified Newsmax and ZeroHedge as two of the 11 studied health-misinformation sites. Both carry NewsGuard "red" ratings specifically for health misinformation. Their inclusion is significant:
+
+- **Newsmax** is a major U.S. cable news network with millions of daily viewers, not a fringe blog. Its presence on the list demonstrates that health misinformation is not confined to obscure websites — it appears on major media properties with large legitimate audiences, making blocklisting particularly difficult (blocking Newsmax means forgoing legitimate audience reach across its many non-misinformation pages).
+
+- **ZeroHedge** is a high-traffic financial and political commentary site that has been repeatedly identified for COVID-19 and vaccine misinformation. Its inclusion illustrates that health misinformation cross-pollinates with financial and political content — categories that health advertisers would not intuitively think to exclude.
+
+The combination of scale (both are high-traffic) and credibility-adjacent positioning (both have legitimate journalism alongside misinformation) explains why automated systems fail to catch them: the same signals that make them attractive advertising environments (high traffic, engaged readers) also make them resistant to categorical exclusion.
+
+### The Monetization Ecology: What Academic Research Shows
+
+The *Scientific Reports* (2023) study by Broniatowski et al. [Source 15] found that 96% of analyzed health-content domains — across both pro-vaccine and anti-vaccine communities — displayed embedded advertisements. This was not a fringe behavior; it was nearly universal. The study analyzed 412,168 URLs across 2,436 domains from Facebook vaccine discussions, finding comparable ad density regardless of whether the site's content was rated reliable or unreliable.
+
+This matters because it undermines a common intuition: that misinformation sites are obviously low-quality "junk" that advertisers can easily identify and avoid. In reality, unreliable health sites mimic the monetization structure of legitimate news sites — they look the same to ad-buying algorithms.
+
+---
+
+## Contemporary Context (Pass C)
+
+### The Political Timing: Why This Story Landed on April 3, 2026
+
+The Yale/JAMA study was published on the same day — April 3, 2026 — that the Trump White House released its proposed FY2027 budget, which includes a 12%+ cut to HHS overall and deep reductions to CDC. [Source — STAT News, April 3, 2026] The collision of these two stories on the same news day created an unusual narrative: the current HHS leadership used the Yale study's findings to criticize the prior administration's advertising practices, while simultaneously proposing to further reduce the public health infrastructure that would be needed to fix the problem.
+
+HHS spokesman Andrew Nixon's statement — calling prior placements "a serious failure of oversight and accountability" and saying HHS is "doing things differently" under Kennedy's leadership — was issued in the context of an administration that has:
+
+- Eliminated the NICHD Office of Communications (April 2025) [Source 20 — KFF tracker]
+- Removed multiple CDC public health information databases (January 2025)
+- Proposed cutting CDC's budget by $3.9 billion compared to 2025 [Search results]
+- Created a new "Administration for a Healthy America (MAHA)" agency focused on chronic disease, funded at $14 billion, with a mandate that critics note is not specifically focused on health information accuracy
+
+### The Structural Paradox for Public Health Communicators
+
+Two former public health officials quoted in the CIDRAP coverage of the study — University at Buffalo communications professor Yotam Ophir and former CDC official Demetre Daskalakis — identified a genuine dilemma: reaching audiences who consume misinformation requires advertising on the platforms those audiences use. As Daskalakis stated: "Public health has to be willing to go to uncomfortable places." [Source 3 — CIDRAP]
+
+This is not a theoretical argument. During the COVID-19 pandemic, CDC and HHS ran large digital advertising campaigns explicitly designed to reach vaccine-hesitant populations. Those populations are disproportionately represented among the readers of sites like Newsmax and ZeroHedge. A blanket policy of never advertising on sites with any misinformation would effectively abandon the audiences most in need of accurate health information.
+
+The resolution proposed by researchers and communications scholars: better pre-bid filtering using tools like NewsGuard's API, which can flag specific URLs before an ad is purchased (rather than after placement) — but adoption of such tools by government agencies remains voluntary and inconsistent.
+
+### The Regulatory Vacuum
+
+Three converging regulatory dynamics define the current landscape:
+
+**FTC capacity constrained.** In March 2026, the Fifth Circuit ruled in *Intuit v. FTC* that the FTC cannot pursue deceptive advertising cases through its administrative process, requiring federal court filings for each enforcement action. [Source 18 — Debevoise & Plimpton] This procedural constraint reduces the FTC's capacity to regulate advertising practices at the volume and speed needed to address algorithmic misplacement.
+
+**FTC focus is on content, not placement.** The FTC's 2026 healthcare enforcement priorities — GLP-1 marketing fraud, health data privacy, fake reviews [Source 18] — address the *content* of health advertising, not the *placement* of otherwise-legitimate health advertising on misinformation sites. No federal regulatory framework currently governs where government health agencies' programmatic ads may legally appear.
+
+**Industry self-regulation insufficient.** IAS's September 2024 expansion of misinformation measurement to YouTube [Source 19] represents the ad industry's response — but it is voluntary, subscription-based, and still incomplete. The Adalytics findings [Source 16] demonstrate that paid verification services labeled dangerous domains as "safe" as recently as 2025. Congressional action has not materialized.
+
+### The Broader Misinformation Ecosystem
+
+The Yale study's 11-website dataset is a deliberately narrow probe of a much larger phenomenon. The concurrent March 2026 meta-analysis of social media health misinformation found that up to 56% of health-related social media posts contained inaccurate or unsubstantiated information — with TikTok showing a 52% misinformation rate for ADHD content alone [Source 21 — Euronews/University of East Anglia]. Government and health organizations run programmatic advertising on all of these platforms.
+
+The $35.7 million figure documented by Yale should therefore be understood as a floor, not a ceiling: it represents only health-sector spending on 11 identified news websites with available expenditure data — not the full universe of health-misinformation-adjacent placements across social media, streaming, and the broader programmatic web.
+
+---
+
+## Expanded Chart Data
+
+### Chart 4: Timeline of Brand Safety Tool Availability vs. Study Period
+
+```
+type: timeline_comparison
+title: Brand Safety Misinformation Measurement Tools vs. Yale Study Period
+events:
+  - date: 2021
+    label: Yale study period begins; HHS/CDC programmatic campaigns running
+    type: problem_start
+  - date: 2021-2024
+    label: No major third-party tool specifically measures health misinformation ad placements
+    type: gap
+  - date: Sept 2024
+    label: IAS launches misinformation measurement for YouTube advertising campaigns
+    type: solution_partial
+  - date: 2024-ongoing
+    label: Zefr launches brand safety/suitability measurement for YouTube misinformation category
+    type: solution_partial
+  - date: April 3, 2026
+    label: Yale/JAMA study published documenting 4 years of misplacement (2021-2024)
+    type: exposure
+note: The IAS misinformation measurement tool launched after the Yale study period ended, confirming no adequate solution existed during the period studied
+sources: IAS Press Release (Sept 2024); Yale/JAMA Network Open (2026)
+```
+
+### Chart 5: HHS/CDC Budget Context — Cuts Proposed vs. Advertising Misspend
+
+```
+type: scale_comparison
+title: HHS Advertising Misspend vs. Proposed 2026-2027 Budget Cuts (USD)
+labels:
+  - HHS ad spend on misinformation sites 2021-2024 (Yale study)
+  - HHS total programmatic ad spend (estimated, 2021-2024)
+  - CDC budget cut proposed for FY2026 (vs FY2025)
+  - HHS overall budget cut proposed for FY2027 (12%+ of ~$95B discretionary)
+values:
+  - 0.623   (millions USD — confirmed minimum)
+  - ~10     (millions USD — estimated, proportional to health sector share)
+  - 3900    (millions USD — per HHS budget documents)
+  - 11400   (millions USD — 12% of ~$95B discretionary base)
+note: The misspend documented by Yale is a rounding error relative to proposed budget cuts; the political significance far exceeds the dollar amount
+sources: Yale/JAMA (2026); HHS FY2026 Budget in Brief; STAT News (April 3, 2026)
+```
+
+### Chart 6: Social Media Health Misinformation Rates by Platform (2026 Meta-Analysis)
+
+```
+type: horizontal_bar
+title: Health Misinformation Rates on Social Platforms (Meta-Analysis of 27 Studies, March 2026)
+labels:
+  - TikTok (ADHD content)
+  - TikTok (autism content)
+  - YouTube (average across topics)
+  - Facebook (average across topics)
+  - All platforms combined (peak rate across ~5,000 posts)
+values:
+  - 52   (percent)
+  - 41   (percent)
+  - 22   (percent)
+  - 15   (percent)
+  - 56   (percent — upper bound)
+source: Meta-analysis of 27 studies, University of East Anglia (Eleanor Chatburn et al.); reported by Euronews Health, March 20, 2026
+note: Government health agencies run programmatic advertising on all of these platforms; the Yale study's 11-website dataset does not capture social media placements
+```
+
+---
+
+*Depth expansion completed: April 4, 2026. Passes A, B, and C completed. Seven new sources added (Sources 15–21), including two peer-reviewed academic studies, two primary regulatory/government sources, one industry primary source (IAS press release), one major law firm regulatory analysis, and one trade industry investigation. All new sources are non-duplicative of existing Sources 1–14.*
