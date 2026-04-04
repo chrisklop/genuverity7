@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -90,
+        title: "The $890M AI Hoax: How a Fake 'Thomas Massie Exposé' Fabricated a Stephen Miller Money Scandal",
+        slug: "stephen-miller-cayman-ai-hoax-2026",
+        category: "AI Disinformation",
+        tagClass: "tag-red",
+        catClass: "cat-ai",
+        icon: "bot",
+        date: "Apr 4, 2026",
+        sources: "22 Sources",
+        readTime: "16 min",
+        verdict: "false",
+        excerpt: "A March 2026 AI-generated video falsely claimed Rep. Thomas Massie exposed Stephen Miller funneling $890M into Cayman Islands accounts. Miller's official OGE Form 278e shows domestic holdings and a net worth of $1.8M–$4.8M. Massie isn't on the Oversight Committee — he sits on Judiciary and Transportation. The hoax originated from an AI content farm that monetized the video through YouTube ads before removal.",
+        chart: {"type":"hbar","data":[4800,890000000],"labels":["Miller actual net worth max (OGE est.)","Fabricated $890M claim"],"colors":["#22c55e","#ef4444"]}
+    },
+    {
         id: -89,
         title: "Trump's Third-Term 'Loophole': A Constitutional Dead End",
         slug: "trump-third-term-loophole-claims-2026",
