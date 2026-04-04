@@ -256,3 +256,179 @@ Snopes's debunking relied on four independent categories of evidence:
 ---
 
 *Research compiled April 4, 2026 | GenuVerity Deep Research Protocol v2 | 5-round methodology | 15 sources*
+
+---
+
+## Additional Sources (Pass A)
+
+16. **White House / Office of Government Ethics — OGE Form 278e Financial Disclosure, Stephen N. Miller**  
+    *Miller, Stephen N — OGE Form 278e (Updated 08/2024, Expires 08/31/2027)*  
+    URL: https://www.whitehouse.gov/wp-content/uploads/2025/06/Miller-Stephen.pdf  
+    Credibility: **Primary source (U.S. federal government filing)**  
+    Key data: Official 14-page financial disclosure filed with the White House; confirms domestic-only asset holdings; no offshore accounts or foreign financial interests disclosed in any section. Document structure consistent with ProPublica's published summary of Miller's holdings.
+
+17. **Project On Government Oversight (POGO) — Stephen Miller's Financial Stake in ICE Contractor Palantir**  
+    URL: https://www.pogo.org/investigates/stephen-miller-conflicts-of-interest  
+    Credibility: **High — nonpartisan government oversight organization with direct access to disclosure filings**  
+    Verbatim (via search summary): Miller disclosed from $100,001 up to a quarter million dollars of stock in Palantir, a tech company woven into the operations of U.S. Immigration and Customs Enforcement (ICE) and used by other federal agencies such as the Pentagon. Ethics experts say Miller's deep involvement in ICE's efforts and his financial stake in Palantir raises conflict of interest concerns.
+
+18. **NOTUS — Stephen Miller Scored a Big Cash Bonus Before Joining Trump 2.0**  
+    URL: https://www.notus.org/money/stephen-miller-financial-bonus-white-house-america-first-legal  
+    Credibility: **High — original reporting with access to tax filings**  
+    Verbatim: The America First Legal board stated Miller's past compensation "was below market," justifying a $100,000 adjustment payment covering three prior years, plus a $75,000 bonus, bringing his 2024 total compensation to over $567,000 — more than double his 2023 compensation of $266,600 — before he joined Trump's White House at a salary of $195,200.
+
+19. **DFRLab (Atlantic Council Digital Forensic Research Lab) — AI-Generated YouTube Channels Co-opt War Coverage to Farm Nearly Two Billion Views**  
+    URL: https://dfrlab.org/2026/03/23/ai-generated-youtube-channels-co-opt-war-coverage-to-farm-nearly-two-billion-views/  
+    Published: March 23, 2026  
+    Credibility: **High — primary investigative research organization specializing in digital disinformation**  
+    Verbatim: *"Coordinated network deploys synthetic anchors, fabricated headlines, and LLM-produced scripts to capitalize on audience interest in Russia-Ukraine war."* Key statistics: network of 26+ YouTube channels; nearly two billion cumulative views; close to two million subscribers; 23 of 26 analyzed accounts still active as of March 23, 2026; advertisements observed running on videos.
+
+20. **NBC News — Trump's 'Hammer': Stephen Miller's Power Extends Far Beyond Immigration**  
+    URL: https://www.nbcnews.com/politics/white-house/stephen-miller-trump-white-house-immigration-woke-colleges-dc-rcna259413  
+    Published: February 23, 2026  
+    Credibility: **High — major national news organization with White House access**  
+    Verbatim: *"All the executive orders signed on Day One, Week One, Month One are things that Stephen selected"* [for drafting and execution]. Article documents Miller's daily 10 a.m. conference calls with senior federal officials spanning immigration, foreign policy, college campus initiatives, and domestic infrastructure — confirming his current title as Deputy Chief of Staff for Policy and Homeland Security Adviser.
+
+21. **House Clerk's Office — Thomas Massie Official Member Profile**  
+    URL: https://clerk.house.gov/members/M001184  
+    Credibility: **Primary source (official U.S. government record)**  
+    Key data: Official House Clerk record confirming Massie's current committee assignments in the 119th Congress (2025–2026): Committee on the Judiciary (Subcommittees: Courts, Intellectual Property, Artificial Intelligence, and the Internet; The Constitution and Limited Government) and Committee on Transportation and Infrastructure. No assignment to the House Oversight Committee is listed.
+
+22. **WUKY / NPR — "Bigger than Watergate": Rep. Thomas Massie Demands Accountability During DOJ Hearing**  
+    URL: https://www.wuky.org/wuky-news/2026-02-12/bigger-than-watergate-representative-thomas-massie-demands-accountability-during-doj-hearing  
+    Published: February 12, 2026  
+    Credibility: **High — NPR affiliate local reporting**  
+    Verbatim: Massie appeared before the House Judiciary Committee and accused DOJ officials of "over-redacting" potentially incriminating information in the Epstein files; suggested the department only unredacted material belonging to someone "likely incriminated" because officials had been caught "red-handed." Context: illustrates Massie's genuine profile as an aggressive congressional questioner — the authentic template that AI content farms exploit to fabricate hoax confrontation narratives.
+
+---
+
+## Evidence Deep-Dive (Pass B)
+
+### The AI Content Farm Business Model: Documented at Scale
+
+The Miller/Massie hoax is not an isolated incident but a specific execution of an extensively documented, financially motivated production template. The DFRLab's March 23, 2026 investigation — published the same day as the approximate origin of the hoax video — identified a network of 26+ YouTube channels that had accumulated nearly **two billion views** by deploying identical methods: synthetic AI anchors reading LLM-produced scripts over a combination of real archival footage and AI-generated imagery, with fabricated events inserted intermittently to drive outrage-based engagement. [19]
+
+The DFRLab documented advertisements running on these channels' videos, confirming the core monetization mechanism: YouTube's advertising revenue sharing program (the YouTube Partner Program) pays creators based on ad impressions, meaning fabricated political content directly generates income for its producers. As of the DFRLab's publication date, 23 of the 26 analyzed channels remained active despite violating YouTube's stated misinformation policies. This gap between policy and enforcement is structurally identical to the conditions that allowed the Miller/Massie hoax channel to operate, upload a synthetic-content-labeled video, earn ad revenue, and trigger a fact-checking response only after achieving viral spread. [19]
+
+### The George Will Deepfake Network: A Template Comparison
+
+The fabrication techniques used in the Miller/Massie hoax closely mirror those documented in Snopes's investigation of the George Will deepfake network (December 2025). In the Will case, the creator downloaded a genuine MLB Network interview clip from March 2025, then used an AI tool to manipulate Will's mouth movements and audio to produce a fabricated script — a script that itself bore hallmarks of AI generation including "overdramatic phrasing commonly found in AI-generated text." The false videos spread across YouTube channels named Capitol Transparency Watch, George Will Analysis, TwoNation News, Mind to George, Voices of Freedom, and Inside the Capitol (the last of which also featured deepfake Rachel Maddow content). The operation's geographic and temporal span — active from late December 2025 through at least January 2, 2026 — overlaps directly with the accelerating AI content farm ecosystem that produced the Miller hoax ten weeks later. [7]
+
+Both operations share three structural features: (1) a real public figure with existing credibility on the topic of the fabricated claim; (2) genuine archival footage repurposed to create a veneer of authenticity; and (3) distribution across multiple platforms via a network of interlinked channels designed to survive individual takedowns.
+
+### YouTube's Deepfake Detection Tool: Expansion and Limitations
+
+On March 10, 2026 — twelve days before the estimated upload date of the Miller/Massie hoax — YouTube announced an expansion of its AI-powered likeness detection tool to a pilot group of politicians, government officials, and journalists. The tool scans uploaded videos for synthetic reproductions of enrolled individuals' faces and audio profiles and allows flagged subjects to request removal through YouTube's privacy complaint process. [9]
+
+Critically, **the tool does not prevent synthetic content from being uploaded or initially distributed** — it is a reactive reporting mechanism, not a pre-publication filter. The Miller/Massie hoax's origin channel self-labeled its video with YouTube's "altered or synthetic content" disclosure and still accumulated sufficient reach to trigger a Snopes fact-check. This illustrates the tool's core limitation: the most dangerous synthetic content — content targeting non-enrolled figures, or content where the subject is unaware of the deepfake — faces no automated barrier to viral distribution. The expansion of the detection tool to public officials represents a meaningful step, but the Miller case itself demonstrates that even self-disclosed synthetic content can achieve viral scale before any detection or removal occurs. [9][19]
+
+### Monetization Chain: From Fabrication to Ad Revenue
+
+Research across multiple investigations reveals the full financial chain sustaining AI political hoax ecosystems:
+
+1. **Production**: AI tools (documented cases: HeyGen for the Mearsheimer network; generic AI audio and video synthesis for the Miller hoax) generate synthetic content at near-zero marginal cost per video. [8]
+2. **Platform distribution**: YouTube Partner Program ad revenue is earned from views on synthetic content channels; as of early 2026, YouTube's enforcement has not consistently demonetized channels that self-disclose synthetic content. [19]
+3. **Amplification**: Viral social sharing on Facebook, Threads, and TikTok drives additional traffic back to the YouTube origin video, multiplying ad impressions and enabling secondary monetization on linked blog domains. [1][2]
+4. **Blog revenue**: AI-generated blog articles republishing the false claim are indexed by search engines and carry independent display advertising, creating a parallel revenue stream separate from the YouTube origin. [2]
+
+The result is a self-sustaining economic system in which false political content generates income at every step of its propagation — a model that fact-checking organizations must race against, typically arriving after peak virality has already occurred.
+
+---
+
+## Contemporary Context (Pass C)
+
+### Why Stephen Miller Is a High-Value Hoax Target in 2026
+
+Stephen Miller's documented role in the second Trump administration makes him simultaneously one of Washington's most powerful unelected officials and one of its most polarizing — a combination that makes him a structurally attractive subject for fabricated outrage content targeting both left-leaning and right-leaning audiences.
+
+As of February 2026, Miller holds two White House titles simultaneously: Deputy Chief of Staff for Policy and Homeland Security Adviser. NBC News reporting (February 23, 2026) documents that his portfolio spans immigration enforcement, college campus policy, foreign policy, trade, and domestic infrastructure. He runs daily 10 a.m. conference calls with senior officials across multiple agencies, and White House sources describe him as the architect of virtually every executive order issued in the administration's first weeks. [20]
+
+This breadth of power — combined with documented conflict-of-interest concerns (the Palantir stock holding in a company woven into ICE operations, and the pre-White House "golden parachute" payments from America First Legal totaling over $175,000 in bonus/adjustment payments) — creates a fertile landscape for plausible-seeming financial corruption narratives. [17][18] The $890 million figure is, of course, entirely fabricated; but the underlying template exploits real documented concerns about Miller's financial interests to construct a narrative that is emotionally compelling even if factually groundless.
+
+### Thomas Massie in 2026: Authentic Questioner, Fabricated Target
+
+Massie's selection as the fictional interrogator in the hoax is not arbitrary. By early 2026, he had established a documented record as one of the House's most aggressive questioners on issues of financial accountability and government transparency — most prominently through his role in the Epstein files investigation (he sponsored the Epstein Files Transparency Act) and his February 2026 Judiciary Committee confrontation with DOJ officials, in which he accused the department of "over-redacting" potentially incriminating material and suggested the department had been caught "red-handed." [22][4][3]
+
+This authentic profile — a libertarian Republican unafraid to challenge his own party's administration — made Massie a plausible vehicle for a false narrative about confronting a Trump White House official. The hoax exploited his real credibility without his knowledge or consent, and it relied on audiences not knowing the specific committee structure that made his alleged House Oversight Committee membership impossible.
+
+Separately, Massie faces a consequential 2026 primary challenge. Trump has mobilized his political operation to unseat Massie in Kentucky's 4th Congressional District Republican primary (scheduled May 19, 2026), with Massie running against challenger Ed Gallrein. This context means that false narratives about Massie — whether flattering (a heroic exposer of White House corruption) or damaging — circulate during a period of maximum political sensitivity for him. [Pass C search results]
+
+### The Regulatory Vacuum: Why These Hoaxes Will Continue
+
+As of April 2026, no comprehensive federal law governs AI-generated political content. Congress's only enacted AI-related legislation — the TAKE IT DOWN Act (signed May 2025) — addresses non-consensual synthetic intimate imagery exclusively and has no application to fabricated political videos. [Pass C search results]
+
+At the state level, 28 states have enacted legislation related to political deepfakes, but the dominant approach is **disclosure requirements**, not prohibition. Two California laws attempting to go further — including one that blocked platforms from hosting deceptive political deepfakes — were struck down in federal court in 2025 as overbroad restrictions on speech. [MultiState.us, February 12, 2026] This patchwork of uncoordinated, disclaimer-focused state laws leaves the fabrication and monetization of synthetic political content operating in a near-regulatory vacuum.
+
+The Reuters/AP reporting (Honolulu Star-Advertiser, March 28, 2026) documented that the same absence of federal regulation has allowed the 2026 midterm cycle to feature the normalization of deepfake political advertising at the campaign level — with the NRSC releasing a synthetic video of Democratic Senate candidate James Talarico, and multiple other races featuring deepfake ads from both parties. The Miller/Massie hoax represents the financially monetized, non-campaign version of the same phenomenon: AI-generated political content designed to exploit partisan outrage, operating in the same regulatory vacuum as official campaign deepfakes. [12]
+
+### International Fact-Checking Day Context
+
+The Snopes fact-check on the Miller/Massie hoax was published in the same week as International Fact-Checking Day (April 2, 2026), which saw PBS NewsHour and Euronews publish guides on spotting AI-generated disinformation. A PNAS Nexus study cited in Euronews's coverage found that nearly 50% of AI-generated headlines appeared "mostly" or "completely real" to a sample of 27,000 people across 27 EU countries — and that people are broadly "unable to distinguish between human- and AI-generated content." [14] The Miller/Massie hoax's viral reach is therefore not anomalous; it is predictable given the documented scale of AI-credulity across mass audiences.
+
+---
+
+## Expanded Chart Data
+
+### Chart 4: AI Content Farm Ecosystem — Monetization Chain
+
+**Type:** Flow / Sankey  
+**Stages:**
+1. AI Fabrication (near-zero marginal cost per video) → Platform Upload (YouTube, self-labeled "synthetic content")
+2. YouTube Partner Program → Ad revenue from initial views
+3. Viral Social Sharing (Facebook, Threads, TikTok) → Traffic amplification → additional ad impressions
+4. AI Blog Articles (search-indexed republications) → independent display ad revenue
+5. Engagement Loop → repeat fabrication triggered by revenue signal
+
+**Source Notes:** DFRLab [19]; Snopes [1][2]; Maldita.es [8]  
+**Key stat:** DFRLab documented a network of 26+ channels accumulating ~2 billion views with advertisements running on content that violates platform misinformation policies.
+
+---
+
+### Chart 5: Federal vs. State Deepfake Regulation Landscape (April 2026)
+
+**Type:** Stacked Bar / Status Matrix  
+**Categories:**
+- Federal law covering political deepfakes: **0** (none enacted)
+- Federal law covering non-consensual synthetic intimate imagery: **1** (TAKE IT DOWN Act, May 2025)
+- States with political deepfake disclosure requirements: **~28**
+- States with attempted outright bans (struck down/challenged): **2** (California)
+- States with no AI political content law: **~22**
+
+**Source:** MultiState.us [Pass C]; Roll Call [Pass C]; NBC News [Pass C]; CNN Politics [12]  
+**Note:** The regulatory vacuum at the federal level means that fabricating and monetizing AI-generated political hoax content remains legal in all 50 states, provided it does not constitute provable defamation under existing tort law.
+
+---
+
+### Chart 6: Stephen Miller's Pre-White House vs. White House Compensation (2023–2026)
+
+**Type:** Grouped Bar  
+**Labels:** `["2023 (America First Legal)", "2024 (America First Legal, pre-WH)", "2025+ (White House salary)"]`  
+**Values (USD):** `[266600, 567000, 195200]`  
+**Source:** NOTUS [18]; White House salary disclosure  
+**Note:** The 2024 spike reflects a $75,000 bonus plus a $100,000 "adjustment" payment for three years of alleged below-market compensation, paid before Miller entered government service. His current White House salary of $195,200 represents less than one-third of his peak non-profit year compensation — context that makes the fabricated $890 million figure even more starkly implausible against the public record.
+
+---
+
+## Additional Embeddable Media (Pass B/C)
+
+### Link Preview 4 — DFRLab: AI-Generated YouTube Channels Co-opt War Coverage
+
+- **URL:** https://dfrlab.org/2026/03/23/ai-generated-youtube-channels-co-opt-war-coverage-to-farm-nearly-two-billion-views/
+- **Publisher:** DFRLab (Atlantic Council Digital Forensic Research Lab)
+- **Published:** March 23, 2026
+- **Suggested Placement:** Evidence Deep-Dive section, as the primary structural parallel to the Miller hoax's content farm model
+- **Suggested Caption:** *"Published the same day as the Miller/Massie hoax upload: DFRLab documents how 26+ AI channels accumulated nearly 2 billion views using the same fabrication template."*
+
+---
+
+### Link Preview 5 — NBC News: Miller's Power Extends Far Beyond Immigration
+
+- **URL:** https://www.nbcnews.com/politics/white-house/stephen-miller-trump-white-house-immigration-woke-colleges-dc-rcna259413
+- **Publisher:** NBC News
+- **Published:** February 23, 2026
+- **Suggested Placement:** Contemporary Context section
+- **Suggested Caption:** *"NBC News documents Miller's daily 10 a.m. calls directing policy across immigration, foreign policy, and college campuses — the real power profile that AI hoax content exploits without basis."*
+
+---
+
+*Depth Expansion completed April 4, 2026 | GenuVerity Depth Expansion Protocol | Pass A–C methodology | 22 total sources (7 new primary/major journalism sources added)*
