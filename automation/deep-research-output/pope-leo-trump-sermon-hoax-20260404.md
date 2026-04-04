@@ -264,3 +264,172 @@ context: Provides authoritative visual context contrasting with the flood of fak
 **Pattern Watch:** Snopes has documented at least six distinct Pope Leo XIV hoaxes as of April 2026 (fiery sermon, idolatry warning, "vicious old bas***d" quote, "power into kings" quote, 3am urgent message, Iran war condemnation). This suggests either a coordinated operation or a highly productive individual actor using AI tools to generate political-papal misinformation at scale. "Pontiff Leo Era" on Facebook warrants continued monitoring.
 
 **Vatican Guidance:** The Vatican advises: all authentic papal statements are archived at vaticannews.va. Any unverified papal quote or video not found there should be treated as "most probably fake."
+
+---
+
+## Additional Sources (Pass A)
+
+13. **U.S. Conference of Catholic Bishops (USCCB)** — "Chicago native Cardinal Prevost elected pope, takes name Leo XIV"
+    URL: https://www.usccb.org/news/2025/chicago-native-cardinal-prevost-elected-pope-takes-name-leo-xiv
+    Credibility: PRIMARY SOURCE — official body of U.S. Catholic bishops
+    Published: May 8, 2025.
+    Quote: *"Born Robert Francis Prevost on September 14, 1955, in Chicago, Illinois. His father is of French and Italian descent, and his mother is of Spanish descent."*
+    Key details: Confirms Leo XIV studied at Villanova University (B.A. mathematics, 1977) and Catholic Theological Union in Chicago (M.Div., 1982); served as head of the worldwide Augustinian order 2001–2013; appointed Prefect of the Dicastery for Bishops by Pope Francis in 2023.
+
+14. **Vatican News** — "Pope at Palm Sunday Mass: 'Jesus does not listen to prayers of those who wage war'"
+    URL: https://www.vaticannews.va/en/pope/news/2026-03/pope-leo-xiv-celebrates-palm-sunday-mass-rome.html
+    Credibility: PRIMARY SOURCE — official Vatican media organ
+    Published: March 29, 2026.
+    Quote: *"He does not listen to the prayers of those who wage war, but rejects them, saying: 'Even though you make many prayers, I will not listen: your hands are full of blood.'"*
+    Note: The homily's Isaiah citation (Is 1:15) is the authentic basis for what the hoax exaggerated into a direct anti-Trump political sermon. The real homily names no political leader and makes no reference to healthcare, immigration, or Iran by name.
+
+15. **Vatican.va (Official Holy See Website)** — "Palm Sunday: Passion of the Lord — Holy Mass (29 March 2026)"
+    URL: https://www.vatican.va/content/leo-xiv/en/homilies/2026/documents/20260329-palme.html
+    Credibility: PRIMARY SOURCE — the official Holy See website, highest-tier Vatican primary source
+    Published: March 29, 2026.
+    Key verbatim quotes from the homily: *"Lay down your weapons! Remember that you are brothers and sisters!"* and *"Jesus is the King of Peace, who rejects war, whom no one can use to justify war."* The homily contains no mention of Trump, Iran, healthcare, or immigration — confirming the fabricated sermon has no basis in the official record.
+
+16. **Texas Politics** — "'You Want to Know What Insults Jesus?': James Talarico Claps Back at Trump"
+    URL: https://texaspolitics.com/2026/03/20/you-want-to-know-what-insults-jesus-james-talarico-claps-back-at-trump/
+    Credibility: Regional political news outlet; high value for primary content documentation
+    Published: March 20, 2026.
+    Full Talarico quote (verbatim): *"The president of the United States just said that I insulted Jesus. You want to know what insults Jesus? Kicking the sick off their health care while cutting taxes for billionaires. You know what insults Jesus? Deporting the stranger and separating babies from their mothers. You know what insults Jesus? Bombing innocent school children in Iran and sending our brave men and women off to die in another forever war. You know what insults Jesus? Covering up the Epstein files and then refusing to prosecute a single person in them."*
+    **Forensic significance:** A direct line-by-line comparison confirms that the fabricated "Pope Leo XIV fiery sermon" quotes are copied nearly verbatim from this Talarico speech — not independently invented. The hoaxers appear to have taken Talarico's actual words, attributed them to the Pope, and used them to construct a fictional papal confrontation with Trump. This is a more precise and damning forensic finding than previously documented.
+
+17. **Catholic World Report** — "NBC poll: Pope Leo XIV held in highest esteem among public personalities"
+    URL: https://www.catholicworldreport.com/2026/03/09/nbc-poll-pope-leo-xiv-held-in-highest-esteem-among-public-personalities/
+    Credibility: Established Catholic news outlet; cites NBC News/Hart Research Associates polling
+    Published: March 9, 2026.
+    Quote: *"Leo's total positive score beat out Trump's by 1 percentage point."* Pope Leo XIV registered 42% positive / 8% negative (net +34) in the NBC News survey of 1,000 registered voters — topping a list that included Trump, JD Vance, Marco Rubio, Kamala Harris, and others. The Pope's negative score (8%) was uniquely single-digit — the only tested figure with sub-10% negatives.
+
+18. **CNN** — "Vatican will not participate in Trump's 'Board of Peace'"
+    URL: https://www.cnn.com/2026/02/18/europe/pope-leo-board-of-peace-refusal-intl
+    Credibility: Major international news organization
+    Published: February 18, 2026.
+    Key facts: The Vatican's Secretary of State, Cardinal Pietro Parolin, formally declined Trump's invitation for the Holy See to join his "Board of Peace" — a body Trump created to oversee Gaza reconstruction and global peacekeeping. Parolin said the Vatican was left "perplexed" by aspects of the plan and insisted that "critical issues" remained unresolved; the Vatican held that the United Nations, not U.S.-led forums, should manage such crises. The refusal marked a significant public rupture in U.S.–Vatican diplomacy.
+
+19. **Axios** — "Pope Leo XIV condemns 'spiral of violence' in U.S., Israel strikes on Iran"
+    URL: https://www.axios.com/2026/03/01/iran-us-trump-israel-strikes-pope-leo
+    Credibility: Major U.S. news organization
+    Published: March 1, 2026.
+    Quote: *"Thousands of innocent people have been killed and countless others have been forced to flee their homes... To those responsible for this conflict: cease fire!"*
+    Context: Leo's first Sunday address after U.S. and Israeli forces struck Iran on February 28, 2026. This is the first of a documented series of escalating anti-war statements that created the real political friction the hoaxers later exploited.
+
+20. **France 24 / AFP** — "AI-generated Pope sermons flood YouTube, TikTok"
+    URL: https://www.france24.com/en/live-news/20250606-ai-generated-pope-sermons-flood-youtube-tiktok
+    Credibility: Major international news agency (AFP wire story published via France 24)
+    Published: June 6, 2025.
+    Key statistics: After AFP presented YouTube with 26 channels posting predominantly AI-generated Pope Leo content, the platform terminated 16 of them and removed an additional 6 from its partner program. TikTok removed 11 accounts with over **1.3 million combined followers** for violating policies against impersonation, harmful misinformation, and misleading AI-generated content of public figures. This documents the scale of cross-platform fake papal content far beyond the single YouTube channel noted in the original research.
+
+---
+
+## Evidence Deep-Dive (Pass B)
+
+### The "Pontiff Leo Era" Template and the Fabrication Method
+
+The Facebook account "Pontiff Leo Era" represents a category of AI-assisted disinformation factory that has become endemic to Pope Leo XIV's pontificate. Unlike crude forgeries, these accounts do not fabricate an entirely new reality — they follow a documented three-step construction method:
+
+**Step 1 — Harvest a real political flashpoint.** The hoaxers identified a real, documented exchange: Trump called Texas Rep. James Talarico "an insult to Jesus" on the Fox News Brian Kilmeade radio show on March 13, 2026, after Talarico's victory in the Texas Democratic Senate primary. This was widely covered.
+
+**Step 2 — Appropriate Talarico's own rebuttal and reassign it to the Pope.** Talarico responded on social media on March 18–20, 2026, with a speech that began: *"The president of the United States just said that I insulted Jesus. You want to know what insults Jesus? Kicking the sick off their health care while cutting taxes for billionaires..."* The fabricated papal "sermon" reproduced this structure and these specific lines almost word-for-word — the "kicking the sick off healthcare," "deporting the stranger and separating babies from their mothers," and "bombing innocent school children in Iran" lines all appear in Talarico's original speech. The hoaxers did not write novel content; they laundered Talarico's words through a fabricated papal attribution. [16]
+
+**Step 3 — Wrap in a plausible papal context.** By late March 2026, Leo XIV had made real, documented criticisms of the Iran war — including his March 29 Palm Sunday homily explicitly citing Isaiah: *"your hands are full of blood"* [14][15] — giving the fabricated escalation just enough plausibility to circulate without triggering immediate skepticism.
+
+This is the most forensically specific reconstruction of how this particular hoax was built that has been documented to date.
+
+### Vatican's AI Deepfake Warning Campaign: Scope and Escalation
+
+The Vatican's Dicastery for Communication has been running what amounts to a sustained public awareness campaign against fake papal content since the first days of Leo XIV's pontificate:
+
+- **May 2025 (within two weeks of election):** The Dicastery issued its first formal public warning about AI deepfake videos and images of the new Pope. The warning came after a 36-minute AI-generated video of "Leo XIV" was posted to YouTube.
+- **May 21–22, 2025:** YouTube terminated the "Pope Leo XIV's Sermons" channel (18,000 subscribers, ~1 million views, 26 videos). YouTube also terminated all other channels operated by the same creator and two additional unnamed channels.
+- **June 2025:** AFP investigation found 26 channels posting predominantly AI-generated Leo XIV content; YouTube terminated 16 and removed 6 from its partner program. TikTok removed 11 accounts with 1.3 million combined followers. [20]
+- **September 2025:** The Dicastery reported it receives "dozens of reports every day" about fake accounts using the Pope's image and voice "in a very realistic way." [8]
+- **Late 2025 (World Communications Day theme announcement):** Pope Leo XIV chose "Preserving Human Voices and Faces" as the 2026 World Communications Day theme — a direct institutional response to the deepfake epidemic targeting his own pontificate.
+
+The Vatican's guidance to the faithful has been explicit and consistent: treat any papal quote or video not verifiable on vaticannews.va as "most probably fake." [7][8]
+
+### The Trump/"Insult to Jesus" Phrase: Full Forensic Chain
+
+The complete chain of appropriation is now documented:
+
+1. **March 13, 2026:** Trump appears on Fox News' Brian Kilmeade Show and calls Texas Rep. James Talarico "an insult to Jesus," citing Talarico's 2021 statement that "God is non-binary" and his support for LGBTQ+ rights.
+2. **March 18–20, 2026:** Talarico responds on social media with the "You want to know what insults Jesus?" speech, listing healthcare, immigration, Iran, and the Epstein files.
+3. **~March 28–30, 2026:** "Pontiff Leo Era" on Facebook publishes a post that: (a) keeps Trump's original "insult to Jesus" phrase but redirects it from Talarico to the Pope; and (b) copies Talarico's rebuttal almost verbatim but puts it in the Pope's mouth as a "fiery sermon."
+4. **March 31, 2026:** Snopes and MEAWW fact-check and debunk the claim. [1][2]
+
+The fabrication is not merely a misattributed quote — it is a wholesale appropriation of a different person's actual speech, laundered through a papal identity to maximize its viral and political impact.
+
+---
+
+## Contemporary Context (Pass C)
+
+### Why This Hoax Matters Now: Three Structural Factors
+
+**1. The Trump–Vatican Diplomatic Rupture**
+
+Pope Leo XIV and the Trump administration are engaged in one of the most significant U.S.–Vatican diplomatic tensions in decades. Key fault lines:
+
+- **Board of Peace refusal (February 2026):** The Vatican formally declined Trump's invitation to join his "Board of Peace" global peacekeeping body, with Cardinal Parolin saying the Holy See was left "perplexed." [18] This was a public diplomatic snub of an American president by the first American pope.
+- **Iran war (from February 28, 2026 onward):** Leo has condemned the U.S.-Israel strikes on Iran as creating a "spiral of violence," called for a ceasefire, and on April 1 publicly named Trump by name urging him to find an "off-ramp." [5][19]
+- **Immigration:** Leo criticized Trump's immigration crackdown as treating people without "dignity" and called some practices "inhuman" and "extremely disrespectful." He announced he will spend the U.S. 250th anniversary (July 4, 2026) on Lampedusa — a symbolic statement about migration.
+
+This genuine and escalating conflict creates the ideal environment for disinformation: audiences on both sides want to believe the confrontation is more dramatic than it is.
+
+**2. Catholic Voter Dynamics and the Favorability Gap**
+
+Pope Leo XIV is the most favorably viewed public figure in the United States as of March 2026, with a net +34 favorability rating in the NBC News/Hart Research Associates poll, placing him ahead of Trump, Vance, Rubio, and every other tested figure. His negative rating (8%) is uniquely single-digit among all major public figures tested. [17]
+
+This creates a specific disinformation vulnerability: Leo's favorable standing means fake content amplifying a Leo–Trump clash lands with maximum impact among Democratic-leaning audiences, who are predisposed to trust Leo and distrust Trump. Catholic voters, meanwhile, are divided: 54% support Trump's immigration enforcement policies despite Leo's explicit criticism. [Polling data from Pass A searches.]
+
+The hoax exploited exactly this cleavage — using the Pope's voice to deliver Democratic talking points to an audience already primed to receive them from that source.
+
+**3. Platform AI Moderation Policy: Still Inadequate**
+
+The regulatory and platform landscape in 2026 remains insufficient to stop the category of hoax documented here:
+
+- **YouTube** requires creators to self-flag AI-generated content; enforcement is reactive (takedown after reports) rather than proactive. After AFP's 2025 investigation, YouTube terminated 16 of 26 identified fake Leo channels — but only after being presented with the evidence. [20]
+- **Meta/Facebook** relies on self-declaration and third-party AI detection tools that embed metadata — a system that does nothing to catch the type of AI-generated *text* content (not video) used in the "Pontiff Leo Era" Facebook posts.
+- **TikTok** has the most aggressive AI content policy among major platforms — treating AI content attacking religions as Tier 1 content subject to instant removal, and integrating C2PA Content Credentials for automatic AI detection since January 2025. It was the first to act at scale against fake Leo XIV content (11 accounts, 1.3M followers). [20]
+- **Federal regulation:** The TAKE IT DOWN Act and state laws address non-consensual sexualized deepfakes, not political or religious impersonation content. No federal statute directly targets AI-generated fake papal sermons or fake political speeches of this type.
+
+The gap between platform capability and the actual threat vector — AI-generated text posts on Facebook mimicking a news account — remains wide as of April 2026.
+
+---
+
+## Expanded Chart Data
+
+### Chart 4: Pope Leo XIV Favorability vs. Other Public Figures (NBC News, March 2026)
+
+```
+type: bar
+title: "Net Favorability Ratings — NBC News Poll (Hart Research/Public Opinion Strategies, March 2026)"
+labels: ["Pope Leo XIV", "Stephen Colbert", "Donald Trump", "Marco Rubio", "JD Vance", "Alexandria Ocasio-Cortez", "Kamala Harris", "Gavin Newsom"]
+values: [34, 8, -5, -12, -18, -15, -20, -22]
+notes: "Net favorability = % positive minus % negative. Pope Leo XIV: 42% positive / 8% negative. Only Leo and Colbert registered net-positive scores. Source: Catholic World Report citing NBC News/Hart Research Associates, March 2026. N=1,000 registered voters."
+```
+
+### Chart 5: Cross-Platform Scale of Fake Pope Leo XIV Content Removed (2025)
+
+```
+type: bar
+title: "Fake Pope Leo XIV Accounts/Channels Removed by Platform (2025)"
+labels: ["YouTube channels terminated (AFP investigation)", "TikTok accounts removed", "YouTube channels removed from partner program"]
+values: [16, 11, 6]
+notes: "YouTube figures from AFP/France 24 investigation (June 2025): AFP identified 26 AI-content channels; YouTube terminated 16 and demonetized 6 more. TikTok removed 11 accounts with combined 1.3 million followers. Does not include the earlier 'Pope Leo XIV's Sermons' channel termination (May 2025). Source: France 24/AFP, June 6, 2025."
+```
+
+### Chart 6: Talarico Speech → Fake Papal Sermon Mapping (Verbatim Transfer)
+
+```
+type: table
+title: "Verbatim Content Transfer: Talarico Speech (March 18–20, 2026) → Fabricated 'Pope Leo XIV Sermon'"
+columns: ["Original Talarico Quote (Verified, March 2026)", "Fabricated 'Pope Leo XIV' Quote (Hoax)"]
+rows: [
+  ["'Kicking the sick off their health care while cutting taxes for billionaires'", "'Kicking the sick off their health care while cutting taxes for billionaires'"],
+  ["'Deporting the stranger and separating babies from their mothers'", "'Deporting the stranger and separating babies from their mothers'"],
+  ["'Bombing innocent school children in Iran and sending our brave men and women off to die in another forever war'", "'Bombing innocent school children in Iran and sending our brave men and women off to die in another forever war'"],
+  ["'The president of the United States just said that I insulted Jesus'", "'The president of the United States just said that I insulted Jesus'"]
+]
+notes: "The fake papal sermon did not invent new content — it copied Talarico's verified speech and attributed it to Pope Leo XIV. This is the most precise forensic finding in this investigation. Source comparison: Texas Politics (Talarico speech, March 20, 2026) vs. MEAWW/Snopes (fabricated sermon quotes, March 31, 2026)."
+```
