@@ -3,6 +3,21 @@
 
 const REPORTS_DATA = [
     {
+        id: -90,
+        title: "The Stephen Miller $890M Hoax: Anatomy of an AI-Generated Political Smear",
+        slug: "stephen-miller-cayman-ai-hoax-2026",
+        category: "Political Disinformation",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "bot",
+        date: "Apr 6, 2026",
+        sources: "24 Sources",
+        readTime: "16 min",
+        verdict: "false",
+        excerpt: "A YouTube AI channel fabricated a viral claim that Thomas Massie exposed Stephen Miller funneling $890M through Cayman Islands accounts. Miller's official OGE Form 278e shows zero offshore holdings and a $1.8M–$4.8M net worth — a three-order-of-magnitude gap from the hoax. The channel explicitly uses AI to make 'inspiring or shocking stories about public figures.' YouTube flagged it with a synthetic content label; the claim spread to Facebook (8,300+ likes) and a blog ad-revenue network.",
+        chart: {"type":"hbar","data":[890000000,4800000,195200],"labels":["Hoax claim: offshore accounts","Miller actual net worth (max OGE)","Miller annual salary (OGE)"],"colors":["#ef4444","#22c55e","#06b6d4"]}
+    },
+    {
         id: -89,
         title: "Trump's Third-Term 'Loophole': A Constitutional Dead End",
         slug: "trump-third-term-loophole-claims-2026",
