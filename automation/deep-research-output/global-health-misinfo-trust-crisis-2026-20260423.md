@@ -194,3 +194,151 @@ Colors: ["#22c55e","#3b82f6","#f97316","#ef4444"]
 - **Headline:** "Elon Musk Amplifies Baseless Claim About COVID-19 Vaccine"
 - **Excerpt:** "Elon Musk amplified an unfounded claim that COVID-19 vaccines killed tens of thousands in Germany. The claim misuses passive surveillance data and confuses coincidence with causation."
 - **Caption:** "FactCheck.org debunks the 60-million-view COVID vaccine death claim that Musk shared on April 12, 2026. [7]"
+
+---
+
+## Additional Sources (Pass A — Primary Source Gap Analysis)
+
+15. **"2026 Edelman Trust Barometer Special Report: Trust and Health" (Full PDF)** — Edelman Trust Institute, April 2026  
+    URL: https://www.edelman.com/sites/g/files/aatuss191/files/2026-04/2026%20Edelman%20Trust%20Barometer%20Special%20Report%20Trust%20and%20Health_Final.pdf  
+    > Survey of 16,006 respondents across 16 countries (1,000 per country), conducted February 28 – March 11, 2026 via 25-minute online interviews. Key finding: 70% believe at least one of six divisive health claims; confidence in finding reliable health information fell 10 points year-on-year to 51%.
+
+16. **"Why Review of the U.S.'s Measles Elimination Status Has Been Delayed"** — Johns Hopkins Bloomberg School of Public Health, 2026  
+    URL: https://publichealth.jhu.edu/2026/why-review-of-the-uss-measles-elimination-status-has-been-delayed  
+    > Review of U.S. measles elimination status delayed; staffing shortages and funding cuts at the CDC measles lab have compounded challenges in tracking and responding to the 2026 outbreak.
+
+17. **"Update on the Review of Measles Elimination Status"** — PAHO/WHO, March 2, 2026  
+    URL: https://www.paho.org/en/news/2-3-2026-update-review-measles-elimination-status  
+    > The Regional Verification Commission will review the U.S.'s measles elimination status at its November 2026 annual meeting. The Region of the Americas already lost regional elimination status in November 2025 after endemic transmission persisted for more than 12 months.
+
+18. **"Public Health Infrastructure in Crisis: HHS Workforce Cuts, Reorganizations, and Funding Reductions"** — Trust for America's Health (TFAH), 2025–2026  
+    URL: https://www.tfah.org/report-details/funding-report-2025/  
+    > The FY 2026 HHS budget proposes a 42% cut to CDC funding vs. FY 2024 — a net reduction of approximately $3.8 billion. Over 100 public health programs and funding lines would be eliminated; an estimated 42,000 public health jobs would be lost nationwide.
+
+19. **"Trump Pulls $600M in Public Health Funds From Four States"** — U.S. News & World Report, February 11, 2026  
+    URL: https://www.usnews.com/news/health-news/articles/2026-02-11/trump-pulls-600m-in-public-health-funds-from-four-states  
+    > The Trump administration clawed back $600 million in public health grants from four Democrat-led states, stating the grants "no longer match health priorities." The broader COVID-era grant clawback totaled over $12 billion.
+
+20. **"PBS NewsHour: Measles Cases Surged in 2025 as Vaccination Rates Dropped"** — PBS NewsHour, 2026  
+    URL: https://www.pbs.org/video/measles-outbreak-1769206509/  
+    > Video explainer: correspondent Stephanie Sy explores why measles cases have surged — fewer children receiving routine vaccines due to parental waivers, healthcare access gaps, and "rampant disinformation." South Carolina reported 876 cases in a single outbreak starting in an unvaccinated community.
+
+---
+
+## Evidence Deep-Dive (Pass B)
+
+### The German Vaccine Death Claim: How the Math Was Faked
+
+The core of the Musk-amplified claim rests on a fundamental misreading — whether deliberate or negligent — of how passive pharmacovigilance surveillance works.
+
+**What the Paul Ehrlich Institute (PEI) data actually measures:** The PEI is Germany's federal institute for vaccines and biomedicines. It operates a passive adverse event reporting system, analogous to the U.S. VAERS database. Under this system, any healthcare provider, patient, or family member can report a death that occurred after vaccination — regardless of whether vaccination had any causal role. The PEI explicitly states in its FAQ that reports are collected "regardless of the causal link to the vaccination." A person who received a vaccine and died weeks later in a car accident would, in principle, be reportable.
+
+**The actual numbers:** Through the end of 2024, the PEI recorded 2,133 death reports following vaccination with the original Pfizer/BioNTech (Comirnaty) vaccine across the entire German vaccination campaign. More than 138 million doses of this vaccine had been administered in Germany by that point. Of those 2,133 reports, PEI medical reviewers assessed only **28** as having a "possible or probable" causal relationship with vaccination — a rate of approximately 0.02 per 100,000 doses, or roughly 1 causally assessed death per 4.9 million doses.
+
+**Why Sterz's 30x multiplier is unsupported:** Dr. Helmut Sterz, who testified at the German Bundestag hearing on March 19, 2026, took the 2,133 figure and multiplied it by 30, producing a claim of approximately 64,000 deaths — then separately cited a figure of 20,000. His justification was an alleged "underreporting factor" in passive surveillance. Dr. Mahmoud Zureik, a vaccine safety epidemiologist, directly rebutted this methodology: Sterz's approach "confuses coincidence with causation, misuses passive surveillance data, and is not supported by the best available scientific evidence." Zureik further noted that "applying a fixed 'underreporting factor' is not only unsupported but also ignores the possibility of reporting inflation" — i.e., during a highly publicized vaccine campaign, reporting rates tend to be higher than baseline, not lower. Jeffrey S. Morris of the University of Pennsylvania stated plainly: "It is not valid to presume the 2,133 reported deaths were caused by vaccines, much less to presume that there were 30x this number."
+
+**What 28 confirmed causal deaths at 138 million doses actually means:** At population scale, 28 causally assessed deaths across 138 million doses yields a rate of approximately 0.2 per million doses — a risk level roughly comparable to severe allergic reaction from penicillin. For context, measles itself kills approximately 1–2 per 1,000 infected individuals in developed nations (1,000–2,000 per million infections) — meaning the confirmed vaccine-associated death rate is roughly 5,000 to 10,000 times lower than the disease mortality rate.
+
+---
+
+### The Vitamin A Toxicity Cases
+
+The promotion of high-dose vitamin A as a measles treatment or preventive by RFK Jr. and HHS produced a concrete, traceable harm signal in the United States during the 2025–2026 outbreak.
+
+**Why vitamin A is clinically relevant at all — and only in specific contexts:** The WHO recommends vitamin A supplementation for children with measles in low-income countries where vitamin A deficiency is prevalent. In this narrow setting, supplementation reduces measles-related mortality by addressing a pre-existing nutritional deficiency that worsens immune response. It does not prevent measles infection, does not function as an antiviral agent, and is not indicated for children with adequate vitamin A levels.
+
+**The U.S. context:** Vitamin A deficiency is rare in the United States due to dietary abundance and food fortification. The clinical threshold for toxicity is not high: the tolerable upper intake level for children under 3 is 600 micrograms RAE per day. High-dose supplementation regimens promoted during the outbreak — some circulating online involved single doses of 200,000 IU (60,000 micrograms RAE) — vastly exceed this threshold.
+
+**What happened:** During the West Texas measles outbreak in early 2025, the U.S. government, acting on RFK Jr.'s guidance, shipped extra vitamin A doses to affected communities. Parents and caregivers — acting on HHS and RFK Jr.'s public messaging — administered high-dose vitamin A to children over extended periods in an attempt to prevent measles. Several children were subsequently hospitalized with acute vitamin A toxicity (hypervitaminosis A). Symptoms of acute toxicity include nausea, vomiting, increased intracranial pressure (pseudotumor cerebri), and in severe cases, vision changes and liver damage. As NPR reported: "People are giving vitamin A at high doses over long periods of time to try to prevent children from getting measles, and that can be quite dangerous." [9] The McGill Office for Science and Society noted that "vitamin A deficiency isn't common in the U.S., and thanks to vaccines, measles deaths are rare" — making supplementation both unnecessary and actively harmful in the American context. [11]
+
+---
+
+### What the Edelman Study Actually Measured
+
+**Methodology:** The 2026 Edelman Trust Barometer Special Report on Health is the firm's 5th annual health-focused special report. It was produced by the Edelman Trust Institute and consisted of 25-minute online surveys of 16,006 respondents across 16 countries (approximately 1,000 per country), conducted between February 28 and March 11, 2026. The survey covered: Argentina, Australia, Brazil, Canada, China, France, Germany, India, Indonesia, Japan, Mexico, Singapore, South Africa, UAE, UK, and United States.
+
+**The six divisive health claims tested:** Respondents were asked whether they believed each of the following claims to be true:
+1. Animal protein is healthier for you than plant-based protein (believed by 32%)
+2. Fluoride in drinking water is harmful or unhelpful to health (32%)
+3. The risks of childhood vaccination outweigh the benefits (31%)
+4. Raw milk is healthier than pasteurized milk (28%)
+5. Taking acetaminophen during pregnancy causes autism in children (25%)
+6. Vaccines are used as a tool for population control (25%)
+
+**Country-level variation:** Belief in at least one myth was highest in India (89%) and South Africa (88%), and lowest in Japan, Canada, and the U.S. (50–61%). This range is notable: even in the lowest-belief countries, roughly half the population holds at least one debunked health belief.
+
+**How questions were framed:** The survey tested belief in specific claims — not general vaccine or science skepticism. This methodology is significant because it produces more conservative estimates than abstract "trust" questions: a respondent could identify as pro-vaccine while still believing, say, that fluoride is harmful. This is consistent with the finding that education level provides essentially no protection: 69% of university graduates believed at least one myth versus 70% of those without degrees.
+
+**Limitations acknowledged:** Online survey methodology oversamples internet-connected populations. Countries like India and South Africa may have respondents skewed toward urban, more connected demographics, which could actually understate rural belief rates in those nations. The 16-country scope, while broad, excludes much of sub-Saharan Africa, Central Asia, and smaller nations where misinformation dynamics may differ substantially.
+
+---
+
+## Contemporary Context (Pass C)
+
+### The Institutional Vacuum: HHS, CDC, FDA in 2026
+
+The United States enters the 2026 measles crisis with its federal public health infrastructure in a state of deliberate, policy-driven contraction — a condition that directly reduces the government's capacity to counter health misinformation.
+
+**Budget cuts:** The President's proposed FY 2026 budget would reduce CDC funding by approximately $3.8 billion net — a 42% reduction compared to FY 2024 levels. More than 61 programs at the CDC would be eliminated, along with 40 programs at SAMHSA. The George Washington University Milken Institute School of Public Health estimated that the proposed CDC cuts would cost approximately 42,000 jobs nationwide and reduce state GDPs by a combined $5.4 billion.
+
+**Grant clawbacks:** The administration has already clawed back over $12 billion in COVID-era public health grants. In January 2026, the CDC abruptly froze public health funding to cities and states before partially reversing course. In February 2026, $600 million in public health grants were pulled from four states on the stated grounds that they "no longer match health priorities."
+
+**Operational impact on measles response:** The CDC measles lab — the operational unit responsible for confirming outbreak cases and tracking transmission chains — has experienced staffing shortages and funding reductions that directly impair outbreak response. Johns Hopkins Bloomberg School of Public Health noted that these shortfalls have "created challenges" in the status review process itself: the U.S. measles elimination status review, normally conducted annually, has been delayed, with PAHO pushing the formal review to November 2026.
+
+**Leadership credibility:** With RFK Jr. leading HHS — and actively promoting vitamin A as a measles alternative, casting doubt on the MMR vaccine, and appearing before Senate committees where he was publicly accused of "pushing vaccine misinformation" — the federal government's ability to serve as a credible source of counter-misinformation messaging has been severely compromised. The Edelman data captures this collapse: only 46% of the public trusts media to accurately cover health topics, and confidence in finding reliable health answers has fallen to 51%.
+
+**The MAHA rebranding:** The HHS budget proposal eliminates the CDC's chronic disease and global health centers in favor of a new "MAHA" (Make America Healthy Again) agency, signaling a structural reorientation of federal public health priorities away from vaccine-preventable diseases and toward RFK Jr.'s preferred focus areas.
+
+---
+
+### Why This Is the Worst Measles Crisis in 30 Years
+
+**Case count trajectory:** The U.S. recorded 1,748 confirmed measles cases as of April 16, 2026 — already near the full-year 2025 total of 2,288 cases, which was itself the worst year in decades. At the 2026 pace, the annual total could surpass 4,000 cases. The prior peak was 1,282 in 2019. Prior to 2019, the last time the U.S. approached these numbers was 1994.
+
+**Elimination status at risk:** The U.S. achieved measles elimination in 2000, defined as the absence of continuous disease transmission for 12 months or longer. PAHO formally notified that the regional elimination status for the Americas was lost in November 2025 after endemic transmission — primarily in Canada, but with U.S. contribution — persisted beyond 12 months. The U.S.'s individual country status will be reviewed at the November 2026 RVC meeting. A higher proportion of 2025–2026 cases are attributable to domestic transmission rather than importation compared to prior outbreak years, indicating a structural erosion of herd immunity rather than isolated importation events.
+
+**Vaccination rate erosion by geography and community:** The outbreak is not randomly distributed. South Carolina reported 876 cases in a single community-linked outbreak that began in an unvaccinated population in October 2025 and continued into 2026 — the largest single-state outbreak in decades. Florida reported 145 cases by early 2026. The West Texas outbreak in 2025 was concentrated in communities with high rates of non-medical vaccine exemptions. As fewer parents vaccinate due to parental waivers, healthcare access gaps, and online misinformation, pockets of susceptibility have grown large enough to sustain endemic transmission.
+
+**The herd immunity threshold:** Measles has one of the highest basic reproduction numbers (R₀) of any known pathogen — approximately 12–18 — meaning that without vaccination, one infected person infects 12–18 others on average. Achieving herd immunity requires approximately 95% vaccination coverage. National MMR coverage has been slipping below this threshold in multiple states; in communities with high exemption rates, coverage can fall to 60–70%, well below what is needed to interrupt transmission.
+
+**Policy failure layers:** The crisis reflects at least three distinct policy failures compounding each other: (1) the erosion of vaccine confidence through years of anti-vaccine advocacy now represented at the cabinet level; (2) the active promotion of ineffective and dangerous alternatives (vitamin A) by federal officials; and (3) the defunding of the very public health infrastructure — CDC outbreak response, immunization programs, state health department grants — needed to contain the resulting outbreak.
+
+---
+
+## Expanded Chart Data
+
+### Chart 4: Belief in Health Myths by Country (2026 Edelman — % Believing At Least One of Six Claims)
+```
+Type: hbar
+Title: "Share of Population Believing At Least One Debunked Health Myth by Country (2026 Edelman, n=16,006)"
+Labels: ["India", "South Africa", "Brazil/Indonesia (est.)", "Global Average", "United States", "Canada", "Japan"]
+Values: [89, 88, 75, 70, 61, 55, 50]
+Colors: ["#dc2626","#dc2626","#ef4444","#f97316","#f97316","#22c55e","#22c55e"]
+Note: "Country-level estimates for mid-range countries are approximated from published range; India and South Africa figures confirmed in Edelman report."
+```
+
+### Chart 5: CDC Budget Trajectory (FY2024 Baseline vs. Proposed FY2026)
+```
+Type: bar
+Title: "CDC Funding: FY2024 Actual vs. Proposed FY2026 ($ billions)"
+Labels: ["FY2024 (Actual)", "FY2026 (Proposed)"]
+Values: [9.0, 5.2]
+Colors: ["#3b82f6", "#ef4444"]
+Note: "FY2026 figure represents ~42% reduction from FY2024. Source: TFAH, GWU Milken Institute analysis."
+```
+
+### Chart 6: Measles Vaccination Coverage vs. Herd Immunity Threshold
+```
+Type: hbar
+Title: "MMR Vaccination Coverage: U.S. National vs. Herd Immunity Requirement"
+Labels: ["Herd immunity threshold (measles)", "U.S. national MMR coverage (est. 2025)", "High-exemption communities (est.)"]
+Values: [95, 92, 68]
+Colors: ["#22c55e","#f97316","#ef4444"]
+Note: "Measles R₀ of 12–18 requires ~95% coverage. National coverage near threshold; community-level gaps sustain transmission."
+```
+
+### Video 2 (PBS NewsHour — confirmed embed)
+- **Title:** "Measles Cases Surged in 2025 as Vaccination Rates Dropped"
+- **URL:** https://www.pbs.org/video/measles-outbreak-1769206509/
+- **Source:** PBS NewsHour, Season 2026
+- **Caption:** "PBS NewsHour correspondent Stephanie Sy examines the structural causes of the measles surge — parental waivers, healthcare access gaps, and 'rampant disinformation' driving down vaccination rates."
