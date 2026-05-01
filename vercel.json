@@ -1388,6 +1388,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/mike-lee-noncitizen-voting-save-act-2026.html",
+      "destination": "/mike-lee-noncitizen-voting-save-act-2026",
+      "permanent": true
+    },
+    {
+      "source": "/mike-lee-noncitizen-voting-save-act-2026.html",
+      "destination": "/mike-lee-noncitizen-voting-save-act-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/minneapolis-ice-shooting-what-we-know.html",
       "destination": "/minneapolis-ice-shooting-what-we-know",
       "permanent": true
@@ -1685,6 +1695,16 @@
     {
       "source": "/plaque-fact-check.html",
       "destination": "/plaque-fact-check",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/pope-leo-xiv-disinfo-2026.html",
+      "destination": "/pope-leo-xiv-disinfo-2026",
+      "permanent": true
+    },
+    {
+      "source": "/pope-leo-xiv-disinfo-2026.html",
+      "destination": "/pope-leo-xiv-disinfo-2026",
       "permanent": true
     },
     {
@@ -1995,6 +2015,16 @@
     {
       "source": "/storm-1516-russian-campaigns-2025.html",
       "destination": "/storm-1516-russian-campaigns-2025",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/stephen-miller-massie-ai-hoax-2026.html",
+      "destination": "/stephen-miller-massie-ai-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/stephen-miller-massie-ai-hoax-2026.html",
+      "destination": "/stephen-miller-massie-ai-hoax-2026",
       "permanent": true
     },
     {
@@ -3201,6 +3231,10 @@
       "destination": "/localreports/mike-lee-marxist-claim-2025.html"
     },
     {
+      "source": "/mike-lee-noncitizen-voting-save-act-2026",
+      "destination": "/localreports/mike-lee-noncitizen-voting-save-act-2026.html"
+    },
+    {
       "source": "/minneapolis-ice-shooting-what-we-know",
       "destination": "/localreports/minneapolis-ice-shooting-what-we-know.html"
     },
@@ -3319,6 +3353,10 @@
     {
       "source": "/plaque-fact-check",
       "destination": "/localreports/plaque-fact-check.html"
+    },
+    {
+      "source": "/pope-leo-xiv-disinfo-2026",
+      "destination": "/localreports/pope-leo-xiv-disinfo-2026.html"
     },
     {
       "source": "/portland-burning-narrative-2025",
@@ -3443,6 +3481,10 @@
     {
       "source": "/storm-1516-russian-campaigns-2025",
       "destination": "/localreports/storm-1516-russian-campaigns-2025.html"
+    },
+    {
+      "source": "/stephen-miller-massie-ai-hoax-2026",
+      "destination": "/localreports/stephen-miller-massie-ai-hoax-2026.html"
     },
     {
       "source": "/synthetic-content-farms-model-collapse-2026",

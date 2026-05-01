@@ -3,6 +3,51 @@
 
 const REPORTS_DATA = [
     {
+        id: -99,
+        title: "Mike Lee's \"Hundreds of Thousands\": The Statistical Lie Behind the SAVE Act",
+        slug: "mike-lee-noncitizen-voting-save-act-2026",
+        category: "Election Integrity Disinformation",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "shield-x",
+        date: "May 1, 2026",
+        sources: "23 Sources",
+        readTime: "20 min",
+        verdict: "false",
+        excerpt: "Sen. Mike Lee improvised 'hundreds of thousands of noncitizen voters' on live TV with zero evidence. Utah's exhaustive search of 2.1 million voters found 1. The Heritage Foundation's 44-year database has 99 total cases. The SAVE tool he relies on has a 50%+ false-positive rate in Missouri's Boone County. The SAVE Act stalled 48–50 in Senate with four Republican defectors; would cost $510M/cycle and risk disenfranchising 21.3 million eligible Americans.",
+        chart: {"type":"hbar","data":[200000,99,1],"labels":["Lee's 'minimum estimate'","Heritage DB: 44-yr total","Utah: 2.1M voters searched"],"colors":["#ef4444","#22c55e","#22c55e"]}
+    },
+    {
+        id: -98,
+        title: "The AI-Generated \"Expose\": How a YouTube Channel Fabricated Stephen Miller's $890M Cayman Islands Scandal",
+        slug: "stephen-miller-massie-ai-hoax-2026",
+        category: "AI Political Disinformation",
+        tagClass: "tag-red",
+        catClass: "cat-ai",
+        icon: "video-off",
+        date: "May 1, 2026",
+        sources: "27 Sources",
+        readTime: "18 min",
+        verdict: "false",
+        excerpt: "A YouTube channel called \"Homeless People\" fabricated congressional hearings featuring Rep. Thomas Massie and Rep. Ted Lieu exposing Stephen Miller for funneling $890M–$6.2B through Cayman Islands shell companies. Both videos used real hearing footage as visual scaffolding for AI-generated narration. Miller's OGE-disclosed total assets are $1.8M–$4.8M — his salary is $195,200/year. Snopes debunked both hoaxes (April 4 and April 20, 2026). DFRLab identified the same production technique across a 26-channel AI content farm with 1.8 billion collective views. The parallel Republican/Democrat template doubled audience reach across ideological lines.",
+        chart: {"type":"hbar","data":[0.195,890],"labels":["Actual annual salary (OGE)","Fabricated Cayman Islands claim"],"colors":["#22c55e","#ef4444"]}
+    },
+    {
+        id: -97,
+        title: "Pope Leo XIV: Anatomy of an AI-Driven Disinformation Campaign",
+        slug: "pope-leo-xiv-disinfo-2026",
+        category: "Religious Disinformation",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "video-off",
+        date: "May 1, 2026",
+        sources: "22 Sources",
+        readTime: "22 min",
+        verdict: "misleading",
+        excerpt: "The first American pope became the world's most impersonated religious figure within weeks of his election: 18+ debunked rumors documented by Snopes, a TikTok deepfake sermon with 32.9 million views (5.5× any authentic papal video), a Vietnam ad-farm manufacturing fake papal quotes at industrial scale, and a Burkina Faso junta deepfake exceeding 1 million views. The Vatican receives 'dozens of fake-content reports every day' and calls the volume impossible to individually refute. Pope Leo XIV chose 'Preserving Human Voices and Faces' as his 2026 World Communications Day theme — then became its most prominent victim.",
+        chart: {"type":"hbar","data":[32900000,9600000,1000000,1000000,230000],"labels":["TikTok AI sermon","TikTok deepfake (ES)","YouTube fake channel","Burkina Faso deepfake","YT sermons channel"],"colors":["#ef4444","#f97316","#eab308","#3b82f6","#06b6d4"]}
+    },
+    {
         id: -89,
         title: "Trump's Third-Term 'Loophole': A Constitutional Dead End",
         slug: "trump-third-term-loophole-claims-2026",
