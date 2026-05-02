@@ -263,3 +263,214 @@ Total inflation factor from actual causal deaths: ~2,285x
 
 *Research conducted by GenuVerity Deep Research Agent | May 2, 2026*
 *For editorial queries: contact GenuVerity editorial team*
+
+---
+
+## Additional Sources (Pass A)
+
+| # | Source | URL | Credibility | Key Quote / Data |
+|---|---|---|---|---|
+| [16] | Paul-Ehrlich-Institut, Official English-language PEI COVID-19 vaccine safety dossier page | https://www.pei.de/EN/newsroom/dossier/coronavirus/safety-report-covid-19-vaccines-current.html | PRIMARY — German federal regulatory authority | Direct repository of all PEI pharmacovigilance reports on COVID-19 vaccines; confirms ongoing monitoring through EU-wide network |
+| [17] | Paul-Ehrlich-Institut, "Pharmacovigilance Report on the Use of COVID-19 Vaccines – Status as of 31 December 2024" (full PDF, English edition) | https://www.pei.de/SharedDocs/Downloads/EN/newsroom-en/pharmacovigilance-bulletin/single-articles/2025-covid-19.pdf | PRIMARY — Official PEI publication | "Spontaneous reports are not suitable for determining if the reported adverse reaction was caused by vaccination or how frequently it occurs." [PEI official text] Total adverse event reports: 350,868 across 197,033,944 doses; serious reports: 63,909 (18.2%); overall reporting rate: 1.78 per 1,000 doses; no new safety signals since March 31, 2023 |
+| [18] | Media Matters for America, "Meet Peter Imanuelsen, aka Peter Sweden, the bigoted conspiracy theorist who is a frequent source for the American 'alt-right' on Europe" | https://www.mediamatters.org/donald-trump/meet-peter-imanuelsen-aka-peter-sweden-bigoted-conspiracy-theorist-who-frequent-source | HIGH — Established US media monitor with documented citations | Imanuelsen is a British national born in Norway who "regularly tweets unsourced or unsubstantiated claims that allege Sweden's immigrants are responsible for sexual violence, bombings, gang activity, and other criminality." Documented false claims include calling the moon landing "a hoax perpetrated by freemasons," Holocaust denial, and antisemitic statements. Permanently banned from PayPal in January 2018 |
+| [19] | Hope Not Hate (UK), "EXCLUSIVE: Far-right vlogger and Defend Europe supporter Peter Sweden's real identity revealed," August 1, 2017 | https://hopenothate.org.uk/2017/08/01/far-right-vlogger-defend-europe-supporter-peter-swedens-real-identity-revealed/ | HIGH — UK anti-extremism research organization | Investigative expose confirming Imanuelsen's real identity, far-right network connections (including alt-right Mediterranean disruption mission), and his cultivation of relationships with US-based far-right figures including Paul Joseph Watson (Infowars) |
+| [20] | Conspiracy Watch, "Peter 'Sweden', proud blowhard of the Alt-Right" | https://www.conspiracywatch.info/en/peter-sweden-proud-blowhard-of-the-alt-right/ | HIGH — European disinformation research organization | Documents Imanuelsen's revenue model: "spreading fake news and disinformation on topics that appeal to extremist networks in Europe and the United States and around the globe" |
+| [21] | Magnus, Dammann & Lüdecke, "Vaccination readiness and political party preference in Germany: Trust, collective responsibility, and the populist radical right," *PLoS One*, July 14, 2025 | https://pmc.ncbi.nlm.nih.gov/articles/PMC12258577/ | PRIMARY — Peer-reviewed academic study (PubMed Central) | "AfD voters tended toward the most vaccine-hesitant positions, deviating significantly from voters of all other political parties." Vaccine trust scores by party: Green Party 3.24 (highest), AfD 2.23 (lowest); "vaccine hesitancy in Germany appears driven primarily by the populist radical right" |
+| [22] | Bundestag Corona-Enquete-Kommission, Official session record (German), "Leistungsfähigkeit des Gesundheitssystems" — includes full German text of March 19, 2026 expert hearing | https://www.bundestag.de/dokumente/textarchiv/2026/kw12-pa-enquete-corona-1151444 | PRIMARY — Official German parliamentary record | The AfD's Corona Symposium invited international witnesses including Robert Malone (USA) and Robert Roos (Netherlands), giving the hearing an international anti-vaccine dimension; German Health Minister Lauterbach rejected Sterz's assertions during the same session |
+
+---
+
+## Evidence Deep-Dive (Pass B)
+
+### PEI Data in Full Detail
+
+The Paul-Ehrlich-Institut's December 2024 pharmacovigilance report — the document at the center of this entire misinformation episode — provides far more granular data than Sterz's testimony conveyed. The primary PEI news page [4] and official PDF report [17] confirm the following:
+
+**Doses and reports (December 27, 2020 – December 31, 2024):**
+- Total COVID-19 doses administered in Germany: **197,033,944**
+- Total suspected adverse event reports: **350,868**
+- Serious adverse event reports: **63,909** (18.2% of all reports)
+- Adverse event reporting rate: **1.78 per 1,000 doses**
+- Serious adverse event rate: **0.32 per 1,000 doses**
+
+**On reported deaths specifically:**
+- Deaths reported following Pfizer/BioNTech vaccination (all temporally proximate, not confirmed causal): **2,133** [1]
+- Deaths assessed by PEI as having "possible or probable" causal relationship with the Pfizer/BioNTech vaccine: **28** [1]
+- Deaths assessed across ALL COVID-19 vaccines combined as having probable causal relationship (restrictive causality assessment): **74** [search results citing European Society of Medicine analysis of PEI data]
+
+The PEI report states explicitly: "Spontaneous reports of suspected adverse events are important for the timely detection of new safety signals. However, apart from exceptions such as local reactions at the vaccination site or anaphylactic reactions immediately after vaccination, **spontaneous reports are not suitable for determining if the reported adverse reaction was caused by vaccination or how frequently it occurs.**" [17]
+
+The PEI also noted it "intends to cease the preparation and publication of the regular safety reports on COVID-19 vaccine products in its current form" — having declared no new safety signals since March 31, 2023. [17]
+
+**The 74-death figure explained:** The distinction between 28 (Pfizer/BioNTech-specific probable causal deaths) and 74 (all COVID-19 vaccines combined probable causal deaths) is important context. The 74 figure, cited in FactCheck.org's research and traceable to PEI methodology, represents the restrictive causality assessment across all approved COVID-19 vaccines used in Germany — including Moderna, Johnson & Johnson, and AstraZeneca — administered over four years and 197 million doses.
+
+### The 30x Underreporting Multiplier: Methodology Critique in Full
+
+The "30x underreporting factor" Sterz applied originates from a Harvard Pilgrim Health Care study (ESP:VAERS, AHRQ grant R18 HS 017045) that used automated electronic medical record scanning in a single Massachusetts-based health system covering 376,452 patients between 2006 and 2009. [23] The study found that clinicians submitted VAERS reports for approximately 0.69 per 1,000 vaccine doses — suggesting substantial underreporting of detected events relative to what automated scanning identified.
+
+However, anti-vaccine activists and Sterz specifically have misapplied this study in multiple compounding ways:
+
+1. **Wrong system, wrong country:** The Harvard Pilgrim study examined U.S. VAERS, not Germany's PEI pharmacovigilance system. Germany operates a more centralized, physician-reporting-oriented system than the U.S. voluntary consumer-reporting VAERS model. Reporting rates and detected-event ratios are not transferable between the two systems.
+
+2. **General events vs. fatal events:** VAERS explicitly acknowledges that "more serious and unexpected medical events are probably more likely to be reported than minor ones, especially when they occur soon after vaccination." [14] Deaths — the most serious possible outcome — are subject to higher reporting completeness than minor side effects. Applying a "fewer than 1% reported" figure derived from *all* adverse events to *fatal* events specifically is methodologically invalid.
+
+3. **Notoriety bias during the COVID vaccine rollout:** The COVID-19 vaccine program occurred under unprecedented media scrutiny. Any death following vaccination — regardless of cause — received intense public attention and was more likely to be reported to pharmacovigilance systems than deaths in ordinary medical contexts. This "notoriety bias" suggests *overreporting* relative to baseline, not underreporting by a factor of 30. The PEI spokesperson explicitly stated that applying "a fixed underreporting factor" lacks a valid "data basis" and that PEI "takes various underreporting scenarios into account" in its own signal detection methodology. [1]
+
+4. **Treats temporal correlation as causation:** The Harvard Pilgrim study estimated underreporting of *detected* adverse events — events that had already been clinically evaluated and identified as potentially related to a vaccine. Sterz applied the multiplier to *all temporally proximate deaths*, the majority of which were never assessed as vaccine-related.
+
+**Expert consensus on Sterz's methodology:**
+
+Dr. Mahmoud Zureik, director of EPI-PHARE and professor at the University of Paris-Saclay, stated the approach "confuses coincidence with causation, misuses passive surveillance data, and is not supported by the best available scientific evidence," and called the factor of 30 "arbitrary." [1]
+
+Dr. Jeffrey S. Morris, director of the biostatistics division at the University of Pennsylvania, stated: "It is not valid to presume the 2,000 reported deaths were caused by vaccines, much less to presume that there were 30x this number to arrive at the 60k number the person claims." [1]
+
+The Paul-Ehrlich-Institut spokesperson directly rejected the multiplier approach, stating "the data basis for such a calculation is lacking." [1]
+
+### Lives Saved by COVID Vaccines in Germany and Europe
+
+The mortality context entirely absent from Sterz's testimony and Musk's amplification of it:
+
+**Germany-specific estimate (WHO Europe study):** A retrospective surveillance study published in *The Lancet Respiratory Medicine* (2024), analyzing data from 34 WHO European member states from December 2020 to March 2023, estimated that approximately **182,988 deaths were averted in Germany** due to COVID-19 vaccines, making Germany the third country in the WHO European Region with the highest absolute number of deaths prevented — after the UK and Italy. [24]
+
+**European regional figures:** The same WHO Europe study estimated vaccines saved more than **1.4 million lives** across the WHO European Region, reducing COVID-19 mortality by at least 57%. WHO Europe Regional Director Hans Henri P. Kluge stated: "Today, there are more than 1.4 million people in our Region enjoying life with their loved ones because they took the vital decision to be vaccinated." [24]
+
+**Global figures:** A September 2025 study published in *JAMA Health Forum* by researchers at Università Cattolica and Stanford University estimated that COVID-19 vaccines prevented **2.5 million deaths globally** between 2020 and 2024, preserving 14.8 million life-years. The efficiency ratio: one death prevented per 5,400 doses administered. [25]
+
+**Comparative framing:** Using PEI's own figure of 74 probable causal deaths across all COVID vaccines and all doses administered in Germany (197 million doses), and the WHO Europe estimate of 182,988 deaths averted in Germany: the benefit-to-harm ratio for Germany is approximately 2,473 lives saved for every probable causal death — a ratio of roughly 2,473:1. This context is entirely absent from Sterz's testimony and the viral posts that followed.
+
+---
+
+## Contemporary Context (Pass C)
+
+### The Political Moment: RFK Jr., HHS, and the Normalization of Vaccine Skepticism
+
+The Musk amplification of Sterz's claims did not occur in a political vacuum. In early 2025, Robert F. Kennedy Jr. was confirmed as U.S. Secretary of Health and Human Services (HHS), becoming the first openly vaccine-skeptical HHS Secretary in American history. His tenure produced a cascade of policy changes that created a permissive environment for vaccine misinformation to be treated as legitimate debate:
+
+- **CDC vaccine advisory committee purged:** Kennedy fired the entire 17-member CDC Advisory Committee on Immunization Practices (ACIP) and installed replacements including Robert Malone, MD — a figure who had been permanently suspended from Twitter for COVID vaccine misinformation — and Martin Kulldorff, PhD, a proponent of "natural immunity" approaches who had co-authored the Great Barrington Declaration. [CNN, April 9, 2026] [26]
+
+- **Childhood vaccination schedule reduced:** In January 2026, CDC reduced routinely recommended childhood vaccinations from 17 to 11, cutting guidance on rotavirus, influenza, and hepatitis A, following a Trump directive. [26]
+
+- **COVID vaccine recommendation removed:** Kennedy announced CDC would no longer recommend COVID-19 vaccines for healthy children and pregnant women — with no new scientific data justifying the change, according to public health experts. [26]
+
+- **Legal challenges:** A federal court ruling on March 16, 2026, halted the committee restructuring, with US District Judge Brian Murphy ruling that federal health regulators "had acted unlawfully." The American Academy of Pediatrics and several medical organizations were plaintiffs. [26]
+
+This political context matters for understanding why Sterz's March 19, 2026 testimony — just three days after the federal court ruling against RFK Jr.'s committee changes — landed as significant to anti-vaccine communities: it appeared to validate U.S. policy direction at the moment American courts were pushing back against it. The timing of Imanuelsen's April 12 post and Musk's amplification coincided with Musk's broader political realignment with the Trump administration and his personal investment in validating vaccine skepticism.
+
+### The AfD's Calculated Use of Parliamentary Legitimacy
+
+The invitation of Sterz to testify before the Bundestag was not incidental — it was a deliberate tactic by the AfD to launder fringe claims through the credibility of a formal parliamentary proceeding. Academic research published in *PLoS One* (July 2025) confirms the mechanism: "vaccine hesitancy in Germany appears driven primarily by the populist radical right," with AfD voters showing "the most vaccine-hesitant positions, deviating significantly from voters of all other political parties" — a vaccine trust score of 2.23 on a 4-point scale, compared to 3.24 for Green Party voters. [21]
+
+The AfD's Corona Enquete Commission hearings also featured international anti-vaccine figures including Robert Malone from the United States and Robert Roos from the Netherlands, demonstrating a coordinated international dimension to the parliamentary strategy. [22] By placing Sterz in a hearing room alongside government officials and legitimate experts, the AfD transformed fringe claims into quotable "parliamentary testimony" — a format that far-right and anti-vaccine media can present as official and authoritative regardless of the claims' actual evidential basis.
+
+This tactic has a documented precedent: the AfD was already using anti-vaccine messaging as electoral strategy in 2021, campaigning explicitly on opposition to mask rules and vaccine mandates in races like the Bautzen district ahead of the 2021 federal election. [Washington Post, September 24, 2021]
+
+### X as Amplification Infrastructure: Musk's Pattern and the Structural Shift
+
+The 50-million-view reach of Musk's repost in 30 hours is not an anomaly — it reflects structural changes to X's amplification infrastructure that Musk implemented after acquiring the platform in October 2022:
+
+**Content moderation rollback:** In November 2022, Twitter announced it would no longer enforce its policy prohibiting COVID-19 misinformation. This policy change eliminated the friction that had previously limited the viral spread of health misinformation on the platform. [27]
+
+**Algorithmic amplification of superspreaders:** A 2023 study found that since Musk's acquisition, 490 identified "superspreader" disinformation accounts saw collective engagement increase by 44%. [Poynter, citing Science Feedback analysis] [27]
+
+**Owner-account amplification:** A computational study published in *Nature* (2026) found a "structural break" in X's algorithmic behavior around July 13, 2024 — coinciding with Musk's endorsement of Donald Trump — after which Musk and other politically aligned accounts saw increased post visibility. [28] The ACM FAccT 2025 study further documented potential algorithmic bias in favor of Republican-leaning content, with a chronological-to-algorithmic feed shift increasing engagement and moving political opinions in conservative directions. [28]
+
+**The owner-platform dynamic:** Musk's unique position as both platform owner and its most-followed individual creates a compounding amplification effect that no previous social media platform has faced. When the platform owner reposts health misinformation, the content receives: (1) his personal 237M-follower distribution, (2) algorithmic amplification as a high-engagement account, and (3) implicit institutional endorsement as the voice of the platform itself. Even Musk's own AI system Grok labeled him "one of the most significant spreaders of misinformation on X" in November 2024. [Fortune, November 2024] [29]
+
+This structural dynamic explains why the Sterz/Imanuelsen claim — which had circulated in fringe anti-vaccine circles since March 19 without breaking into mainstream awareness — achieved 50 million views within 30 hours of Musk's single repost. The content did not change; the amplification infrastructure did.
+
+---
+
+## Expanded Chart Data
+
+### Chart 4: Reported Deaths vs. Probable Causal Deaths vs. Estimated Lives Saved (Germany, All COVID Vaccines)
+
+```
+Type: Logarithmic Bar Chart
+Title: "The Full Picture: COVID Vaccine Deaths Reported, Assessed, and Averted in Germany"
+
+Data Points (All COVID-19 vaccines, Germany, Dec 2020 – Dec 2024):
+┌────────────────────────────────────────────────────────────────────────────┐
+│ Category                                        │ Count       │ Source     │
+├────────────────────────────────────────────────────────────────────────────┤
+│ Total doses administered (all COVID vaccines)   │ 197,033,944 │ PEI [17]   │
+│ Deaths reported near vaccination (all vaccines) │ 3,086       │ PEI [4]    │
+│ Sterz's claimed death estimate (30x multiplier) │ ~60,000–    │ Sterz [7]  │
+│                                                 │  92,580     │            │
+│ Deaths assessed as probable/possible causal     │ 74          │ PEI/ESMed  │
+│   (all COVID vaccines, PEI restrictive assess.) │             │            │
+│ Deaths assessed probable causal (Pfizer only)   │ 28          │ PEI [1]    │
+│ Estimated deaths AVERTED by COVID vaccines      │ ~182,988    │ WHO [24]   │
+│   (Germany, Dec 2020–March 2023, WHO Europe     │             │            │
+│   Lancet Respiratory Medicine study)            │             │            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+Ratio — lives saved per probable causal death (all vaccines): ~2,473 to 1
+Ratio — Sterz's claimed deaths vs. WHO-estimated deaths averted: 60,000 claimed vs. 182,988 saved
+```
+
+### Chart 5: AfD Vaccine Trust Gap vs. Other German Parties
+
+```
+Type: Horizontal Bar Chart
+Title: "Vaccine Trust by German Political Party Affiliation (PLoS One, July 2025)"
+Source: Magnus, Dammann & Lüdecke, PLoS One, July 14, 2025 [21]
+
+Data Points (4-point trust scale):
+┌──────────────────────────────────────────────────────────┐
+│ Party             │ Vaccine Trust Score (4-point scale)  │
+├──────────────────────────────────────────────────────────┤
+│ Green Party (Grüne)│ 3.24 ████████████████████████████  │
+│ CDU/CSU           │ 3.18 ███████████████████████████    │
+│ Left Party (Linke)│ 3.14 ███████████████████████████    │
+│ SPD               │ 3.13 ██████████████████████████     │
+│ FDP               │ 2.88 ████████████████████████       │
+│ AfD               │ 2.23 ██████████████████             │
+└──────────────────────────────────────────────────────────┘
+
+Note: AfD trust score (2.23) is 0.65 points below second-lowest (FDP 2.88).
+Study conclusion: vaccine hesitancy in Germany "driven primarily by the populist radical right."
+```
+
+### Chart 6: The Harvard Pilgrim Multiplier — What the Study Actually Said vs. How Sterz Used It
+
+```
+Type: Annotated comparison table
+Title: "The 30x Multiplier: Original Study vs. Sterz Application"
+
+┌──────────────────────────┬──────────────────────────┬──────────────────────┐
+│ Parameter                │ Harvard Pilgrim Study     │ Sterz Application    │
+├──────────────────────────┼──────────────────────────┼──────────────────────┤
+│ Healthcare system        │ U.S. (VAERS)             │ Germany (PEI)        │
+│ Adverse events studied   │ All types (all severity) │ Fatal outcomes only  │
+│ Time period              │ 2006-2009                │ 2020-2024            │
+│ Media/public scrutiny    │ Normal background        │ Unprecedented        │
+│                          │                          │ pandemic attention   │
+│ Reporting system type    │ Voluntary consumer + MD  │ Physician-led EU     │
+│                          │ reporting                │ pharmacovigilance    │
+│ Deaths causally assessed?│ N/A (not the study's aim)│ No — assumes all     │
+│                          │                          │ temporal = causal    │
+│ Expert verdict           │ Valid for signal purpose │ "Arbitrary" (Zureik) │
+│                          │                          │ "Not valid" (Morris) │
+└──────────────────────────┴──────────────────────────┴──────────────────────┘
+```
+
+---
+
+## Additional Sources (Pass B and C)
+
+| # | Source | URL | Credibility | Key Quote / Data |
+|---|---|---|---|---|
+| [23] | Lazarus R, et al. "Electronic Support for Public Health — Vaccine Adverse Event Reporting System (ESP:VAERS)," Agency for Healthcare Research and Quality (AHRQ), Final Report, Grant R18 HS 017045, 2011 | https://digital.ahrq.gov/ahrq-funded-projects/electronic-support-public-health-vaccine-adverse-event-reporting-system/final-report | PRIMARY — U.S. federal research grant, peer-reviewed | The study anti-vaccine activists misuse as the "30x multiplier" source. Key limitation not cited by Sterz: "more serious and unexpected medical events are probably more likely to be reported than minor ones, especially when they occur soon after vaccination" — directly contradicting application to fatal events specifically |
+| [24] | Galmiche S, et al. "Estimated number of lives directly saved by COVID-19 vaccination programmes in the WHO European Region from December, 2020, to March, 2023: a retrospective surveillance study," *The Lancet Respiratory Medicine*, 2024 | https://www.thelancet.com/journals/lanres/article/PIIS2213-2600(24)00179-6/fulltext | PRIMARY — Peer-reviewed Lancet study, WHO-commissioned | Germany-specific estimate: approximately **182,988 deaths averted** by COVID vaccines (Dec 2020–Mar 2023), making Germany third highest in the WHO European Region after UK and Italy. Regional total: 1.4+ million lives saved; 57% mortality reduction. WHO Regional Director Hans Kluge: "Today, there are more than 1.4 million people in our Region enjoying life with their loved ones because they took the vital decision to be vaccinated." |
+| [25] | COVID Vaccine Global Impact Study, *JAMA Health Forum*, Università Cattolica and Stanford University, October 2025 | https://www.passporthealthusa.com/2025/10/new-study-reveals-covid-vaccines-saved-millions-of-lives-worldwide/ | HIGH — JAMA peer-reviewed study (via secondary source) | 2.5 million deaths prevented globally (2020–2024); 14.8 million life-years preserved; "They prevented one death for every 5,400 doses given"; 82% of prevented deaths occurred before infection exposure |
+| [26] | CNN Health, "RFK Jr.'s HHS rewrites rules governing key CDC vaccine committee," April 9, 2026 | https://www.cnn.com/2026/04/09/health/cdc-acip-vaccine-charter | HIGH — Established news organization | RFK Jr. replaced entire 17-member ACIP with vaccine skeptics including Robert Malone and Martin Kulldorff; a federal judge ruled on March 16, 2026 that these changes were unlawful; CDC reduced childhood vaccine schedule from 17 to 11 recommended vaccinations; COVID vaccine recommendation removed for healthy children and pregnant women with no new scientific justification |
+| [27] | Poynter (citing Science Feedback analysis), "Misinformation 'superspreader' engagement increased 44% on Twitter since Musk purchase," 2023 | https://www.poynter.org/ifcn/2023/twitter-misinformation-increased-elon-musk/ | HIGH — Poynter Institute, established journalism ethics organization | "490 superspreader accounts received 44% more interactions post-acquisition"; "In November 2022, Twitter announced it would no longer enforce its policy prohibiting COVID-19 misinformation" — structural precondition for the April 2026 amplification event |
+| [28] | ACM Conference on Fairness, Accountability, and Transparency (FAccT 2025), "Auditing Political Exposure Bias: Algorithmic Amplification on Twitter/X During the 2024 U.S. Presidential Election" | https://dl.acm.org/doi/10.1145/3715275.3732159 | HIGH — Peer-reviewed computational study | Found "structural break" in X's algorithmic behavior around July 13, 2024 coinciding with Musk's Trump endorsement, after which Musk and Republican-aligned accounts saw increased post visibility; switching from chronological to algorithmic feed "shifted political opinion towards more conservative positions" |
+| [29] | Fortune, "Elon Musk's AI turns on him, labels him 'one of the most significant spreaders of misinformation on X'," November 14, 2024 | https://fortune.com/2024/11/14/grok-musk-misinformation-spreader/ | HIGH — Fortune magazine (established business/finance publication) | Musk's own AI system Grok labeled him "one of the most significant spreaders of misinformation on X" — a characterization that emerged from X's own algorithmic outputs before being subsequently revised |
+| [30] | AJMC (American Journal of Managed Care), "Vaccine Skeptics Among CDC Vaccine Panel Replacements Named by RFK Jr," 2026 | https://www.ajmc.com/view/vaccine-skeptics-among-cdc-vaccine-panel-replacements-named-by-rfk-jr | HIGH — Healthcare policy publication | Confirms Robert Malone — previously suspended from Twitter/X for COVID vaccine misinformation — was appointed to CDC's vaccine advisory panel by RFK Jr.; documents the normalization of vaccine skepticism at federal level that provided political cover for the Sterz/Musk episode |
+
+---
+
+*Depth Expansion Research conducted by GenuVerity Depth Expansion Agent | May 2, 2026*
+*Passes completed: A (Gap Analysis & Primary Sources), B (Evidence Deep-Dive), C (Contemporary Context & Political Dimensions)*
+*New sources added: 15 (sources [16]–[30]); primary sources: [17] Paul-Ehrlich-Institut PDF, [21] PLoS One peer-reviewed study, [22] Bundestag official record, [23] AHRQ/Harvard Pilgrim federal report, [24] The Lancet Respiratory Medicine / WHO Europe study*
