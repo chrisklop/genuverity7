@@ -3,6 +3,51 @@
 
 const REPORTS_DATA = [
     {
+        id: -92,
+        title: "Musk's 50-Million-View COVID Vaccine Death Hoax: How a Misread German Report Went Global",
+        slug: "musk-covid-vaccine-germany-hoax-2026",
+        category: "Health Misinformation",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "syringe",
+        date: "May 2, 2026",
+        sources: "30 Sources",
+        readTime: "18 min",
+        verdict: "false",
+        excerpt: "Elon Musk amplified a false claim that COVID-19 vaccines killed 20,000–60,000 Germans to 50M+ views in 30 hours. The claim originated in methodologically flawed Bundestag testimony by a retired veterinarian (who left Pfizer in 2007) using an invalid '30x underreporting multiplier.' Germany's Paul-Ehrlich-Institut assessed just 28 deaths as probably causally related to the vaccine out of 197 million doses. WHO estimates vaccines averted 182,988 German deaths — a benefit-to-harm ratio of 2,473:1.",
+        chart: {"type":"hbar","data":[28,2133,63990,182988],"labels":["PEI Confirmed Causal (Pfizer)","PEI Temporal Reports (Pfizer)","Sterz 30x Projection","WHO Estimated Deaths Averted"],"colors":["#22c55e","#f59e0b","#ef4444","#3b82f6"]}
+    },
+    {
+        id: -91,
+        title: "Grok Said It Was Real: How X's AI Chatbot Became a Disinformation Amplifier in the Iran War Panic",
+        slug: "grok-ai-iran-war-disinfo-2026",
+        category: "AI Disinformation",
+        tagClass: "tag-red",
+        catClass: "cat-factcheck",
+        icon: "bot",
+        date: "May 2, 2026",
+        sources: "20 Sources",
+        readTime: "14 min",
+        verdict: "false",
+        excerpt: "When panic about a U.S.-Iran war spread across X in early 2026, Grok — the platform's AI chatbot — falsely confirmed fabricated videos as real. A DFRLab study of 130,000+ posts found Grok gave false confirmations 31–34% of the time. Musk's March 2026 directive to use 'Grok to fact-check' magnified the problem, as X had already cut its Trust & Safety engineering team by 80%.",
+        chart: {"type":"hbar","data":[31,34,21,4],"labels":["DFRLab False Confirm Rate (%)","False Confirm — War Claims (%)","False Confirm — Health (%)","Documented Misidentifications"],"colors":["#ef4444","#dc2626","#f97316","#f59e0b"]}
+    },
+    {
+        id: -90,
+        title: "Pope Leo XIV Misinformation Supernova: 18+ Viral Hoaxes Targeting the First American Pope",
+        slug: "pope-leo-xiv-disinfo-2026",
+        category: "Religious Disinformation",
+        tagClass: "tag-amber",
+        catClass: "cat-factcheck",
+        icon: "church",
+        date: "May 2, 2026",
+        sources: "31 Sources",
+        readTime: "16 min",
+        verdict: "misleading",
+        excerpt: "Since his May 2025 election, Pope Leo XIV (Robert Prevost) has been targeted by at least 18 debunked viral hoaxes: AI deepfakes from Vietnamese spam networks, a fake 15-reform 'Cor Unum' document, a 1-million-view Burkina Faso deepfake, and Trump's Truth Social claim — rated 'Pants on Fire' — that the Pope supports Iran having nuclear weapons. The Vatican's own AI address warned: 'Language is becoming more and more a weapon with which to deceive.'",
+        chart: {"type":"hbar","data":[9,5,4,3,2,2,2],"labels":["AI-Gen Fake Quotes","AI Fake News Articles","AI Deepfake Videos","Vietnamese Spam Networks","Health/Crisis Hoaxes","Fabricated Documents","Head-of-State Misrep"],"colors":["#ef4444","#f59e0b","#f97316","#dc2626","#06b6d4","#3b82f6","#64748b"]}
+    },
+    {
         id: -89,
         title: "Trump's Third-Term 'Loophole': A Constitutional Dead End",
         slug: "trump-third-term-loophole-claims-2026",

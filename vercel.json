@@ -868,6 +868,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/grok-ai-iran-war-disinfo-2026.html",
+      "destination": "/grok-ai-iran-war-disinfo-2026",
+      "permanent": true
+    },
+    {
+      "source": "/grok-ai-iran-war-disinfo-2026.html",
+      "destination": "/grok-ai-iran-war-disinfo-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/grok-ai-misinformation-crisis.html",
       "destination": "/grok-ai-misinformation-crisis",
       "permanent": true
@@ -1438,6 +1448,16 @@
       "permanent": true
     },
     {
+      "source": "/localreports/musk-covid-vaccine-germany-hoax-2026.html",
+      "destination": "/musk-covid-vaccine-germany-hoax-2026",
+      "permanent": true
+    },
+    {
+      "source": "/musk-covid-vaccine-germany-hoax-2026.html",
+      "destination": "/musk-covid-vaccine-germany-hoax-2026",
+      "permanent": true
+    },
+    {
       "source": "/localreports/musk-eu-claims.html",
       "destination": "/musk-eu-claims",
       "permanent": true
@@ -1685,6 +1705,16 @@
     {
       "source": "/plaque-fact-check.html",
       "destination": "/plaque-fact-check",
+      "permanent": true
+    },
+    {
+      "source": "/localreports/pope-leo-xiv-disinfo-2026.html",
+      "destination": "/pope-leo-xiv-disinfo-2026",
+      "permanent": true
+    },
+    {
+      "source": "/pope-leo-xiv-disinfo-2026.html",
+      "destination": "/pope-leo-xiv-disinfo-2026",
       "permanent": true
     },
     {
@@ -2993,6 +3023,10 @@
       "destination": "/localreports/grocery-prices-claim.html"
     },
     {
+      "source": "/grok-ai-iran-war-disinfo-2026",
+      "destination": "/localreports/grok-ai-iran-war-disinfo-2026.html"
+    },
+    {
       "source": "/grok-ai-misinformation-crisis",
       "destination": "/localreports/grok-ai-misinformation-crisis.html"
     },
@@ -3221,6 +3255,10 @@
       "destination": "/localreports/mrna-vaccine-misinfo-2025.html"
     },
     {
+      "source": "/musk-covid-vaccine-germany-hoax-2026",
+      "destination": "/localreports/musk-covid-vaccine-germany-hoax-2026.html"
+    },
+    {
       "source": "/musk-eu-claims",
       "destination": "/localreports/musk-eu-claims.html"
     },
@@ -3319,6 +3357,10 @@
     {
       "source": "/plaque-fact-check",
       "destination": "/localreports/plaque-fact-check.html"
+    },
+    {
+      "source": "/pope-leo-xiv-disinfo-2026",
+      "destination": "/localreports/pope-leo-xiv-disinfo-2026.html"
     },
     {
       "source": "/portland-burning-narrative-2025",
